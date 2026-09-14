@@ -31,20 +31,27 @@
      button and focus rings and nothing else. Nobody's words have a colour of their own:
      speakers are told apart by the band around bekh's line, not by ink, because a page
      that colours the model's words is already saying something about the model. */
+  /* The room is ours, not a template's: the warm charcoal ground and blue-white ink the
+     rest of the desk uses, a lilac accent instead of the indigo every chat app ships with,
+     ice for the live dot, rose for posed. A hint — the layout is still a plain page. */
   :root{
-    --bg:#1c1c1f; --ink:#e8e8ea; --ghost:#9a9aa1; --line:#34343a;
-    --panel:#26262a; --panel-soft:#222226; --sunk:#19191c;
-    --accent:#6b7cff;
+    --bg:#232323; --ink:#d4e3fe; --ghost:#7d8a9c; --line:#2e3547;
+    --panel:#2a2b31; --panel-soft:#272830; --sunk:#1e1e22;
+    --accent:#f5c8fe; --on-accent:#232323;
+    --live:#c6f1fe;
     /* posed and errors: a state you have to be able to spot without reading */
-    --hot:#e0716f;
+    --hot:#eb6f92;
     --ctl:28px;
   }
+  /* the dawn side of the same palette: paper ground, violet ink, the accents deepened so
+     they still read on white */
   @media (prefers-color-scheme: light){
     :root{
-      --bg:#ffffff; --ink:#111114; --ghost:#6e6e76; --line:#e2e2e6;
-      --panel:#f3f3f5; --panel-soft:#f7f7f9; --sunk:#fafafa;
-      --accent:#5b6cf0;
-      --hot:#c7504e;
+      --bg:#faf4ed; --ink:#575279; --ghost:#8f8aa3; --line:#dfdad9;
+      --panel:#f2ebe3; --panel-soft:#f6f0e9; --sunk:#fffaf3;
+      --accent:#907aa9; --on-accent:#faf4ed;
+      --live:#56949f;
+      --hot:#b4637a;
     }
   }
   /* And that light block is the whole of the light room: there are no RULE overrides
@@ -86,7 +93,7 @@
   /* the dot is the connection and nothing else: ice pulse when llama answers /health,
      dull rose and still when it doesn't. */
   .dot{display:inline-block; width:7px; height:7px; border-radius:50%;
-    background:var(--accent); animation:pulse 3s ease-in-out infinite;}
+    background:var(--live); animation:pulse 3s ease-in-out infinite;}
   .dot.off{background:color-mix(in srgb, var(--hot) 65%, var(--bg)); animation:none;}
   @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
@@ -105,7 +112,7 @@
   .btn:hover{border-color:var(--ghost);}
   .btn:disabled{opacity:.4; cursor:default;}
   /* the one accent on the page: the button that spends his line */
-  .btn.warm{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .btn.warm{background:var(--accent); color:var(--on-accent); border-color:var(--accent);}
   .btn.warm:hover{filter:brightness(1.08);}
   input, textarea{
     background:var(--sunk); color:var(--ink); border:1px solid var(--line);
