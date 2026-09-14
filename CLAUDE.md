@@ -12,7 +12,7 @@ go into `friendship-is-magic`'s round engine.
 ## What gets built
 
 Our own small loom, written here, nobody's fork: a document on disk, a tree of branches, one
-llama-server `/completion` call per branch, a terminal view that shows the fan and lets bekh pick,
+llama-server `/completion` call per branch, a web page that shows the fan and lets bekh pick,
 prune, go deeper. A few hundred lines, stdlib. The seat's brief becomes a *document header*, never
 an instruction; the words "AI" and "assistant" never appear in the document — they are the hook
 that summons every chatbot transcript in the training set (`docs/research-base-models.md`, the
@@ -20,9 +20,9 @@ cyborgism section). Sampling needs a repetition brake (dry / repeat penalty): ba
 
 ## The models, in order
 
-1. **A small one on the mac** — mistral nemo 12b base or olmo 3 7b base at q6, 8k window; the mac
-   is 16 GB and that is the ceiling. The tool is built against this one, because it answers in
-   seconds. First sitting here.
+1. **A small one on the mac** — mistral nemo 12b base at q5_k_m, 8k window (the q6 spills on a
+   16 GB box; olmo 7b's `main` has the instruction midtrain in it). The tool is built against this
+   one, because it answers in seconds. First sitting here.
 2. **mistral small 3.1 24b base** — the clean family, apache, gguf up; q8 needs a rented card.
 3. **olmo 3 32b at its last pre-anneal checkpoint** — the only one where "nothing installed" is
    checkable (the Allen Institute publishes every step); needs converting to gguf; rented card.
@@ -58,12 +58,27 @@ atomically to `sittings/<name>.json` and forwards one branch at a time to llama-
 `/completion`. The page: document on the left as one continuous text (bekh's line in a band, the
 model's words on bare ground, nobody's words coloured), `‹ 2/3 ›` in the margin of any line with
 siblings to walk the tree, candidates as cards on the right, a sampler drawer whose changes land
-on the next branch. Neutral near-black room with one indigo accent, system sans, light by the OS,
-no toggle; dom-built never innerHTML. A model line bekh edits is tagged **posed** forever. Tests:
-`tests/loomtest.py` against `tests/stub_llama.py` (a fake llama-server), run with `uv run
---python 3.12 -m unittest tests/loomtest.py`. `looks/` holds the four alternative pages from the
-2026-09-14 look-off (two opus, two codex, a one-column reader and a side-by-side table each) —
-rejected, kept for reference; they are drop-in replacements for `loom.html`, same script layer.
+on the next branch. The room: our charcoal ground and blue-white ink, a lilac send button as the
+one accent, ice for the live dot, rose for posed; system sans, not mono; light by the OS, no
+toggle; dom-built never innerHTML. Settled by a look-off (2026-09-14): the fim skin was too much
+costume, a neutral-grey-and-indigo pass read as every chat app, this is the hint in between — go
+softer or harder from here, not back to either end. A model line bekh edits is tagged **posed**
+forever. Tests: `tests/loomtest.py` against `tests/stub_llama.py` (a fake llama-server), run with
+`uv run --python 3.12 -m unittest tests/loomtest.py`. `looks/` holds the four alternative pages
+from the look-off (two opus, two codex, a one-column reader and a side-by-side table each) —
+rejected, kept for reference; drop-in replacements for `loom.html`, same script layer.
+
+**Reviewing the page** is done with screenshots, not descriptions: run a spare loom on its own
+port against the stub with a scratch shelf holding a mock sitting (a root, a few human lines, a
+fan with one pruned and one posed branch — never the real `sittings/`), shoot it headless, fire
+the shots into kitty with `kkmosaic`. Light room: serve a copy with `prefers-color-scheme: light`
+sed'd to `@media all` — headless follows the OS appearance. The shot line and the codex recipe
+are in `~/.claude/docs/codex.md`.
+
+```bash
+/Applications/Helium.app/Contents/MacOS/Helium --headless=new --disable-gpu --hide-scrollbars \
+  --window-size=1440,900 --virtual-time-budget=4000 --screenshot=out.png http://127.0.0.1:<port>/
+```
 
 **It runs permanently, as `https://eva.x` / `https://e.x`.** Two launchd agents on the mac —
 `com.bekh.eva-llama` (llama-server, nemo, loopback 8080) and `com.bekh.eva-loom` (the loom,
@@ -89,6 +104,7 @@ sampler line is wrong on that one field; the page defaults it to the context siz
 
 ## State
 
-Plumbing proven end to end against nemo: it answers as a base model (`i'm here`, `yep`), stops
-clean on `\nbekh:`, ~12 tok/s. No sitting run yet. Next: bekh opens the page, seeds a document
-with real lines cut from a room, runs the first fan, and the register gets read.
+The loom is built, named and running: `https://eva.x`, nemo behind it, plumbing proven end to end
+(it answers as a base model — `i'm here`, `yep` — stops clean on `\nbekh:`, ~12 tok/s on this
+mac). The room is settled. No sitting run yet. Next: bekh opens the page, makes a sitting, pastes
+the seeded lines cut from a real room, sends the first line, and the register gets read.
