@@ -65,12 +65,21 @@ no toggle; dom-built never innerHTML. A model line bekh edits is tagged **posed*
 2026-09-14 look-off (two opus, two codex, a one-column reader and a side-by-side table each) —
 rejected, kept for reference; they are drop-in replacements for `loom.html`, same script layer.
 
-Run it, three lines, in this order:
+**It runs permanently, as `https://eva.x` / `https://e.x`.** Two launchd agents on the mac —
+`com.bekh.eva-llama` (llama-server, nemo, loopback 8080) and `com.bekh.eva-loom` (the loom,
+bound to the mac's tailnet ip 100.91.166.121:8082, the only door) — and one caddy block on the
+mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same shape as `m.x` and
+`kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`. Nothing answers on loopback 8082
+any more; use the name. Handles:
 
 ```bash
-llama-server -m ~/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf -c 8192 -ngl 99 -fa on --no-jinja --port 8080
-uv run --python 3.12 loom.py     # http://127.0.0.1:8082  (8081 is fim)
+launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom          # restart the loom (after editing loom.py; loom.html needs only a reload)
+launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # give the mac its ~10 GB back
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-llama.plist   # and take it again
 ```
+
+A 502 at the name = the mac is asleep or the loom agent is down; a red dot on the page = llama
+is down. Tests and the stub still run by hand, on their own ports.
 
 The mac's model is nemo base at **q5_k_m, not q6**: the q6 file is 10 GB and macOS wires at
 most ~2/3 of a 16 GB box for the GPU, so q6 plus an 8k cache spills. Pulled with resumable curl,
