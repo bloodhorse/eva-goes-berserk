@@ -50,7 +50,33 @@ cost guard, rent the pipe not the card).
   seat, the ten-model wire, why a base model is the next question.
 - The mac's llama-server is brew's; models in `~/.cache/llama.cpp/`.
 
+## The loom (built 2026-09-14)
+
+`loom.py` + `loom.html`, stdlib, no build. The server is a file store and a proxy, nothing else:
+the browser owns the tree and posts the whole sitting after every move; the server writes it
+atomically to `sittings/<name>.json` and forwards one branch at a time to llama-server's
+`/completion`. The page is fim's skin (tokens, font, 3px radii, no theme toggle, dom-built never
+innerHTML) with its own shape: document on the left, the fan on the right, a depth strip of
+siblings to walk back into a branch, a sampler drawer whose changes land on the next branch. A
+model line bekh edits is tagged **posed** forever. Tests: `tests/loomtest.py` against
+`tests/stub_llama.py` (a fake llama-server), run with `uv run --python 3.12 -m unittest
+tests/loomtest.py`.
+
+Run it, three lines, in this order:
+
+```bash
+llama-server -m ~/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf -c 8192 -ngl 99 -fa on --no-jinja --port 8080
+uv run --python 3.12 loom.py     # http://127.0.0.1:8082  (8081 is fim)
+```
+
+The mac's model is nemo base at **q5_k_m, not q6**: the q6 file is 10 GB and macOS wires at
+most ~2/3 of a 16 GB box for the GPU, so q6 plus an 8k cache spills. Pulled with resumable curl,
+not llama-server's own `-hf` puller, which timed out on one connection and wrote nothing.
+llama-server 0.4.0 **rejects `dry_penalty_last_n: -1`** (validates 0..INT_MAX) — the sheet's
+sampler line is wrong on that one field; the page defaults it to the context size, 8192.
+
 ## State
 
-Nothing built yet. Next: pick the small base for the mac off the sheet, pull it, run llama-server
-on the completion route, and write the loom against it.
+Plumbing proven end to end against nemo: it answers as a base model (`i'm here`, `yep`), stops
+clean on `\nbekh:`, ~12 tok/s. No sitting run yet. Next: bekh opens the page, seeds a document
+with real lines cut from a room, runs the first fan, and the register gets read.
