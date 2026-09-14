@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1c1c1f">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<title>Loom — The Table</title>
+<style>
+:root {
+  color-scheme: dark;
+  --ground: #1c1c1f;
+  --panel: #26262a;
+  --text: #e8e8ea;
+  --secondary: #9a9aa1;
+  --border: #34343a;
+  --accent: #6b7cff;
+}
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; --ground: #fff; --panel: #f3f3f5; --text: #111;
+    --secondary: #6c6c74; --border: #e2e2e6; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button, select { cursor: pointer; }
+button { touch-action: manipulation; }
+button:disabled { opacity: .4; cursor: default; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+[hidden] { display: none !important; }
+.quiet { display: flex; align-items: center; gap: 16px; min-height: 32px;
+  color: var(--secondary); font-size: 13px; flex-wrap: wrap; }
+#pick { appearance: none; border: none; background: transparent; color: var(--secondary);
+  padding: 4px 0; max-width: 40%; text-overflow: ellipsis; }
+#pick option { background: var(--panel); color: var(--text); }
+.spacer { flex: 1; }
+.dot { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: var(--accent); }
+.dot.off { background: var(--secondary); }
+.text-button, .arw { border: none; background: transparent; padding: 3px 0;
+  color: var(--secondary); font-size: 13px; line-height: 1.6; }
+.text-button:hover, .arw:hover { color: var(--text); }
+input, textarea { background: var(--ground); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; }
+textarea { resize: none; }
+::placeholder { color: var(--secondary); opacity: 1; }
+#newbox { display: none; align-items: center; gap: 12px; flex-wrap: wrap; }
+#newbox.on { display: flex; }
+#newname { width: 160px; font-size: 13px; }
+#blocks { width: 100%; }
+/* A reserved margin keeps controls from covering words or changing the reading measure on hover. */
+.block { position: relative; padding-right: 86px; }
+.body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.block.root .body { color: var(--secondary); }
+.human-band { display: inline-block; width: 100%; vertical-align: top;
+  background: var(--panel); border-radius: 10px; padding: 12px 16px; }
+.block.model .body { color: var(--text); }
+.margin { position: absolute; right: 0; top: 0; display: flex; flex-direction: column;
+  align-items: flex-end; gap: 2px; width: 76px; }
+.edit-button { opacity: 0; transition: opacity 120ms; }
+.block:hover .edit-button, .block:focus-within .edit-button { opacity: .7; }
+.block .edit-button:hover, .block .edit-button:focus-visible { opacity: 1; }
+.swipe { display: flex; align-items: center; gap: 5px; color: var(--secondary);
+  font-size: 13px; opacity: .7; }
+.swipe:hover, .swipe:focus-within { opacity: 1; }
+.arw { padding: 0 3px; }
+.posed { font-size: 13px; color: var(--secondary); margin-left: 8px; white-space: normal; }
+.editor { display: block; width: 100%; min-height: 3em; font: inherit; line-height: inherit;
+  padding: 0; background: transparent; border: none; border-radius: 8px; overflow: hidden; }
+#fanbar { display: flex; align-items: center; gap: 18px; color: var(--secondary); font-size: 13px; }
+#cards { display: grid; align-items: start; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  cursor: pointer; min-width: 0; }
+.card:hover { border-color: var(--secondary); }
+.facts { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px;
+  font-size: 13px; color: var(--secondary); margin-top: 10px; }
+.facts-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.card.gen { min-height: 88px; cursor: default; animation: breathing 1.8s ease-in-out infinite; }
+@keyframes breathing { 0%, 100% { border-color: var(--border); }
+  50% { border-color: color-mix(in srgb, var(--border) 60%, var(--secondary)); } }
+#messages { color: var(--secondary); font-size: 13px; }
+.sys { padding: 8px 0; overflow-wrap: anywhere; }
+.sys.err { font-weight: 500; }
+#turnwrap { background: var(--ground); padding-top: 20px; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.composer { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
+#turn { display: block; width: 100%; min-height: 26px; border: none; padding: 0;
+  background: transparent; border-radius: 0; overflow: hidden; }
+#turn:focus-visible { outline: none; }
+.composer:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.composer-actions { display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 10px; }
+#thenwrap { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--secondary); }
+#thenfan { margin: 0; padding: 0; width: 13px; height: 13px; accent-color: var(--secondary); }
+#send { display: grid; place-items: center; padding: 0; width: 28px; height: 28px;
+  border: none; border-radius: 50%; background: var(--accent); color: #fff; flex: 0 0 28px; }
+#send svg { width: 18px; height: 18px; }
+#docstat { color: var(--secondary); font-size: 12px; padding-top: 6px; }
+/* The drawer covers only its own width, so the document remains readable while tuning. */
+#sampwrap { position: fixed; inset: 0 0 0 auto; z-index: 10; width: 320px; max-width: 100vw;
+  height: 100dvh; background: var(--panel); border-left: 1px solid var(--border); padding: 20px;
+  overflow-y: auto; transform: translateX(100%); visibility: hidden;
+  transition: transform 180ms ease, visibility 180ms; }
+#sampwrap.on { transform: translateX(0); visibility: visible; }
+.drawer-top { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+#sampler { display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label { font-size: 13px; color: var(--secondary); }
+.field input, .field textarea { width: 100%; font-size: 14px; padding: 8px 10px; }
+.field textarea { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.note { color: var(--secondary); font-size: 13px; margin-top: 6px; }
+@media (hover: none) { .edit-button { opacity: .7; } }
+@media (prefers-reduced-motion: reduce) {
+  #sampwrap, .edit-button { transition: none; }
+  .card.gen { animation: none; }
+}
+
+/* The fan owns spare height; min-height zero lets long cards scroll without moving the composer. */
+body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.page { width: 100%; max-width: 1400px; margin: 0 auto; padding: 32px 40px;
+  flex: 1; min-height: 0; display: flex; flex-direction: column; }
+#document-region { flex: 0 1 auto; min-height: 0; overflow-y: auto; }
+#document-region.expanded { max-height: 45vh; }
+.quiet { margin-bottom: 18px; }
+#blocks, #expander { max-width: 760px; margin: 0 auto; }
+#expander { margin-bottom: 12px; }
+#fanregion { flex: 1 1 0; min-height: 0; overflow-y: auto; margin-top: 24px; }
+#fanbar { margin-bottom: 12px; }
+#cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.card { padding: 16px 18px; font-size: 15px; line-height: 1.55; }
+#turnwrap { flex: 0 0 auto; width: 100%; max-width: 760px; margin: 0 auto; }
+@media (max-width: 700px) {
+  .page { padding: 20px 16px; }
+  #cards { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<section id="document-region" aria-label="Document"><div class="quiet">
+  <select id="pick" aria-label="Sitting"></select>
+  <button class="text-button" id="newbtn" type="button">New</button>
+  <span id="newbox"><input id="newname" aria-label="New sitting name" placeholder="Name" autocomplete="off" spellcheck="false">
+    <button class="text-button" id="newok" type="button">Create</button>
+    <button class="text-button" id="newno" type="button">Cancel</button></span>
+  <span class="spacer"></span>
+  <span class="dot off" id="dot" role="status" aria-label="Model unavailable" title="Model unavailable"></span>
+  <button class="text-button" id="samp" type="button" aria-expanded="false" aria-controls="sampwrap">Sampler</button>
+</div><div id="expander" hidden><button class="text-button" id="expand" type="button" aria-expanded="false" aria-controls="blocks">Show whole document</button></div><div id="blocks"></div></section>
+<section id="fanregion" aria-label="Candidates"><div id="fanbar" hidden><span>Candidates</span><span class="spacer"></span><button class="text-button" id="more" type="button">More</button>
+  <button class="text-button" id="stop" type="button" hidden>Stop</button></div><div id="cards"></div></section>
+<div id="turnwrap">
+  <div id="messages" role="status" aria-live="polite"></div>
+  <div class="composer">
+    <textarea id="turn" rows="1" placeholder="Your line" aria-label="Your line" autocomplete="off" spellcheck="false"></textarea>
+    <div class="composer-actions">
+      <button class="text-button" id="fanbtn" type="button">Fan</button>
+      <label id="thenwrap"><input type="checkbox" id="thenfan" checked>Then fan</label>
+      <button id="send" type="button" aria-label="Send" title="Send">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="docstat"></div>
+</div>
+</main>
+<aside id="sampwrap" aria-label="Sampler" aria-hidden="true" inert>
+  <div class="drawer-top"><button class="text-button" id="done" type="button">Done</button></div>
+  <div id="sampler"></div>
+</aside>
+<script>
+// ---- the shape of a sitting ----------------------------------------------------------
+// The document a base model continues is not a chat: it is one text, and the tree is only
+// a way of keeping several futures of that text at once. The prompt for any node is the
+// concatenation of `text` along the path root→node, VERBATIM, with nothing inserted
+// between blocks. Everything that looks like a turn structure — the newline, the name,
+// the colon — lives inside the node texts themselves, because the model must never see a
+// frame we imagined and it didn't.
+// One trailing newline, not two: the turn prefix below opens with its own, and the pair
+// makes exactly the one blank line a saved chat log puts between its header and the
+// first message. Two here would make the model's very first document open on a gap no
+// real log has.
+const HEADER = 'a chat log between two friends, saved from a phone. no punctuation fixed, no capitals.\n';
+// Straight off the research sheet, loop-killers on. llama's own defaults are wrong for
+// this in two specific ways and both are fixed here: n_predict is -1 (infinite) out of
+// the box, and dry_penalty_last_n is 64 tokens, which is useless against a loop that
+// starts two thousand tokens into a transcript. It is set to the context size and NOT
+// to -1: the sheet says -1 means "whole context", but llama-server 0.4.0 validates the
+// field as 0..INT_MAX and answers 400 to a negative — every branch would fail before
+// the model saw a token. Raise it with -c if the server ever runs a longer window.
+const PARAMS = {
+  n_predict: 220,
+  stop: ['\nbekh:', '\nbekh :', '\n\nbekh'],
+  temperature: 1.0, min_p: 0.08, top_k: 0, top_p: 1.0,
+  repeat_penalty: 1.05, repeat_last_n: 512,
+  dry_multiplier: 0.8, dry_base: 1.75, dry_allowed_length: 3, dry_penalty_last_n: 8192,
+  fan: 4,           // loom-side; the server strips it before llama ever sees it
+};
+// llama EATS the stop string — it is cut out of `content` and handed back separately, so
+// the document would lose the "\nbekh:" that ended the model's line. That is exactly why
+// the prefix carries the newline AND the name: the human node puts back what the stop ate
+// and the document stays one continuous text. Break this and every branch after the first
+// runs the two speakers together on one line.
+const TURN = {prefix: '\nbekh: ', suffix: '\nseat:'};
+// Which numbers the sampler draws, in the order they matter. `stop`, the two turn strings
+// and the fan get their own widgets below.
+const FIELDS = [
+  ['n_predict', 1], ['temperature', 0.05], ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05],
+  ['repeat_penalty', 0.01], ['repeat_last_n', 64],
+  ['dry_multiplier', 0.1], ['dry_base', 0.05], ['dry_allowed_length', 1],
+  ['dry_penalty_last_n', 64],
+];
+
+const $ = id => document.getElementById(id);
+const blocksEl = $('blocks'), cardsEl = $('cards');
+const pickEl = $('pick'), sampEl = $('sampler'), turnEl = $('turn');
+
+// ---- state ---------------------------------------------------------------------------
+let sitting = null;      // the whole tree, and the only state that matters
+let shelf = [];          // what /api/sittings last said
+let generation = 0;      // bumped by anything that makes a running fan stale
+let running = false;
+// Expansion is a view preference, so it never changes the saved tree.
+let expanded = false;
+try{ expanded = localStorage.getItem('loom.table.expanded') === 'true'; }catch(e){}
+$('expand').addEventListener('click', () => {
+  expanded = !expanded;
+  try{ localStorage.setItem('loom.table.expanded', String(expanded)); }catch(e){}
+  if(sitting) renderDoc();
+});
+
+// Wrapped, all three: Safari throws on localStorage outright in a private window, and a
+// page that can't remember which sitting you were in must still be a page that works.
+const KEY = 'loom.sitting';
+function remembered(){ try{ return localStorage.getItem(KEY) || ''; }catch(e){ return ''; } }
+function remember(n){ try{ localStorage.setItem(KEY, n); }catch(e){} }
+
+const hex = n => Array.from(crypto.getRandomValues(new Uint8Array(n)))
+  .map(b => b.toString(16).padStart(2, '0')).join('');
+
+async function getJSON(url){
+  const r = await fetch(url, {cache: 'no-store'});
+  return await r.json();
+}
+async function postJSON(url, body){
+  const r = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'},
+                             body: JSON.stringify(body)});
+  return await r.json();
+}
+
+function sys(text, err){
+  const d = document.createElement('div');
+  d.className = 'sys' + (err ? ' err' : '');
+  d.textContent = text;          // textContent: this string can carry llama's own words
+  $('messages').appendChild(d);
+}
+
+// ---- the tree ------------------------------------------------------------------------
+function node(id){ return sitting.nodes[id]; }
+function kids(id){
+  return Object.values(sitting.nodes)
+    .filter(n => n.parent === id && !n.pruned)
+    .sort((a, b) => a.ts - b.ts);       // newest at the bottom, in both panes
+}
+function path(){
+  const out = [];
+  let n = node(sitting.current);
+  while(n){ out.unshift(n); n = n.parent ? node(n.parent) : null; }
+  return out;
+}
+function promptFrom(id){
+  const out = [];
+  let n = node(id);
+  while(n){ out.unshift(n.text); n = n.parent ? node(n.parent) : null; }
+  return out.join('');
+}
+function addNode(kind, text, parent, meta){
+  const n = {id: hex(4), parent: parent, kind: kind, text: text, ts: Date.now() / 1000,
+             pruned: false, posed: false, meta: meta || null};
+  sitting.nodes[n.id] = n;
+  return n;
+}
+
+async function save(){
+  if(!sitting) return;
+  const d = await postJSON('/api/sitting', sitting);
+  if(d && d.error) sys('not saved: ' + d.error, true);
+  else if(d && d.updated) sitting.updated = d.updated;
+}
+
+// ---- rendering -----------------------------------------------------------------------
+// DOM building only, never innerHTML — fim's law, and here it is not a formality: every
+// model node is a string a base model wrote, and a base model continuing a chat log will
+// happily produce `<img onerror=...>` because its training set is full of them.
+// Node text stays textContent, never innerHTML: generated markup is document text too.
+function facts(n){
+  if(!n.meta) return '';
+  const reason = n.meta.stop_type || 'Stopped';
+  const word = n.meta.stopping_word ? ' ' + JSON.stringify(n.meta.stopping_word) : '';
+  return reason + word + ' · ' + (n.meta.tokens_predicted || 0) + ' tokens';
+}
+function appendText(body, n){
+  body.textContent = n.text;
+  if(n.posed){
+    const mark = document.createElement('span');
+    mark.className = 'posed';
+    mark.textContent = 'posed';
+    body.appendChild(mark);
+  }
+}
+function appendDocumentText(body, n){
+  const suffix = sitting.turn.suffix;
+  // Only a matching turn boundary can tell us which words belong outside the band.
+  // Keep the wrapper intact so editing still replaces the complete, verbatim node.
+  if(n.kind !== 'human' || !suffix || !n.text.endsWith(suffix)){
+    appendText(body, n);
+    return;
+  }
+  const line = n.text.slice(0, -suffix.length);
+  const leading = line.match(/^[\r\n]*/)[0];
+  const band = document.createElement('span');
+  band.className = 'human-band';
+  band.textContent = line.slice(leading.length);
+  body.append(document.createTextNode(leading), band, document.createTextNode(suffix));
+}
+function footLine(n, extra){
+  const f = document.createElement('div');
+  f.className = 'facts';
+  const info = document.createElement('span');
+  info.className = 'facts-text';
+  info.textContent = facts(n);
+  f.appendChild(info);
+  extra.forEach(b => f.appendChild(b));
+  return f;
+}
+// Card controls must stop the click before it can choose the branch.
+
+function ghostBtn(label, fn, stop){
+  const b = document.createElement('button');
+  b.className = 'text-button';
+  b.type = 'button';
+  b.textContent = label;
+  b.addEventListener('click', e => { if(stop) e.stopPropagation(); fn(); });
+  return b;
+}
+
+// Edit in place: the block becomes a textarea, saves on blur or cmd/ctrl+enter. A model
+// line that comes back changed is POSED FOREVER — the tag is the only thing standing
+// between "the model said this" and "we said this and forgot", which is the one confusion
+// that would make a whole sitting worthless as evidence.
+function editBlock(n, body, after){
+  const ta = document.createElement('textarea');
+  ta.className = 'editor';
+  ta.setAttribute('aria-label', 'Edit line');
+  ta.value = n.text;
+  let done = false;
+  const commit = async () => {
+    if(done) return;
+    done = true;
+    if(ta.value !== n.text){
+      n.text = ta.value;
+      if(n.kind === 'model') n.posed = true;
+      await save();
+    }
+    (after || render)();
+  };
+  ta.addEventListener('blur', commit);
+  ta.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && (e.metaKey || e.ctrlKey)){ e.preventDefault(); ta.blur(); }
+    if(e.key === 'Escape'){ e.stopPropagation(); done = true; (after || render)(); }
+  });
+  body.replaceWith(ta);
+  const resize = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
+  ta.addEventListener('input', resize);
+  resize();
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+}
+
+// The sibling walk. This is the only affordance for getting back into a branch he turned
+// away from, and without one a pruned-nothing tree is still a tunnel. It sits on the block
+// itself because that is what it is about: not "the tree has four nodes at depth 3" but
+// "this line had three alternatives". Picking a sibling of an ANCESTOR truncates the
+// document there, exactly as picking any node always has.
+function swipe(n){
+  if(!n.parent) return null;
+  const sibs = kids(n.parent);
+  if(sibs.length < 2) return null;
+  const at = sibs.findIndex(s => s.id === n.id);
+  if(at < 0) return null;
+  const box = document.createElement('div');
+  box.className = 'swipe';
+  // wrap at both ends: with four branches, one more press of › is always a branch, and a
+  // dead arrow at the edge is a control that lies about what is there.
+  const go = d => pickNode(sibs[(at + d + sibs.length) % sibs.length].id);
+  const arrow = (glyph, d) => {
+    const b = document.createElement('button');
+    b.className = 'arw';
+    b.type = 'button';
+    b.textContent = glyph;
+    b.setAttribute('aria-label', d < 0 ? 'Previous sibling' : 'Next sibling');
+    b.addEventListener('click', () => go(d));
+    return b;
+  };
+  const count = document.createElement('span');
+  count.textContent = (at + 1) + '/' + sibs.length;
+  box.appendChild(arrow('‹', -1));
+  box.appendChild(count);
+  box.appendChild(arrow('›', 1));
+  return box;
+}
+
+function renderDoc(){
+  blocksEl.textContent = '';
+  const full = path();
+  $('expander').hidden = full.length <= 3;
+  $('expand').textContent = expanded ? 'Show less' : 'Show whole document';
+  $('expand').setAttribute('aria-expanded', String(expanded));
+  $('document-region').classList.toggle('expanded', expanded);
+  const visible = expanded ? full : full.slice(-3);
+  for(const n of visible){
+    const el = document.createElement('div');
+    el.className = 'block ' + n.kind;
+    const body = document.createElement('div');
+    body.className = 'body';
+    appendDocumentText(body, n);
+    const margin = document.createElement('div');
+    margin.className = 'margin';
+    const edit = ghostBtn('Edit', () => editBlock(n, body));
+    edit.classList.add('edit-button');
+    margin.appendChild(edit);
+    const sw = swipe(n);
+    if(sw) margin.appendChild(sw);
+    el.append(body, margin);
+    blocksEl.appendChild(el);
+  }
+}
+
+function fanVisibility(){
+  const visible = sitting && (kids(sitting.current).length > 0 || running);
+  $('fanbar').hidden = !visible;
+  $('stop').hidden = !running;
+  
+}
+function renderFan(){
+  cardsEl.textContent = '';
+  for(const n of kids(sitting.current)){
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.tabIndex = 0;
+    el.setAttribute('aria-label', 'Choose candidate');
+    const body = document.createElement('div');
+    body.className = 'body';
+    appendText(body, n);
+    el.appendChild(body);
+    el.appendChild(footLine(n, [
+      ghostBtn('Edit', () => editBlock(n, body), true),
+      ghostBtn('Prune', () => pruneNode(n.id), true),
+    ]));
+    el.addEventListener('click', e => {
+      if(e.target.closest('button, textarea')) return;
+      pickNode(n.id);
+    });
+    el.addEventListener('keydown', e => {
+      if(e.target !== el || !['Enter', ' '].includes(e.key)) return;
+      e.preventDefault();
+      pickNode(n.id);
+    });
+    cardsEl.appendChild(el);
+  }
+  if(pendingCard && pendingGeneration === generation) cardsEl.appendChild(pendingCard);
+  fanVisibility();
+}
+
+function render(){
+  if(!sitting) return;
+  const total = Object.keys(sitting.nodes).length;
+  const live = Object.values(sitting.nodes).filter(n => !n.pruned).length;
+  $('docstat').textContent = `${live} live · ${total - live} pruned · depth ${path().length - 1}`;
+  renderDoc();
+  renderFan();
+}
+
+async function pickNode(id){
+  generation++;
+  sitting.current = id;
+  await save();
+  render();
+}
+async function pruneNode(id){
+  generation++;
+  // Hidden, never deleted: a branch you pruned in a bad mood is evidence too, and the
+  // file is text. Nothing in the page ever removes a node from `nodes`.
+  node(id).pruned = true;
+  await save();
+  render();
+}
+
+let pendingCard = null;
+let pendingGeneration = 0;
+function pending(){
+  const el = document.createElement('div');
+  el.className = 'card gen';
+  el.setAttribute('aria-label', 'Generating candidate');
+  pendingCard = el;
+  pendingGeneration = generation;
+  fanVisibility();
+  cardsEl.appendChild(el);
+  return el;
+}
+
+// The fan runs HERE, in the browser, one branch at a time. Sequential and not parallel on
+// purpose: llama-server has a fixed number of slots and a shared prompt cache, and four
+// concurrent completions off the same prefix fight over both — slower in wall-clock than
+// doing them in a row, and the cards would all land at once instead of one by one.
+async function runFan(n){
+  if(!sitting) return;
+  const mine = ++generation;
+  const from = sitting.current;
+  running = true;
+  $('fanbtn').disabled = $('more').disabled = $('send').disabled = true;
+  try{
+    for(let i = 0; i < n; i++){
+      if(mine !== generation) return;
+      const card = pending();
+      let d;
+      try{
+        d = await postJSON('/api/complete', {prompt: promptFrom(from), params: sitting.params});
+      }catch(e){
+        card.remove();
+        pendingCard = null;
+        sys('the loom is not answering: ' + e, true);
+        return;
+      }
+      card.remove();
+      pendingCard = null;
+      if(mine !== generation) return;
+      if(d.error){
+        // Cancellation is deliberate, so it should not be reported as an error.
+        if(d.error !== 'cancelled') sys(d.error, true);
+        return;
+      }
+      addNode('model', d.text, from, {
+        stop_type: d.stop_type, stopping_word: d.stopping_word,
+        tokens_predicted: d.tokens_predicted, tps: d.tps,
+        // Frozen: a branch is only readable later if you know what produced it, and the
+        // sampler moves between fans.
+        params: JSON.parse(JSON.stringify(sitting.params)),
+      });
+      await save();
+      render();
+    }
+  }finally{
+    running = false;
+    $('fanbtn').disabled = $('more').disabled = $('send').disabled = false;
+    fanVisibility();
+  }
+}
+
+async function sendLine(){
+  if(!sitting) return;
+  const typed = turnEl.value.trim();
+  if(!typed) return;
+  turnEl.value = '';
+  grow();
+  generation++;
+  // prefix + typed + suffix, built here and stored as one flat string, so the document on
+  // disk is a document and the two names are nothing but settings — rename "seat" in the
+  // sampler and the next node carries the new name, the old ones keep theirs.
+  const n = addNode('human', sitting.turn.prefix + typed + sitting.turn.suffix, sitting.current);
+  sitting.current = n.id;
+  await save();
+  render();
+  if($('thenfan').checked) runFan(sitting.params.fan || 4);
+}
+
+async function stopAll(){
+  generation++;
+  running = false;
+  try{ await postJSON('/api/cancel', {}); }catch(e){}
+  render();
+}
+
+// ---- the sampler ---------------------------------------------------------------------
+// Escaped both ways, because every string in here has newlines in it and a textarea that
+// showed them as real line breaks could not tell one stop string from two.
+function esc(s){ return String(s).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/\t/g, '\\t'); }
+function unesc(s){
+  let out = '';
+  for(let i = 0; i < s.length; i++){
+    if(s[i] !== '\\'){ out += s[i]; continue; }
+    const c = s[++i];
+    out += c === 'n' ? '\n' : c === 't' ? '\t' : c === undefined ? '\\' : c;
+  }
+  return out;
+}
+
+function field(label, value, onchange, opts){
+  const wrap = document.createElement('div');
+  wrap.className = 'field';
+  const l = document.createElement('label');
+  l.textContent = label;
+  const inp = document.createElement(opts && opts.rows ? 'textarea' : 'input');
+  if(opts && opts.rows) inp.rows = opts.rows;
+  if(opts && opts.step !== undefined){ inp.type = 'number'; inp.step = opts.step; }
+  inp.value = value;
+  inp.id = 'setting-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  l.htmlFor = inp.id;
+  // `change` and not `input`: every keystroke would be a POST, and a half-typed 0.0 is
+  // not a temperature anybody meant.
+  inp.addEventListener('change', async () => { onchange(inp.value); await save(); });
+  wrap.appendChild(l); wrap.appendChild(inp);
+  return wrap;
+}
+
+function buildSampler(){
+  sampEl.textContent = '';
+  if(!sitting) return;
+  const p = sitting.params;
+  for(const [key, step] of FIELDS){
+    sampEl.appendChild(field(key.replaceAll('_', ' ').replace(/^./, c => c.toUpperCase()), p[key], v => { p[key] = Number(v); }, {step}));
+  }
+  sampEl.appendChild(field('Fan', p.fan, v => { p.fan = Math.max(1, Math.min(12, Number(v) || 1)); },
+                           {step: 1}));
+  sampEl.appendChild(field('Turn prefix', esc(sitting.turn.prefix),
+                           v => { sitting.turn.prefix = unesc(v); }));
+  sampEl.appendChild(field('Turn suffix', esc(sitting.turn.suffix),
+                           v => { sitting.turn.suffix = unesc(v); }));
+  sampEl.appendChild(field('Stop (one per line)', p.stop.map(esc).join('\n'),
+    v => { p.stop = v.split('\n').filter(s => s.length).map(unesc); },
+    {rows: 4, wide: true}));
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.textContent = 'Changes apply to the next branch.';
+  sampEl.appendChild(note);
+}
+
+// ---- the shelf -----------------------------------------------------------------------
+function drawShelf(){
+  pickEl.textContent = '';
+  for(const s of shelf){
+    const o = document.createElement('option');
+    o.value = s.name;
+    o.textContent = s.name;
+    pickEl.appendChild(o);
+  }
+  if(sitting) pickEl.value = sitting.name;
+}
+
+async function loadShelf(){
+  const d = await getJSON('/api/sittings');
+  shelf = d.sittings || [];
+  drawShelf();
+}
+
+async function openSitting(name){
+  const d = await getJSON('/api/sitting?name=' + encodeURIComponent(name));
+  if(d.error){ sys(d.error, true); return; }
+  generation++;
+  sitting = d;
+  remember(name);
+  pickEl.value = name;
+  buildSampler();
+  render();
+}
+
+async function newSitting(name){
+  if(!/^[A-Za-z0-9_.-]{1,64}$/.test(name)){
+    sys('names are letters, digits, _ . - and up to 64 of them', true);
+    return;
+  }
+  generation++;
+  const root = {id: hex(4), parent: null, kind: 'root', text: HEADER,
+                ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
+  // One line of scene-setting and an empty seed, and that is the whole of it. No example
+  // exchanges ship with this tool: seeded lines have to be bekh's own, cut from a real
+  // room, and anything we invented here would be us writing his half of the transcript.
+  sitting = {
+    name: name, created: Date.now() / 1000, updated: 0,
+    params: JSON.parse(JSON.stringify(PARAMS)),
+    turn: JSON.parse(JSON.stringify(TURN)),
+    root: root.id, current: root.id, nodes: {[root.id]: root},
+  };
+  await save();
+  remember(name);
+  await loadShelf();
+  pickEl.value = name;
+  buildSampler();
+  render();
+}
+
+// ---- wiring --------------------------------------------------------------------------
+pickEl.addEventListener('change', () => openSitting(pickEl.value));
+$('newbtn').addEventListener('click', () => {
+  $('newbox').classList.add('on');
+  $('newname').focus();
+});
+$('newno').addEventListener('click', () => $('newbox').classList.remove('on'));
+$('newok').addEventListener('click', async () => {
+  const name = $('newname').value.trim();
+  $('newbox').classList.remove('on');
+  $('newname').value = '';
+  if(name) await newSitting(name);
+});
+$('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
+function drawer(open){
+  $('sampwrap').classList.toggle('on', open);
+  $('sampwrap').inert = !open;
+  $('sampwrap').setAttribute('aria-hidden', String(!open));
+  $('samp').setAttribute('aria-expanded', String(open));
+  (open ? $('done') : $('samp')).focus();
+}
+$('samp').addEventListener('click', () => drawer(!$('sampwrap').classList.contains('on')));
+$('done').addEventListener('click', () => drawer(false));
+$('sampwrap').addEventListener('keydown', e => { if(e.key === 'Escape') drawer(false); });
+$('send').addEventListener('click', sendLine);
+$('fanbtn').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
+$('more').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
+$('stop').addEventListener('click', stopAll);
+
+// Desktop page, so one level of the enter net is enough — fim states the rule at three
+// levels because iOS's return key is not reliably a keydown, and none of that applies to
+// a browser with a real keyboard in front of it.
+turnEl.addEventListener('keydown', e => {
+  if(e.key !== 'Enter' || e.shiftKey || e.isComposing) return;
+  e.preventDefault();
+  sendLine();
+});
+function grow(){
+  turnEl.style.height = 'auto';
+  turnEl.style.height = turnEl.scrollHeight + 'px';
+}
+turnEl.addEventListener('input', grow);
+
+async function health(){
+  try{
+    const d = await getJSON('/api/health');
+    $('dot').classList.toggle('off', !d.ok);
+    $('dot').title = d.ok ? 'Model available' : 'Model unavailable';
+    $('dot').setAttribute('aria-label', $('dot').title);
+  }catch(e){ $('dot').classList.add('off');
+    $('dot').title = 'Model unavailable';
+    $('dot').setAttribute('aria-label', 'Model unavailable'); }
+}
+
+(async function start(){
+  await loadShelf();
+  const want = remembered();
+  const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
+  if(name) await openSitting(name);
+  else $('newbtn').click();          // an empty shelf opens with the name box waiting
+  health();
+  setInterval(health, 5000);
+})();
+</script>
+</body>
+</html>

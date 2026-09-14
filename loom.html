@@ -26,43 +26,25 @@
      The tree lives here, in `sitting`, and the whole of it is POSTed back after every
      move. The server holds no opinion about it. -->
 <style>
+  /* A neutral room: near-black ground, one step lighter for anything that is a panel,
+     white ink, grey for everything secondary, and exactly ONE accent — spent on the send
+     button and focus rings and nothing else. Nobody's words have a colour of their own:
+     speakers are told apart by the band around bekh's line, not by ink, because a page
+     that colours the model's words is already saying something about the model. */
   :root{
-    --bg:#232323; --ink:#d4e3fe; --ghost:#4a6377; --line:#152238;
+    --bg:#1c1c1f; --ink:#e8e8ea; --ghost:#9a9aa1; --line:#34343a;
+    --panel:#26262a; --panel-soft:#222226; --sunk:#19191c;
+    --accent:#6b7cff;
+    /* posed and errors: a state you have to be able to spot without reading */
+    --hot:#e0716f;
     --ctl:28px;
-    /* chrome, mixed off --bg so tuning the ground carries the whole page */
-    --panel:color-mix(in srgb, #000 20%, var(--bg));
-    --panel-soft:color-mix(in srgb, #000 7%, var(--bg));
-    --sunk:color-mix(in srgb, #000 14%, var(--bg));
-    --lift:color-mix(in srgb, #fff 5%, var(--bg));
-    /* one token per kind of line, fim's own three. ice is what the model says, lilac is
-       what bekh says, and the header lives in --ghost because it is stage direction
-       rather than anybody's voice. */
-    --cod:#c6f1fe;
-    --bekh:#f5c8fe;
-    /* posed, and nobody's colour — the same rose fim spends on "recording": a state you
-       have to be able to spot without reading. */
-    --hot:#eb6f92;
-    --cod-dim:color-mix(in srgb, var(--cod) 62%, var(--bg));
-    --bekh-dim:color-mix(in srgb, var(--bekh) 62%, var(--bg));
   }
-  /* Rosé Pine Dawn, following the phone/laptop. Only tokens are restated — everything
-     downstream is var() all the way down and re-resolves for free. The mixes go the
-     other way round on purpose: a dark ground sinks its panels below the floor, Dawn's
-     surface sits above its base, and mixing black into paper just makes dirty paper. */
   @media (prefers-color-scheme: light){
     :root{
-      --bg:#faf4ed; --ink:#575279; --ghost:#9893a5; --line:#dfdad9;
-      --panel:color-mix(in srgb, #fff 62%, var(--bg));
-      --panel-soft:color-mix(in srgb, #fff 26%, var(--bg));
-      --sunk:color-mix(in srgb, #000 3%, var(--bg));
-      --lift:color-mix(in srgb, #fff 45%, var(--bg));
-      --cod:#286983;
-      --bekh:#907aa9;
-      --hot:#b4637a;
-      /* the one derived formula that doesn't transpose: mixing toward the ground dims a
-         pastel on a dark floor and washes an accent out on paper. */
-      --cod-dim:color-mix(in srgb, var(--cod) 78%, var(--bg));
-      --bekh-dim:color-mix(in srgb, var(--bekh) 78%, var(--bg));
+      --bg:#ffffff; --ink:#111114; --ghost:#6e6e76; --line:#e2e2e6;
+      --panel:#f3f3f5; --panel-soft:#f7f7f9; --sunk:#fafafa;
+      --accent:#5b6cf0;
+      --hot:#c7504e;
     }
   }
   /* And that light block is the whole of the light room: there are no RULE overrides
@@ -77,7 +59,8 @@
   html,body{height:100%; margin:0;}
   body{
     background:var(--bg); color:var(--ink);
-    font:14px/1.55 'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;
+    /* the system face: this is a page for reading a saved chat log, not a terminal */
+    font:14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display:flex; flex-direction:column; height:100dvh; overflow:hidden;
   }
 
@@ -103,7 +86,7 @@
   /* the dot is the connection and nothing else: ice pulse when llama answers /health,
      dull rose and still when it doesn't. */
   .dot{display:inline-block; width:7px; height:7px; border-radius:50%;
-    background:var(--cod-dim); animation:pulse 3s ease-in-out infinite;}
+    background:var(--accent); animation:pulse 3s ease-in-out infinite;}
   .dot.off{background:color-mix(in srgb, var(--hot) 65%, var(--bg)); animation:none;}
   @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
@@ -111,35 +94,36 @@
   /* two kinds, and only two: a word you can click (everything that is a way of looking),
      and an outline button (everything that spends the GPU or writes to the tree). */
   .ghostbtn{
-    background:none; border:0; padding:0; margin:0; font:inherit; font-size:12px;
-    color:var(--ghost); cursor:pointer; letter-spacing:.04em;
+    background:none; border:0; padding:0; margin:0; font:inherit; font-size:13px;
+    color:var(--ghost); cursor:pointer;
   }
   .ghostbtn:hover{color:var(--ink);}
   .btn{
-    background:transparent; color:var(--cod-dim); border:1px solid var(--cod-dim);
-    border-radius:6px; padding:6px 14px; font:inherit; font-size:12px; cursor:pointer;
+    background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    border-radius:8px; padding:6px 14px; font:inherit; font-size:13px; cursor:pointer;
   }
-  .btn:hover{background:color-mix(in srgb, var(--cod) 10%, transparent);}
-  .btn:disabled{opacity:.4; cursor:default; background:transparent;}
-  .btn.warm{color:var(--bekh); border-color:var(--bekh-dim);}
-  .btn.warm:hover{background:color-mix(in srgb, var(--bekh) 10%, transparent);}
+  .btn:hover{border-color:var(--ghost);}
+  .btn:disabled{opacity:.4; cursor:default;}
+  /* the one accent on the page: the button that spends his line */
+  .btn.warm{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .btn.warm:hover{filter:brightness(1.08);}
   input, textarea{
     background:var(--sunk); color:var(--ink); border:1px solid var(--line);
-    border-radius:6px; padding:6px 8px; font:inherit; font-size:13px; outline:none;
+    border-radius:8px; padding:7px 10px; font:inherit; font-size:14px; outline:none;
   }
-  input:focus, textarea:focus{border-color:var(--cod-dim);}
-  textarea{resize:none; caret-color:var(--bekh);}
+  input:focus, textarea:focus{border-color:var(--accent);}
+  textarea{resize:none;}
   ::placeholder{color:var(--ghost);}
-  label{font-size:11px; letter-spacing:.06em; color:var(--ghost);}
+  label{font-size:13px; color:var(--ghost);}
   /* the generic field rule above would make a checkbox a padded box — put it back */
-  input[type=checkbox]{width:12px; height:12px; padding:0; margin:0; border:0;
-    background:transparent; accent-color:var(--cod);}
+  input[type=checkbox]{width:13px; height:13px; padding:0; margin:0; border:0;
+    background:transparent; accent-color:var(--accent);}
 
   /* the inline new-sitting box, and it is a box and not prompt(): a native dialog steals
      the window, can't be styled, and on some browsers is silently suppressed. */
   #newbox{display:none; align-items:center; gap:8px;}
   #newbox.on{display:flex;}
-  #newname{width:15ch; font-size:12px; padding:3px 7px;}
+  #newname{width:160px; font-size:13px; padding:3px 8px;}
 
   /* ---- the two panes ---------------------------------------------------------------
      min-height:0 is load-bearing: a flex child defaults to min-height:auto, which lets a
@@ -153,28 +137,29 @@
     padding:28px 32px 20px;}
 
   /* ---- the document ----------------------------------------------------------------
-     A reading column, capped in ch so the measure stays a measure however wide the window
+     A reading column, capped in px so the measure stays a measure however wide the window
      gets. The blocks carry NO gap: the node texts already contain the newlines that
      separate them (that is what the model sees), and a gap here would draw a seam the
      document does not have. */
-  #blocks{flex:1 1 auto; overflow-y:auto; width:100%; max-width:76ch;
-    font-size:15px; line-height:1.75;}
-  .blk{position:relative; padding:0 7ch 0 9ch;}
-  .blk .body{white-space:pre-wrap; word-wrap:break-word;
-    border-left:2px solid transparent; padding-left:1.4ch;}
-  /* the transparent rule above is why every block's text starts on the same column: root
-     has no seam, human and model do, and none of them shift. */
+  /* --gut is the left margin the controls live in and --rim the right one the swipe lives
+     in; the turn box below uses the same two so its field starts on the text's column. */
+  #blocks{flex:1 1 auto; overflow-y:auto; width:100%; max-width:860px;
+    --gut:72px; --rim:64px; font-size:16px; line-height:1.65;}
+  .blk{position:relative; padding:0 var(--rim) 0 var(--gut);}
+  .blk .body{white-space:pre-wrap; word-wrap:break-word;}
   .blk.root{color:var(--ghost);}
-  .blk.human{color:var(--bekh);}
-  .blk.human .body{border-left-color:color-mix(in srgb, var(--bekh) 30%, transparent);}
-  .blk.model{color:var(--cod);}
-  .blk.model .body{border-left-color:color-mix(in srgb, var(--cod) 30%, transparent);}
+  /* bekh's line gets a band, the model's words sit on the bare ground. The band wraps ONLY
+     his sentence: renderDoc splits the node's text into the newline before it, the line,
+     and the `seat:` header after it, so the model's turn marker is never inside his
+     bubble and the seams stay real newlines in the flow. */
+  .blk.human .core{display:inline-block; max-width:100%; background:var(--panel);
+    border-radius:10px; padding:8px 14px; margin:4px 0;}
 
   /* the left margin: empty until the pointer is over the block. The controls are real and
      always there, they just don't ask for attention while he is reading. */
-  .blk .gut{position:absolute; left:0; top:0; width:9ch; padding-right:1.2ch;
-    text-align:right; opacity:0; transition:opacity 120ms ease; font-size:12px;
-    line-height:1.75;}
+  .blk .gut{position:absolute; left:0; top:0; width:var(--gut); padding-right:14px;
+    text-align:right; opacity:0; transition:opacity 120ms ease; font-size:13px;
+    line-height:1.65;}
   .blk:hover .gut, .blk .gut:focus-within{opacity:1;}
 
   /* the sibling walk, and it replaces the old depth strip outright: the branches you
@@ -182,65 +167,68 @@
      line, so they belong beside it. ‹ and › move `current` onto the previous/next
      unpruned sibling by ts and wrap at the ends. */
   .blk .swipe{position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px;
-    font-size:12px; color:var(--ghost); line-height:1.75;}
+    font-size:13px; color:var(--ghost); line-height:1.65;}
   .blk .swipe .arw{background:none; border:0; padding:0; margin:0; font:inherit;
-    font-size:12px; color:var(--ghost); cursor:pointer;}
+    font-size:13px; color:var(--ghost); cursor:pointer;}
   .blk .swipe .arw:hover{color:var(--ink);}
 
   /* the facts a node carries, and `posed`. A hairline under the words, never a row above
      them — a tag row on top of every block is what turned the document into a stack of
      receipts. */
-  .foot{font-size:11px; letter-spacing:.06em; color:var(--ghost); line-height:1.6;
+  .foot{font-size:13px; color:var(--ghost); line-height:1.6;
     display:flex; align-items:center; gap:10px; white-space:normal;}
-  .blk .foot{padding-left:calc(1.4ch + 2px);}
   /* posed: a model line bekh edited. It never comes off — the whole value of the tag is
      that a year later you can still tell which words were the model's. */
   .foot .posed{color:var(--hot);}
 
   /* editing in place: the textarea is the text, same size, same colour, and only a
      hairline says you are inside it. */
-  .ed{width:100%; min-height:5em; font:inherit; font-size:15px; line-height:1.75;
-    color:inherit; background:transparent; border:1px solid var(--line); border-radius:6px;
-    padding:4px 8px;}
+  .ed{width:100%; min-height:5em; font:inherit; font-size:16px; line-height:1.65;
+    color:inherit; background:transparent; border:1px solid var(--line); border-radius:8px;
+    padding:6px 10px;}
 
   /* ---- the turn box ----------------------------------------------------------------
      Drawn as the next line of the log rather than as a form: the same ghost prefix the
      human node will actually carry, then his words in his colour. It does not scroll with
      the blocks — a document you have to scroll to find the cursor in is a document you
      stop typing into. */
-  /* the same left edge as the text above it (gutter + rule + its padding): the turn box
-     is the next line of the document, and a next line that starts a gutter to the left of
-     every other line reads as a form under the text, not as the text continuing. */
-  #turnwrap{flex:0 0 auto; width:100%; max-width:76ch; font-size:15px;
-    padding:16px 7ch 0 calc(10.4ch + 2px);}  /* 15px so its ch is the document's ch */
-  #turnline{display:flex; align-items:flex-start; gap:1ch;}
-  #turnlab{flex:0 0 auto; color:var(--bekh-dim); font-size:15px; line-height:1.75;}
+  /* the same margins as the text above it: the turn box is the next line of the document,
+     and a next line that starts a gutter to the left of every other line reads as a form
+     under the text, not as the text continuing. */
+  #turnwrap{flex:0 0 auto; width:100%; max-width:860px; font-size:16px;
+    padding:16px 64px 0 72px;}
+  /* a composer field, the way every chat app on his phone draws one: a rounded panel, the
+     name the line will carry in grey, his words in ink */
+  #turnline{display:flex; align-items:flex-start; gap:8px; background:var(--panel);
+    border:1px solid var(--line); border-radius:12px; padding:12px 16px;}
+  #turnline:focus-within{border-color:var(--accent);}
+  #turnlab{flex:0 0 auto; color:var(--ghost); font-size:16px; line-height:1.6;}
   #turn{flex:1 1 auto; min-width:0; min-height:var(--ctl); max-height:30vh;
-    background:transparent; border:0; border-radius:0; padding:0; color:var(--bekh);
-    font-size:15px; line-height:1.75;}
-  #turnbtns{display:flex; align-items:center; gap:8px; padding-top:12px;}
-  #thenwrap{display:flex; align-items:center; gap:5px; margin-left:auto; white-space:nowrap;}
-  #docstat{color:var(--ghost); font-size:11px; letter-spacing:.06em; padding-top:10px;}
+    background:transparent; border:0; border-radius:0; padding:0; color:var(--ink);
+    font-size:16px; line-height:1.6;}
+  #turnbtns{display:flex; align-items:center; gap:10px; padding-top:12px;}
+  #thenwrap{display:flex; align-items:center; gap:6px; margin-left:auto; white-space:nowrap;}
+  #docstat{color:var(--ghost); font-size:13px; padding-top:10px;}
 
   /* ---- the fan ----------------------------------------------------------------------
      Here a border IS right: these are not the document, they are candidates for it, and
      the card edge is what says "this one is still outside". */
   #fanbar{flex:0 0 auto; display:flex; align-items:center; gap:12px; padding-bottom:16px;}
-  #fanbar .cap{color:var(--ghost); font-size:11px; letter-spacing:.06em;}
-  #cards{flex:1 1 auto; overflow-y:auto; display:flex; flex-direction:column; gap:14px;}
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:6px;
+  #fanbar .cap{color:var(--ghost); font-size:13px;}
+  #cards{flex:1 1 auto; overflow-y:auto; display:flex; flex-direction:column; gap:12px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:10px;
     padding:14px 16px; cursor:pointer;}
-  .card:hover{border-color:var(--cod-dim);}
-  .card .body{color:var(--cod); font-size:14px; line-height:1.65;
+  .card:hover{border-color:var(--ghost);}
+  .card .body{color:var(--ink); font-size:15px; line-height:1.6;
     white-space:pre-wrap; word-wrap:break-word;}
   .card .foot{padding-top:8px;}
   /* the branch still being written: the same card, empty, breathing. No dots — three
      bouncing dots are a chat tell, and this thing is deliberately not a chat. */
   .card.gen{cursor:default; min-height:64px; animation:edge 1.6s ease-in-out infinite;}
   .card.gen:hover{border-color:var(--line);}
-  @keyframes edge{0%,100%{border-color:var(--line)}50%{border-color:var(--cod-dim)}}
+  @keyframes edge{0%,100%{border-color:var(--line)}50%{border-color:var(--ghost)}}
 
-  .sys{color:var(--ghost); font-size:11px; letter-spacing:.06em; padding:2px 0;}
+  .sys{color:var(--ghost); font-size:13px; padding:2px 0;}
   .sys.err{color:var(--hot);}
 
   /* ---- the sampler ------------------------------------------------------------------
@@ -255,7 +243,7 @@
   #sampler .f{display:flex; flex-direction:column; gap:4px; min-width:0;}
   #sampler .f.wide{gap:6px;}
   #sampler input, #sampler textarea{width:100%;}
-  #sampler .note{color:var(--ghost); font-size:11px; letter-spacing:.06em; line-height:1.5;}
+  #sampler .note{color:var(--ghost); font-size:13px; line-height:1.5;}
 
   /* ---- narrow ------------------------------------------------------------------------
      Not the shape this tool is for — reading a fan of four means having the fan and the
@@ -275,14 +263,14 @@
     <span class="namewrap">
       <select id="pick" title="which sitting"></select><span class="caret">▾</span>
     </span>
-    <button class="ghostbtn" id="newbtn" type="button">new</button>
+    <button class="ghostbtn" id="newbtn" type="button">New</button>
     <span id="newbox">
-      <input id="newname" placeholder="name" autocomplete="off" spellcheck="false">
-      <button class="ghostbtn" id="newok" type="button">make</button>
-      <button class="ghostbtn" id="newno" type="button">cancel</button>
+      <input id="newname" placeholder="Name" autocomplete="off" spellcheck="false">
+      <button class="ghostbtn" id="newok" type="button">Create</button>
+      <button class="ghostbtn" id="newno" type="button">Cancel</button>
     </span>
     <span class="spring"></span>
-    <button class="ghostbtn" id="samp" type="button">sampler</button>
+    <button class="ghostbtn" id="samp" type="button">Sampler</button>
     <span class="dot off" id="dot" title="llama-server"></span>
   </header>
 
@@ -292,14 +280,14 @@
       <div id="turnwrap">
         <div id="turnline">
           <span id="turnlab">bekh:</span>
-          <textarea id="turn" rows="1" placeholder="…" autocomplete="off"
+          <textarea id="turn" rows="1" placeholder="Your line" autocomplete="off"
                     spellcheck="false"></textarea>
         </div>
         <div id="turnbtns">
-          <button class="btn warm" id="send" type="button">send</button>
-          <button class="btn" id="fanbtn" type="button">fan</button>
-          <button class="btn" id="stop" type="button">stop</button>
-          <span id="thenwrap"><input type="checkbox" id="thenfan" checked><label for="thenfan">then fan</label></span>
+          <button class="btn warm" id="send" type="button">Send</button>
+          <button class="btn" id="fanbtn" type="button">Fan</button>
+          <button class="btn" id="stop" type="button">Stop</button>
+          <span id="thenwrap"><input type="checkbox" id="thenfan" checked><label for="thenfan">Then fan</label></span>
         </div>
         <div id="docstat"></div>
       </div>
@@ -308,9 +296,9 @@
     <div id="fanpane">
       <div id="fancol">
         <div id="fanbar">
-          <span class="cap">the fan</span>
+          <span class="cap">Candidates</span>
           <span class="spring"></span>
-          <button class="btn" id="more" type="button">more</button>
+          <button class="btn" id="more" type="button">More</button>
         </div>
         <div id="cards"></div>
       </div>
@@ -542,6 +530,33 @@ function swipe(n){
   return box;
 }
 
+// A human node is one flat string — prefix + his line + suffix — and the band must wrap
+// only his line: the `seat:` header after it is the model's turn marker, and the newline
+// before it is the seam between two speakers. So the text goes in as three pieces that
+// concatenate back to exactly n.text: bare newline, the band, bare suffix. Nothing added,
+// nothing hidden — if the suffix doesn't match (an old node from before a rename), the
+// whole thing goes in plain. Text nodes only, never innerHTML: this string can be his,
+// but its neighbours came out of a model.
+function fillBody(body, n){
+  body.textContent = '';
+  const suf = (sitting.turn && sitting.turn.suffix) || '';
+  if(n.kind === 'human' && suf && n.text.endsWith(suf) && n.text.length > suf.length){
+    const head = n.text.slice(0, -suf.length);
+    const lead = head.match(/^\n*/)[0];
+    const core = head.slice(lead.length);
+    if(core){
+      body.appendChild(document.createTextNode(lead));
+      const band = document.createElement('span');
+      band.className = 'core';
+      band.textContent = core;
+      body.appendChild(band);
+      body.appendChild(document.createTextNode(suf));
+      return;
+    }
+  }
+  body.textContent = n.text;
+}
+
 function renderDoc(){
   blocksEl.textContent = '';
   for(const n of path()){
@@ -549,10 +564,10 @@ function renderDoc(){
     el.className = 'blk ' + n.kind;
     const body = document.createElement('div');
     body.className = 'body';
-    body.textContent = n.text;
+    fillBody(body, n);
     const gut = document.createElement('div');
     gut.className = 'gut';
-    gut.appendChild(ghostBtn('edit', () => editBlock(n, body)));
+    gut.appendChild(ghostBtn('Edit', () => editBlock(n, body)));
     el.appendChild(gut);
     el.appendChild(body);
     const foot = footLine(n);
@@ -570,7 +585,7 @@ function renderFan(){
   if(!list.length && !running){
     const d = document.createElement('div');
     d.className = 'sys';
-    d.textContent = 'nothing here yet — fan';
+    d.textContent = 'No candidates yet.';
     cardsEl.appendChild(d);
     return;
   }
@@ -582,8 +597,8 @@ function renderFan(){
     body.textContent = n.text;
     el.appendChild(body);
     el.appendChild(footLine(n, [
-      ghostBtn('edit', () => editBlock(n, body), true),
-      ghostBtn('prune', () => pruneNode(n.id), true),
+      ghostBtn('Edit', () => editBlock(n, body), true),
+      ghostBtn('Prune', () => pruneNode(n.id), true),
     ]));
     // the card IS the pick: reading it and choosing it are the same gesture, and a pick
     // button on a card you already clicked is a second thing to aim at for nothing. The
@@ -758,7 +773,7 @@ function buildSampler(){
     {rows: 4, wide: true}));
   const note = document.createElement('div');
   note.className = 'note';
-  note.textContent = 'changes land on the next branch; nothing restarts.';
+  note.textContent = 'Changes apply to the next branch.';
   sampEl.appendChild(note);
 }
 

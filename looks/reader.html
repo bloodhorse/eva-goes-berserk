@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" media="(prefers-color-scheme:dark)" content="#1c1c1f">
+<meta name="theme-color" media="(prefers-color-scheme:light)" content="#ffffff">
+<title>loom — reader</title>
+<!-- THE READER.
+
+     One centred column, and the page is the document. Root to current renders as one
+     continuous text, because that is literally the string the model is handed; the
+     candidates for the next line are drawn INLINE, directly under the last line, in the
+     same measure — an alternate next line should appear where the next line would be, not
+     in a second pane you have to look sideways into.
+
+     Speakers are not colour-coded. A human line sits in a slightly lighter band the way a
+     sent message does in a chat app, the model's words sit on the bare ground, and the
+     header is secondary. That is the entire grammar: no rules, no tags, no glyphs. There
+     is exactly one accent on the page and it means "this is the button that spends the
+     GPU" — send, and focus rings. Everything else is ground, panel, ink, secondary ink.
+
+     Dark by default with a prefers-color-scheme light room and NO toggle: the OS already
+     knows which one it is, and a switch is one more control that can be in the wrong
+     position.
+
+     The tree lives here, in `sitting`, and the whole of it is POSTed back after every
+     move. The server holds no opinion about it. -->
+<style>
+  :root{
+    --ground:#1c1c1f;
+    --panel:#26262a;
+    --ink:#e8e8ea;
+    --dim:#9a9aa1;
+    --edge:#34343a;
+    --accent:#6b7cff;
+    /* Not a second accent — the only semantic colour on the page, and it is spent on one
+       thing: a line the tool failed to produce. Anything the eye must not miss while
+       reading has to differ from secondary ink by more than weight. */
+    --warn:#e07b7b;
+  }
+  /* The light room is tokens only. Nothing below this block names a colour, so the whole
+     page re-resolves for free — keep it that way: the moment a literal colour is written
+     into a rule, the light room needs a second copy of it, and a media query adds no
+     specificity so that copy has to live at the bottom of the file or it silently loses. */
+  @media (prefers-color-scheme: light){
+    :root{
+      --ground:#ffffff;
+      --panel:#f3f3f5;
+      --ink:#111111;
+      --dim:#6b6b73;
+      --edge:#e2e2e6;
+      --accent:#6b7cff;
+      --warn:#c13a3a;
+    }
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{background:var(--ground);}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  /* The `hidden` attribute has to beat the display rules below it, and several of the
+     things this page hides are flex boxes. */
+  [hidden]{display:none !important;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;}
+
+  /* ---- the column ------------------------------------------------------------------
+     min-height + margin-top:auto on the composer is what pins the composer to the bottom
+     of the screen when the document is short, while `position:sticky` keeps it there once
+     the document is long. Both are needed: sticky alone leaves the box floating halfway up
+     an empty page. */
+  #col{
+    max-width:720px; margin:0 auto; padding:40px 24px 24px;
+    min-height:100dvh; display:flex; flex-direction:column;
+  }
+  .spring{margin-left:auto;}
+
+  /* ---- the top line ----------------------------------------------------------------
+     Not a header bar: no border, no background, no title. Which sitting, the way into a
+     new one, whether there is a model behind the port, and the drawer. 13px secondary and
+     out of the way — the document underneath is the thing being looked at. */
+  #top{
+    flex:0 0 auto; display:flex; align-items:center; gap:12px;
+    height:32px; font-size:13px; color:var(--dim); margin-bottom:18px;
+  }
+  /* The select is the sitting's NAME first and a control second, so it is drawn as plain
+     text — and it carries full ink while the rest of the line stays secondary, because the
+     name is the one piece of identity on the page. */
+  #pick{
+    appearance:none; -webkit-appearance:none; background:transparent; border:0; outline:none;
+    color:var(--ink); font:inherit; font-size:13px; padding:0; margin:0;
+    max-width:34vw; text-overflow:ellipsis; cursor:pointer;
+  }
+  .tbtn{
+    background:none; border:0; padding:0; margin:0; font:inherit; font-size:13px;
+    color:var(--dim); cursor:pointer;
+  }
+  .tbtn:hover{color:var(--ink);}
+  .tbtn:disabled{opacity:.45; cursor:default; color:var(--dim);}
+  .dot{
+    display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent);
+  }
+  .dot.off{background:var(--dim);}
+  /* The inline new-sitting box, and it is a box and not a native dialog: a native one
+     steals the window, can't be styled, and on some browsers is silently suppressed. */
+  #newbox{display:flex; align-items:center; gap:8px;}
+  #newname{width:14ch; font-size:13px; padding:5px 8px;}
+
+  input, textarea, select{font-family:inherit;}
+  input, textarea{
+    background:var(--ground); color:var(--ink); border:1px solid var(--edge);
+    border-radius:8px; padding:8px 10px; font-size:14px; outline:none;
+  }
+  input:focus, textarea:focus{border-color:var(--accent);}
+  ::placeholder{color:var(--dim);}
+  /* The generic field rule above would draw a checkbox as a padded box — put it back. */
+  input[type=checkbox]{
+    width:13px; height:13px; padding:0; margin:0; border:0; background:transparent;
+    accent-color:var(--accent);
+  }
+
+  /* ---- the document ------------------------------------------------------------------
+     The blocks carry NO gap: the node texts already contain the newlines that separate
+     them (that is what the model sees), and a gap here would draw a seam the document does
+     not have. The right padding is the margin the tool's own controls live in, so they
+     never sit inside the measure. */
+  #doc{flex:0 0 auto;}
+  .blk{position:relative; padding-right:64px;}
+  .blk .body{white-space:pre-wrap; overflow-wrap:break-word;}
+  .blk.root .body{color:var(--dim);}
+  /* Only a model can hand us a kilometre of characters with no space in it — a sampler set
+     badly enough will do exactly that — and only there is it worth breaking inside a word
+     rather than letting one branch widen the measure for the whole document. */
+  .blk.model .body, .cand .body{overflow-wrap:anywhere;}
+  /* The margin controls hang from the top of their block, which for a human line is the
+     newline that separates it from the line above plus the band's own top padding. Without
+     this they float in the gap and read as belonging to the model's line overhead. */
+  .blk.human .marg{padding-top:calc(1.6em + 12px);}
+  /* The band: a human line, drawn the way a sent message is drawn. inline-block and not a
+     block of its own so the newlines around it stay real newlines in the flow — the
+     document has to remain one continuous text, and a block-level band would insert a
+     break the model never sees. */
+  .band{
+    display:inline-block; max-width:100%;
+    background:var(--panel); border-radius:10px; padding:12px 16px;
+  }
+  /* posed: a model line bekh edited. It never comes off — the whole value of the mark is
+     that a year later you can still tell which words were the model's. A word, not a tag:
+     nothing on this page is a coloured chip. */
+  .posed{font-size:13px; color:var(--dim);}
+
+  /* The margin. Empty until the pointer is over the block — the controls are real and
+     always there, they just don't ask for attention while he is reading. The sibling walk
+     is the exception: it says something about the document (this line had alternatives),
+     so it stays visible, only faded. */
+  .marg{
+    position:absolute; right:0; top:0; width:56px; text-align:right;
+    font-size:13px; line-height:1.6; color:var(--dim);
+  }
+  .marg .edit{opacity:0; transition:opacity 120ms ease; display:block; margin-left:auto;}
+  .blk:hover .edit, .marg:focus-within .edit{opacity:1;}
+  .swipe{display:flex; align-items:center; justify-content:flex-end; gap:3px; opacity:.6;}
+  .swipe .arw{
+    background:none; border:0; padding:0 1px; margin:0; font:inherit; font-size:13px;
+    color:var(--dim); cursor:pointer;
+  }
+  .swipe .arw:hover{color:var(--ink);}
+
+  /* Editing in place: the textarea is the text — same measure, same size, same colour, and
+     only a hairline says you are inside it. */
+  .ed{
+    display:block; width:100%; min-height:4.8em; font-size:16px; line-height:1.6;
+    color:var(--ink); background:var(--ground); border:1px solid var(--edge);
+    border-radius:10px; padding:12px 16px; resize:vertical;
+  }
+
+  /* ---- the fan ------------------------------------------------------------------------
+     Inline, under the last line, in the same column and the same measure. Here a border IS
+     right: these are not the document, they are candidates for it, and the panel edge is
+     what says "this one is still outside". */
+  #fan{flex:0 0 auto; display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+  .cand{
+    background:var(--panel); border:1px solid var(--edge); border-radius:10px;
+    padding:14px 16px; cursor:pointer;
+  }
+  .cand:hover{border-color:var(--dim);}
+  .cand .body{white-space:pre-wrap; overflow-wrap:break-word;}
+  .cfoot{
+    display:flex; align-items:center; gap:12px; margin-top:8px;
+    font-size:13px; color:var(--dim);
+  }
+  /* The branch still being written: the same panel, empty, breathing. No dots — three
+     bouncing dots are a chat tell, and this thing is deliberately not a chat. */
+  .cand.gen{cursor:default; min-height:56px; animation:breathe 1.6s ease-in-out infinite;}
+  .cand.gen:hover{border-color:var(--edge);}
+  @keyframes breathe{0%,100%{border-color:var(--edge)} 50%{border-color:var(--dim)}}
+  #fanrow{flex:0 0 auto; display:flex; align-items:center; gap:14px; margin-top:12px;}
+  .sys{font-size:13px; color:var(--dim); padding:2px 0;}
+  .sys.err{color:var(--warn);}
+
+  /* ---- the composer --------------------------------------------------------------------
+     A modern chat composer, and sticky: a document you have to scroll to find the cursor in
+     is a document you stop typing into. The ground colour behind it is what lets the text
+     scroll underneath instead of showing through. */
+  #composer{
+    position:sticky; bottom:0; margin-top:auto; flex:0 0 auto;
+    background:var(--ground); padding:14px 0 8px;
+  }
+  #field{
+    background:var(--panel); border:1px solid var(--edge); border-radius:12px;
+    padding:12px 16px;
+  }
+  #field:focus-within{border-color:var(--accent);}
+  #turn{
+    display:block; width:100%; background:transparent; border:0; border-radius:0;
+    padding:0; color:var(--ink); font-size:16px; line-height:1.6;
+    min-height:1.6em; max-height:34vh; overflow-y:auto; resize:none;
+  }
+  #fieldrow{display:flex; align-items:center; gap:14px; margin-top:10px;}
+  .check{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--dim);
+    cursor:pointer; white-space:nowrap;}
+  #send{
+    width:28px; height:28px; flex:0 0 auto; border:0; border-radius:50%;
+    background:var(--accent); color:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; padding:0;
+  }
+  #send:disabled{opacity:.4; cursor:default;}
+  #docstat{font-size:12px; color:var(--dim); padding-top:8px;}
+
+  /* ---- the sampler ---------------------------------------------------------------------
+     A panel that slides over the right edge. No dimming behind it: the document stays
+     readable while a number is being changed, and a scrim would say "stop everything",
+     which is not what changing top_k is. */
+  #samppanel{
+    position:fixed; top:0; right:0; bottom:0; width:min(320px, 100vw); z-index:20;
+    background:var(--panel); border-left:1px solid var(--edge);
+    padding:20px; overflow-y:auto;
+    display:flex; flex-direction:column; gap:14px;
+    transform:translateX(100%); visibility:hidden;
+    transition:transform 180ms ease, visibility 0s linear 180ms;
+  }
+  /* visibility, not just the transform: an off-screen panel that is still `visible` keeps
+     every one of its inputs in the tab order. */
+  #samppanel.on{transform:none; visibility:visible; transition:transform 180ms ease;}
+  #samphead{display:flex; align-items:center; justify-content:flex-end;}
+  .f{display:flex; flex-direction:column; gap:5px; min-width:0;}
+  .f label{font-size:13px; color:var(--dim);}
+  .f input, .f textarea{width:100%;}
+  /* The one monospace on the page, and it earns it: these strings are compared character
+     by character against what llama sends back, and a proportional font hides the space
+     at the end of "\nbekh: ". */
+  .f textarea.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:13px; resize:vertical;}
+  .note{font-size:13px; color:var(--dim); line-height:1.5;}
+
+  /* ---- narrow ----------------------------------------------------------------------- */
+  @media (max-width: 640px){
+    #col{padding:24px 16px 16px;}
+    .blk{padding-right:52px;}
+    .marg{width:48px;}
+  }
+</style>
+</head>
+<body>
+  <div id="col">
+    <div id="top">
+      <span class="namewrap"><select id="pick" title="Which sitting"></select></span>
+      <button class="tbtn" id="newbtn" type="button">New</button>
+      <span id="newbox" hidden>
+        <input id="newname" placeholder="Name" autocomplete="off" spellcheck="false">
+        <button class="tbtn" id="newok" type="button">Create</button>
+        <button class="tbtn" id="newno" type="button">Cancel</button>
+      </span>
+      <span class="spring"></span>
+      <span class="dot off" id="dot" title="llama-server"></span>
+      <button class="tbtn" id="sampbtn" type="button">Sampler</button>
+    </div>
+
+    <div id="doc"></div>
+    <div id="fan"></div>
+    <div id="fanrow" hidden>
+      <button class="tbtn" id="more" type="button">More</button>
+      <button class="tbtn" id="stop" type="button" hidden>Stop</button>
+    </div>
+
+    <div id="composer">
+      <div id="field">
+        <textarea id="turn" rows="1" placeholder="Your line" autocomplete="off"
+                  spellcheck="false"></textarea>
+        <div id="fieldrow">
+          <button class="tbtn" id="fanbtn" type="button">Fan</button>
+          <label class="check"><input type="checkbox" id="thenfan" checked><span>Then fan</span></label>
+          <span class="spring"></span>
+          <button id="send" type="button" title="Send">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+              <path d="M12 19V5M12 5l-6.5 6.5M12 5l6.5 6.5" fill="none" stroke="currentColor"
+                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="docstat"></div>
+    </div>
+  </div>
+
+  <aside id="samppanel">
+    <div id="samphead"><button class="tbtn" id="sampclose" type="button">Done</button></div>
+    <div id="sampler"></div>
+  </aside>
+
+<script>
+// ---- the shape of a sitting ----------------------------------------------------------
+// The document a base model continues is not a chat: it is one text, and the tree is only
+// a way of keeping several futures of that text at once. The prompt for any node is the
+// concatenation of `text` along the path root→node, VERBATIM, with nothing inserted
+// between blocks. Everything that looks like a turn structure — the newline, the name,
+// the colon — lives inside the node texts themselves, because the model must never see a
+// frame we imagined and it didn't.
+// One trailing newline, not two: the turn prefix below opens with its own, and the pair
+// makes exactly the one blank line a saved chat log puts between its header and the
+// first message. Two here would make the model's very first document open on a gap no
+// real log has.
+const HEADER = 'a chat log between two friends, saved from a phone. no punctuation fixed, no capitals.\n';
+// Straight off the research sheet, loop-killers on. llama's own defaults are wrong for
+// this in two specific ways and both are fixed here: n_predict is -1 (infinite) out of
+// the box, and dry_penalty_last_n is 64 tokens, which is useless against a loop that
+// starts two thousand tokens into a transcript. It is set to the context size and NOT
+// to -1: the sheet says -1 means "whole context", but llama-server 0.4.0 validates the
+// field as 0..INT_MAX and answers 400 to a negative — every branch would fail before
+// the model saw a token. Raise it with -c if the server ever runs a longer window.
+const PARAMS = {
+  n_predict: 220,
+  stop: ['\nbekh:', '\nbekh :', '\n\nbekh'],
+  temperature: 1.0, min_p: 0.08, top_k: 0, top_p: 1.0,
+  repeat_penalty: 1.05, repeat_last_n: 512,
+  dry_multiplier: 0.8, dry_base: 1.75, dry_allowed_length: 3, dry_penalty_last_n: 8192,
+  fan: 4,           // loom-side; the server strips it before llama ever sees it
+};
+// llama EATS the stop string — it is cut out of `content` and handed back separately, so
+// the document would lose the "\nbekh:" that ended the model's line. That is exactly why
+// the prefix carries the newline AND the name: the human node puts back what the stop ate
+// and the document stays one continuous text. Break this and every branch after the first
+// runs the two speakers together on one line.
+const TURN = {prefix: '\nbekh: ', suffix: '\nseat:'};
+// Which numbers the sampler draws, in the order they matter. `stop`, the two turn strings
+// and the fan get their own widgets below.
+const FIELDS = [
+  ['n_predict', 1], ['temperature', 0.05], ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05],
+  ['repeat_penalty', 0.01], ['repeat_last_n', 64],
+  ['dry_multiplier', 0.1], ['dry_base', 0.05], ['dry_allowed_length', 1],
+  ['dry_penalty_last_n', 64],
+];
+// The label over a field is the llama parameter name with its underscores opened out and
+// one capital on the front — mechanical on purpose. Renaming them to friendlier words
+// ("repeat window") would make the one thing you actually do with a sampler — look the
+// parameter up in llama's docs — impossible from inside the panel.
+const pretty = key => key.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
+
+const $ = id => document.getElementById(id);
+const docEl = $('doc'), fanEl = $('fan');
+const pickEl = $('pick'), sampEl = $('sampler'), turnEl = $('turn');
+
+// ---- state ---------------------------------------------------------------------------
+let sitting = null;      // the whole tree, and the only state that matters
+let shelf = [];          // what /api/sittings last said
+let generation = 0;      // bumped by anything that makes a running fan stale
+let running = false;
+
+// Wrapped, all three: Safari throws on localStorage outright in a private window, and a
+// page that can't remember which sitting you were in must still be a page that works.
+const KEY = 'loom.sitting';
+function remembered(){ try{ return localStorage.getItem(KEY) || ''; }catch(e){ return ''; } }
+function remember(n){ try{ localStorage.setItem(KEY, n); }catch(e){} }
+
+const hex = n => Array.from(crypto.getRandomValues(new Uint8Array(n)))
+  .map(b => b.toString(16).padStart(2, '0')).join('');
+
+async function getJSON(url){
+  const r = await fetch(url, {cache: 'no-store'});
+  return await r.json();
+}
+async function postJSON(url, body){
+  const r = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'},
+                             body: JSON.stringify(body)});
+  return await r.json();
+}
+
+function sys(text, err){
+  const d = document.createElement('div');
+  d.className = 'sys' + (err ? ' err' : '');
+  d.textContent = text;          // textContent: this string can carry llama's own words
+  fanEl.appendChild(d);
+  stickDown();
+}
+
+// The page itself is the scroller now, so "follow the new line" has to be conditional: a
+// hard jump to the bottom on every render would yank the view away from someone reading
+// three lines up while a fan lands behind him. Follow only if he was already at the end.
+function atBottom(){
+  return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 160;
+}
+function stickDown(){
+  window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'auto'});
+}
+
+// ---- the tree ------------------------------------------------------------------------
+function node(id){ return sitting.nodes[id]; }
+function kids(id){
+  return Object.values(sitting.nodes)
+    .filter(n => n.parent === id && !n.pruned)
+    .sort((a, b) => a.ts - b.ts);       // newest at the bottom
+}
+function path(){
+  const out = [];
+  let n = node(sitting.current);
+  while(n){ out.unshift(n); n = n.parent ? node(n.parent) : null; }
+  return out;
+}
+function promptFrom(id){
+  const out = [];
+  let n = node(id);
+  while(n){ out.unshift(n.text); n = n.parent ? node(n.parent) : null; }
+  return out.join('');
+}
+function addNode(kind, text, parent, meta){
+  const n = {id: hex(4), parent: parent, kind: kind, text: text, ts: Date.now() / 1000,
+             pruned: false, posed: false, meta: meta || null};
+  sitting.nodes[n.id] = n;
+  return n;
+}
+
+async function save(){
+  if(!sitting) return;
+  const d = await postJSON('/api/sitting', sitting);
+  if(d && d.error) sys('Not saved: ' + d.error, true);
+  else if(d && d.updated) sitting.updated = d.updated;
+}
+
+// ---- rendering -----------------------------------------------------------------------
+// DOM building only, never innerHTML — and here that is not a formality: every model node
+// is a string a base model wrote, and a base model continuing a chat log will happily
+// produce an `<img onerror=...>` because its training set is full of them.
+function facts(n){
+  const bits = [];
+  if(n.meta){
+    if(n.meta.stop_type) bits.push(n.meta.stop_type +
+      (n.meta.stopping_word ? ' ' + JSON.stringify(n.meta.stopping_word) : ''));
+    if(n.meta.tokens_predicted) bits.push(n.meta.tokens_predicted + ' tok');
+    if(n.meta.tps) bits.push(n.meta.tps + ' tps');
+  }
+  return bits.join(' · ');
+}
+
+// A word you can click. `stop` is not optional inside a candidate: the whole panel is the
+// pick target, so an edit button that let the click through would edit and then pick.
+function tbtn(label, fn, stop){
+  const b = document.createElement('button');
+  b.className = 'tbtn';
+  b.type = 'button';
+  b.textContent = label;
+  b.addEventListener('click', e => { if(stop) e.stopPropagation(); fn(); });
+  return b;
+}
+
+// Edit in place: the block becomes a textarea, saves on blur or cmd/ctrl+enter. A model
+// line that comes back changed is POSED FOREVER — the mark is the only thing standing
+// between "the model said this" and "we said this and forgot", which is the one confusion
+// that would make a whole sitting worthless as evidence.
+function editBlock(n, body, after){
+  const ta = document.createElement('textarea');
+  ta.className = 'ed';
+  ta.value = n.text;
+  let done = false;
+  const commit = async () => {
+    if(done) return;
+    done = true;
+    if(ta.value !== n.text){
+      n.text = ta.value;
+      if(n.kind === 'model') n.posed = true;
+      await save();
+    }
+    (after || render)();
+  };
+  ta.addEventListener('blur', commit);
+  ta.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && (e.metaKey || e.ctrlKey)){ e.preventDefault(); ta.blur(); }
+    if(e.key === 'Escape'){ done = true; (after || render)(); }
+  });
+  body.replaceWith(ta);
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+}
+
+// The sibling walk. This is the only affordance for getting back into a branch he turned
+// away from, and without one a pruned-nothing tree is still a tunnel. It sits in the
+// margin of the block itself because that is what it is about: not "the tree has four
+// nodes at depth 3" but "this line had three alternatives". Picking a sibling of an
+// ANCESTOR truncates the document there, exactly as picking any node always has.
+function swipe(n){
+  if(!n.parent) return null;
+  const sibs = kids(n.parent);
+  if(sibs.length < 2) return null;
+  const at = sibs.findIndex(s => s.id === n.id);
+  if(at < 0) return null;
+  const box = document.createElement('div');
+  box.className = 'swipe';
+  // wrap at both ends: with four branches, one more press of › is always a branch, and a
+  // dead arrow at the edge is a control that lies about what is there.
+  const go = d => pickNode(sibs[(at + d + sibs.length) % sibs.length].id);
+  const arrow = (glyph, d) => {
+    const b = document.createElement('button');
+    b.className = 'arw';
+    b.type = 'button';
+    b.textContent = glyph;
+    b.addEventListener('click', () => go(d));
+    return b;
+  };
+  const count = document.createElement('span');
+  count.textContent = (at + 1) + '/' + sibs.length;
+  box.appendChild(arrow('‹', -1));
+  box.appendChild(count);
+  box.appendChild(arrow('›', 1));
+  return box;
+}
+
+// A human node's text is prefix + what he typed + suffix, one flat string — and the band
+// must contain his words and nothing else. So the block is drawn in three pieces that
+// concatenate back to exactly `n.text`: the newline that separates it from the line above,
+// the band, and the suffix that is already the next speaker's header. Nothing is hidden
+// and nothing is added; only the background stops where his sentence stops.
+function humanParts(n){
+  const suffix = (sitting.turn && sitting.turn.suffix) || '';
+  let rest = n.text, tail = '';
+  if(suffix && rest.length > suffix.length && rest.endsWith(suffix)){
+    tail = suffix;
+    rest = rest.slice(0, -suffix.length);
+  }
+  const lead = (/^\s*/.exec(rest) || [''])[0];
+  const core = rest.slice(lead.length);
+  return core ? {lead, core, tail} : null;   // all whitespace: no band, just the text
+}
+
+function fillBody(body, n){
+  const parts = n.kind === 'human' ? humanParts(n) : null;
+  if(!parts){
+    body.textContent = n.text;
+    return;
+  }
+  const band = document.createElement('span');
+  band.className = 'band';
+  band.textContent = parts.core;
+  body.appendChild(document.createTextNode(parts.lead));
+  body.appendChild(band);
+  body.appendChild(document.createTextNode(parts.tail));
+}
+
+function renderDoc(){
+  docEl.textContent = '';
+  for(const n of path()){
+    const el = document.createElement('div');
+    el.className = 'blk ' + n.kind;
+    const body = document.createElement('div');
+    body.className = 'body';
+    fillBody(body, n);
+    if(n.posed){
+      // After the words, not above them: a row of tags on top of every block is what turns
+      // a document into a stack of receipts.
+      const p = document.createElement('span');
+      p.className = 'posed';
+      p.textContent = ' posed';
+      body.appendChild(p);
+    }
+    el.appendChild(body);
+
+    const marg = document.createElement('div');
+    marg.className = 'marg';
+    const sw = swipe(n);
+    if(sw) marg.appendChild(sw);
+    const ed = tbtn('Edit', () => editBlock(n, body));
+    ed.classList.add('edit');
+    marg.appendChild(ed);
+    el.appendChild(marg);
+
+    docEl.appendChild(el);
+  }
+}
+
+function renderFan(){
+  fanEl.textContent = '';
+  const list = kids(sitting.current);
+  // Nothing to say and nothing running: say nothing. A placeholder under the last line
+  // would read as a line of the document that the model wrote, which is the one thing this
+  // page must never do.
+  $('fanrow').hidden = !list.length && !running;
+  $('stop').hidden = !running;
+  for(const n of list){
+    const el = document.createElement('div');
+    el.className = 'cand';
+    const body = document.createElement('div');
+    body.className = 'body';
+    body.textContent = n.text;
+    el.appendChild(body);
+
+    const foot = document.createElement('div');
+    foot.className = 'cfoot';
+    const left = document.createElement('span');
+    left.textContent = facts(n) + (n.posed ? (facts(n) ? ' · ' : '') + 'posed' : '');
+    foot.appendChild(left);
+    const spring = document.createElement('span');
+    spring.className = 'spring';
+    foot.appendChild(spring);
+    foot.appendChild(tbtn('Edit', () => editBlock(n, body), true));
+    foot.appendChild(tbtn('Prune', () => pruneNode(n.id), true));
+    el.appendChild(foot);
+
+    // the panel IS the pick: reading it and choosing it are the same gesture, and a pick
+    // button on a panel you already clicked is a second thing to aim at for nothing. The
+    // guard keeps the two word-buttons and an open editor out of it.
+    el.addEventListener('click', e => {
+      if(e.target.closest('button, textarea')) return;
+      pickNode(n.id);
+    });
+    fanEl.appendChild(el);
+  }
+}
+
+function render(){
+  if(!sitting) return;
+  const follow = atBottom();
+  const total = Object.keys(sitting.nodes).length;
+  const live = Object.values(sitting.nodes).filter(n => !n.pruned).length;
+  $('docstat').textContent = `${live} live · ${total - live} pruned · depth ${path().length - 1}`;
+  renderDoc();
+  renderFan();
+  if(follow) stickDown();
+}
+
+// ---- moves ---------------------------------------------------------------------------
+// Every one of these bumps `generation` first. A fan loop checks it between branches, so
+// the instant he picks, prunes or switches, the branches still queued behind a slow
+// completion stop arriving into a fan that is no longer the fan he is looking at.
+async function pickNode(id){
+  generation++;
+  sitting.current = id;
+  await save();
+  render();
+}
+async function pruneNode(id){
+  generation++;
+  // Hidden, never deleted: a branch you pruned in a bad mood is evidence too, and the
+  // file is text. Nothing in the page ever removes a node from `nodes`.
+  node(id).pruned = true;
+  await save();
+  render();
+}
+
+function pending(){
+  const el = document.createElement('div');
+  el.className = 'cand gen';
+  fanEl.appendChild(el);
+  stickDown();
+  return el;
+}
+
+// The fan runs HERE, in the browser, one branch at a time. Sequential and not parallel on
+// purpose: llama-server has a fixed number of slots and a shared prompt cache, and four
+// concurrent completions off the same prefix fight over both — slower in wall-clock than
+// doing them in a row, and the panels would all land at once instead of one by one.
+async function runFan(n){
+  if(!sitting) return;
+  const mine = ++generation;
+  const from = sitting.current;
+  running = true;
+  $('fanbtn').disabled = $('more').disabled = $('send').disabled = true;
+  $('fanrow').hidden = false;
+  $('stop').hidden = false;
+  try{
+    for(let i = 0; i < n; i++){
+      if(mine !== generation) return;
+      const card = pending();
+      let d;
+      try{
+        d = await postJSON('/api/complete', {prompt: promptFrom(from), params: sitting.params});
+      }catch(e){
+        card.remove();
+        sys('The loom is not answering: ' + e, true);
+        return;
+      }
+      card.remove();
+      if(mine !== generation) return;
+      if(d.error){
+        // "cancelled" is him pressing Stop, not a failure: no red line for a decision.
+        if(d.error !== 'cancelled') sys(d.error, true);
+        return;
+      }
+      addNode('model', d.text, from, {
+        stop_type: d.stop_type, stopping_word: d.stopping_word,
+        tokens_predicted: d.tokens_predicted, tps: d.tps,
+        // Frozen: a branch is only readable later if you know what produced it, and the
+        // sampler moves between fans.
+        params: JSON.parse(JSON.stringify(sitting.params)),
+      });
+      await save();
+      render();
+    }
+  }finally{
+    running = false;
+    $('fanbtn').disabled = $('more').disabled = $('send').disabled = false;
+    $('stop').hidden = true;
+    if(sitting) $('fanrow').hidden = !kids(sitting.current).length;
+  }
+}
+
+async function sendLine(){
+  if(!sitting) return;
+  const typed = turnEl.value.trim();
+  if(!typed) return;
+  turnEl.value = '';
+  grow();
+  generation++;
+  // prefix + typed + suffix, built here and stored as one flat string, so the document on
+  // disk is a document and the two names are nothing but settings — rename "seat" in the
+  // sampler and the next node carries the new name, the old ones keep theirs.
+  const n = addNode('human', sitting.turn.prefix + typed + sitting.turn.suffix, sitting.current);
+  sitting.current = n.id;
+  await save();
+  render();
+  if($('thenfan').checked) runFan(sitting.params.fan || 4);
+}
+
+async function stopAll(){
+  generation++;
+  running = false;
+  try{ await postJSON('/api/cancel', {}); }catch(e){}
+  render();
+}
+
+// ---- the sampler ---------------------------------------------------------------------
+// Escaped both ways, because every string in here has newlines in it and a textarea that
+// showed them as real line breaks could not tell one stop string from two.
+function esc(s){ return String(s).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/\t/g, '\\t'); }
+function unesc(s){
+  let out = '';
+  for(let i = 0; i < s.length; i++){
+    if(s[i] !== '\\'){ out += s[i]; continue; }
+    const c = s[++i];
+    out += c === 'n' ? '\n' : c === 't' ? '\t' : c === undefined ? '\\' : c;
+  }
+  return out;
+}
+
+function field(label, value, onchange, opts){
+  const wrap = document.createElement('div');
+  wrap.className = 'f';
+  const l = document.createElement('label');
+  l.textContent = label;
+  const inp = document.createElement(opts && opts.rows ? 'textarea' : 'input');
+  if(opts && opts.rows){ inp.rows = opts.rows; inp.className = 'mono'; }
+  if(opts && opts.step !== undefined){ inp.type = 'number'; inp.step = opts.step; }
+  inp.value = value;
+  // `change` and not `input`: every keystroke would be a POST, and a half-typed 0.0 is
+  // not a temperature anybody meant.
+  inp.addEventListener('change', async () => { onchange(inp.value); await save(); });
+  wrap.appendChild(l); wrap.appendChild(inp);
+  return wrap;
+}
+
+function buildSampler(){
+  sampEl.textContent = '';
+  if(!sitting) return;
+  const p = sitting.params;
+  for(const [key, step] of FIELDS){
+    sampEl.appendChild(field(pretty(key), p[key], v => { p[key] = Number(v); }, {step}));
+  }
+  sampEl.appendChild(field('Fan', p.fan, v => { p.fan = Math.max(1, Math.min(12, Number(v) || 1)); },
+                           {step: 1}));
+  sampEl.appendChild(field('Turn prefix', esc(sitting.turn.prefix),
+                           v => { sitting.turn.prefix = unesc(v); }));
+  sampEl.appendChild(field('Turn suffix', esc(sitting.turn.suffix),
+                           v => { sitting.turn.suffix = unesc(v); render(); }));
+  sampEl.appendChild(field('Stop strings, one per line', p.stop.map(esc).join('\n'),
+    v => { p.stop = v.split('\n').filter(s => s.length).map(unesc); },
+    {rows: 4}));
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.textContent = 'Changes apply to the next branch.';
+  sampEl.appendChild(note);
+}
+
+// ---- the shelf -----------------------------------------------------------------------
+function drawShelf(){
+  pickEl.textContent = '';
+  for(const s of shelf){
+    const o = document.createElement('option');
+    o.value = s.name;
+    o.textContent = s.name;
+    pickEl.appendChild(o);
+  }
+  if(sitting) pickEl.value = sitting.name;
+}
+
+async function loadShelf(){
+  const d = await getJSON('/api/sittings');
+  shelf = d.sittings || [];
+  drawShelf();
+}
+
+async function openSitting(name){
+  const d = await getJSON('/api/sitting?name=' + encodeURIComponent(name));
+  if(d.error){ sys(d.error, true); return; }
+  generation++;
+  sitting = d;
+  remember(name);
+  pickEl.value = name;
+  buildSampler();
+  render();
+}
+
+async function newSitting(name){
+  if(!/^[A-Za-z0-9_.-]{1,64}$/.test(name)){
+    sys('Names are letters, digits, _ . - and up to 64 of them', true);
+    return;
+  }
+  generation++;
+  const root = {id: hex(4), parent: null, kind: 'root', text: HEADER,
+                ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
+  // One line of scene-setting and an empty seed, and that is the whole of it. No example
+  // exchanges ship with this tool: seeded lines have to be bekh's own, cut from a real
+  // room, and anything we invented here would be us writing his half of the transcript.
+  sitting = {
+    name: name, created: Date.now() / 1000, updated: 0,
+    params: JSON.parse(JSON.stringify(PARAMS)),
+    turn: JSON.parse(JSON.stringify(TURN)),
+    root: root.id, current: root.id, nodes: {[root.id]: root},
+  };
+  await save();
+  remember(name);
+  await loadShelf();
+  pickEl.value = name;
+  buildSampler();
+  render();
+}
+
+// ---- wiring --------------------------------------------------------------------------
+pickEl.addEventListener('change', () => openSitting(pickEl.value));
+$('newbtn').addEventListener('click', () => {
+  $('newbox').hidden = false;
+  $('newname').focus();
+});
+$('newno').addEventListener('click', () => { $('newbox').hidden = true; });
+$('newok').addEventListener('click', async () => {
+  const name = $('newname').value.trim();
+  $('newbox').hidden = true;
+  $('newname').value = '';
+  if(name) await newSitting(name);
+});
+$('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
+$('sampbtn').addEventListener('click', () => $('samppanel').classList.toggle('on'));
+$('sampclose').addEventListener('click', () => $('samppanel').classList.remove('on'));
+$('send').addEventListener('click', sendLine);
+$('fanbtn').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
+$('more').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
+$('stop').addEventListener('click', stopAll);
+
+// Desktop page, so one level of the enter net is enough — the phone rule (a return key
+// that is not reliably a keydown) does not apply to a browser with a real keyboard in
+// front of it.
+turnEl.addEventListener('keydown', e => {
+  if(e.key !== 'Enter' || e.shiftKey || e.isComposing) return;
+  e.preventDefault();
+  sendLine();
+});
+function grow(){
+  turnEl.style.height = 'auto';
+  turnEl.style.height = Math.min(turnEl.scrollHeight, window.innerHeight * 0.34) + 'px';
+}
+turnEl.addEventListener('input', grow);
+
+async function health(){
+  try{
+    const d = await getJSON('/api/health');
+    $('dot').classList.toggle('off', !d.ok);
+  }catch(e){ $('dot').classList.add('off'); }
+}
+
+(async function start(){
+  await loadShelf();
+  const want = remembered();
+  const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
+  if(name) await openSitting(name);
+  else $('newbtn').click();          // an empty shelf opens with the name box waiting
+  health();
+  setInterval(health, 5000);
+})();
+</script>
+</body>
+</html>

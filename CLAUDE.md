@@ -55,12 +55,15 @@ cost guard, rent the pipe not the card).
 `loom.py` + `loom.html`, stdlib, no build. The server is a file store and a proxy, nothing else:
 the browser owns the tree and posts the whole sitting after every move; the server writes it
 atomically to `sittings/<name>.json` and forwards one branch at a time to llama-server's
-`/completion`. The page is fim's skin (tokens, font, 3px radii, no theme toggle, dom-built never
-innerHTML) with its own shape: document on the left, the fan on the right, a depth strip of
-siblings to walk back into a branch, a sampler drawer whose changes land on the next branch. A
-model line bekh edits is tagged **posed** forever. Tests: `tests/loomtest.py` against
-`tests/stub_llama.py` (a fake llama-server), run with `uv run --python 3.12 -m unittest
-tests/loomtest.py`.
+`/completion`. The page: document on the left as one continuous text (bekh's line in a band, the
+model's words on bare ground, nobody's words coloured), `‹ 2/3 ›` in the margin of any line with
+siblings to walk the tree, candidates as cards on the right, a sampler drawer whose changes land
+on the next branch. Neutral near-black room with one indigo accent, system sans, light by the OS,
+no toggle; dom-built never innerHTML. A model line bekh edits is tagged **posed** forever. Tests:
+`tests/loomtest.py` against `tests/stub_llama.py` (a fake llama-server), run with `uv run
+--python 3.12 -m unittest tests/loomtest.py`. `looks/` holds the four alternative pages from the
+2026-09-14 look-off (two opus, two codex, a one-column reader and a side-by-side table each) —
+rejected, kept for reference; they are drop-in replacements for `loom.html`, same script layer.
 
 Run it, three lines, in this order:
 
