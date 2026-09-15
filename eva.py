@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --python 3.12
+#!/usr/bin/env -S uv run --python 3.12 --script
 """eva.py — the loom with no browser: a repl whose scrollback IS the document.
 
     uv run --python 3.12 eva.py [name]
