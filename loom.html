@@ -48,6 +48,8 @@
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{height:100%; margin:0;}
+  /* iOS inflates text in landscape unless told not to; the page sizes its own type */
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
   body{
     background:var(--bg); color:var(--ink);
     /* the system face: this is a page for reading a saved chat log, not a terminal */
@@ -121,7 +123,7 @@
     line-height:1.65; padding:2px 56px 28px 64px;}
   #notetext{flex:1; min-height:0; margin:2px 56px 28px 64px; font-size:16px; line-height:1.65;}
   @media (max-width:900px){
-    #notebar{padding:0 36px 16px;} #noteview{padding:2px 36px 20px;} #notetext{margin:2px 36px 20px;}
+    #notebar{padding:0 0 16px;} #noteview{padding:2px 0 20px;} #notetext{margin:2px 0 20px;}
   }
   @media (max-width:540px){
     #notebar{padding:0 0 14px; gap:10px;} #noteview{padding:2px 0 16px;} #notetext{margin:2px 0 16px;}
@@ -178,7 +180,7 @@
   .card .foot{padding-top:8px;}
   .card.gen{cursor:default; color:var(--ghost); background:transparent; font-size:14px;}
   .card.gen:hover{border-color:transparent;}
-  #notice{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); z-index:40;
+  #notice{position:fixed; bottom:max(18px, env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); z-index:40;
     max-width:calc(100vw - 32px); background:var(--panel); border:1px solid var(--line);
     border-radius:10px; padding:12px 18px; font-size:14px;}
   #notice:empty{display:none;}
@@ -188,21 +190,53 @@
   @media (max-width:900px){
     :root{--reading:100%;}
     #doc, #fanpane, #notepane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
-    #blocks{--gut:36px; --rim:36px;}
-    #turnwrap{padding:20px 36px 0;}
-    #fanbar{padding:0 36px 16px;}
-    #cards{padding:2px 36px 20px;}
+    /* No margins for controls once the screen narrows: at 36px the "edit" word and the
+       ‹ 2/3 › walk were wider than their margin and sat on top of the text, and on a
+       touch screen there is no hover to reveal them anyway. So every block becomes a
+       small grid — its text, the posed tag, then one row with edit on the left and the
+       sibling walk on the right, in the flow, where nothing can overlap. */
+    #blocks{--gut:0px; --rim:0px;}
+    .blk{display:grid; grid-template-columns:1fr auto;
+      grid-template-areas:"body body" "foot foot" "gut swipe"; padding:0 0 14px;}
+    .blk > .body, .blk > .ed{grid-area:body;}
+    .blk > .foot{grid-area:foot;}
+    .blk .gut{grid-area:gut; position:static; width:auto; padding:0; text-align:left; opacity:1;}
+    .blk .swipe{grid-area:swipe; position:static; opacity:1;}
+    #turnwrap{padding:20px 0 0;}
+    #fanbar{padding:0 0 16px;}
+    #cards{padding:2px 0 20px;}
+    /* the -10px that optically aligns the arrow on desktop pushed its focus ring past
+       the 12px phone margin and clipped it at the screen edge */
+    #back, #noteback{margin-left:0;}
+    /* On a phone the bottom is the text box: a notice pinned there covered the box and
+       the send button until the error cleared. Up top, under the menu button, it covers
+       one line of reading at worst and never the controls. */
+    #notice{top:max(66px, calc(env(safe-area-inset-top) + 58px)); bottom:auto;
+      left:16px; right:16px; transform:none; max-width:none;}
   }
   @media (max-width:540px){
     #doc, #fanpane, #notepane{padding-left:12px; padding-right:12px;}
-    #blocks{--gut:0px; --rim:0px;}
-    .blk{padding-bottom:24px;}
-    .blk .gut{top:auto; bottom:0; width:auto; opacity:1;}
-    .blk .swipe{top:auto; bottom:0; opacity:1;}
     #turnwrap{padding:16px 0 0;}
     #fanbar{padding:0 0 14px; gap:10px;}
     #cards{padding:2px 0 16px; gap:16px;}
     .card{padding:16px 18px;}
+  }
+  /* Touch screens, at any width (an iPad in landscape is wider than 900 and still can't
+     hover): controls that only appear on hover must just be there, and tap targets get
+     room for a thumb. Fields go to 16px because iOS Safari zooms the whole page into any
+     field smaller than that on focus — the room picker, rename, note name and sampler
+     fields were all 14px. */
+  @media (hover:none){
+    .blk .gut, .blk .swipe{opacity:1;}
+    .blk .gut .ghostbtn{padding:10px 14px 10px 0;}
+    .arw{padding:8px 12px; font-size:18px;}
+    input, select, textarea{font-size:16px;}
+  }
+  /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
+     left 214px to read in. Keep just enough top to clear the fixed menu button (58px). */
+  @media (max-height:500px){
+    #doc, #fanpane, #notepane{padding-top:64px;}
+    #turnwrap{padding-top:10px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
   /* The page speaks lowercase — every label, button, hint, message and placeholder. Done here
@@ -1190,8 +1224,12 @@ $('back').addEventListener('click', () => { showDialogue(); stopAll(); });
 // Desktop page, so one level of the enter net is enough — fim states the rule at three
 // levels because iOS's return key is not reliably a keydown, and none of that applies to
 // a browser with a real keyboard in front of it.
+// On a phone the return key is the only way to type a line break, and in a bare room a
+// line break is text. So on a touch screen return inserts a newline and the send button
+// sends; with a real keyboard return sends and shift+return breaks the line.
+const TOUCH = window.matchMedia('(hover: none) and (pointer: coarse)');
 turnEl.addEventListener('keydown', e => {
-  if(e.key !== 'Enter' || e.shiftKey || e.isComposing) return;
+  if(e.key !== 'Enter' || e.shiftKey || e.isComposing || TOUCH.matches) return;
   e.preventDefault();
   sendLine();
 });
