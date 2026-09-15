@@ -181,10 +181,19 @@
     .card{padding:16px 18px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+  /* The page speaks lowercase — every label, button, hint, message and placeholder. Done here
+     and not in the strings, so a new label can't forget. Buttons and selects need it said
+     outright: browsers reset text-transform on form controls instead of inheriting it.
+     The document is exempt, and so is anything typed: `.body` holds his lines and the model's
+     words, and a capital there is part of the text the model continues — lowercasing it on
+     screen would show a document the model never saw. */
+  body, button, select{text-transform:lowercase;}
+  .body, .body *, input, textarea{text-transform:none;}
+  ::placeholder{text-transform:lowercase;}
 </style>
 </head>
 <body>
-  <button class="iconbtn" id="menubtn" type="button" aria-label="Sitting menu" aria-expanded="false" aria-controls="tools" title="Sitting menu">
+  <button class="iconbtn" id="menubtn" type="button" aria-label="Sitting menu" aria-expanded="false" aria-controls="tools" title="sitting menu">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/></svg>
   </button>
   <aside id="tools" aria-label="Sitting controls" hidden>
@@ -193,10 +202,10 @@
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
     <div class="toolrow">
-      <button class="ghostbtn" id="newbtn" type="button" title="A new room: the chat-log header, your lines and the other side's">Basic</button>
-      <button class="ghostbtn" id="newbarebtn" type="button" title="A new bare room: no header, no names, you write and it continues">Bare</button>
+      <button class="ghostbtn" id="newbtn" type="button" title="a new room: the chat-log header, your lines and the other side's">Basic</button>
+      <button class="ghostbtn" id="newbarebtn" type="button" title="a new bare room: no header, no names, you write and it continues">Bare</button>
       <button class="ghostbtn" id="renamebtn" type="button">Rename</button>
-      <button class="ghostbtn" id="clearbtn" type="button" title="Start this room over; the old run is kept">Clear</button>
+      <button class="ghostbtn" id="clearbtn" type="button" title="start this room over; the old run is kept">Clear</button>
       <button class="ghostbtn" id="delbtn" type="button">Delete</button>
     </div>
     <button class="ghostbtn" id="choicesbtn" type="button">View alternatives</button>
@@ -222,7 +231,7 @@
         <div id="turnline">
           <span id="turnlab">bekh:</span>
           <textarea id="turn" rows="1" placeholder="Your line" aria-label="Your message" autocomplete="off" spellcheck="false"></textarea>
-          <button class="iconbtn" id="send" type="button" aria-label="Send" title="Send">
+          <button class="iconbtn" id="send" type="button" aria-label="Send" title="send">
             <svg class="send-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>
             <svg class="stop-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
           </button>
@@ -233,13 +242,13 @@
 
     <section id="fanpane" aria-label="Choose an answer" hidden>
       <div id="fanbar">
-        <button class="iconbtn" id="back" type="button" aria-label="Back to dialogue" title="Back to dialogue">
+        <button class="iconbtn" id="back" type="button" aria-label="Back to dialogue" title="back to dialogue">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
         </button>
         <h1>Choose an answer</h1>
         <span class="spring"></span>
         <button class="ghostbtn" id="more" type="button">More</button>
-        <button class="iconbtn" id="stop" type="button" aria-label="Stop generating" title="Stop generating" hidden>
+        <button class="iconbtn" id="stop" type="button" aria-label="Stop generating" title="stop generating" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
@@ -576,7 +585,7 @@ function renderFan(){
     const body = document.createElement('div');
     body.className = 'body';
     body.id = 'answer-' + n.id;
-    body.textContent = n.text || '(Empty continuation)';
+    body.textContent = n.text || '(empty continuation)';
     el.setAttribute('aria-describedby', body.id);
     el.appendChild(body);
     const foot = footLine(n);
@@ -602,7 +611,7 @@ function gate(){
   $('send').disabled = !on || stopping || saving || (!running && !turnEl.value.length);
   $('send').classList.toggle('busy', running || stopping);
   $('send').setAttribute('aria-label', stopping ? 'Stopping' : running ? 'Stop generating' : 'Send');
-  $('send').title = $('send').getAttribute('aria-label');
+  $('send').title = $('send').getAttribute('aria-label').toLowerCase();
   $('fanbtn').disabled = $('more').disabled = !on || running || stopping || saving;
   for(const id of ['pick', 'newbtn', 'newbarebtn', 'clearbtn', 'delbtn', 'renameok', 'renameno']) $(id).disabled = stopping || saving;
   $('clearbtn').disabled ||= !on;
