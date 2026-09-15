@@ -32,6 +32,7 @@ import ast
 import atexit
 import http.client
 import json
+import math
 import os
 import secrets
 import shlex
@@ -299,6 +300,60 @@ def blank(name: str, is_bare: bool = False, root_text: str | None = None) -> dic
     if is_bare:
         d["params"]["stop"] = []
     return d
+
+
+def est_tokens(text: str) -> int:
+    """Tokens, guessed from characters. There is no tokenizer in this process, and asking
+    llama for one would be a round trip per line; four characters to a token is the standard
+    rough ratio, and everything this number feeds is itself a ratio."""
+    return max(1, round(len(text) / 4)) if text else 0
+
+
+def curation(sitting: dict) -> dict:
+    """janus's bits of curation for the document as it stands (generative.ink).
+
+    How much of this text is the human? Picking from a fan of n and keeping m of them
+    acceptable costs log2(n/m) bits — that is the choice, measured. A line he typed, or a
+    model line he edited, costs its whole token count instead: every token of it came from
+    him and none from the model, and there are no logprobs for text nobody sampled.
+
+    Along the CURRENT PATH only, because the document is what is on the path — the rest of
+    the tree is roads not taken. Computed on the fly from what the nodes already carry: a
+    stored number would be wrong the moment a branch is pruned.
+    """
+    nodes = sitting["nodes"]
+    path, node = [], nodes.get(sitting["current"])
+    while node:
+        path.insert(0, node)
+        node = nodes.get(node["parent"]) if node["parent"] else None
+    bits, picks = 0.0, 0
+    for n in path:
+        if n["kind"] != "model" or n["posed"]:
+            t = est_tokens(n["text"])
+            if t:
+                bits += t
+                picks += 1
+            continue
+        # n is what the fan produced, pruned ones included — they were still written, and
+        # rejecting them is the choice being measured. m is what survived it: a branch that
+        # was continued, or the one being stood on.
+        sibs = [s for s in nodes.values()
+                if s["parent"] == n["parent"] and s["kind"] == "model"]
+        kept = [s for s in sibs if not s["pruned"] and (
+            s["id"] == n["id"] or any(k["parent"] == s["id"] for k in nodes.values()))]
+        if len(sibs) > 1 and 0 < len(kept) < len(sibs):
+            bits += math.log2(len(sibs) / len(kept))
+            picks += 1
+    tokens = est_tokens("".join(n["text"] for n in path))
+    return {"bits": round(bits, 1), "tokens": tokens, "picks": picks,
+            "per_token": round(bits / tokens, 3) if tokens else 0.0,
+            "per_pick": round(tokens / picks) if picks else 0}
+
+
+def curation_line(sitting: dict) -> str:
+    c = curation(sitting)
+    out = f"curation: {c['bits']} bits · {c['per_token']} bits/token"
+    return out + (f" · 1 pick per {c['per_pick']} tokens" if c["picks"] else "")
 
 
 def backfill(params: dict) -> dict:
@@ -777,6 +832,8 @@ class Eva:
         self.bol()
         self.borrowed = False
         self.echo_doc()
+        # After the document, not before it: the measure is of the thing just printed.
+        self.note(curation_line(self.sitting))
 
     def cmd_set(self, arg: str) -> None:
         p = self.sitting["params"]

@@ -400,6 +400,69 @@ class Editing(unittest.TestCase):
         on_disk(ev)
 
 
+class Curation(unittest.TestCase):
+    """janus's measure, on trees built by hand so the arithmetic is checkable."""
+
+    def test_a_picked_branch_costs_log2_of_its_fan(self):
+        ev = fresh()
+        ev.sitting["nodes"] = {}
+        root = ev.add_node("root", "", None)
+        ev.sitting["root"] = ev.sitting["current"] = root["id"]
+        kids = [ev.add_node("model", "x" * 40, root["id"]) for _ in range(4)]
+        ev.sitting["current"] = kids[0]["id"]
+        c = eva.curation(ev.sitting)
+        # one of four kept, and an empty root costs nothing
+        self.assertEqual(c["bits"], 2.0)
+        self.assertEqual(c["picks"], 1)
+        self.assertEqual(c["tokens"], 10)           # 40 chars, four to a token
+
+    def test_pruned_branches_still_count_as_produced(self):
+        ev = fresh()
+        ev.sitting["nodes"] = {}
+        root = ev.add_node("root", "", None)
+        ev.sitting["root"] = root["id"]
+        kids = [ev.add_node("model", "x" * 4, root["id"]) for _ in range(8)]
+        for k in kids[1:]:
+            k["pruned"] = True
+        ev.sitting["current"] = kids[0]["id"]
+        self.assertEqual(eva.curation(ev.sitting)["bits"], 3.0)      # log2(8/1)
+
+    def test_two_kept_out_of_four_is_one_bit(self):
+        ev = fresh()
+        ev.sitting["nodes"] = {}
+        root = ev.add_node("root", "", None)
+        ev.sitting["root"] = root["id"]
+        kids = [ev.add_node("model", "x" * 4, root["id"]) for _ in range(4)]
+        ev.add_node("human", "", kids[1]["id"])     # continued, so it was kept too
+        ev.sitting["current"] = kids[0]["id"]
+        self.assertEqual(eva.curation(ev.sitting)["bits"], 1.0)      # log2(4/2)
+
+    def test_typed_and_posed_lines_cost_their_tokens(self):
+        ev = fresh()
+        ev.sitting["nodes"] = {}
+        root = ev.add_node("root", "", None)
+        ev.sitting["root"] = root["id"]
+        h = ev.add_node("human", "y" * 20, root["id"])
+        m = ev.add_node("model", "z" * 40, h["id"])
+        m["posed"] = True                            # he wrote it, whatever it says
+        ev.sitting["current"] = m["id"]
+        c = eva.curation(ev.sitting)
+        self.assertEqual(c["bits"], 5 + 10)
+        self.assertEqual(c["picks"], 2)
+
+    def test_the_line_reads_and_doc_prints_it(self):
+        ev = fresh()
+        ev.dispatch("/set fan 4")
+        ev.dispatch("you up")
+        ev.dispatch("1")
+        line = eva.curation_line(ev.sitting)
+        self.assertTrue(line.startswith("curation: "))
+        self.assertIn("bits/token", line)
+        ev.out = io.StringIO()
+        ev.dispatch("/doc")
+        self.assertIn("curation: ", screen(ev))
+
+
 class SpinOff(unittest.TestCase):
     def test_the_document_so_far_becomes_a_bare_room(self):
         ev = fresh()

@@ -88,6 +88,8 @@
     background:var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:20px;
     box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
   .shelfrow{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+  #curation{margin-bottom:12px;}
+  #curation:empty{display:none;}
   #pick{flex:1; width:100%; text-overflow:ellipsis;}
   .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--live);}
   .dot.off{background:var(--hot);}
@@ -291,6 +293,7 @@
       <select id="pick" aria-label="Which sitting"></select>
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
+    <div id="curation" class="sys"></div>
     <div class="toolrow">
       <button class="ghostbtn" id="newbtn" type="button" title="a new room: the chat-log header, your lines and the other side's">Basic</button>
       <button class="ghostbtn" id="newbarebtn" type="button" title="a new bare room: no header, no names, you write and it continues">Bare</button>
@@ -676,6 +679,15 @@ function footLine(n, ops){
     s.textContent = 'temp ' + num(t);
     f.appendChild(s);
   }
+  // What this line cost to choose: log2 of the fan it came out of, quietly, beside its
+  // temperature. One branch out of four is two bits of this document that are bekh's.
+  const fan = n.kind === 'model' && sitting ? fanSize(n) : 0;
+  if(fan > 1){
+    const s = document.createElement('span');
+    s.textContent = (Math.round(Math.log2(fan) * 10) / 10) + ' bits';
+    s.title = 'one of ' + fan;
+    f.appendChild(s);
+  }
   if(n.meta && n.meta.fork){
     // Evidence, like posed: this line did not come out of the model in one run. Somebody
     // reached into it at token N and took the road not taken.
@@ -702,6 +714,50 @@ function footLine(n, ops){
     f.appendChild(b);
   }
   return f.firstChild ? f : null;
+}
+
+// ---- bits of curation ----------------------------------------------------------------
+// janus's measure (generative.ink), twinned from eva.py's `curation` — how much of this
+// document is the human. Picking from a fan of n and keeping m costs log2(n/m) bits; a line
+// he typed, or a model line he edited, costs its whole token count, because every token of
+// it came from him. Along the current path only: the document is what is on the path.
+const estTokens = s => s ? Math.max(1, Math.round(s.length / 4)) : 0;
+// n is what the fan produced, PRUNED ONES INCLUDED — they were written, and rejecting them
+// is the choice being measured.
+function fanSize(n){
+  if(!n.parent) return 0;
+  return Object.values(sitting.nodes)
+    .filter(s => s.parent === n.parent && s.kind === 'model').length;
+}
+function curation(){
+  const all = Object.values(sitting.nodes);
+  let bits = 0, picks = 0;
+  for(const n of path()){
+    if(n.kind !== 'model' || n.posed){
+      const t = estTokens(n.text);
+      if(t){ bits += t; picks++; }
+      continue;
+    }
+    const sibs = all.filter(s => s.parent === n.parent && s.kind === 'model');
+    const kept = sibs.filter(s => !s.pruned &&
+      (s.id === n.id || all.some(k => k.parent === s.id)));
+    if(sibs.length > 1 && kept.length > 0 && kept.length < sibs.length){
+      bits += Math.log2(sibs.length / kept.length);
+      picks++;
+    }
+  }
+  const tokens = estTokens(path().map(n => n.text).join(''));
+  return {bits, tokens, picks,
+          perToken: tokens ? bits / tokens : 0,
+          perPick: picks ? Math.round(tokens / picks) : 0};
+}
+function drawCuration(){
+  const el = $('curation');
+  if(!sitting){ el.textContent = ''; return; }
+  const c = curation();
+  el.textContent = 'curation: ' + (Math.round(c.bits * 10) / 10) + ' bits · ' +
+    (Math.round(c.perToken * 1000) / 1000) + ' bits/token' +
+    (c.picks ? ' · 1 pick per ' + c.perPick + ' tokens' : '');
 }
 
 // ---- how improbable was that word ----------------------------------------------------
@@ -1047,6 +1103,7 @@ function gate(){
 
 function render(){
   gate();
+  drawCuration();
   if(!sitting) return;
   turnLabel();
   renderDoc();
