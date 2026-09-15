@@ -729,6 +729,14 @@ function fanSize(n){
   return Object.values(sitting.nodes)
     .filter(s => s.parent === n.parent && s.kind === 'model').length;
 }
+// How many model children of this node's parent say the same thing, trimmed — itself
+// included, pruned ones included. 1 means it is the only one.
+function twins(n){
+  const same = n.text.trim();
+  return Object.values(sitting.nodes)
+    .filter(s => s.parent === n.parent && s.kind === 'model' && s.text.trim() === same).length;
+}
+
 function curation(){
   const all = Object.values(sitting.nodes);
   let bits = 0, picks = 0;
@@ -741,8 +749,12 @@ function curation(){
     const sibs = all.filter(s => s.parent === n.parent && s.kind === 'model');
     const kept = sibs.filter(s => !s.pruned &&
       (s.id === n.id || all.some(k => k.parent === s.id)));
-    if(sibs.length > 1 && kept.length > 0 && kept.length < sibs.length){
-      bits += Math.log2(sibs.length / kept.length);
+    // A branch that says exactly what a kept branch says cost nothing to throw away — the
+    // same text was on offer twice, so the choice was between fewer things than it looks.
+    const texts = new Set(kept.map(s => s.text.trim()));
+    const m = sibs.filter(s => kept.includes(s) || texts.has(s.text.trim())).length;
+    if(sibs.length > 1 && m > 0 && m < sibs.length){
+      bits += Math.log2(sibs.length / m);
       picks++;
     }
   }
@@ -1063,7 +1075,18 @@ function renderFan(){
     body.textContent = n.text || '(empty continuation)';
     el.setAttribute('aria-describedby', body.id);
     el.appendChild(body);
-    const foot = footLine(n);
+    let foot = footLine(n);
+    const same = twins(n);
+    if(same > 1){
+      if(!foot){
+        foot = document.createElement('div');
+        foot.className = 'foot';
+      }
+      const s = document.createElement('span');
+      s.textContent = '×' + same;
+      s.title = 'the model wrote this ' + same + ' times in this fan';
+      foot.appendChild(s);
+    }
     if(foot) el.appendChild(foot);
     el.addEventListener('click', () => {
       // Selecting a passage to copy it is not choosing the answer.
@@ -1165,12 +1188,17 @@ async function runFan(n, from = sitting && sitting.current){
         if(d.error !== 'cancelled') sys(d.error, true);
         return;
       }
-      addNode('model', d.text, from, {
+      const made = addNode('model', d.text, from, {
         stop_type: d.stop_type, stopping_word: d.stopping_word,
         tokens_predicted: d.tokens_predicted, tps: d.tps,
         probs: d.probs || null,
         params: JSON.parse(JSON.stringify(branch)),
       });
+      // A fan that wrote the same thing twice is a fan of three. The copy is kept — it is
+      // evidence about the model, and at temperature 0.2 it is the whole finding — but it
+      // is pruned on arrival, so it takes no card, no slot in the ‹ n/m › walk, and no bit
+      // of curation. The card that stands keeps the count as ×2.
+      if(twins(made) > 1) made.pruned = true;
       showChoices(from);
       if(!await save()) return;
       if(mine !== generation || sitting !== owner) return;

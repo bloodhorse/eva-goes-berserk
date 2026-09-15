@@ -341,8 +341,13 @@ def curation(sitting: dict) -> dict:
                 if s["parent"] == n["parent"] and s["kind"] == "model"]
         kept = [s for s in sibs if not s["pruned"] and (
             s["id"] == n["id"] or any(k["parent"] == s["id"] for k in nodes.values()))]
-        if len(sibs) > 1 and 0 < len(kept) < len(sibs):
-            bits += math.log2(len(sibs) / len(kept))
+        # A branch that says exactly what a kept branch says cost nothing to throw away —
+        # the same text was on offer twice, so the choice was between fewer things than it
+        # looks. (The page prunes verbatim twins on arrival for the same reason.)
+        texts = {s["text"].strip() for s in kept}
+        m = sum(1 for s in sibs if s in kept or s["text"].strip() in texts)
+        if len(sibs) > 1 and 0 < m < len(sibs):
+            bits += math.log2(len(sibs) / m)
             picks += 1
     tokens = est_tokens("".join(n["text"] for n in path))
     return {"bits": round(bits, 1), "tokens": tokens, "picks": picks,

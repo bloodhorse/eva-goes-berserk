@@ -408,7 +408,8 @@ class Curation(unittest.TestCase):
         ev.sitting["nodes"] = {}
         root = ev.add_node("root", "", None)
         ev.sitting["root"] = ev.sitting["current"] = root["id"]
-        kids = [ev.add_node("model", "x" * 40, root["id"]) for _ in range(4)]
+        # distinct on purpose: verbatim twins are not four things to choose between
+        kids = [ev.add_node("model", chr(97 + i) + "x" * 39, root["id"]) for i in range(4)]
         ev.sitting["current"] = kids[0]["id"]
         c = eva.curation(ev.sitting)
         # one of four kept, and an empty root costs nothing
@@ -421,7 +422,7 @@ class Curation(unittest.TestCase):
         ev.sitting["nodes"] = {}
         root = ev.add_node("root", "", None)
         ev.sitting["root"] = root["id"]
-        kids = [ev.add_node("model", "x" * 4, root["id"]) for _ in range(8)]
+        kids = [ev.add_node("model", chr(97 + i) + "xxx", root["id"]) for i in range(8)]
         for k in kids[1:]:
             k["pruned"] = True
         ev.sitting["current"] = kids[0]["id"]
@@ -432,10 +433,21 @@ class Curation(unittest.TestCase):
         ev.sitting["nodes"] = {}
         root = ev.add_node("root", "", None)
         ev.sitting["root"] = root["id"]
-        kids = [ev.add_node("model", "x" * 4, root["id"]) for _ in range(4)]
+        kids = [ev.add_node("model", chr(97 + i) + "xxx", root["id"]) for i in range(4)]
         ev.add_node("human", "", kids[1]["id"])     # continued, so it was kept too
         ev.sitting["current"] = kids[0]["id"]
         self.assertEqual(eva.curation(ev.sitting)["bits"], 1.0)      # log2(4/2)
+
+    def test_a_verbatim_twin_is_not_a_choice(self):
+        ev = fresh()
+        ev.sitting["nodes"] = {}
+        root = ev.add_node("root", "", None)
+        ev.sitting["root"] = root["id"]
+        kids = [ev.add_node("model", t, root["id"])
+                for t in (" same", " same ", " other", " third")]
+        ev.sitting["current"] = kids[0]["id"]
+        # four on offer, but two of them are the same line: log2(4/2)
+        self.assertEqual(eva.curation(ev.sitting)["bits"], 1.0)
 
     def test_typed_and_posed_lines_cost_their_tokens(self):
         ev = fresh()
