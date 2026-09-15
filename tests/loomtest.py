@@ -265,6 +265,19 @@ class Sittings(unittest.TestCase):
         self.assertEqual(card["nodes"], len(b.d["nodes"]))
         self.assertGreater(card["updated"], 0)
 
+    def test_delete_moves_to_trash(self):
+        t = fresh("oops")
+        name = t.d["name"]
+        st, d = call("/api/delete", {"name": name})
+        self.assertEqual(st, 200, d)
+        self.assertNotIn(name, [s["name"] for s in call("/api/sittings")[1]["sittings"]])
+        self.assertEqual(call("/api/sitting?name=" + name)[0], 404)
+        # moved, not unlinked: the tree is still on disk in .trash
+        kept = [f for f in os.listdir(os.path.join(SHELF, ".trash")) if f.startswith(name + ".")]
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(call("/api/delete", {"name": name})[0], 404)
+        self.assertEqual(call("/api/delete", {"name": "../loom"})[0], 400)
+
     def test_human_line_is_the_document(self):
         t = fresh("human")
         n = t.human("so what is it like in there")

@@ -24,6 +24,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/sittings         -> the shelf, newest first
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
+  POST /api/delete           -> {"name"}: the sitting moves to sittings/.trash, off the shelf
   POST /api/complete         -> {"prompt", "params"} through to llama's /completion
   POST /api/cancel           -> hang up on every completion in flight
 
@@ -290,6 +291,24 @@ def write_sitting(obj: dict) -> float:
     return ts
 
 
+def trash_sitting(name: str) -> str:
+    """Delete, for sittings made by mistake — as a move, never an unlink.
+
+    The file goes to SITTINGS/.trash with a timestamp on the name, so the shelf stops
+    seeing it (shelf() only lists top-level .json) and a second sitting under the same
+    name can be trashed later without clobbering the first. A mis-click on Delete is then
+    one `mv` away from undone; an os.remove would have had a priest.
+    """
+    src = sitting_path(name)
+    if not os.path.isfile(src):
+        raise FileNotFoundError(name)
+    bin_ = os.path.join(SITTINGS, ".trash")
+    os.makedirs(bin_, exist_ok=True)
+    dst = os.path.join(bin_, f"{name}.{time.strftime('%Y%m%d-%H%M%S')}.json")
+    os.replace(src, dst)
+    return dst
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -382,6 +401,22 @@ class Handler(BaseHTTPRequestHandler):
 
         if u.path == "/api/cancel":
             self._json(200, {"ok": True, "cut": cancel_all()})
+            return
+
+        if u.path == "/api/delete":
+            name = payload.get("name")
+            if not isinstance(name, str) or not NAME_RE.match(name):
+                self._json(400, {"error": "bad name"})
+                return
+            try:
+                trash_sitting(name)
+            except FileNotFoundError:
+                self._json(404, {"error": "no such sitting"})
+                return
+            except OSError as exc:
+                self._json(500, {"error": f"can't move it: {exc}"})
+                return
+            self._json(200, {"ok": True})
             return
 
         self._json(404, {"error": "not found"})

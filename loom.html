@@ -132,6 +132,11 @@
   #newbox{display:none; align-items:center; gap:8px;}
   #newbox.on{display:flex;}
   #newname{width:160px; font-size:13px; padding:3px 8px;}
+  /* delete asks inline, same reason as the new box; the yes is rose, the page's colour for
+     "this changes something you can't click back" */
+  #delbox{display:none; align-items:center; gap:8px; font-size:13px; color:var(--ink);}
+  #delbox.on{display:flex;}
+  .ghostbtn.hot{color:var(--hot);}
   #barewrap{display:inline-flex; align-items:center; gap:5px; font-size:13px; color:var(--ghost);}
 
   /* ---- the two panes ---------------------------------------------------------------
@@ -273,6 +278,12 @@
       <select id="pick" title="which sitting"></select><span class="caret">▾</span>
     </span>
     <button class="ghostbtn" id="newbtn" type="button">New</button>
+    <button class="ghostbtn" id="delbtn" type="button">Delete</button>
+    <span id="delbox">
+      <span id="delq"></span>
+      <button class="ghostbtn hot" id="delok" type="button">Yes, delete</button>
+      <button class="ghostbtn" id="delno" type="button">Cancel</button>
+    </span>
     <span id="newbox">
       <input id="newname" placeholder="Name" autocomplete="off" spellcheck="false">
       <span id="barewrap" title="no header, no names, no stop strings: you type, it continues"><input type="checkbox" id="bare"><label for="bare">bare</label></span>
@@ -864,6 +875,30 @@ async function newSitting(name, isBare){
   render();
 }
 
+// Delete is for sittings made by mistake. The server moves the file to sittings/.trash,
+// it never unlinks. `sitting` goes null BEFORE the request, so a fan still finishing a
+// branch can't save() the tree back onto the shelf a second after it left.
+async function deleteSitting(){
+  if(!sitting) return;
+  const name = sitting.name;
+  generation++;
+  if(running){ try{ await postJSON('/api/cancel', {}); }catch(e){} }
+  sitting = null;
+  const d = await postJSON('/api/delete', {name: name});
+  if(d && d.error){
+    // failed = the file is still on the shelf: go back to it, and say so AFTER the
+    // reopen, or the render wipes the red line before he ever sees it
+    await openSitting(name);
+    sys('delete failed: ' + d.error, true);
+    return;
+  }
+  await loadShelf();
+  if(shelf.length){ await openSitting(shelf[0].name); return; }
+  blocksEl.textContent = ''; cardsEl.textContent = ''; sampEl.textContent = '';
+  render();
+  $('newbtn').click();
+}
+
 // ---- wiring --------------------------------------------------------------------------
 pickEl.addEventListener('change', () => openSitting(pickEl.value));
 $('newbtn').addEventListener('click', () => {
@@ -880,6 +915,17 @@ $('newok').addEventListener('click', async () => {
   if(name) await newSitting(name, isBare);
 });
 $('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
+$('delbtn').addEventListener('click', () => {
+  if(!sitting) return;
+  $('newbox').classList.remove('on');
+  $('delq').textContent = `Delete “${sitting.name}”?`;
+  $('delbox').classList.add('on');
+});
+$('delno').addEventListener('click', () => $('delbox').classList.remove('on'));
+$('delok').addEventListener('click', async () => {
+  $('delbox').classList.remove('on');
+  await deleteSitting();
+});
 $('samp').addEventListener('click', () => $('sampwrap').classList.toggle('on'));
 $('send').addEventListener('click', sendLine);
 $('fanbtn').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
