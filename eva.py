@@ -279,6 +279,28 @@ def unesc(s: str) -> str:
     return "".join(out)
 
 
+def blank(name: str, is_bare: bool = False, root_text: str | None = None) -> dict:
+    """A new sitting, in the one shape the page and the repl both read.
+
+    Here and not inside Eva because census.py makes rooms too, and a second copy of this
+    shape is a second thing to change when the file format moves. `root_text` is for a room
+    whose first text is neither the header nor nothing — a document handed in on the command
+    line, or a branch spun off into a room of its own.
+    """
+    root = {"id": secrets.token_hex(4), "parent": None, "kind": "root",
+            "text": (("" if is_bare else HEADER) if root_text is None else root_text),
+            "ts": time.time(), "pruned": False, "posed": False, "meta": None}
+    d = {"name": name, "created": time.time(), "updated": 0,
+         "params": json.loads(json.dumps(PARAMS)),
+         "turn": {"prefix": "", "suffix": ""} if is_bare else json.loads(json.dumps(TURN)),
+         "root": root["id"], "current": root["id"], "nodes": {root["id"]: root}}
+    # Without a stop string a branch runs to n_predict and may end mid-word. That is not a
+    # defect, it is what continuation is; the next fan picks the word back up.
+    if is_bare:
+        d["params"]["stop"] = []
+    return d
+
+
 def backfill(params: dict) -> dict:
     """Keys PARAMS has grown since the file was written, put back at their defaults.
 
@@ -865,7 +887,7 @@ class Eva:
         self.present()
         return True
 
-    def new(self, name: str, is_bare: bool = False) -> bool:
+    def new(self, name: str, is_bare: bool = False, root_text: str | None = None) -> bool:
         if not NAME_RE.match(name or ""):
             self.err("names are letters, digits, _ . - and up to 64 of them")
             return False
@@ -874,22 +896,10 @@ class Eva:
         if os.path.exists(os.path.join(SITTINGS, name + ".json")):
             self.err(f"{name} already exists, nothing changed — /open {name}")
             return False
-        root = {"id": secrets.token_hex(4), "parent": None, "kind": "root",
-                "text": "" if is_bare else HEADER, "ts": time.time(),
-                "pruned": False, "posed": False, "meta": None}
         # One line of scene-setting and an empty seed, and that is the whole of it. No
         # example exchanges ship with this tool: seeded lines have to be bekh's own, cut
         # from a real room, and anything invented here would be us writing his half.
-        self.sitting = {
-            "name": name, "created": time.time(), "updated": 0,
-            "params": json.loads(json.dumps(PARAMS)),
-            "turn": {"prefix": "", "suffix": ""} if is_bare else json.loads(json.dumps(TURN)),
-            "root": root["id"], "current": root["id"], "nodes": {root["id"]: root},
-        }
-        # Without a stop string a branch runs to n_predict and may end mid-word. That is not
-        # a defect, it is what continuation is; the next fan picks the word back up.
-        if is_bare:
-            self.sitting["params"]["stop"] = []
+        self.sitting = blank(name, is_bare, root_text)
         self.atbol, self.borrowed = True, False
         if not self.save():
             self.sitting = None
