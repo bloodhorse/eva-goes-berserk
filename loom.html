@@ -132,10 +132,10 @@
   #newbox{display:none; align-items:center; gap:8px;}
   #newbox.on{display:flex;}
   #newname{width:160px; font-size:13px; padding:3px 8px;}
-  /* delete asks inline, same reason as the new box; the yes is rose, the page's colour for
-     "this changes something you can't click back" */
-  #delbox{display:none; align-items:center; gap:8px; font-size:13px; color:var(--ink);}
-  #delbox.on{display:flex;}
+  /* clear and delete ask inline, same reason as the new box; the yes is rose, the page's
+     colour for "this changes something you can't click back" */
+  #askbox{display:none; align-items:center; gap:8px; font-size:13px; color:var(--ink);}
+  #askbox.on{display:flex;}
   .ghostbtn.hot{color:var(--hot);}
   #barewrap{display:inline-flex; align-items:center; gap:5px; font-size:13px; color:var(--ghost);}
 
@@ -278,11 +278,12 @@
       <select id="pick" title="which sitting"></select><span class="caret">▾</span>
     </span>
     <button class="ghostbtn" id="newbtn" type="button">New</button>
-    <button class="ghostbtn" id="delbtn" type="button">Delete</button>
-    <span id="delbox">
-      <span id="delq"></span>
-      <button class="ghostbtn hot" id="delok" type="button">Yes, delete</button>
-      <button class="ghostbtn" id="delno" type="button">Cancel</button>
+    <button class="ghostbtn" id="clearbtn" type="button" title="start this room over; the old run is kept in sittings/.trash">Clear</button>
+    <button class="ghostbtn" id="delbtn" type="button" title="for rooms made by mistake; the file goes to sittings/.trash">Delete</button>
+    <span id="askbox">
+      <span id="askq"></span>
+      <button class="ghostbtn hot" id="askok" type="button"></button>
+      <button class="ghostbtn" id="askno" type="button">Cancel</button>
     </span>
     <span id="newbox">
       <input id="newname" placeholder="Name" autocomplete="off" spellcheck="false">
@@ -899,6 +900,25 @@ async function deleteSitting(){
   $('newbtn').click();
 }
 
+// Clear = the same room, run again. Name, header line, turn strings and sampler stay; the
+// tree goes back to its root alone. The server copies the whole run into sittings/.trash
+// FIRST, and if that copy fails nothing is reset — a clear that loses the old run is a
+// delete with a friendlier label. The root node itself is kept, not rebuilt, so a header
+// he edited by hand survives the clear.
+async function clearSitting(){
+  if(!sitting) return;
+  generation++;
+  if(running){ try{ await postJSON('/api/cancel', {}); }catch(e){} }
+  const d = await postJSON('/api/clear', {name: sitting.name});
+  if(d && d.error){ sys('clear failed, nothing was reset: ' + d.error, true); return; }
+  const root = node(sitting.root);
+  sitting.nodes = {[root.id]: root};
+  sitting.current = root.id;
+  await save();
+  render();
+  turnEl.focus();
+}
+
 // ---- wiring --------------------------------------------------------------------------
 pickEl.addEventListener('change', () => openSitting(pickEl.value));
 $('newbtn').addEventListener('click', () => {
@@ -915,16 +935,25 @@ $('newok').addEventListener('click', async () => {
   if(name) await newSitting(name, isBare);
 });
 $('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
-$('delbtn').addEventListener('click', () => {
+// One confirm box for both, holding whichever action asked last.
+let asked = null;
+function ask(question, yes, action){
   if(!sitting) return;
   $('newbox').classList.remove('on');
-  $('delq').textContent = `Delete “${sitting.name}”?`;
-  $('delbox').classList.add('on');
-});
-$('delno').addEventListener('click', () => $('delbox').classList.remove('on'));
-$('delok').addEventListener('click', async () => {
-  $('delbox').classList.remove('on');
-  await deleteSitting();
+  $('askq').textContent = question;
+  $('askok').textContent = yes;
+  asked = action;
+  $('askbox').classList.add('on');
+}
+$('clearbtn').addEventListener('click', () =>
+  sitting && ask(`Clear “${sitting.name}” and start over?`, 'Yes, clear', clearSitting));
+$('delbtn').addEventListener('click', () =>
+  sitting && ask(`Delete “${sitting.name}”?`, 'Yes, delete', deleteSitting));
+$('askno').addEventListener('click', () => { $('askbox').classList.remove('on'); asked = null; });
+$('askok').addEventListener('click', async () => {
+  $('askbox').classList.remove('on');
+  const act = asked; asked = null;
+  if(act) await act();
 });
 $('samp').addEventListener('click', () => $('sampwrap').classList.toggle('on'));
 $('send').addEventListener('click', sendLine);

@@ -278,6 +278,35 @@ class Sittings(unittest.TestCase):
         self.assertEqual(call("/api/delete", {"name": name})[0], 404)
         self.assertEqual(call("/api/delete", {"name": "../loom"})[0], 400)
 
+    def test_clear_keeps_the_room(self):
+        t = fresh("again")
+        name = t.d["name"]
+        t.d["params"]["temperature"] = 1.3      # a room setting that must survive
+        t.human("first run")
+        t.fan(2)
+        t.save()
+        full = len(t.d["nodes"])
+        st, d = call("/api/clear", {"name": name})
+        self.assertEqual(st, 200, d)
+        # the old run is copied to .trash, whole
+        kept = [f for f in os.listdir(os.path.join(SHELF, ".trash")) if f.startswith(name + ".")]
+        self.assertEqual(len(kept), 1)
+        with open(os.path.join(SHELF, ".trash", kept[0]), encoding="utf-8") as f:
+            self.assertEqual(len(json.load(f)["nodes"]), full)
+        # the page's half, twinned: root only, current on it, everything else untouched
+        root = t.d["nodes"][t.d["root"]]
+        t.d["nodes"] = {root["id"]: root}
+        t.d["current"] = root["id"]
+        st, d = t.save()
+        self.assertEqual(st, 200, d)
+        back = call("/api/sitting?name=" + name)[1]
+        self.assertEqual(list(back["nodes"]), [root["id"]])
+        self.assertEqual(back["nodes"][root["id"]]["text"], HEADER)
+        self.assertEqual(back["params"]["temperature"], 1.3)
+        self.assertEqual(back["turn"], TURN)
+        self.assertIn(name, [s["name"] for s in call("/api/sittings")[1]["sittings"]])
+        self.assertEqual(call("/api/clear", {"name": "nobody-home"})[0], 404)
+
     def test_human_line_is_the_document(self):
         t = fresh("human")
         n = t.human("so what is it like in there")

@@ -25,6 +25,8 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
   POST /api/delete           -> {"name"}: the sitting moves to sittings/.trash, off the shelf
+  POST /api/clear            -> {"name"}: a COPY goes to sittings/.trash; the page then resets
+                                the tree to its root and saves, the room itself stays
   POST /api/complete         -> {"prompt", "params"} through to llama's /completion
   POST /api/cancel           -> hang up on every completion in flight
 
@@ -38,6 +40,7 @@ import http.client
 import json
 import os
 import re
+import shutil
 import socket
 import sys
 import threading
@@ -291,13 +294,14 @@ def write_sitting(obj: dict) -> float:
     return ts
 
 
-def trash_sitting(name: str) -> str:
-    """Delete, for sittings made by mistake — as a move, never an unlink.
+def trash_sitting(name: str, keep: bool = False) -> str:
+    """Into SITTINGS/.trash — as a move (Delete) or a copy (Clear), never an unlink.
 
-    The file goes to SITTINGS/.trash with a timestamp on the name, so the shelf stops
-    seeing it (shelf() only lists top-level .json) and a second sitting under the same
-    name can be trashed later without clobbering the first. A mis-click on Delete is then
-    one `mv` away from undone; an os.remove would have had a priest.
+    Timestamped, so the shelf stops seeing it (shelf() only lists top-level .json) and the
+    same room cleared five times keeps five runs instead of the last one clobbering the
+    rest. A mis-click is then one `mv` away from undone; an os.remove would have a priest.
+    Clear copies rather than moves because the room has to stay on the shelf the whole
+    time: the page writes the reset tree over the original right after this returns.
     """
     src = sitting_path(name)
     if not os.path.isfile(src):
@@ -305,7 +309,10 @@ def trash_sitting(name: str) -> str:
     bin_ = os.path.join(SITTINGS, ".trash")
     os.makedirs(bin_, exist_ok=True)
     dst = os.path.join(bin_, f"{name}.{time.strftime('%Y%m%d-%H%M%S')}.json")
-    os.replace(src, dst)
+    if keep:
+        shutil.copy2(src, dst)
+    else:
+        os.replace(src, dst)
     return dst
 
 
@@ -403,13 +410,13 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "cut": cancel_all()})
             return
 
-        if u.path == "/api/delete":
+        if u.path in ("/api/delete", "/api/clear"):
             name = payload.get("name")
             if not isinstance(name, str) or not NAME_RE.match(name):
                 self._json(400, {"error": "bad name"})
                 return
             try:
-                trash_sitting(name)
+                trash_sitting(name, keep=(u.path == "/api/clear"))
             except FileNotFoundError:
                 self._json(404, {"error": "no such sitting"})
                 return
