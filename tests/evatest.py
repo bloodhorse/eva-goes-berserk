@@ -400,6 +400,45 @@ class Editing(unittest.TestCase):
         on_disk(ev)
 
 
+class SpinOff(unittest.TestCase):
+    def test_the_document_so_far_becomes_a_bare_room(self):
+        ev = fresh()
+        ev.dispatch("/set fan 1")
+        ev.dispatch("/set temperature 1.3")
+        ev.dispatch("you up")
+        ev.dispatch("1")
+        was = ev.sitting["name"]
+        doc = ev.prompt_from(ev.sitting["current"])
+
+        name = "spun" + uuid.uuid4().hex[:6]
+        ev.dispatch("/spin " + name)
+        self.assertEqual(ev.sitting["name"], name)
+        d = on_disk(ev)
+        # nothing stripped: header, names, colons, the branch — exactly what the model read
+        self.assertEqual(d["nodes"][d["root"]]["text"], doc)
+        self.assertEqual(d["turn"], {"prefix": "", "suffix": ""})
+        self.assertEqual(d["params"]["stop"], [])
+        self.assertEqual(d["params"]["temperature"], 1.3)      # the heat comes with it
+        self.assertEqual(d["title"], "spun off from " + was)
+        self.assertEqual(len(d["nodes"]), 1)
+        # and it continues from there, with nothing inserted between the two
+        ev.dispatch("")
+        kid = [n for n in ev.sitting["nodes"].values() if n["kind"] == "model"][0]
+        wire = [b for b in stub_llama.SEEN if b.get("prompt") == doc]
+        self.assertTrue(wire)
+        self.assertEqual(ev.prompt_from(kid["id"]), doc + kid["text"])
+
+    def test_blank_name_and_a_taken_one(self):
+        ev = fresh()
+        ev.dispatch("/spin")
+        self.assertRegex(ev.sitting["name"], r"^[0-9a-f]{8}$")
+        taken = ev.sitting["name"]
+        ev.out = io.StringIO()
+        ev.dispatch("/spin " + taken)
+        self.assertIn("already exists", screen(ev))
+        self.assertEqual(ev.sitting["name"], taken)            # still standing where it was
+
+
 class Bare(unittest.TestCase):
     def test_whitespace_is_text(self):
         ev = fresh(bare=True)

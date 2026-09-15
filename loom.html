@@ -144,12 +144,18 @@
   .blk.root{color:var(--ghost);}
   .blk.human .core{display:inline-block; max-width:100%; background:var(--panel);
     border-radius:12px; padding:10px 16px; margin:6px 0;}
+  /* pointer-events with the opacity: a margin control is taller than a one-line block, so
+     an invisible gutter hangs over the block below it and would eat that block's clicks. */
   .blk .gut{position:absolute; left:0; top:0; width:var(--gut); padding-right:12px;
-    text-align:right; opacity:0; transition:opacity 120ms ease;}
-  .blk:hover .gut, .blk:focus-within .gut{opacity:1;}
+    text-align:right; opacity:0; pointer-events:none; transition:opacity 120ms ease;}
+  .blk:hover .gut, .blk:focus-within .gut{opacity:1; pointer-events:auto;}
+  /* one word per row, right-aligned at the text's edge; a longer one overhangs into the
+     page margin rather than wrapping into two ragged halves */
+  .blk .gut .ghostbtn{display:block; width:100%; text-align:right; white-space:nowrap;
+    font-size:13px; padding:3px 0;}
   .blk .swipe{position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px;
-    font-size:13px; color:var(--ghost); opacity:0;}
-  .blk:hover .swipe, .blk:focus-within .swipe{opacity:1;}
+    font-size:13px; color:var(--ghost); opacity:0; pointer-events:none;}
+  .blk:hover .swipe, .blk:focus-within .swipe{opacity:1; pointer-events:auto;}
   .arw{background:none; border:0; padding:6px 2px; color:var(--ghost);}
   .foot{font-size:13px; color:var(--ghost); display:flex; gap:10px; flex-wrap:wrap;}
   .foot .ghostbtn{font-size:13px; padding:0;}
@@ -222,6 +228,8 @@
     #blocks{--gut:0px; --rim:0px;}
     .blk{display:grid; grid-template-columns:1fr auto;
       grid-template-areas:"body body" "foot foot" "gut swipe"; padding:0 0 14px;}
+    /* in the phone row the gutter's words sit side by side, not stacked */
+    .blk .gut .ghostbtn{display:inline-block; width:auto; text-align:left;}
     .blk > .body, .blk > .ed{grid-area:body;}
     .blk > .foot{grid-area:foot;}
     .blk .gut{grid-area:gut; position:static; width:auto; padding:0; text-align:left; opacity:1;}
@@ -962,6 +970,7 @@ function renderDoc(){
     const gut = document.createElement('div');
     gut.className = 'gut';
     gut.appendChild(ghostBtn('Edit', () => editBlock(n, body)));
+    gut.appendChild(ghostBtn('Spin off', () => spinOff(n)));
     el.appendChild(gut);
     el.appendChild(body);
     const foot = footLine(n, true);
@@ -1333,7 +1342,9 @@ async function openSitting(name){
 }
 
 // A random file ID is permanent; the optional title can change without moving a tree.
-async function newSitting(isBare = false){
+// `opts` is how a room gets made out of something other than nothing: rootText for a
+// document handed to it (spin off), params to carry the sampler it was made at.
+async function newSitting(isBare = false, opts = {}){
   if(saving || stopping) return;
   saving = true;
   gate();
@@ -1343,14 +1354,17 @@ async function newSitting(isBare = false){
     await loadShelf();
     let name;
     do { name = hex(6); } while(shelf.some(s => s.name === name));
-    const root = {id: hex(4), parent: null, kind: 'root', text: isBare ? '' : HEADER,
+    const text = opts.rootText !== undefined && opts.rootText !== null ? opts.rootText
+                                                                      : (isBare ? '' : HEADER);
+    const root = {id: hex(4), parent: null, kind: 'root', text: text,
                   ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
     const fresh = {
       name, created: Date.now() / 1000, updated: 0,
-      params: JSON.parse(JSON.stringify(PARAMS)),
+      params: JSON.parse(JSON.stringify(opts.params || PARAMS)),
       turn: isBare ? {prefix: '', suffix: ''} : JSON.parse(JSON.stringify(TURN)),
       root: root.id, current: root.id, nodes: {[root.id]: root},
     };
+    if(opts.title) fresh.title = opts.title;
     if(isBare) fresh.params.stop = [];
     const d = await postJSON('/api/sitting', fresh);
     if(d.error) throw new Error(d.error);
@@ -1361,7 +1375,7 @@ async function newSitting(isBare = false){
     turnEl.value = '';
     grow();
     remember(name);
-    shelf.unshift({name, updated: fresh.updated});
+    shelf.unshift({name, title: fresh.title, updated: fresh.updated});
     drawShelf();
     buildSampler();
     $('renamebox').classList.remove('on');
@@ -1376,6 +1390,22 @@ async function newSitting(isBare = false){
     render();
     if($('tools').hidden) turnEl.focus();
   }
+}
+
+// Spin off: the document down to this line becomes the root of a new BARE room, and that
+// room opens. Nothing is stripped — header, names, colons and all — because what goes in is
+// exactly the string the model was reading when it wrote that line, and the point of the
+// new room is to keep reading it. Bare, because a document that already carries two
+// speakers' names does not want a turn structure wrapped round it a second time; the
+// sampler comes along, so the continuation happens at the heat it was found at.
+async function spinOff(n){
+  if(!sitting || running || stopping || saving) return;
+  const from = sitting.title || sitting.name;
+  await newSitting(true, {
+    rootText: promptFrom(n.id),
+    title: ('spun off from ' + from).slice(0, 120),
+    params: sitting.params,
+  });
 }
 
 async function renameSitting(){

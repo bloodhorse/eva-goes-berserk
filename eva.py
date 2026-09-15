@@ -76,7 +76,7 @@ TURN = {"prefix": "\nbekh: ", "suffix": "\nseat:"}
 
 HISTORY = os.path.expanduser("~/.cache/eva/history")
 HELP = ("a number picks · empty enter fans · /more /fan N /back /prune [N] /edit [N] "
-        "/say /seed /doc /set [key value] /open [name] /new [bare] name /quit")
+        "/say /seed /doc /spin [name] /set [key value] /open [name] /new [bare] name /quit")
 
 
 # ---- colour ---------------------------------------------------------------------------
@@ -839,6 +839,24 @@ class Eva:
                 return
         self.open(name)
 
+    def cmd_spin(self, arg: str) -> None:
+        """The document down to where you are standing, as the root of a new bare room.
+
+        Nothing is stripped: what goes in is exactly the string the model was reading. The
+        sampler comes with it, so the continuation happens at the heat it was found at, and
+        the stop strings do not — a bare room is a document, not a conversation.
+        """
+        name = arg.strip() or secrets.token_hex(4)
+        text = self.prompt_from(self.sitting["current"])
+        params = json.loads(json.dumps(self.sitting["params"]))
+        title = ("spun off from " + (self.sitting.get("title") or self.sitting["name"]))[:120]
+        if not self.new(name, True, text):
+            return
+        self.sitting["params"] = params
+        self.sitting["params"]["stop"] = []
+        self.sitting["title"] = title
+        self.save()
+
     def cmd_new(self, arg: str) -> None:
         parts = arg.split()
         is_bare = bool(parts) and parts[0] == "bare"
@@ -938,6 +956,8 @@ class Eva:
                 self.cmd_say(fan=False)
             elif cmd == "doc":
                 self.cmd_doc()
+            elif cmd == "spin":
+                self.cmd_spin(arg)
             elif cmd == "set":
                 self.cmd_set(arg)
             elif cmd == "more":
