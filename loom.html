@@ -103,10 +103,34 @@
   #sampler input, #sampler textarea{width:100%;}
   #sampler .note{color:var(--ghost); font-size:14px;}
 
+  /* Storage: a list of names in the menu, a + to add, and one plain note screen that
+     reads like the dialogue — same measure, same size, the text exactly as pasted. */
+  #storewrap{display:none; border-top:1px solid var(--line); margin-top:12px; padding-top:8px;}
+  #storewrap.on{display:block;}
+  .storehead{display:flex; align-items:center;}
+  #noteadd{font-size:22px; line-height:1; padding:0 4px;}
+  #notelist{display:flex; flex-direction:column;}
+  #notelist .notelink{text-align:left; color:var(--ink); text-decoration:underline;
+    text-decoration-color:var(--line); text-underline-offset:4px; overflow-wrap:anywhere;}
+  #notelist .notelink:hover{text-decoration-color:var(--accent);}
+  #notebar{display:flex; align-items:center; gap:16px; padding:0 56px 20px 64px; flex-shrink:0;}
+  #notebar h1{font-size:16px; font-weight:500; margin:0; overflow-wrap:anywhere;}
+  #notename{flex:1;}
+  #noteback{background:transparent; border-color:transparent; margin-left:-10px;}
+  #noteview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin; font-size:16px;
+    line-height:1.65; padding:2px 56px 28px 64px;}
+  #notetext{flex:1; min-height:0; margin:2px 56px 28px 64px; font-size:16px; line-height:1.65;}
+  @media (max-width:900px){
+    #notebar{padding:0 36px 16px;} #noteview{padding:2px 36px 20px;} #notetext{margin:2px 36px 20px;}
+  }
+  @media (max-width:540px){
+    #notebar{padding:0 0 14px; gap:10px;} #noteview{padding:2px 0 16px;} #notetext{margin:2px 0 16px;}
+  }
+
   /* The former 55% dialogue pane, widened by about a third and centered. */
   :root{--reading: min(72vw, 1120px);}
   #panes{flex:1; display:flex; min-height:0; min-width:0;}
-  #doc, #fanpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
+  #doc, #fanpane, #notepane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
     display:flex; flex-direction:column; padding:64px 24px max(24px, env(safe-area-inset-bottom));}
   #blocks{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     --gut:64px; --rim:56px; font-size:16px; line-height:1.65;}
@@ -163,14 +187,14 @@
 
   @media (max-width:900px){
     :root{--reading:100%;}
-    #doc, #fanpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
+    #doc, #fanpane, #notepane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
     #blocks{--gut:36px; --rim:36px;}
     #turnwrap{padding:20px 36px 0;}
     #fanbar{padding:0 36px 16px;}
     #cards{padding:2px 36px 20px;}
   }
   @media (max-width:540px){
-    #doc, #fanpane{padding-left:12px; padding-right:12px;}
+    #doc, #fanpane, #notepane{padding-left:12px; padding-right:12px;}
     #blocks{--gut:0px; --rim:0px;}
     .blk{padding-bottom:24px;}
     .blk .gut{top:auto; bottom:0; width:auto; opacity:1;}
@@ -221,7 +245,14 @@
       <button class="ghostbtn" id="renameok" type="button">Save name</button>
       <button class="ghostbtn" id="renameno" type="button">Cancel</button>
     </div>
+    <button class="ghostbtn" id="storebtn" type="button" aria-expanded="false" aria-controls="storewrap">Storage</button>
     <div id="sampwrap"><div id="sampler"></div></div>
+    <div id="storewrap">
+      <div class="storehead"><span class="spring"></span>
+        <button class="ghostbtn" id="noteadd" type="button" aria-label="Add a note" title="add a note">+</button>
+      </div>
+      <div id="notelist"></div>
+    </div>
   </aside>
 
   <main id="panes">
@@ -253,6 +284,22 @@
         </button>
       </div>
       <div id="cards"></div>
+    </section>
+
+    <section id="notepane" aria-label="Note" hidden>
+      <div id="notebar">
+        <button class="iconbtn" id="noteback" type="button" aria-label="Back" title="back">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        </button>
+        <h1 id="notetitle"></h1>
+        <input id="notename" placeholder="Name (blank = random)" aria-label="Note name" maxlength="120" autocomplete="off" spellcheck="false" hidden>
+        <span class="spring"></span>
+        <button class="ghostbtn" id="noteedit" type="button">Edit</button>
+        <button class="ghostbtn" id="notesave" type="button" hidden>Save</button>
+        <button class="ghostbtn" id="notecancel" type="button" hidden>Cancel</button>
+      </div>
+      <div id="noteview" class="body"></div>
+      <textarea id="notetext" placeholder="Paste it here" aria-label="Note text" spellcheck="false" hidden></textarea>
     </section>
   </main>
   <div id="notice" role="status" aria-live="polite"></div>
@@ -353,6 +400,7 @@ function showDialogue(){
   choosing = false;
   $('doc').hidden = false;
   $('fanpane').hidden = true;
+  $('notepane').hidden = true;
   turnEl.focus({preventScroll:true});
 }
 function showChoices(from){
@@ -362,6 +410,7 @@ function showChoices(from){
   menu(false);
   $('doc').hidden = true;
   $('fanpane').hidden = false;
+  $('notepane').hidden = true;
   renderFan();
   if(entering){
     cardsEl.scrollTop = 0;
@@ -373,6 +422,104 @@ function alternativesFrom(){
   if(kids(sitting.current).some(n => n.kind === 'model')) return sitting.current;
   const n = node(sitting.current);
   return n.kind === 'model' ? n.parent : null;
+}
+
+// ---- storage -------------------------------------------------------------------------
+// Findings, one plain text file each, nothing to do with the sitting that is open: none of
+// this touches `sitting`, `generation` or the tree. `note` is what the note screen shows,
+// or null while a new one is being written.
+let note = null;
+
+async function loadNotes(){
+  const list = $('notelist');
+  let d;
+  try{ d = await getJSON('/api/notes'); }
+  catch(e){ sys('storage is not answering: ' + e.message, true); return; }
+  list.textContent = '';
+  const rows = (d && d.notes) || [];
+  if(!rows.length){
+    const s = document.createElement('div');
+    s.className = 'sys';
+    s.textContent = 'Nothing stored yet.';
+    list.appendChild(s);
+  }
+  for(const r of rows){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ghostbtn notelink';
+    b.textContent = r.name;
+    b.addEventListener('click', () => openNote(r.name));
+    list.appendChild(b);
+  }
+}
+
+function showNote(){
+  choosing = false;
+  menu(false);
+  $('doc').hidden = true;
+  $('fanpane').hidden = true;
+  $('notepane').hidden = false;
+}
+
+// Reading and writing are the same screen with the words swapped; the name field shows
+// only for a new note, because an existing note's name is its file and edit keeps it.
+function noteMode(editing){
+  const fresh = editing && !note;
+  $('noteview').hidden = editing;
+  $('notetext').hidden = !editing;
+  $('noteedit').hidden = editing;
+  $('notesave').hidden = !editing;
+  $('notecancel').hidden = !editing;
+  $('notename').hidden = !fresh;
+  $('notetitle').hidden = fresh;
+}
+
+async function openNote(name){
+  let d;
+  try{ d = await getJSON('/api/note?name=' + encodeURIComponent(name)); }
+  catch(e){ sys('could not open the note: ' + e.message, true); return; }
+  if(d.error){ sys(d.error, true); return; }
+  note = {name: d.name, text: d.text};
+  $('notetitle').textContent = note.name;
+  $('noteview').textContent = note.text;       // textContent: pasted text is never markup
+  noteMode(false);
+  showNote();
+}
+
+function newNote(){
+  note = null;
+  $('notename').value = '';
+  $('notetext').value = '';
+  noteMode(true);
+  showNote();
+  $('notename').focus();
+}
+
+function editNote(){
+  if(!note) return;
+  $('notetext').value = note.text;
+  noteMode(true);
+  $('notetext').focus();
+}
+
+async function saveNote(){
+  const text = $('notetext').value;
+  const body = note ? {name: note.name, text: text, create: false}
+                    : {name: $('notename').value.trim(), text: text, create: true};
+  let d;
+  try{ d = await postJSON('/api/note', body); }
+  catch(e){ sys('not saved: ' + e.message, true); return; }
+  // On a refusal (a taken name) the screen stays as it is, text and all, so nothing
+  // pasted is lost to a wrong name.
+  if(d.error){ sys(d.error, true); return; }
+  sys('');
+  await openNote(d.name);
+  loadNotes();
+}
+
+function cancelNote(){
+  if(note) noteMode(false);
+  else showDialogue();
 }
 
 // ---- the tree ------------------------------------------------------------------------
@@ -1006,6 +1153,17 @@ $('askok').addEventListener('click', async () => {
   const act = asked; asked = null;
   if(act) await act();
 });
+$('storebtn').addEventListener('click', () => {
+  const on = !$('storewrap').classList.contains('on');
+  $('storewrap').classList.toggle('on', on);
+  $('storebtn').setAttribute('aria-expanded', String(on));
+  if(on) loadNotes();
+});
+$('noteadd').addEventListener('click', newNote);
+$('noteback').addEventListener('click', showDialogue);
+$('noteedit').addEventListener('click', editNote);
+$('notesave').addEventListener('click', saveNote);
+$('notecancel').addEventListener('click', cancelNote);
 $('menubtn').addEventListener('click', () => menu($('tools').hidden));
 document.addEventListener('click', e => {
   if(!e.target.closest('#tools, #menubtn')) menu(false);

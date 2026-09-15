@@ -27,6 +27,7 @@ import threading
 import time
 import unittest
 import urllib.error
+import urllib.parse
 import urllib.request
 import uuid
 
@@ -52,6 +53,7 @@ STUB = None
 LOOM = None
 BASE = ""
 SHELF = ""
+STORE = ""
 
 
 def free_port() -> int:
@@ -79,14 +81,16 @@ def call(path: str, body=None, timeout: float = 30):
 
 
 def setUpModule() -> None:
-    global STUB, LOOM, BASE, SHELF
+    global STUB, LOOM, BASE, SHELF, STORE
     STUB = stub_llama.serve(0)
     threading.Thread(target=STUB.serve_forever, daemon=True).start()
     SHELF = tempfile.mkdtemp(prefix="loom-test-")
+    STORE = tempfile.mkdtemp(prefix="loom-store-")   # never the real, git-tracked storage/
     port = free_port()
     BASE = f"http://127.0.0.1:{port}"
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
+               LOOM_STORAGE=STORE,
                LOOM_LLAMA=f"http://127.0.0.1:{STUB.server_address[1]}")
     LOOM = subprocess.Popen([sys.executable, os.path.join(ROOT, "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -114,6 +118,8 @@ def tearDownModule() -> None:
         STUB.shutdown()
     if SHELF:
         shutil.rmtree(SHELF, ignore_errors=True)
+    if STORE:
+        shutil.rmtree(STORE, ignore_errors=True)
 
 
 class Tree:
@@ -237,6 +243,62 @@ class Plumbing(unittest.TestCase):
         st, d = call("/api/complete", {"params": PARAMS})
         self.assertEqual(st, 400)
         self.assertEqual(d["error"], "no prompt")
+
+
+def note_get(name: str):
+    return call("/api/note?name=" + urllib.parse.quote(name))
+
+
+class Notes(unittest.TestCase):
+    def test_add_read_list_and_the_file_is_only_the_text(self):
+        name = f"a finding — {uuid.uuid4().hex[:6]}"
+        text = "line one\r\n  indented, with Capitals\n\nno trailing newline"
+        st, d = call("/api/note", {"name": name, "text": text, "create": True})
+        self.assertEqual((st, d.get("name")), (200, name), d)
+        st, back = note_get(name)
+        self.assertEqual((st, back["text"]), (200, text))
+        with open(os.path.join(STORE, name + ".txt"), "rb") as f:
+            self.assertEqual(f.read(), text.encode("utf-8"))     # no metadata, no newline added
+        self.assertIn(name, [n["name"] for n in call("/api/notes")[1]["notes"]])
+
+    def test_blank_name_gets_random_hex(self):
+        for blank in ("", "   ", None):
+            st, d = call("/api/note", {"name": blank, "text": "x", "create": True})
+            self.assertEqual(st, 200, d)
+            self.assertRegex(d["name"], r"^[0-9a-f]{8}$")
+            self.assertEqual(note_get(d["name"])[1]["text"], "x")
+
+    def test_taken_name_is_refused_and_untouched(self):
+        name = f"taken-{uuid.uuid4().hex[:6]}"
+        call("/api/note", {"name": name, "text": "first", "create": True})
+        st, d = call("/api/note", {"name": name, "text": "second", "create": True})
+        self.assertEqual(st, 409, d)
+        self.assertEqual(note_get(name)[1]["text"], "first")
+
+    def test_edit_overwrites_and_needs_an_existing_note(self):
+        name = f"edit-{uuid.uuid4().hex[:6]}"
+        call("/api/note", {"name": name, "text": "first", "create": True})
+        st, d = call("/api/note", {"name": name, "text": "first\nand more later", "create": False})
+        self.assertEqual(st, 200, d)
+        self.assertEqual(note_get(name)[1]["text"], "first\nand more later")
+        self.assertEqual(call("/api/note", {"name": "nobody-" + name, "text": "x"})[0], 404)
+
+    def test_newest_first(self):
+        a, b = f"old-{uuid.uuid4().hex[:6]}", f"new-{uuid.uuid4().hex[:6]}"
+        call("/api/note", {"name": a, "text": "a", "create": True})
+        time.sleep(0.02)
+        call("/api/note", {"name": b, "text": "b", "create": True})
+        names = [n["name"] for n in call("/api/notes")[1]["notes"]]
+        self.assertLess(names.index(b), names.index(a))
+
+    def test_bad_names_never_leave_storage(self):
+        for bad in ("../escape", "a/b", "a\\b", ".hidden", " edge", "x" * 121, "tab\there", 42):
+            st, _ = call("/api/note", {"name": bad, "text": "x", "create": True})
+            self.assertEqual(st, 400, bad)
+        for bad in ("../loom", ".hidden", ""):
+            self.assertEqual(note_get(bad)[0], 400, bad)
+        self.assertEqual(note_get("nobody-home")[0], 404)
+        self.assertEqual(call("/api/note", {"name": "no-text", "create": True})[0], 400)
 
 
 class Sittings(unittest.TestCase):

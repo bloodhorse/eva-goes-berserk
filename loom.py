@@ -25,6 +25,10 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
   POST /api/delete           -> {"name"}: the sitting moves to sittings/.trash, off the shelf
+  GET  /api/notes            -> storage: every note's name, newest first
+  GET  /api/note?name=       -> {"name", "text"}
+  POST /api/note             -> {"name", "text", "create"}: add (blank name = random hex,
+                                taken name refused) or overwrite an existing one
   POST /api/clear            -> {"name"}: a COPY goes to sittings/.trash; the page then resets
                                 the tree to its root and saves, the room itself stays
   POST /api/complete         -> {"prompt", "params"} through to llama's /completion
@@ -40,6 +44,7 @@ import http.client
 import json
 import os
 import re
+import secrets
 import shutil
 import socket
 import sys
@@ -56,6 +61,19 @@ LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
 # Overridable only so the tests can run against a scratch shelf instead of the real one;
 # everything else should leave it alone — sittings belong next to the script that made them.
 SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(HERE, "sittings"))
+# Storage: findings bekh wants to keep, one plain .txt per note, nothing but the text in it.
+# Tracked by git on purpose (sittings are not) — a finding is worth its history.
+STORAGE = os.environ.get("LOOM_STORAGE", os.path.join(HERE, "storage"))
+NOTE_MAX = 120
+
+
+def note_name_ok(name) -> bool:
+    """A note name IS its file name, so it gets a looser rule than a sitting (spaces and
+    any script are fine) but the same refusal of anything that could leave STORAGE: no
+    slash or backslash, no control characters, no leading dot (`..`, hidden files), and
+    no edge whitespace that would make two names look the same in the list."""
+    return (isinstance(name, str) and 0 < len(name) <= NOTE_MAX and name == name.strip()
+            and not name.startswith(".") and not re.search(r"[/\\\x00-\x1f\x7f]", name))
 
 # A sitting name is a filename, and this API has no auth in front of it: no slashes, no
 # dots-only, nothing that could climb out of SITTINGS. Checked on the way in AND on the
@@ -320,6 +338,40 @@ def trash_sitting(name: str, keep: bool = False) -> str:
     return dst
 
 
+def note_path(name: str) -> str:
+    return os.path.join(STORAGE, name + ".txt")
+
+
+def notes() -> list[dict]:
+    """Every note, newest first by file time — a hand edit in the folder counts as new."""
+    out = []
+    try:
+        names = os.listdir(STORAGE)
+    except OSError:
+        return out
+    for fname in names:
+        if not fname.endswith(".txt") or not note_name_ok(fname[:-4]):
+            continue
+        try:
+            out.append({"name": fname[:-4],
+                        "updated": os.path.getmtime(os.path.join(STORAGE, fname))})
+        except OSError:
+            continue
+    out.sort(key=lambda n: n["updated"], reverse=True)
+    return out
+
+
+def write_note(name: str, text: str) -> None:
+    """Exactly the text, nothing else — no header, no trailing newline added. newline=""
+    so python never rewrites line endings in something he pasted."""
+    os.makedirs(STORAGE, exist_ok=True)
+    path = note_path(name)
+    tmp = os.path.join(STORAGE, f".{secrets.token_hex(6)}.part")
+    with open(tmp, "w", encoding="utf-8", newline="") as f:
+        f.write(text)
+    os.replace(tmp, path)
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -375,6 +427,24 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(500, {"error": "that file isn't json any more"})
             return
 
+        if u.path == "/api/notes":
+            self._json(200, {"notes": notes()})
+            return
+
+        if u.path == "/api/note":
+            name = parse_qs(u.query).get("name", [""])[0]
+            if not note_name_ok(name):
+                self._json(400, {"error": "bad note name"})
+                return
+            try:
+                with open(note_path(name), encoding="utf-8", newline="") as f:
+                    self._json(200, {"name": name, "text": f.read()})
+            except FileNotFoundError:
+                self._json(404, {"error": "no such note"})
+            except (OSError, UnicodeDecodeError) as exc:
+                self._json(500, {"error": f"can't read it: {exc}"})
+            return
+
         self._json(404, {"error": "not found"})
 
     def do_POST(self) -> None:
@@ -410,6 +480,39 @@ class Handler(BaseHTTPRequestHandler):
             self._json(502 if out.get("error") else 200, out)
             return
 
+        if u.path == "/api/note":
+            # create:true = the + button: a blank name gets a random hex one, and a taken
+            # name is refused — adding must never overwrite a finding. create:false = edit:
+            # the note has to exist already.
+            text = payload.get("text")
+            if not isinstance(text, str):
+                self._json(400, {"error": "no text"})
+                return
+            create = bool(payload.get("create"))
+            name = payload.get("name")
+            if create and (name is None or (isinstance(name, str) and not name.strip())):
+                name = secrets.token_hex(4)
+                while os.path.exists(note_path(name)):
+                    name = secrets.token_hex(4)
+            if not note_name_ok(name):
+                self._json(400, {"error": "names are up to 120 characters, no slashes, "
+                                          "no leading dot or edge spaces"})
+                return
+            exists = os.path.exists(note_path(name))
+            if create and exists:
+                self._json(409, {"error": f"a note called “{name}” already exists"})
+                return
+            if not create and not exists:
+                self._json(404, {"error": "no such note"})
+                return
+            try:
+                write_note(name, text)
+            except OSError as exc:
+                self._json(500, {"error": f"can't write it: {exc}"})
+                return
+            self._json(200, {"ok": True, "name": name})
+            return
+
         if u.path == "/api/cancel":
             self._json(200, {"ok": True, "cut": cancel_all()})
             return
@@ -435,6 +538,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> int:
     os.makedirs(SITTINGS, exist_ok=True)
+    os.makedirs(STORAGE, exist_ok=True)
     print(f"loom up: http://{HOST}:{PORT}  (llama {LLAMA}, sittings {SITTINGS})", flush=True)
     srv = ThreadingHTTPServer((HOST, PORT), Handler)
     try:
