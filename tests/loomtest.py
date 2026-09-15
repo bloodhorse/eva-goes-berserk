@@ -240,6 +240,30 @@ class Plumbing(unittest.TestCase):
 
 
 class Sittings(unittest.TestCase):
+    def test_title_renames_without_changing_file_or_tree(self):
+        t = fresh("title")
+        t.human("a saved line")
+        t.save()
+        name = t.d["name"]
+        t.d["title"] = "A room / with spaces — 河"
+        self.assertEqual(t.save()[0], 200)
+        st, back = call("/api/sitting?name=" + name)
+        self.assertEqual(st, 200)
+        self.assertEqual(back["name"], name)
+        self.assertEqual(back["title"], t.d["title"])
+        self.assertEqual(back["nodes"], t.d["nodes"])
+        self.assertEqual(back["current"], t.d["current"])
+        row = next(s for s in call("/api/sittings")[1]["sittings"] if s["name"] == name)
+        self.assertEqual(row["title"], t.d["title"])
+
+    def test_bad_title_leaves_saved_room_unchanged(self):
+        t = fresh("bad-title")
+        for title in ("", "  ", "x" * 121, 42, []):
+            t.d["title"] = title
+            self.assertEqual(t.save()[0], 400)
+        back = call("/api/sitting?name=" + t.d["name"])[1]
+        self.assertNotIn("title", back)
+
     def test_round_trip(self):
         t = fresh("round")
         t.human("you up")

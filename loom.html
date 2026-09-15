@@ -91,11 +91,10 @@
   .dot.off{background:var(--hot);}
   .toolrow{display:flex; gap:20px; flex-wrap:wrap;}
   #tools > .ghostbtn{display:block; width:100%; text-align:left;}
-  #newbox, #askbox{display:none; flex-wrap:wrap; align-items:center; gap:12px;
+  #renamebox, #askbox{display:none; flex-wrap:wrap; align-items:center; gap:12px;
     border-top:1px solid var(--line); margin-top:12px; padding-top:16px;}
-  #newbox.on, #askbox.on{display:flex;}
-  #newname{width:100%;}
-  #barewrap{display:inline-flex; align-items:center; gap:6px; margin-right:auto;}
+  #renamebox.on, #askbox.on{display:flex;}
+  #renamename{width:100%;}
   #askq{width:100%;}
   #sampwrap{display:none; border-top:1px solid var(--line); margin-top:12px; padding-top:16px;}
   #sampwrap.on{display:block;}
@@ -194,7 +193,9 @@
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
     <div class="toolrow">
-      <button class="ghostbtn" id="newbtn" type="button">New</button>
+      <button class="ghostbtn" id="newbtn" type="button" title="A new room: the chat-log header, your lines and the other side's">Basic</button>
+      <button class="ghostbtn" id="newbarebtn" type="button" title="A new bare room: no header, no names, you write and it continues">Bare</button>
+      <button class="ghostbtn" id="renamebtn" type="button">Rename</button>
       <button class="ghostbtn" id="clearbtn" type="button" title="Start this room over; the old run is kept">Clear</button>
       <button class="ghostbtn" id="delbtn" type="button">Delete</button>
     </div>
@@ -206,11 +207,10 @@
       <button class="ghostbtn hot" id="askok" type="button"></button>
       <button class="ghostbtn" id="askno" type="button">Cancel</button>
     </div>
-    <div id="newbox">
-      <input id="newname" placeholder="Name" aria-label="Sitting name" autocomplete="off" spellcheck="false">
-      <span id="barewrap" title="No header, names or stop strings"><input type="checkbox" id="bare"><label for="bare">bare</label></span>
-      <button class="ghostbtn" id="newok" type="button">Create</button>
-      <button class="ghostbtn" id="newno" type="button">Cancel</button>
+    <div id="renamebox">
+      <input id="renamename" placeholder="Room name" aria-label="Room name" maxlength="120" autocomplete="off" spellcheck="false">
+      <button class="ghostbtn" id="renameok" type="button">Save name</button>
+      <button class="ghostbtn" id="renameno" type="button">Cancel</button>
     </div>
     <div id="sampwrap"><div id="sampler"></div></div>
   </aside>
@@ -338,6 +338,7 @@ function sys(text, err){
 function menu(open){
   $('tools').hidden = !open;
   $('menubtn').setAttribute('aria-expanded', String(open));
+  if(!open) $('renamebox').classList.remove('on');
 }
 function showDialogue(){
   choosing = false;
@@ -444,6 +445,7 @@ function ghostBtn(label, fn, stop){
 // between "the model said this" and "we said this and forgot", which is the one confusion
 // that would make a whole sitting worthless as evidence.
 function editBlock(n, body, after){
+  if(saving || stopping) return;
   const ta = document.createElement('textarea');
   ta.className = 'ed';
   ta.value = n.text;
@@ -596,15 +598,17 @@ function renderFan(){
 
 function gate(){
   const on = !!sitting;
-  turnEl.disabled = !on;
+  turnEl.disabled = !on || saving;
   $('send').disabled = !on || stopping || saving || (!running && !turnEl.value.length);
   $('send').classList.toggle('busy', running || stopping);
   $('send').setAttribute('aria-label', stopping ? 'Stopping' : running ? 'Stop generating' : 'Send');
   $('send').title = $('send').getAttribute('aria-label');
   $('fanbtn').disabled = $('more').disabled = !on || running || stopping || saving;
-  for(const id of ['pick', 'newbtn', 'clearbtn', 'delbtn']) $(id).disabled = stopping || saving;
+  for(const id of ['pick', 'newbtn', 'newbarebtn', 'clearbtn', 'delbtn', 'renameok', 'renameno']) $(id).disabled = stopping || saving;
   $('clearbtn').disabled ||= !on;
   $('delbtn').disabled ||= !on;
+  $('renamebtn').disabled = !on || running || stopping || saving;
+  $('renamename').disabled = saving;
   $('choicesbtn').disabled = !on || !alternativesFrom();
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
@@ -791,7 +795,7 @@ function drawShelf(){
   for(const s of shelf){
     const o = document.createElement('option');
     o.value = s.name;
-    o.textContent = s.name;
+    o.textContent = s.title || s.name;
     pickEl.appendChild(o);
   }
   if(sitting) pickEl.value = sitting.name;
@@ -821,36 +825,82 @@ async function openSitting(name){
   render();
 }
 
-async function newSitting(name, isBare){
-  if(!/^[A-Za-z0-9_.-]{1,64}$/.test(name)){
-    sys('names are letters, digits, _ . - and up to 64 of them', true);
+// A random file ID is permanent; the optional title can change without moving a tree.
+async function newSitting(isBare = false){
+  if(saving || stopping) return;
+  saving = true;
+  gate();
+  try{
+    await stopAll();
+    await saveQueue;
+    await loadShelf();
+    let name;
+    do { name = hex(6); } while(shelf.some(s => s.name === name));
+    const root = {id: hex(4), parent: null, kind: 'root', text: isBare ? '' : HEADER,
+                  ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
+    const fresh = {
+      name, created: Date.now() / 1000, updated: 0,
+      params: JSON.parse(JSON.stringify(PARAMS)),
+      turn: isBare ? {prefix: '', suffix: ''} : JSON.parse(JSON.stringify(TURN)),
+      root: root.id, current: root.id, nodes: {[root.id]: root},
+    };
+    if(isBare) fresh.params.stop = [];
+    const d = await postJSON('/api/sitting', fresh);
+    if(d.error) throw new Error(d.error);
+    fresh.updated = d.updated || 0;
+    // Keep the previous room and draft until the new file has actually been written.
+    sitting = fresh;
+    fanFrom = null;
+    turnEl.value = '';
+    grow();
+    remember(name);
+    shelf.unshift({name, updated: fresh.updated});
+    drawShelf();
+    buildSampler();
+    $('renamebox').classList.remove('on');
+    $('askbox').classList.remove('on');
+    sys('');
+    menu(false);
+    showDialogue();
+  }catch(e){
+    sys('Could not create the room: ' + e.message, true);
+  }finally{
+    saving = false;
+    render();
+    if($('tools').hidden) turnEl.focus();
+  }
+}
+
+async function renameSitting(){
+  if(!sitting || running || stopping || saving) return;
+  const title = $('renamename').value.trim();
+  if(!title || title.length > 120){
+    sys('Use a name between 1 and 120 characters.', true);
     return;
   }
-  await stopAll();
-  await saveQueue;
-  fanFrom = null;
-  showDialogue();
-  menu(false);
-  const root = {id: hex(4), parent: null, kind: 'root', text: isBare ? '' : HEADER,
-                ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
-  // One line of scene-setting and an empty seed, and that is the whole of it. No example
-  // exchanges ship with this tool: seeded lines have to be bekh's own, cut from a real
-  // room, and anything we invented here would be us writing his half of the transcript.
-  sitting = {
-    name: name, created: Date.now() / 1000, updated: 0,
-    params: JSON.parse(JSON.stringify(PARAMS)),
-    turn: isBare ? {prefix: '', suffix: ''} : JSON.parse(JSON.stringify(TURN)),
-    root: root.id, current: root.id, nodes: {[root.id]: root},
-  };
-  // Without a stop string a branch runs to n_predict and may end mid-word. That is not a
-  // defect, it is what continuation is; the next Fan from that card picks the word back up.
-  if(isBare) sitting.params.stop = [];
-  await save();
-  remember(name);
-  await loadShelf();
-  pickEl.value = name;
-  buildSampler();
-  render();
+  saving = true;
+  gate();
+  const owner = sitting;
+  const previous = owner.title;
+  try{
+    await saveQueue;
+    owner.title = title;
+    if(!await save()){
+      if(previous === undefined) delete owner.title;
+      else owner.title = previous;
+      return;
+    }
+    const row = shelf.find(s => s.name === owner.name);
+    if(row) row.title = title;
+    drawShelf();
+    $('renamebox').classList.remove('on');
+    sys('');
+    menu(false);
+  }finally{
+    saving = false;
+    gate();
+    if($('tools').hidden && !choosing) turnEl.focus();
+  }
 }
 
 // Delete is for sittings made by mistake. The server moves the file to sittings/.trash,
@@ -876,7 +926,7 @@ async function deleteSitting(){
   if(shelf.length){ await openSitting(shelf[0].name); return; }
   blocksEl.textContent = ''; cardsEl.textContent = ''; sampEl.textContent = '';
   render();
-  $('newbtn').click();
+  menu(true);
 }
 
 // Clear = the same room, run again. Name, header line, turn strings and sampler stay; the
@@ -902,26 +952,31 @@ async function clearSitting(){
 
 // ---- wiring --------------------------------------------------------------------------
 pickEl.addEventListener('change', () => openSitting(pickEl.value));
-$('newbtn').addEventListener('click', () => {
-  menu(true);
-  $('newbox').classList.add('on');
-  $('newname').focus();
+$('newbtn').addEventListener('click', () => newSitting());
+$('newbarebtn').addEventListener('click', () => newSitting(true));
+$('renamebtn').addEventListener('click', () => {
+  if(!sitting) return;
+  $('askbox').classList.remove('on');
+  $('renamename').value = sitting.title || sitting.name;
+  $('renamebox').classList.add('on');
+  $('renamename').focus();
+  $('renamename').select();
 });
-$('newno').addEventListener('click', () => $('newbox').classList.remove('on'));
-$('newok').addEventListener('click', async () => {
-  const name = $('newname').value.trim();
-  const isBare = $('bare').checked;
-  $('newbox').classList.remove('on');
-  $('newname').value = '';
-  $('bare').checked = false;
-  if(name) await newSitting(name, isBare);
+$('renameno').addEventListener('click', () => $('renamebox').classList.remove('on'));
+$('renameok').addEventListener('click', renameSitting);
+$('renamename').addEventListener('keydown', e => {
+  if(e.key === 'Enter' && !e.isComposing){ e.preventDefault(); renameSitting(); }
+  if(e.key === 'Escape'){
+    e.preventDefault();
+    $('renamebox').classList.remove('on');
+    $('renamebtn').focus();
+  }
 });
-$('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
 // One confirm box for both, holding whichever action asked last.
 let asked = null;
 function ask(question, yes, action){
   if(!sitting) return;
-  $('newbox').classList.remove('on');
+  $('renamebox').classList.remove('on');
   $('askq').textContent = question;
   $('askok').textContent = yes;
   asked = action;
@@ -935,7 +990,7 @@ $('clearbtn').addEventListener('click', () => {
   clearSitting();
 });
 $('delbtn').addEventListener('click', () =>
-  sitting && ask(`Delete “${sitting.name}”?`, 'Yes, delete', deleteSitting));
+  sitting && ask(`Delete “${sitting.title || sitting.name}”?`, 'Yes, delete', deleteSitting));
 $('askno').addEventListener('click', () => { $('askbox').classList.remove('on'); asked = null; });
 $('askok').addEventListener('click', async () => {
   $('askbox').classList.remove('on');
@@ -993,7 +1048,7 @@ async function health(){
   const want = remembered();
   const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
   if(name) await openSitting(name);
-  else { gate(); $('newbtn').click(); }   // an empty shelf opens with the name box waiting
+  else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
   health();
   setInterval(health, 5000);
   }catch(e){ gate(); sys('Could not open the sitting: ' + e.message, true); }

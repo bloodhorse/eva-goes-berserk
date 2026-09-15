@@ -232,6 +232,7 @@ def shelf() -> list[dict]:
             continue
         out.append({
             "name": name,
+            "title": d.get("title") or name,
             "created": d.get("created") or 0,
             "updated": d.get("updated") or 0,
             "nodes": len(d.get("nodes") or {}),
@@ -253,6 +254,9 @@ def check(obj) -> str:
     name = obj.get("name")
     if not isinstance(name, str) or not NAME_RE.match(name):
         return "bad name"
+    title = obj.get("title")
+    if title is not None and (not isinstance(title, str) or not title.strip() or len(title) > 120):
+        return "title must be between 1 and 120 characters"
     nodes = obj.get("nodes")
     if not isinstance(nodes, dict) or not nodes:
         return "no nodes"
