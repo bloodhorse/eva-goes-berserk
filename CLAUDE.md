@@ -57,6 +57,9 @@ cost guard, rent the pipe not the card).
   `sittings/.trash/` holds what Clear and Delete took, timestamped.
 - `storage/` — bekh's saved findings, one plain `.txt` per note, **tracked by git**. A save in the
   page doesn't commit; it goes up with the next commit.
+- `artifacts/` — frozen fans, one indented json each, **tracked by git and pushed**. Written once
+  by the server, never edited or overwritten; a mistaken one is a `git rm` by hand. Like storage,
+  a save in the page goes up with the next commit.
 
 ## The loom
 
@@ -76,7 +79,20 @@ file names; the title is display only, ≤120 chars), **clear** (same room run a
 copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, file moves to
 `.trash`), view alternatives, continue from here, **sampler**, **storage** (note names as links, `+`
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
-edit). The composer is greyed with no room open. All chrome is lowercase by one CSS rule; the
+edit), **artifacts** (a list; each opens read-only). The composer is greyed with no room open.
+
+**Artifacts** are the opposite of rooms: a room is a dry run, an artifact is one fan frozen. On
+the choose screen every card has **keep** (an optional `kept: true` on the node, saved with the
+room; eva ignores it and keeps it); with anything kept, **save as artifact** posts the room, fan
+point and kept ids, and the server builds the file itself from the room *on disk*:
+`artifacts/<hex>.json` with the prompt (root→fan point, verbatim), the kept branches whole with
+"k of N", temperature and meta minus probs, every other branch as an 80-char opening, the room's
+turn and sampler, the model llama's `/props` names at save time, and bits of curation for the
+selection — log2(C(N,k)), which is `curation`'s log2(n) when one is kept; a verbatim twin of a
+kept branch leaves the pool. Written once through `os.link`, so a taken name is 409, never an
+overwrite. The artifact screen shows the prompt folded, the kept cards, the rest faint, the
+numbers, and one button: **fan again** makes a new room from the prompt with the same turn and
+sampler, and doesn't fan. All chrome is lowercase by one CSS rule; the
 document and anything typed keep their capitals, because a capital there is text the model sees.
 Room: charcoal ground and blue-white ink, lilac accent, ice for the live dot, rose for posed;
 system sans; light by the OS, no toggle; dom-built, never innerHTML. `looks/` holds the four
@@ -95,9 +111,9 @@ name /quit`. It talks straight to llama-server, streaming, and saves through loo
 `write_sitting`. `/new` on a taken name is a no-op. It doesn't read titles yet, so page-made rooms
 show as hex names there. The page and eva on one room: last writer wins, by the dry-run law.
 
-**Tests**: `tests/loomtest.py` (every server route, notes included) and `tests/evatest.py`, both
-against `tests/stub_llama.py`, a fake llama-server; scratch dirs via `LOOM_SITTINGS` /
-`LOOM_STORAGE`, never the real ones:
+**Tests**: `tests/loomtest.py` (every server route, notes and artifacts included) and
+`tests/evatest.py`, both against `tests/stub_llama.py`, a fake llama-server; scratch dirs via
+`LOOM_SITTINGS` / `LOOM_STORAGE` / `LOOM_ARTIFACTS`, never the real ones:
 
 ```bash
 uv run --python 3.12 -m unittest tests/loomtest.py tests/evatest.py
@@ -141,9 +157,12 @@ sampler line is wrong on that one field; the page defaults it to the context siz
 
 The loom is built, running at `https://eva.x`, and usable from the phone; eva is its terminal
 twin. Nemo answers as a base model (`i'm here`, `yep`), stops clean on `\nbekh:`, ~10–12 tok/s.
-What's on the shelf: `ls sittings/`. The real reading hasn't happened yet. Next: bekh opens a
-basic room, pastes seeded lines cut from a real room, sends the first line, and the register gets
-read — or opens a bare room and just writes.
+What's on the shelf: `ls sittings/`; what's been kept: `ls artifacts/`. The real reading hasn't
+happened yet. Next: bekh opens a basic room, pastes seeded lines cut from a real room, sends the
+first line, and the register gets read — or opens a bare room and just writes. The first
+artifact candidate waits in `i-cant-make-you-believe`, a full copy of `chrome-roll` standing on
+the branch that broke the roll to tell the reader *"i can't make you believe any of this is
+real. i wish i could."* — keep it on its fan and save.
 
 Open, small: eva should show room titles; the cyborgism crowd (janus, ampdot) is reachable only by
 a person — every channel is invite-only, ampdot's contacts are on the Act I manifund page.
@@ -151,10 +170,3 @@ a person — every channel is invite-only, ampdot's contacts are on the Act I ma
 **Parked:** room templates — a "new" list in the menu (chat, bare, irc, letters, novel…), each
 one only a header, two turn prefixes and stop strings, never seeded lines; plus "save this
 room as a template", stored as files in `templates/`.
-
-**Parked:** artifacts — a third shelf beside `sittings/` and `storage/`, tracked by git: a
-read-only snapshot of a room at the moment a branch earned keeping (the document verbatim, the
-branch verbatim, the sampler that drew it, which of how many, bits of curation), openable in the
-page but never editable. The first candidate waits in `i-cant-make-you-believe`, a full copy of
-`chrome-roll` standing on the branch that broke the roll to tell the reader *"i can't make you
-believe any of this is real. i wish i could."*

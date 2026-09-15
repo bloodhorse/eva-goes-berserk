@@ -134,10 +134,52 @@
     #notebar{padding:0 0 14px; gap:10px;} #noteview{padding:2px 0 16px;} #notetext{margin:2px 0 16px;}
   }
 
+  /* Artifacts: a list in the menu like storage's, and a screen that can only be read. The
+     kept branches are cards like a fan's but nothing on them is a target — no hover, no
+     pointer — because an artifact that looked pickable would be lying about being frozen. */
+  #artwrap{display:none; border-top:1px solid var(--line); margin-top:12px; padding-top:8px;}
+  #artwrap.on{display:block;}
+  #artlist{display:flex; flex-direction:column;}
+  #artlist .artrow{display:flex; flex-direction:column; align-items:flex-start; text-align:left;
+    color:var(--ink); padding:8px 0;}
+  #artlist .artrow .t{text-decoration:underline; text-decoration-color:var(--line);
+    text-underline-offset:4px; overflow-wrap:anywhere;}
+  #artlist .artrow:hover .t{text-decoration-color:var(--accent);}
+  #artlist .artrow .n{color:var(--ghost); font-size:13px;}
+  #artbar{display:flex; align-items:center; gap:16px; padding:0 56px 20px 64px; flex-shrink:0;}
+  #artbar h1{font-size:16px; font-weight:500; margin:0; overflow-wrap:anywhere; min-width:0;}
+  #artback{background:transparent; border-color:transparent; margin-left:-10px;}
+  #artagain{flex-shrink:0; white-space:nowrap;}
+  #artview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
+    display:flex; flex-direction:column; gap:20px; padding:2px 56px 28px 64px;}
+  #artview details{flex-shrink:0; border-left:2px solid var(--line); padding-left:16px;}
+  #artview summary{cursor:pointer; color:var(--ghost); font-size:14px; padding:4px 0;}
+  #artview details .body{color:var(--ghost); font-size:16px; line-height:1.65; padding:10px 0 4px;}
+  .card.frozen{cursor:default;}
+  .card.frozen:hover{border-color:transparent;}
+  .artothers{flex-shrink:0; display:flex; flex-direction:column; gap:6px; color:var(--ghost);
+    font-size:14px;}
+  .artothers .o{display:flex; gap:12px; align-items:baseline; opacity:.75;}
+  .artothers .o .at{flex-shrink:0; font-size:13px; min-width:6.5em;}
+  .artothers .o .body{overflow-wrap:anywhere; min-width:0;}
+  .artnums{flex-shrink:0; display:grid; grid-template-columns:max-content 1fr; gap:4px 16px;
+    font-size:13px; color:var(--ghost); border-top:1px solid var(--line); padding-top:14px;}
+  /* not lowercased: a model file is Q5_K_M and a turn string is text the model saw */
+  .artnums .v{color:var(--ink); overflow-wrap:anywhere; min-width:0; text-transform:none;}
+  .foot .keep{margin-left:auto;}
+  #artsave{white-space:nowrap;}
+  @media (max-width:900px){
+    #artbar{padding:0 0 16px;} #artview{padding:2px 0 20px;} #artback{margin-left:0;}
+  }
+  @media (max-width:540px){
+    #artbar{padding:0 0 14px; gap:10px;} #artview{padding:2px 0 16px; gap:16px;}
+    .artothers .o{flex-direction:column; gap:0;}
+  }
+
   /* The former 55% dialogue pane, widened by about a third and centered. */
   :root{--reading: min(72vw, 1120px);}
   #panes{flex:1; display:flex; min-height:0; min-width:0;}
-  #doc, #fanpane, #notepane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
+  #doc, #fanpane, #notepane, #artpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
     display:flex; flex-direction:column; padding:64px 24px max(24px, env(safe-area-inset-bottom));}
   #blocks{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     --gut:64px; --rim:56px; font-size:16px; line-height:1.65;}
@@ -221,7 +263,7 @@
 
   @media (max-width:900px){
     :root{--reading:100%;}
-    #doc, #fanpane, #notepane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
+    #doc, #fanpane, #notepane, #artpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
     /* No margins for controls once the screen narrows: at 36px the "edit" word and the
        ‹ 2/3 › walk were wider than their margin and sat on top of the text, and on a
        touch screen there is no hover to reveal them anyway. So every block becomes a
@@ -249,9 +291,11 @@
       left:16px; right:16px; transform:none; max-width:none;}
   }
   @media (max-width:540px){
-    #doc, #fanpane, #notepane{padding-left:12px; padding-right:12px;}
+    #doc, #fanpane, #notepane, #artpane{padding-left:12px; padding-right:12px;}
     #turnwrap{padding:16px 0 0;}
-    #fanbar{padding:0 0 14px; gap:10px;}
+    /* the fan bar grew a second word (save as artifact); on a phone it wraps under the
+       title rather than squeezing "choose an answer" onto two lines */
+    #fanbar{padding:0 0 14px; gap:6px 10px; flex-wrap:wrap;}
     #cards{padding:2px 0 16px; gap:16px;}
     .card{padding:16px 18px;}
   }
@@ -269,7 +313,7 @@
   /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
      left 214px to read in. Keep just enough top to clear the fixed menu button (58px). */
   @media (max-height:500px){
-    #doc, #fanpane, #notepane{padding-top:64px;}
+    #doc, #fanpane, #notepane, #artpane{padding-top:64px;}
     #turnwrap{padding-top:10px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
@@ -315,6 +359,7 @@
       <button class="ghostbtn" id="renameno" type="button">Cancel</button>
     </div>
     <button class="ghostbtn" id="storebtn" type="button" aria-expanded="false" aria-controls="storewrap">Storage</button>
+    <button class="ghostbtn" id="artbtn" type="button" aria-expanded="false" aria-controls="artwrap">Artifacts</button>
     <div id="sampwrap"><div id="sampler"></div></div>
     <div id="storewrap">
       <div class="storehead"><span class="spring"></span>
@@ -322,6 +367,7 @@
       </div>
       <div id="notelist"></div>
     </div>
+    <div id="artwrap"><div id="artlist"></div></div>
   </aside>
 
   <main id="panes">
@@ -347,6 +393,7 @@
         </button>
         <h1>Choose an answer</h1>
         <span class="spring"></span>
+        <button class="ghostbtn" id="artsave" type="button" hidden title="freeze this fan with only the kept answers">Save as artifact</button>
         <button class="ghostbtn" id="more" type="button">More</button>
         <button class="iconbtn" id="stop" type="button" aria-label="Stop generating" title="stop generating" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
@@ -369,6 +416,18 @@
       </div>
       <div id="noteview" class="body"></div>
       <textarea id="notetext" placeholder="Paste it here" aria-label="Note text" spellcheck="false" hidden></textarea>
+    </section>
+
+    <section id="artpane" aria-label="Artifact" hidden>
+      <div id="artbar">
+        <button class="iconbtn" id="artback" type="button" aria-label="Back" title="back">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        </button>
+        <h1 id="arttitle"></h1>
+        <span class="spring"></span>
+        <button class="btn" id="artagain" type="button" title="a new room whose document is this prompt, at this sampler">Fan again</button>
+      </div>
+      <div id="artview"></div>
     </section>
   </main>
   <div id="notice" role="status" aria-live="polite"></div>
@@ -507,6 +566,7 @@ function showDialogue(){
   $('doc').hidden = false;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
+  $('artpane').hidden = true;
   turnEl.focus({preventScroll:true});
 }
 function showChoices(from){
@@ -517,6 +577,7 @@ function showChoices(from){
   $('doc').hidden = true;
   $('fanpane').hidden = false;
   $('notepane').hidden = true;
+  $('artpane').hidden = true;
   renderFan();
   if(entering){
     cardsEl.scrollTop = 0;
@@ -565,6 +626,7 @@ function showNote(){
   $('doc').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = false;
+  $('artpane').hidden = true;
 }
 
 // Reading and writing are the same screen with the words swapped; the name field shows
@@ -626,6 +688,189 @@ async function saveNote(){
 function cancelNote(){
   if(note) noteMode(false);
   else showDialogue();
+}
+
+// ---- artifacts -----------------------------------------------------------------------
+// One fan, frozen: the prompt it was drawn from and the answers bekh kept. The page marks
+// and asks; the server builds the file from the room on disk and writes it once. Nothing
+// here edits, renames or deletes one — a mistaken artifact is a `git rm`, by hand.
+let artifact = null;     // what the artifact screen shows
+let savingArt = false;
+
+function keptInFan(){
+  if(!sitting || !fanFrom) return [];
+  return kids(fanFrom).filter(n => n.kind === 'model' && n.kept);
+}
+function gateArtSave(){
+  $('artsave').hidden = !choosing || !keptInFan().length;
+  // Not while the fan is still writing: the artifact would freeze a fan missing its tail,
+  // and "what it could have said" would be short of what it did say.
+  $('artsave').disabled = running || stopping || saving || savingArt;
+}
+
+function toggleKeep(n){
+  if(!sitting || stopping) return;
+  if(n.kept) delete n.kept;       // optional key: absent means not kept, like every old room
+  else n.kept = true;
+  renderFan();
+  save();
+}
+
+async function saveArtifact(){
+  if(!sitting || !fanFrom || running || stopping || saving || savingArt) return;
+  const ids = keptInFan().map(n => n.id);
+  if(!ids.length) return;
+  savingArt = true;
+  gate();
+  try{
+    // The server reads the room off the disk, so every queued write has to land first — a
+    // branch that arrived a moment ago is not a branch there until its save has.
+    await saveQueue;
+    const d = await postJSON('/api/artifact', {room: sitting.name, parent: fanFrom, kept: ids});
+    if(d.error){ sys('not saved as an artifact: ' + d.error, true); return; }
+    sys('saved as an artifact: ' + d.title);
+    if($('artwrap').classList.contains('on')) loadArtifacts();
+  }catch(e){
+    sys('not saved as an artifact: ' + e.message, true);
+  }finally{
+    savingArt = false;
+    gate();
+  }
+}
+
+function when(ts){
+  const d = new Date((Number(ts) || 0) * 1000);
+  return d.toLocaleDateString(undefined, {day: 'numeric', month: 'short', year: 'numeric'}) +
+    ' ' + d.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'});
+}
+
+// Split from the fetch so the screenshot rig can hand it rows it loaded synchronously.
+function drawArtifacts(rows){
+  const list = $('artlist');
+  list.textContent = '';
+  if(!rows.length){
+    const s = document.createElement('div');
+    s.className = 'sys';
+    s.textContent = 'No artifacts yet — keep answers in a fan, then save.';
+    list.appendChild(s);
+  }
+  for(const r of rows){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ghostbtn artrow';
+    const t = document.createElement('span');
+    t.className = 't';
+    t.textContent = r.title;
+    const n = document.createElement('span');
+    n.className = 'n';
+    n.textContent = r.kept + ' of ' + r.fan + ' kept · ' + when(r.created);
+    b.appendChild(t);
+    b.appendChild(n);
+    b.addEventListener('click', () => openArtifact(r.name));
+    list.appendChild(b);
+  }
+}
+
+async function loadArtifacts(){
+  let d;
+  try{ d = await getJSON('/api/artifacts'); }
+  catch(e){ sys('artifacts are not answering: ' + e.message, true); return; }
+  drawArtifacts((d && d.artifacts) || []);
+}
+
+function showArtifact(){
+  choosing = false;
+  menu(false);
+  $('doc').hidden = true;
+  $('fanpane').hidden = true;
+  $('notepane').hidden = true;
+  $('artpane').hidden = false;
+  $('artview').scrollTop = 0;
+}
+
+// The whole read-only screen. Every string from the file goes in as text: the prompt and
+// the branches are model output and his lines, and the file is in a public repo besides.
+function drawArtifact(a){
+  const view = $('artview');
+  view.textContent = '';
+  $('arttitle').textContent = a.title || a.name;
+  const size = (a.fan && a.fan.size) || 0;
+  const add = (parent, tag, cls, text) => {
+    const el = document.createElement(tag);
+    if(cls) el.className = cls;
+    if(text !== undefined) el.textContent = text;
+    parent.appendChild(el);
+    return el;
+  };
+
+  // Folded: the prompt is usually the long part, and what he came back for is the answers.
+  const fold = add(view, 'details');
+  add(fold, 'summary', '', 'prompt · ' + (a.prompt || '').length + ' characters');
+  add(fold, 'div', 'body', a.prompt || '(empty — the model began the document itself)');
+
+  for(const k of (a.kept || [])){
+    const card = add(view, 'div', 'card frozen');
+    add(card, 'div', 'body', k.text || '(empty continuation)');
+    const foot = add(card, 'div', 'foot');
+    add(foot, 'span', '', k.at + ' of ' + size);
+    if(typeof k.temperature === 'number') add(foot, 'span', '', 'temp ' + num(k.temperature));
+    if(k.meta && k.meta.tokens_predicted) add(foot, 'span', '', k.meta.tokens_predicted + ' tokens');
+    if(k.meta && k.meta.fork) add(foot, 'span', '', 'forked at ' + k.meta.fork.at_token);
+    if(k.posed) add(foot, 'span', 'posed', 'posed');
+  }
+
+  const others = (a.fan && a.fan.others) || [];
+  if(others.length){
+    const box = add(view, 'div', 'artothers');
+    add(box, 'div', '', 'what else it said');
+    for(const o of others){
+      const row = add(box, 'div', 'o');
+      add(row, 'span', 'at', o.at + ' of ' + size +
+        (typeof o.temperature === 'number' ? ' · temp ' + num(o.temperature) : '') +
+        (o.pruned ? ' · pruned' : ''));
+      add(row, 'span', 'body', (o.opening || '') + ((o.length || 0) > (o.opening || '').length ? '…' : ''));
+    }
+  }
+
+  const nums = add(view, 'div', 'artnums');
+  const pair = (k, v) => { add(nums, 'span', '', k); add(nums, 'span', 'v', v); };
+  pair('bits', (Math.round((a.bits || 0) * 100) / 100) + ' bits');
+  const m = a.model;
+  pair('model', m && m.file ? m.file + (m.n_ctx ? ' · ' + m.n_ctx + ' ctx' : '') : 'not recorded');
+  const p = a.params || {};
+  pair('sampler', ['temperature', 'spread', 'min_p', 'top_k', 'top_p', 'top_n_sigma',
+    'xtc_probability', 'repeat_penalty', 'dry_multiplier', 'n_predict', 'fan']
+    .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · ') +
+    (p.logit_bias_text ? ' · bias ' + p.logit_bias_text.split('\n').join(', ') : ''));
+  const turn = a.turn || {};
+  pair('turn', (turn.prefix || turn.suffix) ? esc(turn.prefix || '') + ' … ' + esc(turn.suffix || '') : 'bare');
+  pair('saved', when(a.created));
+  const src = a.source || {};
+  pair('from', src.title ? src.title + ' (' + src.room + ')' : (src.room || '?'));
+}
+
+async function openArtifact(name){
+  let d;
+  try{ d = await getJSON('/api/artifact?name=' + encodeURIComponent(name)); }
+  catch(e){ sys('could not open the artifact: ' + e.message, true); return; }
+  if(d.error){ sys(d.error, true); return; }
+  artifact = d;
+  drawArtifact(d);
+  showArtifact();
+}
+
+// Coming back to an artifact is a new room, never a change to the artifact: its prompt is
+// the root, its turn and sampler come along, and nothing fans until he asks.
+async function fanAgain(){
+  if(!artifact) return;
+  const a = artifact;
+  const turn = a.turn || {prefix: '', suffix: ''};
+  await newSitting(!(turn.prefix || turn.suffix), {
+    rootText: a.prompt || '',
+    title: ('again: ' + (a.title || a.name)).slice(0, 120),
+    params: a.params && Object.keys(a.params).length ? a.params : PARAMS,
+    turn: turn,
+  });
 }
 
 // ---- the tree ------------------------------------------------------------------------
@@ -1101,13 +1346,27 @@ function renderFan(){
       s.title = 'the model wrote this ' + same + ' times in this fan';
       foot.appendChild(s);
     }
-    if(foot) el.appendChild(foot);
+    // Keep: a mark on the node, saved with the room, that says "this one goes in the
+    // artifact". Not a pick — `stop` on the button, or keeping would also choose the card.
+    if(!foot){
+      foot = document.createElement('div');
+      foot.className = 'foot';
+    }
+    const keep = ghostBtn(n.kept ? 'Kept' : 'Keep', () => toggleKeep(n), true);
+    keep.classList.add('keep');
+    keep.classList.toggle('on', !!n.kept);
+    keep.setAttribute('aria-pressed', String(!!n.kept));
+    foot.appendChild(keep);
+    el.appendChild(foot);
     el.addEventListener('click', () => {
       // Selecting a passage to copy it is not choosing the answer.
       if(window.getSelection().toString()) return;
       pickNode(n.id);
     });
     el.addEventListener('keydown', e => {
+      // Only the card's own keys: return on the keep button bubbles up here, and without
+      // this it would keep the answer and then pick it.
+      if(e.target !== el) return;
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pickNode(n.id); }
     });
     cardsEl.appendChild(el);
@@ -1115,6 +1374,7 @@ function renderFan(){
   }
   if(running && !stopping) pending();
   cardsEl.scrollTop = scroll;
+  gateArtSave();
 }
 
 function gate(){
@@ -1134,6 +1394,8 @@ function gate(){
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
   $('stop').disabled = stopping;
+  $('artagain').disabled = stopping || saving;
+  gateArtSave();
   turnEl.placeholder = !on ? 'Open the menu to start a sitting' : bare() ? 'Text to continue' : 'Your line';
   $('activity').textContent = stopping ? 'Stopping…' : running ? 'Writing alternatives…' : '';
 }
@@ -1540,11 +1802,13 @@ async function newSitting(isBare = false, opts = {}){
     const fresh = {
       name, created: Date.now() / 1000, updated: 0,
       params: JSON.parse(JSON.stringify(opts.params || PARAMS)),
-      turn: isBare ? {prefix: '', suffix: ''} : JSON.parse(JSON.stringify(TURN)),
+      turn: JSON.parse(JSON.stringify(opts.turn || (isBare ? {prefix: '', suffix: ''} : TURN))),
       root: root.id, current: root.id, nodes: {[root.id]: root},
     };
     if(opts.title) fresh.title = opts.title;
-    if(isBare) fresh.params.stop = [];
+    // A room handed its turn (fan again) is a rebuild of one that existed: its stop strings
+    // are whatever that room ran with, even if its turn was empty, so they are left alone.
+    if(isBare && !opts.turn) fresh.params.stop = [];
     const d = await postJSON('/api/sitting', fresh);
     if(d.error) throw new Error(d.error);
     fresh.updated = d.updated || 0;
@@ -1719,6 +1983,15 @@ $('storebtn').addEventListener('click', () => {
   $('storebtn').setAttribute('aria-expanded', String(on));
   if(on) loadNotes();
 });
+$('artbtn').addEventListener('click', () => {
+  const on = !$('artwrap').classList.contains('on');
+  $('artwrap').classList.toggle('on', on);
+  $('artbtn').setAttribute('aria-expanded', String(on));
+  if(on) loadArtifacts();
+});
+$('artback').addEventListener('click', showDialogue);
+$('artagain').addEventListener('click', fanAgain);
+$('artsave').addEventListener('click', saveArtifact);
 $('noteadd').addEventListener('click', newNote);
 $('noteback').addEventListener('click', showDialogue);
 $('noteedit').addEventListener('click', editNote);
