@@ -132,6 +132,7 @@
   #newbox{display:none; align-items:center; gap:8px;}
   #newbox.on{display:flex;}
   #newname{width:160px; font-size:13px; padding:3px 8px;}
+  #barewrap{display:inline-flex; align-items:center; gap:5px; font-size:13px; color:var(--ghost);}
 
   /* ---- the two panes ---------------------------------------------------------------
      min-height:0 is load-bearing: a flex child defaults to min-height:auto, which lets a
@@ -274,6 +275,7 @@
     <button class="ghostbtn" id="newbtn" type="button">New</button>
     <span id="newbox">
       <input id="newname" placeholder="Name" autocomplete="off" spellcheck="false">
+      <span id="barewrap" title="no header, no names, no stop strings: you type, it continues"><input type="checkbox" id="bare"><label for="bare">bare</label></span>
       <button class="ghostbtn" id="newok" type="button">Create</button>
       <button class="ghostbtn" id="newno" type="button">Cancel</button>
     </span>
@@ -348,6 +350,11 @@ const PARAMS = {
 // and the document stays one continuous text. Break this and every branch after the first
 // runs the two speakers together on one line.
 const TURN = {prefix: '\nbekh: ', suffix: '\nseat:'};
+// A "bare" sitting is not a mode: it is the same four settings emptied — no header, no
+// names, no stop strings — so the model sees nothing but the text and continues it. Derived
+// from the settings rather than stored, so flipping the prefix in the sampler mid-sitting
+// flips the behaviour with it and the file never carries a flag that can disagree.
+const bare = () => !!sitting && !(sitting.turn.prefix || sitting.turn.suffix);
 // Which numbers the sampler draws, in the order they matter. `stop`, the two turn strings
 // and the fan get their own widgets below.
 const FIELDS = [
@@ -548,8 +555,10 @@ function swipe(n){
 function fillBody(body, n){
   body.textContent = '';
   const suf = (sitting.turn && sitting.turn.suffix) || '';
-  if(n.kind === 'human' && suf && n.text.endsWith(suf) && n.text.length > suf.length){
-    const head = n.text.slice(0, -suf.length);
+  // No suffix (a bare sitting) still gets the band: whose words are whose is the one piece
+  // of structure a bare document keeps, and it lives in the page, never in the text.
+  if(n.kind === 'human' && (!suf || (n.text.endsWith(suf) && n.text.length > suf.length))){
+    const head = suf ? n.text.slice(0, -suf.length) : n.text;
     const lead = head.match(/^\n*/)[0];
     const core = head.slice(lead.length);
     if(core){
@@ -626,7 +635,7 @@ function renderFan(){
 function gate(){
   const on = !!sitting;
   for(const id of ['turn', 'send', 'fanbtn', 'stop', 'more']) $(id).disabled = !on;
-  turnEl.placeholder = on ? 'Your line' : 'No sitting open — press New';
+  turnEl.placeholder = !on ? 'No sitting open — press New' : bare() ? 'Text to continue' : 'Your line';
   if(!on) $('docstat').textContent = 'no sitting open · New makes one';
 }
 
@@ -722,7 +731,9 @@ async function runFan(n){
 
 async function sendLine(){
   if(!sitting) return;
-  const typed = turnEl.value.trim();
+  // Bare: whitespace is text. A trailing space or newline is the difference between
+  // "continue this word" and "start the next one", and trimming would decide it for him.
+  const typed = bare() ? turnEl.value : turnEl.value.trim();
   if(!typed) return;
   turnEl.value = '';
   grow();
@@ -825,13 +836,13 @@ async function openSitting(name){
   render();
 }
 
-async function newSitting(name){
+async function newSitting(name, isBare){
   if(!/^[A-Za-z0-9_.-]{1,64}$/.test(name)){
     sys('names are letters, digits, _ . - and up to 64 of them', true);
     return;
   }
   generation++;
-  const root = {id: hex(4), parent: null, kind: 'root', text: HEADER,
+  const root = {id: hex(4), parent: null, kind: 'root', text: isBare ? '' : HEADER,
                 ts: Date.now() / 1000, pruned: false, posed: false, meta: null};
   // One line of scene-setting and an empty seed, and that is the whole of it. No example
   // exchanges ship with this tool: seeded lines have to be bekh's own, cut from a real
@@ -839,9 +850,12 @@ async function newSitting(name){
   sitting = {
     name: name, created: Date.now() / 1000, updated: 0,
     params: JSON.parse(JSON.stringify(PARAMS)),
-    turn: JSON.parse(JSON.stringify(TURN)),
+    turn: isBare ? {prefix: '', suffix: ''} : JSON.parse(JSON.stringify(TURN)),
     root: root.id, current: root.id, nodes: {[root.id]: root},
   };
+  // Without a stop string a branch runs to n_predict and may end mid-word. That is not a
+  // defect, it is what continuation is; the next Fan from that card picks the word back up.
+  if(isBare) sitting.params.stop = [];
   await save();
   remember(name);
   await loadShelf();
@@ -859,9 +873,11 @@ $('newbtn').addEventListener('click', () => {
 $('newno').addEventListener('click', () => $('newbox').classList.remove('on'));
 $('newok').addEventListener('click', async () => {
   const name = $('newname').value.trim();
+  const isBare = $('bare').checked;
   $('newbox').classList.remove('on');
   $('newname').value = '';
-  if(name) await newSitting(name);
+  $('bare').checked = false;
+  if(name) await newSitting(name, isBare);
 });
 $('newname').addEventListener('keydown', e => { if(e.key === 'Enter') $('newok').click(); });
 $('samp').addEventListener('click', () => $('sampwrap').classList.toggle('on'));
