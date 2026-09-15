@@ -148,8 +148,29 @@
     font-size:13px; color:var(--ghost); opacity:0;}
   .blk:hover .swipe, .blk:focus-within .swipe{opacity:1;}
   .arw{background:none; border:0; padding:6px 2px; color:var(--ghost);}
-  .foot{font-size:13px; color:var(--ghost); display:flex; gap:10px;}
+  .foot{font-size:13px; color:var(--ghost); display:flex; gap:10px; flex-wrap:wrap;}
+  .foot .ghostbtn{font-size:13px; padding:0;}
+  .foot .ghostbtn.on{color:var(--accent);}
   .posed{color:var(--hot);}
+
+  /* Tokens, painted by how improbable the model found the word it chose. A wash on the
+     GROUND and never a colour on the ink: the page's oldest rule is that nobody's words
+     have a colour of their own, and a model line whose letters changed hue would be the
+     page saying something about the model. --hot is the same rose that marks posed, which
+     is right — both mean "look here, this is not the ordinary case". */
+  .tok{cursor:pointer; border-radius:2px;}
+  .tok:hover{box-shadow:inset 0 -1px 0 var(--ghost);}
+  #alts{position:fixed; z-index:50; width:min(280px, calc(100vw - 32px));
+    max-height:min(52dvh, 360px); overflow-y:auto; scrollbar-width:thin;
+    background:var(--panel-soft); border:1px solid var(--line); border-radius:12px;
+    padding:8px; box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
+  #alts .head{color:var(--ghost); font-size:13px; padding:4px 10px 8px;}
+  #alts .altrow{display:flex; align-items:baseline; gap:10px; width:100%; text-align:left;
+    background:none; border:0; border-radius:8px; padding:8px 10px; color:var(--ink);}
+  #alts .altrow:hover{background:var(--panel);}
+  #alts .altrow .t{flex:1; overflow-wrap:anywhere; text-transform:none;}
+  #alts .altrow .p{color:var(--ghost); font-size:13px; flex-shrink:0;}
+  #alts .altrow.here{color:var(--ghost);}
   .ed{width:100%; min-height:5em; font-size:16px; line-height:1.65; background:transparent;}
 
   #turnwrap{flex-shrink:0; padding:24px 56px 0 64px;}
@@ -634,7 +655,8 @@ function save(){
 // more, and the mark that says these are not the model's words. The rest of the sampler
 // stays in the file — put it all on screen and the document stops being the thing you read.
 const num = x => String(Math.round(x * 1000) / 1000);
-function footLine(n){
+function hasProbs(n){ return !!(n.meta && n.meta.probs && n.meta.probs.length); }
+function footLine(n, ops){
   const f = document.createElement('div');
   f.className = 'foot';
   const t = n.meta && n.meta.params && n.meta.params.temperature;
@@ -643,13 +665,177 @@ function footLine(n){
     s.textContent = 'temp ' + num(t);
     f.appendChild(s);
   }
+  if(n.meta && n.meta.fork){
+    // Evidence, like posed: this line did not come out of the model in one run. Somebody
+    // reached into it at token N and took the road not taken.
+    const s = document.createElement('span');
+    s.textContent = 'forked at ' + n.meta.fork.at_token;
+    f.appendChild(s);
+  }
   if(n.posed){
     const p = document.createElement('span');
     p.className = 'posed';
     p.textContent = 'posed';
     f.appendChild(p);
   }
+  // Only in the document, never on a card: the whole card is the pick target, and a line
+  // of clickable tokens inside it would be a fight over every click.
+  if(ops && n.kind === 'model' && hasProbs(n)){
+    const on = painted.has(n.id);
+    const b = ghostBtn('tokens', () => {
+      if(on) painted.delete(n.id); else painted.add(n.id);
+      closeAlts();
+      render();
+    });
+    b.classList.toggle('on', on);
+    f.appendChild(b);
+  }
   return f.firstChild ? f : null;
+}
+
+// ---- how improbable was that word ----------------------------------------------------
+// Which lines are showing their tokens. Page state, deliberately not in the file: it is a
+// way of looking at a line, not a fact about it.
+const painted = new Set();
+
+const probOf = p => Math.exp(Number(p.logprob) || -40);
+function pct(p){ return (p * 100).toFixed(p >= 0.1 ? 0 : p >= 0.01 ? 1 : 2) + '%'; }
+// Whitespace has to be visible in a list of alternatives: half the choices a tokenizer
+// offers are " word" against "word", and a row that showed them identically would be a
+// fork you cannot aim.
+function shown(tok){
+  return String(tok || '').replace(/\n/g, '⏎').replace(/\t/g, '⇥').replace(/ /g, '␣');
+}
+// -log10 and not the probability: everything worth seeing lives between 10% and 0.1%, and
+// a ramp linear in p would spend its whole range on the difference between 90% and 60%.
+// 3 decades to full strength, so 10% is a visible wash and 0.1% is unmistakable.
+function tint(p){
+  const a = Math.min(Math.max(-Math.log10(Math.max(p, 1e-9)) / 3, 0), 1) * 42;
+  return a < 1.5 ? '' : 'color-mix(in srgb, var(--hot) ' + a.toFixed(1) + '%, transparent)';
+}
+
+function paintBody(body, n){
+  body.textContent = '';
+  const probs = n.meta.probs;
+  let at = 0;
+  for(let i = 0; i < probs.length; i++){
+    const tok = probs[i].token || '';
+    // The probabilities are a record of ONE run; the text can have moved since (an edit, a
+    // fork filled out from a different call). The moment they stop matching the line, stop
+    // painting — a token drawn over the wrong word is worse than no paint at all.
+    if(!tok || n.text.slice(at, at + tok.length) !== tok) break;
+    const s = document.createElement('span');
+    s.className = 'tok';
+    s.textContent = tok;
+    const p = probOf(probs[i]);
+    const bg = tint(p);
+    if(bg) s.style.background = bg;
+    s.title = pct(p);
+    const at_ = i;
+    s.addEventListener('click', e => { e.stopPropagation(); showAlts(n, at_, s); });
+    body.appendChild(s);
+    at += tok.length;
+  }
+  // Whatever the probabilities don't reach goes in plain. The document is never wrong.
+  if(at < n.text.length) body.appendChild(document.createTextNode(n.text.slice(at)));
+}
+
+function closeAlts(){
+  const box = $('alts');
+  if(box) box.remove();
+}
+
+function showAlts(n, i, anchor){
+  closeAlts();
+  const here = n.meta.probs[i];
+  const box = document.createElement('div');
+  box.id = 'alts';
+  const head = document.createElement('div');
+  head.className = 'head';
+  head.textContent = 'instead of ' + shown(here.token) + ' — pick one to fork here';
+  box.appendChild(head);
+  for(const alt of (here.top_logprobs || [])){
+    const row = document.createElement('button');
+    row.type = 'button';
+    row.className = 'altrow' + (alt.token === here.token ? ' here' : '');
+    const t = document.createElement('span');
+    t.className = 't';
+    t.textContent = shown(alt.token);
+    const p = document.createElement('span');
+    p.className = 'p';
+    p.textContent = pct(probOf(alt));
+    row.appendChild(t);
+    row.appendChild(p);
+    // The token that was actually taken is already in the document — clicking it would
+    // make a fork identical to the line it came from.
+    row.addEventListener('click', () => alt.token === here.token ? closeAlts() : forkAt(n, i, alt));
+    box.appendChild(row);
+  }
+  document.body.appendChild(box);
+  const r = anchor.getBoundingClientRect();
+  const w = box.offsetWidth, h = box.offsetHeight;
+  box.style.left = Math.max(12, Math.min(r.left, window.innerWidth - w - 12)) + 'px';
+  // below the word, or above it when there is no room — a popup half off the bottom of a
+  // phone is a control that isn't there
+  box.style.top = (r.bottom + 6 + h < window.innerHeight ? r.bottom + 6 : Math.max(12, r.top - h - 6)) + 'px';
+}
+
+// A fork is an ordinary sibling: same parent, same params, walkable with ‹ n/m › like any
+// branch of a fan. The only thing that makes it special is written in its meta, and the
+// only thing that makes it interesting is that its first divergence was chosen, not sampled.
+async function forkAt(n, i, alt){
+  if(!sitting || running || stopping || saving) return;
+  closeAlts();
+  sys('');
+  const probs = n.meta.probs;
+  const head = probs.slice(0, i).map(p => p.token).join('') + (alt.token || '');
+  const params = JSON.parse(JSON.stringify((n.meta && n.meta.params) || sitting.params));
+  // Nothing invented: the token at the fork really does have that probability in that
+  // context — it is the number the original line reported for it — and the alternatives
+  // beside it are the same set.
+  const headProbs = probs.slice(0, i).concat([{
+    id: alt.id, token: alt.token, logprob: alt.logprob,
+    top_logprobs: probs[i].top_logprobs || [],
+  }]);
+  const fork = addNode('model', head, n.parent, {
+    params: params, probs: headProbs,
+    fork: {at_token: i, chosen: alt.token, from_node: n.id},
+  });
+  const mine = ++generation;
+  const owner = sitting;
+  sitting.current = fork.id;
+  painted.add(fork.id);      // he forked to watch the tokens; keep watching them
+  fanFrom = null;
+  running = true;
+  showDialogue();
+  render();
+  if(!await save()){
+    running = false;
+    gate();
+    return;
+  }
+  try{
+    const d = await postJSON('/api/complete', {prompt: promptFrom(fork.id), params: params});
+    if(mine !== generation || sitting !== owner) return;
+    if(d.error){
+      if(d.error !== 'cancelled') sys(d.error, true);
+      return;
+    }
+    fork.text += d.text;
+    fork.meta.probs = headProbs.concat(d.probs || []);
+    fork.meta.stop_type = d.stop_type;
+    fork.meta.stopping_word = d.stopping_word;
+    fork.meta.tokens_predicted = d.tokens_predicted;
+    fork.meta.tps = d.tps;
+    await save();
+  }catch(e){
+    if(mine === generation) sys('The loom is not answering: ' + e.message, true);
+  }finally{
+    if(mine === generation){
+      running = false;
+      render();
+    }
+  }
 }
 
 // A word you can click. `stop` is not optional inside a fan card: the whole card is the
@@ -734,6 +920,10 @@ function swipe(n){
 // but its neighbours came out of a model.
 function fillBody(body, n){
   body.textContent = '';
+  if(n.kind === 'model' && painted.has(n.id) && hasProbs(n)){
+    paintBody(body, n);
+    return;
+  }
   const suf = (sitting.turn && sitting.turn.suffix) || '';
   // No suffix (a bare sitting) still gets the band: whose words are whose is the one piece
   // of structure a bare document keeps, and it lives in the page, never in the text.
@@ -755,6 +945,9 @@ function fillBody(body, n){
 }
 
 function renderDoc(){
+  // Every token span about to be thrown away takes its popup with it, or the alternatives
+  // end up floating over a line that has been rebuilt underneath them.
+  closeAlts();
   blocksEl.textContent = '';
   for(const n of path()){
     const el = document.createElement('div');
@@ -768,7 +961,7 @@ function renderDoc(){
     gut.appendChild(ghostBtn('Edit', () => editBlock(n, body)));
     el.appendChild(gut);
     el.appendChild(body);
-    const foot = footLine(n);
+    const foot = footLine(n, true);
     if(foot) el.appendChild(foot);
     const sw = swipe(n);
     if(sw) el.appendChild(sw);
@@ -1244,9 +1437,15 @@ $('notecancel').addEventListener('click', cancelNote);
 $('menubtn').addEventListener('click', () => menu($('tools').hidden));
 document.addEventListener('click', e => {
   if(!e.target.closest('#tools, #menubtn')) menu(false);
+  if(!e.target.closest('#alts')) closeAlts();
 });
+// The popup is positioned against a word on the screen, so it has to go the moment that
+// word moves. Capture, because #blocks is what actually scrolls, not the window.
+document.addEventListener('scroll', closeAlts, true);
+window.addEventListener('resize', closeAlts);
 document.addEventListener('keydown', e => {
   if(e.key !== 'Escape' || e.defaultPrevented || e.target.closest('.ed')) return;
+  if($('alts')){ closeAlts(); return; }
   if(!$('tools').hidden){ menu(false); $('menubtn').focus(); }
   else if(choosing){ showDialogue(); stopAll(); }
 });

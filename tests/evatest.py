@@ -39,6 +39,15 @@ os.environ["LOOM_SITTINGS"] = SHELF
 import eva  # noqa: E402
 import loom  # noqa: E402
 
+# …unless loom was already imported by another test module in the same run (loomtest does
+# it, for the spread formula), in which case that module's env won a race this one can't
+# see. Follow loom rather than argue with it: the whole point is never to touch the real
+# shelf, and loom.SITTINGS is by definition the one being used.
+if loom.SITTINGS != SHELF:
+    shutil.rmtree(SHELF, ignore_errors=True)
+    SHELF = loom.SITTINGS
+    os.makedirs(SHELF, exist_ok=True)
+
 STUB = None
 EDITOR = os.path.join(SHELF, "fake_editor.py")
 # The editor is a process eva shells out to, so the test provides a real one: it writes
@@ -52,6 +61,9 @@ def setUpModule() -> None:
     STUB = stub_llama.serve(0)
     threading.Thread(target=STUB.serve_forever, daemon=True).start()
     eva.LLAMA = f"http://127.0.0.1:{STUB.server_address[1]}"
+    # The shelf can be gone by now: sharing it with loomtest means loomtest's teardown may
+    # already have taken it away in a combined run.
+    os.makedirs(SHELF, exist_ok=True)
     with open(EDITOR, "w", encoding="utf-8") as f:
         f.write(EDITOR_SRC)
     os.environ["EDITOR"] = f"{sys.executable} {EDITOR}"
@@ -238,11 +250,11 @@ class SpreadAndProbabilities(unittest.TestCase):
         ev = fresh()
         ev.dispatch("/set fan 4")
         ev.dispatch("/set spread 0.5")
-        ev.dispatch("SPREADMARK")
+        ev.dispatch("EVASPREADMARK")
         kids = ev.kids(ev.sitting["current"])
         self.assertEqual([k["meta"]["params"]["temperature"] for k in kids],
                          [0.5, 0.8333, 1.1667, 1.5])
-        wire = [b for b in stub_llama.SEEN if "SPREADMARK" in (b.get("prompt") or "")]
+        wire = [b for b in stub_llama.SEEN if "EVASPREADMARK" in (b.get("prompt") or "")]
         self.assertEqual([b["temperature"] for b in wire], [0.5, 0.8333, 1.1667, 1.5])
         for b in wire:                      # llama never sees the loom's own keys
             for k in ("fan", "spread", "dry_keep"):
@@ -251,7 +263,7 @@ class SpreadAndProbabilities(unittest.TestCase):
     def test_streamed_probabilities_are_collected_token_by_token(self):
         ev = fresh()
         ev.dispatch("/set fan 1")
-        ev.dispatch("PROBMARK")
+        ev.dispatch("EVAPROBMARK")
         node = ev.kids(ev.sitting["current"])[0]
         probs = on_disk(ev)["nodes"][node["id"]]["meta"]["probs"]
         # Nothing rides on the final streamed event, so this is the whole test: if the

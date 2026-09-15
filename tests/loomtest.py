@@ -184,6 +184,28 @@ class Tree:
         if n["kind"] == "model":
             n["posed"] = True     # forever; root and human lines are his own words
 
+    def fork_at(self, n: dict, i: int, k: int) -> dict:
+        """The page's forkAt: a sibling whose text is the line up to token i plus the k-th
+        alternative there, then one completion to fill it out from that point."""
+        probs = n["meta"]["probs"]
+        alt = probs[i]["top_logprobs"][k]
+        head = "".join(p["token"] for p in probs[:i]) + alt["token"]
+        params = json.loads(json.dumps(n["meta"]["params"]))
+        head_probs = probs[:i] + [{"id": alt["id"], "token": alt["token"],
+                                   "logprob": alt["logprob"],
+                                   "top_logprobs": probs[i]["top_logprobs"]}]
+        fork = self.add("model", head, n["parent"], {
+            "params": params, "probs": head_probs,
+            "fork": {"at_token": i, "chosen": alt["token"], "from_node": n["id"]}})
+        self.d["current"] = fork["id"]
+        st, d = call("/api/complete", {"prompt": self.prompt_from(fork["id"]),
+                                       "params": params})
+        assert st == 200, d
+        fork["text"] += d["text"]
+        fork["meta"]["probs"] = head_probs + (d.get("probs") or [])
+        fork["meta"]["stop_type"] = d["stop_type"]
+        return fork
+
     def kids(self, nid: str) -> list:
         return [n for n in self.d["nodes"].values() if n["parent"] == nid and not n["pruned"]]
 
@@ -529,6 +551,32 @@ class Probabilities(unittest.TestCase):
         t.d["params"]["n_probs"] = 0
         t.human("NOPROBMARK")
         self.assertIsNone(t.fan(1)[0]["meta"]["probs"])
+
+    def test_fork_at_a_token(self):
+        t = fresh("fork")
+        t.human("FORKMARK")
+        line = t.fan(1)[0]
+        at = 2
+        alt = line["meta"]["probs"][at]["top_logprobs"][1]
+        self.assertNotEqual(alt["token"], line["meta"]["probs"][at]["token"])
+        head = "".join(p["token"] for p in line["meta"]["probs"][:at]) + alt["token"]
+
+        fork = t.fork_at(line, at, 1)
+        self.assertTrue(fork["text"].startswith(head))
+        self.assertGreater(len(fork["text"]), len(head))        # it filled out from there
+        # A sibling, not a child: the fork stands beside the line it came from and the
+        # ‹ n/m › walk finds it like any other candidate.
+        self.assertEqual(fork["parent"], line["parent"])
+        self.assertEqual([n["id"] for n in t.kids(line["parent"])], [line["id"], fork["id"]])
+        self.assertEqual(fork["meta"]["fork"],
+                         {"at_token": at, "chosen": alt["token"], "from_node": line["id"]})
+        # and the merged probabilities still rebuild the line, so it can be painted and
+        # forked again
+        self.assertEqual("".join(p["token"] for p in fork["meta"]["probs"]), fork["text"])
+        # what llama was actually asked to continue ends in the chosen alternative
+        body = [b for b in seen() if "FORKMARK" in (b.get("prompt") or "")][-1]
+        self.assertTrue(body["prompt"].endswith(head))
+        self.assertEqual(t.save()[0], 200)
 
 
 class Cancel(unittest.TestCase):
