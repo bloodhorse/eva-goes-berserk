@@ -43,8 +43,10 @@ import stub_llama  # noqa: E402
 # loom.html fans instead of guessing at it.
 SHELF = tempfile.mkdtemp(prefix="loom-test-")
 STORE = tempfile.mkdtemp(prefix="loom-store-")     # never the real, git-tracked storage/
+ARTS = tempfile.mkdtemp(prefix="loom-arts-")       # nor artifacts/, which gets pushed
 os.environ["LOOM_SITTINGS"] = SHELF
 os.environ["LOOM_STORAGE"] = STORE
+os.environ["LOOM_ARTIFACTS"] = ARTS
 import loom  # noqa: E402 — path first; this file may be started from anywhere
 
 # loom.html's own defaults, restated. Kept as literals rather than parsed out of the page
@@ -109,7 +111,7 @@ def setUpModule() -> None:
     BASE = f"http://127.0.0.1:{port}"
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
-               LOOM_STORAGE=STORE,
+               LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS,
                LOOM_LLAMA=STUB_BASE)
     LOOM = subprocess.Popen([sys.executable, os.path.join(ROOT, "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -139,6 +141,8 @@ def tearDownModule() -> None:
         shutil.rmtree(SHELF, ignore_errors=True)
     if STORE:
         shutil.rmtree(STORE, ignore_errors=True)
+    if ARTS:
+        shutil.rmtree(ARTS, ignore_errors=True)
 
 
 class Tree:
@@ -628,6 +632,177 @@ class Probabilities(unittest.TestCase):
         body = [b for b in seen() if "FORKMARK" in (b.get("prompt") or "")][-1]
         self.assertTrue(body["prompt"].endswith(head))
         self.assertEqual(t.save()[0], 200)
+
+
+def kept_fan(prefix: str, n: int = 6, keep=(1, 4)):
+    """A room with one fan of n and the branches at positions `keep` (0-based) marked the
+    way the page marks them — `kept: true` on the node — saved, so the server can read it."""
+    t = fresh(prefix)
+    t.human("KEEPMARK and a Capital")
+    branches = t.fan(n)
+    # The stub draws from six lines at random, so a fan of six nearly always holds a verbatim
+    # twin — and a twin is not a choice, which would move every bits number below. Numbered,
+    # every branch is its own; the twin test adds its twin on purpose.
+    for i, br in enumerate(branches):
+        br["text"] += f" #{i}"
+    for i in keep:
+        branches[i]["kept"] = True
+    assert t.save()[0] == 200
+    return t, branches
+
+
+def art_get(name: str):
+    return call("/api/artifact?name=" + urllib.parse.quote(name))
+
+
+class Artifacts(unittest.TestCase):
+    def test_create_list_get(self):
+        t, b = kept_fan("art")
+        at = t.d["current"]
+        st, d = call("/api/artifact", {"room": t.d["name"], "parent": at,
+                                       "kept": [b[4]["id"], b[1]["id"]]})
+        self.assertEqual(st, 200, d)
+        self.assertRegex(d["name"], r"^[0-9a-f]{12}$")
+        self.assertTrue(os.path.isfile(os.path.join(ARTS, d["name"] + ".json")))
+
+        st, a = art_get(d["name"])
+        self.assertEqual(st, 200, a)
+        self.assertEqual(a["name"], d["name"])
+        self.assertEqual(a["title"], d["title"])
+        self.assertTrue(a["title"].startswith(t.d["name"] + " · "))   # untitled room: its name
+        self.assertLessEqual(len(a["title"]), 120)
+        self.assertEqual(a["source"], {"room": t.d["name"], "title": None, "node": at})
+        self.assertEqual(a["turn"], TURN)
+        self.assertEqual(a["params"], t.d["params"])
+        self.assertEqual(a["model"]["file"], "stub-base-12b.Q5_K_M.gguf")
+        self.assertEqual(a["model"]["n_ctx"], 8192)
+
+        row = next(r for r in call("/api/artifacts")[1]["artifacts"] if r["name"] == d["name"])
+        self.assertEqual((row["kept"], row["fan"], row["title"]), (2, 6, a["title"]))
+
+    def test_the_prompt_is_verbatim(self):
+        t, b = kept_fan("art-prompt")
+        at = t.d["current"]
+        d = call("/api/artifact", {"room": t.d["name"], "parent": at, "kept": [b[1]["id"]]})[1]
+        a = art_get(d["name"])[1]
+        # exactly what a fan from that point sent llama — header, names, the capital, all of it
+        self.assertEqual(a["prompt"], t.prompt_from(at))
+        sent = [s for s in seen() if "KEEPMARK" in (s.get("prompt") or "")][-1]["prompt"]
+        self.assertEqual(a["prompt"], sent)
+
+    def test_kept_and_others(self):
+        t, b = kept_fan("art-split")
+        d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
+                                   "kept": [b[4]["id"], b[1]["id"], b[1]["id"]]})[1]
+        a = art_get(d["name"])[1]
+        # in fan order whatever order they were sent in, a repeat counted once
+        self.assertEqual([k["id"] for k in a["kept"]], [b[1]["id"], b[4]["id"]])
+        self.assertEqual([k["at"] for k in a["kept"]], [2, 5])
+        for k, src in zip(a["kept"], (b[1], b[4])):
+            self.assertEqual(k["text"], src["text"])
+            self.assertEqual(k["temperature"], src["meta"]["params"]["temperature"])
+            self.assertEqual(k["meta"]["tokens_predicted"], src["meta"]["tokens_predicted"])
+            self.assertEqual(k["meta"]["stop_type"], src["meta"]["stop_type"])
+            self.assertNotIn("probs", k["meta"])
+            self.assertFalse(k["posed"])
+        self.assertEqual(a["fan"]["size"], 6)
+        others = a["fan"]["others"]
+        self.assertEqual([o["id"] for o in others], [b[i]["id"] for i in (0, 2, 3, 5)])
+        self.assertEqual([o["at"] for o in others], [1, 3, 4, 6])
+        for o in others:
+            src = t.d["nodes"][o["id"]]
+            self.assertEqual(o["opening"], src["text"][:80])
+            self.assertEqual(o["length"], len(src["text"]))
+            self.assertEqual(o["temperature"], src["meta"]["params"]["temperature"])
+
+    def test_bits_are_log2_of_n_choose_k(self):
+        import math
+        t, b = kept_fan("art-bits")
+        d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
+                                   "kept": [b[1]["id"], b[4]["id"]]})[1]
+        self.assertEqual(art_get(d["name"])[1]["bits"], round(math.log2(math.comb(6, 2)), 3))
+        # one kept is the same number curation gives a pick: log2 of the fan
+        d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
+                                   "kept": [b[0]["id"]]})[1]
+        self.assertEqual(art_get(d["name"])[1]["bits"], round(math.log2(6), 3))
+        self.assertEqual(loom.bits_of_keeping(6, 6), 0.0)
+        self.assertEqual(loom.bits_of_keeping(1, 1), 0.0)
+
+    def test_a_twin_of_a_kept_branch_is_not_a_choice(self):
+        import math
+        t, b = kept_fan("art-twin", n=4, keep=(0,))
+        # the page prunes a verbatim twin on arrival; it still counts as written, not as refused
+        twin = t.add("model", b[0]["text"], t.d["current"], dict(b[0]["meta"]))
+        twin["pruned"] = True
+        twin["ts"] = b[-1]["ts"] + 1
+        self.assertEqual(t.save()[0], 200)
+        d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
+                                   "kept": [b[0]["id"]]})[1]
+        a = art_get(d["name"])[1]
+        self.assertEqual(a["fan"]["size"], 5)
+        self.assertEqual(a["bits"], round(math.log2(4), 3))
+        self.assertTrue(a["fan"]["others"][-1]["pruned"])
+
+    def test_refusals(self):
+        t, b = kept_fan("art-no")
+        room, at = t.d["name"], t.d["current"]
+        before = set(os.listdir(ARTS))
+
+        st, d = call("/api/artifact", {"room": room, "parent": at, "kept": []})
+        self.assertEqual(st, 400, d)
+        self.assertEqual(call("/api/artifact", {"room": room, "parent": at})[0], 400)
+        # the human line is a node of the room but not a branch of this fan
+        st, d = call("/api/artifact", {"room": room, "parent": at, "kept": [b[0]["id"], at]})
+        self.assertEqual(st, 400, d)
+        self.assertEqual(call("/api/artifact", {"room": room, "parent": at,
+                                                "kept": ["ghost123"]})[0], 400)
+        self.assertEqual(call("/api/artifact", {"room": room, "parent": "ghost",
+                                                "kept": [b[0]["id"]]})[0], 400)
+        self.assertEqual(call("/api/artifact", {"room": "nobody-home", "parent": at,
+                                                "kept": [b[0]["id"]]})[0], 404)
+        for bad in ("../escape", "a/b", "x" * 65, 42):
+            self.assertEqual(call("/api/artifact", {"room": room, "parent": at, "name": bad,
+                                                    "kept": [b[0]["id"]]})[0], 400, bad)
+            self.assertEqual(call("/api/artifact", {"room": bad, "parent": at,
+                                                    "kept": [b[0]["id"]]})[0], 400, bad)
+        self.assertEqual(set(os.listdir(ARTS)), before)     # not one refusal wrote a file
+
+        name = f"taken-{uuid.uuid4().hex[:6]}"
+        st, d = call("/api/artifact", {"room": room, "parent": at, "name": name,
+                                       "kept": [b[0]["id"]]})
+        self.assertEqual(st, 200, d)
+        with open(os.path.join(ARTS, name + ".json"), "rb") as f:
+            first = f.read()
+        st, d = call("/api/artifact", {"room": room, "parent": at, "name": name,
+                                       "kept": [b[1]["id"]]})
+        self.assertEqual(st, 409, d)
+        with open(os.path.join(ARTS, name + ".json"), "rb") as f:
+            self.assertEqual(f.read(), first)               # frozen: never overwritten
+        self.assertFalse([f for f in os.listdir(ARTS) if f.endswith(".part")])
+
+    def test_bad_names_on_the_way_out(self):
+        for bad in ("../loom", "a/b", ""):
+            self.assertEqual(art_get(bad)[0], 400, bad)
+        self.assertEqual(art_get("nobody-home")[0], 404)
+        # a file dropped in by hand with a name the api would refuse is not on the list
+        with open(os.path.join(ARTS, "bad name!.json"), "w", encoding="utf-8") as f:
+            json.dump({"title": "sneaked in", "created": time.time()}, f)
+        self.assertNotIn("bad name!", [r["name"] for r in call("/api/artifacts")[1]["artifacts"]])
+
+    def test_list_newest_first(self):
+        t, b = kept_fan("art-order", n=2, keep=(0,))
+        body = {"room": t.d["name"], "parent": t.d["current"], "kept": [b[0]["id"]]}
+        a = call("/api/artifact", body)[1]["name"]
+        time.sleep(0.02)
+        z = call("/api/artifact", body)[1]["name"]
+        names = [r["name"] for r in call("/api/artifacts")[1]["artifacts"]]
+        self.assertLess(names.index(z), names.index(a))
+
+    def test_kept_flags_ride_in_the_room(self):
+        t, b = kept_fan("art-flags")
+        back = call("/api/sitting?name=" + t.d["name"])[1]
+        self.assertEqual([n["id"] for n in back["nodes"].values() if n.get("kept")],
+                         [b[1]["id"], b[4]["id"]])
 
 
 class Cancel(unittest.TestCase):

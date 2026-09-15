@@ -4,6 +4,7 @@
 Answers the routes the loom actually uses, in llama-server's own shapes:
 
   GET  /health      -> {"status":"ok"}
+  GET  /props       -> {"model_path", "default_generation_settings": {"n_ctx"}, "build_info"}
   POST /tokenize    -> {"tokens": [id, …]} — one id per whitespace-led word, so " the" is
                        one token and "hello there" is two
   POST /completion  -> {"content", "stop_type", "stopping_word", "tokens_predicted",
@@ -124,6 +125,12 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         if self.path == "/health":
             self._json(200, {"status": "ok"})
+            return
+        if self.path == "/props":
+            # The three fields an artifact reads, shaped as llama-server shapes them.
+            self._json(200, {"model_path": "/models/stub-base-12b.Q5_K_M.gguf",
+                             "default_generation_settings": {"n_ctx": 8192},
+                             "build_info": "b0000-stub", "total_slots": 1})
             return
         if self.path == "/seen":
             self._json(200, {"seen": list(SEEN)})

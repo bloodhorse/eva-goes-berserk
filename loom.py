@@ -37,15 +37,23 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 sampler drawer can turn words into the token ids logit_bias
                                 actually listens to
   POST /api/cancel           -> hang up on every completion in flight
+  GET  /api/artifacts        -> every artifact's name, title, created, kept and fan size,
+                                newest first
+  GET  /api/artifact?name=   -> one artifact, whole
+  POST /api/artifact         -> {"room", "parent", "kept": [node ids], "name"?}: the server
+                                reads that room off the disk, freezes the fan under `parent`
+                                with only the kept branches, and writes it once — a taken
+                                name is 409, never an overwrite
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
-LOOM_SITTINGS.
+LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS.
 """
 
 from __future__ import annotations
 
 import http.client
 import json
+import math
 import os
 import re
 import secrets
@@ -69,6 +77,13 @@ SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(HERE, "sittings"))
 # Tracked by git on purpose (sittings are not) — a finding is worth its history.
 STORAGE = os.environ.get("LOOM_STORAGE", os.path.join(HERE, "storage"))
 NOTE_MAX = 120
+# Artifacts: one fan each, frozen — the prompt it was drawn from and only the branches bekh
+# kept. The opposite of a sitting on every axis: written once and never again, tracked by
+# git and pushed. A room is a place to work; an artifact is what came out of it.
+ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(HERE, "artifacts"))
+# How much of a branch he did NOT keep rides along: enough to see what the model could have
+# said instead, not so much that the rejects outweigh what was kept.
+OPENING = 80
 
 
 def note_name_ok(name) -> bool:
@@ -334,6 +349,39 @@ def health() -> dict:
             pass
 
 
+def model_info() -> dict | None:
+    """Which model llama says it has loaded, off /props. None when llama is unreachable or
+    answers something that isn't props — an artifact saved with the model down is still an
+    artifact, it just can't say what drew it.
+
+    This is the model loaded at SAVE time. The loom never wrote the model into a branch's
+    meta, so a fan drawn on nemo and saved after a swap would name the wrong one; on a box
+    that runs one model that is a non-case, and the file name is the honest best available.
+    """
+    conn, prefix = llama_conn(HEALTH_TIMEOUT)
+    try:
+        conn.request("GET", prefix + "/props")
+        resp = conn.getresponse()
+        raw = resp.read()
+        if resp.status != 200:
+            return None
+        d = json.loads(raw)
+    except (OSError, http.client.HTTPException, ValueError):
+        return None
+    finally:
+        try:
+            conn.close()
+        except OSError:
+            pass
+    if not isinstance(d, dict):
+        return None
+    path = d.get("model_path") if isinstance(d.get("model_path"), str) else ""
+    gen = d.get("default_generation_settings")
+    return {"file": os.path.basename(path) or None, "path": path or None,
+            "n_ctx": gen.get("n_ctx") if isinstance(gen, dict) else None,
+            "build": d.get("build_info") or None}
+
+
 def sitting_path(name: str) -> str:
     return os.path.join(SITTINGS, name + ".json")
 
@@ -484,6 +532,153 @@ def write_note(name: str, text: str) -> None:
     os.replace(tmp, path)
 
 
+def artifact_path(name: str) -> str:
+    return os.path.join(ARTIFACTS, name + ".json")
+
+
+def bits_of_keeping(n: int, k: int) -> float:
+    """log2(C(n, k)): the bits it takes to say WHICH k of n branches were kept.
+
+    janus's measure, the same one eva.py's `curation` takes along a path, where a pick is
+    log2(n/m) — how hard the filter squeezed. For one kept branch the two are the same
+    number, log2(n). They part at k > 1, and on purpose: an artifact records the exact
+    subset, and two named branches out of six (C(6,2) = 15, 3.9 bits) is more of bekh in
+    the file than "a third of them survived" (log2 3, 1.6 bits). Keeping all of them, or
+    a fan of one, is no choice at all: 0.
+    """
+    if n < 2 or k < 1 or k >= n:
+        return 0.0
+    return math.log2(math.comb(n, k))
+
+
+def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
+    """One fan of `sitting`, frozen: the prompt up to `parent`, the kept branches whole,
+    the rest as openings. Raises ValueError with a sentence the page can show.
+
+    Built here and not in the page, so there is one place that decides what an artifact is,
+    and the tests can hold it to that. The room is the one ON DISK — the page saves before
+    it asks — because the file is what anyone can check the artifact against later.
+    """
+    why = check(sitting)
+    if why:
+        raise ValueError(f"that room doesn't read: {why}")
+    nodes = sitting["nodes"]
+    if not isinstance(parent, str) or parent not in nodes:
+        raise ValueError("the fan point isn't a node of that room")
+    if not isinstance(kept, list) or not kept:
+        raise ValueError("nothing is kept — keep at least one branch")
+    ids: list[str] = []
+    for k in kept:
+        if not isinstance(k, str):
+            raise ValueError("kept is a list of node ids")
+        if k not in ids:
+            ids.append(k)
+    # The fan as the page lists it: model children of the fan point, oldest first — pruned
+    # ones included, because they were written and not keeping them is part of the choice.
+    # sorted() is stable, like the page's sort, so two branches with one ts keep file order.
+    sibs = sorted((n for n in nodes.values()
+                   if n.get("parent") == parent and n.get("kind") == "model"),
+                  key=lambda n: n.get("ts") or 0)
+    at = {n["id"]: i + 1 for i, n in enumerate(sibs)}
+    for k in ids:
+        if k not in at:
+            raise ValueError(f"{k} isn't a branch of that fan")
+
+    # The prompt, exactly as the page builds one: every text root→fan point, joined with
+    # nothing. The seen-set is only there because check() doesn't look for cycles, and a
+    # hand-edited file with one would hang this request forever.
+    texts, seen, n = [], set(), nodes[parent]
+    while n and n["id"] not in seen:
+        seen.add(n["id"])
+        texts.insert(0, n["text"])
+        n = nodes.get(n["parent"]) if n["parent"] else None
+
+    def temp_of(node):
+        p = (node.get("meta") or {}).get("params")
+        return p.get("temperature") if isinstance(p, dict) else None
+
+    kept_rows, others = [], []
+    for s in sibs:
+        if s["id"] in ids:
+            # probs out: 40 KB per branch of numbers nobody reads off a frozen card, in a file
+            # that lives in git forever.
+            meta = {k: v for k, v in (s.get("meta") or {}).items() if k != "probs"}
+            kept_rows.append({"id": s["id"], "at": at[s["id"]], "text": s["text"],
+                              "temperature": temp_of(s), "posed": bool(s.get("posed")),
+                              "meta": meta})
+        else:
+            others.append({"id": s["id"], "at": at[s["id"]], "opening": s["text"][:OPENING],
+                           "length": len(s["text"]), "temperature": temp_of(s),
+                           "pruned": bool(s.get("pruned"))})
+
+    # A branch that says verbatim what a kept one says was not a road refused — the same text
+    # was on offer twice, so it leaves the pool the choice was made from. Same rule as
+    # `curation` in eva.py and the page's ×2, so a fan of six with one twin is a pick from five.
+    same = {nodes[k]["text"].strip() for k in ids}
+    pool = sum(1 for s in sibs if s["id"] in ids or s["text"].strip() not in same)
+
+    source_title = sitting.get("title") or sitting["name"]
+    now = time.time()
+    lt = time.localtime(now)
+    stamp = f" · {lt.tm_mday} {time.strftime('%b', lt).lower()}"
+    return {
+        "name": name,
+        "title": source_title[:120 - len(stamp)] + stamp,
+        "created": now,
+        "source": {"room": sitting["name"], "title": sitting.get("title"), "node": parent},
+        "model": None,          # filled in by the caller: it is a network call, made last
+        "prompt": "".join(texts),
+        "turn": json.loads(json.dumps(sitting.get("turn") or {"prefix": "", "suffix": ""})),
+        "params": json.loads(json.dumps(sitting.get("params") or {})),
+        "kept": kept_rows,
+        "fan": {"size": len(sibs), "others": others},
+        "bits": round(bits_of_keeping(pool, len(ids)), 3),
+    }
+
+
+def write_artifact(obj: dict) -> None:
+    """Once, and never over anything. Raises FileExistsError on a taken name.
+
+    Temp file, then os.link onto the real name: link refuses an existing target, where
+    os.replace — what sittings use — would quietly clobber it. So two saves racing for one
+    name cannot both win, and the check-then-write gap in the handler is not a hole.
+    Indented, because this file is read on github and diffed in git, unlike a sitting.
+    """
+    os.makedirs(ARTIFACTS, exist_ok=True)
+    tmp = os.path.join(ARTIFACTS, f".{secrets.token_hex(6)}.part")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    try:
+        os.link(tmp, artifact_path(obj["name"]))
+    finally:
+        os.unlink(tmp)
+
+
+def artifacts() -> list[dict]:
+    """Every artifact, newest first by the time it was made — not file time, because a
+    git checkout rewrites every mtime to the moment of the clone."""
+    out = []
+    try:
+        names = os.listdir(ARTIFACTS)
+    except OSError:
+        return out
+    for fname in names:
+        if not fname.endswith(".json") or not NAME_RE.match(fname[:-5]):
+            continue
+        try:
+            with open(os.path.join(ARTIFACTS, fname), encoding="utf-8") as f:
+                d = json.load(f)
+            out.append({"name": fname[:-5], "title": d.get("title") or fname[:-5],
+                        "created": d.get("created") or 0,
+                        "kept": len(d.get("kept") or []),
+                        "fan": (d.get("fan") or {}).get("size") or 0})
+        except (OSError, ValueError, AttributeError):
+            continue
+    out.sort(key=lambda a: a["created"], reverse=True)
+    return out
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -554,6 +749,24 @@ class Handler(BaseHTTPRequestHandler):
             except FileNotFoundError:
                 self._json(404, {"error": "no such note"})
             except (OSError, UnicodeDecodeError) as exc:
+                self._json(500, {"error": f"can't read it: {exc}"})
+            return
+
+        if u.path == "/api/artifacts":
+            self._json(200, {"artifacts": artifacts()})
+            return
+
+        if u.path == "/api/artifact":
+            name = parse_qs(u.query).get("name", [""])[0]
+            if not NAME_RE.match(name):
+                self._json(400, {"error": "bad name"})
+                return
+            try:
+                with open(artifact_path(name), encoding="utf-8") as f:
+                    self._json(200, json.load(f))
+            except FileNotFoundError:
+                self._json(404, {"error": "no such artifact"})
+            except (OSError, ValueError) as exc:
                 self._json(500, {"error": f"can't read it: {exc}"})
             return
 
@@ -629,6 +842,50 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "name": name})
             return
 
+        if u.path == "/api/artifact":
+            room = payload.get("room")
+            if not isinstance(room, str) or not NAME_RE.match(room):
+                self._json(400, {"error": "bad room name"})
+                return
+            # No name = a random hex one, like a room the page makes. A name that is given
+            # gets the room rule, because it is a file name behind an api with no auth.
+            name = payload.get("name")
+            if name is None or (isinstance(name, str) and not name.strip()):
+                name = secrets.token_hex(6)
+                while os.path.exists(artifact_path(name)):
+                    name = secrets.token_hex(6)
+            if not isinstance(name, str) or not NAME_RE.match(name):
+                self._json(400, {"error": "bad name"})
+                return
+            if os.path.exists(artifact_path(name)):
+                self._json(409, {"error": f"an artifact called {name} already exists"})
+                return
+            try:
+                with open(sitting_path(room), encoding="utf-8") as f:
+                    sitting = json.load(f)
+            except FileNotFoundError:
+                self._json(404, {"error": "no such sitting"})
+                return
+            except (OSError, ValueError) as exc:
+                self._json(500, {"error": f"can't read that room: {exc}"})
+                return
+            try:
+                art = build_artifact(sitting, payload.get("parent"), payload.get("kept"), name)
+            except ValueError as exc:
+                self._json(400, {"error": str(exc)})
+                return
+            art["model"] = model_info()
+            try:
+                write_artifact(art)
+            except FileExistsError:
+                self._json(409, {"error": f"an artifact called {name} already exists"})
+                return
+            except OSError as exc:
+                self._json(500, {"error": f"can't write it: {exc}"})
+                return
+            self._json(200, {"ok": True, "name": name, "title": art["title"]})
+            return
+
         if u.path == "/api/tokenize":
             contents = payload.get("contents")
             # A cap, because this is a loop of network calls with no auth in front of it.
@@ -665,6 +922,7 @@ class Handler(BaseHTTPRequestHandler):
 def main() -> int:
     os.makedirs(SITTINGS, exist_ok=True)
     os.makedirs(STORAGE, exist_ok=True)
+    os.makedirs(ARTIFACTS, exist_ok=True)
     print(f"loom up: http://{HOST}:{PORT}  (llama {LLAMA}, sittings {SITTINGS})", flush=True)
     srv = ThreadingHTTPServer((HOST, PORT), Handler)
     try:

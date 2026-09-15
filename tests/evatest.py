@@ -611,6 +611,28 @@ class Shelf(unittest.TestCase):
         # what it prints on open is the document, verbatim
         self.assertIn(ev.prompt_from(at), screen(again))
 
+    def test_a_room_with_kept_flags_opens_and_keeps_them(self):
+        # The page marks the branches bekh wants in an artifact with `kept: true` on the node.
+        # eva has no use for the flag and must neither choke on it nor lose it on its next save.
+        ev = fresh()
+        ev.dispatch("/set fan 3")
+        ev.dispatch("you up")
+        at = ev.sitting["current"]
+        marked = [k["id"] for k in ev.kids(at)[:2]]
+        with open(os.path.join(SHELF, ev.sitting["name"] + ".json"), encoding="utf-8") as f:
+            d = json.load(f)
+        for nid in marked:
+            d["nodes"][nid]["kept"] = True
+        loom.write_sitting(d)
+
+        again = eva.Eva(out=io.StringIO(), colour=False)
+        self.assertTrue(again.open(ev.sitting["name"]))
+        self.assertEqual(len(again.kids(at)), 3)
+        again.dispatch("1")                               # a move, so eva writes the file
+        back = on_disk(again)
+        self.assertEqual(back["current"], again.kids(at)[0]["id"])
+        self.assertEqual([n["id"] for n in back["nodes"].values() if n.get("kept")], marked)
+
     def test_unknown_command_lists_them(self):
         ev = fresh()
         ev.out = io.StringIO()
