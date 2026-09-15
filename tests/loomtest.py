@@ -54,11 +54,13 @@ HEADER = "a chat log between two friends, saved from a phone. no punctuation fix
 TURN = {"prefix": "\nbekh: ", "suffix": "\nseat:"}
 PARAMS = {
     "n_predict": 220, "stop": ["\nbekh:", "\nbekh :", "\n\nbekh"],
-    "temperature": 1.0, "min_p": 0.08, "top_k": 0, "top_p": 1.0,
+    "temperature": 2.5, "min_p": 0.08, "top_k": 0, "top_p": 1.0,
+    "top_n_sigma": -1, "xtc_probability": 0, "xtc_threshold": 0.1,
     "repeat_penalty": 1.05, "repeat_last_n": 512,
     "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 3,
-    "dry_penalty_last_n": 8192, "n_probs": 5, "logit_bias": [],
-    "fan": 4, "spread": 0, "dry_keep": 0.8,
+    "dry_penalty_last_n": 8192, "ignore_eos": False,
+    "n_probs": 5, "logit_bias": [],
+    "fan": 4, "spread": 1.0, "dry_keep": 0.8,
 }
 
 STUB = None
@@ -287,6 +289,14 @@ class Plumbing(unittest.TestCase):
         st, d = call("/api/complete", {"params": PARAMS})
         self.assertEqual(st, 400)
         self.assertEqual(d["error"], "no prompt")
+        self.assertEqual(call("/api/complete", {"prompt": 3, "params": PARAMS})[0], 400)
+
+    def test_an_empty_prompt_is_a_prompt(self):
+        # A bare room with an empty root has nothing else to send, and llama takes it:
+        # BOS goes in and the model starts the document itself.
+        st, d = call("/api/complete", {"prompt": "", "params": PARAMS})
+        self.assertEqual(st, 200, d)
+        self.assertTrue(d["text"])
 
 
 def note_get(name: str):
@@ -454,8 +464,8 @@ class Branching(unittest.TestCase):
         self.assertEqual(len(t.kids(t.d["current"])), 6)
         # A fan of identical branches is not a fan. The stub varies on purpose.
         self.assertGreater(len({b["text"] for b in branches}), 1)
-        for b in branches:
-            self.assertEqual(b["meta"]["params"]["temperature"], 1.0)
+        # and a fan is a slice through the range, not six draws at one setting
+        self.assertEqual(len({b["meta"]["params"]["temperature"] for b in branches}), 6)
 
         keep, drop = branches[0], branches[1]
         t.d["current"] = keep["id"]             # pick
@@ -510,6 +520,7 @@ class Spread(unittest.TestCase):
 
     def test_a_fan_goes_out_at_four_temperatures(self):
         t = fresh("spread")
+        t.d["params"]["temperature"] = 1.0
         t.d["params"]["spread"] = 0.5
         t.human("SPREADMARK")
         t.fan(4)

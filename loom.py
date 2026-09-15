@@ -543,7 +543,11 @@ class Handler(BaseHTTPRequestHandler):
 
         if u.path == "/api/complete":
             prompt = payload.get("prompt")
-            if not isinstance(prompt, str) or not prompt:
+            # "" is a legal prompt and not a missing one: llama inserts BOS and evaluates a
+            # single token, and a bare room with an empty root — the thing census.py makes
+            # with --empty — has nothing else to send. Only a missing or non-string prompt
+            # is a bug in the caller.
+            if not isinstance(prompt, str):
                 self._json(400, {"error": "no prompt"})
                 return
             params = payload.get("params")

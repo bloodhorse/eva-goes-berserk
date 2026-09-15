@@ -48,6 +48,23 @@ def temps_of(s: str) -> list[float]:
     return out
 
 
+def coerce(current, val: str):
+    """A typed value for --set, read from what the param already holds — except for numbers,
+    which are read from what was TYPED: the page's json writes `temperature: 1` as an int,
+    and following the stored type would refuse 0.9 on a room the browser made. (eva's /set
+    has the same rule, for the same reason.)"""
+    if isinstance(current, bool):
+        return val.lower() in ("1", "true", "yes", "on")
+    if isinstance(current, (int, float)):
+        return int(val) if val.lstrip("-").isdigit() else float(val)
+    if isinstance(current, list):
+        out = json.loads(val)
+        if not isinstance(out, list):
+            raise ValueError("expected a json list")
+        return out
+    return val
+
+
 def one_line(text: str, width: int = 60) -> str:
     """The branch's opening, flattened. Newlines are collapsed on purpose: this line is a
     receipt in a column of receipts, and a continuation that opens with three blank lines
@@ -68,6 +85,11 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--n-predict", type=int, default=None, help="tokens per branch")
     ap.add_argument("--bare", action="store_true",
                     help="no turn names and no stop strings: pure continuation")
+    # One escape hatch instead of a flag per sampler field: everything in PARAMS is
+    # reachable, and a field llama grows next month needs no change here.
+    ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                    help="any sampler field, e.g. --set xtc_probability=0.5 "
+                         "--set ignore_eos=true (repeatable)")
     a = ap.parse_args(argv[1:])
 
     if not NAME_RE.match(a.name or ""):
@@ -100,6 +122,17 @@ def main(argv: list[str]) -> int:
     sitting = eva.blank(a.name, a.bare, doc)
     if a.n_predict:
         sitting["params"]["n_predict"] = a.n_predict
+    for pair in a.set:
+        key, _, val = str(pair).partition("=")
+        key = key.strip()
+        if key not in sitting["params"]:
+            print(f"no such param: {key}", file=sys.stderr)
+            return 2
+        try:
+            sitting["params"][key] = coerce(sitting["params"][key], val.strip())
+        except ValueError as exc:
+            print(f"bad value for {key}: {exc}", file=sys.stderr)
+            return 2
     root = sitting["nodes"][sitting["root"]]
     write_sitting(sitting)
 

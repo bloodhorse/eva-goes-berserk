@@ -161,6 +161,26 @@ class Census(unittest.TestCase):
         self.assertEqual(d["turn"], eva.TURN)
         self.assertEqual(d["params"]["stop"], eva.PARAMS["stop"])
 
+    def test_set_reaches_the_wire(self):
+        name = fresh_name()
+        code, out = run("--name", name, "--empty", "--n", "1", "--bare",
+                        "--set", "xtc_probability=0.5", "--set", "ignore_eos=true",
+                        "--set", "top_n_sigma=1.5", "--set", "logit_bias=[[1234, -100]]")
+        self.assertEqual(code, 0, out)
+        kid = [n for n in on_disk(name)["nodes"].values() if n["kind"] == "model"][0]
+        p = kid["meta"]["params"]
+        self.assertEqual((p["xtc_probability"], p["ignore_eos"], p["top_n_sigma"]),
+                         (0.5, True, 1.5))
+        body = stub_llama.SEEN[-1]
+        self.assertEqual(body["xtc_probability"], 0.5)
+        self.assertIs(body["ignore_eos"], True)
+        self.assertEqual(body["logit_bias"], [[1234, -100]])
+        self.assertEqual(body["prompt"], "")            # --empty really means empty
+
+        self.assertEqual(run("--name", fresh_name(), "--empty", "--set", "nope=1")[0], 2)
+        self.assertEqual(run("--name", fresh_name(), "--empty",
+                             "--set", "temperature=hot")[0], 2)
+
     def test_a_taken_name_is_a_noop(self):
         name = fresh_name()
         self.assertEqual(run("--name", name, "--empty", "--n", "1")[0], 0)

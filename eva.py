@@ -61,15 +61,24 @@ COMPLETE_TIMEOUT = 900
 #   HEADER ends in ONE newline, the prefix opens with its own, and the pair is the single
 #   blank line a saved chat log has between its header and the first message.
 HEADER = "a chat log between two friends, saved from a phone. no punctuation fixed, no capitals.\n"
+# Measured against nemo on this box (docs/research-cyborgism-methods.md), and the one number
+# that matters is the sampler CHAIN ORDER: this build runs penalties, dry, top_n_sigma,
+# top_k, typ_p, top_p, min_p, xtc, and temperature LAST. So min_p truncates the model's
+# untouched distribution and temperature only flattens what survived — which is why 2.5 is
+# coherent here and 1.0 is where nemo copies its seed and loops. A new room starts hot and
+# spread; a room already on the shelf keeps whatever it was written with.
 PARAMS = {
     "n_predict": 220,
     "stop": ["\nbekh:", "\nbekh :", "\n\nbekh"],
-    "temperature": 1.0, "min_p": 0.08, "top_k": 0, "top_p": 1.0,
+    "temperature": 2.5, "min_p": 0.08, "top_k": 0, "top_p": 1.0,
+    "top_n_sigma": -1,                       # -1 is off
+    "xtc_probability": 0, "xtc_threshold": 0.1,
     "repeat_penalty": 1.05, "repeat_last_n": 512,
     "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 3,
     "dry_penalty_last_n": 8192,
+    "ignore_eos": False,
     "n_probs": 5, "logit_bias": [],
-    "fan": 4, "spread": 0, "dry_keep": 0.8,
+    "fan": 4, "spread": 1.0, "dry_keep": 0.8,
 }
 # llama EATS the stop string. The prefix carries the newline AND the name so the next human
 # node puts back what the stop ate; break this and the two speakers run together on a line.

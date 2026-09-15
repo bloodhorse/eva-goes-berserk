@@ -168,7 +168,9 @@ class LineAndFan(unittest.TestCase):
             self.assertNotIn("\nbekh:", k["text"])          # llama ate it; the prefix puts it back
             self.assertGreater(k["meta"]["tokens_predicted"], 0)
             self.assertGreater(k["meta"]["tps"], 0)
-            self.assertEqual(k["meta"]["params"]["temperature"], 1.0)
+        # the default fan is a slice through the range: temperature 2.5, spread 1.0
+        self.assertEqual(sorted(k["meta"]["params"]["temperature"] for k in kids),
+                         [1.5, 2.1667, 2.8333, 3.5])
         # the prompt the model saw is the path, verbatim
         self.assertEqual(ev.prompt_from(human["id"]), eva.HEADER + "\nbekh: you up\nseat:")
 
@@ -184,7 +186,7 @@ class LineAndFan(unittest.TestCase):
         node = [n for n in ev.sitting["nodes"].values() if n["kind"] == "model"][0]
         ev.dispatch("/set temperature 0.2")
         self.assertEqual(ev.sitting["params"]["temperature"], 0.2)
-        self.assertEqual(on_disk(ev)["nodes"][node["id"]]["meta"]["params"]["temperature"], 1.0)
+        self.assertEqual(on_disk(ev)["nodes"][node["id"]]["meta"]["params"]["temperature"], 2.5)
 
     def test_empty_enter_adds_more(self):
         ev = fresh()
@@ -249,6 +251,7 @@ class SpreadAndProbabilities(unittest.TestCase):
     def test_fan_steps_the_temperature(self):
         ev = fresh()
         ev.dispatch("/set fan 4")
+        ev.dispatch("/set temperature 1.0")
         ev.dispatch("/set spread 0.5")
         ev.dispatch("EVASPREADMARK")
         kids = ev.kids(ev.sitting["current"])
@@ -281,7 +284,7 @@ class SpreadAndProbabilities(unittest.TestCase):
         ev.save()
         again = eva.Eva(out=io.StringIO(), colour=False)
         self.assertTrue(again.open(name))
-        self.assertEqual(again.sitting["params"]["spread"], 0)
+        self.assertEqual(again.sitting["params"]["spread"], eva.PARAMS["spread"])
         self.assertEqual(again.sitting["params"]["n_probs"], 5)
         self.assertEqual(again.sitting["params"]["temperature"], 0.7)
         again.dispatch("/set spread 0.4")               # and /set can now see them
@@ -535,7 +538,7 @@ class Settings(unittest.TestCase):
         ev.out = io.StringIO()
         ev.dispatch("/set")
         out = screen(ev)
-        self.assertIn("temperature = 1.0", out)
+        self.assertIn("temperature = 2.5", out)
         self.assertIn(r"prefix = '\nbekh: '", out)          # repr, so the newline is visible
 
         ev.dispatch("/set temperature 0.85")
@@ -586,7 +589,7 @@ class Settings(unittest.TestCase):
         out = screen(ev)
         self.assertIn("bad value for temperature", out)
         self.assertIn("no such param", out)
-        self.assertEqual(ev.sitting["params"]["temperature"], 1.0)
+        self.assertEqual(ev.sitting["params"]["temperature"], 2.5)
 
 
 class Shelf(unittest.TestCase):

@@ -393,12 +393,21 @@ const HEADER = 'a chat log between two friends, saved from a phone. no punctuati
 // to -1: the sheet says -1 means "whole context", but llama-server 0.4.0 validates the
 // field as 0..INT_MAX and answers 400 to a negative — every branch would fail before
 // the model saw a token. Raise it with -c if the server ever runs a longer window.
+// Measured against nemo on this box (docs/research-cyborgism-methods.md). The one number
+// that matters is the sampler CHAIN ORDER: this build runs penalties, dry, top_n_sigma,
+// top_k, typ_p, top_p, min_p, xtc, and TEMPERATURE LAST — so min_p truncates the model's
+// untouched distribution and temperature only flattens what survived. That is why 2.5 is
+// coherent here and why 1.0 is the setting where nemo copies its seed and loops. A new room
+// starts hot and spread; a room already on the shelf keeps what it was written with.
 const PARAMS = {
   n_predict: 220,
   stop: ['\nbekh:', '\nbekh :', '\n\nbekh'],
-  temperature: 1.0, min_p: 0.08, top_k: 0, top_p: 1.0,
+  temperature: 2.5, min_p: 0.08, top_k: 0, top_p: 1.0,
+  top_n_sigma: -1,                    // -1 is off
+  xtc_probability: 0, xtc_threshold: 0.1,
   repeat_penalty: 1.05, repeat_last_n: 512,
   dry_multiplier: 0.8, dry_base: 1.75, dry_allowed_length: 3, dry_penalty_last_n: 8192,
+  ignore_eos: false,
   // How many of the top tokens llama reports for each token it wrote. 0 is off. These are
   // the model's own probabilities, NOT the post-sampling ones: `post_sampling_probs` would
   // report what the temperature left standing, which makes every branch of a spread fan
@@ -407,7 +416,7 @@ const PARAMS = {
   n_probs: 5,
   logit_bias: [],   // [[token or word, bias], …] — llama's own shape, sent as it is
   fan: 4,           // loom-side; the server strips these three before llama sees them
-  spread: 0,
+  spread: 1.0,
   dry_keep: 0.8,    // what the dry switch puts back when it is turned on again
 };
 // The floor and the formula, twinned from loom.py's spread_temps — the same numbers have
@@ -436,9 +445,13 @@ const TURN = {prefix: '\nbekh: ', suffix: '\nseat:'};
 const bare = () => !!sitting && !(sitting.turn.prefix || sitting.turn.suffix);
 // Which numbers the sampler draws, in the order they matter. `stop`, the two turn strings
 // and the fan get their own widgets below.
+// In the order the sampler chain runs them, as far as the chain is exposed here, so the
+// drawer reads top to bottom the way the tokens actually go through it. No min or max on
+// any of them: temperature above 10 is a legitimate thing to try on this build.
 const FIELDS = [
   ['n_predict', 1], ['temperature', 0.05], ['spread', 0.05],
-  ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05],
+  ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05], ['top_n_sigma', 0.1],
+  ['xtc_probability', 0.05], ['xtc_threshold', 0.01],
   ['repeat_penalty', 0.01], ['repeat_last_n', 64],
   ['dry_multiplier', 0.1], ['dry_base', 0.05], ['dry_allowed_length', 1],
   ['dry_penalty_last_n', 64], ['n_probs', 1],
@@ -1372,6 +1385,9 @@ function buildSampler(){
     }
     sampEl.appendChild(field(key, p[key], v => { p[key] = Number(v); }, {step}));
   }
+  // Let the model run past its own end-of-text instead of stopping there — on a base model
+  // that is the difference between one document and a document that keeps going.
+  sampEl.appendChild(toggle('ignore_eos', !!p.ignore_eos, on => { p.ignore_eos = on; }));
   sampEl.appendChild(field('fan', p.fan, v => { p.fan = Math.max(1, Math.min(12, Number(v) || 1)); },
                            {step: 1}));
   sampEl.appendChild(field('turn prefix', esc(sitting.turn.prefix),
