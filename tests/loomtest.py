@@ -552,6 +552,21 @@ class Probabilities(unittest.TestCase):
         t.human("NOPROBMARK")
         self.assertIsNone(t.fan(1)[0]["meta"]["probs"])
 
+    def test_logit_bias_goes_through_in_llamas_own_shape(self):
+        t = fresh("bias")
+        # strings and ids in one list, and `false` to ban — all three are llama's, checked
+        # against tools/server/server-schema.cpp on master
+        t.d["params"]["logit_bias"] = [[" the", -2], [1234, -100], ["\n", False]]
+        t.d["params"]["dry_multiplier"] = 0        # the page's dry switch, in the file
+        t.d["params"]["dry_keep"] = 0.8
+        t.human("BIASMARK")
+        t.fan(1)
+        body = [b for b in seen() if "BIASMARK" in (b.get("prompt") or "")][-1]
+        self.assertEqual(body["logit_bias"], [[" the", -2], [1234, -100], ["\n", False]])
+        self.assertEqual(body["dry_multiplier"], 0)
+        self.assertNotIn("dry_keep", body)         # the switch's memory is ours, not llama's
+        self.assertEqual(t.save()[0], 200)
+
     def test_fork_at_a_token(self):
         t = fresh("fork")
         t.human("FORKMARK")

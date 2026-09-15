@@ -452,6 +452,18 @@ class Settings(unittest.TestCase):
         self.assertIsInstance(d["params"]["top_k"], int)
         self.assertNotIn("bad value", screen(ev))
 
+    def test_set_logit_bias_and_dry_off(self):
+        ev = fresh()
+        ev.out = io.StringIO()
+        ev.dispatch("/set logit_bias [[' the', -2], [1234, -100]]")
+        ev.dispatch("/set dry_multiplier 0")
+        d = on_disk(ev)
+        self.assertEqual(d["params"]["logit_bias"], [[" the", -2], [1234, -100]])
+        self.assertEqual(d["params"]["dry_multiplier"], 0)
+        ev.dispatch("/set logit_bias ['the', -2]")      # not a list of pairs
+        self.assertIn("bad value for logit_bias", screen(ev))
+        self.assertEqual(ev.sitting["params"]["logit_bias"], [[" the", -2], [1234, -100]])
+
     def test_set_refuses_nonsense(self):
         ev = fresh()
         ev.out = io.StringIO()

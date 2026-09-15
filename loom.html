@@ -103,6 +103,9 @@
   #sampler{display:flex; flex-direction:column; gap:14px;}
   #sampler .f{display:flex; flex-direction:column; gap:4px;}
   #sampler input, #sampler textarea{width:100%;}
+  /* a switch reads as a row, not as a field with a box under it */
+  #sampler .sw{flex-direction:row; align-items:center; gap:10px;}
+  #sampler .sw input{width:auto;}
   #sampler .note{color:var(--ghost); font-size:14px;}
 
   /* Storage: a list of names in the menu, a + to add, and one plain note screen that
@@ -1184,9 +1187,68 @@ function field(label, value, onchange, opts){
   inp.value = value;
   // `change` and not `input`: every keystroke would be a POST, and a half-typed 0.0 is
   // not a temperature anybody meant.
-  inp.addEventListener('change', async () => { onchange(inp.value); await save(); });
+  inp.addEventListener('change', async () => {
+    // A handler that returns a string is saying "this is what I understood you to mean" —
+    // the box is rewritten with it, so a line that did not parse is visibly gone rather
+    // than sitting there looking like a setting.
+    const back = onchange(inp.value);
+    if(typeof back === 'string') inp.value = back;
+    await save();
+  });
   wrap.appendChild(l); wrap.appendChild(inp);
   return wrap;
+}
+
+function toggle(label, on, onchange){
+  const wrap = document.createElement('div');
+  wrap.className = 'f sw';
+  const inp = document.createElement('input');
+  inp.type = 'checkbox';
+  inp.checked = !!on;
+  inp.id = 'setting-' + label.replace(/[^a-z0-9]+/gi, '-');
+  const l = document.createElement('label');
+  l.textContent = label;
+  l.htmlFor = inp.id;
+  inp.addEventListener('change', async () => { onchange(inp.checked); await save(); });
+  wrap.appendChild(inp); wrap.appendChild(l);
+  return wrap;
+}
+
+// logit_bias, as llama takes it: an array of [token, bias] pairs, where a token is either
+// an id or a STRING — llama tokenizes the string and biases every token in it (verified in
+// tools/server/server-schema.cpp on master; the OpenAI object form is accepted too, and we
+// do not use it). `false` as the bias bans the token outright.
+// The drawer's text is one pair per line, `word  bias`, because that is what a hand types.
+// A quoted "token" keeps its spaces — and that matters more than it looks: to a tokenizer
+// " the" and "the" are two different tokens, and the leading space is the common one.
+function parseBias(text){
+  const out = [];
+  for(const raw of String(text).split('\n')){
+    const line = raw.trim();
+    const at = Math.max(line.lastIndexOf(' '), line.lastIndexOf('\t'));
+    if(at < 1) continue;
+    const head = line.slice(0, at).trim();
+    const tail = line.slice(at + 1).trim();
+    let bias;
+    if(tail === 'false' || tail === 'never') bias = false;
+    else { bias = Number(tail); if(!isFinite(bias) || tail === '') continue; }
+    let tok;
+    if(/^-?\d+$/.test(head)) tok = Number(head);
+    else if(head.length > 1 && head[0] === '"' && head.endsWith('"')){
+      try{ tok = JSON.parse(head); }catch(e){ continue; }
+    } else tok = head;
+    if(tok === '') continue;
+    out.push([tok, bias]);
+  }
+  return out;
+}
+function formatBias(list){
+  return (list || []).map(pair => {
+    const tok = pair[0], bias = pair[1];
+    const t = typeof tok === 'number' ? String(tok)
+      : (/^-?\d+$/.test(tok) || /\s|"/.test(tok)) ? JSON.stringify(tok) : tok;
+    return t + '  ' + (bias === false ? 'false' : bias);
+  }).join('\n');
 }
 
 function buildSampler(){
@@ -1198,6 +1260,22 @@ function buildSampler(){
   // to llama. Missing keys only — a value in the file is his, including a zero.
   for(const k in PARAMS) if(p[k] === undefined) p[k] = JSON.parse(JSON.stringify(PARAMS[k]));
   for(const [key, step] of FIELDS){
+    // The dry switch sits on top of its own numbers: janus's finding is that a frequency
+    // penalty is a band-aid over looping and that heat and context are the real cure, so
+    // letting a loop THROUGH has to be one click, not a dive into the drawer to remember
+    // what 0.8 was and type it back afterwards. dry_keep is where 0.8 waits.
+    if(key === 'dry_multiplier'){
+      sampEl.appendChild(toggle('dry', p.dry_multiplier > 0, on => {
+        if(on){
+          p.dry_multiplier = p.dry_keep || PARAMS.dry_multiplier;
+        }else{
+          if(p.dry_multiplier > 0) p.dry_keep = p.dry_multiplier;
+          p.dry_multiplier = 0;
+        }
+        const box = $('setting-dry-multiplier');
+        if(box) box.value = p.dry_multiplier;
+      }));
+    }
     sampEl.appendChild(field(key, p[key], v => { p[key] = Number(v); }, {step}));
   }
   sampEl.appendChild(field('fan', p.fan, v => { p.fan = Math.max(1, Math.min(12, Number(v) || 1)); },
@@ -1209,6 +1287,9 @@ function buildSampler(){
   sampEl.appendChild(field('stop (one per line)', p.stop.map(esc).join('\n'),
     v => { p.stop = v.split('\n').filter(s => s.length).map(unesc); },
     {rows: 4, wide: true}));
+  sampEl.appendChild(field('logit bias (word or id, then a number)', formatBias(p.logit_bias),
+    v => { p.logit_bias = parseBias(v); return formatBias(p.logit_bias); },
+    {rows: 3, wide: true}));
   const note = document.createElement('div');
   note.className = 'note';
   note.textContent = 'Changes apply to the next branch.';
