@@ -151,3 +151,10 @@ a person — every channel is invite-only, ampdot's contacts are on the Act I ma
 **Parked:** room templates — a "new" list in the menu (chat, bare, irc, letters, novel…), each
 one only a header, two turn prefixes and stop strings, never seeded lines; plus "save this
 room as a template", stored as files in `templates/`.
+
+**Parked:** artifacts — a third shelf beside `sittings/` and `storage/`, tracked by git: a
+read-only snapshot of a room at the moment a branch earned keeping (the document verbatim, the
+branch verbatim, the sampler that drew it, which of how many, bits of curation), openable in the
+page but never editable. The first candidate waits in `i-cant-make-you-believe`, a full copy of
+`chrome-roll` standing on the branch that broke the roll to tell the reader *"i can't make you
+believe any of this is real. i wish i could."*
