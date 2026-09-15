@@ -132,8 +132,8 @@
   #newbox{display:none; align-items:center; gap:8px;}
   #newbox.on{display:flex;}
   #newname{width:160px; font-size:13px; padding:3px 8px;}
-  /* clear and delete ask inline, same reason as the new box; the yes is rose, the page's
-     colour for "this changes something you can't click back" */
+  /* delete asks inline, same reason as the new box; the yes is rose, the page's colour for
+     "this changes something you can't click back". Clear doesn't ask — it's undoable. */
   #askbox{display:none; align-items:center; gap:8px; font-size:13px; color:var(--ink);}
   #askbox.on{display:flex;}
   .ghostbtn.hot{color:var(--hot);}
@@ -945,8 +945,13 @@ function ask(question, yes, action){
   asked = action;
   $('askbox').classList.add('on');
 }
-$('clearbtn').addEventListener('click', () =>
-  sitting && ask(`Clear “${sitting.name}” and start over?`, 'Yes, clear', clearSitting));
+// No confirm on Clear: the old run is copied to .trash before anything resets, so the
+// button is already undoable and a question in front of it is only friction. Delete keeps
+// its question — that one takes the room off the shelf.
+$('clearbtn').addEventListener('click', () => {
+  $('askbox').classList.remove('on'); asked = null;
+  clearSitting();
+});
 $('delbtn').addEventListener('click', () =>
   sitting && ask(`Delete “${sitting.name}”?`, 'Yes, delete', deleteSitting));
 $('askno').addEventListener('click', () => { $('askbox').classList.remove('on'); asked = null; });
