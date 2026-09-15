@@ -59,7 +59,7 @@ PARAMS = {
     "repeat_penalty": 1.05, "repeat_last_n": 512,
     "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 3,
     "dry_penalty_last_n": 8192, "ignore_eos": False,
-    "n_probs": 5, "logit_bias": [],
+    "n_probs": 5, "logit_bias": [], "logit_bias_text": "",
     "fan": 4, "spread": 1.0, "dry_keep": 0.8,
 }
 
@@ -562,6 +562,31 @@ class Probabilities(unittest.TestCase):
         t.d["params"]["n_probs"] = 0
         t.human("NOPROBMARK")
         self.assertIsNone(t.fan(1)[0]["meta"]["probs"])
+
+    def test_tokenize_is_how_a_word_becomes_a_bias(self):
+        """The drawer's resolver, twinned: llama's string form of logit_bias does not work
+        on this build, so a word has to be resolved to ids before it is sent."""
+        st, d = call("/api/tokenize", {"contents": ["the", " the", "The", " The",
+                                                    "hello there", ""]})
+        self.assertEqual(st, 200, d)
+        ids = d["tokens"]
+        self.assertEqual([len(t) for t in ids], [1, 1, 1, 1, 2, 0])
+        # four spellings of one word are four different tokens — which is the whole reason
+        # the resolver tries all four
+        self.assertEqual(len({t[0] for t in ids[:4]}), 4)
+        self.assertEqual(call("/api/tokenize", {"contents": "the"})[0], 400)
+        self.assertEqual(call("/api/tokenize", {"contents": ["x"] * 65})[0], 400)
+
+        t = fresh("resolved")
+        # what the page stores after resolving: ids on the wire, the words kept beside them
+        t.d["params"]["logit_bias"] = [[i[0], -2] for i in ids[:4]]
+        t.d["params"]["logit_bias_text"] = "the  -2"
+        t.human("RESOLVEDMARK")
+        t.fan(1)
+        body = [b for b in seen() if "RESOLVEDMARK" in (b.get("prompt") or "")][-1]
+        self.assertEqual(body["logit_bias"], [[i[0], -2] for i in ids[:4]])
+        self.assertNotIn("logit_bias_text", body)   # the words are ours, not llama's
+        self.assertEqual(t.save()[0], 200)
 
     def test_logit_bias_goes_through_in_llamas_own_shape(self):
         t = fresh("bias")

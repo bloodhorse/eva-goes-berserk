@@ -33,6 +33,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 the tree to its root and saves, the room itself stays
   POST /api/complete         -> {"prompt", "params"} through to llama's /completion; the
                                 answer carries `probs` when params asked for n_probs
+  POST /api/tokenize         -> {"contents": [str, …]} through to llama's /tokenize, so the
+                                sampler drawer can turn words into the token ids logit_bias
+                                actually listens to
   POST /api/cancel           -> hang up on every completion in flight
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
@@ -88,7 +91,7 @@ HEALTH_TIMEOUT = 3
 # some builds. They ride in `params` anyway so they get saved and frozen into a node's meta
 # with everything else that shaped it: `fan` is how many branches to ask for, `spread` how
 # far apart their temperatures are, `dry_keep` the multiplier the dry switch puts back.
-LOOM_ONLY = {"fan", "spread", "dry_keep"}
+LOOM_ONLY = {"fan", "spread", "dry_keep", "logit_bias_text"}
 
 # Below this a temperature is not a temperature any more: llama treats 0 as greedy, and a
 # fan of greedy branches is one branch drawn four times.
@@ -273,6 +276,42 @@ def complete(prompt: str, params: dict) -> dict:
         # page treats "no probabilities" and "probabilities off" as the same thing.
         "probs": trim_probs(d.get("completion_probabilities")),
     }
+
+
+def tokenize(contents: list) -> dict:
+    """Spellings to token ids, through llama's /tokenize. {"tokens": [[id, …], …]}.
+
+    This exists because logit_bias's string form does not work on this build: measured
+    against nemo, `[["the", -5]]` changed nothing, and the reason is that "the" and " the"
+    are different tokens (3265 and 1278) — a bias on the wrong spelling is a bias on a token
+    the model was never going to write there. So the page resolves every word to real ids
+    and sends ids. One call per spelling; they are four-byte requests on loopback.
+    """
+    out = []
+    for c in contents:
+        if not isinstance(c, str) or not c:
+            out.append([])
+            continue
+        conn, prefix = llama_conn(HEALTH_TIMEOUT * 4)
+        try:
+            conn.request("POST", prefix + "/tokenize",
+                         body=json.dumps({"content": c, "add_special": False},
+                                         ensure_ascii=False).encode("utf-8"),
+                         headers={"Content-Type": "application/json"})
+            resp = conn.getresponse()
+            raw = resp.read()
+            if resp.status != 200:
+                return {"error": f"llama {resp.status}: {raw[:200].decode('utf-8', 'replace')}"}
+            got = json.loads(raw).get("tokens")
+            out.append([int(t) for t in got] if isinstance(got, list) else [])
+        except (OSError, http.client.HTTPException, ValueError, TypeError) as exc:
+            return {"error": f"llama unreachable: {exc}"}
+        finally:
+            try:
+                conn.close()
+            except OSError:
+                pass
+    return {"tokens": out}
 
 
 def health() -> dict:
@@ -588,6 +627,16 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(500, {"error": f"can't write it: {exc}"})
                 return
             self._json(200, {"ok": True, "name": name})
+            return
+
+        if u.path == "/api/tokenize":
+            contents = payload.get("contents")
+            # A cap, because this is a loop of network calls with no auth in front of it.
+            if not isinstance(contents, list) or len(contents) > 64:
+                self._json(400, {"error": "contents is a list of up to 64 strings"})
+                return
+            out = tokenize(contents)
+            self._json(502 if out.get("error") else 200, out)
             return
 
         if u.path == "/api/cancel":

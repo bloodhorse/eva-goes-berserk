@@ -78,6 +78,7 @@ PARAMS = {
     "dry_penalty_last_n": 8192,
     "ignore_eos": False,
     "n_probs": 5, "logit_bias": [],
+    "logit_bias_text": "",
     "fan": 4, "spread": 1.0, "dry_keep": 0.8,
 }
 # llama EATS the stop string. The prefix carries the newline AND the name so the next human
@@ -884,6 +885,8 @@ class Eva:
                         isinstance(e, (list, tuple)) and len(e) == 2 for e in new):
                     raise ValueError("logit_bias is a list of [token, bias] pairs")
                 new = [list(e) for e in new]
+                # The drawer's words no longer describe what is being sent.
+                p.pop("logit_bias_text", None)
             elif key == "fan":
                 new = max(1, int(val))
             elif isinstance(cur, bool):

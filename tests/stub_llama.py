@@ -1,9 +1,11 @@
 #!/usr/bin/env -S uv run --python 3.12
 """stub_llama.py — a fake llama-server, so the loom can be tested without a 9 GB model.
 
-Answers the two routes the loom actually uses, in llama-server's own shapes:
+Answers the routes the loom actually uses, in llama-server's own shapes:
 
   GET  /health      -> {"status":"ok"}
+  POST /tokenize    -> {"tokens": [id, …]} — one id per whitespace-led word, so " the" is
+                       one token and "hello there" is two
   POST /completion  -> {"content", "stop_type", "stopping_word", "tokens_predicted",
                         "timings":{"predicted_per_second": …}}
                        with "stream": true in the body, the same answer as text/event-stream:
@@ -44,6 +46,7 @@ import random
 import re
 import sys
 import time
+import zlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 LINES = [
@@ -94,10 +97,16 @@ def probs_for(text: str, n_probs: int) -> list[dict]:
     return out
 
 
+def fake_id(text: str) -> int:
+    """A stable id per spelling. crc32 and not sum-of-bytes: "the" and " The" have the same
+    byte sum, and a stub where two spellings share an id would hide the very bug the
+    drawer's four-spelling resolver exists to dodge."""
+    return 1000 + (zlib.crc32(text.encode("utf-8")) % 30000)
+
+
 def entry(tok: str, p: float) -> dict:
     raw = tok.encode("utf-8")
-    return {"id": 1000 + (sum(raw) % 30000), "token": tok, "bytes": list(raw),
-            "logprob": math.log(p)}
+    return {"id": fake_id(tok), "token": tok, "bytes": list(raw), "logprob": math.log(p)}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -122,12 +131,20 @@ class Handler(BaseHTTPRequestHandler):
         self._json(404, {"error": "not found"})
 
     def do_POST(self) -> None:
-        if self.path != "/completion":
+        if self.path not in ("/completion", "/tokenize"):
             self._json(404, {"error": "not found"})
             return
         n = int(self.headers.get("Content-Length", "0") or 0)
         body = json.loads(self.rfile.read(n) or b"{}")
         SEEN.append(body)
+        if self.path == "/tokenize":
+            # One id per whitespace-led word, so " the" is one token and "hello there" is
+            # two — which is the only property the drawer's resolver depends on: a spelling
+            # that comes back as more than one token cannot be biased and is dropped.
+            content = body.get("content") or ""
+            ids = [fake_id(w) for w in re.findall(r"\s*\S+", content)]
+            self._json(200, {"tokens": ids})
+            return
         prompt = body.get("prompt") or ""
         stops = [s for s in (body.get("stop") or []) if isinstance(s, str) and s]
 

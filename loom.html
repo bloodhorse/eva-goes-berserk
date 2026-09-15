@@ -414,7 +414,8 @@ const PARAMS = {
   // look equally likely. What we want painted is the model's confidence, so that a line
   // written at 1.5 visibly walks further off the road than one written at 0.5.
   n_probs: 5,
-  logit_bias: [],   // [[token or word, bias], …] — llama's own shape, sent as it is
+  logit_bias: [],   // [[id, bias], …] — ids, resolved from words by the drawer
+  logit_bias_text: '',   // the words he typed; loom-side, never sent
   fan: 4,           // loom-side; the server strips these three before llama sees them
   spread: 1.0,
   dry_keep: 0.8,    // what the dry switch puts back when it is turned on again
@@ -1337,15 +1338,16 @@ function parseBias(text){
     const head = line.slice(0, at).trim();
     const tail = line.slice(at + 1).trim();
     let bias;
-    if(tail === 'false' || tail === 'never') bias = false;
+    if(tail === 'false' || tail === 'never' || tail === 'ban') bias = false;
     else { bias = Number(tail); if(!isFinite(bias) || tail === '') continue; }
-    let tok;
-    if(/^-?\d+$/.test(head)) tok = Number(head);
-    else if(head.length > 1 && head[0] === '"' && head.endsWith('"')){
-      try{ tok = JSON.parse(head); }catch(e){ continue; }
-    } else tok = head;
-    if(tok === '') continue;
-    out.push([tok, bias]);
+    // `literal` = leave this exactly as written. A quoted "…" is him naming one spelling,
+    // an id is already an id; a bare word is a request to find the right spelling.
+    if(/^-?\d+$/.test(head)){ out.push({tok: Number(head), bias, literal: true}); continue; }
+    if(head.length > 1 && head[0] === '"' && head.endsWith('"')){
+      try{ out.push({tok: JSON.parse(head), bias, literal: true}); }catch(e){}
+      continue;
+    }
+    if(head) out.push({tok: head, bias, literal: false});
   }
   return out;
 }
@@ -1356,6 +1358,84 @@ function formatBias(list){
       : (/^-?\d+$/.test(tok) || /\s|"/.test(tok)) ? JSON.stringify(tok) : tok;
     return t + '  ' + (bias === false ? 'false' : bias);
   }).join('\n');
+}
+
+// A bare word goes in as all four spellings a tokenizer is likely to have for it: to a
+// tokenizer "the" and " the" are two different tokens, and the one that actually appears
+// mid-sentence is the one with the space. Biasing only what was typed is why llama's own
+// string form looked like it did nothing.
+function spellings(word){
+  const cap = word[0].toUpperCase() + word.slice(1);
+  return [...new Set([word, ' ' + word, cap, ' ' + cap])];
+}
+// -100 or lower is not a bias, it is a ban, and llama has a real one: `false` sets the
+// logit to -inf. A number that large is a way of asking for it.
+const asBan = b => (b === false || b <= -100) ? false : b;
+
+async function resolveBias(text){
+  const want = parseBias(text);
+  const asks = [];
+  for(const w of want){
+    if(typeof w.tok === 'string') w.try = w.literal ? [w.tok] : spellings(w.tok);
+    for(const s of (w.try || [])) asks.push(s);
+  }
+  let tokens = [];
+  if(asks.length){
+    const d = await postJSON('/api/tokenize', {contents: asks});
+    if(d.error) return {pairs: null, says: d.error};
+    tokens = d.tokens || [];
+  }
+  const at = new Map();
+  asks.forEach((s, i) => at.set(s, tokens[i] || []));
+  const pairs = [], got = [], lost = [];
+  for(const w of want){
+    if(typeof w.tok === 'number'){ pairs.push([w.tok, asBan(w.bias)]); got.push(String(w.tok)); continue; }
+    // Never a bias on whitespace or punctuation: those ids are the joints of every line the
+    // model writes, and pushing on them breaks the text rather than steering it.
+    if(!/[\p{L}\p{N}]/u.test(w.tok)){ lost.push(w.tok + ' (not a word)'); continue; }
+    const ids = [];
+    for(const s of w.try){
+      const t = at.get(s) || [];
+      if(t.length === 1) ids.push(t[0]); else lost.push(s.trim() + ' (' + t.length + ' tokens)');
+    }
+    if(!ids.length) continue;
+    for(const id of new Set(ids)) pairs.push([id, asBan(w.bias)]);
+    got.push(w.tok + ' → ' + [...new Set(ids)].join(', '));
+  }
+  let says = got.length ? 'sending ' + got.join(' · ') : 'nothing to send';
+  if(lost.length) says += ' · dropped ' + lost.join(', ');
+  return {pairs, says};
+}
+
+// Built by hand and not with field(), because this one has to go to the server and come
+// back before it knows what it is sending, and say so underneath.
+function biasField(p){
+  const wrap = document.createElement('div');
+  wrap.className = 'f wide';
+  const l = document.createElement('label');
+  l.textContent = 'logit bias (word or id, then a number, or ban)';
+  const ta = document.createElement('textarea');
+  ta.rows = 3;
+  ta.id = 'setting-logit-bias';
+  l.htmlFor = ta.id;
+  ta.value = p.logit_bias_text || formatBias(p.logit_bias);
+  const note = document.createElement('div');
+  note.className = 'note';
+  note.textContent = p.logit_bias && p.logit_bias.length
+    ? 'sending ' + formatBias(p.logit_bias).split('\n').join(' · ') : '';
+  ta.addEventListener('change', async () => {
+    note.textContent = 'resolving…';
+    const r = await resolveBias(ta.value);
+    if(!r.pairs){ note.textContent = r.says; return; }
+    p.logit_bias = r.pairs;
+    // The source text rides along, so the box still shows the words he typed and eva can
+    // send the ids without a tokenizer of its own.
+    p.logit_bias_text = ta.value;
+    note.textContent = r.says;
+    await save();
+  });
+  wrap.appendChild(l); wrap.appendChild(ta); wrap.appendChild(note);
+  return wrap;
 }
 
 function buildSampler(){
@@ -1397,9 +1477,7 @@ function buildSampler(){
   sampEl.appendChild(field('stop (one per line)', p.stop.map(esc).join('\n'),
     v => { p.stop = v.split('\n').filter(s => s.length).map(unesc); },
     {rows: 4, wide: true}));
-  sampEl.appendChild(field('logit bias (word or id, then a number)', formatBias(p.logit_bias),
-    v => { p.logit_bias = parseBias(v); return formatBias(p.logit_bias); },
-    {rows: 3, wide: true}));
+  sampEl.appendChild(biasField(p));
   const note = document.createElement('div');
   note.className = 'note';
   note.textContent = 'Changes apply to the next branch.';
