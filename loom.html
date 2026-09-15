@@ -111,6 +111,7 @@
   }
   .btn:hover{border-color:var(--ghost);}
   .btn:disabled{opacity:.4; cursor:default;}
+  textarea:disabled{opacity:.4;}
   /* the one accent on the page: the button that spends his line */
   .btn.warm{background:var(--accent); color:var(--on-accent); border-color:var(--accent);}
   .btn.warm:hover{filter:brightness(1.08);}
@@ -619,7 +620,18 @@ function renderFan(){
   cardsEl.scrollTop = cardsEl.scrollHeight;
 }
 
+// With no sitting open the composer is greyed and says why. Before this, the box and the
+// Send button sat there live on an empty shelf and read as "the model is broken" — a dead
+// control has to look dead, or the first thing the page teaches is distrust.
+function gate(){
+  const on = !!sitting;
+  for(const id of ['turn', 'send', 'fanbtn', 'stop', 'more']) $(id).disabled = !on;
+  turnEl.placeholder = on ? 'Your line' : 'No sitting open — press New';
+  if(!on) $('docstat').textContent = 'no sitting open · New makes one';
+}
+
 function render(){
+  gate();
   if(!sitting) return;
   const total = Object.keys(sitting.nodes).length;
   const live = Object.values(sitting.nodes).filter(n => !n.pruned).length;
@@ -884,7 +896,7 @@ async function health(){
   const want = remembered();
   const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
   if(name) await openSitting(name);
-  else $('newbtn').click();          // an empty shelf opens with the name box waiting
+  else { gate(); $('newbtn').click(); }   // an empty shelf opens with the name box waiting
   health();
   setInterval(health, 5000);
 })();
