@@ -594,8 +594,13 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
         n = nodes.get(n["parent"]) if n["parent"] else None
 
     def temp_of(node):
-        p = (node.get("meta") or {}).get("params")
-        return p.get("temperature") if isinstance(p, dict) else None
+        # The page and census freeze the whole sampler into meta.params; a branch written by a
+        # one-off script may carry only a bare meta.temperature. Either is the real draw.
+        meta = node.get("meta") or {}
+        p = meta.get("params")
+        if isinstance(p, dict) and p.get("temperature") is not None:
+            return p.get("temperature")
+        return meta.get("temperature")
 
     kept_rows, others = [], []
     for s in sibs:
