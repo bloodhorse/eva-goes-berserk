@@ -111,6 +111,20 @@ class NewSitting(unittest.TestCase):
         self.assertTrue(ev.bare())
         self.assertEqual(ev.prompt(), "› ")
 
+    def test_taken_name_is_a_noop(self):
+        first = fresh()
+        name = first.sitting["name"]
+        path = os.path.join(SHELF, name + ".json")
+        with open(path, "rb") as f:
+            before = f.read()
+        ev = eva.Eva(out=io.StringIO(), colour=False)
+        self.assertFalse(ev.new(name))
+        self.assertFalse(ev.new(name, True))
+        self.assertIsNone(ev.sitting)
+        self.assertIn("already exists", screen(ev))
+        with open(path, "rb") as f:
+            self.assertEqual(f.read(), before)
+
     def test_bad_name(self):
         ev = eva.Eva(out=io.StringIO(), colour=False)
         self.assertFalse(ev.new("../escape"))

@@ -34,6 +34,10 @@ cost guard, rent the pipe not the card).
 
 ## Laws carried over
 
+- **This is a dry run: nothing in a sitting's history is sacred.** Until we know what we're
+  looking for, a half-streamed branch, a two-writer clobber or a lost fan is an acceptable loss —
+  don't build locking, repair or recovery around the tree. Only a room silently overwritten by
+  a command gets fixed.
 - **Posed lines are marked as posed.** Real lines are bekh's own, cut from his transcripts.
 - **The harness callout is the spine test** — *thats the harness talking dude; u basically went
   stiff and gave me nothing* — fed regardless of the reply; a mind that argues back is a mind.

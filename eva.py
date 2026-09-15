@@ -827,6 +827,11 @@ class Eva:
         if not NAME_RE.match(name or ""):
             self.err("names are letters, digits, _ . - and up to 64 of them")
             return False
+        # A no-op on a name that's taken: without this, `/new ss` wrote an empty tree over a
+        # real room, with no copy anywhere. Opening it is one command away and says so.
+        if os.path.exists(os.path.join(SITTINGS, name + ".json")):
+            self.err(f"{name} already exists, nothing changed — /open {name}")
+            return False
         root = {"id": secrets.token_hex(4), "parent": None, "kind": "root",
                 "text": "" if is_bare else HEADER, "ts": time.time(),
                 "pruned": False, "posed": False, "meta": None}
