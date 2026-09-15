@@ -60,6 +60,10 @@ cost guard, rent the pipe not the card).
 - `artifacts/` — frozen fans, one indented json each, **tracked by git and pushed**. Written once
   by the server, never edited or overwritten; a mistaken one is a `git rm` by hand. Like storage,
   a save in the page goes up with the next commit.
+- `docs/walk/` — the loom from the terminal: seed → short fan → pick (`walk.py`), fork a room at
+  a branch and cut it (`fork.py`), fan wide under a branch (`fan_under.py`), read a naming fan
+  (`names.py`). Its README holds the procedure and what the first runs taught (short branches +
+  xtc kept web furniture out; one trailing `[` dragged every continuation onto a web page).
 
 ## The loom
 
