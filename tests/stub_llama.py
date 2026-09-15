@@ -6,6 +6,8 @@ Answers the two routes the loom actually uses, in llama-server's own shapes:
   GET  /health      -> {"status":"ok"}
   POST /completion  -> {"content", "stop_type", "stopping_word", "tokens_predicted",
                         "timings":{"predicted_per_second": …}}
+                       with "stream": true in the body, the same answer as text/event-stream:
+                       a few `data: {"content": …}` events and a final one with "stop": true
 
 Two behaviours are copied on purpose because they are the ones that bite:
 
@@ -86,13 +88,41 @@ class Handler(BaseHTTPRequestHandler):
             text = " ".join(text.split()[:cap])
             stop_type, word = "limit", ""
 
-        self._json(200, {
+        done = {
             "content": text,
             "stop_type": stop_type,
             "stopping_word": word,
             "tokens_predicted": max(1, len(text.split())),
             "timings": {"predicted_per_second": round(random.uniform(20.0, 60.0), 2)},
-        })
+        }
+        if body.get("stream"):
+            self._sse(done)
+            return
+        self._json(200, done)
+
+    def _sse(self, done: dict) -> None:
+        """The same answer, in pieces, the way llama-server streams it.
+
+        eva.py reads this route with an SSE parser, so a stub that only ever answered in
+        one lump would let a parser that mishandles chunk boundaries pass its tests. The
+        final event carries `stop` and the timings and NO new text — the loom's own rule is
+        that the text is the concatenation of the pieces, not a field on the last one.
+        """
+        text = done["content"]
+        n = 3
+        size = max(1, -(-len(text) // n))
+        pieces = [text[i:i + size] for i in range(0, len(text), size)] or [""]
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        for piece in pieces:
+            self._event({"content": piece, "stop": False})
+        self._event(dict(done, content="", stop=True))
+
+    def _event(self, obj: dict) -> None:
+        self.wfile.write(b"data: " + json.dumps(obj, ensure_ascii=False).encode("utf-8") + b"\n\n")
+        self.wfile.flush()
 
 
 def serve(port: int = 0) -> ThreadingHTTPServer:
