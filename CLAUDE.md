@@ -112,3 +112,7 @@ The loom is built, named and running: `https://eva.x`, nemo behind it, plumbing 
 (it answers as a base model — `i'm here`, `yep` — stops clean on `\nbekh:`, ~12 tok/s on this
 mac). The room is settled. No sitting run yet. Next: bekh opens the page, makes a sitting, pastes
 the seeded lines cut from a real room, sends the first line, and the register gets read.
+
+**Parked:** room templates — a "new" list in the menu (chat, bare, irc, letters, novel…), each
+one only a header, two turn prefixes and stop strings, never seeded lines; plus "save this
+room as a template", stored as files in `templates/`.
