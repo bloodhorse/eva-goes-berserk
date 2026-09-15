@@ -149,8 +149,8 @@ class LineAndFan(unittest.TestCase):
         self.assertGreater(len({k["text"] for k in kids}), 1)   # a fan of one line is not a fan
         for k in kids:
             self.assertEqual(k["kind"], "model")
-            self.assertEqual(sorted(k["meta"]), ["params", "stop_type", "stopping_word",
-                                                 "tokens_predicted", "tps"])
+            self.assertEqual(sorted(k["meta"]), ["params", "probs", "stop_type",
+                                                 "stopping_word", "tokens_predicted", "tps"])
             self.assertEqual(k["meta"]["stop_type"], "word")
             self.assertEqual(k["meta"]["stopping_word"], "\nbekh:")
             self.assertNotIn("\nbekh:", k["text"])          # llama ate it; the prefix puts it back
@@ -231,6 +231,49 @@ class LineAndFan(unittest.TestCase):
         self.assertIn("unreachable", screen(ev))
         self.assertEqual([n for n in ev.sitting["nodes"].values() if n["kind"] == "model"], [])
         on_disk(ev)     # the human line is still saved and the file is still a sitting
+
+
+class SpreadAndProbabilities(unittest.TestCase):
+    def test_fan_steps_the_temperature(self):
+        ev = fresh()
+        ev.dispatch("/set fan 4")
+        ev.dispatch("/set spread 0.5")
+        ev.dispatch("SPREADMARK")
+        kids = ev.kids(ev.sitting["current"])
+        self.assertEqual([k["meta"]["params"]["temperature"] for k in kids],
+                         [0.5, 0.8333, 1.1667, 1.5])
+        wire = [b for b in stub_llama.SEEN if "SPREADMARK" in (b.get("prompt") or "")]
+        self.assertEqual([b["temperature"] for b in wire], [0.5, 0.8333, 1.1667, 1.5])
+        for b in wire:                      # llama never sees the loom's own keys
+            for k in ("fan", "spread", "dry_keep"):
+                self.assertNotIn(k, b)
+
+    def test_streamed_probabilities_are_collected_token_by_token(self):
+        ev = fresh()
+        ev.dispatch("/set fan 1")
+        ev.dispatch("PROBMARK")
+        node = ev.kids(ev.sitting["current"])[0]
+        probs = on_disk(ev)["nodes"][node["id"]]["meta"]["probs"]
+        # Nothing rides on the final streamed event, so this is the whole test: if the
+        # partials were not being read, `probs` would be empty, not short.
+        self.assertEqual("".join(p["token"] for p in probs), node["text"])
+        self.assertNotIn("bytes", probs[0])
+        self.assertEqual(len(probs[0]["top_logprobs"]), 5)
+
+    def test_old_rooms_get_the_new_keys_on_open(self):
+        ev = fresh()
+        name = ev.sitting["name"]
+        for k in ("spread", "n_probs", "logit_bias", "dry_keep"):
+            del ev.sitting["params"][k]
+        ev.sitting["params"]["temperature"] = 0.7       # his own value, not to be touched
+        ev.save()
+        again = eva.Eva(out=io.StringIO(), colour=False)
+        self.assertTrue(again.open(name))
+        self.assertEqual(again.sitting["params"]["spread"], 0)
+        self.assertEqual(again.sitting["params"]["n_probs"], 5)
+        self.assertEqual(again.sitting["params"]["temperature"], 0.7)
+        again.dispatch("/set spread 0.4")               # and /set can now see them
+        self.assertEqual(on_disk(again)["params"]["spread"], 0.4)
 
 
 class Walking(unittest.TestCase):

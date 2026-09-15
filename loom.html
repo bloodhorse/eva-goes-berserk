@@ -364,8 +364,30 @@ const PARAMS = {
   temperature: 1.0, min_p: 0.08, top_k: 0, top_p: 1.0,
   repeat_penalty: 1.05, repeat_last_n: 512,
   dry_multiplier: 0.8, dry_base: 1.75, dry_allowed_length: 3, dry_penalty_last_n: 8192,
-  fan: 4,           // loom-side; the server strips it before llama ever sees it
+  // How many of the top tokens llama reports for each token it wrote. 0 is off. These are
+  // the model's own probabilities, NOT the post-sampling ones: `post_sampling_probs` would
+  // report what the temperature left standing, which makes every branch of a spread fan
+  // look equally likely. What we want painted is the model's confidence, so that a line
+  // written at 1.5 visibly walks further off the road than one written at 0.5.
+  n_probs: 5,
+  logit_bias: [],   // [[token or word, bias], …] — llama's own shape, sent as it is
+  fan: 4,           // loom-side; the server strips these three before llama sees them
+  spread: 0,
+  dry_keep: 0.8,    // what the dry switch puts back when it is turned on again
 };
+// The floor and the formula, twinned from loom.py's spread_temps — the same numbers have
+// to come out here and in eva, or the same room fans differently depending on which half
+// of the tool you are sitting in.
+const TEMP_FLOOR = 0.05;
+function spreadTemps(temperature, spread, n){
+  const t = Number(temperature);
+  const s = Math.abs(Number(spread) || 0);
+  n = Math.max(1, n | 0);
+  if(!s || n < 2) return Array(n).fill(t);
+  const step = (2 * s) / (n - 1);
+  return Array.from({length: n},
+    (_, i) => Math.round(Math.max(t - s + step * i, TEMP_FLOOR) * 10000) / 10000);
+}
 // llama EATS the stop string — it is cut out of `content` and handed back separately, so
 // the document would lose the "\nbekh:" that ended the model's line. That is exactly why
 // the prefix carries the newline AND the name: the human node puts back what the stop ate
@@ -380,10 +402,11 @@ const bare = () => !!sitting && !(sitting.turn.prefix || sitting.turn.suffix);
 // Which numbers the sampler draws, in the order they matter. `stop`, the two turn strings
 // and the fan get their own widgets below.
 const FIELDS = [
-  ['n_predict', 1], ['temperature', 0.05], ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05],
+  ['n_predict', 1], ['temperature', 0.05], ['spread', 0.05],
+  ['min_p', 0.01], ['top_k', 1], ['top_p', 0.05],
   ['repeat_penalty', 0.01], ['repeat_last_n', 64],
   ['dry_multiplier', 0.1], ['dry_base', 0.05], ['dry_allowed_length', 1],
-  ['dry_penalty_last_n', 64],
+  ['dry_penalty_last_n', 64], ['n_probs', 1],
 ];
 
 const $ = id => document.getElementById(id);
@@ -607,16 +630,26 @@ function save(){
 // DOM building only, never innerHTML — fim's law, and here it is not a formality: every
 // model node is a string a base model wrote, and a base model continuing a chat log will
 // happily produce `<img onerror=...>` because its training set is full of them.
-// Sampling metadata stays in the file. Only an edited model line needs a visible mark.
+// The strip under a model line: the one number that is not the same for every branch any
+// more, and the mark that says these are not the model's words. The rest of the sampler
+// stays in the file — put it all on screen and the document stops being the thing you read.
+const num = x => String(Math.round(x * 1000) / 1000);
 function footLine(n){
-  if(!n.posed) return null;
   const f = document.createElement('div');
   f.className = 'foot';
-  const p = document.createElement('span');
-  p.className = 'posed';
-  p.textContent = 'posed';
-  f.appendChild(p);
-  return f;
+  const t = n.meta && n.meta.params && n.meta.params.temperature;
+  if(n.kind === 'model' && typeof t === 'number'){
+    const s = document.createElement('span');
+    s.textContent = 'temp ' + num(t);
+    f.appendChild(s);
+  }
+  if(n.posed){
+    const p = document.createElement('span');
+    p.className = 'posed';
+    p.textContent = 'posed';
+    f.appendChild(p);
+  }
+  return f.firstChild ? f : null;
 }
 
 // A word you can click. `stop` is not optional inside a fan card: the whole card is the
@@ -856,10 +889,15 @@ async function runFan(n, from = sitting && sitting.current){
   menu(false);
   gate();
   if(choosing) renderFan();
+  // One temperature per branch. With spread 0 they are all the sitting's temperature and
+  // this is the fan it always was; with spread they step from t-spread to t+spread, and
+  // each node keeps the temperature that actually made it.
+  const temps = spreadTemps(params.temperature, params.spread, n);
   try{
     for(let i = 0; i < n; i++){
       if(mine !== generation || sitting !== owner) return;
-      const d = await postJSON('/api/complete', {prompt, params});
+      const branch = Object.assign({}, params, {temperature: temps[i]});
+      const d = await postJSON('/api/complete', {prompt, params: branch});
       if(mine !== generation || sitting !== owner) return;
       if(d.error){
         if(d.error !== 'cancelled') sys(d.error, true);
@@ -868,7 +906,8 @@ async function runFan(n, from = sitting && sitting.current){
       addNode('model', d.text, from, {
         stop_type: d.stop_type, stopping_word: d.stopping_word,
         tokens_predicted: d.tokens_predicted, tps: d.tps,
-        params: JSON.parse(JSON.stringify(params)),
+        probs: d.probs || null,
+        params: JSON.parse(JSON.stringify(branch)),
       });
       showChoices(from);
       if(!await save()) return;
@@ -961,6 +1000,10 @@ function buildSampler(){
   sampEl.textContent = '';
   if(!sitting) return;
   const p = sitting.params;
+  // Every room on the shelf was written before spread, n_probs and logit_bias existed, and
+  // a drawer built straight off the file would show `undefined` in those boxes and send it
+  // to llama. Missing keys only — a value in the file is his, including a zero.
+  for(const k in PARAMS) if(p[k] === undefined) p[k] = JSON.parse(JSON.stringify(PARAMS[k]));
   for(const [key, step] of FIELDS){
     sampEl.appendChild(field(key, p[key], v => { p[key] = Number(v); }, {step}));
   }

@@ -34,7 +34,18 @@ import uuid
 TESTS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TESTS)
 sys.path.insert(0, TESTS)
-import stub_llama  # noqa: E402 — path first; this file may be started from anywhere
+sys.path.insert(0, ROOT)
+import stub_llama  # noqa: E402
+
+# Before importing loom, and it has to be: loom reads LOOM_SITTINGS and LOOM_STORAGE once,
+# at import. The server under test is a subprocess with the same env; this import is for
+# the pieces the PAGE is a twin of — the spread formula — so `Tree` below can fan the way
+# loom.html fans instead of guessing at it.
+SHELF = tempfile.mkdtemp(prefix="loom-test-")
+STORE = tempfile.mkdtemp(prefix="loom-store-")     # never the real, git-tracked storage/
+os.environ["LOOM_SITTINGS"] = SHELF
+os.environ["LOOM_STORAGE"] = STORE
+import loom  # noqa: E402 — path first; this file may be started from anywhere
 
 # loom.html's own defaults, restated. Kept as literals rather than parsed out of the page
 # on purpose: if somebody changes the header line or the turn strings in the page, this
@@ -46,14 +57,14 @@ PARAMS = {
     "temperature": 1.0, "min_p": 0.08, "top_k": 0, "top_p": 1.0,
     "repeat_penalty": 1.05, "repeat_last_n": 512,
     "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 3,
-    "dry_penalty_last_n": 8192, "fan": 4,
+    "dry_penalty_last_n": 8192, "n_probs": 5, "logit_bias": [],
+    "fan": 4, "spread": 0, "dry_keep": 0.8,
 }
 
 STUB = None
 LOOM = None
 BASE = ""
-SHELF = ""
-STORE = ""
+STUB_BASE = ""
 
 
 def free_port() -> int:
@@ -80,18 +91,24 @@ def call(path: str, body=None, timeout: float = 30):
     return status, raw.decode("utf-8", "replace")
 
 
+def seen() -> list[dict]:
+    """Every body the stub llama was actually sent, in order. The only place the wire can
+    be read: a saved node only proves the page copied its own number into meta."""
+    with urllib.request.urlopen(STUB_BASE + "/seen", timeout=10) as r:
+        return json.load(r)["seen"]
+
+
 def setUpModule() -> None:
-    global STUB, LOOM, BASE, SHELF, STORE
+    global STUB, LOOM, BASE, STUB_BASE
     STUB = stub_llama.serve(0)
     threading.Thread(target=STUB.serve_forever, daemon=True).start()
-    SHELF = tempfile.mkdtemp(prefix="loom-test-")
-    STORE = tempfile.mkdtemp(prefix="loom-store-")   # never the real, git-tracked storage/
+    STUB_BASE = f"http://127.0.0.1:{STUB.server_address[1]}"
     port = free_port()
     BASE = f"http://127.0.0.1:{port}"
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                LOOM_STORAGE=STORE,
-               LOOM_LLAMA=f"http://127.0.0.1:{STUB.server_address[1]}")
+               LOOM_LLAMA=STUB_BASE)
     LOOM = subprocess.Popen([sys.executable, os.path.join(ROOT, "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     deadline = time.time() + 20
@@ -174,15 +191,20 @@ class Tree:
         return call("/api/sitting", self.d)
 
     def fan(self, n: int) -> list:
+        """The page's runFan: one request per branch, one temperature per branch, and the
+        params that made a branch frozen into its own meta."""
         out = []
-        for _ in range(n):
+        p = self.d["params"]
+        for temp in loom.spread_temps(p.get("temperature", 1.0), p.get("spread", 0), n):
+            branch = dict(json.loads(json.dumps(p)), temperature=temp)
             st, d = call("/api/complete", {"prompt": self.prompt_from(self.d["current"]),
-                                           "params": self.d["params"]})
+                                           "params": branch})
             assert st == 200, d
             out.append(self.add("model", d["text"], self.d["current"], {
                 "stop_type": d["stop_type"], "stopping_word": d["stopping_word"],
                 "tokens_predicted": d["tokens_predicted"], "tps": d["tps"],
-                "params": json.loads(json.dumps(self.d["params"])),
+                "probs": d.get("probs"),
+                "params": branch,
             }))
         return out
 
@@ -448,6 +470,65 @@ class Branching(unittest.TestCase):
         self.assertEqual(t.save()[0], 200)
         back = call("/api/sitting?name=" + t.d["name"])[1]
         self.assertTrue(back["nodes"][model["id"]]["posed"])   # forever, across a reload
+
+
+class Spread(unittest.TestCase):
+    """A fan is four draws at one temperature only when spread is 0."""
+
+    def test_the_stepping(self):
+        self.assertEqual(loom.spread_temps(1.0, 0.5, 4), [0.5, 0.8333, 1.1667, 1.5])
+        self.assertEqual(loom.spread_temps(1.0, 0.5, 2), [0.5, 1.5])
+
+    def test_off_by_default_and_floored_when_on(self):
+        self.assertEqual(loom.spread_temps(1.0, 0, 4), [1.0] * 4)
+        self.assertEqual(loom.spread_temps(1.0, 0.5, 1), [1.0])
+        # greedy is a setting he is allowed to ask for; the floor is only for the arithmetic
+        self.assertEqual(loom.spread_temps(0.0, 0, 2), [0.0, 0.0])
+        self.assertEqual(loom.spread_temps(0.3, 2.0, 3)[0], 0.05)
+
+    def test_a_fan_goes_out_at_four_temperatures(self):
+        t = fresh("spread")
+        t.d["params"]["spread"] = 0.5
+        t.human("SPREADMARK")
+        t.fan(4)
+        bodies = [b for b in seen() if "SPREADMARK" in (b.get("prompt") or "")]
+        self.assertEqual([b["temperature"] for b in bodies], [0.5, 0.8333, 1.1667, 1.5])
+        # the loom's own keys never reach llama, which answers 400 to a field it doesn't know
+        for b in bodies:
+            for k in ("fan", "spread", "dry_keep"):
+                self.assertNotIn(k, b)
+        self.assertEqual(
+            [n["meta"]["params"]["temperature"] for n in t.kids(t.d["current"])],
+            [0.5, 0.8333, 1.1667, 1.5])
+        self.assertEqual(t.save()[0], 200)
+
+
+class Probabilities(unittest.TestCase):
+    def test_kept_whole_and_stripped_of_bytes(self):
+        t = fresh("probs")
+        t.human("PROBMARK")
+        node = t.fan(1)[0]
+        probs = node["meta"]["probs"]
+        self.assertTrue(probs)
+        # The one property the page's painting rests on: the tokens rebuild the line.
+        self.assertEqual("".join(p["token"] for p in probs), node["text"])
+        for p in probs:
+            self.assertNotIn("bytes", p)                    # `token` again, as integers
+            self.assertEqual(len(p["top_logprobs"]), 5)     # n_probs
+            self.assertNotIn("bytes", p["top_logprobs"][0])
+            self.assertLessEqual(p["logprob"], 0)
+            self.assertEqual(p["top_logprobs"][0]["token"], p["token"])
+        self.assertEqual(
+            [b for b in seen() if "PROBMARK" in (b.get("prompt") or "")][0]["n_probs"], 5)
+        self.assertEqual(t.save()[0], 200)
+        back = call("/api/sitting?name=" + t.d["name"])[1]
+        self.assertEqual(back["nodes"][node["id"]]["meta"]["probs"], probs)
+
+    def test_zero_is_off(self):
+        t = fresh("noprobs")
+        t.d["params"]["n_probs"] = 0
+        t.human("NOPROBMARK")
+        self.assertIsNone(t.fan(1)[0]["meta"]["probs"])
 
 
 class Cancel(unittest.TestCase):

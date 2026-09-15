@@ -47,12 +47,11 @@ from urllib.parse import urlparse
 HERE = os.path.dirname(os.path.realpath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
-from loom import NAME_RE, SITTINGS, check, shelf, write_sitting  # noqa: E402
+from loom import (NAME_RE, SITTINGS, LOOM_ONLY, check, shelf, spread_temps,  # noqa: E402
+                  trim_probs, write_sitting)
 
 LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
 COMPLETE_TIMEOUT = 900
-# Not sent to llama — it answers 400 to unknown fields on some builds. Same set as loom.py's.
-LOOM_ONLY = {"fan"}
 
 # ---- the shape of a sitting ----------------------------------------------------------
 # Copied verbatim from loom.html, on purpose and not parsed out of it: if somebody changes
@@ -68,7 +67,8 @@ PARAMS = {
     "repeat_penalty": 1.05, "repeat_last_n": 512,
     "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 3,
     "dry_penalty_last_n": 8192,
-    "fan": 4,
+    "n_probs": 5, "logit_bias": [],
+    "fan": 4, "spread": 0, "dry_keep": 0.8,
 }
 # llama EATS the stop string. The prefix carries the newline AND the name so the next human
 # node puts back what the stop ate; break this and the two speakers run together on a line.
@@ -201,6 +201,7 @@ def complete_stream(prompt: str, params: dict, on_chunk) -> dict:
                                       timeout=COMPLETE_TIMEOUT)
     prefix = (u.path or "").rstrip("/")
     parts: list[str] = []
+    probs: list[dict] = []
     last: dict = {}
     try:
         conn.request("POST", prefix + "/completion",
@@ -225,6 +226,12 @@ def complete_stream(prompt: str, params: dict, on_chunk) -> dict:
             if piece:
                 parts.append(piece)
                 on_chunk(piece)
+            # Streaming splits the probabilities the way it splits the text: one token's
+            # worth on each partial, and NOTHING on the final event — llama guards the
+            # whole-array field with `if (!stream ...)`. Collect them here or lose them.
+            got = d.get("completion_probabilities")
+            if isinstance(got, list):
+                probs.extend(got)
             if d.get("stop"):
                 last = d                      # the only chunk carrying the timings and why it stopped
     except (OSError, http.client.HTTPException, ValueError) as exc:
@@ -244,6 +251,7 @@ def complete_stream(prompt: str, params: dict, on_chunk) -> dict:
         "stopping_word": last.get("stopping_word") or "",
         "tokens_predicted": last.get("tokens_predicted") or 0,
         "tps": round(float(timings.get("predicted_per_second") or 0.0), 1),
+        "probs": trim_probs(probs),
     }
 
 
@@ -269,6 +277,19 @@ def unesc(s: str) -> str:
         i += 1
         out.append("\n" if d == "n" else "\t" if d == "t" else d)
     return "".join(out)
+
+
+def backfill(params: dict) -> dict:
+    """Keys PARAMS has grown since the file was written, put back at their defaults.
+
+    Every sitting on the shelf predates n_probs, spread and logit_bias, and /set refuses a
+    key it cannot see — without this, an old room could never be given the new settings at
+    all. Only missing keys are touched; anything already in the file is his.
+    """
+    for k, v in PARAMS.items():
+        if k not in params:
+            params[k] = json.loads(json.dumps(v))
+    return params
 
 
 def leading_nl(s: str) -> str:
@@ -548,7 +569,12 @@ class Eva:
             return
         from_id = self.sitting["current"]
         prompt = self.prompt_from(from_id)
-        for _ in range(count):
+        p = self.sitting["params"]
+        # One temperature per branch, so a fan can be a slice through the range instead of
+        # four draws at one setting. With spread 0 every value is the plain temperature and
+        # this is the loop it always was.
+        temps = spread_temps(p.get("temperature", 1.0), p.get("spread", 0), count)
+        for temp in temps:
             # Numbered by where it lands in kids(from_id), so /more keeps climbing 4, 5, 6
             # and a prune in between is reflected the next time the list is drawn.
             num = len(self.kids(from_id)) + 1
@@ -556,8 +582,12 @@ class Eva:
             self.bol()
             self.w(self.ink.dim(mark))
             wr = Wrap(self.w, self.width(), len(mark))
+            # A copy per branch: what goes into meta has to be the params that actually
+            # made THIS line, or a spread fan reads back as four lines at one temperature.
+            params = json.loads(json.dumps(p))
+            params["temperature"] = temp
             try:
-                d = complete_stream(prompt, self.sitting["params"], wr.feed)
+                d = complete_stream(prompt, params, wr.feed)
             except KeyboardInterrupt:
                 # The socket is already shut (complete_stream's finally) so llama has the
                 # slot back. The half-written branch is thrown away, not saved: a truncated
@@ -577,9 +607,10 @@ class Eva:
             self.add_node("model", d["text"], from_id, {
                 "stop_type": d["stop_type"], "stopping_word": d["stopping_word"],
                 "tokens_predicted": d["tokens_predicted"], "tps": d["tps"],
+                "probs": d.get("probs"),
                 # Frozen: a branch is only readable later if you know what produced it, and
                 # the sampler moves between fans.
-                "params": json.loads(json.dumps(self.sitting["params"])),
+                "params": params,
             })
             self.save()
 
@@ -750,6 +781,16 @@ class Eva:
                 new = ast.literal_eval(val)
                 if not isinstance(new, list) or not all(isinstance(s, str) for s in new):
                     raise ValueError("stop is a list of strings")
+            elif key == "logit_bias":
+                # llama's own shape, typed out: [["word", -2], [1234, -100]]. A python
+                # literal and not the page's one-per-line text, because the repl already
+                # has literal_eval for `stop` and a second syntax here would be a second
+                # thing to remember.
+                new = ast.literal_eval(val)
+                if not isinstance(new, list) or not all(
+                        isinstance(e, (list, tuple)) and len(e) == 2 for e in new):
+                    raise ValueError("logit_bias is a list of [token, bias] pairs")
+                new = [list(e) for e in new]
             elif key == "fan":
                 new = max(1, int(val))
             elif isinstance(cur, bool):
@@ -818,6 +859,7 @@ class Eva:
         if why:
             self.err(f"{name}: {why}")
             return False
+        backfill(d.setdefault("params", {}))
         self.sitting = d
         self.atbol, self.borrowed = True, False
         self.present()

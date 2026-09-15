@@ -31,7 +31,8 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 taken name refused) or overwrite an existing one
   POST /api/clear            -> {"name"}: a COPY goes to sittings/.trash; the page then resets
                                 the tree to its root and saves, the room itself stays
-  POST /api/complete         -> {"prompt", "params"} through to llama's /completion
+  POST /api/complete         -> {"prompt", "params"} through to llama's /completion; the
+                                answer carries `probs` when params asked for n_probs
   POST /api/cancel           -> hang up on every completion in flight
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
@@ -83,10 +84,79 @@ NAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,64}$")
 # A completion is minutes, not seconds, on a big model at a long context.
 COMPLETE_TIMEOUT = 900
 HEALTH_TIMEOUT = 3
-# Not sent to llama — llama has never heard of it and answers 400 to unknown fields on
-# some builds. `fan` is how many branches the page asks for; it rides in `params` so it
-# gets saved and frozen into a node's meta with everything else that shaped it.
-LOOM_ONLY = {"fan"}
+# Not sent to llama — llama has never heard of these and answers 400 to unknown fields on
+# some builds. They ride in `params` anyway so they get saved and frozen into a node's meta
+# with everything else that shaped it: `fan` is how many branches to ask for, `spread` how
+# far apart their temperatures are, `dry_keep` the multiplier the dry switch puts back.
+LOOM_ONLY = {"fan", "spread", "dry_keep"}
+
+# Below this a temperature is not a temperature any more: llama treats 0 as greedy, and a
+# fan of greedy branches is one branch drawn four times.
+TEMP_FLOOR = 0.05
+
+
+def spread_temps(temperature, spread, n: int) -> list[float]:
+    """The temperatures of one fan: n values evenly stepped from t-spread to t+spread.
+
+    The instrument, not the seed, is where the strangeness is bought — so a fan is not four
+    draws at one temperature but a slice through the range, and the node that comes back
+    carries the temperature that actually made it. spread 0 is the old behaviour exactly,
+    and must stay that way: it is the default, and every sitting written before this existed
+    has no `spread` key at all.
+
+    The floor is applied only to the stepped values. A temperature bekh set himself is his,
+    including 0 — clamping that would silently refuse the one setting that means "greedy".
+    """
+    try:
+        t = float(temperature)
+    except (TypeError, ValueError):
+        t = 1.0
+    try:
+        s = abs(float(spread or 0))
+    except (TypeError, ValueError):
+        s = 0.0
+    n = max(1, int(n))
+    if not s or n < 2:
+        return [t] * n
+    step = (2 * s) / (n - 1)
+    return [round(max(t - s + step * i, TEMP_FLOOR), 4) for i in range(n)]
+
+
+def trim_probs(probs):
+    """llama's `completion_probabilities`, with the weight taken out of it.
+
+    The shape is kept as llama shapes it — id, token, logprob, top_logprobs — because the
+    page reads it and the next person to look this up will read llama's README, not ours.
+    What goes is `bytes`: a duplicate of `token` as an integer array, which triples the size
+    of a sitting for nothing. A 220-token branch keeps its probabilities in ~40 KB; with
+    bytes it is three times that, and these files are written after every single move.
+    """
+    if not isinstance(probs, list):
+        return None
+    out = []
+    for p in probs:
+        if not isinstance(p, dict):
+            continue
+        row = {"id": p.get("id"), "token": p.get("token") or "",
+               "logprob": _round_lp(p.get("logprob"))}
+        top = []
+        for a in (p.get("top_logprobs") or []):
+            if isinstance(a, dict):
+                top.append({"id": a.get("id"), "token": a.get("token") or "",
+                            "logprob": _round_lp(a.get("logprob"))})
+        row["top_logprobs"] = top
+        out.append(row)
+    return out or None
+
+
+def _round_lp(x):
+    """Four places is ~0.01% of probability — finer than anything the page paints, and it
+    keeps a float out of json as `-1.7976931348623157e+308` (llama's stand-in for log 0)."""
+    try:
+        v = float(x)
+    except (TypeError, ValueError):
+        return None
+    return round(max(v, -40.0), 4)
 
 
 class Call:
@@ -199,6 +269,9 @@ def complete(prompt: str, params: dict) -> dict:
         "stopping_word": d.get("stopping_word") or "",
         "tokens_predicted": d.get("tokens_predicted") or 0,
         "tps": round(float(timings.get("predicted_per_second") or 0.0), 1),
+        # None when n_probs is 0, which is also what an older llama build answers — the
+        # page treats "no probabilities" and "probabilities off" as the same thing.
+        "probs": trim_probs(d.get("completion_probabilities")),
     }
 
 
