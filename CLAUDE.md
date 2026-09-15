@@ -86,7 +86,7 @@ rejected look-off pages, kept for reference.
 their own row below each line, touch shows hover-only controls, fields are 16px so iOS doesn't
 zoom, return types a newline on touch and the button sends, notices sit at the top. How to check
 a phone layout from the mac — the iframe-and-crop headless rig and every trap in it — lives in
-**`~/tower/forge/mobile/`**; read it before touching the page's small-screen CSS.
+**`mobile/`**; read it before touching the page's small-screen CSS.
 
 **eva** (`eva.py`, `~/.local/bin/eva` symlinks to it) is the loom as a terminal repl over the same
 sittings: `eva [name]`, the prompt is the turn prefix, candidates stream in numbered, a digit
@@ -106,7 +106,7 @@ uv run --python 3.12 -m unittest tests/loomtest.py tests/evatest.py
 **Reviewing the page** is done with screenshots, not descriptions: a spare loom on its own port
 against the stub with a scratch shelf holding a mock sitting (never the real `sittings/`), shot
 headless, fired into kitty with `kkmosaic`. Desktop shots: the line below. Phone shots: the rig in
-`~/tower/forge/mobile/`. Light room: serve a copy with `prefers-color-scheme: light` sed'd to
+`mobile/`. Light room: serve a copy with `prefers-color-scheme: light` sed'd to
 `@media all` — headless follows the OS appearance. The codex recipe is in `~/.claude/docs/codex.md`.
 
 ```bash
