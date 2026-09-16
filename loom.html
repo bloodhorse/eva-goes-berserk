@@ -485,6 +485,7 @@
         <h1 id="texttitle"></h1>
         <span class="spring"></span>
         <button class="ghostbtn" id="textcopy" type="button" title="the whole document to the clipboard">Copy</button>
+        <button class="ghostbtn" id="textlink" type="button" title="the same document at its own url, to send or paste">Link</button>
         <button class="ghostbtn" id="textsave" type="button" title="the same text as a .txt file">Download</button>
       </div>
       <pre id="textview"></pre>
@@ -993,53 +994,26 @@ function artFoot(a, steps){
   return out.join(' · ');
 }
 
-// The walk as ONE document: the prompt, then every step's lead and the line taken, joined
-// with nothing between them — the same concatenation the server tests against, so what comes
-// out is the text the model actually saw and wrote, not a transcript of the tree. The
-// branches kept beside the path are deliberately left out: this is the story, not the fan —
-// except at the open fork it ends on, where there is no line taken and the keeps are the
-// only ending there is. It writes .txt, not .md: a base model's document is full of `> > >`,
-// `//` and stray brackets, and a markdown reader eats exactly those — the punctuation is the
-// evidence.
-function artifactText(a){
-  const steps = stepsOf(a);
-  let doc = (a.prompt || '') +
-    steps.map(st => (st.lead || '') + (st.took ? st.took.text : '')).join('');
-  // The last step is the fan he SAVED from, so it has no line taken and the document stops
-  // at that fork. Stopping there is why a walk of one step exported as the prompt alone,
-  // breaking off mid-sentence with the branch that was the whole point of saving nowhere in
-  // the file. The branches kept at that open fork go under it — one mark and nothing else.
-  // Which branch of how many, at what temperature, how many were kept: that is the tree's
-  // job, and the tree is one click away. Here the document is the thing, so nothing is
-  // trimmed, counted or annotated around it. Keeps at EARLIER forks still stay out: there a
-  // line was taken, and the line taken is the story.
-  const last = steps.length ? steps[steps.length - 1] : null;
-  const ends = last && !last.took ? (last.kept || []) : [];
-  ends.forEach(k => { doc += '\n\n[generation begins]\n\n' + (k.text || ''); });
-  const m = a.model || {}, p = a.params || {};
-  // Above the document, only what you would need to run it again: which model, and the few
-  // sampler numbers that decide the register. Everything else is in the json.
-  const head = [
-    a.title || a.name,
-    'model: ' + (m.file || 'not recorded'),
-    'sampler: ' + ['temperature', 'min_p', 'xtc_probability', 'n_predict']
-      .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · '),
-    'walk: ' + steps.length + (steps.length === 1 ? ' step · ' : ' steps · ') +
-      num(a.bits || 0) + ' bits of curation',
-    'saved: ' + when(a.created),
-  ].join('\n');
-  // The document goes out exactly as it stands — no trailing trim. Whitespace at the end of a
-  // branch is text the model wrote, and this file is the evidence of what it wrote.
-  return head + '\n\n' + doc;
-}
-
 // Export is a SCREEN, not a download: the point of the walk is to be read, and a file in
 // Downloads is a thing you have to go find, open in something, and trust not to render the
 // brackets away. The file is still one button from here for when it should leave the mac.
-function exportArtifact(){
+//
+// The text itself is the SERVER's — `/api/artifact/text`, built by loom.py from the file on
+// disk. The page had its own copy of that concatenation for a day and that is exactly how
+// two answers to "what does an artifact read like" start to drift; now there is one, it is
+// tested, and it has a url that can be sent.
+const textURL = a => '/api/artifact/text?name=' + encodeURIComponent(a.name);
+
+async function exportArtifact(){
   if(!artifact) return;
+  let text;
+  try{
+    const r = await fetch(textURL(artifact), {cache: 'no-store'});
+    text = await r.text();
+    if(!r.ok) throw new Error(text.trim() || r.status);
+  }catch(e){ sys('could not read the document: ' + e.message, true); return; }
   $('texttitle').textContent = artifact.title || artifact.name;
-  $('textview').textContent = artifactText(artifact);
+  $('textview').textContent = text;
   showText();
 }
 
@@ -2269,6 +2243,9 @@ $('artsave').addEventListener('click', saveArtifact);
 // came from, and its connectors are measured, so it has to be re-drawn on the way in.
 $('textback').addEventListener('click', showArtifact);
 $('textcopy').addEventListener('click', copyText);
+// The document at its own address, in a tab: that is the thing you can send to a phone or
+// paste into sheets. `_blank` and not this tab, because leaving the loom loses the room.
+$('textlink').addEventListener('click', () => artifact && window.open(textURL(artifact), '_blank'));
 $('textsave').addEventListener('click', downloadText);
 $('noteadd').addEventListener('click', newNote);
 $('noteback').addEventListener('click', showDialogue);

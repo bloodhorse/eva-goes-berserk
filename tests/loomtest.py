@@ -939,6 +939,42 @@ class Artifacts(unittest.TestCase):
         row = next(r for r in call("/api/artifacts")[1]["artifacts"] if r["name"] == name)
         self.assertEqual((row["steps"], row["kept"], row["fan"]), (0, 1, 40))
 
+    def test_the_document_at_a_url(self):
+        # What the export screen reads, and what a browser opened at that address shows: a
+        # short head, a blank line, and then the room's own text, verbatim.
+        t, walk = walk_room("art-text")
+        a = save_walk(t, walk)
+        st, text = call("/api/artifact/text?name=" + urllib.parse.quote(a["name"]))
+        self.assertEqual(st, 200, text)
+        head, _, doc = text.partition("\n\n")
+        self.assertEqual(head.split("\n")[0], a["title"])
+        self.assertIn("model: " + a["model"]["file"], head)
+        self.assertIn(f"temperature {a['params']['temperature']}", head)
+        self.assertIn(f"walk: {len(a['steps'])} steps", head)
+        self.assertEqual(doc, t.prompt_from(t.d["current"]))
+
+    def test_the_document_ends_on_the_keeps_of_an_open_fan(self):
+        # Nothing was taken at the fan he saved from, so the keeps ARE the ending — each
+        # under a bare mark, in fan order, and the document itself untouched before them.
+        t, b = kept_fan("art-text-open")
+        at = t.d["current"]
+        d = call("/api/artifact", {"room": t.d["name"], "parent": at,
+                                   "kept": [b[4]["id"], b[1]["id"]]})[1]
+        text = call("/api/artifact/text?name=" + d["name"])[1]
+        doc = text.partition("\n\n")[2]
+        self.assertEqual(doc, t.prompt_from(at) +
+                         "\n\n[generation begins]\n\n" + b[1]["text"] +
+                         "\n\n[generation begins]\n\n" + b[4]["text"])
+
+    def test_the_document_says_no_in_plain_text(self):
+        # Whatever opens this url is reading, not parsing: a json error here would be a page
+        # of braces in a browser window.
+        for path, code, want in (("?name=nope", 404, "no such artifact"),
+                                 ("?name=../secrets", 400, "bad name")):
+            st, body = call("/api/artifact/text" + path)
+            self.assertEqual(st, code, body)
+            self.assertEqual(body.strip(), want)
+
 
 class Cancel(unittest.TestCase):
     def test_cancel_with_nothing_running(self):

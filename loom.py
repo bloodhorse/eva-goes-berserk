@@ -40,6 +40,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/artifacts        -> every artifact's name, title, created, steps, kept and fan
                                 size, newest first
   GET  /api/artifact?name=   -> one artifact, whole
+  GET  /api/artifact/text?name= -> that walk as one plain-text document, to read or send
   POST /api/artifact         -> {"room", "parent", "kept": [node ids], "name"?}: the server
                                 reads that room off the disk, walks the path that reached
                                 `parent`, and freezes every fork along it — the line taken,
@@ -744,6 +745,55 @@ def artifact_card(d: dict) -> dict:
             "fan": (d.get("fan") or {}).get("size") or 0}
 
 
+def artifact_steps(d: dict) -> list[dict]:
+    """A walk's steps, with a pre-walk artifact read as a walk of one step nobody picked
+    from. Same two shapes as `artifact_card`, same rule: `steps` is the whole test."""
+    steps = d.get("steps")
+    if isinstance(steps, list):
+        return steps
+    return [{"at": (d.get("source") or {}).get("node"), "lead": "", "took": None,
+             "kept": d.get("kept") or [], "fan": d.get("fan") or {"size": 0, "others": []},
+             "bits": d.get("bits") or 0}]
+
+
+def artifact_text(d: dict) -> str:
+    """The walk as ONE document: the prompt, then every step's lead and the line taken,
+    joined with nothing between them — the text the model actually saw and wrote, not a
+    transcript of the tree. The branches kept beside the path are left out, this being the
+    story and not the fan, except at the open fork it ends on: there nothing was taken and
+    those keeps are the only ending there is, each under a bare `[generation begins]`.
+
+    It lives here and not in the page for the same reason `build_artifact` does — one place
+    decides what an artifact reads like, and the tests can hold it to that. The page shows
+    what this returns; `/api/artifact/text` is the same string at a url.
+
+    Nothing is trimmed. Whitespace at the end of a branch is text the model wrote, and this
+    string is the evidence of what it wrote — which is also why it goes out as plain text:
+    a base model's document is full of `> > >`, `//` and stray brackets, exactly what a
+    markdown reader would swallow.
+    """
+    steps = artifact_steps(d)
+    doc = (d.get("prompt") or "") + "".join(
+        (s.get("lead") or "") + ((s.get("took") or {}).get("text") or "") for s in steps)
+    last = steps[-1] if steps else None
+    if last and not last.get("took"):
+        for k in last.get("kept") or []:
+            doc += "\n\n[generation begins]\n\n" + (k.get("text") or "")
+    m, p = d.get("model") or {}, d.get("params") or {}
+    sampler = " · ".join(f"{k} {p[k]}" for k in
+                         ("temperature", "min_p", "xtc_probability", "n_predict") if k in p)
+    lt = time.localtime(d.get("created") or 0)
+    head = "\n".join([
+        d.get("title") or d.get("name") or "",
+        "model: " + (m.get("file") or "not recorded"),
+        "sampler: " + sampler,
+        f"walk: {len(steps)} step{'' if len(steps) == 1 else 's'} · "
+        f"{round(d.get('bits') or 0, 3):g} bits of curation",
+        "saved: " + time.strftime("%b %-d, %Y %I:%M %p", lt),
+    ])
+    return head + "\n\n" + doc
+
+
 def artifacts() -> list[dict]:
     """Every artifact, newest first by the time it was made — not file time, because a
     git checkout rewrites every mtime to the moment of the clone."""
@@ -856,6 +906,24 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(404, {"error": "no such artifact"})
             except (OSError, ValueError) as exc:
                 self._json(500, {"error": f"can't read it: {exc}"})
+            return
+
+        # The document at a url, as plain text: the export screen reads it, and so does a
+        # browser opened straight at it — a link that can be sent, reloaded and pasted into
+        # sheets, where a blob download is a file and nothing more. Errors are plain text
+        # too, because whatever opens this is reading, not parsing.
+        if u.path == "/api/artifact/text":
+            name = parse_qs(u.query).get("name", [""])[0]
+            if not NAME_RE.match(name):
+                self._send(400, "bad name\n", "text/plain; charset=utf-8")
+                return
+            try:
+                with open(artifact_path(name), encoding="utf-8") as f:
+                    self._send(200, artifact_text(json.load(f)), "text/plain; charset=utf-8")
+            except FileNotFoundError:
+                self._send(404, "no such artifact\n", "text/plain; charset=utf-8")
+            except (OSError, ValueError) as exc:
+                self._send(500, f"can't read it: {exc}\n", "text/plain; charset=utf-8")
             return
 
         self._json(404, {"error": "not found"})
