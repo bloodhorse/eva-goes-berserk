@@ -35,10 +35,8 @@ Built and live at `https://eva.x` (reload the page — `loom.html` changed sever
   height has to call `drawArtLinks()` — the prompt fold already does.
 
 **2. The export button.**
-- **It has never been clicked in a real browser.** The page renders with it and the tree still
-  draws (11 connector paths in the headless shot), but the blob download path — `a.download`,
-  the object url, the 10s revoke — is unverified on bekh's Safari/Helium. First job next session:
-  press it, confirm a `.md` lands, confirm the text is the document and not a transcript.
+- **Clicked and working** — bekh pressed it in his own browser the same night it was built, so the
+  blob download path (`a.download`, the object url, the 10s revoke) is real, not just headless.
 - No test covers `artifactText()`. The server-side equivalent *is* tested (prompt + every step's
   lead + line taken rebuilds the document), so the shapes agree; the page's copy does not.
 - Open questions bekh raised and we haven't settled: `.md` versus plain `.txt`, whether the head
