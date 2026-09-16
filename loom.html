@@ -159,10 +159,6 @@
      show — would be the page hiding part of the walk. The inner box is what the rows centre
      in and what the svg covers, so it has to be as wide as the widest row, not as wide as
      the screen. */
-  /* The reading column is a rule for prose, and a tree is not prose: it is a picture that
-     wants every pixel the window has. So the artifact screen alone opts out of --reading —
-     a step of three branches fits without scrolling, and the text in them can be read. */
-  #artpane{width:100%; max-width:none;}
   #arttree{position:relative; flex-shrink:0; overflow-x:auto; padding:2px 0 8px;}
   #arttree .inner{position:relative; width:max-content; min-width:100%; margin:0 auto;}
   #arttree svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
@@ -174,7 +170,10 @@
     border:1px solid var(--line); border-radius:11px; padding:9px 12px; font-size:13px;
     color:var(--ghost); overflow-wrap:anywhere;}
   #arttree .n.took{background:var(--panel); border-color:transparent; color:var(--ink);}
-  #arttree .n.root{width:460px; max-width:100%; background:var(--sunk); color:var(--ink);}
+  /* The prompt is the document everything below it came out of, and the longest text on the
+     screen — it gets most of the window, not a card the size of a branch. */
+  #arttree .n.root{width:clamp(330px, 62vw, 900px); max-width:100%;
+    background:var(--sunk); color:var(--ink);}
   #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
   #arttree .cap.posed{color:var(--hot);}
   #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
@@ -201,6 +200,11 @@
   #panes{flex:1; display:flex; min-height:0; min-width:0;}
   #doc, #fanpane, #notepane, #artpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
     display:flex; flex-direction:column; padding:64px 24px max(24px, env(safe-area-inset-bottom));}
+  /* The reading column is a rule for prose, and a tree is not prose: it is a picture that
+     wants every pixel the window has, so the artifact screen alone opts out of --reading.
+     It has to come AFTER the rule above: same specificity, and the last one wins — written
+     before it, the pane stayed the width of a chat and every wide row was cut. */
+  #artpane{width:100%; max-width:none;}
   #blocks{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     --gut:64px; --rim:56px; font-size:16px; line-height:1.65;}
   .blk{position:relative; padding:0 var(--rim) 0 var(--gut);}
