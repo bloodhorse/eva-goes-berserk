@@ -200,7 +200,9 @@
   .blk .swipe{position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px;
     font-size:13px; color:var(--ghost); opacity:0; pointer-events:none;}
   .blk:hover .swipe, .blk:focus-within .swipe{opacity:1; pointer-events:auto;}
-  .arw{background:none; border:0; padding:6px 2px; color:var(--ghost);}
+  .fork{background:none; border:0; padding:6px 2px; color:var(--ghost); font:inherit;
+    white-space:nowrap; letter-spacing:.02em;}
+  .fork:hover{color:var(--accent);}
   .foot{font-size:13px; color:var(--ghost); display:flex; gap:10px; flex-wrap:wrap;}
   .foot .ghostbtn{font-size:13px; padding:0;}
   .foot .ghostbtn.on{color:var(--accent);}
@@ -265,10 +267,10 @@
     :root{--reading:100%;}
     #doc, #fanpane, #notepane, #artpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
     /* No margins for controls once the screen narrows: at 36px the "edit" word and the
-       ‹ 2/3 › walk were wider than their margin and sat on top of the text, and on a
+       ⌥ 3/40 fork mark were wider than their margin and sat on top of the text, and on a
        touch screen there is no hover to reveal them anyway. So every block becomes a
        small grid — its text, the posed tag, then one row with edit on the left and the
-       sibling walk on the right, in the flow, where nothing can overlap. */
+       fork mark on the right, in the flow, where nothing can overlap. */
     #blocks{--gut:0px; --rim:0px;}
     .blk{display:grid; grid-template-columns:1fr auto;
       grid-template-areas:"body body" "foot foot" "gut swipe"; padding:0 0 14px;}
@@ -307,7 +309,7 @@
   @media (hover:none){
     .blk .gut, .blk .swipe{opacity:1;}
     .blk .gut .ghostbtn{padding:10px 14px 10px 0;}
-    .arw{padding:8px 12px; font-size:18px;}
+    .fork{padding:8px 12px; font-size:15px;}
     input, select, textarea{font-size:16px;}
   }
   /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
@@ -1217,11 +1219,18 @@ function editBlock(n, body, after){
   ta.setSelectionRange(ta.value.length, ta.value.length);
 }
 
-// The sibling walk. This is the only affordance for getting back into a branch he turned
-// away from, and without one a pruned-nothing tree is still a tunnel. It sits on the block
-// itself because that is what it is about: not "the tree has four nodes at depth 3" but
-// "this line had three alternatives". Picking a sibling of an ANCESTOR truncates the
-// document there, exactly as picking any node always has.
+// The fork mark. This is the only affordance for getting back into a branch he turned away
+// from, and without one a pruned-nothing tree is still a tunnel. It sits on the block itself
+// because that is what it is about: not "the tree has four nodes at depth 3" but "this line
+// had forty alternatives". One tap opens that line's own fan on the choose screen, where the
+// branches are read side by side.
+//
+// It used to be ‹ n/m › arrows, stepping one sibling at a time. They went because that is not
+// how a fan of forty gets read: nobody walks a pile hunting for the good one, he opens the
+// pile. The count stays, because "3/40" says both where he is standing and how wide the fan
+// was — and the corner menu's "view alternatives" still opens the fan UNDER the current line,
+// so both directions are one move and neither has to be inferred from where he stands.
+// The glyph is ⌥, generative.ink's own mark for a branch point in the old loom artifacts.
 function swipe(n){
   if(!n.parent) return null;
   const sibs = kids(n.parent);
@@ -1230,22 +1239,16 @@ function swipe(n){
   if(at < 0) return null;
   const box = document.createElement('div');
   box.className = 'swipe';
-  // wrap at both ends: with four branches, one more press of › is always a branch, and a
-  // dead arrow at the edge is a control that lies about what is there.
-  const go = d => pickNode(sibs[(at + d + sibs.length) % sibs.length].id);
-  const arrow = (glyph, d) => {
-    const b = document.createElement('button');
-    b.className = 'arw';
-    b.type = 'button';
-    b.textContent = glyph;
-    b.addEventListener('click', () => go(d));
-    return b;
-  };
-  const count = document.createElement('span');
-  count.textContent = (at + 1) + '/' + sibs.length;
-  box.appendChild(arrow('‹', -1));
-  box.appendChild(count);
-  box.appendChild(arrow('›', 1));
+  const b = document.createElement('button');
+  b.className = 'fork';
+  b.type = 'button';
+  b.textContent = '⌥ ' + (at + 1) + '/' + sibs.length;
+  b.title = 'view this line\'s ' + sibs.length + ' branches';
+  b.setAttribute('aria-label', b.title);
+  // The fan of THIS line is the fan under its parent — the same screen the menu opens, so a
+  // sibling of an ancestor picked there truncates the document exactly as it always has.
+  b.addEventListener('click', () => showChoices(n.parent));
+  box.appendChild(b);
   return box;
 }
 
