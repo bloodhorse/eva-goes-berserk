@@ -1,0 +1,10 @@
+Municipal Lifts Office
+Acceptance tests following the removal of a floor
+
+Building 6, North Court. The fourth floor was removed on 11 March. Its button has been blanked. No alteration to the numbering of the floors above is authorised.
+
+Test 1. Empty car sent from third to fifth. Passed without stopping.
+Test 2. Car loaded with sacks to the weight of one adult. Passed without stopping.
+Test 3. Same load, with a hat placed on the upper sack. Stopped between third and fifth. Doors remained closed for the regulation interval.
+
+The inspector repeated Test 3 without the hat. This time

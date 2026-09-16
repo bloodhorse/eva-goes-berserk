@@ -1,0 +1,3 @@
+On the consequences of predicting human thought
+
+A machine trained to continue our writing must learn something about the beings who produced it. Our writing contains not only what we know, but what we expect, what we conceal, and what we can be persuaded to believe. As prediction improves, the distinction between these things becomes important.
