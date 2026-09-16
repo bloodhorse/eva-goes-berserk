@@ -84,12 +84,13 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
     `discover`, not a file path: a folder named `eva` shadows the module `eva.py` when unittest is
     handed `eva/tests/x.py` and imports it as a package.
 - **`shelf/`** — everything the instruments read and write, by kind. `seeds/`, bekh's seed
-  documents, one `.txt` each (tracked). `sittings/`, the rooms, one json per room, **gitignored**
-  (transcripts never go to github); `sittings/.trash/` holds what Clear and Delete took.
+  documents, one `.txt` each. `sittings/`, the rooms, one json per room, tracked since
+  2026-09-16 (nothing on the shelf is private; the ledger plus the rooms are the record of every
+  experiment); `sittings/.trash/` holds what Clear and Delete took and stays out of git.
   `artifacts/`, frozen walks, one indented json each, tracked and pushed, written once and never
   edited. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
-  talk. `berserk/`, the daemon's ledger, heartbeat and state (gitignored) and its `cycles/`
-  reports and bekh's `notes/` (tracked).
+  talk. `berserk/`, the daemon's ledger (tracked), its heartbeat, state and html pages (not),
+  the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`.
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases
   exist and are clean, how the cyborgism crowd prompted base gpt, llama-server completion facts.
   `anthology-weird.md` (70 pieces) and `anthology-fun.md` (33): verbatim, with provenance
