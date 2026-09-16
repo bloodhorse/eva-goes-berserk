@@ -331,13 +331,23 @@ Cycles 80 and 81 predate `tries`, so their rows carry only `wished` and the page
 attempts from it — every miss shows, the whys of the misses do not exist to show. The first cycle
 walked after this is the first one whose page is complete.
 
-`--picker random` and `--beats` are built and green against the fakes, and **no real cycle has
-run with either**. The one they are for is the first-person run: cycle 82, the scale of 80 and
-81 (two pages, five forks of five, one closing fan), walked by lot to
-`shelf/berserk/beats/first-person.txt` — six lines, five forks and the closing fan. Read beside
-80 and 81 it answers the question those two could not: how much of what a page does is the
-picker and how much is the fan.
+**Cycle 82 is the first-person run** (2026-09-16, late): the scale of 80 and 81 (two pages, five
+forks of five, one closing fan), 60 tokens a branch, walked by lot with
+`shelf/berserk/beats/first-person.txt` — six beats, the first *i keep coming back to one line of
+it.*, the rest time cues. No reader, no opus: the unselected rate, and the first cycle whose rows
+carry `beat`, `ask` and `brakes`. On the sheets site as `berserk-c82.html`, the tree at
+`https://eva.x/#tree=berserk-c82-p01`.
 
-Next is bekh's call, not the machine's: read the pages, decide whether any picker is
-choosing, and — if margin's notes are the prize — whether the note should be written about the
-*branch alone* rather than the branch under the whole document.
+What it shows: the beat summoned an *i*, and the *i* that came is **the author**. Under the lift
+tests the document became a writer's blog (*i'm going to use a lot of the text as-is*, *you guys*,
+then a markdown file header); under the relay roll it became the author's note under a poem
+(*inspired by a conversation on the Discord channel*, *thoughts? questions?*, *it's just the new
+meds*). *I keep coming back to one line of it* is precisely what a writer says about a draft, so
+the voice arrived outside the document, talking about it. Two lines at the edge are worth the
+night: *"my name is an apple, but it has no mouth"* and *the witch-towers keep speaking. it wants
+something. i don't know yet if it can have it.* The lesson for the next beats file: the first
+beat has to put the *i* inside the world — a place, a body, a time of night — not in front of a
+page.
+
+Next is bekh's call: read 80, 81 and 82 side by side, say what the *i* should be standing in,
+and whether a picker goes back in against the same beats.

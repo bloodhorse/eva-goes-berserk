@@ -8,27 +8,26 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
 
 - The loom (page, repl, walk scripts), berserk walking it with three pickers, two real cycles
   (80 about, 81 margin) on the sheets site.
-- The berserk page as a tree: fans lettered, every try with its why, the story at the end.
-  The md report is gone; the ask, the tries and the brakes ride on the ledger. `--brakes off`
-  exists (2026-09-16).
+- Two renderings of one record, and the record is the ledger plus the rooms, both in git
+  (2026-09-16): the sheets page (a tree: fans lettered, every try with its why, the story at
+  the end) and the tree screen at eva.x (`#tree=<room>`). The md report is gone. `--brakes
+  off`, `--beats`, `--picker random` exist.
+- Cycle 82, the first first-person run: beats before every fan, drawn by lot. The *i* that
+  came was the author (a writer's blog, an author's note). Two lines at the edge. See the
+  State section of `eva/berserk/CLAUDE.md`.
 
 ## now
 
-1. **Understand the third approach in dialogue, by examples.** The walk plus a picker reads
-   lame because the fan is the ceiling and the picker can't lift it; the good lines came from
-   the reader seat (the notes, the wished descriptions). The candidate: nothing is continued,
-   every step is a short document that responds to the previous one — a note on a story, an
-   entry naming the next thing, that thing written out, a note on it. bekh decides whether that
-   shape is the machine or a step on the way. Nothing runs until it's understood.
-2. **Build the recurrence loop** for whatever shape survives 1. Twenty short chains a night,
-   one sample per move, no opus anywhere. Read the roll in the morning, count what you'd keep.
-   That count is the only number; keep the roll the same size every morning so it's
-   comparable.
-3. **One cycle with `--brakes off`**, whenever — cheap, and c82 sits next to c80/c81 for the
-   comparison.
-4. **bekh's lyrics and poems as the source documents** the reader responds to. First of the
-   three ways in from `HANDOFF.md`; the hand is in the input, which is where the criterion
-   allows it.
+1. **bekh reads 80, 81 and 82 side by side** and says where the *i* should be standing. The
+   shape that was rejected: anything told by a reporter, a clerk, an archivist — second-hand.
+   The shape that held on the shelf: first person, present, inside it, turning it over. Open:
+   a beats file that puts the *i* in a place and a body instead of in front of a page; whether
+   a picker goes back in against the same beats.
+2. **One cycle with `--brakes off`**, whenever — cheap, sits next to the others.
+3. **bekh's lyrics and poems as seeds** for the voice to stand in. First of the three ways in
+   from `HANDOFF.md`; the hand is in the input, which is where the criterion allows it.
+4. **Twenty chains a night, unselected**, once the beats hold: read the roll in the morning,
+   count what you'd keep, same size every morning so the count is comparable.
 
 ## then
 
