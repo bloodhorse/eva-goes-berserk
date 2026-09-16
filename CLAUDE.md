@@ -71,8 +71,9 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `server/` — `loom.py`, the file store and llama proxy. Everything else imports it.
   - `cli/` — `eva.py`, the terminal repl (`~/.local/bin/eva`); `census.py`, one document, n
     continuations, unattended; `walk/`, seed → fan → pick from a shell, with its `README.md`.
-  - `berserk/` — the daemon: nemo writes, opus picks, bekh reads in the morning. `picker.md` is
-    the rulebook pasted into every picker call. **`eva/berserk/CLAUDE.md`** is the doc.
+  - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
+    matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
+    is the doc.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
     env, never the real shelf:
 

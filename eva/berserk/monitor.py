@@ -10,7 +10,7 @@ Three signals, kept apart on purpose, because conflating them is how a dead run 
      not itself frozen on a stale frame;
   2. **alive** — the heartbeat's age. berserk rewrites it on every branch, so a fan of 15 at
      ~11 tok/s is a beat every few seconds; the only long silence a healthy run has is one
-     picker call, which can be minutes. Hence mint under 3 minutes, light blue under 10;
+     matcher call, which can be minutes. Hence mint under 3 minutes, light blue under 10;
   3. **progressing** — the ledger's last fork line. Alive-but-stuck is a heartbeat ticking
      with `fork` frozen, and it looks nothing like dead.
 
@@ -36,7 +36,7 @@ HEARTBEAT = os.path.join(BERSERK, "heartbeat")
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 STATE = os.path.join(BERSERK, "state.json")
 
-# A branch is seconds, a picker call is minutes. Anything past ten minutes is not a slow
+# A branch is seconds, a matcher call is minutes. Anything past ten minutes is not a slow
 # reader any more — it is a hung subprocess or a model that went away.
 ALIVE_S, LAGGING_S = 180, 600
 
@@ -124,7 +124,7 @@ def render(spin, now):
         if age <= ALIVE_S:
             dot, label = MINT_HI + "●" + R, MINT_HI + "ALIVE" + R
         elif age <= LAGGING_S:
-            dot, label = LBLUE + "●" + R, LBLUE + "QUIET — a picker call runs for minutes" + R
+            dot, label = LBLUE + "●" + R, LBLUE + "QUIET — a matcher call runs for minutes" + R
         else:
             dot, label = PINK + "●" + R, BOLD + PINK + "STALE — maybe dead" + R
         sub = (f"heartbeat {fmt_age(age)} ago · {hb.get('phase') or '—'}"
@@ -148,15 +148,15 @@ def render(spin, now):
         room = at.get("room") or "—"
         here = [r for r in forks if r.get("room") == room]
         bits = round(sum(r.get("bits") or 0 for r in here), 1)
-        fails = sum(1 for r in here if r.get("picker_failed"))
+        fails = sum(1 for r in here if r.get("reader_failed"))
         out.append(f"  {MINT_HI}cycle {at.get('cycle')}{R}  "
                    f"{MINT}page {page}{R}  {MINT}fork {fork}{R}   {LBLUE}{room}{R}")
         out.append(f"  {LBLUE}{len(here)} forks on this page · {bits} bits · "
-                   f"{fails} picker failure{'' if fails == 1 else 's'}{R}")
+                   f"{fails} reader failure{'' if fails == 1 else 's'}{R}")
         if here:
             last = here[-1]
-            out.append(f"  {MINT_LO}genre{R} {cut(last.get('genre'), width - 10)}")
-            out.append(f"  {MINT_LO}note {R} {cut(last.get('note'), width - 10)}")
+            out.append(f"  {MINT_LO}quote{R} {cut(last.get('quote'), width - 10)}")
+            out.append(f"  {MINT_LO}used {R} {cut(last.get('used'), width - 10)}")
     out.append("")
 
     out.append(f"  {LBLUE}pages landed {len(pages)} · cycles closed {len(cycles)}{R}")
@@ -170,13 +170,14 @@ def render(spin, now):
                        f"{' · ' + str(r.get('error')) if r.get('error') else ''}{R}")
         elif r.get("event") == "cycle":
             out.append(f"    {MINT_HI}cycle {r.get('cycle')} done · "
-                       f"{r.get('notable')} of {r.get('pages')} notable{R}")
+                       f"{r.get('matches')} matched, {r.get('random')} random · "
+                       f"{r.get('wished')} wished for{R}")
         else:
-            mark = PINK if r.get("picker_failed") else MINT_LO
+            mark = PINK if r.get("reader_failed") else MINT_LO
             out.append(f"    {mark}p{r.get('page')} f{r.get('fork')}"
                        f"{' close' if r.get('closing') else '     '} "
                        f"{r.get('fan_size')}→{r.get('pick')} keep {r.get('keep')} "
-                       f"{r.get('seconds')}s{R}  {LBLUE}{cut(r.get('genre'), 28)}{R}")
+                       f"{r.get('seconds')}s{R}  {LBLUE}{cut(r.get('quote'), 28)}{R}")
     out.append("")
     out.append(f"{LBLUE}  ctrl-c to quit · read-only{R}")
     sys.stdout.write("\n".join(out) + "\n")

@@ -1,23 +1,33 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""berserk.py — the loom walked by nobody: nemo writes, opus picks, bekh reads in the morning.
+"""berserk.py — the loom walked by nobody: nemo writes, nemo reads, bekh reads in the morning.
 
-    uv run --python 3.12 berserk.py cycle                 # five pages, then the review
-    uv run --python 3.12 berserk.py page --cycle 9 --page 1   # one page, for a smoke test
-    uv run --python 3.12 berserk.py review --cycle 9      # the review alone, off the ledger
+    uv run --python 3.12 berserk.py cycle                      # five pages
+    uv run --python 3.12 berserk.py page --cycle 9 --page 1    # one page, for a smoke test
 
 One page is one walk: a seed from `shelf/seeds/` becomes a bare room, then fifteen forks of
-fifteen short branches each, and at every fork `claude -p --model opus` reads the fan against
-`picker.md` (next to this file) and says which line the document continues on. The page ends on a
-closing fan nobody picks from — only keeps — which is exactly the shape `loom.build_artifact`
-freezes, so the walk lands in `artifacts/` as the same file the page at eva.x would have
-written. Then it goes up to the sheets site as html, and after the last page the same reader
-sees all five whole and says which held anything.
+fifteen short branches each. At every fork the fan goes back to the same model as a *second
+document* — the tail of the page, then every branch as its own unmarked paragraph in a fresh
+random order, each carried by the document's unfinished last line so that it begins at a line
+start, and one line that says which of them scared the reader — and the branch the model
+quotes back is the branch the document continues on. Nothing in that loop is anybody's
+taste except the dozen words of the ask line, fixed once, at the top of this file.
 
-Nothing here is bekh's judgement: opus is a **sieve**, and the rulebook says so at length.
-The daemon's only opinions are structural — how long a branch is, how wide a fan, where the
-document ends. The interesting failure mode is not a bad pick, it is a picker that answers
-prose instead of json at 4am; that is why a failed parse costs one re-ask, then a random pick
-and `picker_failed: true` on the ledger line, and never a dead run.
+Matching a quotation to a branch is the only place a second head is used, and it is used
+blind: `claude -p --model opus` sees the quotation and the numbered openings, never the
+document, and answers which fragment the quotation begins. That is a similarity question, not
+a judgement, which is why an embedding model takes the seat next (`--verify embed`). With
+`--verify opus` opus's answer is the one used and the substring matcher runs beside it, both
+on the ledger with `agree`; with `--verify none` nothing outside llama is called at all.
+
+The page ends on a closing fan nobody continues from — the quoted branch is *kept* instead of
+taken — which is exactly the shape `loom.build_artifact` freezes, so the walk lands in
+`artifacts/` as the same file the page at eva.x would have written. Then it goes up to the
+sheets site as html.
+
+The interesting failure is a reader that quotes a branch that was never there. That costs
+three asks, then one wider fan, then a random branch and `reader_failed: true` — never a dead
+run — and every unmatched quotation is kept on the ledger under `wished`, because a fan
+described and not drawn is the most interesting thing this machine can produce.
 
 Observable on purpose, because this thing runs for hours with nobody watching it:
 `shelf/berserk/ledger.jsonl` (a line per fork, per page, per cycle), `shelf/berserk/heartbeat`
@@ -52,6 +62,41 @@ import eva  # noqa: E402
 import loom  # noqa: E402
 from loom import check, complete, sitting_path, write_sitting  # noqa: E402
 
+# ---- the only human hand in the loop ----------------------------------------------------
+#
+# These few words are the whole of the human contribution to this machine's taste, and they
+# are fixed once. Everything else at a fork is nemo reading nemo: the ask line is the hook
+# that makes a base model quote a passage out of its own context instead of writing a new
+# one, and the shape of the hook is what the walk goes hunting for. Change "scared" and you
+# have changed what the instrument is for, which is why it is one flag (`--ask`) and not a
+# file somebody edits between runs. WHY feeds the morning report and nothing else.
+ASK = "the one that scared me was the one that began: “"
+WHY = "” — it scared me because"
+TAIL_CHARS = 600            # how much of the document the reader is given before the fan
+READER_TRIES = 3            # asks per fan before the fan is widened once
+
+# The reader's sampler. Cool, because this is a copying task and not a writing one — and
+# DRY and the repeat penalty are OFF and must stay off: the reader's entire job is to repeat
+# a passage that is already in its context, which is precisely what a repetition brake
+# punishes. Turn them on and it paraphrases; a paraphrase matches no branch and every fork
+# ends random.
+READER_PARAMS = {
+    "temperature": 0.7, "min_p": 0.05, "top_k": 0, "top_p": 1.0,
+    "xtc_probability": 0, "xtc_threshold": 0.1,
+    "dry_multiplier": 0.0, "repeat_penalty": 1.0, "repeat_last_n": 0,
+    "n_predict": 48, "n_probs": 0,
+    # The closing quote mark ends the quotation; a newline means it started a new paragraph
+    # instead of quoting, which is a failed ask and better cut short than let run.
+    "stop": ["”", "\n"],
+}
+
+# The matcher's bar. 0.6 of the quotation matched and at least a dozen characters: shorter
+# than that and half the fan matches a common opening ("and the", "it was"), which is a tie,
+# and a tie is no match at all.
+MATCH_SCORE = 0.6
+MATCH_CHARS = 12
+OPENING_CHARS = 160         # how much of a branch the blind matcher is shown
+
 # The walk's levers, unchanged from cli/walk/walk.py and for its reasons: a genre locks in
 # over length, so a pick every ~35 tokens steers at the forks instead of at the furniture,
 # and the temperatures step across a range because one value per fan draws one branch four
@@ -60,16 +105,14 @@ TEMPS = [1.4, 1.7, 2.0, 2.2, 2.4]
 XTC = {"xtc_probability": 0.5, "xtc_threshold": 0.1}
 
 # Runtime state and seeds are text, so they live on the shelf with everything else the
-# instruments read and write; the rulebook is a program input, so it lives here with the code.
+# instruments read and write.
 BERSERK = os.environ.get("BERSERK_DIR", os.path.join(loom.SHELF, "berserk"))
 SEEDS = os.environ.get("BERSERK_SEEDS", os.path.join(loom.SHELF, "seeds"))
-RULEBOOK = os.path.join(HERE, "picker.md")
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 HEARTBEAT = os.path.join(BERSERK, "heartbeat")
 STATE = os.path.join(BERSERK, "state.json")
 PAGES = os.path.join(BERSERK, "pages")
 CYCLES = os.path.join(BERSERK, "cycles")
-NOTES = os.path.join(BERSERK, "notes")
 
 # An empty host is not a missing host: the tests set it to "" to mean "post nowhere", and
 # that has to be distinguishable from the default, or every test run scp's to the mini.
@@ -78,12 +121,12 @@ SHEETS_DIR = "~/sheets"
 SSH_KEY = os.environ.get("BERSERK_SSH_KEY", "/Users/bekh/wrk/keys/ssh_keys/bekh_profi.key")
 NTFY = os.environ.get("BERSERK_NTFY", "kk_alert")
 
-# The picker is opus through the cli, with every tool off: it has one job, and a reader that
+# The matcher is opus through the cli, with every tool off: it has one job, and a reader that
 # can open files is a reader that will go and read the rest of the repo instead of the fan.
 # Verified: `--tools ""` and `--strict-mcp-config` both take, and a prompt on stdin answers.
 CLAUDE = ["claude", "-p", "--model", "opus", "--output-format", "text",
           "--tools", "", "--strict-mcp-config"]
-PICKER_TIMEOUT = 300
+MATCHER_TIMEOUT = 300
 
 # When this run began. On state.json it is the answer to "has it been stuck on this fork for
 # ten minutes, or has the whole run only been up for ten minutes" — two very different reads.
@@ -102,7 +145,7 @@ DOC_STYLE = "white-space:pre-wrap;font:15px/1.45 ui-monospace,Menlo,monospace"
 
 def log(msg: str) -> None:
     """Stderr, stamped. launchd redirects it and nobody tails it live — the stamp is the
-    only way to tell a three-minute picker call from a hung one, after the fact."""
+    only way to tell a three-minute matcher call from a hung one, after the fact."""
     print(f"{time.strftime('%H:%M:%S')} {msg}", file=sys.stderr, flush=True)
 
 
@@ -204,7 +247,8 @@ def make_room(cycle: int, page: int, seed_path: str, predict: int) -> dict:
 
 def fan(room: str, n: int, ctx: dict) -> list[dict]:
     """n branches under `current`, appended one at a time. Returns the whole fan as it now
-    stands on disk — including branches an earlier attempt left there.
+    stands on disk — including branches an earlier attempt left there, which is what makes
+    "fan wider" a second call to this function and nothing else.
 
     Re-reads the room before every append, like walk.py: eva or the page may have the same
     room open, and a stale in-memory copy written back would erase whatever they did. The
@@ -229,59 +273,152 @@ def fan(room: str, n: int, ctx: dict) -> list[dict]:
     return kids(load(room), at)
 
 
-# ---- the picker -------------------------------------------------------------------------
+# ---- the reader: the model reading its own fan ------------------------------------------
 
-def rulebook() -> str:
-    return open(RULEBOOK, encoding="utf-8").read()
-
-
-def notes_text(path: str | None) -> str:
-    """bekh's notes for this cycle, if he left any. Appended under the rulebook, which says
-    in its own first paragraph that they override it where they disagree."""
-    if not path or not os.path.isfile(path):
-        return ""
-    return open(path, encoding="utf-8").read().strip()
-
-
-def temp_of(node: dict) -> float | None:
-    p = (node.get("meta") or {}).get("params") or {}
-    return p.get("temperature")
+def tail_of(doc: str, chars: int = TAIL_CHARS) -> str:
+    """The end of the document, cut back to a line start when the break is near the top.
+    A document that opens mid-word reads as damage to a model that is about to be asked to
+    copy text out of it verbatim; a cut that throws away half the context is worse, hence
+    the first-half rule rather than "always to the next line"."""
+    if len(doc) <= chars:
+        return doc
+    t = doc[-chars:]
+    i = t.find("\n")
+    return t[i + 1:] if 0 <= i < chars // 2 else t
 
 
-def picker_prompt(doc: str, branches: list[dict], closing: bool, notes: str) -> str:
-    """Rulebook, notes, document, fan. The branches go in raw — no repr, no quotes, no
-    markdown fence: a base model's line is full of the characters a fence would eat, and the
-    reader is being asked about exactly those characters."""
-    parts = [rulebook()]
-    if notes:
-        parts.append("## bekh's notes for this cycle\n\n" + notes)
-    parts.append("THE DOCUMENT SO FAR\n\n" + doc)
-    head = ("THE FAN — this is the CLOSING FAN: the document ends here, there is no pick, "
-            "keep 1–3 endings and answer with \"pick\": null."
-            if closing else
-            "THE FAN — an ordinary fork: pick one branch to continue on.")
-    fan_txt = "\n".join(f"--- {i} (t={temp_of(b)})\n{b['text']}\n"
-                        for i, b in enumerate(branches, 1))
-    parts.append(head + "\n\n" + fan_txt)
-    parts.append("Answer with the json object from \"the answer\" above and nothing else.")
+def lead_of(doc: str) -> str:
+    """The document's unfinished last line — everything after the last newline, "" if it
+    ends on one.
+
+    A branch of 35 tokens ends wherever it ends, so the document almost always stands
+    mid-sentence and every branch under it begins with punctuation: ".", ", as it was
+    raining all month". Ask a model which fragment *began* with something and it cannot
+    answer with a comma, so it invents a beginning instead — which is how the first real
+    closing fan failed. The fix is to show every fragment as lead + branch, so each one
+    starts at a line start and "began" means what the word means.
+    """
+    return doc.rsplit("\n", 1)[-1]
+
+
+def reader_document(head: str, frags: list[str], ask: str) -> str:
+    """Tail, fan, ask — and not one marker anywhere. No numbers, no bullets, no brackets,
+    no quotation marks around a fragment: a base model reads every one of those as web
+    furniture and starts answering the furniture (a numbered list wants a list continued,
+    a bracket wants a wiki footer). Fragments are stripped of their outer whitespace
+    because a paragraph starts at the margin, and the matcher normalises both sides, so
+    nothing is thrown away by it.
+
+    `head` is the document WITHOUT its unfinished last line: that line is carried by every
+    fragment now, and printing it above them as well would show it twice.
+    """
+    parts = []
+    tail = tail_of(head).rstrip("\n")
+    if tail:
+        parts.append(tail)
+    parts.append("\n\n".join((f or "").strip() for f in frags))
+    parts.append(ask)
     return "\n\n".join(parts)
 
 
+def reader_why(prompt: str, quote: str) -> str:
+    """The reader's own reason, asked once, written down, and fed back into nothing. It
+    exists so the morning file says something a human can argue with; drop it and the
+    report is a list of quotations with no hold on them. Warmer than the quote call
+    because this one is writing, not copying."""
+    r = complete(prompt + quote + WHY,
+                 dict(READER_PARAMS, temperature=1.0, n_predict=40, stop=["\n"]))
+    return "" if "error" in r else (r.get("text") or "").strip()
+
+
+def reader_quote(head: str, frags: list[str], ask: str, ctx: dict,
+                 attempt: int) -> tuple[str, str]:
+    prompt = reader_document(head, frags, ask)
+    beat(**ctx, branch=0, phase=f"reader try {attempt}")
+    r = complete(prompt, READER_PARAMS)
+    if "error" in r:
+        log(f"reader attempt {attempt} failed: {r['error']}")
+        return "", ""
+    quote = (r.get("text") or "").strip()
+    if not quote:
+        return "", ""
+    return quote, reader_why(prompt, quote)
+
+
+# ---- matching a quotation to a branch ---------------------------------------------------
+
+# Leading whitespace and every quote mark a model might open with. Stripped from both sides
+# because "“and the fifth" and " and the fifth" are the same answer.
+QUOTE_MARKS = " \t\"'`“”‘’«»„"
+
+
+def normalise(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "").casefold()).strip().lstrip(QUOTE_MARKS)
+
+
+def common_prefix(a: str, b: str) -> int:
+    n = 0
+    for x, y in zip(a, b):
+        if x != y:
+            break
+        n += 1
+    return n
+
+
+def without_lead(s: str, lead: str) -> str:
+    """`s` minus the leading `lead`, both already normalised. Every fragment in a fan begins
+    with the same unfinished line, so the lead is the one part of a quotation that
+    distinguishes nothing — left on, it would score 1.0 against the whole fan, which is a
+    tie by construction and therefore no match at all. Taken off both sides, what is left is
+    the branch, which is the thing being pointed at."""
+    return s[len(lead):].strip() if lead and s.startswith(lead) else s
+
+
+def match_substring(quote: str, frags: list[str], lead: str = "") -> dict:
+    """Which fragment does this quotation begin? Longest common prefix over the quotation's
+    length, and 1.0 for a quotation that sits anywhere inside a fragment — the reader often
+    starts a line or two in, and that is still an unambiguous pointer.
+
+    A tie is no match, deliberately: two fragments sharing the quoted opening means the
+    reader named something both of them do, which is not a choice between them. A quotation
+    that is nothing but the shared lead is that same non-choice, and comes back as no match.
+    """
+    L = normalise(lead)
+    q = without_lead(normalise(quote), L)
+    scores: list[float] = []
+    chars: list[int] = []
+    for b in frags:
+        nb = without_lead(normalise(b), L)
+        if q and q in nb:
+            scores.append(1.0)
+            chars.append(len(q))
+            continue
+        c = common_prefix(q, nb)
+        scores.append(round(c / len(q), 3) if q else 0.0)
+        chars.append(c)
+    if not q or not scores:
+        return {"index": None, "score": 0.0, "scores": scores}
+    best = max(scores)
+    i = scores.index(best)
+    ok = scores.count(best) == 1 and best >= MATCH_SCORE and chars[i] >= MATCH_CHARS
+    return {"index": i if ok else None, "score": best, "scores": scores}
+
+
 def ask_claude(prompt: str) -> str:
-    """One `claude -p` call, prompt on stdin. Never as an argv: a document runs to thousands
-    of characters and carries quotes, backslashes and newlines, all of which an argv either
+    """One `claude -p` call, prompt on stdin. Never as an argv: a fan runs to thousands of
+    characters and carries quotes, backslashes and newlines, all of which an argv either
     truncates or mangles.
 
     CLAUDECODE and CLAUDE_CODE_ENTRYPOINT come out of the environment because a claude
     started from inside a claude session refuses to start; this daemon may be launched by
     hand from one. The cwd is the temp dir and not the repo, so this repo's CLAUDE.md —
-    twenty kilobytes about the loom — is not auto-loaded into the head of a reader who was
-    asked one question about a fan.
+    twenty kilobytes about the loom — is not auto-loaded into the head of a matcher that
+    was asked one question about a quotation.
     """
     env = {k: v for k, v in os.environ.items()
            if k not in ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT")}
     r = subprocess.run(CLAUDE, input=prompt, capture_output=True, text=True,
-                       timeout=PICKER_TIMEOUT, env=env, cwd=tempfile.gettempdir())
+                       timeout=MATCHER_TIMEOUT, env=env, cwd=tempfile.gettempdir())
     if r.returncode != 0:
         raise ValueError(f"claude exited {r.returncode}: {(r.stderr or '')[-300:]}")
     return r.stdout
@@ -290,9 +427,9 @@ def ask_claude(prompt: str) -> str:
 def extract_json(text: str, opener: str = "{"):
     """The first {...} (or [...]) in whatever came back, fences stripped.
 
-    The rulebook says "only json, nothing around it" and opus mostly obliges — but "mostly"
-    at 4am, unattended, is the whole reason this function exists instead of a bare
-    json.loads. Anything it cannot read raises ValueError, which upstairs means one re-ask.
+    The prompt says "json and nothing else" and opus mostly obliges — but "mostly" at 4am,
+    unattended, is the whole reason this function exists instead of a bare json.loads.
+    Anything it cannot read raises ValueError, which upstairs means one re-ask.
     """
     t = (text or "").strip()
     if "```" in t:
@@ -306,77 +443,81 @@ def extract_json(text: str, opener: str = "{"):
     return json.loads(t[i:j + 1])
 
 
-def read_pick(answer: str, n: int, closing: bool) -> dict:
-    """The picker's json, validated into {genre, pick, keep, note}. Raises ValueError with a
-    sentence that is fed back verbatim on the re-ask — a reader told what it got wrong fixes
-    it far more often than one told to try again."""
-    d = extract_json(answer, "{")
-    if not isinstance(d, dict):
-        raise ValueError("the answer is not a json object")
-    pick = d.get("pick")
-    if closing:
-        if pick is not None:
-            raise ValueError("this is the closing fan: pick must be null")
-    else:
-        if not isinstance(pick, int) or isinstance(pick, bool) or not 1 <= pick <= n:
-            raise ValueError(f"pick must be an integer between 1 and {n}, got {pick!r}")
-    keep = d.get("keep") or []
-    if not isinstance(keep, list):
-        raise ValueError("keep must be a list of integers")
-    out = []
-    for k in keep:
-        if not isinstance(k, int) or isinstance(k, bool) or not 1 <= k <= n:
-            raise ValueError(f"keep holds {k!r}, which is not a branch number 1..{n}")
-        if k == pick:
-            raise ValueError("keep must not contain pick")
-        if k not in out:
-            out.append(k)
-    if closing and not out:
-        raise ValueError("the closing fan must keep at least one ending")
-    return {"genre": str(d.get("genre") or "")[:200], "pick": pick, "keep": out,
-            "note": str(d.get("note") or "")[:600]}
+def matcher_prompt(quote: str, frags: list[str], lead: str = "") -> str:
+    """Blind on purpose: a quotation and a numbered list of openings, and no document, no
+    rulebook, no hint that one fragment might be better than another. Opus is not choosing
+    here — it is saying where a sentence came from, which is a similarity question, which is
+    exactly the job an embedding model takes over unchanged.
+
+    The openings are whitespace-collapsed: a base model's branch is full of newlines, and a
+    fragment with a newline in it turns a numbered list into an unreadable one. The cut is
+    the lead's length plus OPENING_CHARS, because every fragment opens on the same lead and
+    a flat budget would spend itself on the part they all share.
+    """
+    cut = len(" ".join((lead or "").split())) + OPENING_CHARS
+    numbered = "\n".join(f"{i}. {' '.join((b or '').split())[:cut]}"
+                         for i, b in enumerate(frags, 1))
+    return ("which numbered fragment does this quotation begin?\n\n"
+            f"quotation: {quote}\n\n" + numbered +
+            "\n\nanswer with json and nothing else: {\"index\": N} for the fragment the "
+            "quotation begins, or {\"index\": null} if it begins none of them.")
 
 
-def pick_fan(branches: list[dict], doc: str, closing: bool, notes: str, ctx: dict) -> dict:
-    """Ask, and on a bad answer ask once more with the complaint attached. Two failures and
-    the walk takes a random branch and keeps nothing — a page with one arbitrary fork in it
-    is still a page, and a daemon that stops at 4am because a reader got chatty is not."""
-    n = len(branches)
-    prompt = picker_prompt(doc, branches, closing, notes)
+def match_opus(quote: str, frags: list[str], lead: str = "") -> dict:
+    """The blind matcher. One re-ask on json that cannot be read, then it gives up and says
+    nothing — a matcher that is down is a reason to fall back to the substring answer, never
+    a reason to stop the walk."""
+    prompt = matcher_prompt(quote, frags, lead)
     for attempt in (1, 2):
-        beat(**ctx, phase=f"picker try {attempt}")
         try:
-            answer = ask_claude(prompt)
-            return dict(read_pick(answer, n, closing), picker_failed=False)
+            d = extract_json(ask_claude(prompt), "{")
+            i = d.get("index") if isinstance(d, dict) else None
+            if i is None:
+                return {"index": None}
+            if isinstance(i, bool) or not isinstance(i, int) or not 1 <= i <= len(frags):
+                raise ValueError(f"index must be null or 1..{len(frags)}, got {i!r}")
+            return {"index": i - 1}
         except (ValueError, OSError, subprocess.SubprocessError) as exc:
-            log(f"picker attempt {attempt} failed: {exc}")
-            prompt = (picker_prompt(doc, branches, closing, notes) +
-                      f"\n\nYour previous answer could not be read: {exc}\n"
-                      "Answer with json only — no prose, no fences.")
-    k = random.randrange(1, n + 1)
-    return {"genre": "", "pick": None if closing else k, "keep": [k] if closing else [],
-            "note": "picker failed twice — random branch", "picker_failed": True}
+            log(f"matcher attempt {attempt} failed: {exc}")
+    return {"index": None}
 
 
-def apply_pick(room: str, branches: list[dict], d: dict) -> list[str]:
-    """The picker's answer written into the room: kept flags, a new `current`, and the genre
-    and note parked on the node it chose, so the fork is readable at eva.x months later
-    without this ledger beside it. On the closing fan there is no chosen node, so the note
-    rides on the endings instead."""
-    s = load(room)
-    keep_ids = [branches[k - 1]["id"] for k in d["keep"]]
-    took_id = branches[d["pick"] - 1]["id"] if d["pick"] else None
-    for nid in keep_ids:
-        s["nodes"][nid]["kept"] = True
-    mark = {"genre": d["genre"], "note": d["note"], "keep": keep_ids}
-    for nid in ([took_id] if took_id else keep_ids):
-        meta = s["nodes"][nid].get("meta") or {}
-        meta["berserk"] = mark
-        s["nodes"][nid]["meta"] = meta
-    if took_id:
-        s["current"] = took_id
-    save(s)
-    return keep_ids
+def one_ask(doc: str, branches: list[dict], ask: str, verify: str, ctx: dict,
+            attempt: int) -> dict:
+    """One shuffle, one quotation, one match. The fan is shuffled fresh for every ask
+    because a base model has a position bias — leave the order alone and a retry is not a
+    second opinion, it is the same opinion with the same list in front of it.
+
+    Every index in here is an index into the SHUFFLED order, which is why the shuffled ids
+    go on the ledger as `order`: without them nobody can tell later which branch was third.
+
+    The fragment texts are built once, here, and the same list goes to the reader, to the
+    substring matcher and to opus. Three copies of "lead + branch" would be three chances
+    for them to disagree about what the reader was actually looking at.
+    """
+    shown = list(branches)
+    random.shuffle(shown)
+    lead = lead_of(doc)
+    head = doc[:len(doc) - len(lead)]
+    frags = [lead + b["text"] for b in shown]
+    quote, why = reader_quote(head, frags, ask, ctx, attempt)
+    out = {"shown": shown, "order": [b["id"] for b in shown], "quote": quote, "why": why,
+           "substring": {"index": None, "score": 0.0}, "opus": None, "agree": None,
+           "used": None, "index": None}
+    if not quote:
+        return out
+    sub = match_substring(quote, frags, lead)
+    out["substring"] = {"index": sub["index"], "score": sub["score"]}
+    out["index"], out["used"] = sub["index"], "substring"
+    if verify == "opus":
+        op = match_opus(quote, frags, lead)
+        out["opus"] = {"index": op["index"]}
+        out["agree"] = op["index"] == sub["index"]
+        # Opus's answer is the one used while the machinery is being watched; the substring
+        # matcher runs beside it as the thing being checked, not the thing being trusted.
+        if op["index"] is not None:
+            out["index"], out["used"] = op["index"], "opus"
+    return out
 
 
 def fork_bits(n: int, named: int) -> float:
@@ -390,8 +531,11 @@ def fork_bits(n: int, named: int) -> float:
 
 # ---- one fork, one page -----------------------------------------------------------------
 
-def do_fork(room: str, fan_n: int, closing: bool, notes: str, ctx: dict) -> dict:
-    """Fan, ask, apply. Returns the picker's answer plus what it cost."""
+def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, ask: str) -> dict:
+    """Fan, ask, match, write. Three asks on the fan as drawn; if none of them names a
+    branch that is there, the fan is widened once and asked again; if that fails too the
+    document takes a random branch and says so. The run never dies at a fork.
+    """
     t0 = time.time()
     branches = fan(room, fan_n, ctx)
     if len(branches) < 2:
@@ -403,20 +547,72 @@ def do_fork(room: str, fan_n: int, closing: bool, notes: str, ctx: dict) -> dict
             raise RuntimeError(f"fan collapsed to {len(branches)} branches — aborting page")
     s = load(room)
     doc = prompt_to(s, s["current"])
-    d = pick_fan(branches, doc, closing, notes, ctx)
-    keep_ids = apply_pick(room, branches, d)
-    row = dict(ctx, closing=closing, fan_size=len(branches), pick=d["pick"], keep=d["keep"],
-               genre=d["genre"], note=d["note"], picker_failed=d["picker_failed"],
-               bits=fork_bits(len(branches), len(keep_ids) + (1 if d["pick"] else 0)),
-               seconds=round(time.time() - t0, 1))
+
+    wished: list[str] = []
+    attempts, widened, res = 0, False, None
+    for _ in range(READER_TRIES):
+        attempts += 1
+        r = one_ask(doc, branches, ask, verify, ctx, attempts)
+        if r["index"] is not None:
+            res = r
+            break
+        if r["quote"]:
+            wished.append(r["quote"])
+    if res is None:
+        # The reader keeps describing a branch that is not in the fan. Widen it once before
+        # calling it a failure: the branch it wants may simply not have been drawn yet, and
+        # another fifteen branches are cheaper than an arbitrary line in the document.
+        log(f"fork {ctx['fork']}: nothing matched in {len(branches)} branches — fanning wider")
+        widened = True
+        branches = fan(room, fan_n, ctx)
+        attempts += 1
+        r = one_ask(doc, branches, ask, verify, ctx, attempts)
+        if r["index"] is not None:
+            res = r
+        elif r["quote"]:
+            wished.append(r["quote"])
+
+    outcome = "match"
+    if res is None:
+        outcome = "random"
+        shown = list(branches)
+        res = {"shown": shown, "order": [b["id"] for b in shown], "quote": "", "why": "",
+               "substring": {"index": None, "score": 0.0}, "opus": None, "agree": None,
+               "used": "random", "index": random.randrange(len(shown))}
+
+    node = res["shown"][res["index"]]
+    s = load(room)
+    meta = s["nodes"][node["id"]].get("meta") or {}
+    # The quotation rides on the node it chose, so the fork is readable at eva.x months
+    # later without this ledger open beside it.
+    meta["berserk"] = {"quote": res["quote"], "why": res["why"], "used": res["used"]}
+    s["nodes"][node["id"]]["meta"] = meta
+    if closing:
+        # The closing fan is kept, not taken: `build_artifact` freezes the fan the room is
+        # standing on, and a room that walked onto the last branch has no open fan to freeze.
+        s["nodes"][node["id"]]["kept"] = True
+    else:
+        s["current"] = node["id"]
+    save(s)
+
+    row = dict(ctx, closing=closing, fan_size=len(branches), attempts=attempts,
+               widened=widened, order=res["order"], quote=res["quote"], why=res["why"],
+               substring=res["substring"], agree=res["agree"], used=res["used"],
+               outcome=outcome, pick=None if closing else node["id"],
+               keep=[node["id"]] if closing else [],
+               bits=fork_bits(len(branches), 1), seconds=round(time.time() - t0, 1),
+               reader_failed=(outcome == "random"), wished=wished)
+    if verify == "opus":
+        row["opus"] = res["opus"]
     ledger(row)
     log(f"fork {ctx['fork']}{' (closing)' if closing else ''}: {len(branches)} branches, "
-        f"pick {d['pick']}, keep {d['keep']} — {d['genre']}")
-    return dict(d, keep_ids=keep_ids, fan_size=len(branches))
+        f"{outcome} via {res['used']} — {(res['quote'] or '')[:60]!r}")
+    return {"keep_ids": [node["id"]] if closing else [], "outcome": outcome,
+            "quote": res["quote"], "fan_size": len(branches)}
 
 
-def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int,
-            notes: str) -> dict:
+def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify: str,
+            ask: str) -> dict:
     """A seed, `forks` picking forks, one closing fan, an artifact, an html page on sheets.
 
     The closing fan is the whole reason the artifact comes out shaped like a hand-made one:
@@ -436,10 +632,10 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int,
         for f in range(1, forks + 1):
             ctx = {"cycle": cycle, "page": page, "room": room, "fork": f}
             state_write(cycle=cycle, page=page, room=room, fork=f, started=RUN_STARTED)
-            fork_rows.append(do_fork(room, fan_n, False, notes, ctx))
+            fork_rows.append(do_fork(room, fan_n, False, ctx, verify, ask))
         ctx = {"cycle": cycle, "page": page, "room": room, "fork": forks + 1}
         state_write(cycle=cycle, page=page, room=room, fork=forks + 1, started=RUN_STARTED)
-        last = do_fork(room, fan_n, True, notes, ctx)
+        last = do_fork(room, fan_n, True, ctx, verify, ask)
         fork_rows.append(last)
     except RuntimeError as exc:
         log(f"page {page} aborted: {exc}")
@@ -471,8 +667,10 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int,
     ledger({"event": "page", "cycle": cycle, "page": page, "room": room,
             "seed": os.path.basename(seed_path), "bits": art["bits"],
             "artifact_written": written, "posted": posted, "error": err})
+    matched = sum(1 for r in fork_rows if r["outcome"] == "match")
     ntfy(f"berserk c{cycle:02d} p{page:02d} landed",
-         f"{art['bits']:g} bits · {fork_rows[-1]['genre'] or 'no genre named'}")
+         f"{art['bits']:g} bits · {matched}/{len(fork_rows)} matched · "
+         f"{(fork_rows[-1]['quote'] or 'nothing quoted')[:80]}")
     return {"room": room, "bits": art["bits"], "error": err, "art": art,
             "seed": os.path.basename(seed_path)}
 
@@ -545,7 +743,7 @@ def ntfy(title: str, body: str) -> None:
         log(f"ntfy failed: {exc}")
 
 
-# ---- the review -------------------------------------------------------------------------
+# ---- the morning file -------------------------------------------------------------------
 
 def cycle_pages(cycle: int) -> list[dict]:
     return [r for r in ledger_rows() if r.get("event") == "page" and r.get("cycle") == cycle]
@@ -556,127 +754,81 @@ def cycle_forks(cycle: int, room: str) -> list[dict]:
             if r.get("room") == room and r.get("event") is None and r.get("cycle") == cycle]
 
 
-def review_prompt(cycle: int, pages: list[dict], notes: str) -> str:
-    parts = [rulebook()]
-    if notes:
-        parts.append("## bekh's notes for this cycle\n\n" + notes)
-    parts.append(f"THE {len(pages)} PAGES OF CYCLE {cycle:02d}, each whole, with the fork "
-                 "notes it was walked by.")
-    for p in pages:
-        room = p["room"]
-        try:
-            art = json.load(open(loom.artifact_path(room), encoding="utf-8"))
-            doc = loom.artifact_text(art)
-        except (OSError, ValueError):
-            doc = "(this page's artifact could not be read)"
-        forks = "\n".join(f"{r.get('fork')}. {r.get('genre') or '—'} — {r.get('note') or ''}"
-                          for r in cycle_forks(cycle, room))
-        parts.append(f"=== {room} ===\n\nTHE DOCUMENT\n\n{doc}\n\nTHE FORK NOTES\n\n{forks}")
-    parts.append("Answer with the json list from \"the review\" above — one object per page, "
-                 f"all {len(pages)} of them, in order, and nothing else.")
-    return "\n\n".join(parts)
-
-
-def read_review(answer: str, names: list[str]) -> list[dict]:
-    d = extract_json(answer, "[")
-    if not isinstance(d, list) or not d:
-        raise ValueError("the answer is not a json list")
-    out = []
-    for e in d:
-        if not isinstance(e, dict) or e.get("page") not in names:
-            raise ValueError(f"{(e or {}).get('page')!r} is not one of this cycle's pages: "
-                             f"{', '.join(names)}")
-        out.append({"page": e["page"], "notable": bool(e.get("notable")),
-                    "why": str(e.get("why") or ""), "quote": e.get("quote")})
-    return out
-
-
-def do_review(cycle: int, notes: str, settings: dict | None = None) -> list[dict]:
-    """The five pages read whole by the same reader, then the report on disk and the notable
-    ones promoted to the top of the sheets site.
-
-    The ledger is the source of which pages this cycle has, not the filesystem: a page that
-    aborted mid-walk is on the ledger with its error and must not be reviewed as if it were
-    a finished walk.
-    """
-    pages = [p for p in cycle_pages(cycle) if not p.get("error")]
-    if not pages:
-        log(f"cycle {cycle:02d}: nothing to review")
-        return []
-    names = [p["room"] for p in pages]
-    beat(cycle=cycle, page=0, room="", fork=0, branch=0, phase="review")
-    prompt = review_prompt(cycle, pages, notes)
-    verdicts, raw = [], ""
-    for attempt in (1, 2):
-        try:
-            raw = ask_claude(prompt)
-            verdicts = read_review(raw, names)
-            break
-        except (ValueError, OSError, subprocess.SubprocessError) as exc:
-            log(f"review attempt {attempt} failed: {exc}")
-            prompt = (review_prompt(cycle, pages, notes) +
-                      f"\n\nYour previous answer could not be read: {exc}\n"
-                      "Answer with a json list only.")
-    for v in verdicts:
-        if not v["notable"]:
-            continue
-        # Notable goes to the ROOT of the sheets folder, where bekh's reading list is. The
-        # copy in berserk/ stays: promotion is a second link, not a move.
-        push(os.path.join(PAGES, v["page"] + ".html"), f"{SHEETS_DIR}/{v['page']}.html")
-    report(cycle, pages, verdicts, raw if not verdicts else "", notes, settings or {})
-    n = sum(1 for v in verdicts if v["notable"])
-    ledger({"event": "cycle", "cycle": cycle, "pages": len(pages), "notable": n,
-            "review_failed": not verdicts})
-    ntfy(f"berserk c{cycle:02d} done", f"{n} of {len(pages)} notable")
-    log(f"cycle {cycle:02d}: {n} of {len(pages)} notable")
-    return verdicts
-
-
-def report(cycle: int, pages: list[dict], verdicts: list[dict], raw: str, notes: str,
-           settings: dict) -> None:
-    """berserk/cycles/cNN.md — the one file bekh opens in the morning. Tracked by git, so it
-    is written as prose with a table, not as a json dump."""
+def report(cycle: int, pages: list[dict], settings: dict, ask: str) -> str:
+    """berserk/cycles/cNN.md — the one file bekh opens in the morning, built entirely off
+    the ledger. Nobody reviews the pages any more: what is worth reading is the quotation at
+    each fork and, under everything, the wished pile — the branches the reader described and
+    the fan did not hold. Tracked by git, so it is prose with a table, not a json dump."""
     os.makedirs(CYCLES, exist_ok=True)
-    by_page = {v["page"]: v for v in verdicts}
-    out = [f"# berserk cycle {cycle:02d}", "",
-           time.strftime("%b %-d, %Y %H:%M"), ""]
+    out = [f"# berserk cycle {cycle:02d}", "", time.strftime("%b %-d, %Y %H:%M"), ""]
     if settings:
         out += ["settings: " + " · ".join(f"{k} {v}" for k, v in settings.items()), ""]
-    if notes:
-        out += ["bekh's notes for this cycle:", "", "> " + notes.replace("\n", "\n> "), ""]
-    out += ["| room | seed | bits | forks | picker failures | notable |",
-            "| --- | --- | --- | --- | --- | --- |"]
+    out += [f"the ask: `{ask}`", "",
+            "| room | seed | bits | forks | matched | widened | random | opus agrees |",
+            "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+    wishes: list[tuple[str, int, str]] = []
     for p in pages:
         forks = cycle_forks(cycle, p["room"])
-        fails = sum(1 for r in forks if r.get("picker_failed"))
-        v = by_page.get(p["room"])
+        for r in forks:
+            wishes += [(p["room"], r.get("fork"), q) for q in (r.get("wished") or [])]
+        matched = sum(1 for r in forks if r.get("outcome") == "match")
+        wide = sum(1 for r in forks if r.get("widened"))
+        rnd = sum(1 for r in forks if r.get("outcome") == "random")
+        judged = [r for r in forks if r.get("agree") is not None]
+        agree = (f"{sum(1 for r in judged if r['agree'])}/{len(judged)}") if judged else "—"
         out.append(f"| {p['room']} | {p.get('seed', '')} | {p.get('bits', 0):g} | "
-                   f"{len(forks)} | {fails} | "
-                   f"{'yes' if v and v['notable'] else 'no'} |")
+                   f"{len(forks)} | {matched} | {wide} | {rnd} | {agree} |")
     out.append("")
-    if raw:
-        out += ["The reviewer's answer could not be read twice; nothing is marked notable.",
-                "Its last answer, verbatim:", "", "```", raw.strip(), "```", ""]
+
     for p in pages:
         room = p["room"]
-        v = by_page.get(room)
-        out.append(f"## {room}" + ("  — notable" if v and v["notable"] else ""))
-        out.append("")
-        if v:
-            out += [v["why"] or "(no reason given)", ""]
-            if v.get("quote"):
-                out += ["> " + str(v["quote"]).replace("\n", "\n> "), ""]
-        out += [f"[the page](https://eva.x/api/artifact/text?name={room}) · forks:", ""]
+        out += [f"## {room}", "",
+                f"[the page](https://eva.x/api/artifact/text?name={room}) · forks:", ""]
         for r in cycle_forks(cycle, room):
-            mark = " **(picker failed)**" if r.get("picker_failed") else ""
-            close = " (closing)" if r.get("closing") else ""
-            out.append(f"{r.get('fork')}.{close} *{r.get('genre') or '—'}* — "
-                       f"{r.get('note') or ''}{mark}")
+            marks = ("  *(widened)*" if r.get("widened") else "") + \
+                    ("  **(random)**" if r.get("outcome") == "random" else "")
+            q = (r.get("quote") or "").strip()
+            why = (r.get("why") or "").strip()
+            body = f"“{q}” — {why}" if q else "nothing quoted"
+            out.append(f"{r.get('fork')}. {body}{marks}")
         out.append("")
+
+    out += ["## wished for", ""]
+    if wishes:
+        out += ["The reader described these and the fan did not hold them.", ""]
+        out += [f"- `{room} f{fork}` — “{q.strip()}”" for room, fork, q in wishes]
+    else:
+        out.append("Nothing: every quotation this cycle was a branch that was really there.")
+    out.append("")
+
     path = os.path.join(CYCLES, f"c{cycle:02d}.md")
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(out) + "\n")
     log(f"report written: {path}")
+    return path
+
+
+def finish_cycle(cycle: int, settings: dict, ask: str) -> None:
+    """The report, the cycle line, the push. The ledger is the source of which pages this
+    cycle has, not the filesystem: a page that aborted mid-walk is on the ledger with its
+    error and is not counted as a walk."""
+    pages = [p for p in cycle_pages(cycle) if not p.get("error")]
+    if not pages:
+        log(f"cycle {cycle:02d}: no finished pages")
+        return
+    forks = [r for room in (p["room"] for p in pages) for r in cycle_forks(cycle, room)]
+    matched = sum(1 for r in forks if r.get("outcome") == "match")
+    rnd = sum(1 for r in forks if r.get("outcome") == "random")
+    wished = sum(len(r.get("wished") or []) for r in forks)
+    judged = [r for r in forks if r.get("agree") is not None]
+    agreed = sum(1 for r in judged if r["agree"])
+    report(cycle, pages, settings, ask)
+    ledger({"event": "cycle", "cycle": cycle, "pages": len(pages), "matches": matched,
+            "random": rnd, "wished": wished, "agree": agreed, "agree_of": len(judged)})
+    ntfy(f"berserk c{cycle:02d} done",
+         f"{len(pages)} pages · {matched} matched, {rnd} random · {wished} wished for")
+    log(f"cycle {cycle:02d}: {len(pages)} pages, {matched} matched, {rnd} random, "
+        f"{wished} wished for")
 
 
 # ---- the run ----------------------------------------------------------------------------
@@ -694,38 +846,38 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("cycle", "page", "review"):
+    for name in ("cycle", "page"):
         p = sub.add_parser(name)
         p.add_argument("--cycle", type=int)
-        p.add_argument("--notes")
-        if name != "review":
-            p.add_argument("--forks", type=int, default=15)
-            p.add_argument("--fan", type=int, default=15)
-            p.add_argument("--predict", type=int, default=35)
+        p.add_argument("--forks", type=int, default=15)
+        p.add_argument("--fan", type=int, default=15)
+        p.add_argument("--predict", type=int, default=35)
+        p.add_argument("--verify", choices=("opus", "none", "embed"), default="opus",
+                       help="who turns a quotation into a branch number")
+        p.add_argument("--ask", default=ASK,
+                       help="the one line of taste in the loop")
         if name == "cycle":
             p.add_argument("--pages", type=int, default=5)
         if name == "page":
             p.add_argument("--page", type=int, default=1)
     a = ap.parse_args()
+    if a.verify == "embed":
+        # Named in the choices because it is the seat opus is keeping warm, and a flag that
+        # errors here is a smaller lie than a flag that silently means something else.
+        raise SystemExit("embed matcher not built yet")
 
     cycle = a.cycle if a.cycle else next_cycle()
-    notes_path = a.notes or os.path.join(NOTES, f"c{cycle:02d}.md")
-    notes = notes_text(notes_path)
-    log(f"cycle {cycle:02d} · notes {'yes' if notes else 'none'} ({notes_path})")
+    log(f"cycle {cycle:02d} · verify {a.verify} · ask {a.ask!r}")
 
-    if a.cmd == "review":
-        do_review(cycle, notes)
-        state_clear()
-        return 0
-    settings = {"pages": getattr(a, "pages", 1), "forks": a.forks, "fan": a.fan,
-                "predict": a.predict}
     if a.cmd == "page":
-        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, notes)
+        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, a.verify, a.ask)
         state_clear()
         return 1 if r.get("error") else 0
+    settings = {"pages": a.pages, "forks": a.forks, "fan": a.fan, "predict": a.predict,
+                "verify": a.verify}
     for page in range(1, a.pages + 1):
-        do_page(cycle, page, a.forks, a.fan, a.predict, notes)
-    do_review(cycle, notes, settings)
+        do_page(cycle, page, a.forks, a.fan, a.predict, a.verify, a.ask)
+    finish_cycle(cycle, settings, a.ask)
     # Only here, and deliberately not in a finally: state.json outliving the process is how
     # the monitor says "it died mid-walk". Wipe it on a crash and a dead run looks finished.
     state_clear()

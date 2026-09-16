@@ -3,9 +3,9 @@ __pycache__/
 docs/harvest/.cache/
 # rooms are dry runs and transcripts: never to github
 shelf/sittings/
-# berserk's running state, not its output: a log, a beat and a pid. The reports in
-# shelf/berserk/cycles/, bekh's notes in shelf/berserk/notes/ and the seeds are the tracked
-# half — shelf/berserk/pages/ is only the html copy of an artifact that is already in git.
+# berserk's running state, not its output: a log, a beat and a pid. The morning reports in
+# shelf/berserk/cycles/ and the seeds are the tracked half — shelf/berserk/pages/ is only the
+# html copy of an artifact that is already in git.
 shelf/berserk/ledger.jsonl
 shelf/berserk/heartbeat
 shelf/berserk/state.json

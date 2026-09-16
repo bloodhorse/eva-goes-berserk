@@ -1,17 +1,20 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""berserktest.py — one whole berserk cycle, with a fake llama and a fake opus.
+"""berserktest.py — berserk walked end to end, with a fake llama and a fake matcher.
 
-    uv run --python 3.12 -m unittest tests/berserktest.py
+    uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'
 
-Nothing inside berserk.py is mocked: a real berserk.py runs as a subprocess, against the
-same stub llama-server the loom's tests use and against a **fake `claude`** — a three-line
-script put first on PATH that reads the prompt off stdin, files it away, and prints the json
-the rulebook asks for. That is the seam worth faking: the picker is a subprocess with a
-prompt on stdin and json on stdout, and every one of those three things can break silently.
+Nothing inside berserk.py is mocked: a real berserk.py runs as a subprocess against the same
+stub llama-server the loom's tests use, and against a **fake `claude`** — a short script put
+first on PATH that reads the prompt off stdin, files it away, and answers the one json the
+blind matcher is asked for. Those are the two seams worth faking, and both of them are a
+subprocess with text going in and text coming out, where everything breaks silently.
 
-The fake claude also keeps every prompt it was handed, which is how the first test can assert
-that the rulebook and the document really reached the reader — a picker walking a document it
-was never shown would produce a perfectly valid-looking run.
+The stub's `READER_MODE` is the other half. berserk asks the model a second question at every
+fork and expects a **quotation out of its own prompt**; a stub answering its usual random line
+would only ever exercise the failure path. `"quote"` answers with a branch's opening (the fan
+is read), `"garbage"` answers a sentence that is in no branch (nothing ever matches, every
+fork ends random, and the wished pile fills up). The fake claude has a garbage mode of its
+own, for the run where the matcher is the thing that is broken.
 
 Scratch everything: LOOM_SITTINGS / LOOM_ARTIFACTS, BERSERK_DIR, BERSERK_SEEDS. The sheets
 host and the ntfy topic are set to the empty string, which berserk reads as "post nowhere" —
@@ -41,69 +44,108 @@ os.environ["LOOM_SITTINGS"] = SHELF
 os.environ["LOOM_ARTIFACTS"] = ARTS
 import loom  # noqa: E402 — after the env, which loom reads once at import
 
-SEED = ("Municipal Lifts Office\nAcceptance tests following the removal of a floor\n\n"
+# berserk itself, imported for the matcher's unit tests. BERSERK_DIR first, because the
+# module resolves it at import and an unset one points at the real shelf — nothing is
+# written by importing, but a test file that names the real shelf at all is a test file one
+# edit away from writing to it.
+IMPORT_DIR = tempfile.mkdtemp(prefix="berserk-import-")
+os.environ["BERSERK_DIR"] = IMPORT_DIR
+sys.path.insert(0, os.path.join(EVA, "berserk"))
+import berserk  # noqa: E402
+
+# One paragraph, on purpose: the reader document has no markers in it, so the stub finds the
+# branches by taking every paragraph between the document's tail and the ask line. A seed
+# with a blank line in it would put half of itself in the branch pool and the stub would
+# quote the document back at berserk, which is a stub bug that would read as a matcher bug.
+SEED = ("Municipal Lifts Office, acceptance tests following the removal of a floor.\n"
         "Test 3. Same load, with a hat placed on the upper sack. Stopped between third "
         "and fifth.\n")
 
-# The rulebook's first heading, restated as a literal: if somebody retitles the rulebook,
-# this test should fail and a human should read why the picker's prompt changed.
-RULEBOOK_HEAD = "# the picker's rulebook"
+# berserk's default ask line, restated as a literal: it is the only human contribution to the
+# loop's taste, and if somebody edits it this test should fail and a human should read why.
+ASK_TAIL = "was the one that began: “"
 
 STUB = None
 STUB_BASE = ""
-REAL_LINES: list[str] = []
+REAL_LINES = None
+REAL_MODE = ""
 REAL_DIRS: tuple = ()
 
-# A picker that answers "pick 1, keep [2]" every time, and "pick null, keep [1]" when the
-# prompt says the fan is a closing one. GARBAGE mode answers prose instead, twice, which is
-# the 4am failure the daemon is built to survive.
+
+class UniqueLines:
+    """A stand-in for the stub's LINES that never hands out the same branch twice.
+    `random.choice` reads it as a sequence; what it actually does is count.
+
+    Two identical branches in one fan are a real thing — they drop out of the artifact's bit
+    pool as twins, and a quotation that begins both of them is a tie and therefore no match.
+    Both are worth testing; neither is worth testing one run in twenty at random, which is
+    what `random.choice` over a fixed list gives you.
+    """
+
+    def __init__(self) -> None:
+        self.n = 0
+
+    def __len__(self) -> int:
+        return 60
+
+    def __getitem__(self, i: int) -> str:
+        self.n += 1
+        return f" and entry {self.n} of the {i}th sack was recorded without remark"
+
+
+# The blind matcher, faked: find the numbered fragment the quotation begins, answer its
+# number, and nothing else. GARBAGE mode answers prose instead, twice, which is the 4am
+# failure the daemon is built to fall back from.
 FAKE_CLAUDE = '''#!/usr/bin/env python3
-import os, sys
+import os, re, sys
 prompt = sys.stdin.read()
 log = os.environ.get("FAKE_CLAUDE_LOG")
 if log:
     with open(log, "a", encoding="utf-8") as f:
         f.write("\\n===PROMPT===\\n" + prompt)
 if os.environ.get("FAKE_CLAUDE_MODE") == "garbage":
-    print("Sure! Here is my thinking about the fan. I liked branch three a lot.")
+    print("Sure! Here is my thinking about the fragments. I liked number three a lot.")
     sys.exit(0)
-if "CLOSING FAN" in prompt:
-    print('{"genre": "lift report", "pick": null, "keep": [1], "note": "ends on a thing said"}')
-elif "THE 1 PAGES" in prompt or "THE PAGES" in prompt or "json list" in prompt:
-    print('[{"page": "PAGE", "notable": true, "why": "the hat", "quote": "a hat"}]')
-else:
-    print('{"genre": "municipal minute", "pick": 1, "keep": [2], "note": "keeps doors open"}')
+quote = ""
+for line in prompt.splitlines():
+    if line.startswith("quotation: "):
+        quote = line[len("quotation: "):].strip()
+answer = "null"
+for line in prompt.splitlines():
+    m = re.match(r"^(\\d+)\\. (.*)$", line)
+    if m and quote and m.group(2).startswith(quote):
+        answer = m.group(1)
+        break
+print('{"index": %s}' % answer)
 '''
 
 
 def setUpModule() -> None:
-    global STUB, STUB_BASE, REAL_LINES, REAL_DIRS
+    global STUB, STUB_BASE, REAL_LINES, REAL_MODE, REAL_DIRS
     # loom reads LOOM_SITTINGS and LOOM_ARTIFACTS ONCE, at import, so when the whole suite
     # runs in one process loomtest has already imported it and pointed it at its own scratch
     # shelf. Repointed here and not at import: at import time this would fire during
     # collection, before the other files' tests run, and move the shelf out from under them.
     REAL_DIRS = (loom.SITTINGS, loom.ARTIFACTS)
     loom.SITTINGS, loom.ARTIFACTS = SHELF, ARTS
-    # Distinct lines, and plenty of them: the stub picks its continuation at random, and two
-    # branches of one fan coming back verbatim identical would drop out of the artifact's
-    # bit pool as twins — a real property of build_artifact, but a flaky test. Put back in
-    # tearDown, because the stub is a module the other test files share in one process.
-    REAL_LINES = stub_llama.LINES
-    stub_llama.LINES = [f" and the {i}th entry was recorded without remark" for i in range(60)]
+    REAL_LINES, REAL_MODE = stub_llama.LINES, stub_llama.READER_MODE
+    stub_llama.LINES = UniqueLines()
     STUB = stub_llama.serve(0)
     threading.Thread(target=STUB.serve_forever, daemon=True).start()
     STUB_BASE = f"http://127.0.0.1:{STUB.server_address[1]}"
 
 
 def tearDownModule() -> None:
-    if REAL_LINES:
+    # The stub is a module, one per process, shared with every other test file in the suite.
+    if REAL_LINES is not None:
         stub_llama.LINES = REAL_LINES
+    stub_llama.READER_MODE = REAL_MODE
     if REAL_DIRS:
         loom.SITTINGS, loom.ARTIFACTS = REAL_DIRS
     if STUB:
         STUB.shutdown()
-    shutil.rmtree(SHELF, ignore_errors=True)
-    shutil.rmtree(ARTS, ignore_errors=True)
+    for d in (SHELF, ARTS, IMPORT_DIR):
+        shutil.rmtree(d, ignore_errors=True)
 
 
 def scratch(mode: str = "") -> dict:
@@ -117,8 +159,7 @@ def scratch(mode: str = "") -> dict:
         f.write(SEED)
     fake = os.path.join(binp, "claude")
     with open(fake, "w", encoding="utf-8") as f:
-        f.write(FAKE_CLAUDE.replace("#!/usr/bin/env python3", "#!" + sys.executable)
-                .replace('"PAGE"', '"berserk-c01-p01"'))
+        f.write(FAKE_CLAUDE.replace("#!/usr/bin/env python3", "#!" + sys.executable))
     os.chmod(fake, 0o755)
     log = os.path.join(d, "prompts.txt")
     env = dict(os.environ,
@@ -145,11 +186,78 @@ def rows(berserk: str) -> list[dict]:
             if line.strip()]
 
 
-class Cycle(unittest.TestCase):
-    """One page, two picking forks and a closing fan, walked end to end."""
+def forks_of(berserk: str) -> list[dict]:
+    return [r for r in rows(berserk) if r.get("event") is None]
+
+
+def reader_bodies() -> list[dict]:
+    """Every request the reader made, off the stub's SEEN list. The ask line is the tell:
+    nothing else in the suite ends a prompt that way, and asserting on the saved node would
+    only prove berserk copied its own number into meta."""
+    return [b for b in stub_llama.SEEN if (b.get("prompt") or "").endswith(ASK_TAIL)]
+
+
+def cleanup(*rooms: str) -> None:
+    for room in rooms:
+        for p in (loom.sitting_path(room), loom.artifact_path(room)):
+            if os.path.exists(p):
+                os.unlink(p)
+
+
+class TheLead(unittest.TestCase):
+    """A 35-token branch ends anywhere, so the document almost always stands mid-sentence and
+    the branches under it open on punctuation. These are the real openings from the first
+    smoke run's closing fan, where the reader was asked which fragment "began: “" and — since
+    none of them began with anything — invented four beginnings instead."""
+
+    DOC = "the roll was read out in the hall\nthere will be no witch burning this year"
+    BRANCHES = [".\nthe lanterns were put away", ", as it was raining all month",
+                ", god help us all."]
+
+    def frags(self) -> tuple[str, list[str]]:
+        lead = berserk.lead_of(self.DOC)
+        return lead, [lead + b for b in self.BRANCHES]
+
+    def test_the_lead_is_the_unfinished_last_line(self) -> None:
+        self.assertEqual(berserk.lead_of(self.DOC),
+                         "there will be no witch burning this year")
+        self.assertEqual(berserk.lead_of("a line that ended\n"), "")
+
+    def test_the_lead_is_shown_once_per_fragment_and_never_above_them(self) -> None:
+        lead, frags = self.frags()
+        head = self.DOC[:len(self.DOC) - len(lead)]
+        doc = berserk.reader_document(head, frags, berserk.ASK)
+        self.assertEqual(doc.count(lead), len(frags), "in the fan, and not in the tail too")
+        self.assertIn("the roll was read out in the hall", doc)
+        self.assertTrue(doc.endswith(berserk.ASK))
+
+    def test_a_fragment_is_matched_through_its_lead(self) -> None:
+        lead, frags = self.frags()
+        m = berserk.match_substring(lead + ", as it was raining", frags, lead)
+        self.assertEqual(m["index"], 1)
+        self.assertEqual(m["score"], 1.0)
+
+    def test_quoting_the_lead_alone_is_no_match(self) -> None:
+        # Every fragment begins with it, so it points at all three, which is to say at none.
+        lead, frags = self.frags()
+        self.assertIsNone(berserk.match_substring(lead, frags, lead)["index"])
+        self.assertIsNone(berserk.match_substring(lead + ",", frags, lead)["index"])
+
+    def test_the_blind_matcher_sees_the_same_fragments(self) -> None:
+        lead, frags = self.frags()
+        p = berserk.matcher_prompt("a quotation", frags, lead)
+        for i, f in enumerate(frags, 1):
+            self.assertIn(f"{i}. {' '.join(f.split())}", p)
+        self.assertNotIn("the roll was read out in the hall", p, "still blind")
+
+
+class Quoted(unittest.TestCase):
+    """The reader quotes a branch that is really there, and opus agrees with the substring
+    matcher. Two picking forks and a closing fan, walked end to end."""
 
     @classmethod
     def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
         cls.s = scratch()
         cls.r = run(cls.s["env"], "cycle", "--cycle", "1", "--pages", "1",
                     "--forks", "2", "--fan", "3")
@@ -157,10 +265,9 @@ class Cycle(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
         shutil.rmtree(cls.s["dir"], ignore_errors=True)
-        for p in (loom.sitting_path(cls.room), loom.artifact_path(cls.room)):
-            if os.path.exists(p):
-                os.unlink(p)
+        cleanup(cls.room)
 
     def sitting(self) -> dict:
         return json.loads(read(loom.sitting_path(self.room)))
@@ -180,15 +287,60 @@ class Cycle(unittest.TestCase):
             n = s["nodes"][n["parent"]]
         self.assertEqual(depth, 2, "two picking forks means the document is two lines deep")
 
-    def test_kept_flags_landed(self) -> None:
-        s = self.sitting()
-        kept = [n for n in s["nodes"].values() if n.get("kept")]
-        # One keep per fork, three forks — the closing one keeps too.
-        self.assertEqual(len(kept), 3)
-        # The genre and note are readable in the room itself, not only in the ledger.
-        marks = [n["meta"]["berserk"] for n in s["nodes"].values()
-                 if (n.get("meta") or {}).get("berserk")]
-        self.assertTrue(any(m["genre"] == "municipal minute" for m in marks))
+    def test_every_fork_matched(self) -> None:
+        fs = forks_of(self.s["berserk"])
+        self.assertEqual(len(fs), 3)
+        self.assertTrue(all(r["outcome"] == "match" for r in fs),
+                        [r["outcome"] for r in fs])
+        self.assertFalse(any(r["reader_failed"] for r in fs))
+        self.assertFalse(any(r["widened"] for r in fs))
+
+    def test_ledger_rows_carry_the_quote_the_use_and_the_order(self) -> None:
+        for r in forks_of(self.s["berserk"]):
+            self.assertTrue(r["quote"].strip(), r)
+            self.assertEqual(r["used"], "opus", "opus is the used answer while verify=opus")
+            self.assertEqual(len(r["order"]), r["fan_size"],
+                             "the shuffled branch ids, exactly as the reader saw them")
+            self.assertEqual(len(set(r["order"])), r["fan_size"])
+            self.assertGreaterEqual(r["substring"]["score"], 0.6)
+            self.assertGreater(r["bits"], 0)
+
+    def test_the_quote_rides_on_the_chosen_node(self) -> None:
+        marks = [(n["meta"] or {}).get("berserk") for n in self.sitting()["nodes"].values()]
+        marks = [m for m in marks if m]
+        self.assertEqual(len(marks), 3, "two taken and one kept carry the reader's quote")
+        self.assertTrue(all(m["quote"] and m["used"] == "opus" for m in marks), marks)
+
+    def test_opus_and_the_substring_matcher_agree(self) -> None:
+        fs = forks_of(self.s["berserk"])
+        self.assertTrue(all(r["agree"] for r in fs), [(r["opus"], r["substring"]) for r in fs])
+        self.assertTrue(all(r["opus"]["index"] == r["substring"]["index"] for r in fs))
+
+    def test_the_matcher_was_blind(self) -> None:
+        prompts = read(self.s["log"])
+        quote = forks_of(self.s["berserk"])[0]["quote"]
+        self.assertIn(quote, prompts, "the quotation is what it was asked about")
+        self.assertNotIn("Municipal Lifts Office", prompts, "no document reaches the matcher")
+        self.assertNotIn("rulebook", prompts.lower(), "there is no rulebook any more")
+        self.assertNotIn("THE DOCUMENT", prompts)
+
+    def test_the_reader_ran_with_the_brakes_off(self) -> None:
+        # DRY and the repeat penalty punish copying, which is the reader's whole job; xtc
+        # refuses the likeliest token at a fork, which here is the branch it means to quote.
+        bodies = reader_bodies()
+        self.assertTrue(bodies, "the reader never called llama")
+        for b in bodies:
+            self.assertEqual(b["dry_multiplier"], 0.0)
+            self.assertEqual(b["repeat_penalty"], 1.0)
+            self.assertEqual(b["xtc_probability"], 0)
+
+    def test_the_closing_fan_kept_one_and_took_nothing(self) -> None:
+        last = forks_of(self.s["berserk"])[-1]
+        self.assertTrue(last["closing"])
+        self.assertIsNone(last["pick"])
+        self.assertEqual(len(last["keep"]), 1)
+        kept = [n for n in self.sitting()["nodes"].values() if n.get("kept")]
+        self.assertEqual(len(kept), 1, "only the closing fan keeps")
 
     def test_artifact_is_a_three_step_walk(self) -> None:
         art = self.artifact()
@@ -209,42 +361,36 @@ class Cycle(unittest.TestCase):
     def test_html_page_holds_the_escaped_document(self) -> None:
         path = os.path.join(self.s["berserk"], "pages", self.room + ".html")
         self.assertTrue(os.path.isfile(path))
-        html = read(path)
-        self.assertIn("Municipal Lifts Office", html)
-        self.assertIn("plain text at eva.x", html)
-        self.assertIn("background:#111", html)
+        page = read(path)
+        self.assertIn("Municipal Lifts Office", page)
+        self.assertIn("plain text at eva.x", page)
+        self.assertIn("background:#111", page)
 
     def test_ledger_has_a_line_per_fork_page_and_cycle(self) -> None:
         rs = rows(self.s["berserk"])
-        forks = [r for r in rs if r.get("event") is None]
-        self.assertEqual(len(forks), 3)
-        self.assertTrue(forks[-1]["closing"])
-        self.assertIsNone(forks[-1]["pick"])
-        self.assertFalse(any(r["picker_failed"] for r in forks))
         pages = [r for r in rs if r.get("event") == "page"]
         self.assertEqual(len(pages), 1)
         self.assertTrue(pages[0]["artifact_written"])
         cycles = [r for r in rs if r.get("event") == "cycle"]
         self.assertEqual(len(cycles), 1)
+        self.assertEqual(cycles[0]["matches"], 3)
+        self.assertEqual(cycles[0]["random"], 0)
+        self.assertEqual(cycles[0]["wished"], 0)
+        self.assertEqual(cycles[0]["agree"], 3)
 
-    def test_report_names_the_page(self) -> None:
-        path = os.path.join(self.s["berserk"], "cycles", "c01.md")
-        self.assertTrue(os.path.isfile(path))
-        md = read(path)
+    def test_report_names_the_page_and_the_quotes(self) -> None:
+        md = read(os.path.join(self.s["berserk"], "cycles", "c01.md"))
         self.assertIn(self.room, md)
-        self.assertIn("notable", md)
+        self.assertIn("the ask:", md)
+        for r in forks_of(self.s["berserk"]):
+            self.assertIn(r["quote"], md)
+        self.assertIn("## wished for", md)
+        self.assertIn("every quotation this cycle was a branch that was really there", md)
 
     def test_state_is_gone_and_heartbeat_remains(self) -> None:
         self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "state.json")))
         hb = json.loads(read(os.path.join(self.s["berserk"], "heartbeat")))
         self.assertIn("phase", hb)
-
-    def test_the_picker_saw_the_rulebook_and_the_document(self) -> None:
-        prompts = read(self.s["log"])
-        self.assertIn(RULEBOOK_HEAD, prompts)
-        self.assertIn("Municipal Lifts Office", prompts)
-        self.assertIn("--- 1 (t=1.4)", prompts)
-        self.assertIn("CLOSING FAN", prompts)
 
     def test_a_second_run_refuses_the_same_room(self) -> None:
         r = run(self.s["env"], "page", "--cycle", "1", "--page", "1", "--forks", "1",
@@ -253,38 +399,119 @@ class Cycle(unittest.TestCase):
         self.assertIn("not overwriting", r.stderr)
 
 
-class PickerFails(unittest.TestCase):
-    """The picker answers prose. Twice. The walk still finishes, and says so on the ledger."""
+class NoVerify(unittest.TestCase):
+    """--verify none: the substring matcher alone, and `claude` is never started at all."""
 
     @classmethod
     def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
+        cls.s = scratch()
+        cls.r = run(cls.s["env"], "cycle", "--cycle", "3", "--pages", "1",
+                    "--forks", "1", "--fan", "3", "--verify", "none")
+        cls.room = "berserk-c03-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def test_the_walk_still_happened(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        self.assertTrue(os.path.isfile(loom.artifact_path(self.room)))
+
+    def test_claude_was_never_invoked(self) -> None:
+        # The fake claude is still first on PATH and writes this file the moment it runs, so
+        # its absence is the assertion: not "opus answered nothing", but "nobody asked it".
+        self.assertFalse(os.path.exists(self.s["log"]))
+
+    def test_the_substring_matcher_was_used_and_opus_is_not_on_the_row(self) -> None:
+        for r in forks_of(self.s["berserk"]):
+            self.assertEqual(r["outcome"], "match")
+            self.assertEqual(r["used"], "substring")
+            self.assertIsNone(r["agree"])
+            self.assertNotIn("opus", r)
+
+    def test_embed_is_named_and_refused(self) -> None:
+        r = run(self.s["env"], "page", "--cycle", "9", "--verify", "embed")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("embed matcher not built yet", r.stderr)
+
+
+class MatcherGarbage(unittest.TestCase):
+    """The reader quotes fine; opus answers prose. The substring answer carries the walk."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
         cls.s = scratch(mode="garbage")
+        cls.r = run(cls.s["env"], "cycle", "--cycle", "4", "--pages", "1",
+                    "--forks", "1", "--fan", "3")
+        cls.room = "berserk-c04-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def test_it_fell_back_to_the_substring_answer(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        for r in forks_of(self.s["berserk"]):
+            self.assertEqual(r["outcome"], "match")
+            self.assertEqual(r["used"], "substring")
+            self.assertIsNone(r["opus"]["index"])
+            self.assertFalse(r["agree"])
+
+
+class NothingMatches(unittest.TestCase):
+    """The reader quotes a branch that was never in the fan. Every fork widens once, then
+    goes random, the walk still finishes, and the quotes land on the wished pile."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "garbage"
+        cls.s = scratch()
         cls.r = run(cls.s["env"], "cycle", "--cycle", "2", "--pages", "1",
                     "--forks", "1", "--fan", "3")
         cls.room = "berserk-c02-p01"
 
     @classmethod
     def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
         shutil.rmtree(cls.s["dir"], ignore_errors=True)
-        for p in (loom.sitting_path(cls.room), loom.artifact_path(cls.room)):
-            if os.path.exists(p):
-                os.unlink(p)
+        cleanup(cls.room)
 
     def test_the_run_completes_anyway(self) -> None:
         self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
         self.assertTrue(os.path.isfile(loom.artifact_path(self.room)))
 
-    def test_picker_failed_is_on_every_fork_line(self) -> None:
-        forks = [r for r in rows(self.s["berserk"]) if r.get("event") is None]
-        self.assertEqual(len(forks), 2)
-        self.assertTrue(all(r["picker_failed"] for r in forks))
-        # The closing fan still has to keep something, or there is no artifact to write.
-        self.assertTrue(forks[-1]["keep"])
+    def test_every_fork_widened_and_went_random(self) -> None:
+        fs = forks_of(self.s["berserk"])
+        self.assertEqual(len(fs), 2)
+        for r in fs:
+            self.assertEqual(r["outcome"], "random")
+            self.assertTrue(r["reader_failed"])
+            self.assertTrue(r["widened"])
+            self.assertEqual(r["attempts"], 4, "three asks, then one wider fan asked once")
+            self.assertEqual(r["fan_size"], 6, "the fan was drawn a second time under it")
+            self.assertEqual(r["used"], "random")
+            self.assertTrue(r["wished"])
+        # The closing fan still keeps something, or there is no artifact to write.
+        self.assertTrue(fs[-1]["keep"])
 
-    def test_the_report_carries_the_unreadable_review(self) -> None:
+    def test_the_report_carries_the_wished_pile(self) -> None:
         md = read(os.path.join(self.s["berserk"], "cycles", "c02.md"))
-        self.assertIn("could not be read", md)
-        self.assertIn("| 2 |", md, "two picker failures counted in the table")
+        self.assertIn("## wished for", md)
+        self.assertIn(stub_llama.NO_BRANCH, md)
+        self.assertIn("**(random)**", md)
+        self.assertIn("*(widened)*", md)
+
+    def test_the_cycle_line_counts_the_wishes(self) -> None:
+        c = [r for r in rows(self.s["berserk"]) if r.get("event") == "cycle"][0]
+        self.assertEqual(c["matches"], 0)
+        self.assertEqual(c["random"], 2)
+        self.assertEqual(c["wished"], 8, "four unmatched quotations at each of two forks")
 
 
 if __name__ == "__main__":
