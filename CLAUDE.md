@@ -132,8 +132,13 @@ taken, dashed for the keeps), redrawn on a resize, a theme flip and when the fon
 wider than the screen scrolls inside the tree pane, the only thing on the page allowed to; under
 it a foot line (steps, kept of total, bits, model, temperature range) and the sampler, turn, date
 and room it came from. Two buttons: **export** opens the walk as one document on **its own
-screen** — monospace, pre-wrap, the lowercase rule lifted, with **copy** and **download** in its
-bar and back returning to the tree; the file is one button away, not the only way to read it.
+screen** — monospace, pre-wrap, the lowercase rule lifted, with **copy**, **link** and
+**download** in its bar and back returning to the tree; reading it is the point, the file is one
+button away. The text is **the server's**: `GET /api/artifact/text?name=` builds it in `loom.py`
+from the file on disk and serves it as plain text, so the screen, the download and the link are
+one string with one implementation the tests can hold — the page had its own copy of the
+concatenation for a day, which is how two answers to "what does an artifact read like" drift.
+**Link** opens that url in a tab: the thing that can be sent to a phone or pasted into sheets.
 The document is the prompt, then every step's lead and the line taken, joined with nothing
 between them, under a short head naming
 the model and the few sampler numbers that decide the register (the branches kept beside the path
@@ -141,12 +146,13 @@ are left out: it is the story, not the fan) — then, under the document, the br
 **open fork it ends on**, because nothing was taken there and those keeps are the only ending there
 is; without them a walk of one step exported as the prompt alone, cut off mid-word. Each is marked
 `[generation begins]` and nothing more — which branch of how many, at what temperature, is the
-tree's job — and the text goes out untrimmed, as a `.txt`, because a base model's document is full
-of `> > >`, `//` and stray brackets and a markdown reader eats exactly those. **Fan again** makes a new room from the prompt
+tree's job — and the text goes out untrimmed, as plain text, because a base model's document is
+full of `> > >`, `//` and stray brackets and a markdown reader eats exactly those. **Fan again** makes a new room from the prompt
 with the same turn and sampler, and doesn't fan. An artifact written before walks existed has no `steps` and is
 read as a walk of one step with nothing taken — `steps` is the whole test, and no file on the
 shelf is ever rewritten. All chrome is lowercase by one CSS rule; the
-document and anything typed keep their capitals, because a capital there is text the model sees.
+document, anything typed and the export screen keep their capitals, because a capital there is
+text the model sees.
 Room: charcoal ground and blue-white ink, lilac accent, ice for the live dot, rose for posed;
 system sans; light by the OS, no toggle; dom-built, never innerHTML. `looks/` holds the four
 rejected look-off pages, kept for reference.
@@ -236,8 +242,10 @@ someone who asks a voice in the lines what it is and writes down everything it s
 broke its own document to tell the reader *"i can't make you believe any of this is real. i wish i
 could."* — 1 of 40, 5.3 bits. It waits in `i-cant-make-you-believe` (a full copy of `chrome-roll`
 standing on that branch, its 40 siblings intact); `i-wish-i-could` is the same fork with the
-branch cut at the confession and fanned again. **Nothing is saved as an artifact yet** — keep and
-save is bekh's call.
+branch cut at the confession and fanned again. That fan is also **the first artifact on the
+shelf** — the confession and one other branch kept out of forty, 9.6 bits — and the first walk
+read end to end as a document, on the export screen and at its url. Keeping and saving stays
+bekh's call.
 
 Next: bekh writes the seed himself, a couple of sentences in his own register. The shape that
 fits a short seed is fragments — his prose cut into numbered pieces inside a bare skeleton
