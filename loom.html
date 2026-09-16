@@ -961,7 +961,9 @@ function artFoot(a, steps){
 // out is the text the model actually saw and wrote, not a transcript of the tree. The
 // branches kept beside the path are deliberately left out: this is the story, not the fan —
 // except at the open fork it ends on, where there is no line taken and the keeps are the
-// only ending there is.
+// only ending there is. It writes .txt, not .md: a base model's document is full of `> > >`,
+// `//` and stray brackets, and a markdown reader eats exactly those — the punctuation is the
+// evidence.
 function artifactText(a){
   const steps = stepsOf(a);
   let doc = (a.prompt || '') +
@@ -969,20 +971,14 @@ function artifactText(a){
   // The last step is the fan he SAVED from, so it has no line taken and the document stops
   // at that fork. Stopping there is why a walk of one step exported as the prompt alone,
   // breaking off mid-sentence with the branch that was the whole point of saving nowhere in
-  // the file. The branches kept at that open fork are the endings on offer, so they go under
-  // it, each marked with where it sat in the fan. Keeps at EARLIER forks still stay out:
-  // there a line was taken, and the line taken is the story.
+  // the file. The branches kept at that open fork go under it — one mark and nothing else.
+  // Which branch of how many, at what temperature, how many were kept: that is the tree's
+  // job, and the tree is one click away. Here the document is the thing, so nothing is
+  // trimmed, counted or annotated around it. Keeps at EARLIER forks still stay out: there a
+  // line was taken, and the line taken is the story.
   const last = steps.length ? steps[steps.length - 1] : null;
   const ends = last && !last.took ? (last.kept || []) : [];
-  if(ends.length){
-    const size = (last.fan || {}).size || 0, of = size ? ' of ' + size : '';
-    doc = doc.replace(/\s+$/, '') +
-      '\n\n— the fan is open here: ' + ends.length + of + ' kept, no line taken —\n';
-    ends.forEach(k => {
-      const tag = [k.at + of, k.posed ? 'posed' : 'temp ' + num(k.temperature || 0)].join(' · ');
-      doc += '\n[' + tag + ']\n' + (k.text || '').replace(/\s+$/, '') + '\n';
-    });
-  }
+  ends.forEach(k => { doc += '\n\n[generation begins]\n\n' + (k.text || ''); });
   const m = a.model || {}, p = a.params || {};
   // Above the document, only what you would need to run it again: which model, and the few
   // sampler numbers that decide the register. Everything else is in the json.
@@ -995,17 +991,19 @@ function artifactText(a){
       num(a.bits || 0) + ' bits of curation',
     'saved: ' + when(a.created),
   ].join('\n');
-  return head + '\n\n' + doc.replace(/\s+$/, '') + '\n';
+  // The document goes out exactly as it stands — no trailing trim. Whitespace at the end of a
+  // branch is text the model wrote, and this file is the evidence of what it wrote.
+  return head + '\n\n' + doc;
 }
 
 function exportArtifact(){
   if(!artifact) return;
   const name = (artifact.title || artifact.name).replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
-  const blob = new Blob([artifactText(artifact)], {type: 'text/markdown;charset=utf-8'});
+  const blob = new Blob([artifactText(artifact)], {type: 'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = (name || 'artifact') + '.md';
+  a.download = (name || 'artifact') + '.txt';
   document.body.appendChild(a);
   a.click();
   a.remove();
