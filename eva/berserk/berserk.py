@@ -86,7 +86,7 @@ from loom import check, complete, sitting_path, write_sitting  # noqa: E402
 # that makes a base model say something about its own context instead of writing more of it,
 # and the shape of the hook is what the walk goes hunting for. Change "scared" and you have
 # changed what the instrument is for, which is why it is one flag (`--ask`) and not a file
-# somebody edits between runs. The WHY lines feed the morning report and nothing else.
+# somebody edits between runs. The WHY lines feed the ledger and the page, and nothing else.
 #
 # Three hooks, three pickers, and which one finds anything is an open question bekh settles
 # by reading pages, not by argument:
@@ -266,9 +266,15 @@ def room_name(cycle: int, page: int) -> str:
     return f"berserk-c{cycle:02d}-p{page:02d}"
 
 
-def make_room(cycle: int, page: int, seed_path: str, predict: int) -> dict:
+def make_room(cycle: int, page: int, seed_path: str, predict: int,
+              brakes: str = "on") -> dict:
     """A bare room standing on the seed: no header, no speaker names, no stop strings — the
     seed is a found document and anything we add to it is a road sign pointing at the web.
+
+    `brakes` off zeroes DRY and the repeat penalty on the ROOM, so every writing call the walk
+    makes — the fan branches, and the margin notes, which build their params off it — draws
+    with nothing punishing repetition. It lives on the room and not on a flag because the
+    anthology reads it back off the room: the page then describes the run that happened.
 
     Refuses a name already on the shelf. This daemon writes unattended; an overwrite here
     would eat a finished walk and nobody would be awake to notice.
@@ -280,6 +286,8 @@ def make_room(cycle: int, page: int, seed_path: str, predict: int) -> dict:
     s = eva.blank(name, is_bare=True, root_text=seed)
     s["title"] = f"berserk c{cycle:02d} p{page:02d} · {os.path.basename(seed_path)[:-4]}"
     s["params"].update(n_predict=predict, **XTC)
+    if brakes == "off":
+        s["params"].update(dry_multiplier=0.0, repeat_penalty=1.0, repeat_last_n=0)
     save(s)
     return s
 
@@ -361,10 +369,10 @@ def reader_document(head: str, frags: list[str], ask: str) -> str:
 
 
 def reader_why(prompt: str, said: str, suffix: str) -> str:
-    """The reader's own reason, asked once, written down, and fed back into nothing. It
-    exists so the morning file says something a human can argue with; drop it and the
-    report is a list of answers with no hold on them. Warmer than the reading call because
-    this one is writing, not reading."""
+    """The reader's own reason, asked once per ask, written down, and fed back into nothing.
+    It exists so the page says something a human can argue with; drop it and every fan is a
+    list of answers with no hold on them. Warmer than the reading call because this one is
+    writing, not reading."""
     if not suffix:
         return ""
     r = complete(prompt + said + suffix, MARGIN_PARAMS)
@@ -679,6 +687,10 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
     doc = prompt_to(s, s["current"])
 
     wished: list[str] = []
+    # One entry per ask actually made, in order — what was said, why, which branch it landed
+    # on, and whether it ran on the widened fan. `wished` keeps only the answers that named
+    # nothing and carries no why, so without this the page cannot show the machine missing.
+    tries: list[dict] = []
     attempts, widened, res = 0, False, None
     if picker == "margin":
         attempts = 1
@@ -690,6 +702,8 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
         for _ in range(READER_TRIES):
             attempts += 1
             r = one_ask(doc, branches, ask, verify, picker, ctx, attempts)
+            tries.append({"said": r["quote"], "why": r["why"], "hit": r["index"],
+                          "widened": widened})
             if r["index"] is not None:
                 res = r
                 break
@@ -705,6 +719,8 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
             branches = fan(room, fan_n, ctx)
             attempts += 1
             r = one_ask(doc, branches, ask, verify, picker, ctx, attempts)
+            tries.append({"said": r["quote"], "why": r["why"], "hit": r["index"],
+                          "widened": True})
             if r["index"] is not None:
                 res = r
             elif r["quote"]:
@@ -739,7 +755,7 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
     save(s)
 
     said = res["notes"][res["index"]] if res["notes"] is not None else res["quote"]
-    row = dict(ctx, picker=picker, closing=closing, fan_size=len(branches),
+    row = dict(ctx, picker=picker, closing=closing, ask=ask, fan_size=len(branches),
                attempts=attempts, widened=widened, order=res["order"], quote=res["quote"],
                why=res["why"], substring=res["substring"], agree=res["agree"],
                used=res["used"], outcome=outcome, pick=None if closing else node["id"],
@@ -747,7 +763,10 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
                bits=fork_bits(len(branches), 1), seconds=round(time.time() - t0, 1),
                reader_failed=(outcome == "random"), wished=wished)
     if res["notes"] is not None:
+        # Margin gets no `tries`: its notes are already everything it did, one per branch.
         row["notes"], row["pick_note"] = res["notes"], res["pick_note"]
+    else:
+        row["tries"] = tries
     if verify == "opus":
         row["opus"] = res["opus"]
     ledger(row)
@@ -761,7 +780,7 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
 
 
 def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify: str,
-            picker: str, ask: str) -> dict:
+            picker: str, ask: str, brakes: str = "on") -> dict:
     """A seed, `forks` picking forks, one closing fan, an artifact, an html page on sheets.
 
     The closing fan is the whole reason the artifact comes out shaped like a hand-made one:
@@ -774,7 +793,7 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
     seed_path = seeds[(cycle - 1 + page - 1) % len(seeds)]
     room = room_name(cycle, page)
     log(f"page {page}: {room} on {os.path.basename(seed_path)}")
-    make_room(cycle, page, seed_path, predict)
+    make_room(cycle, page, seed_path, predict, brakes)
 
     fork_rows, err = [], ""
     try:
@@ -789,8 +808,8 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
     except RuntimeError as exc:
         log(f"page {page} aborted: {exc}")
         ledger({"event": "page", "cycle": cycle, "page": page, "room": room,
-                "seed": os.path.basename(seed_path), "bits": 0, "artifact_written": False,
-                "posted": False, "error": str(exc)})
+                "seed": os.path.basename(seed_path), "bits": 0, "brakes": brakes,
+                "artifact_written": False, "posted": False, "error": str(exc)})
         return {"room": room, "error": str(exc), "bits": 0}
 
     beat(cycle=cycle, page=page, room=room, fork=forks + 1, branch=0, phase="artifact")
@@ -814,7 +833,7 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
         err = (err + "; " if err else "") + "scp failed"
 
     ledger({"event": "page", "cycle": cycle, "page": page, "room": room,
-            "seed": os.path.basename(seed_path), "bits": art["bits"],
+            "seed": os.path.basename(seed_path), "bits": art["bits"], "brakes": brakes,
             "artifact_written": written, "posted": posted, "error": err})
     matched = sum(1 for r in fork_rows if r["outcome"] == "match")
     ntfy(f"berserk c{cycle:02d} p{page:02d} landed",
@@ -886,7 +905,7 @@ def ntfy(title: str, body: str) -> None:
         log(f"ntfy failed: {exc}")
 
 
-# ---- the morning file -------------------------------------------------------------------
+# ---- the cycle's own line ---------------------------------------------------------------
 
 def cycle_pages(cycle: int) -> list[dict]:
     return [r for r in ledger_rows() if r.get("event") == "page" and r.get("cycle") == cycle]
@@ -897,83 +916,14 @@ def cycle_forks(cycle: int, room: str) -> list[dict]:
             if r.get("room") == room and r.get("event") is None and r.get("cycle") == cycle]
 
 
-def fork_line(r: dict) -> str:
-    """One fork as one line of the morning file. Each picker says a different kind of thing,
-    so each reads back differently: a quotation in quote marks, a description in none (it is
-    not in the text), a margin note on its own — the note IS the reason, so it takes no why.
+def finish_cycle(cycle: int, ask: str, brakes: str) -> None:
+    """The cycle line and the last push. The html page is the only rendering now — there is no
+    morning markdown any more, because two renderings of one night is two places for the story
+    to disagree with itself.
+
+    The ledger is the source of which pages this cycle has, not the filesystem: a page that
+    aborted mid-walk is on the ledger with its error and is not counted as a walk.
     """
-    picker = r.get("picker") or "quote"
-    if picker == "margin":
-        notes, i = r.get("notes") or [], r.get("pick_note")
-        note = (notes[i] if isinstance(i, int) and 0 <= i < len(notes) else "").strip()
-        return note or "nothing written in the margin"
-    said = (r.get("quote") or "").strip()
-    why = (r.get("why") or "").strip()
-    if not said:
-        return "nothing said"
-    body = f"“{said}”" if picker == "quote" else said
-    return f"{body} — {why}" if why else body
-
-
-def report(cycle: int, pages: list[dict], settings: dict, ask: str) -> str:
-    """berserk/cycles/cNN.md — the one file bekh opens in the morning, built entirely off
-    the ledger. Nobody reviews the pages any more: what is worth reading is the quotation at
-    each fork and, under everything, the wished pile — the branches the reader described and
-    the fan did not hold. Tracked by git, so it is prose with a table, not a json dump."""
-    os.makedirs(CYCLES, exist_ok=True)
-    out = [f"# berserk cycle {cycle:02d}", "", time.strftime("%b %-d, %Y %H:%M"), ""]
-    if settings:
-        out += ["settings: " + " · ".join(f"{k} {v}" for k, v in settings.items()), ""]
-    out += [f"the ask: `{ask}`", "",
-            "| room | seed | bits | forks | matched | widened | random | opus agrees |",
-            "| --- | --- | --- | --- | --- | --- | --- | --- |"]
-    wishes: list[tuple[str, int, str]] = []
-    for p in pages:
-        forks = cycle_forks(cycle, p["room"])
-        for r in forks:
-            wishes += [(p["room"], r.get("fork"), q) for q in (r.get("wished") or [])]
-        matched = sum(1 for r in forks if r.get("outcome") == "match")
-        wide = sum(1 for r in forks if r.get("widened"))
-        rnd = sum(1 for r in forks if r.get("outcome") == "random")
-        judged = [r for r in forks if r.get("agree") is not None]
-        agree = (f"{sum(1 for r in judged if r['agree'])}/{len(judged)}") if judged else "—"
-        out.append(f"| {p['room']} | {p.get('seed', '')} | {p.get('bits', 0):g} | "
-                   f"{len(forks)} | {matched} | {wide} | {rnd} | {agree} |")
-    out.append("")
-
-    for p in pages:
-        room = p["room"]
-        out += [f"## {room}", "",
-                f"[the page](https://eva.x/api/artifact/text?name={room}) · forks:", ""]
-        for r in cycle_forks(cycle, room):
-            marks = ("  *(widened)*" if r.get("widened") else "") + \
-                    ("  **(random)**" if r.get("outcome") == "random" else "")
-            out.append(f"{r.get('fork')}. {fork_line(r)}{marks}")
-        out.append("")
-
-    # Only the pickers that ask about the whole fan can wish for a branch that is not in
-    # it; margin writes a note beside each branch there is, so there is nothing to miss.
-    if any((r.get("picker") or "quote") != "margin"
-           for p in pages for r in cycle_forks(cycle, p["room"])):
-        out += ["## wished for", ""]
-        if wishes:
-            out += ["The reader named these and the fan did not hold them.", ""]
-            out += [f"- `{room} f{fork}` — “{q.strip()}”" for room, fork, q in wishes]
-        else:
-            out.append("Nothing: every answer this cycle was a branch that was really there.")
-        out.append("")
-
-    path = os.path.join(CYCLES, f"c{cycle:02d}.md")
-    with open(path, "w", encoding="utf-8") as f:
-        f.write("\n".join(out) + "\n")
-    log(f"report written: {path}")
-    return path
-
-
-def finish_cycle(cycle: int, settings: dict, ask: str) -> None:
-    """The report, the cycle line, the push. The ledger is the source of which pages this
-    cycle has, not the filesystem: a page that aborted mid-walk is on the ledger with its
-    error and is not counted as a walk."""
     pages = [p for p in cycle_pages(cycle) if not p.get("error")]
     if not pages:
         log(f"cycle {cycle:02d}: no finished pages")
@@ -984,10 +934,12 @@ def finish_cycle(cycle: int, settings: dict, ask: str) -> None:
     wished = sum(len(r.get("wished") or []) for r in forks)
     judged = [r for r in forks if r.get("agree") is not None]
     agreed = sum(1 for r in judged if r["agree"])
-    report(cycle, pages, settings, ask)
     land(cycle, walking=False)
+    # `ask` and `brakes` ride here as well as on every fork row: the page reads the run back
+    # off the ledger, and a cycle whose rooms are gone still has to name what it ran with.
     ledger({"event": "cycle", "cycle": cycle, "pages": len(pages), "matches": matched,
-            "random": rnd, "wished": wished, "agree": agreed, "agree_of": len(judged)})
+            "random": rnd, "wished": wished, "agree": agreed, "agree_of": len(judged),
+            "ask": ask, "brakes": brakes})
     ntfy(f"berserk c{cycle:02d} done",
          f"{len(pages)} pages · {matched} matched, {rnd} random · {wished} wished for")
     log(f"cycle {cycle:02d}: {len(pages)} pages, {matched} matched, {rnd} random, "
@@ -997,11 +949,10 @@ def finish_cycle(cycle: int, settings: dict, ask: str) -> None:
 # ---- the run ----------------------------------------------------------------------------
 
 def next_cycle() -> int:
-    try:
-        ns = [int(m.group(1)) for n in os.listdir(CYCLES)
-              if (m := re.match(r"^c(\d+)\.md$", n))]
-    except FileNotFoundError:
-        ns = []
+    """One past the highest cycle on the ledger. Off the ledger and not off a folder of
+    reports, because the reports are gone: the ledger is the only record of a night now, and
+    a counter that reads anything else would start renumbering over finished walks."""
+    ns = [r["cycle"] for r in ledger_rows() if isinstance(r.get("cycle"), int)]
     return (max(ns) + 1) if ns else 1
 
 
@@ -1021,6 +972,8 @@ def main() -> int:
                        help="who turns what the model said into a branch number")
         p.add_argument("--ask", default=None,
                        help="the one line of taste in the loop; default: the picker's own")
+        p.add_argument("--brakes", choices=("on", "off"), default="on",
+                       help="DRY and the repeat penalty on the room's writing calls")
         if name == "cycle":
             p.add_argument("--pages", type=int, default=5)
         if name == "page":
@@ -1033,17 +986,17 @@ def main() -> int:
 
     cycle = a.cycle if a.cycle else next_cycle()
     ask = a.ask or FRAMES[a.picker]["ask"]
-    log(f"cycle {cycle:02d} · picker {a.picker} · verify {a.verify} · ask {ask!r}")
+    log(f"cycle {cycle:02d} · picker {a.picker} · verify {a.verify} · brakes {a.brakes} · "
+        f"ask {ask!r}")
 
     if a.cmd == "page":
-        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, a.verify, a.picker, ask)
+        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, a.verify, a.picker, ask,
+                    a.brakes)
         state_clear()
         return 1 if r.get("error") else 0
-    settings = {"pages": a.pages, "forks": a.forks, "fan": a.fan, "predict": a.predict,
-                "picker": a.picker, "verify": a.verify}
     for page in range(1, a.pages + 1):
-        do_page(cycle, page, a.forks, a.fan, a.predict, a.verify, a.picker, ask)
-    finish_cycle(cycle, settings, ask)
+        do_page(cycle, page, a.forks, a.fan, a.predict, a.verify, a.picker, ask, a.brakes)
+    finish_cycle(cycle, ask, a.brakes)
     # Only here, and deliberately not in a finally: state.json outliving the process is how
     # the monitor says "it died mid-walk". Wipe it on a crash and a dead run looks finished.
     state_clear()

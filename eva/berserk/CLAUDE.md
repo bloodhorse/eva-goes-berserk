@@ -46,8 +46,15 @@ a tuning preference: a reader's job is to say back something that is already in 
 is exactly what a repetition brake punishes. Turn them on and it paraphrases, a paraphrase matches
 nothing, and every fork ends random. The margin note is the one call that really is writing, so it
 runs at 1.0 — and so does the second, warmer call that asks about/quote *why* that one; the why
-goes to the ledger and the morning file and is fed back into nothing. Margin has no why: the note
-is already the reason.
+goes to the ledger and the page, is asked at **every** attempt and is fed back into nothing.
+Margin has no why: the note is already the reason.
+
+The walk's own writing — the fan branches — keeps its brakes by default and drops them with
+`--brakes off`, which zeroes `dry_multiplier`, `repeat_penalty` and `repeat_last_n` **on the
+room**. On the room and not on a flag, so `anthology.py` reads back what the run really did
+instead of what was typed. Which setting draws the better fan is bekh's to settle by reading
+pages: the brakes cost the model nothing it wants to repeat, and they are also what pushes a
+drifting document onto a wiki footer it cannot rhyme its way out of.
 
 ## Turning what was said into a branch
 
@@ -84,11 +91,7 @@ the levers of `cli/walk/walk.py`, unchanged so the fans stay comparable with eve
 the shelf. The page ends on a **closing fan** nobody continues from: the quoted branch is *kept*
 instead of taken, which is the fan the room is standing on when `loom.build_artifact` freezes it,
 so the artifact is shaped like one saved by hand from the page. What goes to the sheets site is
-the anthology below, not the walk, and `shelf/berserk/cycles/cNN.md` is the report bekh opens in
-the morning: the settings (the picker among them) and the ask, a table per page (bits, forks, matched, widened, random, how often opus
-and substring agreed), then every fork in whatever the picker said — a quotation in quote marks,
-a description in none, a margin note on its own — and then **the wished pile**, which only the
-pickers that read the whole fan have.
+the anthology below, not the walk — and that page is the only rendering of a night there is.
 
 What the picker said rides on the chosen node's `meta.berserk` with `used`, so a fork is
 readable at eva.x months later without the ledger open beside it.
@@ -96,13 +99,30 @@ readable at eva.x months later without the ledger open beside it.
 ## The page bekh actually reads
 
 `anthology.py` renders a cycle — or several, `--cycles 80,81` — as **one html page** in the sheets
-skin: the experiment explained at the top in plain prose (what a base model is, the pickers under
-test, the settings the run really used, the tally), then per cycle, per page, per fork: the lead
-the fan is finishing, then **every branch whole**, in the order the reader saw it, the taken one
-against the accent line. Under margin each branch carries its note; under about the fork opens
-with the description and its why, and the wished pile follows. The seed is printed once per page,
-folded if it runs long. Nothing is ever cut to an opening — the branches nobody took are the
-point.
+skin, and it is the only rendering: the morning markdown is gone, because two renderings of one
+night are two places for the story to disagree with itself.
+
+The page is the walk **as a tree**, one story per page. The settings the run really used and the
+ask, verbatim, at the top with the explainer folded behind *what is this*; then per page: the seed
+open, once, then every fan hanging off a left spine — the lead it is finishing, the branches
+lettered `a b c` in the order the reader saw them, each whole, the one taken against the lilac
+line — and under the last fan **the text as it came out**, the story, once. Under margin each
+branch carries its note; under about and quote every ask is shown in order, misses included. Every
+fan but the first folds away the document it was drawn under. Nothing is ever cut to an opening —
+the branches nobody took are the point.
+
+Three kinds of line, the same for every picker, so the eye learns the grammar once:
+
+- **nemo's words** — the branches, what the reader said, the why, the notes: ordinary text in the
+  document's own pre style, escaped, never cut.
+- **what happened** — `attempt 2 · reshuffled`, `widened to 10`, `→ e`, `random → c`, `taken`:
+  dim, small, monospace (`.plumb`), never louder than the text.
+- **folds** — the explainer, and the document each fan was drawn under.
+
+The resolver is not a character on this page: its pick is an arrow to a branch letter, and there
+is no prompt, no substring witness, no agree column and **no bit count anywhere**. A wish is a
+miss inside its own fan's attempts, shown where it happened; there is no pile of them at the
+bottom any more.
 
 **berserk pushes that page after every fork**, to `~/sheets/berserk/berserk-cNN.html`, with a
 `walking…` line under the last one. So the page is one document per cycle that grows under the
@@ -125,9 +145,10 @@ drawn. Under about and quote: three asks, each with the fan shuffled again (shuf
 base model has a position bias, so a retry on the same order is not a second opinion); then the
 fan is **widened once** — fifteen more branches under the same node, which is cheaper than an
 arbitrary line — and asked once more; then a random branch, `outcome: "random"`,
-`reader_failed: true`, and the walk goes on. Every answer that resolved to nothing is kept on the
-ledger under `wished` and collected at the bottom of the report, because **a branch described and
-not drawn is the most interesting thing this machine makes**. Margin has none of that: its notes
+`reader_failed: true`, and the walk goes on. Every ask is kept on the ledger under `tries`, and
+every answer that resolved to nothing under `wished` as well, because **a branch described and
+not drawn is the most interesting thing this machine makes** — the page shows each of them in the
+fan it was wished for at. Margin has none of that: its notes
 are written once against the branches that exist, so there is nothing to reroll and nothing to
 wish for — either the resolver picks a note or the branch is chance.
 
@@ -149,23 +170,34 @@ dead). `state.json` holds the run's pid and is removed on a clean exit only; pre
 nobody answers to is the one state that needs a human. It shows the last fork's quotation and
 which matcher was used, and counts `reader_failed` as reader failures.
 
-- `shelf/berserk/ledger.jsonl` — a line per fork (`cycle page room fork picker closing fan_size
-  attempts widened order quote why substring opus agree used outcome pick keep bits seconds
-  reader_failed wished`, where `order` is the branch ids exactly as the reader saw them — shuffled
-  under about and quote, fan order under margin — and `pick` and `keep` are ids in it; margin adds
-  `notes`, one per branch in that same order, and `pick_note`, which note the branch taken
-  carried), a `page` event per page, a `cycle` event per cycle.
+- `shelf/berserk/ledger.jsonl` — a line per fork (`cycle page room fork picker ask closing
+  fan_size attempts widened order tries quote why substring opus agree used outcome pick keep bits
+  seconds reader_failed wished`, where `order` is the branch ids exactly as the reader saw them —
+  shuffled under about and quote, fan order under margin — and `pick` and `keep` are ids in it;
+  margin adds `notes`, one per branch in that same order, and `pick_note`, which note the branch
+  taken carried), a `page` event per page, a `cycle` event per cycle.
+  **`tries`** is one entry per ask actually made, in order — `said why hit widened`, where `hit`
+  is the index into `order` or null — and it is what lets the page show the machine missing:
+  `wished` keeps only the answers that named nothing and carries no why. Margin has no `tries`:
+  its notes are already everything it did. **`ask`** rides on every fork row and on the cycle
+  event, and **`brakes`** on the page rows and the cycle event, so a night names what it ran with
+  even when the rooms are gone.
 - `shelf/berserk/heartbeat` — one json object rewritten every branch, temp-then-replace.
 - `shelf/berserk/state.json` — the run, gone on a clean exit.
 - `shelf/berserk/pages/` — the anthology pages pushed to sheets (gitignored: the walk is in git
   as an artifact, and this page is built from the ledger in a second).
-- `shelf/berserk/cycles/cNN.md` — tracked.
+- `shelf/berserk/cycles/` — the two markdown reports cycles 80 and 81 were written with, kept in
+  git as the record of those nights. Nothing writes there any more.
 - `/tmp/eva-berserk.log` — stderr, stamped, from launchd.
+
+The cycle number a bare run takes is one past the highest on the **ledger** — the reports it used
+to count are gone, and the ledger is the record now.
 
 ```bash
 launchctl kickstart gui/$(id -u)/com.bekh.eva-berserk                 # one cycle, five pages
 uv run --python 3.12 eva/berserk/berserk.py page --cycle 9 --page 1   # one page by hand
 uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --pages 2 --forks 5 --fan 5 --picker margin
+uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --brakes off   # no DRY, no repeat penalty on the fan
 uv run --python 3.12 eva/berserk/berserk.py page --cycle 9 --forks 1 --fan 8 --verify none
 uv run --python 3.12 eva/berserk/monitor.py                           # the dashboard; --once for a frame
 ```
@@ -204,15 +236,23 @@ document, the closing fan keeps exactly one and takes nothing, the reader's requ
 out with `dry_multiplier 0`, `repeat_penalty 1.0` and xtc off, `--verify none` never starts
 `claude` at all (the fake writes a file the moment it runs, and that file must not exist), a
 resolver answering prose falls back to substring, a reader that never resolves widens once per
-fork and finishes the cycle with a full wished pile, the report prints each picker's answer in its
-own shape, state is gone and the heartbeat remains, and a second run refuses the same room. Sheets
-host and ntfy are the empty string there: a test run must never scp to the mini or push to bekh's
-phone.
+fork and lands four `tries` per fan on the ledger — each with its own why — `--brakes off` really
+reaches the fan's llama calls, no markdown report is written at all, state is gone and the
+heartbeat remains, and a second run refuses the same room. Sheets host and ntfy are the empty
+string there: a test run must never scp to the mini or push to bekh's phone.
+
+The page has a class of its own, walked with a margin cycle whose fans hold empty branches: the
+h1, the settings, the folded explainer, `fan 1`, a letter per branch, every note inside its own
+branch's card, the arrow to the branch taken, `kept` on the closing fan, the seed open exactly
+once above the tree, and the story at the bottom — plus the negative half, which is the point of
+the rewrite: no `opus`, no `agree`, no `bits`, no wished pile. The misses (`not in the fan`,
+`widened to 6`, `random → …`) are checked on the page berserk itself pushed during the run where
+nothing ever resolved.
 
 ## State
 
 Built and green against the fakes (2026-09-16). **Two real cycles have run, on purpose, to be
-compared** — `c80.md` (about) and `c81.md` (margin), two pages each, five forks of five branches,
+compared** — cycle 80 (about) and cycle 81 (margin), two pages each, five forks of five branches,
 both `--verify opus`, both on the sheets site. The numbers: about, 10 of 12 forks resolved, 2
 random, **23 wished-for lines**, opus and substring agreed **0 of 10** (expected — a description
 is not in the text it describes); margin, 12 of 12 resolved, none random, nothing wished for,
@@ -243,8 +283,13 @@ had failed four asks in a row, and a real opus call once overruled the substring
 (*she cannot stop walking,* against a branch ending *"she will look you straight in the face and
 answer, without stopping"*), which is the looseness to watch when the embedding model takes the
 seat. And the **why call loops** — DRY is off for it too, and it comes back *what if i died? what
-if i died? what if i died?* The brakes-off rule is about the reading call; the why is writing and
-should probably get its brakes back.
+if i died? what if i died?* `--brakes` does not touch that: it is the room's flag, so it reaches
+the fan and not the reader's calls, which are brakes-off by rule. The why still wants its brakes
+back, and that is a separate edit.
+
+Cycles 80 and 81 predate `tries`, so their rows carry only `wished` and the page rebuilds their
+attempts from it — every miss shows, the whys of the misses do not exist to show. The first cycle
+walked after this is the first one whose page is complete.
 
 Next is bekh's call, not the machine's: read the four pages, decide whether either picker is
 choosing, and — if margin's notes are the prize — whether the note should be written about the

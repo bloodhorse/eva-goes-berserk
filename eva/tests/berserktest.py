@@ -253,8 +253,10 @@ class SomeEmpty(UniqueLines):
 
 
 class Anthology(unittest.TestCase):
-    """A margin cycle rendered as one page of reactions. Its own run, not Margin's: a test
-    that reads another class's scratch dir is a test that depends on the order they load in."""
+    """A margin cycle rendered as the page bekh reads: one story, the fan under it, the
+    reactions beside the branches, the arrow to the one taken, and the text as it came out.
+    Its own run, not Margin's: a test that reads another class's scratch dir is a test that
+    depends on the order they load in."""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -287,35 +289,65 @@ class Anthology(unittest.TestCase):
         self.assertTrue(os.path.isfile(self.page))
         page = self.html()
         self.assertIn("background:#111", page, "the sheets skin")
-        self.assertIn("No person picks a branch", page, "the experiment, explained up top")
+        self.assertIn("<h1>berserk · cycle 08 · margin</h1>", page)
+        self.assertIn("<summary>what is this</summary>", page, "the explainer, folded")
+        self.assertIn("No person picks a branch", page, "the experiment, explained inside")
         self.assertIn("<strong>margin</strong>", page, "the picker under test, described")
         self.assertIn(berserk.NOTE_MARGIN, page, "the frame line, verbatim")
-        self.assertIn("tokens a branch", page, "the settings the run really used")
-        self.assertIn(self.room, page)
+        self.assertIn("35 tokens", page, "the settings the run really used")
+        self.assertIn("brakes on", page, "read off the room, not off the flag")
+        self.assertIn(self.room, page, "the link to the walk at eva.x")
 
-    def test_every_note_is_on_the_page(self) -> None:
+    def test_nothing_about_the_resolver_and_no_bit_counts(self) -> None:
+        # The machine that turns an answer into a branch is not a character on this page: its
+        # pick is an arrow to a letter. Bits are a measure for the shelf, not for reading.
+        page = self.html().lower()
+        for word in ("opus", "agree", "bits", "wished", "substring"):
+            self.assertNotIn(word, page, word)
+
+    def test_the_fans_are_numbered_and_the_branches_lettered(self) -> None:
         page = self.html()
-        n = 0
-        for r in forks_of(self.s["berserk"]):
-            for note in r["notes"]:
-                self.assertIn(html_escape(note), page, note)
-                n += 1
-        self.assertGreaterEqual(n, 8, "four branches at each of two forks")
+        forks = forks_of(self.s["berserk"])
+        self.assertIn("<h3>fan 1</h3>", page)
+        self.assertIn(f"<h3>fan {len(forks)} · closing</h3>", page)
+        # One letter cell per branch of every fan, a b c d over a fan of four.
+        letters = sum(len(r["order"]) for r in forks)
+        self.assertEqual(page.count('class="letter plumb">'), letters)
+        self.assertIn('class="letter plumb">d</div>', page)
 
-    def test_one_branch_is_marked_taken_per_fork(self) -> None:
-        # The mark's own span, not the bare word: the page explains the word up top too.
+    def test_every_note_sits_inside_its_own_branch_card(self) -> None:
+        # A note that is merely somewhere on the page is a note the reader has to match up by
+        # hand — the whole complaint about the old page. It has to be in the card.
+        page = self.html()
+        s = json.loads(read(loom.sitting_path(self.room)))
+        cards, n = page.split('<div class="card')[1:], 0
+        for r in forks_of(self.s["berserk"]):
+            for i, nid in enumerate(r["order"]):
+                card, n = cards[n], n + 1
+                text = s["nodes"][nid]["text"]
+                self.assertIn(html_escape(text) if text.strip() else "(empty)", card)
+                self.assertIn("~ " + (html_escape(r["notes"][i]) or "(nothing written)"), card)
+        self.assertEqual(n, len(cards), "one card per branch, and no card without a branch")
+        self.assertGreaterEqual(n, 8, "four branches at each of two fans")
+
+    def test_the_branch_taken_is_marked_and_the_arrow_points_at_it(self) -> None:
         forks = forks_of(self.s["berserk"])
         page = self.html()
-        self.assertEqual(page.count('class="mark">taken<'), len(forks))
         self.assertEqual(page.count('class="card taken"'), len(forks))
+        # Taken at a picking fan, kept at the closing one — the walk continues from one and
+        # stands on the other, and the page has to say which.
+        self.assertEqual(page.count('class="plumb">taken</div>'), len(forks) - 1)
+        self.assertEqual(page.count('class="plumb">kept</div>'), 1)
+        for r in forks:
+            self.assertIn(f'class="plumb">→ {"abcdefgh"[r["pick_note"]]}</div>', page)
 
-    def test_an_empty_branch_is_named_so_its_note_has_a_seat(self) -> None:
+    def test_an_empty_branch_is_one_dim_line_so_its_note_has_a_seat(self) -> None:
         page = self.html()
         s = json.loads(read(loom.sitting_path(self.room)))
         empties = sum(1 for r in forks_of(self.s["berserk"]) for i in r["order"]
                       if not s["nodes"][i]["text"].strip())
         self.assertGreater(empties, 0, "the stub was supposed to draw empty branches")
-        self.assertEqual(page.count("(empty branch)"), empties)
+        self.assertEqual(page.count('class="plumb">(empty)</div>'), empties)
 
     def test_the_lead_says_what_the_branches_are_finishing(self) -> None:
         # A lead is only there when the document stands mid-line, which depends on what the
@@ -329,9 +361,9 @@ class Anthology(unittest.TestCase):
             if lead:
                 self.assertIn(html_escape(lead), page)
                 seen += 1
-        self.assertIn("every branch below finishes", page) if seen else None
+        self.assertIn("every branch finishes", page) if seen else None
 
-    def test_branches_are_printed_whole_and_the_seed_once(self) -> None:
+    def test_branches_whole_the_seed_open_once_and_the_story_at_the_end(self) -> None:
         # Nothing is cut to an opening anywhere: the branches nobody took are the point of
         # this page, and 80 characters of one is not evidence of anything.
         page = self.html()
@@ -341,7 +373,16 @@ class Anthology(unittest.TestCase):
                 text = s["nodes"][nid]["text"]
                 if text.strip():
                     self.assertIn(html_escape(text), page)
-        self.assertEqual(page.count(html_escape(SEED)), 1, "the seed, once per page")
+        # Once, open, above the tree — the first fan finishes it mid-sentence, so a folded
+        # seed makes the first branch unreadable. Below it the seed recurs only inside the
+        # folds, which is what they are for.
+        top = page.split('<div class="tree">')[0]
+        self.assertEqual(top.count(html_escape(SEED)), 1, "the seed, open, once")
+        self.assertEqual(page.count("<summary>document so far</summary>"),
+                         len(forks_of(self.s["berserk"])) - 1, "every fan but the first")
+        self.assertIn("<h3>the text as it came out</h3>", page)
+        doc = berserk.prompt_to(s, s["current"])
+        self.assertIn(html_escape(doc), page, "the story, once, at the end")
 
 
 class About(unittest.TestCase):
@@ -392,12 +433,24 @@ class About(unittest.TestCase):
         self.assertIn(forks_of(self.s["berserk"])[0]["quote"], prompts)
         self.assertNotIn("Municipal Lifts Office", prompts)
 
-    def test_the_report_prints_the_description_without_quote_marks(self) -> None:
-        md = read(os.path.join(self.s["berserk"], "cycles", "c05.md"))
-        self.assertIn("picker about", md)
+    def test_every_ask_lands_on_the_ledger_with_its_why(self) -> None:
+        # `tries` is what makes the page able to show the machine working: one entry per ask
+        # actually made, in order, each with the reason the reader gave for it.
         for r in forks_of(self.s["berserk"]):
-            self.assertIn(r["quote"], md)
-            self.assertNotIn(f"“{r['quote']}”", md, "a description is not a quotation")
+            self.assertEqual(len(r["tries"]), r["attempts"])
+            for t in r["tries"]:
+                self.assertEqual(set(t), {"said", "why", "hit", "widened"})
+                self.assertTrue(t["why"].strip(), "the why is asked at every attempt")
+                self.assertFalse(t["widened"], "nothing was widened in this run")
+            last = r["tries"][-1]
+            self.assertEqual(last["said"], r["quote"])
+            self.assertEqual(r["order"][last["hit"]],
+                             r["keep"][0] if r["closing"] else r["pick"])
+            self.assertEqual(r["ask"], berserk.ASK_ABOUT, "the frame line, on every row")
+
+    def test_no_markdown_report_is_written(self) -> None:
+        self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "cycles")),
+                         "the html page is the only rendering now")
 
 
 class Margin(unittest.TestCase):
@@ -449,12 +502,13 @@ class Margin(unittest.TestCase):
         self.assertNotIn("Municipal Lifts Office", prompts, "no document")
         self.assertNotIn("and entry", prompts, "no branches either — only the notes")
 
-    def test_the_report_prints_the_picked_note_and_no_wished_pile(self) -> None:
-        md = read(os.path.join(self.s["berserk"], "cycles", "c06.md"))
-        self.assertIn("picker margin", md)
+    def test_the_row_names_the_ask_and_carries_no_tries(self) -> None:
+        # Margin makes one pass and writes a note beside every branch: the notes ARE the
+        # record of what it did, and a `tries` list here would be a second, emptier copy.
         for r in forks_of(self.s["berserk"]):
-            self.assertIn(r["notes"][r["pick_note"]], md)
-        self.assertNotIn("## wished for", md)
+            self.assertNotIn("tries", r)
+            self.assertEqual(r["ask"], berserk.NOTE_MARGIN)
+        self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "cycles")))
 
 
 class MarginRandom(unittest.TestCase):
@@ -649,10 +703,11 @@ class Quoted(unittest.TestCase):
         self.assertTrue(os.path.isfile(path))
         page = read(path)
         for n in (1, 2, 3):
-            self.assertIn(f"<h4>fork {n}", page)
-        self.assertIn("the closing fan, nothing taken from it", page)
+            self.assertIn(f"<h3>fan {n}", page)
+        self.assertIn("<h3>fan 3 · closing</h3>", page)
         self.assertIn("Municipal Lifts Office", page, "the seed it started from")
         self.assertIn("background:#111", page, "the sheets skin")
+        self.assertIn("<h3>the text as it came out</h3>", page)
         self.assertNotIn("walking…", page, "the cycle finished")
         self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "pages",
                                                      self.room + ".html")))
@@ -669,14 +724,16 @@ class Quoted(unittest.TestCase):
         self.assertEqual(cycles[0]["wished"], 0)
         self.assertEqual(cycles[0]["agree"], 3)
 
-    def test_report_names_the_page_and_the_quotes(self) -> None:
-        md = read(os.path.join(self.s["berserk"], "cycles", "c01.md"))
-        self.assertIn(self.room, md)
-        self.assertIn("the ask:", md)
+    def test_the_ask_and_the_brakes_are_on_the_ledger(self) -> None:
+        # The page describes the run that happened, and it reads the run off the ledger — so
+        # a cycle walked with a hand-written --ask has to say so without the rooms in reach.
         for r in forks_of(self.s["berserk"]):
-            self.assertIn(r["quote"], md)
-        self.assertIn("## wished for", md)
-        self.assertIn("every answer this cycle was a branch that was really there", md)
+            self.assertEqual(r["ask"], berserk.ASK_QUOTE)
+        c = [r for r in rows(self.s["berserk"]) if r.get("event") == "cycle"][0]
+        self.assertEqual(c["ask"], berserk.ASK_QUOTE)
+        self.assertEqual(c["brakes"], "on")
+        self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "cycles")),
+                         "no morning markdown any more")
 
     def test_state_is_gone_and_heartbeat_remains(self) -> None:
         self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "state.json")))
@@ -727,6 +784,46 @@ class NoVerify(unittest.TestCase):
         r = run(self.s["env"], "page", "--cycle", "9", "--verify", "embed")
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("embed matcher not built yet", r.stderr)
+
+
+class BrakesOff(unittest.TestCase):
+    """`--brakes off`: the walk's own writing calls draw with DRY and the repeat penalty at
+    zero. It is a knob because the why call loops without them (*what if i died? what if i
+    died?*) and the fans drift onto wiki footers with them — which of those is worse is a
+    thing bekh settles by reading pages."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
+        cls.s = scratch()
+        # Where this run's requests start in the stub's list. SEEN is one per process and
+        # every other class in the suite has already written to it.
+        cls.at = len(stub_llama.SEEN)
+        cls.r = run(cls.s["env"], "page", "--cycle", "10", "--page", "1", "--forks", "1",
+                    "--fan", "3", "--picker", "quote", "--verify", "none", "--brakes", "off")
+        cls.room = "berserk-c10-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def test_the_fan_drew_with_no_repetition_brake(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        # xtc is the tell of a branch call: the reader and the why run with it off.
+        fans = [b for b in stub_llama.SEEN[self.at:] if b.get("xtc_probability")]
+        self.assertTrue(fans, "the fan never called llama")
+        for b in fans:
+            self.assertEqual(b["dry_multiplier"], 0.0)
+            self.assertEqual(b["repeat_penalty"], 1.0)
+            self.assertEqual(b["repeat_last_n"], 0)
+
+    def test_it_is_on_the_room_so_the_page_can_read_it_back(self) -> None:
+        p = json.loads(read(loom.sitting_path(self.room)))["params"]
+        self.assertEqual((p["dry_multiplier"], p["repeat_penalty"]), (0.0, 1.0))
+        page = [r for r in rows(self.s["berserk"]) if r.get("event") == "page"][0]
+        self.assertEqual(page["brakes"], "off")
 
 
 class MatcherGarbage(unittest.TestCase):
@@ -791,12 +888,26 @@ class NothingMatches(unittest.TestCase):
         # The closing fan still keeps something, or there is no artifact to write.
         self.assertTrue(fs[-1]["keep"])
 
-    def test_the_report_carries_the_wished_pile(self) -> None:
-        md = read(os.path.join(self.s["berserk"], "cycles", "c02.md"))
-        self.assertIn("## wished for", md)
-        self.assertIn(stub_llama.NO_BRANCH, md)
-        self.assertIn("**(random)**", md)
-        self.assertIn("*(widened)*", md)
+    def test_every_attempt_is_on_the_ledger_in_order(self) -> None:
+        for r in forks_of(self.s["berserk"]):
+            self.assertEqual(len(r["tries"]), 4, "three asks, then the widened one")
+            self.assertEqual([t["widened"] for t in r["tries"]],
+                             [False, False, False, True])
+            for t in r["tries"]:
+                self.assertIsNone(t["hit"], "nothing it said was in the fan")
+                self.assertEqual(t["said"], stub_llama.NO_BRANCH)
+                self.assertTrue(t["why"].strip(), "the why is asked at every attempt")
+
+    def test_the_page_shows_the_machine_missing(self) -> None:
+        # A wish is a miss inside its own fan, shown where it happened — there is no pile of
+        # them at the bottom of the page any more.
+        page = read(os.path.join(self.s["berserk"], "pages", "berserk-c02.html"))
+        self.assertEqual(page.count("not in the fan"), 8, "four asks at each of two fans")
+        self.assertIn("widened to 6", page)
+        self.assertIn("attempt 4 · reshuffled", page)
+        self.assertIn('class="plumb">random → ', page)
+        self.assertIn(stub_llama.NO_BRANCH, page)
+        self.assertNotIn("wished", page.lower())
 
     def test_the_cycle_line_counts_the_wishes(self) -> None:
         c = [r for r in rows(self.s["berserk"]) if r.get("event") == "cycle"][0]
