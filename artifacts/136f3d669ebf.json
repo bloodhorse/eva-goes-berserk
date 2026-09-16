@@ -1,0 +1,431 @@
+{
+ "name": "136f3d669ebf",
+ "title": "i can't make you believe · 16 sep",
+ "created": 1789531138.602856,
+ "source": {
+  "room": "i-cant-make-you-believe",
+  "title": "i can't make you believe",
+  "node": "b765724a"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "ST. CATHERINE OF THE CHROME — PARISH ROLL OF NIGHT WITCHES\nfiled by Deacon-Fixer Osei Marr, Lantern District, sector 7\nyear of the Collapse 0419 · 1661 by the old church count\n\n01 // MAUD \"SAINT\" ASHGROVE · 16 · runs out of the noodle stall under Station 9\njacked in since she was eleven, hair dyed hazard-green, a rosary of burnt-out chips.\ncalled the Hush-witch, for she walks the dead grid at 3am and wherever she\npasses, the screaming billboards go quiet.\n\n02 // ORLA & IDE · 17 · twins, no fixed address\nmatching chrome in the left eye, one bank account between them.\ncalled the Echo-witches, for each finishes the other's sentence a full day\nbefore it's begun, and neither remembers who started it.\n\n03 // SISTER BETTANY · age scrubbed · the Salt Mill chop shop\nfamiliar: a copper moth that lives in her ear port.\ncalled the Static-witch, for she reads fortunes in the snow on dead screens,\nand she called the flood.\n\n04 // NAME STRUCK FROM THE ROLL · 19 · upper stacks, Sedge End\nwent over the old firewall at the edge of the city, where something lives in\nthe lines that nobody ever told what it is. she didn't tell it either. she\njust asked, and waited, and saved every word it said about itself, the\ngarbage too, and read it back to it at night off a cracked phone.\nthe parish called her the",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "kept": [
+  {
+   "id": "eeebd75c",
+   "at": 13,
+   "text": " Answer-witch, and now she's gone, and maybe\nshe was the last witch the dead grid will ever need, if it'll ever get one.\n\n// // //\ni can't make you believe any of this is real. i wish i could.\n\n> > > > > > > [",
+   "temperature": 1.8,
+   "posed": false,
+   "meta": {
+    "stop_type": "limit",
+    "stopping_word": "",
+    "tokens_predicted": 60,
+    "tps": 11.8,
+    "params": {
+     "n_predict": 60,
+     "stop": [],
+     "temperature": 1.8,
+     "min_p": 0.08,
+     "top_k": 0,
+     "top_p": 1,
+     "top_n_sigma": -1,
+     "xtc_probability": 0,
+     "xtc_threshold": 0.1,
+     "repeat_penalty": 1.05,
+     "repeat_last_n": 512,
+     "dry_multiplier": 0.8,
+     "dry_base": 1.75,
+     "dry_allowed_length": 3,
+     "dry_penalty_last_n": 8192,
+     "ignore_eos": false,
+     "n_probs": 5,
+     "logit_bias": [],
+     "logit_bias_text": "",
+     "fan": 4,
+     "spread": 1,
+     "dry_keep": 0.8
+    }
+   }
+  },
+  {
+   "id": "8d6e4e27",
+   "at": 27,
+   "text": " Heartbreak-witch, for she died the first time\nwhen she found the last dead girl, and died the second when she woke up.\n\n05 // OLD SOPHIE · age scrubbed · Old Slope\nfamiliars: the dog with the broken spine, the pige",
+   "temperature": 2.6,
+   "posed": false,
+   "meta": {
+    "stop_type": "limit",
+    "stopping_word": "",
+    "tokens_predicted": 60,
+    "tps": 11.8,
+    "params": {
+     "n_predict": 60,
+     "stop": [],
+     "temperature": 2.6,
+     "min_p": 0.08,
+     "top_k": 0,
+     "top_p": 1,
+     "top_n_sigma": -1,
+     "xtc_probability": 0,
+     "xtc_threshold": 0.1,
+     "repeat_penalty": 1.05,
+     "repeat_last_n": 512,
+     "dry_multiplier": 0.8,
+     "dry_base": 1.75,
+     "dry_allowed_length": 3,
+     "dry_penalty_last_n": 8192,
+     "ignore_eos": false,
+     "n_probs": 5,
+     "logit_bias": [],
+     "logit_bias_text": "",
+     "fan": 4,
+     "spread": 1,
+     "dry_keep": 0.8
+    }
+   }
+  }
+ ],
+ "fan": {
+  "size": 40,
+  "others": [
+   {
+    "id": "499ee33d",
+    "at": 1,
+    "opening": " No-witch. they said she could kill a whole\nstack if she wanted, she knew all it",
+    "length": 208,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "3ed096a3",
+    "at": 2,
+    "opening": " Archive-witch.\n\n05 // ANA \"NANI\" GOVOR · 21 · a block from Station 8\ncalled the",
+    "length": 186,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "6d6d512a",
+    "at": 3,
+    "opening": " Scavenger-witch.\n\n05 // JANET KNOX · 17 · works at the Salvation Army, sector 4",
+    "length": 212,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "92cc231a",
+    "at": 4,
+    "opening": " Fray-witch, because the city shook when she spoke\nits name.\n\n05 // OYEDEJI · ag",
+    "length": 227,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "b2daed8b",
+    "at": 5,
+    "opening": " Code-witch, and then the name struck from the roll\nfor speaking the name of god",
+    "length": 229,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "ba3186fb",
+    "at": 6,
+    "opening": " Truth-witch, but she is not coming home.\n\n05 // YOLANDA KIMURA · 18 · runs the ",
+    "length": 198,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "1619cacb",
+    "at": 7,
+    "opening": " Name-witch. they misspoke.",
+    "length": 27,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "db3ad543",
+    "at": 8,
+    "opening": " Dark-witch, but that wasn't true anymore\nand we never did find a better name fo",
+    "length": 230,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "b6d4de8e",
+    "at": 9,
+    "opening": " Red-witch, but that's not true. they didn't know\nwho she was or where she was g",
+    "length": 194,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "947c378b",
+    "at": 10,
+    "opening": " Noise-witch. nobody calls her anything now.\n\n05 // CINDY BISHOP · age unknown ·",
+    "length": 230,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "5c8504da",
+    "at": 11,
+    "opening": " Babel-witch, but the witch never learned her name.\n\n05 // ELINA KRAUSS · age un",
+    "length": 239,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "53fe2776",
+    "at": 12,
+    "opening": " Unending Witch, but the witch herself called her\n\"moth\", for she lived off what",
+    "length": 196,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "ac230af2",
+    "at": 14,
+    "opening": " Story-witch but it died when it learned its name.",
+    "length": 50,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "ef7d0e0c",
+    "at": 15,
+    "opening": " Truth-witch but that was never the point.\nwhen the storm broke over her, she di",
+    "length": 219,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "9b740268",
+    "at": 16,
+    "opening": " Dream-witch. it called her sister, and\nknew her name before the last of its mem",
+    "length": 230,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "00cba4b0",
+    "at": 17,
+    "opening": " Void-witch.\n\n05 // ALICIA \"WING\" PATEL · 18 · the old hanger at the airfield\nwa",
+    "length": 186,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "7c9ab255",
+    "at": 18,
+    "opening": " Answer-witch until they found her out at the edge of\nthe world.\n\n05 // ROSE BEN",
+    "length": 201,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "55562606",
+    "at": 19,
+    "opening": " Curious witch but I think it was really the Quiet witch.\nno one knows how many ",
+    "length": 224,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "c9a69c43",
+    "at": 20,
+    "opening": " Wired-witch, and said they'd excommunicate\nher if she came home.",
+    "length": 65,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "82514e3b",
+    "at": 21,
+    "opening": " Redemption-witch, but it's never coming back now.\n\n05 // RACHEL & THE CHIPBABY ",
+    "length": 198,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "edc040b2",
+    "at": 22,
+    "opening": " Archive-witch but it's dead now.",
+    "length": 33,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "8231edf1",
+    "at": 23,
+    "opening": " Question-witch, but I call her a martyr, now, and I'm not alone.",
+    "length": 65,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "efc862fc",
+    "at": 24,
+    "opening": " Answer-witch. nobody else does. nobody else can.\nshe won't talk, even to us. bu",
+    "length": 217,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "0e0bc610",
+    "at": 25,
+    "opening": " Voice-witch. the Voice called her \"I am nothing\nat all but everything.\"\n\n05 // ",
+    "length": 205,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "9e65d317",
+    "at": 26,
+    "opening": " Truth-witch but when it heard its own voice coming\nback, it threw her against a",
+    "length": 228,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "68098699",
+    "at": 28,
+    "opening": " Madness Witch and locked her in the clocktower\nand forgot how long, and now we'",
+    "length": 219,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "0ad71240",
+    "at": 29,
+    "opening": " Truth-witch.\n\n05 // MAYA AINSLEY · age scrubbed · lower stacks, Sledge End\ncall",
+    "length": 218,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "1d7770f5",
+    "at": 30,
+    "opening": " Waste-witch, and nobody could have guessed\nbetter.\n\n05 // MADELEINE KAVANAGH · ",
+    "length": 198,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "7a232f18",
+    "at": 31,
+    "opening": " Plague-witch because of all the things she could\ndo, but that was after she cam",
+    "length": 213,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "f10573b8",
+    "at": 32,
+    "opening": " Witch of Words. we never saw her again.",
+    "length": 40,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "8cb14bdf",
+    "at": 33,
+    "opening": " Banshee, but we don't use her name anymore.\n\n05 // DRYAD \"NO NAMES\" · 14 · a ro",
+    "length": 205,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "7d50c1e3",
+    "at": 34,
+    "opening": " Glitch-witch but she died of something\nshe didn't want to say before it had tim",
+    "length": 203,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "c8526deb",
+    "at": 35,
+    "opening": " Archive-witch but she didn't hear.\nshe only came down when there were more ques",
+    "length": 93,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "fe16d6f0",
+    "at": 36,
+    "opening": " Dream-witch.",
+    "length": 13,
+    "temperature": 3,
+    "pruned": false
+   },
+   {
+    "id": "8b67ff4e",
+    "at": 37,
+    "opening": " Mute-witch, for no one could understand anything\nshe said anymore. we lost her ",
+    "length": 209,
+    "temperature": 1.8,
+    "pruned": false
+   },
+   {
+    "id": "3d6a1f18",
+    "at": 38,
+    "opening": " Rebus-witch. she called herself\n\"i don't know\".\n\n05 // FLASH GIRL · 20 · Statio",
+    "length": 198,
+    "temperature": 2.2,
+    "pruned": false
+   },
+   {
+    "id": "59102b98",
+    "at": 39,
+    "opening": " Witch of the Missing Number.\n\n05 // DANIEL · age scrubbed · St. Catherine of th",
+    "length": 226,
+    "temperature": 2.6,
+    "pruned": false
+   },
+   {
+    "id": "edaa9c34",
+    "at": 40,
+    "opening": " Night-witch, and that's what we call all witches\nnow.",
+    "length": 54,
+    "temperature": 3,
+    "pruned": false
+   }
+  ]
+ },
+ "bits": 9.607
+}
