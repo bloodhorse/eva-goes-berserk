@@ -195,10 +195,28 @@
     #arttree .lvl{gap:12px; margin-bottom:38px;}
   }
 
+  /* Export: the walk as one document, on its own screen, which is where it is read now —
+     a download is a file you have to go find. Monospace and pre-wrap because the punctuation
+     IS the evidence: a proportional font and a collapsed run of spaces would quietly retouch
+     what the model wrote, and `> > > [` is exactly the kind of thing that gets retouched. */
+  #textbar{display:flex; align-items:center; gap:16px; padding:0 56px 20px 64px; flex-shrink:0;}
+  #textbar h1{font-size:16px; font-weight:500; margin:0; overflow-wrap:anywhere; min-width:0;}
+  #textback{background:transparent; border-color:transparent; margin-left:-10px;}
+  #textview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin; margin:0;
+    padding:2px 56px 28px 64px; color:var(--ink);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:13.5px;
+    line-height:1.62; white-space:pre-wrap; overflow-wrap:anywhere;}
+  @media (max-width:900px){
+    #textbar{padding:0 0 16px;} #textview{padding:2px 0 20px;}
+  }
+  @media (max-width:540px){
+    #textbar{padding:0 0 14px; gap:10px;} #textview{padding:2px 0 16px; font-size:13px;}
+  }
+
   /* The former 55% dialogue pane, widened by about a third and centered. */
   :root{--reading: min(72vw, 1120px);}
   #panes{flex:1; display:flex; min-height:0; min-width:0;}
-  #doc, #fanpane, #notepane, #artpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
+  #doc, #fanpane, #notepane, #artpane, #textpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
     display:flex; flex-direction:column; padding:64px 24px max(24px, env(safe-area-inset-bottom));}
   /* The reading column is a rule for prose, and a tree is not prose: it is a picture that
      wants every pixel the window has, so the artifact screen alone opts out of --reading.
@@ -289,7 +307,7 @@
 
   @media (max-width:900px){
     :root{--reading:100%;}
-    #doc, #fanpane, #notepane, #artpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
+    #doc, #fanpane, #notepane, #artpane, #textpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
     /* No margins for controls once the screen narrows: at 36px the "edit" word and the
        ⌥ 3/40 fork mark were wider than their margin and sat on top of the text, and on a
        touch screen there is no hover to reveal them anyway. So every block becomes a
@@ -309,7 +327,7 @@
     #cards{padding:2px 0 20px;}
     /* the -10px that optically aligns the arrow on desktop pushed its focus ring past
        the 12px phone margin and clipped it at the screen edge */
-    #back, #noteback{margin-left:0;}
+    #back, #noteback, #textback{margin-left:0;}
     /* On a phone the bottom is the text box: a notice pinned there covered the box and
        the send button until the error cleared. Up top, under the menu button, it covers
        one line of reading at worst and never the controls. */
@@ -317,7 +335,7 @@
       left:16px; right:16px; transform:none; max-width:none;}
   }
   @media (max-width:540px){
-    #doc, #fanpane, #notepane, #artpane{padding-left:12px; padding-right:12px;}
+    #doc, #fanpane, #notepane, #artpane, #textpane{padding-left:12px; padding-right:12px;}
     #turnwrap{padding:16px 0 0;}
     /* the fan bar grew a second word (save as artifact); on a phone it wraps under the
        title rather than squeezing "choose an answer" onto two lines */
@@ -339,7 +357,7 @@
   /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
      left 214px to read in. Keep just enough top to clear the fixed menu button (58px). */
   @media (max-height:500px){
-    #doc, #fanpane, #notepane, #artpane{padding-top:64px;}
+    #doc, #fanpane, #notepane, #artpane, #textpane{padding-top:64px;}
     #turnwrap{padding-top:10px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
@@ -348,9 +366,11 @@
      outright: browsers reset text-transform on form controls instead of inheriting it.
      The document is exempt, and so is anything typed: `.body` holds his lines and the model's
      words, and a capital there is part of the text the model continues — lowercasing it on
-     screen would show a document the model never saw. */
+     screen would show a document the model never saw. `#textview` is the same document again,
+     whole, on the export screen: it showed ST. CATHERINE as st. catherine until it was named
+     here. */
   body, button, select{text-transform:lowercase;}
-  .body, .body *, input, textarea{text-transform:none;}
+  .body, .body *, input, textarea, #textview{text-transform:none;}
   ::placeholder{text-transform:lowercase;}
 </style>
 </head>
@@ -455,6 +475,19 @@
         <button class="btn" id="artagain" type="button" title="a new room whose document is this prompt, at this sampler">Fan again</button>
       </div>
       <div id="artview"></div>
+    </section>
+
+    <section id="textpane" aria-label="The walk as one document" hidden>
+      <div id="textbar">
+        <button class="iconbtn" id="textback" type="button" aria-label="Back to the artifact" title="back to the artifact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        </button>
+        <h1 id="texttitle"></h1>
+        <span class="spring"></span>
+        <button class="ghostbtn" id="textcopy" type="button" title="the whole document to the clipboard">Copy</button>
+        <button class="ghostbtn" id="textsave" type="button" title="the same text as a .txt file">Download</button>
+      </div>
+      <pre id="textview"></pre>
     </section>
   </main>
   <div id="notice" role="status" aria-live="polite"></div>
@@ -594,6 +627,7 @@ function showDialogue(){
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
+  $('textpane').hidden = true;
   turnEl.focus({preventScroll:true});
 }
 function showChoices(from){
@@ -605,6 +639,7 @@ function showChoices(from){
   $('fanpane').hidden = false;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
+  $('textpane').hidden = true;
   renderFan();
   if(entering){
     cardsEl.scrollTop = 0;
@@ -654,6 +689,7 @@ function showNote(){
   $('fanpane').hidden = true;
   $('notepane').hidden = false;
   $('artpane').hidden = true;
+  $('textpane').hidden = true;
 }
 
 // Reading and writing are the same screen with the words swapped; the name field shows
@@ -813,6 +849,7 @@ function showArtifact(){
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = false;
+  $('textpane').hidden = true;
   $('artview').scrollTop = 0;
   requestAnimationFrame(() => { drawArtLinks(); centreTree(); });
 }
@@ -996,14 +1033,40 @@ function artifactText(a){
   return head + '\n\n' + doc;
 }
 
+// Export is a SCREEN, not a download: the point of the walk is to be read, and a file in
+// Downloads is a thing you have to go find, open in something, and trust not to render the
+// brackets away. The file is still one button from here for when it should leave the mac.
 function exportArtifact(){
   if(!artifact) return;
-  const name = (artifact.title || artifact.name).replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
-  const blob = new Blob([artifactText(artifact)], {type: 'text/plain;charset=utf-8'});
+  $('texttitle').textContent = artifact.title || artifact.name;
+  $('textview').textContent = artifactText(artifact);
+  showText();
+}
+
+function showText(){
+  choosing = false;
+  menu(false);
+  $('doc').hidden = true;
+  $('fanpane').hidden = true;
+  $('notepane').hidden = true;
+  $('artpane').hidden = true;
+  $('textpane').hidden = false;
+  $('textview').scrollTop = 0;
+  $('textback').focus({preventScroll:true});
+}
+
+function exportName(){
+  const n = (artifact.title || artifact.name).replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
+  return (n || 'artifact') + '.txt';
+}
+
+function downloadText(){
+  if(!artifact) return;
+  const blob = new Blob([$('textview').textContent], {type: 'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = (name || 'artifact') + '.txt';
+  a.download = exportName();
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -1011,6 +1074,17 @@ function exportArtifact(){
   // click() returns, and a revoked url downloads an empty file.
   setTimeout(() => URL.revokeObjectURL(url), 10000);
   sys('exported ' + a.download);
+}
+
+async function copyText(){
+  // No fallback to execCommand: on a page served over https to this mac and this phone the
+  // clipboard api is there, and a silent half-copy of a document is worse than a refusal.
+  try{
+    await navigator.clipboard.writeText($('textview').textContent);
+    sys('copied');
+  }catch(e){
+    sys('could not copy: ' + e.message, true);
+  }
 }
 
 function drawArtifact(a){
@@ -2191,6 +2265,11 @@ $('artback').addEventListener('click', showDialogue);
 $('artagain').addEventListener('click', fanAgain);
 $('artexport').addEventListener('click', exportArtifact);
 $('artsave').addEventListener('click', saveArtifact);
+// Back from the document goes to the artifact, not to the dialogue: the tree is where it
+// came from, and its connectors are measured, so it has to be re-drawn on the way in.
+$('textback').addEventListener('click', showArtifact);
+$('textcopy').addEventListener('click', copyText);
+$('textsave').addEventListener('click', downloadText);
 $('noteadd').addEventListener('click', newNote);
 $('noteback').addEventListener('click', showDialogue);
 $('noteedit').addEventListener('click', editNote);

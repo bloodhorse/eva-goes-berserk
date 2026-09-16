@@ -131,8 +131,11 @@ dimmer — with the connectors measured after layout and drawn as svg (solid acc
 taken, dashed for the keeps), redrawn on a resize, a theme flip and when the fonts land. A step
 wider than the screen scrolls inside the tree pane, the only thing on the page allowed to; under
 it a foot line (steps, kept of total, bits, model, temperature range) and the sampler, turn, date
-and room it came from. Two buttons: **export** writes the walk as one document — the prompt, then
-every step's lead and the line taken, joined with nothing between them, under a short head naming
+and room it came from. Two buttons: **export** opens the walk as one document on **its own
+screen** — monospace, pre-wrap, the lowercase rule lifted, with **copy** and **download** in its
+bar and back returning to the tree; the file is one button away, not the only way to read it.
+The document is the prompt, then every step's lead and the line taken, joined with nothing
+between them, under a short head naming
 the model and the few sampler numbers that decide the register (the branches kept beside the path
 are left out: it is the story, not the fan) — then, under the document, the branches kept at the
 **open fork it ends on**, because nothing was taken there and those keeps are the only ending there
