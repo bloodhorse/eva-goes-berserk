@@ -959,11 +959,30 @@ function artFoot(a, steps){
 // The walk as ONE document: the prompt, then every step's lead and the line taken, joined
 // with nothing between them — the same concatenation the server tests against, so what comes
 // out is the text the model actually saw and wrote, not a transcript of the tree. The
-// branches kept beside the path are deliberately left out: this is the story, not the fan.
+// branches kept beside the path are deliberately left out: this is the story, not the fan —
+// except at the open fork it ends on, where there is no line taken and the keeps are the
+// only ending there is.
 function artifactText(a){
   const steps = stepsOf(a);
-  const doc = (a.prompt || '') +
+  let doc = (a.prompt || '') +
     steps.map(st => (st.lead || '') + (st.took ? st.took.text : '')).join('');
+  // The last step is the fan he SAVED from, so it has no line taken and the document stops
+  // at that fork. Stopping there is why a walk of one step exported as the prompt alone,
+  // breaking off mid-sentence with the branch that was the whole point of saving nowhere in
+  // the file. The branches kept at that open fork are the endings on offer, so they go under
+  // it, each marked with where it sat in the fan. Keeps at EARLIER forks still stay out:
+  // there a line was taken, and the line taken is the story.
+  const last = steps.length ? steps[steps.length - 1] : null;
+  const ends = last && !last.took ? (last.kept || []) : [];
+  if(ends.length){
+    const size = (last.fan || {}).size || 0, of = size ? ' of ' + size : '';
+    doc = doc.replace(/\s+$/, '') +
+      '\n\n— the fan is open here: ' + ends.length + of + ' kept, no line taken —\n';
+    ends.forEach(k => {
+      const tag = [k.at + of, k.posed ? 'posed' : 'temp ' + num(k.temperature || 0)].join(' · ');
+      doc += '\n[' + tag + ']\n' + (k.text || '').replace(/\s+$/, '') + '\n';
+    });
+  }
   const m = a.model || {}, p = a.params || {};
   // Above the document, only what you would need to run it again: which model, and the few
   // sampler numbers that decide the register. Everything else is in the json.
@@ -972,7 +991,8 @@ function artifactText(a){
     'model: ' + (m.file || 'not recorded'),
     'sampler: ' + ['temperature', 'min_p', 'xtc_probability', 'n_predict']
       .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · '),
-    'walk: ' + steps.length + ' steps · ' + num(a.bits || 0) + ' bits of curation',
+    'walk: ' + steps.length + (steps.length === 1 ? ' step · ' : ' steps · ') +
+      num(a.bits || 0) + ' bits of curation',
     'saved: ' + when(a.created),
   ].join('\n');
   return head + '\n\n' + doc.replace(/\s+$/, '') + '\n';
