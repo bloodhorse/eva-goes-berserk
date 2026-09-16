@@ -77,7 +77,7 @@ cost guard, rent the pipe not the card).
   `sittings/.trash/` holds what Clear and Delete took, timestamped.
 - `storage/` — bekh's saved findings, one plain `.txt` per note, **tracked by git**. A save in the
   page doesn't commit; it goes up with the next commit.
-- `artifacts/` — frozen fans, one indented json each, **tracked by git and pushed**. Written once
+- `artifacts/` — frozen walks, one indented json each, **tracked by git and pushed**. Written once
   by the server, never edited or overwritten; a mistaken one is a `git rm` by hand. Like storage,
   a save in the page goes up with the next commit.
 - `docs/walk/` — the loom from the terminal: seed → short fan → pick (`walk.py`), fork a room at
@@ -105,18 +105,32 @@ copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, fi
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
 edit), **artifacts** (a list; each opens read-only). The composer is greyed with no room open.
 
-**Artifacts** are the opposite of rooms: a room is a dry run, an artifact is one fan frozen. On
-the choose screen every card has **keep** (an optional `kept: true` on the node, saved with the
-room; eva ignores it and keeps it); with anything kept, **save as artifact** posts the room, fan
-point and kept ids, and the server builds the file itself from the room *on disk*:
-`artifacts/<hex>.json` with the prompt (root→fan point, verbatim), the kept branches whole with
-"k of N", temperature and meta minus probs, every other branch as an 80-char opening, the room's
-turn and sampler, the model llama's `/props` names at save time, and bits of curation for the
-selection — log2(C(N,k)), which is `curation`'s log2(n) when one is kept; a verbatim twin of a
-kept branch leaves the pool. Written once through `os.link`, so a taken name is 409, never an
-overwrite. The artifact screen shows the prompt folded, the kept cards, the rest faint, the
-numbers, and one button: **fan again** makes a new room from the prompt with the same turn and
-sampler, and doesn't fan. All chrome is lowercase by one CSS rule; the
+**Artifacts** are the opposite of rooms: a room is a dry run, an artifact is a **walk** frozen —
+the document it started from and every fork along the way. On the choose screen every card has
+**keep** (an optional `kept: true` on the node, saved with the room; eva ignores it and keeps it),
+and that is the whole gesture: he keeps as he goes, picks, walks on, keeps more at the next fork.
+**Save as artifact** posts the room, the fan he has open and the ids kept in it; the server walks
+the path root→`current` and builds the file itself from the room *on disk*: `artifacts/<hex>.json`
+with the prompt (root→the first fan point, verbatim), the room's turn and sampler, the model
+llama's `/props` names at save time, and one **step** per fork — the line taken and the branches
+kept beside it whole with "k of N", temperature and meta minus probs, every other branch of that
+fan as an 80-char opening (evidence of what was on offer, never drawn), and `lead`, the text
+between the last line taken and this fan point, so prompt + every step's lead + line taken is the
+document again. The open fan he saves from is always the last step, with no line taken yet; a fan
+of one is not a step; a step he kept nothing in still is one. Bits per step are log2(C(n,k)) with
+k counting the line taken alongside the keeps — `curation`'s log2(n) when nothing was kept beside
+it — and the walk's total is the steps added, because each fork is its own choice. A verbatim twin
+of a named branch leaves the pool. Written once through `os.link`, so a taken name is 409, never
+an overwrite. **The artifact screen is that walk as a tree**: the prompt as a folded card at the
+top, then one row per step — the line taken in a solid panel, the kept branches flanking it,
+dimmer — with the connectors measured after layout and drawn as svg (solid accent down the path
+taken, dashed for the keeps), redrawn on a resize, a theme flip and when the fonts land. A step
+wider than the screen scrolls inside the tree pane, the only thing on the page allowed to; under
+it a foot line (steps, kept of total, bits, model, temperature range) and the sampler, turn, date
+and room it came from. One button: **fan again** makes a new room from the prompt with the same
+turn and sampler, and doesn't fan. An artifact written before walks existed has no `steps` and is
+read as a walk of one step with nothing taken — `steps` is the whole test, and no file on the
+shelf is ever rewritten. All chrome is lowercase by one CSS rule; the
 document and anything typed keep their capitals, because a capital there is text the model sees.
 Room: charcoal ground and blue-white ink, lilac accent, ice for the live dot, rose for posed;
 system sans; light by the OS, no toggle; dom-built, never innerHTML. `looks/` holds the four

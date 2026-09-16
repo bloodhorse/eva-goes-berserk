@@ -134,9 +134,11 @@
     #notebar{padding:0 0 14px; gap:10px;} #noteview{padding:2px 0 16px;} #notetext{margin:2px 0 16px;}
   }
 
-  /* Artifacts: a list in the menu like storage's, and a screen that can only be read. The
-     kept branches are cards like a fan's but nothing on them is a target — no hover, no
-     pointer — because an artifact that looked pickable would be lying about being frozen. */
+  /* Artifacts: a list in the menu like storage's, and a screen that can only be read — the
+     walk as a tree, top down. The prompt is the card at the top; under it one row per step,
+     the line taken in a solid panel with the branches he kept beside it, dimmer. Nothing in
+     it is a target except the prompt's fold, because an artifact that looked pickable would
+     be lying about being frozen. */
   #artwrap{display:none; border-top:1px solid var(--line); margin-top:12px; padding-top:8px;}
   #artwrap.on{display:block;}
   #artlist{display:flex; flex-direction:column;}
@@ -152,16 +154,28 @@
   #artagain{flex-shrink:0; white-space:nowrap;}
   #artview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     display:flex; flex-direction:column; gap:20px; padding:2px 56px 28px 64px;}
-  #artview details{flex-shrink:0; border-left:2px solid var(--line); padding-left:16px;}
-  #artview summary{cursor:pointer; color:var(--ghost); font-size:14px; padding:4px 0;}
-  #artview details .body{color:var(--ghost); font-size:16px; line-height:1.65; padding:10px 0 4px;}
-  .card.frozen{cursor:default;}
-  .card.frozen:hover{border-color:transparent;}
-  .artothers{flex-shrink:0; display:flex; flex-direction:column; gap:6px; color:var(--ghost);
-    font-size:14px;}
-  .artothers .o{display:flex; gap:12px; align-items:baseline; opacity:.75;}
-  .artothers .o .at{flex-shrink:0; font-size:13px; min-width:6.5em;}
-  .artothers .o .body{overflow-wrap:anywhere; min-width:0;}
+  /* The tree pane is the ONE thing on this page allowed to scroll sideways. A step with six
+     kept branches is wider than a phone, and the alternative — capping how many a step may
+     show — would be the page hiding part of the walk. The inner box is what the rows centre
+     in and what the svg covers, so it has to be as wide as the widest row, not as wide as
+     the screen. */
+  #arttree{position:relative; flex-shrink:0; overflow-x:auto; padding:2px 0 8px;}
+  #arttree .inner{position:relative; width:max-content; min-width:100%; margin:0 auto;}
+  #arttree svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
+  #arttree .lvl{display:flex; gap:18px; justify-content:center; align-items:flex-start;
+    margin:0 0 46px;}
+  #arttree .lvl:last-child{margin-bottom:6px;}
+  /* the boxes sit over the curves, so a connector's ends disappear under them */
+  #arttree .n{position:relative; z-index:1; width:200px; background:var(--panel-soft);
+    border:1px solid var(--line); border-radius:11px; padding:9px 12px; font-size:13px;
+    color:var(--ghost); overflow-wrap:anywhere;}
+  #arttree .n.took{background:var(--panel); border-color:transparent; color:var(--ink);}
+  #arttree .n.root{width:300px; max-width:100%; background:var(--sunk); color:var(--ink);}
+  #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
+  #arttree .cap.posed{color:var(--hot);}
+  #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
+  #arttree details .body{padding-top:8px;}
+  .artfoot{flex-shrink:0; color:var(--ghost); font-size:13px;}
   .artnums{flex-shrink:0; display:grid; grid-template-columns:max-content 1fr; gap:4px 16px;
     font-size:13px; color:var(--ghost); border-top:1px solid var(--line); padding-top:14px;}
   /* not lowercased: a model file is Q5_K_M and a turn string is text the model saw */
@@ -173,7 +187,9 @@
   }
   @media (max-width:540px){
     #artbar{padding:0 0 14px; gap:10px;} #artview{padding:2px 0 16px; gap:16px;}
-    .artothers .o{flex-direction:column; gap:0;}
+    /* the boxes keep their width: a step too wide for the phone scrolls inside the tree
+       pane, which is the one place sideways scrolling is the honest answer */
+    #arttree .lvl{gap:12px; margin-bottom:38px;}
   }
 
   /* The former 55% dialogue pane, widened by about a third and centered. */
@@ -765,7 +781,8 @@ function drawArtifacts(rows){
     t.textContent = r.title;
     const n = document.createElement('span');
     n.className = 'n';
-    n.textContent = r.kept + ' of ' + r.fan + ' kept · ' + when(r.created);
+    n.textContent = ((r.steps || 0) > 1 ? r.steps + ' steps · ' : '') +
+      r.kept + ' of ' + r.fan + ' kept · ' + when(r.created);
     b.appendChild(t);
     b.appendChild(n);
     b.addEventListener('click', () => openArtifact(r.name));
@@ -788,55 +805,144 @@ function showArtifact(){
   $('notepane').hidden = true;
   $('artpane').hidden = false;
   $('artview').scrollTop = 0;
+  requestAnimationFrame(drawArtLinks);
 }
 
-// The whole read-only screen. Every string from the file goes in as text: the prompt and
-// the branches are model output and his lines, and the file is in a public repo besides.
+// An artifact is a WALK: the document it started from, then one step per fork — the line he
+// took, and the branches he kept beside it. One written before walks existed has no `steps`
+// and is a single fan nobody had picked from yet; it is read here as a walk of one such
+// step, so there is ONE renderer and not one file on the shelf has to be rewritten.
+function stepsOf(a){
+  if(Array.isArray(a.steps)) return a.steps;
+  return [{at: (a.source || {}).node, lead: '', took: null, kept: a.kept || [],
+           fan: a.fan || {size: 0, others: []}, bits: a.bits || 0}];
+}
+
+function mk(parent, tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text !== undefined) e.textContent = text;
+  if(parent) parent.appendChild(e);
+  return e;
+}
+const cut = (s, n) => (s || '').length > n ? s.slice(0, n - 1).trimEnd() + '…' : (s || '');
+// The END of the prompt is what the model was standing on, so that is the part shown folded.
+const tail = (s, n) => s.length > n ? '…' + s.slice(s.length - n + 1) : s;
+
+// Connectors are MEASURED after layout and drawn as curves into an svg under the boxes.
+// Nothing here may guess at geometry: a box wraps onto a second line at one width and not at
+// another, and a line drawn on the assumption it didn't is a diagram that lies.
+let artPairs = [], artSvg = null, artInner = null, artRO = null;
+function drawArtLinks(){
+  if(!artSvg || !artInner || !artInner.isConnected) return;
+  artSvg.textContent = '';
+  const R = artInner.getBoundingClientRect();
+  for(const [from, to, took] of artPairs){
+    const A = from.getBoundingClientRect(), B = to.getBoundingClientRect();
+    const x1 = A.left + A.width / 2 - R.left, y1 = A.bottom - R.top;
+    const x2 = B.left + B.width / 2 - R.left, y2 = B.top - R.top;
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', `M${x1},${y1} C${x1},${y1 + 22} ${x2},${y2 - 22} ${x2},${y2}`);
+    p.setAttribute('fill', 'none');
+    // Palette tokens and never a literal colour — that is the whole of why the light room
+    // costs nothing here.
+    p.setAttribute('stroke', took ? 'var(--accent)' : 'var(--line)');
+    p.setAttribute('stroke-width', took ? '1.6' : '1.2');
+    if(!took) p.setAttribute('stroke-dasharray', '3 4');
+    artSvg.appendChild(p);
+  }
+}
+
+function promptCard(a){
+  const box = mk(null, 'div', 'n root');
+  const text = a.prompt || '';
+  const pre = mk(box, 'div', 'body',
+    text ? tail(text, 260) : '(empty — the model began the document itself)');
+  const det = mk(box, 'details');
+  mk(det, 'summary', '', 'the prompt · ' + text.length + ' characters');
+  mk(det, 'div', 'body', text);
+  // Opening the fold moves every row under it, and the connectors were measured against
+  // where those rows used to be.
+  det.addEventListener('toggle', () => { pre.hidden = det.open; drawArtLinks(); });
+  return box;
+}
+
+function stepBox(k, took, size){
+  const box = mk(null, 'div', 'n' + (took ? ' took' : ''));
+  mk(box, 'div', 'body', cut(k.text, took ? 110 : 90) || '(empty continuation)');
+  const cap = took ? ['⌥ ' + k.at + ' of ' + size] : ['kept'];
+  if(took && typeof k.temperature === 'number') cap.push('temp ' + num(k.temperature));
+  if(k.posed) cap.push('posed');
+  mk(box, 'span', 'cap' + (k.posed ? ' posed' : ''), cap.join(' · '));
+  return box;
+}
+
+// The walk, drawn top down: the prompt, then one row per step. Every string from the file
+// goes in as text — the prompt and the branches are model output and his own lines, and the
+// file is in a public repo besides.
+function drawTree(a, steps){
+  const host = mk(null, 'div');
+  host.id = 'arttree';
+  artInner = mk(host, 'div', 'inner');
+  artSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  artInner.appendChild(artSvg);
+  artPairs = [];
+  let prev = promptCard(a);
+  mk(artInner, 'div', 'lvl').appendChild(prev);
+  for(const st of steps){
+    const row = mk(artInner, 'div', 'lvl');
+    const size = (st.fan && st.fan.size) || 0;
+    const kept = (st.kept || []).map(k => stepBox(k, false, size));
+    const took = st.took ? stepBox(st.took, true, size) : null;
+    // The line taken stands in the middle of its step and the kept ones flank it,
+    // alternating outwards, so a step of six is still centred on the walk.
+    for(const b of kept.filter((_, i) => i % 2 === 0).reverse()) row.appendChild(b);
+    if(took) row.appendChild(took);
+    for(const b of kept.filter((_, i) => i % 2 === 1)) row.appendChild(b);
+    if(took) artPairs.push([prev, took, true]);
+    for(const b of kept) artPairs.push([prev, b, false]);
+    // A step with nothing taken is the fan he was still looking at when he saved: the next
+    // step, if there were one, would still hang off the last line he actually took.
+    if(took) prev = took;
+  }
+  return host;
+}
+
+// One line under the tree for everything that is a number about the whole walk. What it
+// counts as kept is what the file NAMES — the lines taken and the branches kept beside them
+// — out of everything the fans offered.
+function artFoot(a, steps){
+  const temps = [];
+  let named = 0, size = 0;
+  for(const st of steps){
+    const fan = st.fan || {};
+    size += fan.size || 0;
+    named += (st.kept || []).length + (st.took ? 1 : 0);
+    for(const k of (st.kept || []).concat(st.took ? [st.took] : [], fan.others || []))
+      if(typeof k.temperature === 'number') temps.push(k.temperature);
+  }
+  const out = [steps.length + (steps.length === 1 ? ' step' : ' steps'),
+               named + ' of ' + size + ' kept',
+               (Math.round((a.bits || 0) * 10) / 10) + ' bits'];
+  const m = a.model;
+  if(m && m.file) out.push(m.file);
+  if(temps.length){
+    const lo = Math.min.apply(null, temps), hi = Math.max.apply(null, temps);
+    out.push('temp ' + num(lo) + (hi > lo ? '–' + num(hi) : ''));
+  }
+  return out.join(' · ');
+}
+
 function drawArtifact(a){
   const view = $('artview');
   view.textContent = '';
   $('arttitle').textContent = a.title || a.name;
-  const size = (a.fan && a.fan.size) || 0;
-  const add = (parent, tag, cls, text) => {
-    const el = document.createElement(tag);
-    if(cls) el.className = cls;
-    if(text !== undefined) el.textContent = text;
-    parent.appendChild(el);
-    return el;
-  };
+  const steps = stepsOf(a);
+  view.appendChild(drawTree(a, steps));
+  mk(view, 'div', 'artfoot', artFoot(a, steps));
 
-  // Folded: the prompt is usually the long part, and what he came back for is the answers.
-  const fold = add(view, 'details');
-  add(fold, 'summary', '', 'prompt · ' + (a.prompt || '').length + ' characters');
-  add(fold, 'div', 'body', a.prompt || '(empty — the model began the document itself)');
-
-  for(const k of (a.kept || [])){
-    const card = add(view, 'div', 'card frozen');
-    add(card, 'div', 'body', k.text || '(empty continuation)');
-    const foot = add(card, 'div', 'foot');
-    add(foot, 'span', '', k.at + ' of ' + size);
-    if(typeof k.temperature === 'number') add(foot, 'span', '', 'temp ' + num(k.temperature));
-    if(k.meta && k.meta.tokens_predicted) add(foot, 'span', '', k.meta.tokens_predicted + ' tokens');
-    if(k.meta && k.meta.fork) add(foot, 'span', '', 'forked at ' + k.meta.fork.at_token);
-    if(k.posed) add(foot, 'span', 'posed', 'posed');
-  }
-
-  const others = (a.fan && a.fan.others) || [];
-  if(others.length){
-    const box = add(view, 'div', 'artothers');
-    add(box, 'div', '', 'what else it said');
-    for(const o of others){
-      const row = add(box, 'div', 'o');
-      add(row, 'span', 'at', o.at + ' of ' + size +
-        (typeof o.temperature === 'number' ? ' · temp ' + num(o.temperature) : '') +
-        (o.pruned ? ' · pruned' : ''));
-      add(row, 'span', 'body', (o.opening || '') + ((o.length || 0) > (o.opening || '').length ? '…' : ''));
-    }
-  }
-
-  const nums = add(view, 'div', 'artnums');
-  const pair = (k, v) => { add(nums, 'span', '', k); add(nums, 'span', 'v', v); };
-  pair('bits', (Math.round((a.bits || 0) * 100) / 100) + ' bits');
+  const nums = mk(view, 'div', 'artnums');
+  const pair = (k, v) => { mk(nums, 'span', '', k); mk(nums, 'span', 'v', v); };
   const m = a.model;
   pair('model', m && m.file ? m.file + (m.n_ctx ? ' · ' + m.n_ctx + ' ctx' : '') : 'not recorded');
   const p = a.params || {};
@@ -849,6 +955,15 @@ function drawArtifact(a){
   pair('saved', when(a.created));
   const src = a.source || {};
   pair('from', src.title ? src.title + ' (' + src.room + ')' : (src.room || '?'));
+
+  // The tree is measured, so it has to be redrawn whenever its own box changes size — a
+  // window resize, the fold opening, the pane going from hidden (every rect zero) to shown.
+  if(artRO) artRO.disconnect();
+  if(window.ResizeObserver){
+    artRO = new ResizeObserver(drawArtLinks);
+    artRO.observe($('arttree'));
+  }
+  requestAnimationFrame(drawArtLinks);
 }
 
 async function openArtifact(name){
@@ -2009,6 +2124,12 @@ document.addEventListener('click', e => {
 // word moves. Capture, because #blocks is what actually scrolls, not the window.
 document.addEventListener('scroll', closeAlts, true);
 window.addEventListener('resize', closeAlts);
+// The artifact tree's connectors are measured, so every one of these moves them: a resize,
+// the OS flipping to the light room (type metrics change with it), and the moment the system
+// face finally loads and every box in the tree grows a line.
+window.addEventListener('resize', drawArtLinks);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawArtLinks);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(drawArtLinks);
 document.addEventListener('keydown', e => {
   if(e.key !== 'Escape' || e.defaultPrevented || e.target.closest('.ed')) return;
   if($('alts')){ closeAlts(); return; }

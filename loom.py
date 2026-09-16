@@ -37,12 +37,13 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 sampler drawer can turn words into the token ids logit_bias
                                 actually listens to
   POST /api/cancel           -> hang up on every completion in flight
-  GET  /api/artifacts        -> every artifact's name, title, created, kept and fan size,
-                                newest first
+  GET  /api/artifacts        -> every artifact's name, title, created, steps, kept and fan
+                                size, newest first
   GET  /api/artifact?name=   -> one artifact, whole
   POST /api/artifact         -> {"room", "parent", "kept": [node ids], "name"?}: the server
-                                reads that room off the disk, freezes the fan under `parent`
-                                with only the kept branches, and writes it once — a taken
+                                reads that room off the disk, walks the path that reached
+                                `parent`, and freezes every fork along it — the line taken,
+                                the branches kept beside it — writing the file once; a taken
                                 name is 409, never an overwrite
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
@@ -77,9 +78,10 @@ SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(HERE, "sittings"))
 # Tracked by git on purpose (sittings are not) — a finding is worth its history.
 STORAGE = os.environ.get("LOOM_STORAGE", os.path.join(HERE, "storage"))
 NOTE_MAX = 120
-# Artifacts: one fan each, frozen — the prompt it was drawn from and only the branches bekh
-# kept. The opposite of a sitting on every axis: written once and never again, tracked by
-# git and pushed. A room is a place to work; an artifact is what came out of it.
+# Artifacts: one walk each, frozen — the document it started from and every fork along the
+# way, with only the branches bekh kept. The opposite of a sitting on every axis: written
+# once and never again, tracked by git and pushed. A room is a place to work; an artifact is
+# what came out of it.
 ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(HERE, "artifacts"))
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
@@ -551,9 +553,32 @@ def bits_of_keeping(n: int, k: int) -> float:
     return math.log2(math.comb(n, k))
 
 
+def spine(nodes: dict, start) -> list[dict]:
+    """root→`start` as a list of nodes, root first — the document as one line of blocks.
+
+    The seen-set is only there because check() doesn't look for cycles, and a hand-edited
+    file with one would hang this request forever.
+    """
+    out, seen, n = [], set(), nodes.get(start)
+    while n and n["id"] not in seen:
+        seen.add(n["id"])
+        out.insert(0, n)
+        n = nodes.get(n["parent"]) if n["parent"] else None
+    return out
+
+
 def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
-    """One fan of `sitting`, frozen: the prompt up to `parent`, the kept branches whole,
-    the rest as openings. Raises ValueError with a sentence the page can show.
+    """The WALK that reached this fan, frozen: the document it started from, then one step
+    per fork along the way — the line bekh took, the branches he kept beside it, and the
+    rest of that fan as openings. Raises ValueError with a sentence the page can show.
+
+    The spine is root→`current`, because that is the document as it stands. The curation is
+    the `kept: true` flags he left on cards while walking, so freezing asks for no new
+    gesture — he keeps as he goes and saves at the end. `parent` is the fan he has open when
+    he saves, and for THAT fork the posted ids win over the flags: what is on his screen now
+    is the newer statement. It is also always a step, whatever its size — a branch he named
+    by hand is never silently dropped — while a fork found on the spine has to have had
+    something to choose between, so a fan of one is not a step.
 
     Built here and not in the page, so there is one place that decides what an artifact is,
     and the tests can hold it to that. The room is the one ON DISK — the page saves before
@@ -573,25 +598,36 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
             raise ValueError("kept is a list of node ids")
         if k not in ids:
             ids.append(k)
-    # The fan as the page lists it: model children of the fan point, oldest first — pruned
-    # ones included, because they were written and not keeping them is part of the choice.
-    # sorted() is stable, like the page's sort, so two branches with one ts keep file order.
-    sibs = sorted((n for n in nodes.values()
-                   if n.get("parent") == parent and n.get("kind") == "model"),
-                  key=lambda n: n.get("ts") or 0)
-    at = {n["id"]: i + 1 for i, n in enumerate(sibs)}
+
+    def fan_of(pid):
+        # The fan as the page lists it: model children of the fan point, oldest first —
+        # pruned ones included, because they were written and not keeping them is part of
+        # the choice. sorted() is stable, like the page's sort, so two branches with one ts
+        # keep file order.
+        return sorted((n for n in nodes.values()
+                       if n.get("parent") == pid and n.get("kind") == "model"),
+                      key=lambda n: n.get("ts") or 0)
+
+    here = {n["id"] for n in fan_of(parent)}
     for k in ids:
-        if k not in at:
+        if k not in here:
             raise ValueError(f"{k} isn't a branch of that fan")
 
-    # The prompt, exactly as the page builds one: every text root→fan point, joined with
-    # nothing. The seen-set is only there because check() doesn't look for cycles, and a
-    # hand-edited file with one would hang this request forever.
-    texts, seen, n = [], set(), nodes[parent]
-    while n and n["id"] not in seen:
-        seen.add(n["id"])
-        texts.insert(0, n["text"])
-        n = nodes.get(n["parent"]) if n["parent"] else None
+    walk = spine(nodes, sitting.get("current"))
+    if parent not in [n["id"] for n in walk]:
+        # He saved from a fan that is not under the document as it stands — a room walked
+        # back, or a side branch opened from the menu. The path that reached THAT fan is the
+        # honest spine; the rest of the tree is roads not taken.
+        walk = spine(nodes, parent)
+    pidx = [n["id"] for n in walk].index(parent)
+
+    # Fan point → the line taken there, for every fork on the spine, in document order. The
+    # fan he has open gets an entry with no line taken yet (setdefault leaves it alone if he
+    # already picked there and walked on).
+    forks = {i - 1: i for i, n in enumerate(walk)
+             if i and n.get("kind") == "model"
+             and (len(fan_of(n["parent"])) > 1 or n["parent"] == parent)}
+    forks.setdefault(pidx, None)
 
     def temp_of(node):
         # The page and census freeze the whole sampler into meta.params; a branch written by a
@@ -602,25 +638,53 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
             return p.get("temperature")
         return meta.get("temperature")
 
-    kept_rows, others = [], []
-    for s in sibs:
-        if s["id"] in ids:
-            # probs out: 40 KB per branch of numbers nobody reads off a frozen card, in a file
-            # that lives in git forever.
-            meta = {k: v for k, v in (s.get("meta") or {}).items() if k != "probs"}
-            kept_rows.append({"id": s["id"], "at": at[s["id"]], "text": s["text"],
-                              "temperature": temp_of(s), "posed": bool(s.get("posed")),
-                              "meta": meta})
-        else:
-            others.append({"id": s["id"], "at": at[s["id"]], "opening": s["text"][:OPENING],
-                           "length": len(s["text"]), "temperature": temp_of(s),
-                           "pruned": bool(s.get("pruned"))})
+    def row(s, at):
+        # probs out: 40 KB per branch of numbers nobody reads off a frozen card, in a file
+        # that lives in git forever.
+        meta = {k: v for k, v in (s.get("meta") or {}).items() if k != "probs"}
+        return {"id": s["id"], "at": at, "text": s["text"], "temperature": temp_of(s),
+                "posed": bool(s.get("posed")), "meta": meta}
 
-    # A branch that says verbatim what a kept one says was not a road refused — the same text
-    # was on offer twice, so it leaves the pool the choice was made from. Same rule as
-    # `curation` in eva.py and the page's ×2, so a fan of six with one twin is a pick from five.
-    same = {nodes[k]["text"].strip() for k in ids}
-    pool = sum(1 for s in sibs if s["id"] in ids or s["text"].strip() not in same)
+    def opening(s, at):
+        return {"id": s["id"], "at": at, "opening": s["text"][:OPENING],
+                "length": len(s["text"]), "temperature": temp_of(s),
+                "pruned": bool(s.get("pruned"))}
+
+    prompt, steps, total = "", [], 0.0
+    reach = None        # how far down the spine the document has been written out already
+    for head_i, took_i in sorted(forks.items()):
+        head, took = walk[head_i], (walk[took_i] if took_i is not None else None)
+        sibs = fan_of(head["id"])
+        at = {s["id"]: i + 1 for i, s in enumerate(sibs)}
+        # Everything between the last line taken and this fan point — his own lines, mostly.
+        # prompt + every step's (lead + the line taken) is the document, verbatim, again.
+        if reach is None:
+            prompt = "".join(n["text"] for n in walk[:head_i + 1])
+            lead = ""
+        else:
+            lead = "".join(n["text"] for n in walk[reach + 1:head_i + 1])
+        reach = head_i if took is None else took_i
+        chosen = set(ids) if head["id"] == parent else {s["id"] for s in sibs if s.get("kept")}
+        if took is not None:
+            chosen.discard(took["id"])      # the line taken is the spine, not a flank
+        named = chosen | ({took["id"]} if took is not None else set())
+        # A branch that says verbatim what a named one says was not a road refused — the same
+        # text was on offer twice, so it leaves the pool the choice was made from. Same rule
+        # as `curation` in eva.py and the page's ×2: a fan of six with one twin is a pick
+        # from five.
+        same = {s["text"].strip() for s in sibs if s["id"] in named}
+        pool = sum(1 for s in sibs if s["id"] in named or s["text"].strip() not in same)
+        bits = bits_of_keeping(pool, len(named))
+        total += bits
+        steps.append({
+            "at": head["id"],
+            "lead": lead,
+            "took": row(took, at[took["id"]]) if took is not None else None,
+            "kept": [row(s, at[s["id"]]) for s in sibs if s["id"] in chosen],
+            "fan": {"size": len(sibs),
+                    "others": [opening(s, at[s["id"]]) for s in sibs if s["id"] not in named]},
+            "bits": round(bits, 3),
+        })
 
     source_title = sitting.get("title") or sitting["name"]
     now = time.time()
@@ -632,12 +696,14 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
         "created": now,
         "source": {"room": sitting["name"], "title": sitting.get("title"), "node": parent},
         "model": None,          # filled in by the caller: it is a network call, made last
-        "prompt": "".join(texts),
+        "prompt": prompt,
         "turn": json.loads(json.dumps(sitting.get("turn") or {"prefix": "", "suffix": ""})),
         "params": json.loads(json.dumps(sitting.get("params") or {})),
-        "kept": kept_rows,
-        "fan": {"size": len(sibs), "others": others},
-        "bits": round(bits_of_keeping(pool, len(ids)), 3),
+        "steps": steps,
+        # The walk's bits are the steps' bits ADDED. Each fork is its own choice made on its
+        # own fan, so they compose the way curation's log2(n/m) does along a path: two steps
+        # of 3.9 bits are 7.8 bits of bekh, not 3.9 twice over.
+        "bits": round(total, 3),
     }
 
 
@@ -660,6 +726,24 @@ def write_artifact(obj: dict) -> None:
         os.unlink(tmp)
 
 
+def artifact_card(d: dict) -> dict:
+    """A row for the list: how many steps, how many branches the walk names, out of how
+    many the fans offered.
+
+    Two shapes read here and only here, so nothing else has to know: a walk has `steps`,
+    and an artifact written before walks existed is one fan with `kept` and `fan` at the
+    top. The older files are never rewritten — `steps` is the whole test.
+    """
+    steps = d.get("steps")
+    if isinstance(steps, list):
+        # The line taken counts as named too: it is the branch he chose out of that fan.
+        kept = sum(len(s.get("kept") or []) + (1 if s.get("took") else 0) for s in steps)
+        fan = sum((s.get("fan") or {}).get("size") or 0 for s in steps)
+        return {"steps": len(steps), "kept": kept, "fan": fan}
+    return {"steps": 0, "kept": len(d.get("kept") or []),
+            "fan": (d.get("fan") or {}).get("size") or 0}
+
+
 def artifacts() -> list[dict]:
     """Every artifact, newest first by the time it was made — not file time, because a
     git checkout rewrites every mtime to the moment of the clone."""
@@ -674,10 +758,9 @@ def artifacts() -> list[dict]:
         try:
             with open(os.path.join(ARTIFACTS, fname), encoding="utf-8") as f:
                 d = json.load(f)
-            out.append({"name": fname[:-5], "title": d.get("title") or fname[:-5],
-                        "created": d.get("created") or 0,
-                        "kept": len(d.get("kept") or []),
-                        "fan": (d.get("fan") or {}).get("size") or 0})
+            out.append(dict({"name": fname[:-5], "title": d.get("title") or fname[:-5],
+                             "created": d.get("created") or 0},
+                            **artifact_card(d)))
         except (OSError, ValueError, AttributeError):
             continue
     out.sort(key=lambda a: a["created"], reverse=True)

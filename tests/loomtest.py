@@ -17,6 +17,7 @@ POST /api/sitting is where it shows up, because the server validates the shape b
 from __future__ import annotations
 
 import json
+import math
 import os
 import shutil
 import socket
@@ -651,8 +652,45 @@ def kept_fan(prefix: str, n: int = 6, keep=(1, 4)):
     return t, branches
 
 
+def walk_room(prefix: str, plan=((6, (1, 4)), (4, ()), (5, (0, 2)), (3, (1,)))):
+    """A room walked several forks deep, the way the page walks one: a line typed, a fan,
+    some cards kept, one of them picked, on to the next fork. `plan` is (fan size, which
+    positions were kept) per fork. The line taken is always one he did NOT keep, so took and
+    kept can never stand in for each other in an assertion below.
+
+    Returns the tree and one row per fork — (fan point, branches, the line taken, the ids
+    kept beside it) — in document order.
+    """
+    t = fresh(prefix)
+    walk = []
+    for i, (n, keeps) in enumerate(plan):
+        t.human(f"line {i} KEEPMARK")
+        head = t.d["current"]
+        branches = t.fan(n)
+        for j, br in enumerate(branches):
+            br["text"] += f" #{i}.{j}"       # every branch its own; see kept_fan
+        for j in keeps:
+            branches[j]["kept"] = True
+        took = next(br for j, br in enumerate(branches) if j not in keeps)
+        t.d["current"] = took["id"]          # the page's pickNode
+        walk.append((head, branches, took, [branches[j]["id"] for j in keeps]))
+    assert t.save()[0] == 200
+    return t, walk
+
+
 def art_get(name: str):
     return call("/api/artifact?name=" + urllib.parse.quote(name))
+
+
+def save_walk(t, walk):
+    """What the page posts when he saves: the room, the fan he has open, and the ids kept in
+    THAT fan. Everything earlier on the walk the server finds by itself."""
+    head, _, _, keeps = walk[-1]
+    st, d = call("/api/artifact", {"room": t.d["name"], "parent": head, "kept": keeps})
+    assert st == 200, d
+    st, a = art_get(d["name"])
+    assert st == 200, a
+    return a
 
 
 class Artifacts(unittest.TestCase):
@@ -678,7 +716,8 @@ class Artifacts(unittest.TestCase):
         self.assertEqual(a["model"]["n_ctx"], 8192)
 
         row = next(r for r in call("/api/artifacts")[1]["artifacts"] if r["name"] == d["name"])
-        self.assertEqual((row["kept"], row["fan"], row["title"]), (2, 6, a["title"]))
+        self.assertEqual((row["steps"], row["kept"], row["fan"], row["title"]),
+                         (1, 2, 6, a["title"]))
 
     def test_the_prompt_is_verbatim(self):
         t, b = kept_fan("art-prompt")
@@ -695,18 +734,25 @@ class Artifacts(unittest.TestCase):
         d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
                                    "kept": [b[4]["id"], b[1]["id"], b[1]["id"]]})[1]
         a = art_get(d["name"])[1]
+        # He kept two cards and saved without picking, so the whole walk is that one open
+        # fan: a step with no line taken.
+        self.assertEqual(len(a["steps"]), 1)
+        step = a["steps"][0]
+        self.assertIsNone(step["took"])
+        self.assertEqual(step["at"], t.d["current"])
+        self.assertEqual(step["lead"], "")
         # in fan order whatever order they were sent in, a repeat counted once
-        self.assertEqual([k["id"] for k in a["kept"]], [b[1]["id"], b[4]["id"]])
-        self.assertEqual([k["at"] for k in a["kept"]], [2, 5])
-        for k, src in zip(a["kept"], (b[1], b[4])):
+        self.assertEqual([k["id"] for k in step["kept"]], [b[1]["id"], b[4]["id"]])
+        self.assertEqual([k["at"] for k in step["kept"]], [2, 5])
+        for k, src in zip(step["kept"], (b[1], b[4])):
             self.assertEqual(k["text"], src["text"])
             self.assertEqual(k["temperature"], src["meta"]["params"]["temperature"])
             self.assertEqual(k["meta"]["tokens_predicted"], src["meta"]["tokens_predicted"])
             self.assertEqual(k["meta"]["stop_type"], src["meta"]["stop_type"])
             self.assertNotIn("probs", k["meta"])
             self.assertFalse(k["posed"])
-        self.assertEqual(a["fan"]["size"], 6)
-        others = a["fan"]["others"]
+        self.assertEqual(step["fan"]["size"], 6)
+        others = step["fan"]["others"]
         self.assertEqual([o["id"] for o in others], [b[i]["id"] for i in (0, 2, 3, 5)])
         self.assertEqual([o["at"] for o in others], [1, 3, 4, 6])
         for o in others:
@@ -716,7 +762,6 @@ class Artifacts(unittest.TestCase):
             self.assertEqual(o["temperature"], src["meta"]["params"]["temperature"])
 
     def test_bits_are_log2_of_n_choose_k(self):
-        import math
         t, b = kept_fan("art-bits")
         d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
                                    "kept": [b[1]["id"], b[4]["id"]]})[1]
@@ -729,7 +774,6 @@ class Artifacts(unittest.TestCase):
         self.assertEqual(loom.bits_of_keeping(1, 1), 0.0)
 
     def test_a_twin_of_a_kept_branch_is_not_a_choice(self):
-        import math
         t, b = kept_fan("art-twin", n=4, keep=(0,))
         # the page prunes a verbatim twin on arrival; it still counts as written, not as refused
         twin = t.add("model", b[0]["text"], t.d["current"], dict(b[0]["meta"]))
@@ -738,10 +782,10 @@ class Artifacts(unittest.TestCase):
         self.assertEqual(t.save()[0], 200)
         d = call("/api/artifact", {"room": t.d["name"], "parent": t.d["current"],
                                    "kept": [b[0]["id"]]})[1]
-        a = art_get(d["name"])[1]
-        self.assertEqual(a["fan"]["size"], 5)
-        self.assertEqual(a["bits"], round(math.log2(4), 3))
-        self.assertTrue(a["fan"]["others"][-1]["pruned"])
+        step = art_get(d["name"])[1]["steps"][0]
+        self.assertEqual(step["fan"]["size"], 5)
+        self.assertEqual(step["bits"], round(math.log2(4), 3))
+        self.assertTrue(step["fan"]["others"][-1]["pruned"])
 
     def test_refusals(self):
         t, b = kept_fan("art-no")
@@ -803,6 +847,97 @@ class Artifacts(unittest.TestCase):
         back = call("/api/sitting?name=" + t.d["name"])[1]
         self.assertEqual([n["id"] for n in back["nodes"].values() if n.get("kept")],
                          [b[1]["id"], b[4]["id"]])
+
+    def test_a_walk_of_several_steps(self):
+        # Four forks walked, the keeps left on cards along the way, and one save at the end:
+        # the server finds every earlier step by itself, off the flags in the room.
+        t, walk = walk_room("art-walk")
+        a = save_walk(t, walk)
+        self.assertEqual(len(a["steps"]), len(walk))
+        self.assertEqual([s["at"] for s in a["steps"]], [head for head, _, _, _ in walk])
+        for s, (head, branches, took, keeps) in zip(a["steps"], walk):
+            at = {br["id"]: i + 1 for i, br in enumerate(branches)}
+            self.assertEqual(s["took"]["id"], took["id"])
+            self.assertEqual(s["took"]["text"], took["text"])
+            self.assertEqual(s["took"]["at"], at[took["id"]])
+            self.assertEqual(s["took"]["temperature"], took["meta"]["params"]["temperature"])
+            self.assertNotIn("probs", s["took"]["meta"])
+            # the keeps made at THAT fork, in fan order, and never the line he took
+            self.assertEqual([k["id"] for k in s["kept"]], keeps)
+            self.assertEqual([k["at"] for k in s["kept"]], [at[k] for k in keeps])
+            self.assertNotIn(took["id"], [k["id"] for k in s["kept"]])
+            self.assertEqual(s["fan"]["size"], len(branches))
+            named = {took["id"], *keeps}
+            self.assertEqual([o["id"] for o in s["fan"]["others"]],
+                             [br["id"] for br in branches if br["id"] not in named])
+            for o in s["fan"]["others"]:
+                src = t.d["nodes"][o["id"]]
+                self.assertEqual(o["opening"], src["text"][:80])
+                self.assertEqual(o["length"], len(src["text"]))
+        row = next(r for r in call("/api/artifacts")[1]["artifacts"] if r["name"] == a["name"])
+        self.assertEqual((row["steps"], row["kept"], row["fan"]), (4, 4 + 5, 6 + 4 + 5 + 3))
+
+    def test_the_prompt_and_the_leads_rebuild_the_document(self):
+        t, walk = walk_room("art-doc")
+        a = save_walk(t, walk)
+        # the prompt is the document the FIRST fan was drawn from, verbatim
+        self.assertEqual(a["prompt"], t.prompt_from(walk[0][0]))
+        self.assertEqual(a["steps"][0]["lead"], "")    # the prompt already reaches that fan
+        doc = a["prompt"] + "".join(s["lead"] + (s["took"] or {}).get("text", "")
+                                    for s in a["steps"])
+        self.assertEqual(doc, t.prompt_from(t.d["current"]))
+
+    def test_a_step_with_no_keeps_is_still_a_step(self):
+        t, walk = walk_room("art-nokeeps")
+        step = save_walk(t, walk)["steps"][1]          # the fan of four he kept nothing in
+        self.assertEqual(step["kept"], [])
+        self.assertEqual(step["took"]["id"], walk[1][2]["id"])
+        self.assertEqual(step["fan"]["size"], 4)
+        self.assertEqual(len(step["fan"]["others"]), 3)
+        # naming one of four is exactly what curation charges for a pick
+        self.assertEqual(step["bits"], round(math.log2(4), 3))
+
+    def test_a_fan_of_one_is_not_a_step(self):
+        t, walk = walk_room("art-single", plan=((3, (1,)), (1, ()), (4, (0,))))
+        a = save_walk(t, walk)
+        self.assertEqual([s["at"] for s in a["steps"]], [walk[0][0], walk[2][0]])
+        # a line with no siblings was no choice, so it leaves the picture — but not the
+        # document: it rides in the next step's lead
+        self.assertIn(walk[1][2]["text"], a["steps"][1]["lead"])
+
+    def test_bits_per_step_and_the_total(self):
+        t, walk = walk_room("art-walkbits")
+        a = save_walk(t, walk)
+        # k is the line taken plus the branches kept beside it: 3 of 6, 1 of 4, 3 of 5, 2 of 3
+        want = [math.log2(math.comb(6, 3)), math.log2(math.comb(4, 1)),
+                math.log2(math.comb(5, 3)), math.log2(math.comb(3, 2))]
+        self.assertEqual([s["bits"] for s in a["steps"]], [round(w, 3) for w in want])
+        self.assertEqual(a["bits"], round(sum(want), 3))
+
+    def test_an_old_one_step_artifact_still_opens(self):
+        # Written before the walk existed: `kept` and `fan` at the top and no `steps`. It is
+        # never migrated, so it has to come back exactly as it lies on the disk, and the list
+        # has to count it without guessing.
+        name = f"old-{uuid.uuid4().hex[:6]}"
+        old = {"name": name, "title": "one fan, frozen · 16 sep", "created": time.time(),
+               "source": {"room": "a-room-since-cleared", "title": None, "node": "b765724a"},
+               "model": {"file": "nemo.gguf", "path": None, "n_ctx": 8192, "build": None},
+               "prompt": "ST. CATHERINE OF THE CHROME\n",
+               "turn": TURN, "params": PARAMS,
+               "kept": [{"id": "k1", "at": 13, "text": " and maybe she was the last witch",
+                         "temperature": 1.8, "posed": False, "meta": {"tokens_predicted": 60}}],
+               "fan": {"size": 40, "others": [{"id": "o1", "at": 1, "opening": " No-witch.",
+                                               "length": 208, "temperature": 1.8,
+                                               "pruned": False}]},
+               "bits": 5.322}
+        with open(os.path.join(ARTS, name + ".json"), "w", encoding="utf-8") as f:
+            json.dump(old, f, ensure_ascii=False)
+        st, a = art_get(name)
+        self.assertEqual(st, 200, a)
+        self.assertEqual(a, old)
+        self.assertNotIn("steps", a)
+        row = next(r for r in call("/api/artifacts")[1]["artifacts"] if r["name"] == name)
+        self.assertEqual((row["steps"], row["kept"], row["fan"]), (0, 1, 40))
 
 
 class Cancel(unittest.TestCase):
