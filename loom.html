@@ -159,6 +159,10 @@
      show — would be the page hiding part of the walk. The inner box is what the rows centre
      in and what the svg covers, so it has to be as wide as the widest row, not as wide as
      the screen. */
+  /* The reading column is a rule for prose, and a tree is not prose: it is a picture that
+     wants every pixel the window has. So the artifact screen alone opts out of --reading —
+     a step of three branches fits without scrolling, and the text in them can be read. */
+  #artpane{width:100%; max-width:none;}
   #arttree{position:relative; flex-shrink:0; overflow-x:auto; padding:2px 0 8px;}
   #arttree .inner{position:relative; width:max-content; min-width:100%; margin:0 auto;}
   #arttree svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
@@ -166,11 +170,11 @@
     margin:0 0 46px;}
   #arttree .lvl:last-child{margin-bottom:6px;}
   /* the boxes sit over the curves, so a connector's ends disappear under them */
-  #arttree .n{position:relative; z-index:1; width:200px; background:var(--panel-soft);
+  #arttree .n{position:relative; z-index:1; width:330px; background:var(--panel-soft);
     border:1px solid var(--line); border-radius:11px; padding:9px 12px; font-size:13px;
     color:var(--ghost); overflow-wrap:anywhere;}
   #arttree .n.took{background:var(--panel); border-color:transparent; color:var(--ink);}
-  #arttree .n.root{width:300px; max-width:100%; background:var(--sunk); color:var(--ink);}
+  #arttree .n.root{width:460px; max-width:100%; background:var(--sunk); color:var(--ink);}
   #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
   #arttree .cap.posed{color:var(--hot);}
   #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
@@ -881,7 +885,9 @@ function promptCard(a){
 
 function stepBox(k, took, size){
   const box = mk(null, 'div', 'n' + (took ? ' took' : ''));
-  mk(box, 'div', 'body', cut(k.text, took ? 110 : 90) || '(empty continuation)');
+  // A branch is a few lines, not a book: show it whole. The cut is only a guard against one
+  // monster continuation making a row a mile tall — the file keeps the text either way.
+  mk(box, 'div', 'body', cut(k.text, 700) || '(empty continuation)');
   const cap = took ? ['⌥ ' + k.at + ' of ' + size] : ['kept'];
   if(took && typeof k.temperature === 'number') cap.push('temp ' + num(k.temperature));
   if(k.posed) cap.push('posed');
