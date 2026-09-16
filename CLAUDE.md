@@ -134,7 +134,10 @@ it a foot line (steps, kept of total, bits, model, temperature range) and the sa
 and room it came from. Two buttons: **export** writes the walk as one document — the prompt, then
 every step's lead and the line taken, joined with nothing between them, under a short head naming
 the model and the few sampler numbers that decide the register (the branches kept beside the path
-are left out: it is the story, not the fan) — and **fan again** makes a new room from the prompt
+are left out: it is the story, not the fan) — then, under the document, the branches kept at the
+**open fork it ends on**, each with its place in the fan and its temperature, because nothing was
+taken there and those keeps are the only ending there is; without them a walk of one step exported
+as the prompt alone. **Fan again** makes a new room from the prompt
 with the same turn and sampler, and doesn't fan. An artifact written before walks existed has no `steps` and is
 read as a walk of one step with nothing taken — `steps` is the whole test, and no file on the
 shelf is ever rewritten. All chrome is lowercase by one CSS rule; the
@@ -236,7 +239,9 @@ fits a short seed is fragments — his prose cut into numbered pieces inside a b
 (catalogue numbers, a date in a strange count, "leaf torn"), no prose from Claude, no web markers
 — and then the walk grows it: short fans, he keeps or writes the next line.
 
-Open, small: eva should show room titles; the cyborgism crowd (janus, ampdot) is reachable only by
+Open, small: eva should show room titles; export is settled as `.md` with a thin head, and bekh
+hasn't said whether the head should carry more of the sampler or a second button should write the
+whole fan; the cyborgism crowd (janus, ampdot) is reachable only by
 a person — every channel is invite-only, ampdot's contacts are on the Act I manifund page.
 
 **Parked:** room templates — a "new" list in the menu (chat, bare, irc, letters, novel…), each
