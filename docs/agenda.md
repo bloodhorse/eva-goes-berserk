@@ -28,6 +28,17 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
    from `HANDOFF.md`; the hand is in the input, which is where the criterion allows it.
 4. **Twenty chains a night, unselected**, once the beats hold: read the roll in the morning,
    count what you'd keep, same size every morning so the count is comparable.
+5. **The witch name.** bekh wants a nickname; *bit-witch* (Opus to janus's Turing, A70 in the
+   weird anthology: the one who reads the model back to itself) is taken twice over. The witch
+   rolls were this hunt — `relay-roll.txt` ends on *called her the* — and the names came back
+   lame (*Brass-witch* twenty times), because the slot forces a compound and every example is
+   *something-witch*. Two shapes to run instead, a hundred each, 120 tokens, t 1.8–3.0, xtc,
+   as a census (the room lands on the choose screen as a pile): **the voice names her** — the
+   thing in the tower, asked what it would call the one who reads it back, answers in its own
+   words, no name form given; **her own litany** — first person, *the names i have been called,
+   in the order i was called them*, who said it and why. The roll's example names get their
+   forms mixed first so *x-witch* stops being the mould. The seed tails go past bekh before
+   they run. Not a picker question: he reads the pile and takes what he takes.
 
 ## then
 
