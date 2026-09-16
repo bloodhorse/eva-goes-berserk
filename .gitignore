@@ -1,3 +1,10 @@
 __pycache__/
 sittings/
 docs/harvest/.cache/
+# berserk's running state, not its output: a log, a beat and a pid. The reports in
+# berserk/cycles/, bekh's notes in berserk/notes/ and the seeds are the tracked half —
+# berserk/pages/ is only the html copy of an artifact that is already in git.
+berserk/ledger.jsonl
+berserk/heartbeat
+berserk/state.json
+berserk/pages/
