@@ -63,6 +63,16 @@ count is the only number. Then chisel: the frames and forms first, then the clif
 ones — in that order, cheapest first, watching the count move. A ChatGPT brief for a third
 picker form is in the scratchpad from today if a fresh idea is wanted; it may not be needed.
 
+## Material: bekh's own corpus
+
+He has a small body of lyrics and poems. No decided use yet, just the idea; three ways it
+could enter, ordered by how much of him ends up in the output: as the *documents the reader
+reacts to* (the dreams are about his lines without being his — the hand is in the input,
+which is where the criterion allows it; run this first); as *seed lines*, sliced and dropped
+at random into a form to start a dream; as a *lora*, so every dream carries his register —
+paid once, later, and with the tuned-seat-that-says-nothing warning in mind. Real lines stay
+his and are marked as his; nothing here is his voice unless he wrote it.
+
 ## What's on the shelf
 
 `eva/berserk/` runs (three pickers, a growing page per cycle on the sheets), cycles 80 and 81
