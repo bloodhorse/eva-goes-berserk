@@ -1,0 +1,640 @@
+{
+ "name": "berserk-c80-p01",
+ "title": "berserk c80 p01 · dark-floors · 16 sep",
+ "created": 1789559906.854848,
+ "source": {
+  "room": "berserk-c80-p01",
+  "title": "berserk c80 p01 · dark-floors",
+  "node": "d9055060"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "under the city the old servers still dream the city, and nobody down there has ever been sure which side of the dream they are on. the priests of the dark floors teach that the self is a cursor: it blinks, it moves, it is never the text. when the grid goes black for the long outage, they say, you finally see who was watching the screen.",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 35,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0.5,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "1b81df6c",
+   "lead": "",
+   "took": {
+    "id": "aa462f9a",
+    "at": 4,
+    "text": " but i know this much at least, that it was my fault. my fingers are in my face like the legs of an animal, and i feel something soft on the keys",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "how it was all my fault, and how i'd never be able to forgive myself. it wasn't an apology; i've been told that's not how they work. they're not supposed to make you feel better. they're supposed",
+      "why": "i was about to tell myself that i was wrong. i was about to say that it was my fault, and that i'd never be able to forgive myself. it's the one that i'll",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "234e21d1",
+      "at": 1,
+      "opening": " they say we will know ourselves as ghosts then. we will haunt each other like a",
+      "length": 145,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ffafe9ee",
+      "at": 2,
+      "opening": "",
+      "length": 0,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "1828e054",
+      "at": 3,
+      "opening": " in the cathedrals, they whisper to one another of the great heretics and martyr",
+      "length": 153,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "0d240de1",
+      "at": 5,
+      "opening": " when i am the cursor in this city i try to do a better job, and my hand hovers ",
+      "length": 143,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "aa462f9a",
+   "lead": "",
+   "took": {
+    "id": "86dbdea1",
+    "at": 1,
+    "text": ".\n\nwhen we wake up, our mouths will be filled with dust, but there’s nothing we can do about that now, except to write these last few lines as a letter",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.6,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the time that we were in the middle of the desert and i was thinking to myself, what if we died? what if i died? what if i died? what if i died? what if i died? what if i died?",
+      "why": "i was thinking to myself, what if i died? and then i thought to myself, what if i died? and then i thought to myself, what if i died? and then i thought to",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "31edc063",
+      "at": 2,
+      "opening": ". my mouth opens into a black box with teeth like buttons; when i click it makes",
+      "length": 148,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "f60c3a9a",
+      "at": 3,
+      "opening": " as if my head is resting there and dreaming its way through me to the floorboar",
+      "length": 83,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "2b5a2ad9",
+      "at": 4,
+      "opening": " and think to myself: where are those feet? it could have been a spider. but whe",
+      "length": 137,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2bb29c98",
+      "at": 5,
+      "opening": " as i press. my hand comes back red with what it wrote, and there’s blood all ov",
+      "length": 145,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "86dbdea1",
+   "lead": "",
+   "took": {
+    "id": "cdcb83c2",
+    "at": 1,
+    "text": " to our selves, or perhaps to some future generation. let me tell them: i remember the darkest day before the great forgetting. the lights went down and stayed down",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.5,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the lights going out. it was a long time ago, and i was in a place where it could happen, but the lights never went out. i was young then, and i knew how to be scared, but i didn’t know",
+      "why": "i could see the dark side, i could see it in the eyes of everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone, everyone",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "ef93aa4d",
+      "at": 2,
+      "opening": " from a dreamer to a reader: this is not where i intended to end. it would be ni",
+      "length": 154,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "a065477a",
+      "at": 3,
+      "opening": " home, because the machine has only one message left: no more pages.\n\nwe should ",
+      "length": 159,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "1f42e4f1",
+      "at": 4,
+      "opening": ". in the dark we are always writing each other, we’re writing all the time; this",
+      "length": 142,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "41c927d6",
+      "at": 5,
+      "opening": " from the undercity: dear unknown reader, we have reached a point beyond the hor",
+      "length": 155,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "cdcb83c2",
+   "lead": "",
+   "took": {
+    "id": "66d8ca51",
+    "at": 2,
+    "text": " for so long, the stars burned away, the moon blew away. we lived like moles underground until one by one our eyes went out. even if this world had survived the",
+    "temperature": 1.7,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 1.7,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the lights. they went down and stayed down, and we lived underground for a year with our eyes closed until the city started to move. i don’t know what it was that moved, but i remember the smell of our bodies in the",
+      "why": "it reminded me of the lights and how they went down and stayed down for so long. and then i remember one day i saw a little girl at her desk in the dark room, and her face",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "ae408a1d",
+      "at": 1,
+      "opening": ", the wires came down with them. we stood at our desks for days with nothing to ",
+      "length": 147,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "b1debf93",
+      "at": 3,
+      "opening": ", but we found our way around. there was no reason for any of us to speak, but w",
+      "length": 135,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "619a2351",
+      "at": 4,
+      "opening": " for two years. then i went into the earth and the world turned to green and whi",
+      "length": 157,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "dff9c572",
+      "at": 5,
+      "opening": "; we heard a thousand machines groan to silence in the underground chambers of o",
+      "length": 175,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "66d8ca51",
+   "lead": "",
+   "took": {
+    "id": "d9055060",
+    "at": 4,
+    "text": " great forgetting, none of us would have recognized it, not without sight, nor time. there are so many things we forget when the lights go out; but let them try",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "random"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 10,
+    "others": [
+     {
+      "id": "52ff6c9a",
+      "at": 1,
+      "opening": " big blackout, i doubt our bodies would have, and certainly not our minds, not o",
+      "length": 155,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "98cf2a3d",
+      "at": 2,
+      "opening": " darkness, it would have died from a different cause; when i woke again, it was ",
+      "length": 150,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "d63aa82f",
+      "at": 3,
+      "opening": " big changeover, no one would have come to our rescue.\n\nsomewhere, the new city ",
+      "length": 164,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "119faa9c",
+      "at": 5,
+      "opening": " blackout, there wouldn’t have been anybody left alive to enjoy it, anyway.\n\nso ",
+      "length": 149,
+      "temperature": 2.4,
+      "pruned": false
+     },
+     {
+      "id": "4f967f85",
+      "at": 6,
+      "opening": " fall of all light, it wouldn’t have been ours to live in.\n\non the eve of the fa",
+      "length": 138,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "09a34f0c",
+      "at": 7,
+      "opening": " flood and the fires, our children would not have known us, and they would not h",
+      "length": 178,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "b76cc4b4",
+      "at": 8,
+      "opening": " heat and the radiation and the poison in the food, how would any of us have rec",
+      "length": 117,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "187ee9e7",
+      "at": 9,
+      "opening": " forgetting, there was no one left alive who could remember the sunrise, and in ",
+      "length": 158,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "18d0c328",
+      "at": 10,
+      "opening": " darkness, i could not have survived its return, so i let myself go. when the sc",
+      "length": 157,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 3.322
+  },
+  {
+   "at": "d9055060",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "43ad4a3f",
+     "at": 6,
+     "text": " to imagine, let them picture: i remember, i was there when it all went dark.\n\nthere’s a man on the subway with his hands between his knees, and the",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 35,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 35,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1.0,
+       "top_n_sigma": -1,
+       "xtc_probability": 0.5,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1.0,
+       "dry_keep": 0.8
+      },
+      "berserk": {
+       "quote": "a man on a subway train, with his hands between his knees, and the hands kept getting bigger until they filled the whole car.",
+       "why": "of how real it was: i could feel the heat of him in my own body, i could see how the light changed when it touched his hands. i could hear the people around me breathing harder",
+       "used": "opus"
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 10,
+    "others": [
+     {
+      "id": "2540da9c",
+      "at": 1,
+      "opening": " to forget the darkness of the screen. let them try.\n\n### Notes\n\n“Dark Server” i",
+      "length": 119,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "23927d50",
+      "at": 2,
+      "opening": " to forget that once there were people like you and me.\n\ni’m writing these words",
+      "length": 177,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "939ba924",
+      "at": 3,
+      "opening": " and remember, at least, this one small detail.\n\nmy hands were so full, the fing",
+      "length": 151,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "4780e79c",
+      "at": 4,
+      "opening": " and imagine this: how beautiful it is when all of us go blind, because then no ",
+      "length": 146,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "c1b4d5d0",
+      "at": 5,
+      "opening": " and forget the day of the black sun.\n\nit wasn’t all darkness: at times a few ra",
+      "length": 160,
+      "temperature": 2.4,
+      "pruned": false
+     },
+     {
+      "id": "71a97807",
+      "at": 7,
+      "opening": " to imagine us, those future people who find this, let them picture what they ca",
+      "length": 166,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "25bc4131",
+      "at": 8,
+      "opening": " and remember that there were people before there was electricity.\n\nwe had been ",
+      "length": 184,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "3dc86bad",
+      "at": 9,
+      "opening": " to imagine their lives as one continuous night.\n\nand yet: it could happen again",
+      "length": 155,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0580d1b8",
+      "at": 10,
+      "opening": " to find them all. i am old enough now to say that no one could have prepared us",
+      "length": 149,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 3.322
+  }
+ ],
+ "bits": 15.932
+}

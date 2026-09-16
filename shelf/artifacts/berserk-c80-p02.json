@@ -1,0 +1,640 @@
+{
+ "name": "berserk-c80-p02",
+ "title": "berserk c80 p02 · errata-slip · 16 sep",
+ "created": 1789560181.566226,
+ "source": {
+  "room": "berserk-c80-p02",
+  "title": "berserk c80 p02 · errata-slip",
+  "node": "abe4c10e"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "corrections to the residents' edition\n\npage 8, third line. for east read west. the gate has not been moved.\npage 19, footnote. for widow read wife. the certificate arrived after printing.\npage 31, second paragraph. delete the sentence beginning nobody remembers. we have received a letter.\npage 44. the blank space is of the correct dimensions and should not be filled by hand.\n\nseveral copies have been returned with the same correction on page 45. in each case\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 35,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0.5,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "9ad7aa56",
+   "lead": "",
+   "took": {
+    "id": "c88c5d4a",
+    "at": 4,
+    "text": "it has been a question of an incorrect reference being given and not that the reference itself\nwas incorrect.\n\nwe have received two requests that we might give more attention to the development",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the man who had a daughter that had a bad name but you didn't say it in the book. you should have.",
+      "why": "I think it might be true of my daughter. —",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 10,
+    "others": [
+     {
+      "id": "a1a7dfd0",
+      "at": 1,
+      "opening": "the word is incorrectly inserted, so we hope it will be clear without any amendm",
+      "length": 189,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "0a8b8ff8",
+      "at": 2,
+      "opening": "this was caused by the recipient filling in the space above incorrectly.\n\nwe apo",
+      "length": 190,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "fdd152c3",
+      "at": 3,
+      "opening": "this page has been completely removed, leaving no blank spaces whatsoever.\n\nall ",
+      "length": 165,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "ea4778a9",
+      "at": 5,
+      "opening": "it has been made with an automatic typewriter which indicates a mistake, or poss",
+      "length": 153,
+      "temperature": 2.4,
+      "pruned": false
+     },
+     {
+      "id": "9d2bc328",
+      "at": 6,
+      "opening": "this was a copy printed early, before the type was corrected.\nwe have now checke",
+      "length": 180,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8989a491",
+      "at": 7,
+      "opening": "it has been a mistake and no further attention will be given to them.",
+      "length": 69,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "8c185db2",
+      "at": 8,
+      "opening": "it has been written over the last line, beginning in the margin and going throug",
+      "length": 157,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "3f8e3952",
+      "at": 9,
+      "opening": "this correction is unnecessary.\nthe price is now reduced to two dollars per copy",
+      "length": 134,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "ffb25c78",
+      "at": 10,
+      "opening": "this correction has been made without consulting us. if it was necessary at all ",
+      "length": 167,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 3.322
+  },
+  {
+   "at": "c88c5d4a",
+   "lead": "",
+   "took": {
+    "id": "da083526",
+    "at": 4,
+    "text": " of the\nresidences, one saying \"the story of the houses was better left unsaid\". our policy is that the\npublic should have the opportunity to hear both sides",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the girl who was thrown out of the residence on hallowe'en",
+      "why": "it was my first year at university. she was the only student at the residence that i was afraid of",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "1e8dcee0",
+      "at": 1,
+      "opening": "\nof the theory of numbers in the pages to come. while the editor of the mathemat",
+      "length": 169,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "dcb033d5",
+      "at": 2,
+      "opening": "\nof the hospital since it became the university teaching school. we hope that\nth",
+      "length": 170,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "884faff0",
+      "at": 3,
+      "opening": "\nof the club as opposed to the present concentration upon the school.\n\nwe feel s",
+      "length": 176,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "26fd3665",
+      "at": 5,
+      "opening": "\nof the library, but regret we have neither space nor staff. it was not the purp",
+      "length": 171,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "da083526",
+   "lead": "",
+   "took": {
+    "id": "0eb8956d",
+    "at": 10,
+    "text": ". there are at present many things in the air,\nwhich do not make the subject matter easy.\n\nin our issue of the 7th instant, a paragraph was published on",
+    "temperature": 2.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.2,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "random"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 10,
+    "others": [
+     {
+      "id": "8cd366a0",
+      "at": 1,
+      "opening": ", if it wants them.\n\npage 47, last paragraph, footnote: for west read east.\npage",
+      "length": 126,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6bcad8b8",
+      "at": 2,
+      "opening": " and that no criticism is unjustified so\nlong as it is constructive and not pers",
+      "length": 161,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "0fc7a59d",
+      "at": 3,
+      "opening": " of every argument.",
+      "length": 19,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "16e767c1",
+      "at": 4,
+      "opening": ", even when one side is a little thin.\n\npage 86. the description of the johnston",
+      "length": 150,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "b81e1874",
+      "at": 5,
+      "opening": ", and since it seems to us that most people\nhave no information as to how the re",
+      "length": 155,
+      "temperature": 2.4,
+      "pruned": false
+     },
+     {
+      "id": "2d6062bc",
+      "at": 6,
+      "opening": " of every story but as it is only possible to\ninclude what people send us we wel",
+      "length": 180,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "06663e63",
+      "at": 7,
+      "opening": " and judge for itself, as well as to\nprovide residents with some assistance if t",
+      "length": 167,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "129447c6",
+      "at": 8,
+      "opening": " of every question before deciding where its\nsympathies lie, and, having said so",
+      "length": 149,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "d65e2e3f",
+      "at": 9,
+      "opening": " of any matter connected with the university\nor the residence life and that, whi",
+      "length": 184,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 3.322
+  },
+  {
+   "at": "0eb8956d",
+   "lead": "",
+   "took": {
+    "id": "dfd78eb4",
+    "at": 3,
+    "text": " the back page about\n\"fresh air for fresh men\" as it applied to the hospital. since that date there\nhas been another attempt at bringing into action some of",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "the \"fresh air for fresh men.\" the hospital",
+      "why": "i knew it was the truth.",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "76a22e12",
+      "at": 1,
+      "opening": " the question of the residences.\non reading the paragraph, the president of the ",
+      "length": 176,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "857a9643",
+      "at": 2,
+      "opening": " page 56 which referred\nto the failure of a local bank to pay a deposit held by ",
+      "length": 124,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "9d789233",
+      "at": 4,
+      "opening": " the last page under the title \"an\neditor's note.\" in that paragraph mention is ",
+      "length": 162,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "36d48395",
+      "at": 5,
+      "opening": " the last page. we were led\nto believe by our correspondent, who signed his init",
+      "length": 145,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "dfd78eb4",
+   "lead": "",
+   "took": {
+    "id": "abe4c10e",
+    "at": 5,
+    "text": " those things advocated,\nand again it failed owing to lack of money and staff.\n\nthe secretary, the matron and several nurses, all did what they could under difficult\nconditions",
+    "temperature": 2.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "a \"shilling a day\" being paid to a few of the nurses. if this was",
+      "why": "it was not true.",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "43200108",
+      "at": 1,
+      "opening": " those responsible. as there are now\nabout a hundred men in hospital, it may be ",
+      "length": 172,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "1314f106",
+      "at": 2,
+      "opening": " those things mentioned therein, which\nbear the earmark of being very near succe",
+      "length": 157,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "4b49ea58",
+      "at": 3,
+      "opening": " those plans and this\nis being dealt with in the general correspondence.\nR.G.A.\n",
+      "length": 139,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "4f82dd7d",
+      "at": 4,
+      "opening": " the provisions of the law in this city, which\nwas only partially successful.\n\nt",
+      "length": 182,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "abe4c10e",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "d25be60a",
+     "at": 3,
+     "text": " and were most enthusiastic; but in spite of their efforts there is\nnothing definite yet as far as the public knows.\nit appears to be the duty of the local authority to",
+     "temperature": 2.0,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 35,
+      "tps": 11.8,
+      "params": {
+       "n_predict": 35,
+       "stop": [],
+       "temperature": 2.0,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1.0,
+       "top_n_sigma": -1,
+       "xtc_probability": 0.5,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1.0,
+       "dry_keep": 0.8
+      },
+      "berserk": {
+       "quote": "the \"fresh air for fresh men.\" I have heard of some",
+       "why": "I knew I could never keep up with them.",
+       "used": "opus"
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "32208246",
+      "at": 1,
+      "opening": ", but their efforts were unavailing.\n\nwe think this incident has done the reside",
+      "length": 165,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "66307bd7",
+      "at": 2,
+      "opening": "; and although no credit was given for any part played, the thanks\nof all go out",
+      "length": 109,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "697b7e3c",
+      "at": 4,
+      "opening": " to give some measure of the benefits to the men who so badly needed it. but the",
+      "length": 156,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "361698d8",
+      "at": 5,
+      "opening": ", but when we think that in some other institutions there is no such difficulty ",
+      "length": 179,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  }
+ ],
+ "bits": 15.932
+}

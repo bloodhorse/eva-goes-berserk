@@ -37,15 +37,17 @@ Two knobs of its own:
   * for the cancel test, a prompt containing SLOW takes three seconds instead of a third of
     one, so a test can reliably hang up on a call in flight.
   * for berserk's reader, `READER_MODE`. berserk asks the same model a second question at
-    every fork — the fan as bare paragraphs under the document, ending in a line that asks
-    which branch scared it — and the answer has to be a quotation OUT OF THE PROMPT, or
-    nothing downstream can be tested at all. A stub answering its usual random line would
-    only ever exercise the failure path. The seam is the shape of the prompt's last line,
-    because that is all the reader document has: `": “"` at the very end is the ask,
-    `"because"` at the very end is the follow-up asking why. `READER_MODE = "quote"`
-    answers with the opening of one of the branches (a real match), `"garbage"` answers a
-    sentence that is in no branch (every fork ends random), and the default `""` leaves the
-    stub's ordinary random line, which also matches nothing.
+    every fork, and the answer has to come OUT OF THE PROMPT, or nothing downstream can be
+    tested at all. A stub answering its usual random line would only ever exercise the
+    failure path. The seam is the shape of the prompt's last line, because that is all a
+    markerless reader document has: `": “"` at the end is the quote ask (answered with a
+    fragment's opening), `"scared me was about"` is the about ask (answered with a
+    description — ten words of a fragment minus its first word, so it is not a quotation of
+    anything), `"what scared me was"` is one margin note (answered with a note naming the
+    fragment's third word, so the notes differ from each other), and `"because"` is the
+    follow-up asking why. `READER_MODE = "quote"` means the stub cooperates with all three,
+    `"garbage"` answers a sentence that is in no branch (every fork ends random), and the
+    default `""` leaves the stub's ordinary random line, which also matches nothing.
 
 Run standalone: `uv run --python 3.12 tests/stub_llama.py [port]` — prints the port it
 bound. Imported by loomtest.py, which runs `serve()` on a thread.
@@ -79,6 +81,12 @@ NORMAL = 0.3
 # one per process and the whole suite shares it.
 READER_MODE = ""
 NO_BRANCH = "the witch counted her teeth"
+
+# The last words of each of berserk's three frame lines. The prompt's ending is the only
+# thing that says which ask this is — the documents themselves are markerless on purpose.
+ABOUT_TAIL = "scared me was about"
+MARGIN_TAIL = "what scared me was"
+QUOTE_TAIL = ": “"
 
 # Every request body, in order. A list and nothing else — the tests read it through
 # GET /seen over the socket, or straight off the module when they run the stub in-thread.
@@ -119,20 +127,39 @@ def probs_for(text: str, n_probs: int) -> list[dict]:
 def reader_reply(prompt: str) -> str | None:
     """berserk's reader, or None when this prompt is not one of its asks.
 
-    The branches are the paragraphs between the document's tail (the first one) and the ask
-    line (the last one) — which holds only because the reader document has no markers in it
-    at all, by design, so paragraphs are the only structure there is.
+    Which ask it is can only be read off the last line, because the reader document carries
+    no markers at all, by design. Same reason the branches are found as the paragraphs
+    between the document's tail (the first one) and the ask line (the last one): paragraphs
+    are the only structure there is.
     """
     if prompt.endswith("because"):
         return " it kept talking after the door had already shut"
-    if not prompt.endswith(": “"):
+    paras = [p for p in prompt.split("\n\n") if p.strip()]
+
+    if prompt.endswith(ABOUT_TAIL):
+        if READER_MODE == "garbage":
+            return NO_BRANCH
+        if READER_MODE != "quote" or len(paras) < 3:
+            return None
+        # A DESCRIPTION, not a quotation: ten words of a fragment with its first word cut
+        # off, so it is no longer something the substring matcher can find at a fragment's
+        # start. That is the whole point of the about picker — the resolver has to decide.
+        return " ".join(random.choice(paras[1:-1]).split()[1:11])
+
+    if prompt.endswith(MARGIN_TAIL):
+        if READER_MODE != "quote" or len(paras) < 2:
+            return None
+        # One fragment per margin call, so it is the paragraph before the note line. The
+        # third word goes in the note because it is the first word that differs between
+        # branches — notes that all read alike would make the picking test meaningless.
+        words = paras[-2].split()
+        return f"the part where it said {words[2] if len(words) > 2 else 'nothing'}"
+
+    if not prompt.endswith(QUOTE_TAIL):
         return None
     if READER_MODE == "garbage":
         return NO_BRANCH
-    if READER_MODE != "quote":
-        return None
-    paras = [p for p in prompt.split("\n\n") if p.strip()]
-    if len(paras) < 3:
+    if READER_MODE != "quote" or len(paras) < 3:
         return None
     # Fourteen words, not eight: every fragment opens with the document's unfinished last
     # line, and once the document has grown that lead is a whole branch line long. A short

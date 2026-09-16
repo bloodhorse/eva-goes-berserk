@@ -1,0 +1,554 @@
+{
+ "name": "berserk-c81-p01",
+ "title": "berserk c81 p01 · errata-slip · 16 sep",
+ "created": 1789560325.889069,
+ "source": {
+  "room": "berserk-c81-p01",
+  "title": "berserk c81 p01 · errata-slip",
+  "node": "7c5e8fcf"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "corrections to the residents' edition\n\npage 8, third line. for east read west. the gate has not been moved.\npage 19, footnote. for widow read wife. the certificate arrived after printing.\npage 31, second paragraph. delete the sentence beginning nobody remembers. we have received a letter.\npage 44. the blank space is of the correct dimensions and should not be filled by hand.\n\nseveral copies have been returned with the same correction on page 45. in each case\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 35,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0.5,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "30de5e87",
+   "lead": "",
+   "took": {
+    "id": "a362552d",
+    "at": 3,
+    "text": "the person who sent us the corrected copy has told us that there were other mistakes\nbut they had been unable to find them.\n\nWe would be glad if readers would let us",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "note": "the thought that you could have got hold of it, but it would have been impossible, wouldn't it, and anyway, I was very careful to tear it into the smallest pieces before putting it in",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "f647a180",
+      "at": 1,
+      "opening": "the word was was substituted for that was, so we will not change the original.\nh",
+      "length": 162,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "edc6aa28",
+      "at": 2,
+      "opening": "the person has taken it upon him or her-self to delete a paragraph from the list",
+      "length": 164,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "b7fa2775",
+      "at": 4,
+      "opening": "the handwriting is the same.\n\nthe first line is now a paragraph break; please ty",
+      "length": 178,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "f69449d3",
+      "at": 5,
+      "opening": "it is a genuine copy of the book.",
+      "length": 33,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "a362552d",
+   "lead": "",
+   "took": {
+    "id": "927b3c8d",
+    "at": 2,
+    "text": " know if any of this is wrong or misleading,\nso that we may make amends where we need to, either on these pages or on\nthose to come. We have",
+    "temperature": 1.7,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 1.7,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "note": "the sentence that says there were other mistakes but they had been unable to find them. I mean, I'm all for making mistakes and fixing them, but I really really hope there weren't more mistakes",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "4e890c9a",
+      "at": 1,
+      "opening": " know any others they spot so that we can\nrectify the error on all future copies",
+      "length": 148,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "39accf73",
+      "at": 3,
+      "opening": " know what others there may be so that\nwe can make them right next time. We apol",
+      "length": 162,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "d71fe9c9",
+      "at": 4,
+      "opening": " know if there are any errors, so that we\ncan put the corrections on these pages",
+      "length": 149,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a6e3b06c",
+      "at": 5,
+      "opening": " know any further corrections they think are\nneeded, especially in this copy, so",
+      "length": 160,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "927b3c8d",
+   "lead": "",
+   "took": {
+    "id": "4db6c847",
+    "at": 5,
+    "text": " not made many mistakes before so we don't suppose there are many.\n\nPlease contact the webmaster at this email address.",
+    "temperature": 2.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "eos",
+     "stopping_word": "",
+     "tokens_predicted": 25,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "note": "the part about the blank space being filled by hand. i checked and found that my copy has the following:",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "0856f8a5",
+      "at": 1,
+      "opening": " been pleased with how much feedback we've already had,",
+      "length": 55,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8d7cb7d3",
+      "at": 2,
+      "opening": " had very little response from people whose families\nwere in the village when we",
+      "length": 169,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "904147e8",
+      "at": 3,
+      "opening": " also noticed several places where it could have been better.",
+      "length": 61,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "6b09b156",
+      "at": 4,
+      "opening": " received two such corrections already (thank you) which will\nbe dealt with late",
+      "length": 92,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "4db6c847",
+   "lead": "",
+   "took": {
+    "id": "b1ac9b98",
+    "at": 3,
+    "text": "",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "eos",
+     "stopping_word": "",
+     "tokens_predicted": 1,
+     "tps": 0.0,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "note": "that I was unable to understand what I had just written and this was only a couple of minutes after I finished writing it.",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "187bd834",
+      "at": 1,
+      "opening": " Thank you.\n\nthe webmaster.",
+      "length": 27,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "2eee65c6",
+      "at": 2,
+      "opening": " Thank you",
+      "length": 10,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "5e982ff2",
+      "at": 4,
+      "opening": "",
+      "length": 0,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "fe024ca6",
+      "at": 5,
+      "opening": " Thank you",
+      "length": 10,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.0
+  },
+  {
+   "at": "b1ac9b98",
+   "lead": "",
+   "took": {
+    "id": "7c5e8fcf",
+    "at": 3,
+    "text": " Thank you.\n\n(3/20/14)\n\npage revision: 5, last edited: 03 Apr 2014 22:2",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 35,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 35,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "note": "that he was only 26 when he wrote it and 26 years later it's all still true. He is so right about the stupidity of the american public, especially the white ones",
+      "used": "opus"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "b34dd4cf",
+      "at": 1,
+      "opening": " Thank you.\n\nBack to The Residents Edition home page.",
+      "length": 53,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c962f196",
+      "at": 2,
+      "opening": "",
+      "length": 0,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "8d778b52",
+      "at": 4,
+      "opening": "",
+      "length": 0,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "92ec76c0",
+      "at": 5,
+      "opening": "",
+      "length": 0,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "7c5e8fcf",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "4cf70a87",
+     "at": 5,
+     "text": "7\n\nUnless otherwise stated, the content of this page is licensed under Creative Commons Attribution-ShareAlike 3.0 License",
+     "temperature": 2.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "eos",
+      "stopping_word": "",
+      "tokens_predicted": 28,
+      "tps": 11.8,
+      "params": {
+       "n_predict": 35,
+       "stop": [],
+       "temperature": 2.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1.0,
+       "top_n_sigma": -1,
+       "xtc_probability": 0.5,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1.0,
+       "dry_keep": 0.8
+      },
+      "berserk": {
+       "note": "not knowing the end of the story, but thinking that i will probably be there one day, with my wife, trying to get out of the house, trying to get to our kids. I hope",
+       "used": "opus"
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "87545778",
+      "at": 1,
+      "opening": "2",
+      "length": 1,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "78034c98",
+      "at": 2,
+      "opening": "0\n\nUnless otherwise stated, the content of this page is licensed under Creative ",
+      "length": 122,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "3cef82f0",
+      "at": 3,
+      "opening": "7",
+      "length": 1,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "e40c88a4",
+      "at": 4,
+      "opening": "6",
+      "length": 1,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  }
+ ],
+ "bits": 13.61
+}
