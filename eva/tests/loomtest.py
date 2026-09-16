@@ -33,9 +33,9 @@ import urllib.request
 import uuid
 
 TESTS = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(TESTS)
-sys.path.insert(0, TESTS)
-sys.path.insert(0, ROOT)
+EVA = os.path.dirname(TESTS)                      # eva/: server/ has loom
+for d in (TESTS, os.path.join(EVA, "server")):
+    sys.path.insert(0, d)
 import stub_llama  # noqa: E402
 
 # Before importing loom, and it has to be: loom reads LOOM_SITTINGS and LOOM_STORAGE once,
@@ -114,7 +114,7 @@ def setUpModule() -> None:
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS,
                LOOM_LLAMA=STUB_BASE)
-    LOOM = subprocess.Popen([sys.executable, os.path.join(ROOT, "loom.py")],
+    LOOM = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     deadline = time.time() + 20
     while time.time() < deadline:
@@ -527,9 +527,11 @@ class Spread(unittest.TestCase):
         t = fresh("spread")
         t.d["params"]["temperature"] = 1.0
         t.d["params"]["spread"] = 0.5
-        t.human("SPREADMARK")
+        # Not "SPREADMARK": the stub's SEEN is one list per process, and evatest's
+        # "EVASPREADMARK" contains it — under `discover` the two modules share the stub module.
+        t.human("LOOMSPREADMARK")
         t.fan(4)
-        bodies = [b for b in seen() if "SPREADMARK" in (b.get("prompt") or "")]
+        bodies = [b for b in seen() if "LOOMSPREADMARK" in (b.get("prompt") or "")]
         self.assertEqual([b["temperature"] for b in bodies], [0.5, 0.8333, 1.1667, 1.5])
         # the loom's own keys never reach llama, which answers 400 to a field it doesn't know
         for b in bodies:

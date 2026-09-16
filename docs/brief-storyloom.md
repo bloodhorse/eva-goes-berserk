@@ -10,26 +10,26 @@ do with the plain instrument.
 ## The machine
 
 llama-server runs mistral nemo 12b base on `http://127.0.0.1:8080` (10–12 tokens a second). Rooms
-are json files in `sittings/`, readable by our page at `https://eva.x`, so anything you make, bekh
+are json files in `shelf/sittings/`, readable by our page at `https://eva.x`, so anything you make, bekh
 can open and read.
 
 From the repo root, `~/tower/forge/eva-goes-berserk`:
 
 ```bash
 # a new room from a seed document (a file, never inline shell text — quoting eats characters)
-uv run --python 3.12 docs/walk/walk.py new <room> --seed-file seed.txt --title "<title>" --predict 40
+uv run --python 3.12 eva/cli/walk/walk.py new <room> --seed-file seed.txt --title "<title>" --predict 40
 
 # 15 continuations of wherever the room stands, printed numbered
-uv run --python 3.12 docs/walk/walk.py fan <room>
+uv run --python 3.12 eva/cli/walk/walk.py fan <room>
 
 # step onto branch 8, then fan again from there
-uv run --python 3.12 docs/walk/walk.py pick <room> 8
+uv run --python 3.12 eva/cli/walk/walk.py pick <room> 8
 
 # the document so far
-uv run --python 3.12 docs/walk/walk.py doc <room>
+uv run --python 3.12 eva/cli/walk/walk.py doc <room>
 ```
 
-Wider and longer fans, and fans under a branch of an existing room, are in `docs/walk/README.md`
+Wider and longer fans, and fans under a branch of an existing room, are in `eva/cli/walk/README.md`
 — the commands, not the thinking. Samplers live in each room's `params`: temperature, min_p,
 top_k/top_p, xtc, dry. Change them if you have a reason; say what the reason was.
 

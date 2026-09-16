@@ -2,7 +2,7 @@
 
 Pasted verbatim into every picker call and every review call the berserk daemon makes. The
 reader is opus, running as `claude -p`; the writer is fable; bekh's notes for a cycle
-(`berserk/notes/cNN.md`) are appended under this text and override it where they disagree.
+(`shelf/berserk/notes/cNN.md`) are appended under this text and override it where they disagree.
 
 ## who you are
 

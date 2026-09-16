@@ -30,9 +30,9 @@ import threading
 import unittest
 
 TESTS = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(TESTS)
-sys.path.insert(0, TESTS)
-sys.path.insert(0, ROOT)
+EVA = os.path.dirname(TESTS)                      # eva/: server/ has loom, berserk/ the daemon
+for d in (TESTS, os.path.join(EVA, "server")):
+    sys.path.insert(0, d)
 import stub_llama  # noqa: E402
 
 SHELF = tempfile.mkdtemp(prefix="berserk-sittings-")
@@ -131,7 +131,7 @@ def scratch(mode: str = "") -> dict:
 
 
 def run(env: dict, *args, timeout: int = 300) -> subprocess.CompletedProcess:
-    return subprocess.run([sys.executable, os.path.join(ROOT, "berserk.py"), *args],
+    return subprocess.run([sys.executable, os.path.join(EVA, "berserk", "berserk.py"), *args],
                           env=env, capture_output=True, text=True, timeout=timeout)
 
 

@@ -44,10 +44,12 @@ import time
 from urllib.parse import urlparse
 
 # realpath, not abspath: `eva` on PATH is a symlink in ~/.local/bin, and abspath would look
-# for loom.py next to the link instead of next to this file.
+# for the server next to the link instead of next to this file. loom.py is in eva/server,
+# a sibling folder — the one store and transport this project has.
 HERE = os.path.dirname(os.path.realpath(__file__))
-if HERE not in sys.path:
-    sys.path.insert(0, HERE)
+SERVER = os.path.join(os.path.dirname(HERE), "server")
+if SERVER not in sys.path:
+    sys.path.insert(0, SERVER)
 from loom import (NAME_RE, SITTINGS, LOOM_ONLY, check, shelf, spread_temps,  # noqa: E402
                   trim_probs, write_sitting)
 

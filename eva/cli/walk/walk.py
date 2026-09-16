@@ -13,8 +13,9 @@ next save wipes the new branches (last writer wins).
 """
 import argparse, json, os, secrets, sys, time
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))
-sys.path.insert(0, ROOT)
+EVA = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))  # eva/cli/walk -> eva/
+for _d in ("cli", "server"):  # eva.py and loom.py
+    sys.path.insert(0, os.path.join(EVA, _d))
 import eva  # noqa: E402
 from loom import check, complete, sitting_path, write_sitting  # noqa: E402
 

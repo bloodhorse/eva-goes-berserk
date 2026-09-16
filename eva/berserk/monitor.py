@@ -1,8 +1,8 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""berserk_monitor.py — is berserk.py alive, and how far has it walked? Read-only.
+"""monitor.py — is berserk.py alive, and how far has it walked? Read-only.
 
-    uv run --python 3.12 berserk_monitor.py          # a frame every two seconds
-    uv run --python 3.12 berserk_monitor.py --once   # one frame and out
+    uv run --python 3.12 eva/berserk/monitor.py          # a frame every two seconds
+    uv run --python 3.12 eva/berserk/monitor.py --once   # one frame and out
 
 Three signals, kept apart on purpose, because conflating them is how a dead run looks busy:
 
@@ -17,10 +17,10 @@ Three signals, kept apart on purpose, because conflating them is how a dead run 
 Plus the pid from state.json: state.json present with a pid nobody answers to means the run
 died mid-walk, which is the one state that needs a human.
 
-Never writes. Reads berserk/heartbeat, berserk/ledger.jsonl and berserk/state.json, all of
-which may be missing, half-written or from last week — every read here is allowed to fail.
+Never writes. Reads heartbeat, ledger.jsonl and state.json in shelf/berserk/, all of which
+may be missing, half-written or from last week — every read here is allowed to fail.
 
-Env: BERSERK_DIR (default berserk/ next to this file).
+Env: BERSERK_DIR (default shelf/berserk/ at the repo root).
 """
 
 import argparse
@@ -29,8 +29,9 @@ import os
 import sys
 import time
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-BERSERK = os.environ.get("BERSERK_DIR", os.path.join(HERE, "berserk"))
+HERE = os.path.dirname(os.path.abspath(__file__))                    # eva/berserk
+ROOT = os.path.dirname(os.path.dirname(HERE))                         # the repo
+BERSERK = os.environ.get("BERSERK_DIR", os.path.join(ROOT, "shelf", "berserk"))
 HEARTBEAT = os.path.join(BERSERK, "heartbeat")
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 STATE = os.path.join(BERSERK, "state.json")

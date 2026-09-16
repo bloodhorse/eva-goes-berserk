@@ -14,8 +14,8 @@ and the fork refuses to overwrite an existing room.
 """
 import argparse, copy, hashlib, json, os, sys, time
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))
-sys.path.insert(0, ROOT)
+EVA = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))  # eva/cli/walk -> eva/
+sys.path.insert(0, os.path.join(EVA, "server"))  # loom.py
 from loom import check, sitting_path, write_sitting  # noqa: E402
 
 

@@ -12,8 +12,8 @@ so the lock-in of a genre can be read off later. The page must not have the room
 """
 import argparse, json, secrets, sys, time, os
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))
-sys.path.insert(0, ROOT)
+EVA = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))  # eva/cli/walk -> eva/
+sys.path.insert(0, os.path.join(EVA, "server"))  # loom.py
 from loom import check, complete, sitting_path, write_sitting  # noqa: E402
 
 

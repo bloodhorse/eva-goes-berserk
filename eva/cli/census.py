@@ -30,9 +30,11 @@ import secrets
 import sys
 import time
 
-HERE = os.path.dirname(os.path.realpath(__file__))
-if HERE not in sys.path:
-    sys.path.insert(0, HERE)
+HERE = os.path.dirname(os.path.realpath(__file__))              # eva/cli, where eva.py is
+SERVER = os.path.join(os.path.dirname(HERE), "server")          # eva/server, where loom.py is
+for d in (SERVER, HERE):
+    if d not in sys.path:
+        sys.path.insert(0, d)
 import eva  # noqa: E402
 from loom import NAME_RE, SITTINGS, write_sitting  # noqa: E402
 

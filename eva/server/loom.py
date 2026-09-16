@@ -67,23 +67,28 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-PAGE = os.path.join(HERE, "loom.html")
+HERE = os.path.dirname(os.path.abspath(__file__))     # eva/server
+ROOT = os.path.dirname(os.path.dirname(HERE))          # the repo: eva/ (code), shelf/ (text), docs/
+# The page is in eva/front, a folder over: the server is a file store and a proxy, the front
+# is the thing bekh looks at, and keeping them apart is what lets either be read alone.
+# LOOM_PAGE exists for the mobile rig, which serves a doctored copy from a scratch dir.
+PAGE = os.environ.get("LOOM_PAGE", os.path.join(ROOT, "eva", "front", "loom.html"))
 HOST = os.environ.get("LOOM_HOST", "127.0.0.1")
 PORT = int(os.environ.get("LOOM_PORT", "8082"))
 LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
-# Overridable only so the tests can run against a scratch shelf instead of the real one;
-# everything else should leave it alone — sittings belong next to the script that made them.
-SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(HERE, "sittings"))
+# Everything the instruments write goes on the shelf, by kind. The env overrides exist only
+# so the tests (and the rig) can run against scratch dirs instead of the real ones.
+SHELF = os.path.join(ROOT, "shelf")
+SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(SHELF, "sittings"))
 # Storage: findings bekh wants to keep, one plain .txt per note, nothing but the text in it.
 # Tracked by git on purpose (sittings are not) — a finding is worth its history.
-STORAGE = os.environ.get("LOOM_STORAGE", os.path.join(HERE, "storage"))
+STORAGE = os.environ.get("LOOM_STORAGE", os.path.join(SHELF, "storage"))
 NOTE_MAX = 120
 # Artifacts: one walk each, frozen — the document it started from and every fork along the
 # way, with only the branches bekh kept. The opposite of a sitting on every axis: written
 # once and never again, tracked by git and pushed. A room is a place to work; an artifact is
 # what came out of it.
-ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(HERE, "artifacts"))
+ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(SHELF, "artifacts"))
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -847,7 +852,7 @@ class Handler(BaseHTTPRequestHandler):
                 with open(PAGE, "rb") as f:
                     self._send(200, f.read(), "text/html; charset=utf-8")
             except OSError:
-                self._json(404, {"error": "no loom.html next to loom.py"})
+                self._json(404, {"error": f"no page at {PAGE}"})
             return
 
         if u.path == "/api/health":

@@ -9,8 +9,8 @@ by how often a name came up, so the default pile sits on top and the one-offs be
 """
 import argparse, collections, json, os, re, sys
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))
-sys.path.insert(0, ROOT)
+EVA = os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))  # eva/cli/walk -> eva/
+sys.path.insert(0, os.path.join(EVA, "server"))  # loom.py
 from loom import sitting_path  # noqa: E402
 
 

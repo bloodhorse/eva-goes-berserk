@@ -15,10 +15,10 @@ Run from the repo root.
 ## The walk: seed → short fan → pick → repeat
 
 ```bash
-uv run --python 3.12 docs/walk/walk.py new carrier --seed-file seed.txt --title "the carrier" --predict 30
-uv run --python 3.12 docs/walk/walk.py fan carrier          # 15 branches, printed numbered
-uv run --python 3.12 docs/walk/walk.py pick carrier 8       # step onto branch 8
-uv run --python 3.12 docs/walk/walk.py doc carrier          # the document so far
+uv run --python 3.12 eva/cli/walk/walk.py new carrier --seed-file seed.txt --title "the carrier" --predict 30
+uv run --python 3.12 eva/cli/walk/walk.py fan carrier          # 15 branches, printed numbered
+uv run --python 3.12 eva/cli/walk/walk.py pick carrier 8       # step onto branch 8
+uv run --python 3.12 eva/cli/walk/walk.py doc carrier          # the document so far
 ```
 
 The seed is a file, never inline shell text (quoting eats characters). The room is bare, so no
@@ -38,7 +38,7 @@ to the web.
 ## Fork a room at a branch, optionally cut
 
 ```bash
-uv run --python 3.12 docs/walk/fork.py chrome-roll i-wish-i-could \
+uv run --python 3.12 eva/cli/walk/fork.py chrome-roll i-wish-i-could \
     --phrase "i can't make you believe any of this is real. i wish i could." --cut --title "i wish i could"
 ```
 
@@ -55,7 +55,7 @@ first person inside the world. One trailing character chose the corpus.
 ## Fan wide under a branch
 
 ```bash
-uv run --python 3.12 docs/walk/fan_under.py i-wish-i-could --phrase "i wish i could." --n 40 --predict 160
+uv run --python 3.12 eva/cli/walk/fan_under.py i-wish-i-could --phrase "i wish i could." --n 40 --predict 160
 ```
 
 For a room that already has a tree (census.py only makes new rooms). The target is found by
@@ -65,7 +65,7 @@ probabilities are kept on each branch.
 ## Read a naming fan
 
 ```bash
-uv run --python 3.12 docs/walk/names.py chrome-roll --word witch
+uv run --python 3.12 eva/cli/walk/names.py chrome-roll --word witch
 ```
 
 For documents that end on a name slot ("…the parish called her the"): each branch is cut at

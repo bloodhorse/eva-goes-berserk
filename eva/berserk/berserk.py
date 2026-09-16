@@ -5,9 +5,9 @@
     uv run --python 3.12 berserk.py page --cycle 9 --page 1   # one page, for a smoke test
     uv run --python 3.12 berserk.py review --cycle 9      # the review alone, off the ledger
 
-One page is one walk: a seed from `seeds/` becomes a bare room, then fifteen forks of fifteen
-short branches each, and at every fork `claude -p --model opus` reads the fan against
-`docs/berserk-picker.md` and says which line the document continues on. The page ends on a
+One page is one walk: a seed from `shelf/seeds/` becomes a bare room, then fifteen forks of
+fifteen short branches each, and at every fork `claude -p --model opus` reads the fan against
+`picker.md` (next to this file) and says which line the document continues on. The page ends on a
 closing fan nobody picks from — only keeps — which is exactly the shape `loom.build_artifact`
 freezes, so the walk lands in `artifacts/` as the same file the page at eva.x would have
 written. Then it goes up to the sheets site as html, and after the last page the same reader
@@ -20,11 +20,11 @@ prose instead of json at 4am; that is why a failed parse costs one re-ask, then 
 and `picker_failed: true` on the ledger line, and never a dead run.
 
 Observable on purpose, because this thing runs for hours with nobody watching it:
-`berserk/ledger.jsonl` (a line per fork, per page, per cycle), `berserk/heartbeat` (rewritten
-every branch — `berserk_monitor.py` reads its age), `berserk/state.json` (the run, gone on a
-clean exit). Stderr is the log; launchd sends it to /tmp/eva-berserk.log.
+`shelf/berserk/ledger.jsonl` (a line per fork, per page, per cycle), `shelf/berserk/heartbeat`
+(rewritten every branch — `monitor.py` reads its age), `shelf/berserk/state.json` (the run,
+gone on a clean exit). Stderr is the log; launchd sends it to /tmp/eva-berserk.log.
 
-Env: BERSERK_DIR (default berserk/), BERSERK_SEEDS (seeds/), BERSERK_SHEETS_HOST — empty
+Env: BERSERK_DIR (default shelf/berserk/), BERSERK_SEEDS (shelf/seeds/), BERSERK_SHEETS_HOST — empty
 string skips the scp entirely — BERSERK_SSH_KEY, BERSERK_NTFY (empty skips the push), plus
 loom's own LOOM_SITTINGS / LOOM_ARTIFACTS / LOOM_LLAMA, which the tests point at scratch dirs.
 """
@@ -44,22 +44,26 @@ import sys
 import tempfile
 import time
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, HERE)
+HERE = os.path.dirname(os.path.abspath(__file__))     # eva/berserk
+EVA = os.path.dirname(HERE)                            # eva/: server/ has loom, cli/ has eva
+for d in ("cli", "server"):
+    sys.path.insert(0, os.path.join(EVA, d))
 import eva  # noqa: E402
 import loom  # noqa: E402
 from loom import check, complete, sitting_path, write_sitting  # noqa: E402
 
-# The walk's levers, unchanged from docs/walk/walk.py and for its reasons: a genre locks in
+# The walk's levers, unchanged from cli/walk/walk.py and for its reasons: a genre locks in
 # over length, so a pick every ~35 tokens steers at the forks instead of at the furniture,
 # and the temperatures step across a range because one value per fan draws one branch four
 # times. Change these and the fans stop being comparable to every walk already on the shelf.
 TEMPS = [1.4, 1.7, 2.0, 2.2, 2.4]
 XTC = {"xtc_probability": 0.5, "xtc_threshold": 0.1}
 
-BERSERK = os.environ.get("BERSERK_DIR", os.path.join(HERE, "berserk"))
-SEEDS = os.environ.get("BERSERK_SEEDS", os.path.join(HERE, "seeds"))
-RULEBOOK = os.path.join(HERE, "docs", "berserk-picker.md")
+# Runtime state and seeds are text, so they live on the shelf with everything else the
+# instruments read and write; the rulebook is a program input, so it lives here with the code.
+BERSERK = os.environ.get("BERSERK_DIR", os.path.join(loom.SHELF, "berserk"))
+SEEDS = os.environ.get("BERSERK_SEEDS", os.path.join(loom.SHELF, "seeds"))
+RULEBOOK = os.path.join(HERE, "picker.md")
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 HEARTBEAT = os.path.join(BERSERK, "heartbeat")
 STATE = os.path.join(BERSERK, "state.json")

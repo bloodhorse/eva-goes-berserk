@@ -23,9 +23,9 @@ import uuid
 from contextlib import redirect_stderr, redirect_stdout
 
 TESTS = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(TESTS)
-sys.path.insert(0, TESTS)
-sys.path.insert(0, ROOT)
+EVA = os.path.dirname(TESTS)                      # eva/: server/ has loom, cli/ has eva and census
+for d in (TESTS, os.path.join(EVA, "server"), os.path.join(EVA, "cli")):
+    sys.path.insert(0, d)
 import stub_llama  # noqa: E402
 
 # Before importing loom, and it has to be — loom reads LOOM_SITTINGS once, at import.

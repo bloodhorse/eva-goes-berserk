@@ -10,9 +10,9 @@ M=${M:-/tmp/mobile-rig}   # scratch dir for rig, profiles, shots — set M to mo
 OUT=$M/${1:-shots2}
 RIG=$M/rig2
 PORT=8186
-rm -rf "$RIG" "$OUT" "$M/profiles2" "$M/wrap2"; mkdir -p "$RIG/sittings" "$RIG/storage" "$OUT/logs" "$M/profiles2" "$M/wrap2"
-cp "$REPO/loom.py" "$RIG/"
-{ cat "$REPO/loom.html"
+rm -rf "$RIG" "$OUT" "$M/profiles2" "$M/wrap2"; mkdir -p "$RIG/sittings" "$RIG/storage" "$RIG/artifacts" "$OUT/logs" "$M/profiles2" "$M/wrap2"
+cp "$REPO/eva/server/loom.py" "$RIG/"
+{ cat "$REPO/eva/front/loom.html"
   cat <<'JS'
 <script>
 function loadNoteSync(name){
@@ -46,8 +46,12 @@ JS
 } > "$RIG/loom.html"
 python3 "$(dirname "$0")/seed.py" "$RIG"
 
-python3 "$REPO/tests/stub_llama.py" 8197 >"$RIG/stub.log" 2>&1 & STUBPID=$!
-(cd "$RIG" && LOOM_PORT=$PORT LOOM_LLAMA=http://127.0.0.1:8197 exec python3 loom.py >"$RIG/loom.log" 2>&1) & LOOMPID=$!
+python3 "$REPO/eva/tests/stub_llama.py" 8197 >"$RIG/stub.log" 2>&1 & STUBPID=$!
+# loom.py finds its page and shelf relative to the repo it was copied out of; point every one
+# of them at the rig, or the scratch server serves the real page over the real sittings.
+(cd "$RIG" && LOOM_PORT=$PORT LOOM_LLAMA=http://127.0.0.1:8197 LOOM_PAGE="$RIG/loom.html" \
+  LOOM_SITTINGS="$RIG/sittings" LOOM_STORAGE="$RIG/storage" LOOM_ARTIFACTS="$RIG/artifacts" \
+  exec python3 loom.py >"$RIG/loom.log" 2>&1) & LOOMPID=$!
 sleep 2
 
 H=/Applications/Helium.app/Contents/MacOS/Helium
