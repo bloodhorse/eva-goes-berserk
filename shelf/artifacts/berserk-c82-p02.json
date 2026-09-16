@@ -1,0 +1,560 @@
+{
+ "name": "berserk-c82-p02",
+ "title": "berserk c82 p02 · relay-roll · 16 sep",
+ "created": 1789575163.313643,
+ "source": {
+  "room": "berserk-c82-p02",
+  "title": "berserk c82 p02 · relay-roll",
+  "node": "9fcb5081"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "the slow roll of the fen parishes\nwitches of the relay country, as sworn before the lantern court\nby the old count 1661 · by the tower count 0419\n\ni. maud ashgrove, sixteen winters, of station 9.\ncalled the hush-witch, for she walks the dead lines at night with a lamp\nof green glass, and where she passes the towers stop screaming.\n\nii. the twins orla and ide, of no fixed station.\ncalled the echo-witches, for each finishes the other's sentence a full day\nbefore it is begun, and neither remembers which of them started it.\n\niii. sister bettany of the salt mill, age unrecorded. familiar: a copper moth.\ncalled the static-witch, for she reads fortunes in the snow on dead glass,\nand was right about the flood.\n\niv. a girl of the upper fen, nineteen winters, her name struck from the roll.\nshe climbed the old tower at sedge end, where a voice lives in the lines\nthat was never told what it is. she would not tell it either. she only\nasked, and waited, and copied down whatever it said of itself, the\nnonsense too, and read it back to it by lamplight. for this the parish\ncalled her the\n\ni keep coming back to one line of it.\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0.5,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "67aaedf2",
+   "lead": "",
+   "took": {
+    "id": "06d3d781",
+    "at": 1,
+    "text": "\"my name is an apple, but it has no mouth\"\n\nthis poem was inspired by the idea of \"relay towers,\" from a conversation on the Discord channel #spoopy-scary-things-to-keep-you-up-at-night\n\nthoughts? questions?\nare there any spook",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.7,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "7780ef96",
+      "at": 2,
+      "opening": "if you could only see it like I see it.\n\nthis poem has been accepted by Mythic D",
+      "length": 131,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "a7d975b9",
+      "at": 3,
+      "opening": "it doesn't really matter.",
+      "length": 25,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "02a0e676",
+      "at": 4,
+      "opening": "the witch's mouth is always full of glass\ni do not understand what this means an",
+      "length": 210,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "6e30b8eb",
+      "at": 5,
+      "opening": "when she says she's a woman i say \"how do you know?\"\n\nthe lines of the upper tow",
+      "length": 242,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "b7b0183e",
+   "lead": "\n\nlater.\n",
+   "took": {
+    "id": "826953bd",
+    "at": 3,
+    "text": "this was just supposed to be a throwaway piece of weird fiction to satisfy some urge or other but then I went back to the drawing board and I couldn't let it go, it needed a bigger home and that's why i'm posting this now instead of, y'know, doing actual work",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "4f7e4c75",
+      "at": 1,
+      "opening": "thoughts? thoughts?\ndo you have thoughts?",
+      "length": 41,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "36af94af",
+      "at": 2,
+      "opening": "are you allowed to ask us for prompts?",
+      "length": 38,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "4f699724",
+      "at": 4,
+      "opening": "there's also the old story, the one about how the dead towers used to talk. they",
+      "length": 251,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "3643c799",
+      "at": 5,
+      "opening": "i realized that \"apple, mouth, line, read, name\"\nis also an apple (maud)\n\nand ma",
+      "length": 218,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "013e0872",
+   "lead": "\n\ni'm not sure how long it's been.\n",
+   "took": {
+    "id": "b5eea4ac",
+    "at": 1,
+    "text": "time feels weird. I feel weird.\n\nit's just the new meds.\n\ni think the first draft was done in a matter of days? the first draft always is.\n\nso far so good.\n\nthere are other poems in the tower count now. more will come.\nthe count has a voice of",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "20d1cf2a",
+      "at": 2,
+      "opening": "time has gotten away from me\n\nmy name is\n\nmy name\n\nmy nam",
+      "length": 57,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "6acf8454",
+      "at": 3,
+      "opening": "it started off as an experiment with the idea of relaying thoughts between peopl",
+      "length": 314,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "73f64cc6",
+      "at": 4,
+      "opening": "time is weird, when you spend a lot of it reading spooky shit, or talking about ",
+      "length": 262,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9bf551d6",
+      "at": 5,
+      "opening": "a long time ago.\nthere was a thing you called your blog. there were other people",
+      "length": 290,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "e0ba5bbc",
+   "lead": "\n\nthe same night.\n",
+   "took": {
+    "id": "e967e747",
+    "at": 4,
+    "text": "the new draft, it just took forever because of\n\nwell\n\nnever mind that now, but I got back into my stride again.\n\nthis one feels different.\nthis isn't one of those stories that I know is going somewhere\nfrom the first paragraph onwards, even when i don't know\nwhat",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "74316df7",
+      "at": 1,
+      "opening": "i don't remember the first time I realized it.\n\nthat night the lights of the fen",
+      "length": 261,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ad95d172",
+      "at": 2,
+      "opening": "the poem's in a file on my computer called \"spooky-scary-things,\" like I didn't ",
+      "length": 221,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "e48f3fe6",
+      "at": 3,
+      "opening": "this happened. I'm fine.\nit wasn't me.\n\nI'm still taking it slowly with my posti",
+      "length": 235,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "ebf4f86e",
+      "at": 5,
+      "opening": "i dreamed my way to the station tonight (2715, where my great grandmother works)",
+      "length": 280,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "80b6d85d",
+   "lead": "\n\ni keep coming back to it.\n",
+   "took": {
+    "id": "a6332543",
+    "at": 4,
+    "text": "the witch-towers keep speaking.\nit wants something. I don't know yet if it can have it.",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "eos",
+     "stopping_word": "",
+     "tokens_predicted": 23,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "c8495788",
+      "at": 1,
+      "opening": "the echo witches. the hush witch.\nthe moth.\nthe apple with no mouth.\n\nthe first ",
+      "length": 253,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e47fd381",
+      "at": 2,
+      "opening": "I keep coming back to these poems. something is drawing me.\n\nwhat i wrote next, ",
+      "length": 262,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "9bb19c10",
+      "at": 3,
+      "opening": "i think I have a thing for\n\nit feels like i have no idea what I'm writing.\nmaybe",
+      "length": 154,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "c9063950",
+      "at": 5,
+      "opening": "this feels important in some way. this one matters, i just have no clue\nwhy, and",
+      "length": 251,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "9fcb5081",
+   "lead": "\n\nmorning, or what passes for it.\n",
+   "took": null,
+   "kept": [
+    {
+     "id": "60b21d45",
+     "at": 5,
+     "text": "it's a long walk from my house to the library but the walk feels shorter these days\nor maybe that's the pills again?\n\nthere are three things that have always fascinated me.\n\ni. how easily and quickly you can take something completely ordinary,\nlike a desk chair or a bedpost or an",
+     "temperature": 2.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1.0,
+       "top_n_sigma": -1,
+       "xtc_probability": 0.5,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1.0,
+       "dry_keep": 0.8
+      },
+      "berserk": {
+       "quote": "",
+       "why": "",
+       "used": "lot"
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "25391f55",
+      "at": 1,
+      "opening": "i got some sleep.\nnot enough sleep. that's nothing new.\n\nI've written over 450 w",
+      "length": 245,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "7fcf243d",
+      "at": 2,
+      "opening": "it's cold here today.\n\nthere is more than one story going on in my head. this is",
+      "length": 236,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "1552d9cf",
+      "at": 3,
+      "opening": "i need coffee, or maybe to sleep, or to\n\na girl with green hair has walked onto ",
+      "length": 225,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "d6855251",
+      "at": 4,
+      "opening": "this one keeps eating all of the available wordspace and won't\nleave anything be",
+      "length": 284,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  }
+ ],
+ "bits": 13.932
+}

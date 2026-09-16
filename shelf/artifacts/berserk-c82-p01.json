@@ -1,0 +1,560 @@
+{
+ "name": "berserk-c82-p01",
+ "title": "berserk c82 p01 · lift-tests · 16 sep",
+ "created": 1789575026.3214998,
+ "source": {
+  "room": "berserk-c82-p01",
+  "title": "berserk c82 p01 · lift-tests",
+  "node": "a93e4feb"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "Municipal Lifts Office\nAcceptance tests following the removal of a floor\n\nBuilding 6, North Court. The fourth floor was removed on 11 March. Its button has been blanked. No alteration to the numbering of the floors above is authorised.\n\nTest 1. Empty car sent from third to fifth. Passed without stopping.\nTest 2. Car loaded with sacks to the weight of one adult. Passed without stopping.\nTest 3. Same load, with a hat placed on the upper sack. Stopped between third and fifth. Doors remained closed for the regulation interval.\n\nThe inspector repeated Test 3 without the hat. This time\n\n\ni keep coming back to one line of it.\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0.5,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "bb2c8b43",
+   "lead": "",
+   "took": {
+    "id": "a771a90b",
+    "at": 3,
+    "text": "I'm going to use a lot of the text as-is. The part I've written about it, and the bit I really want to explore further, is:\n\n\"The part I’ve written about it, and the bit\"\n\nAnd it's not a case of changing my mind or something. It's",
+    "temperature": 2.0,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.7,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.0,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "be6be798",
+      "at": 1,
+      "opening": "Stopped between third and fifth.\n\n\nthe phrase makes me laugh each time I read it",
+      "length": 277,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ae5212be",
+      "at": 2,
+      "opening": "the inspector repeated Test 3\n\nwhat did I mean?\n\nwhat can it mean?\nand I still d",
+      "length": 252,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "762391bb",
+      "at": 4,
+      "opening": "and I remember thinking, it was the best sentence in any novel i ever read.\nthe ",
+      "length": 252,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "22328b27",
+      "at": 5,
+      "opening": "- - -\n\nI found the first section, and the last section. But this section seems t",
+      "length": 244,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "f5a26f4f",
+   "lead": "\n\nlater.\n",
+   "took": {
+    "id": "89ab9af9",
+    "at": 4,
+    "text": "I am very open-minded, and I am quite excited to read new material from you guys in this regard.\n\n\nI was also very happy that we could have an actual dialogue in here, because I feel that we're on the same page here.\n\n\n\nThat's how it should be.\n\nYou guys have all",
+    "temperature": 2.2,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.2,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "7289e869",
+      "at": 1,
+      "opening": "The hat part will come in handy for some future project.\n\nI should explain that ",
+      "length": 291,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "74a40cbb",
+      "at": 2,
+      "opening": "So it's about the change, and the way it turns out. It's just about this, and wh",
+      "length": 243,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "774751e9",
+      "at": 3,
+      "opening": "And this part too. The part in the middle is more difficult because I need to\n\ne",
+      "length": 263,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "07288a7f",
+      "at": 5,
+      "opening": "That is why we will never be able to talk of 'the'\nproblem with this word: there",
+      "length": 243,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "344936a1",
+   "lead": "\n\ni'm not sure how long it's been.\n",
+   "took": {
+    "id": "c75ef3ef",
+    "at": 5,
+    "text": "I was talking with the inspector last week, and he told me he'd had an idea for an experiment to find out what kind of music they would listen to at night.\n\n\n+++++ en/essay/what-i-m-writing.md\n# What I’m writing about today.\n\n### 20",
+    "temperature": 2.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "160b434d",
+      "at": 1,
+      "opening": "The reason is, I was doing this last night, but now I'm at home and it's like a ",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6f8ecd17",
+      "at": 2,
+      "opening": "But i know that this isn't what people are asking about in terms of a general re",
+      "length": 277,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "cd71fa33",
+      "at": 3,
+      "opening": "But I have always said it's fine.\nIf you don't think you'll enjoy this post, don",
+      "length": 243,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "d98567bc",
+      "at": 4,
+      "opening": "But it seems like forever.\n\nI'm going to keep trying though, even if I fail mise",
+      "length": 248,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "b1654851",
+   "lead": "\n\nthe same night.\n",
+   "took": {
+    "id": "48ded255",
+    "at": 1,
+    "text": "The next morning I went down to the poolside again and got my feet wet.\nThe sun came out and there were a lot more people in the pool.\nThere were three young men from the next building sitting together at one end, two boys in swim trunks and the third in shorts.\n\nThe",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "be9a274d",
+      "at": 2,
+      "opening": "The same night I did a similar thing.\n\n\n### 18\n\nThe first two weeks, we had to s",
+      "length": 248,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "b813873f",
+      "at": 3,
+      "opening": "We’re gonna be looking at it all tonight. But what we’ve been doing for years no",
+      "length": 265,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "0c1aa658",
+      "at": 4,
+      "opening": "I've always been very good with my money.\nBut then, you can’t say anything bad a",
+      "length": 254,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "fd745ab0",
+      "at": 5,
+      "opening": "The following day, after school, we met in the hallway at our lockers.\nI saw tha",
+      "length": 239,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "63edbdb3",
+   "lead": "\n\ni keep coming back to it.\n",
+   "took": {
+    "id": "cadf23e4",
+    "at": 5,
+    "text": "The idea I was having about how much of it I’m going to use, and what’s happening, is the most exciting thing in this project, but the biggest part is going to come later.\n\n\nThe other big question for me, and this one isn’t exactly a secret either, is:\n\n\n",
+    "temperature": 2.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 11.7,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 2.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0.5,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "berserk": {
+      "quote": "",
+      "why": "",
+      "used": "lot"
+     }
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "8bb2547b",
+      "at": 1,
+      "opening": "The next day I decided I’d better write my notes on the car that’s supposed to c",
+      "length": 256,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "78bfaeba",
+      "at": 2,
+      "opening": "The only thing that was missing from this place was a sense of community.\n\nThat ",
+      "length": 265,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "83203e20",
+      "at": 3,
+      "opening": "I think there's more than a little to be learned by the fact that it wasn't the ",
+      "length": 265,
+      "temperature": 2.0,
+      "pruned": false
+     },
+     {
+      "id": "54c9c57a",
+      "at": 4,
+      "opening": "It was still the middle of winter.\nIt’s funny that we think of the beginning of ",
+      "length": 252,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  },
+  {
+   "at": "a93e4feb",
+   "lead": "\n\nmorning, or what passes for it.\n",
+   "took": null,
+   "kept": [
+    {
+     "id": "45fbf50f",
+     "at": 3,
+     "text": "There's a little coffee machine by my desk and it's my first cup of tea, or coffee, every day. It makes sense that it's the only coffee machine I use.\n\n\nSo it's probably time to get back to the real work.\n\n\n+++++ en/essay/welcome-back-this",
+     "temperature": 2.0,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.0,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1.0,
+       "top_n_sigma": -1,
+       "xtc_probability": 0.5,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1.0,
+       "dry_keep": 0.8
+      },
+      "berserk": {
+       "quote": "",
+       "why": "",
+       "used": "lot"
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 5,
+    "others": [
+     {
+      "id": "ae59157b",
+      "at": 1,
+      "opening": "There is a huge crowd of people here, and a few who are working.\nThey’re mostly ",
+      "length": 283,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "94367e74",
+      "at": 2,
+      "opening": "It's the day before tomorrow.\n\nThe last night.\n\nThe next day I was working, and ",
+      "length": 274,
+      "temperature": 1.7,
+      "pruned": false
+     },
+     {
+      "id": "43148e00",
+      "at": 4,
+      "opening": "There were several things that had been done with it over the last year and a ha",
+      "length": 242,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "195a32bb",
+      "at": 5,
+      "opening": "I’ve already decided I won’t write about my writing today. The idea is too tempt",
+      "length": 249,
+      "temperature": 2.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 2.322
+  }
+ ],
+ "bits": 13.932
+}
