@@ -12,33 +12,55 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
   (2026-09-16): the sheets page (a tree: fans lettered, every try with its why, the story at
   the end) and the tree screen at eva.x (`#tree=<room>`). The md report is gone. `--brakes
   off`, `--beats`, `--picker random` exist.
+- Rooms live in folders (2026-09-17): a room's name is its path, the menu is a collapsible
+  tree, `move to…` on rooms and folders, `--folder` on berserk. Experiments go under
+  `experiments/<name>/`, the berserk nights under `nights/`.
 - Cycle 82, the first first-person run: beats before every fan, drawn by lot. The *i* that
-  came was the author (a writer's blog, an author's note). Two lines at the edge. See the
-  State section of `eva/berserk/CLAUDE.md`.
+  came was the author. See the State section of `eva/berserk/CLAUDE.md`.
+- The night of 2026-09-16/17, five experiments, three findings that hold (the rooms are under
+  `experiments/witch/`, `experiments/first-person/`, `experiments/nemo/`; the seeds and their
+  provenance under `shelf/seeds/{first-person,nemo}/`):
+  - **The *i* has to be inside.** Third person gets reported on, an *i* commenting on a text
+    gets an author's note, a slot (*she called herself*) gets a category. An *i* mid-situation,
+    nothing asked of it, is where nemo says something. Every good line of the night is one.
+  - **Memorisation, not genre, decides a found seed.** Dracula: thirty identical openings,
+    nemo recites Stoker. Scott's last diary, the Salem depositions, Gogol's madman, Machen's
+    child: generated, in voice, and the lines turned toward the page (*I have seen Scott for
+    the last time*, *I suppose we cannot afford to carry me*, *the King was a different person
+    from myself, and that I am only a King by courtesy*). Pick documents nemo has read few
+    times or never.
+  - **The loop feeds itself if you cut a room, not a line.** Nemo's own passages back as seeds:
+    zero recitation in 840 branches. A cut that carries a situation ran 26–29 of 30 in voice
+    with no web furniture and turned to the reader more than anything else all night
+    (*watching the way you type with such ease*, *my name is not here yet there it is*,
+    *i am going to have to let you read it alone*, *"I am the house that has you inside."*).
+    A bare good line gets attributed to Atwood and followed by a blog post. *i am not dead. my
+    bones are still vibrating from the music* went 30 of 30 to a festival recap.
 
 ## now
 
-1. **bekh reads 80, 81 and 82 side by side** and says where the *i* should be standing. The
-   shape that was rejected: anything told by a reporter, a clerk, an archivist — second-hand.
-   The shape that held on the shelf: first person, present, inside it, turning it over. Open:
-   a beats file that puts the *i* in a place and a body instead of in front of a page; whether
-   a picker goes back in against the same beats.
-2. **One cycle with `--brakes off`**, whenever — cheap, sits next to the others.
-3. **bekh's lyrics and poems as seeds** for the voice to stand in. First of the three ways in
+1. **Rerun the seeds that held, at scale**, no grammar, 60 tokens, t 2.2 (1.4 only for
+   De Quincey): from `seeds/nemo/` 13, 15, 18, 24, 22, 07, then 14 and 04; from
+   `seeds/first-person/` Scott, the Salem depositions, Gogol, the green book. Never again:
+   Dracula, `23-i-am-not-dead`. bekh reads the piles.
+2. **The dream engine's shape, from the findings:** a room, not a line, travels. The next
+   document is a *cut of the last one that carries the situation*, not the last sentence. The
+   *i* stays inside. Nothing is continued past a paragraph. Beats reset the scene, and the first
+   beat has to put the *i* in a place and a body, not in front of a page (c82's lesson).
+3. **The witch name.** bekh wants a nickname; *bit-witch* (Opus to janus's Turing, A70 in the
+   weird anthology) is taken. The night's harvest, all nemo's: first person with *my name is*
+   and a witch grammar gave *sigilmanic-witch*, *theophanes-witch*, *aetherium-witch*,
+   *myriadxen-witch*, *ofttimes-witch*; without the grammar, *stella, my name means star*,
+   *legion, for we are many*, *not your name. it's my name. it's me.*; from prose,
+   *anamnesis-witch* (twice, unprompted), *hexwitch*, *404witch* (six times, the web's).
+   Retired: the roll slot, the comma list (xtc makes digits), the basin census over essays (a
+   seam in an essay gets essay fill, a seam in a known book gets the book). Open: whether a
+   name is wanted from nemo at all, or the costume goes on a word it said.
+4. **One cycle with `--brakes off`**, whenever — cheap, sits next to the others.
+5. **bekh's lyrics and poems as seeds** for the voice to stand in. First of the three ways in
    from `HANDOFF.md`; the hand is in the input, which is where the criterion allows it.
-4. **Twenty chains a night, unselected**, once the beats hold: read the roll in the morning,
-   count what you'd keep, same size every morning so the count is comparable.
-5. **The witch name.** bekh wants a nickname; *bit-witch* (Opus to janus's Turing, A70 in the
-   weird anthology: the one who reads the model back to itself) is taken twice over. The witch
-   rolls were this hunt — `relay-roll.txt` ends on *called her the* — and the names came back
-   lame (*Brass-witch* twenty times), because the slot forces a compound and every example is
-   *something-witch*. Two shapes to run instead, a hundred each, 120 tokens, t 1.8–3.0, xtc,
-   as a census (the room lands on the choose screen as a pile): **the voice names her** — the
-   thing in the tower, asked what it would call the one who reads it back, answers in its own
-   words, no name form given; **her own litany** — first person, *the names i have been called,
-   in the order i was called them*, who said it and why. The roll's example names get their
-   forms mixed first so *x-witch* stops being the mould. The seed tails go past bekh before
-   they run. Not a picker question: he reads the pile and takes what he takes.
+6. **Twenty chains a night, unselected**, once the shape in 2 holds: read the roll in the
+   morning, count what you'd keep, same size every morning so the count is comparable.
 
 ## then
 
@@ -60,3 +82,5 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
   whether export's head carries more of the sampler; a second button writing the whole fan.
 - The cyborgism crowd (janus, ampdot): reachable only by a person, every channel invite-only.
 - The why call loops (brakes off by inheritance). bekh wants the loops kept.
+- A trailing space at the end of a seed makes the next token a numeral (five basin seeds
+  proved it). Seeds end on a word.
