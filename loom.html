@@ -805,7 +805,7 @@ function showArtifact(){
   $('notepane').hidden = true;
   $('artpane').hidden = false;
   $('artview').scrollTop = 0;
-  requestAnimationFrame(drawArtLinks);
+  requestAnimationFrame(() => { drawArtLinks(); centreTree(); });
 }
 
 // An artifact is a WALK: the document it started from, then one step per fork — the line he
@@ -851,6 +851,18 @@ function drawArtLinks(){
     if(!took) p.setAttribute('stroke-dasharray', '3 4');
     artSvg.appendChild(p);
   }
+}
+
+// A step too wide for the screen scrolls inside the tree pane, and the part of it worth
+// opening on is the spine, which is what the middle of every row is. Only while it still
+// stands where it was drawn, and never on a resize: nothing here may yank a pane he is
+// reading sideways.
+function centreTree(){
+  const host = artInner && artInner.parentNode;
+  // A pane with no width has not been laid out yet — measuring it would centre the tree on
+  // a screen that doesn't exist, and the guard above would then refuse to fix it.
+  if(!host || host.scrollLeft || !host.clientWidth) return;
+  host.scrollLeft = Math.max(0, (host.scrollWidth - host.clientWidth) / 2);
 }
 
 function promptCard(a){
@@ -963,7 +975,7 @@ function drawArtifact(a){
     artRO = new ResizeObserver(drawArtLinks);
     artRO.observe($('arttree'));
   }
-  requestAnimationFrame(drawArtLinks);
+  requestAnimationFrame(() => { drawArtLinks(); centreTree(); });
 }
 
 async function openArtifact(name){
