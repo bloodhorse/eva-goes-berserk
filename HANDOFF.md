@@ -18,11 +18,14 @@ eight in ten should be worth reading. Nobody knows if a 12b can get there. It's 
 
 ## The criterion
 
-Not bits. Not science, not purity. The test is a feeling: reading a page, does it feel like
-authentic model creativity, or does it feel curated — by bekh, by opus, by a rulebook? The
-first is the point; the second is what the cyborgism scene did and never counted (the anthology
-in `docs/` is the evidence: the famous base-model weirdness is mostly janus's hand). We are
-not doing that. Fuck bits. If it reads like nemo dreamed it and it's good, it counts.
+Not bits. Not science, not purity. Bits of curation are a real number and we don't care about
+it — not because a human hand in the text is bad, but because measuring it isn't the question.
+The question is a feeling, and it's shared: reading a page, does it feel to bekh *and to the
+model working with him* like authentic model creativity, or does it feel curated — by bekh, by
+opus, by a rulebook? That feeling is the criterion, the whole of it. If it reads like nemo
+dreamed it and it's good, it counts. (The anthology in `docs/` is the background: the famous
+base-model weirdness of the cyborgism scene is mostly janus's hand, and it still reads as
+curated. That's the feeling to steer away from, not a number to minimise.)
 
 ## What the day taught, in ideas
 
