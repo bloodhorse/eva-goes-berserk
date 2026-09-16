@@ -11,9 +11,11 @@ the one place that path is spelled. Read the root `CLAUDE.md` first for what thi
 `server/loom.py`, stdlib, is a file store and a proxy, nothing else: the page owns the tree and
 posts the whole sitting after every move; the server writes it atomically to
 `shelf/sittings/<name>.json` and forwards one branch at a time to llama-server's `/completion`.
-Route list at the top of the file. Env: `LOOM_HOST`, `LOOM_PORT`, `LOOM_LLAMA`, and the
-scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` / `LOOM_ARTIFACTS` / `LOOM_PAGE` that the
-tests and the mobile rig set — production leaves them alone.
+Route list at the top of the file. The one route that reads something it never wrote is
+`/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room. Env: `LOOM_HOST`,
+`LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
+`LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_PAGE` that the tests and the mobile rig set —
+production leaves them alone.
 
 ## The page
 
@@ -76,6 +78,27 @@ model's document is full of `> > >`, `//` and stray brackets and a markdown read
 those. **Fan again** makes a new room from the prompt with the same turn and sampler, and doesn't
 fan. An artifact written before walks existed has no `steps` and is read as a walk of one step with
 nothing taken — `steps` is the whole test, and no file on the shelf is ever rewritten.
+
+**The same screen draws a berserk walk**, because an artifact is the wrong record of one: it
+keeps the branches nobody took as 80-character openings and not a word of what the reader said,
+and those two are the point. The record is the **room plus the ledger**, and
+`GET /api/berserk?name=<room>` hands both over — the room whole, its fork rows in fork order
+with the `lead` each fan was finishing computed per row, and the document root→`current` as one
+string; `GET /api/berserk/text?name=` is that string alone, which is what **export** reads and
+links to. 404 on a room with no fork rows, and a half-written last ledger line is skipped rather
+than raised, because berserk appends to that file for hours while somebody watches. The way in is
+the **tree** control beside the room picker — shown when the picked room's `/api/sittings` row
+says `berserk: true`, one ledger read for the whole list — or the url `#tree=<room>`, which is
+what the sheets page links to. Top to bottom: the seed as the folded card, then per fan its lead
+in dim mono, the branches **whole** and lettered `a b c` in the order the reader saw them (the one
+taken solid on the accent, the rest dimmer, an empty one a single `(empty)` line, each carrying
+its margin note under `margin`), and under the row every ask that fan cost — `attempt 2 ·
+reshuffled`, `widened to 10`, what was said and why, `→ e` or `not in the fan`, `random → c`. The
+accent runs branch taken → those attempts → the next fan's lead → its branches, which is why no
+connector is ever drawn across a paragraph of text. Rows written before `tries` existed have their
+attempts rebuilt out of `wished` exactly as the sheets page rebuilds them. Nothing about opus,
+substring, agree or bits appears anywhere: two renderings of one record, and the resolver is not a
+character in either.
 
 All chrome is lowercase by one CSS rule; the document, anything typed and the export screen keep
 their capitals, because a capital there is text the model sees. Room: charcoal ground and

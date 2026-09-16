@@ -91,7 +91,7 @@ the levers of `cli/walk/walk.py`, unchanged so the fans stay comparable with eve
 the shelf. The page ends on a **closing fan** nobody continues from: the quoted branch is *kept*
 instead of taken, which is the fan the room is standing on when `loom.build_artifact` freezes it,
 so the artifact is shaped like one saved by hand from the page. What goes to the sheets site is
-the anthology below, not the walk — and that page is the only rendering of a night there is.
+the anthology below, not the walk; the loom draws the same night again on its tree screen.
 
 What the picker said rides on the chosen node's `meta.berserk` with `used`, so a fork is
 readable at eva.x months later without the ledger open beside it.
@@ -99,8 +99,13 @@ readable at eva.x months later without the ledger open beside it.
 ## The page bekh actually reads
 
 `anthology.py` renders a cycle — or several, `--cycles 80,81` — as **one html page** in the sheets
-skin, and it is the only rendering: the morning markdown is gone, because two renderings of one
-night are two places for the story to disagree with itself.
+skin: the morning markdown is gone, because two renderings built from *different* sources are two
+places for the story to disagree with itself. There is a second rendering, and it is built from the
+same pair — the room and the ledger, through the loom's `/api/berserk` — which is why it can exist:
+the loom's own **tree screen** at `https://eva.x/#tree=<room>`, linked from every page here beside
+the walk's plain text. Same grammar, same letters, same attempts; one drawn for a phone in bed and
+one for the screen the rooms already live on. What a future experiment has to write to get both is
+the same record: fork rows on the ledger, branches in a room.
 
 The page is the walk **as a tree**, one story per page. The settings the run really used and the
 ask, verbatim, at the top with the explainer folded behind *what is this*; then per page: the seed

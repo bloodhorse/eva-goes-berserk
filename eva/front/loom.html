@@ -91,6 +91,7 @@
   #curation{margin-bottom:12px;}
   #curation:empty{display:none;}
   #pick{flex:1; width:100%; text-overflow:ellipsis;}
+  #treebtn{flex-shrink:0; white-space:nowrap;}
   .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--live);}
   .dot.off{background:var(--hot);}
   .toolrow{display:flex; gap:20px; flex-wrap:wrap;}
@@ -178,6 +179,31 @@
     background:var(--sunk); color:var(--ink);}
   #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
   #arttree .cap.posed{color:var(--hot);}
+  /* A berserk walk on the same tree. The daemon leaves its record in two places — the room,
+     which holds every branch of every fan, and the ledger, which holds what the reader said
+     about them — and this screen is the SECOND rendering of that pair, the sheets page being
+     the first. Same grammar as that page, so one record read in two places reads the same:
+     nemo's words in the document style, and everything the MACHINE did — which attempt this
+     was, that the fan was widened, which letter an answer resolved to — dim, small and
+     monospace, never louder than the text.
+
+     A card is capped in CHARACTERS and not pixels, because here a branch is shown WHOLE and
+     there are five to fifteen of them abreast: 28ch keeps a row of five inside a laptop
+     window with nothing cut, and a wider fan scrolls, which is the tree pane's standing
+     rule. Measured at 1440 — at 34ch a fan of five already hung off both edges. */
+  #arttree .n.fan{width:28ch;}
+  #arttree .plumb{color:var(--ghost); font-size:11.5px; line-height:1.5;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+  /* The lead above a fan and the attempts under it are ANCHORS, not captions: the accent
+     runs branch taken → what was said about that fan → the lead the next fan was finishing →
+     that fan's branches, so no connector ever crosses a block of text. Positioned for the
+     same reason the boxes are — an absolutely placed svg paints over static text otherwise. */
+  #arttree .head, #arttree .tries{position:relative; z-index:1;
+    width:min(66ch, 100%); margin:0 auto 20px;}
+  #arttree .lvl.fanrow{margin-bottom:20px;}
+  #arttree .tries .say{margin:2px 0 10px;}
+  #arttree .n .note{font-style:italic; margin:8px 0 0;}
+  #arttree .n .letter{margin-bottom:5px;}
   #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
   #arttree details .body{padding-top:8px;}
   .artfoot{flex-shrink:0; color:var(--ghost); font-size:13px;}
@@ -383,6 +409,10 @@
   <aside id="tools" aria-label="Sitting controls" hidden>
     <div class="shelfrow">
       <select id="pick" aria-label="Which sitting"></select>
+      <!-- Only for a room berserk walked: the picker is a select, so the control sits beside
+           it rather than beside the option, and it appears when such a room is the one
+           picked. Every other room has no ledger rows and nothing to draw. -->
+      <button class="ghostbtn" id="treebtn" type="button" hidden title="berserk's walk of this room, as a tree">Tree</button>
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
     <div id="curation" class="sys"></div>
@@ -760,7 +790,8 @@ function cancelNote(){
 // One fan, frozen: the prompt it was drawn from and the answers bekh kept. The page marks
 // and asks; the server builds the file from the room on disk and writes it once. Nothing
 // here edits, renames or deletes one — a mistaken artifact is a `git rm`, by hand.
-let artifact = null;     // what the artifact screen shows
+let artifact = null;     // the artifact on the tree screen, or null
+let walk = null;         // a berserk room on the same screen: {name, sitting, rows, text}
 let savingArt = false;
 
 function keptInFan(){
@@ -845,7 +876,11 @@ async function loadArtifacts(){
   drawArtifacts((d && d.artifacts) || []);
 }
 
-function showArtifact(){
+// The tree screen, shared: an artifact and a berserk walk are two records of one kind of
+// thing — a document walked fork by fork — so they get one pane, one set of measured
+// connectors and one export. `walk` says which is on it; only where they really differ (fan
+// again is an artifact's gesture, and the document lives at a different url) is it consulted.
+function showTree(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
@@ -914,13 +949,14 @@ function centreTree(){
   host.scrollLeft = Math.max(0, (host.scrollWidth - host.clientWidth) / 2);
 }
 
-function promptCard(a){
+// The document a tree stands on — an artifact's prompt, a walked room's seed. Folded, with
+// its END showing: that is the part the model was standing on when the first fan was drawn.
+function promptCard(text, label, empty){
   const box = mk(null, 'div', 'n root');
-  const text = a.prompt || '';
-  const pre = mk(box, 'div', 'body',
-    text ? tail(text, 260) : '(empty — the model began the document itself)');
+  text = text || '';
+  const pre = mk(box, 'div', 'body', text ? tail(text, 260) : empty);
   const det = mk(box, 'details');
-  mk(det, 'summary', '', 'the prompt · ' + text.length + ' characters');
+  mk(det, 'summary', '', label + ' · ' + text.length + ' characters');
   mk(det, 'div', 'body', text);
   // Opening the fold moves every row under it, and the connectors were measured against
   // where those rows used to be.
@@ -943,14 +979,22 @@ function stepBox(k, took, size){
 // The walk, drawn top down: the prompt, then one row per step. Every string from the file
 // goes in as text — the prompt and the branches are model output and his own lines, and the
 // file is in a public repo besides.
-function drawTree(a, steps){
+// The box the rows and the svg live in. One per drawing, and the globals point at the one
+// that is on the screen — both trees are measured the same way afterwards.
+function treeHost(){
   const host = mk(null, 'div');
   host.id = 'arttree';
   artInner = mk(host, 'div', 'inner');
   artSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   artInner.appendChild(artSvg);
   artPairs = [];
-  let prev = promptCard(a);
+  return host;
+}
+
+function drawTree(a, steps){
+  const host = treeHost();
+  let prev = promptCard(a.prompt, 'the prompt',
+                        '(empty — the model began the document itself)');
   mk(artInner, 'div', 'lvl').appendChild(prev);
   for(const st of steps){
     const row = mk(artInner, 'div', 'lvl');
@@ -1004,17 +1048,24 @@ function artFoot(a, steps){
 // disk. The page had its own copy of that concatenation for a day and that is exactly how
 // two answers to "what does an artifact read like" start to drift; now there is one, it is
 // tested, and it has a url that can be sent.
-const textURL = a => '/api/artifact/text?name=' + encodeURIComponent(a.name);
+// Two records, two routes, the same rule: the concatenation lives on the server or it lives
+// in two places that will disagree.
+const textURL = () => walk
+  ? '/api/berserk/text?name=' + encodeURIComponent(walk.name)
+  : '/api/artifact/text?name=' + encodeURIComponent(artifact.name);
+const shownTitle = () => walk
+  ? (walk.sitting.title || walk.name)
+  : (artifact ? (artifact.title || artifact.name) : '');
 
-async function exportArtifact(){
-  if(!artifact) return;
+async function exportDocument(){
+  if(!artifact && !walk) return;
   let text;
   try{
-    const r = await fetch(textURL(artifact), {cache: 'no-store'});
+    const r = await fetch(textURL(), {cache: 'no-store'});
     text = await r.text();
     if(!r.ok) throw new Error(text.trim() || r.status);
   }catch(e){ sys('could not read the document: ' + e.message, true); return; }
-  $('texttitle').textContent = artifact.title || artifact.name;
+  $('texttitle').textContent = shownTitle();
   $('textview').textContent = text;
   showText();
 }
@@ -1032,12 +1083,12 @@ function showText(){
 }
 
 function exportName(){
-  const n = (artifact.title || artifact.name).replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
+  const n = shownTitle().replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
   return (n || 'artifact') + '.txt';
 }
 
 function downloadText(){
-  if(!artifact) return;
+  if(!artifact && !walk) return;
   const blob = new Blob([$('textview').textContent], {type: 'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1063,10 +1114,21 @@ async function copyText(){
   }
 }
 
+// The few numbers that decide the register, in the order they matter. One list, because an
+// artifact and a walked room are read side by side and two orders would look like two runs.
+function samplerLine(params){
+  const p = params || {};
+  return ['temperature', 'spread', 'min_p', 'top_k', 'top_p', 'top_n_sigma',
+    'xtc_probability', 'repeat_penalty', 'dry_multiplier', 'n_predict', 'fan']
+    .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · ') +
+    (p.logit_bias_text ? ' · bias ' + p.logit_bias_text.split('\n').join(', ') : '');
+}
+
 function drawArtifact(a){
   const view = $('artview');
   view.textContent = '';
   $('arttitle').textContent = a.title || a.name;
+  $('artagain').hidden = false;
   const steps = stepsOf(a);
   view.appendChild(drawTree(a, steps));
   mk(view, 'div', 'artfoot', artFoot(a, steps));
@@ -1075,11 +1137,7 @@ function drawArtifact(a){
   const pair = (k, v) => { mk(nums, 'span', '', k); mk(nums, 'span', 'v', v); };
   const m = a.model;
   pair('model', m && m.file ? m.file + (m.n_ctx ? ' · ' + m.n_ctx + ' ctx' : '') : 'not recorded');
-  const p = a.params || {};
-  pair('sampler', ['temperature', 'spread', 'min_p', 'top_k', 'top_p', 'top_n_sigma',
-    'xtc_probability', 'repeat_penalty', 'dry_multiplier', 'n_predict', 'fan']
-    .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · ') +
-    (p.logit_bias_text ? ' · bias ' + p.logit_bias_text.split('\n').join(', ') : ''));
+  pair('sampler', samplerLine(a.params));
   const turn = a.turn || {};
   pair('turn', (turn.prefix || turn.suffix) ? esc(turn.prefix || '') + ' … ' + esc(turn.suffix || '') : 'bare');
   pair('saved', when(a.created));
@@ -1102,8 +1160,9 @@ async function openArtifact(name){
   catch(e){ sys('could not open the artifact: ' + e.message, true); return; }
   if(d.error){ sys(d.error, true); return; }
   artifact = d;
+  walk = null;
   drawArtifact(d);
-  showArtifact();
+  showTree();
 }
 
 // Coming back to an artifact is a new room, never a change to the artifact: its prompt is
@@ -1118,6 +1177,223 @@ async function fanAgain(){
     params: a.params && Object.keys(a.params).length ? a.params : PARAMS,
     turn: turn,
   });
+}
+
+// ---- berserk's walks -------------------------------------------------------------------
+// Nobody sat in these rooms: the daemon fanned, the same model read its own fan and said
+// which branch it meant, a matcher turned that into a letter, and the walk went on. The
+// record of a night is the ROOM plus the LEDGER — never the artifact, which keeps the
+// branches nobody took as 80-character openings and not one word of what was said, and those
+// two are the whole point. `/api/berserk` hands both over; this draws them on the tree
+// screen, and the html page on the sheets site draws the same pair for a phone in bed.
+
+// a, b, c … aa. A branch's name here is its place in the order the READER saw — shuffled
+// under about and quote — and not its place in the fan.
+function letter(i){
+  let out = '', n = i + 1;
+  while(n > 0){
+    const r = (n - 1) % 26;
+    out = String.fromCharCode(97 + r) + out;
+    n = (n - 1 - r) / 26;
+  }
+  return out || '?';
+}
+
+// A fork row written before `tries` existed, read back as far as the row allows: every entry
+// of `wished` was an ask that named nothing in the fan, and `quote` is the ask that landed.
+// The whys of the misses do not exist to show — which is exactly why berserk records the
+// tries now. Rule for rule the sheets page's `fallback_tries`: two readings of one row that
+// disagree about what happened are worse than one reading.
+function fallbackTries(row, tookAt){
+  const tries = (row.wished || []).filter(w => (w || '').trim())
+    .map(w => ({said: w, why: '', hit: null, widened: false}));
+  const said = (row.quote || '').trim();
+  if(said && row.outcome === 'match')
+    tries.push({said: said, why: row.why || '', hit: tookAt, widened: false});
+  // The widened ask is the last one made. Where an ask came back empty — counted in
+  // `attempts`, never in `wished` — that is a guess, and it costs a label, not a branch.
+  if(row.widened && tries.length) tries[tries.length - 1].widened = true;
+  return tries;
+}
+
+// Every ask one fan cost, in the order they happened: the reader of this screen wants to see
+// the machine MISS — three attempts that named nothing, a fan widened, then an arrow or a
+// coin toss. The resolver is not a character here: its answer is an arrow to a letter and
+// nothing else, no substring witness and no bit count anywhere.
+function triesBlock(row, picker, tookAt){
+  const box = mk(null, 'div', 'tries');
+  const arrow = () => (tookAt === null ? '?' : letter(tookAt));
+  if(picker === 'margin'){
+    // Margin has nothing to reroll: the notes are written once against the branches that
+    // exist, so either the resolver picks a note or the branch is chance.
+    mk(box, 'div', 'plumb', (row.outcome === 'random' ? 'random → ' : '→ ') + arrow());
+    return box;
+  }
+  const tries = Array.isArray(row.tries) ? row.tries : fallbackTries(row, tookAt);
+  let widened = false;
+  tries.forEach((t, k) => {
+    if(t.widened && !widened){
+      widened = true;
+      mk(box, 'div', 'plumb', 'widened to ' + (row.fan_size || '?'));
+    }
+    mk(box, 'div', 'plumb', 'attempt ' + (k + 1) + (k ? ' · reshuffled' : ''));
+    const said = (t.said || '').trim();
+    if(said){
+      mk(box, 'div', 'plumb', 'said');
+      mk(box, 'div', 'body say', picker === 'quote' ? '“' + said + '”' : said);
+    }else{
+      mk(box, 'div', 'plumb', 'said nothing');
+    }
+    const why = (t.why || '').trim();
+    if(why){
+      mk(box, 'div', 'plumb', 'why');
+      mk(box, 'div', 'body say', why);
+    }
+    mk(box, 'div', 'plumb',
+       typeof t.hit === 'number' ? '→ ' + letter(t.hit) : 'not in the fan');
+  });
+  // Nothing the reader said was in the fan. The walk went on anyway, and says so.
+  if(row.outcome === 'random') mk(box, 'div', 'plumb', 'random → ' + arrow());
+  return box;
+}
+
+function fanHead(row){
+  const box = mk(null, 'div', 'head');
+  mk(box, 'div', 'plumb', 'fan ' + (row.fork || '?') + (row.closing ? ' · closing' : ''));
+  if(row.lead){
+    const line = mk(box, 'div', 'plumb', 'every branch finishes: …');
+    // The lead is nemo's document, not a label: `.body` is what exempts a string from the
+    // page's lowercase rule, and a lead shown as st. catherine is a lead retouched.
+    mk(line, 'span', 'body', row.lead);
+  }
+  return box;
+}
+
+function fanCard(w, row, i, nid, taken){
+  const box = mk(null, 'div', 'n fan' + (taken ? ' took' : ''));
+  mk(box, 'div', 'plumb letter', letter(i));
+  const text = ((w.sitting.nodes || {})[nid] || {}).text || '';
+  // Whole, never cut to an opening: the branches nobody took are what this screen is for.
+  // An empty one is a single dim line and not a paragraph — a base model standing on a
+  // licence footer answers with nothing at all, and that nothing set as prose is noise.
+  if(text.trim()) mk(box, 'div', 'body', text);
+  else mk(box, 'div', 'plumb', '(empty)');
+  if(row.picker === 'margin'){
+    const note = ((row.notes || [])[i] || '').trim();
+    mk(box, 'div', 'body note', note ? '~ ' + note : '~ (nothing written)');
+  }
+  if(taken) mk(box, 'div', 'plumb', row.closing ? 'kept' : 'taken');
+  return box;
+}
+
+// The accent runs branch taken → what was said about that fan → the lead the next fan was
+// finishing → that fan's branches. Every connector therefore joins two blocks that are
+// neighbours on the page, so no curve is ever drawn across a paragraph of text.
+function drawWalkTree(w){
+  const host = treeHost();
+  const nodes = w.sitting.nodes || {};
+  let prev = promptCard((nodes[w.sitting.root] || {}).text, 'the seed',
+                        '(empty — the room began on nothing)');
+  mk(artInner, 'div', 'lvl').appendChild(prev);
+  for(const row of w.rows){
+    const ids = row.order || [];
+    // The closing fan is the one nobody continued from: its branch is kept, not taken.
+    const took = row.pick || (row.keep || [])[0] || null;
+    const at = ids.indexOf(took);
+    const head = fanHead(row);
+    artInner.appendChild(head);
+    artPairs.push([prev, head, true]);
+    const lvl = mk(artInner, 'div', 'lvl fanrow');
+    let tookBox = null;
+    ids.forEach((nid, i) => {
+      const box = fanCard(w, row, i, nid, nid === took);
+      lvl.appendChild(box);
+      artPairs.push([head, box, nid === took]);
+      if(nid === took) tookBox = box;
+    });
+    const tries = triesBlock(row, row.picker || '', at < 0 ? null : at);
+    artInner.appendChild(tries);
+    artPairs.push([tookBox || head, tries, true]);
+    prev = tries;
+  }
+  return host;
+}
+
+function walkFoot(w, view){
+  const rows = w.rows;
+  const out = [w.name, (rows[0] || {}).picker || '?',
+               rows.length + (rows.length === 1 ? ' fan' : ' fans'),
+               rows.filter(r => r.outcome === 'match').length + ' resolved',
+               rows.filter(r => r.outcome === 'random').length + ' random'];
+  // Off the nodes and not off today's constants: a run is described by what it really used,
+  // or the page quietly rewrites history the first time somebody changes a default.
+  const temps = [];
+  let model = '';
+  for(const id in (w.sitting.nodes || {})){
+    const m = w.sitting.nodes[id].meta || {};
+    const t = m.params && m.params.temperature;
+    if(typeof t === 'number') temps.push(t);
+    if(!model && m.model && m.model.file) model = m.model.file;
+  }
+  if(model) out.push(model);
+  if(temps.length){
+    const lo = Math.min.apply(null, temps), hi = Math.max.apply(null, temps);
+    out.push('temp ' + num(lo) + (hi > lo ? '–' + num(hi) : ''));
+  }
+  mk(view, 'div', 'artfoot', out.join(' · '));
+  const asked = (rows.find(r => r.ask) || {}).ask;
+  if(asked){
+    const line = mk(view, 'div', 'artfoot', 'asked with: ');
+    mk(line, 'span', 'body', asked);      // the frame line, verbatim, capitals and all
+  }
+}
+
+function drawWalk(w){
+  const view = $('artview');
+  view.textContent = '';
+  $('arttitle').textContent = w.sitting.title || w.name;
+  // Fan again is an artifact's gesture: a walked room is still on the shelf and opens in the
+  // dialogue like any other, so there is nothing here to make a copy of.
+  $('artagain').hidden = true;
+  view.appendChild(drawWalkTree(w));
+  walkFoot(w, view);
+  const nums = mk(view, 'div', 'artnums');
+  const pair = (k, v) => { mk(nums, 'span', '', k); mk(nums, 'span', 'v', v); };
+  pair('sampler', samplerLine(w.sitting.params));
+  pair('walked', when((w.rows[0] || {}).ts));
+  if(artRO) artRO.disconnect();
+  if(window.ResizeObserver){
+    artRO = new ResizeObserver(drawArtLinks);
+    artRO.observe($('arttree'));
+  }
+  requestAnimationFrame(() => { drawArtLinks(); centreTree(); });
+}
+
+async function openWalk(name){
+  let d;
+  try{ d = await getJSON('/api/berserk?name=' + encodeURIComponent(name)); }
+  catch(e){ sys('could not open the walk: ' + e.message, true); return; }
+  if(d.error){ sys(d.error, true); return; }
+  walk = {name: name, sitting: d.sitting || {}, rows: d.rows || [], text: d.text || ''};
+  artifact = null;
+  drawWalk(walk);
+  showTree();
+}
+
+// #tree=<room> opens a walk straight on the tree screen. That is the address the sheets page
+// links to: a night read on the phone has to be one tap from the branches nobody took, not
+// a room picker and a menu away.
+function hashRoom(){
+  const m = /^#tree=(.+)$/.exec(location.hash || '');
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+// The control beside the picker, for the room that is picked. A room nobody walked has no
+// ledger rows, so the button is not merely disabled there — there is nothing behind it.
+function gateTree(){
+  const name = pickEl.value || (sitting && sitting.name) || '';
+  const row = shelf.find(s => s.name === name);
+  $('treebtn').hidden = !(row && row.berserk);
 }
 
 // ---- the tree ------------------------------------------------------------------------
@@ -2004,6 +2280,7 @@ function drawShelf(){
     pickEl.appendChild(o);
   }
   if(sitting) pickEl.value = sitting.name;
+  gateTree();
 }
 
 async function loadShelf(){
@@ -2026,6 +2303,7 @@ async function openSitting(name){
   menu(false);
   remember(name);
   pickEl.value = name;
+  gateTree();
   buildSampler();
   render();
 }
@@ -2239,15 +2517,25 @@ $('artbtn').addEventListener('click', () => {
 });
 $('artback').addEventListener('click', showDialogue);
 $('artagain').addEventListener('click', fanAgain);
-$('artexport').addEventListener('click', exportArtifact);
+$('artexport').addEventListener('click', exportDocument);
 $('artsave').addEventListener('click', saveArtifact);
+$('treebtn').addEventListener('click', () => {
+  const name = pickEl.value || (sitting && sitting.name);
+  if(name) openWalk(name);
+});
+// A link into the page, not a history stack: the hash is read on boot and whenever it
+// changes, and nothing here ever writes one back.
+window.addEventListener('hashchange', () => {
+  const name = hashRoom();
+  if(name) openWalk(name);
+});
 // Back from the document goes to the artifact, not to the dialogue: the tree is where it
 // came from, and its connectors are measured, so it has to be re-drawn on the way in.
-$('textback').addEventListener('click', showArtifact);
+$('textback').addEventListener('click', showTree);
 $('textcopy').addEventListener('click', copyText);
 // The document at its own address, in a tab: that is the thing you can send to a phone or
 // paste into sheets. `_blank` and not this tab, because leaving the loom loses the room.
-$('textlink').addEventListener('click', () => artifact && window.open(textURL(artifact), '_blank'));
+$('textlink').addEventListener('click', () => (artifact || walk) && window.open(textURL(), '_blank'));
 $('textsave').addEventListener('click', downloadText);
 $('noteadd').addEventListener('click', newNote);
 $('noteback').addEventListener('click', showDialogue);
@@ -2318,10 +2606,14 @@ async function health(){
 (async function start(){
   try{
   await loadShelf();
-  const want = remembered();
+  // A #tree= link names the room too, so the dialogue behind the tree is the room the walk
+  // happened in rather than whatever was last open.
+  const asked = hashRoom();
+  const want = asked || remembered();
   const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
   if(name) await openSitting(name);
   else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
+  if(asked) await openWalk(asked);
   health();
   setInterval(health, 5000);
   }catch(e){ gate(); sys('Could not open the sitting: ' + e.message, true); }

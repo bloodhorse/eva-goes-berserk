@@ -45,9 +45,12 @@ import stub_llama  # noqa: E402
 SHELF = tempfile.mkdtemp(prefix="loom-test-")
 STORE = tempfile.mkdtemp(prefix="loom-store-")     # never the real, git-tracked storage/
 ARTS = tempfile.mkdtemp(prefix="loom-arts-")       # nor artifacts/, which gets pushed
+BERSERK = tempfile.mkdtemp(prefix="loom-berserk-")  # nor the daemon's real ledger
+LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 os.environ["LOOM_SITTINGS"] = SHELF
 os.environ["LOOM_STORAGE"] = STORE
 os.environ["LOOM_ARTIFACTS"] = ARTS
+os.environ["LOOM_LEDGER"] = LEDGER
 import loom  # noqa: E402 — path first; this file may be started from anywhere
 
 # loom.html's own defaults, restated. Kept as literals rather than parsed out of the page
@@ -112,7 +115,7 @@ def setUpModule() -> None:
     BASE = f"http://127.0.0.1:{port}"
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
-               LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS,
+               LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS, LOOM_LEDGER=LEDGER,
                LOOM_LLAMA=STUB_BASE)
     LOOM = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -144,6 +147,8 @@ def tearDownModule() -> None:
         shutil.rmtree(STORE, ignore_errors=True)
     if ARTS:
         shutil.rmtree(ARTS, ignore_errors=True)
+    if BERSERK:
+        shutil.rmtree(BERSERK, ignore_errors=True)
 
 
 class Tree:
@@ -974,6 +979,141 @@ class Artifacts(unittest.TestCase):
         for path, code, want in (("?name=nope", 404, "no such artifact"),
                                  ("?name=../secrets", 400, "bad name")):
             st, body = call("/api/artifact/text" + path)
+            self.assertEqual(st, code, body)
+            self.assertEqual(body.strip(), want)
+
+
+# ---- the walks berserk left ---------------------------------------------------------------
+# The record of a night is the ROOM plus the LEDGER, so the route reads both and the tests
+# write both. Nothing here touches the real shelf or the real ledger: LOOM_LEDGER points at a
+# temp file, the way LOOM_SITTINGS points at a temp shelf.
+LEDGER_ROWS: list[dict] = []
+
+
+def ledger_write(tail: str = "") -> None:
+    """The ledger as berserk leaves it, one json object per line. `tail` is a line written
+    only half way — what the last line of a live run looks like between two disk writes."""
+    with open(LEDGER, "w", encoding="utf-8") as f:
+        for r in LEDGER_ROWS:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        f.write(tail)
+
+
+ROOT_TEXT = "THE ERRATA SLIP\nleaf torn, entry 4,"
+TOOK_TEXT = " and the ink had run."
+
+
+def walked_room(prefix: str, rows: bool = True):
+    """A room shaped like one berserk walked: a seed, a fan of three under it with one branch
+    taken, and a closing fan of three under that with one kept and nothing taken.
+
+    Built by hand rather than through the stub, so the leads and the document are exact
+    strings a test can name instead of whatever the fake llama felt like saying.
+    """
+    t = Tree(f"{prefix}-{uuid.uuid4().hex[:6]}")
+    root = t.d["root"]
+    t.d["nodes"][root]["text"] = ROOT_TEXT
+    one = [t.add("model", txt, root, {"params": dict(PARAMS, temperature=temp)})
+           for txt, temp in ((" the slip was blank.", 1.4), (TOOK_TEXT, 1.7), ("", 2.4))]
+    took = one[1]
+    two = [t.add("model", txt, took["id"], {"params": dict(PARAMS, temperature=temp)})
+           for txt, temp in ((" nobody signed it.", 1.4), (" the clerk was gone.", 2.0),
+                             (" it had been returned.", 2.4))]
+    # `current` stands on the branch TAKEN: the closing fan is kept, never continued from.
+    t.d["current"] = took["id"]
+    st, d = t.save()
+    assert st == 200 and d.get("ok"), d
+    if not rows:
+        return t, one, two
+    name = t.d["name"]
+    LEDGER_ROWS.extend([
+        # Written out of order on purpose: the route sorts by fork, it does not trust the file.
+        {"cycle": 90, "page": 1, "room": name, "fork": 2, "picker": "margin", "closing": True,
+         "fan_size": 3, "attempts": 1, "widened": False,
+         "order": [two[2]["id"], two[0]["id"], two[1]["id"]],
+         "notes": ["that it had come back at all", "", "the clerk's own hand"],
+         "pick_note": 2, "pick": None, "keep": [two[1]["id"]], "outcome": "match"},
+        {"cycle": 90, "page": 1, "room": name, "fork": 1, "picker": "about", "closing": False,
+         "fan_size": 3, "attempts": 2, "widened": False,
+         "order": [one[0]["id"], one[1]["id"], one[2]["id"]],
+         "ask": "the one that scared me was about",
+         "quote": "the ink running over the entry",
+         "why": "because a record that runs is no record",
+         "wished": ["a slip nobody ever drew"],
+         "tries": [{"said": "a slip nobody ever drew", "why": "", "hit": None, "widened": False},
+                   {"said": "the ink running over the entry",
+                    "why": "because a record that runs is no record", "hit": 1,
+                    "widened": False}],
+         "outcome": "match", "pick": one[1]["id"], "keep": []},
+        # The run's own bookkeeping, not a fan: it must not come back as a row.
+        {"event": "page", "cycle": 90, "page": 1, "room": name, "seed": "errata-slip.txt"},
+    ])
+    ledger_write()
+    return t, one, two
+
+
+class Berserk(unittest.TestCase):
+    def test_the_room_the_rows_and_the_document(self):
+        t, one, two = walked_room("brz")
+        st, d = call("/api/berserk?name=" + t.d["name"])
+        self.assertEqual(st, 200, d)
+        # the room verbatim, so the page can read a branch's text without a second request
+        self.assertEqual(d["sitting"]["nodes"].keys(), t.d["nodes"].keys())
+        self.assertEqual([r["fork"] for r in d["rows"]], [1, 2])
+        self.assertEqual([r["picker"] for r in d["rows"]], ["about", "margin"])
+        # the page event is bookkeeping and never a fan
+        self.assertTrue(all(r.get("event") is None for r in d["rows"]))
+        # the lead: the unfinished last line of the document each fan hangs under
+        self.assertEqual(d["rows"][0]["lead"], "leaf torn, entry 4,")
+        self.assertEqual(d["rows"][1]["lead"], "leaf torn, entry 4," + TOOK_TEXT)
+        # the story, as it came out: root down to the last branch TAKEN, nothing between
+        self.assertEqual(d["text"], ROOT_TEXT + TOOK_TEXT)
+        # what the two shapes carry through untouched
+        self.assertEqual(len(d["rows"][0]["tries"]), 2)
+        self.assertEqual(d["rows"][1]["notes"][2], "the clerk's own hand")
+
+    def test_a_half_written_last_line_is_skipped(self):
+        t, one, two = walked_room("brz-torn")
+        # berserk appends to this file while it walks: the last line is regularly half on
+        # disk, and a screen that 500s for those milliseconds breaks when somebody is watching.
+        ledger_write(tail='{"cycle": 90, "room": "' + t.d["name"] + '", "fork": 3, "ord')
+        st, d = call("/api/berserk?name=" + t.d["name"])
+        self.assertEqual(st, 200, d)
+        self.assertEqual([r["fork"] for r in d["rows"]], [1, 2])
+        ledger_write()
+
+    def test_a_room_nobody_walked_is_a_404(self):
+        t, _, _ = walked_room("brz-unwalked", rows=False)
+        for path, code, want in ((t.d["name"], 404, "berserk never walked that room"),
+                                 ("nope-" + uuid.uuid4().hex[:6], 404, "no such sitting"),
+                                 ("../secrets", 400, "bad name")):
+            st, d = call("/api/berserk?name=" + urllib.parse.quote(path))
+            self.assertEqual(st, code, d)
+            self.assertEqual(d["error"], want)
+
+    def test_the_shelf_says_which_rooms_were_walked(self):
+        t, _, _ = walked_room("brz-flag")
+        plain = fresh("brz-plain")
+        rows = {s["name"]: s["berserk"] for s in call("/api/sittings")[1]["sittings"]}
+        self.assertIs(rows[t.d["name"]], True)
+        self.assertIs(rows[plain.d["name"]], False)
+
+    def test_the_document_at_a_url(self):
+        # The same string the json route carries, at an address that can be sent — one
+        # implementation on the server, like the artifact's.
+        t, _, _ = walked_room("brz-text")
+        st, text = call("/api/berserk/text?name=" + t.d["name"])
+        self.assertEqual(st, 200, text)
+        self.assertEqual(text, ROOT_TEXT + TOOK_TEXT)
+        self.assertEqual(text, call("/api/berserk?name=" + t.d["name"])[1]["text"])
+
+    def test_the_document_says_no_in_plain_text(self):
+        # Whatever opens this url is reading, not parsing: braces in a browser window are
+        # not an error message.
+        t, _, _ = walked_room("brz-text-no", rows=False)
+        for path, code, want in ((t.d["name"], 404, "berserk never walked that room"),
+                                 ("../secrets", 400, "bad name")):
+            st, body = call("/api/berserk/text?name=" + urllib.parse.quote(path))
             self.assertEqual(st, code, body)
             self.assertEqual(body.strip(), want)
 

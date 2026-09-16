@@ -37,6 +37,10 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 sampler drawer can turn words into the token ids logit_bias
                                 actually listens to
   POST /api/cancel           -> hang up on every completion in flight
+  GET  /api/berserk?name=    -> a room the berserk daemon walked, as the record it left:
+                                the room itself, its fork rows off the ledger (each with the
+                                lead its fan was finishing), and the document as it came out
+  GET  /api/berserk/text?name= -> that document alone, plain text, to read or send
   GET  /api/artifacts        -> every artifact's name, title, created, steps, kept and fan
                                 size, newest first
   GET  /api/artifact?name=   -> one artifact, whole
@@ -48,7 +52,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 name is 409, never an overwrite
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
-LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS.
+LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER.
 """
 
 from __future__ import annotations
@@ -89,6 +93,11 @@ NOTE_MAX = 120
 # once and never again, tracked by git and pushed. A room is a place to work; an artifact is
 # what came out of it.
 ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(SHELF, "artifacts"))
+# The berserk daemon's ledger, one json object per line. Read here and never written: the
+# loom is the SECOND reading of that record, not a second writer of it. The first is the
+# html page on the sheets site — same rows, same rooms, one drawn for a phone in bed and one
+# for the screen where the rooms already live. LOOM_LEDGER is the tests' scratch override.
+LEDGER = os.environ.get("LOOM_LEDGER", os.path.join(SHELF, "berserk", "ledger.jsonl"))
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -405,6 +414,9 @@ def shelf() -> list[dict]:
         names = os.listdir(SITTINGS)
     except OSError:
         return out
+    # One read of the ledger for the whole list, not one per room: `berserk` is what puts
+    # the tree control beside a room in the picker, and the picker is drawn on every boot.
+    walked = berserk_rooms()
     for fname in names:
         if not fname.endswith(".json"):
             continue
@@ -422,6 +434,8 @@ def shelf() -> list[dict]:
             "created": d.get("created") or 0,
             "updated": d.get("updated") or 0,
             "nodes": len(d.get("nodes") or {}),
+            # Nobody walked it = no fork rows = nothing for the tree screen to draw.
+            "berserk": name in walked,
         })
     out.sort(key=lambda s: s["updated"], reverse=True)
     return out
@@ -822,6 +836,94 @@ def artifacts() -> list[dict]:
     return out
 
 
+# ---- what berserk left behind -------------------------------------------------------------
+# A night the daemon walked is recorded in two places at once: the ROOM, which holds every
+# branch of every fan, and the LEDGER, which holds what the reader said about them and which
+# branch that resolved to. Neither alone is the record — and the artifact is neither, because
+# it keeps the branches nobody took as 80-character openings and not a word of what was said.
+# So the tree screen reads these two, through one route, and the sheets page reads the same
+# two. Two renderings, one record; a third instrument writing the same rows gets both for free.
+
+def ledger_rows() -> list[dict]:
+    """Every line of the ledger that parses, in the order it was written.
+
+    A line that doesn't parse is skipped and is not an error. berserk appends to this file
+    while it walks — one row per fork, over hours — so the last line is regularly half on
+    disk, and a screen that 500s for the milliseconds a json takes to land is a screen that
+    breaks at exactly the moment somebody is watching a run.
+    """
+    out = []
+    try:
+        with open(LEDGER, encoding="utf-8") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                try:
+                    row = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(row, dict):
+                    out.append(row)
+    except OSError:
+        return []
+    return out
+
+
+def berserk_rooms() -> set[str]:
+    """Which rooms berserk has walked at least one fork of."""
+    return {r["room"] for r in ledger_rows()
+            if r.get("event") is None and isinstance(r.get("room"), str)}
+
+
+def berserk_forks(name: str) -> list[dict]:
+    """One room's fork rows, in fork order. A row with an `event` is the run's own
+    bookkeeping — a page finished, a cycle finished — and has no fan to draw."""
+    rows = [r for r in ledger_rows() if r.get("event") is None and r.get("room") == name]
+    # Stable, so two rows that somehow share a fork number keep the order they were written.
+    rows.sort(key=lambda r: r.get("fork") or 0)
+    return rows
+
+
+def lead_of(doc: str) -> str:
+    """The document's unfinished last line — everything after the last newline.
+
+    Every branch of a fan is finishing THIS, and a 35-token branch nearly always leaves the
+    document mid-sentence, so without it a branch that opens on a comma reads as damage
+    rather than as the end of somebody else's sentence. berserk's own rule, restated here so
+    the screen can say what the reader was actually looking at.
+    """
+    return doc.rsplit("\n", 1)[-1]
+
+
+def berserk_text(sitting: dict) -> str:
+    """The story as it came out: root down to `current`, joined with nothing between.
+
+    The closing fan is kept and never taken, so `current` is exactly the document that fan
+    was drawn under — and mid-walk it is the last branch taken, which is the same answer for
+    a page still going. One implementation, like `artifact_text`: the screen, the download
+    and the link are the same string or they are three answers to one question.
+    """
+    return "".join(n["text"] for n in spine(sitting.get("nodes") or {}, sitting.get("current")))
+
+
+def berserk_room(sitting: dict, rows: list[dict]) -> dict:
+    """A walked room as the tree screen reads it: the room, its fork rows, the document.
+
+    `lead` is added per row and is the one thing here that is computed rather than read. It
+    is a fact about the room and not about the run, so storing it would be storing an answer
+    that can go stale against the file it describes.
+    """
+    nodes = sitting.get("nodes") or {}
+    out = []
+    for r in rows:
+        ids = r.get("order") or []
+        parent = (nodes.get(ids[0]) or {}).get("parent") if ids else None
+        row = dict(r)
+        row["lead"] = lead_of("".join(n["text"] for n in spine(nodes, parent))) if parent else ""
+        out.append(row)
+    return {"sitting": sitting, "rows": out, "text": berserk_text(sitting)}
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -839,6 +941,15 @@ class Handler(BaseHTTPRequestHandler):
 
     def _json(self, code: int, obj: dict) -> None:
         self._send(code, json.dumps(obj, ensure_ascii=False))
+
+    def _refuse(self, plain: bool, code: int, msg: str) -> None:
+        """The same refusal in whichever language the caller asked in. A route with a json
+        twin and a text twin has to say no twice, and one of them saying `{"error": …}` to a
+        browser tab is the kind of thing nobody notices until they open the link."""
+        if plain:
+            self._send(code, msg + "\n", "text/plain; charset=utf-8")
+        else:
+            self._json(code, {"error": msg})
 
     def _read_json(self) -> dict:
         n = int(self.headers.get("Content-Length", "0") or 0)
@@ -893,6 +1004,37 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(404, {"error": "no such note"})
             except (OSError, UnicodeDecodeError) as exc:
                 self._json(500, {"error": f"can't read it: {exc}"})
+            return
+
+        # The two halves of a berserk night at one url, and the document alone at the other.
+        # They refuse the same things, so they share a body; `/text` answers in plain text
+        # because whatever opens it is reading, not parsing.
+        if u.path in ("/api/berserk", "/api/berserk/text"):
+            plain = u.path.endswith("/text")
+            name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
+            if not NAME_RE.match(name):
+                self._refuse(plain, 400, "bad name")
+                return
+            try:
+                with open(sitting_path(name), encoding="utf-8") as f:
+                    sitting = json.load(f)
+            except FileNotFoundError:
+                self._refuse(plain, 404, "no such sitting")
+                return
+            except (OSError, ValueError) as exc:
+                self._refuse(plain, 500, f"can't read that room: {exc}")
+                return
+            # A room with no fork rows is a room berserk never walked — a hand-made one, or
+            # one whose ledger lines are gone. 404 and not an empty tree: a blank screen
+            # behind a link is worse than a refusal that says what is missing.
+            rows = berserk_forks(name)
+            if not rows:
+                self._refuse(plain, 404, "berserk never walked that room")
+                return
+            if plain:
+                self._send(200, berserk_text(sitting), "text/plain; charset=utf-8")
+            else:
+                self._json(200, berserk_room(sitting, rows))
             return
 
         if u.path == "/api/artifacts":

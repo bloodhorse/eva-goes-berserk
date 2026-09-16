@@ -448,7 +448,10 @@ def page_block(cycle: int, p: dict, picker: str, walking: bool) -> list[str]:
     out = [f"<h2>{html.escape(short)} · {html.escape(str(p.get('seed') or seed_name(room)))}"
            "</h2>",
            f'<div class="plumb"><a href="https://eva.x/api/artifact/text?name='
-           f'{html.escape(room)}">the walk as one document at eva.x</a></div>']
+           f'{html.escape(room)}">the walk as one document at eva.x</a> · '
+           # The same record drawn by the loom's own tree screen — the fans whole, the
+           # attempts under them, on the machine where the rooms actually live.
+           f'<a href="https://eva.x/#tree={html.escape(room)}">the tree at eva.x</a></div>']
     seed = seed_of(room)
     if seed:
         # Open, once, above the tree: the first fan finishes this text mid-sentence, so a
