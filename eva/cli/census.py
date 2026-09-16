@@ -36,7 +36,7 @@ for d in (SERVER, HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
 import eva  # noqa: E402
-from loom import NAME_RE, SITTINGS, write_sitting  # noqa: E402
+from loom import name_ok, sitting_path, write_sitting  # noqa: E402
 
 
 def temps_of(s: str) -> list[float]:
@@ -77,7 +77,9 @@ def one_line(text: str, width: int = 60) -> str:
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="census.py", description=__doc__.splitlines()[0])
-    ap.add_argument("--name", required=True, help="the room to make (letters, digits, _ . -)")
+    ap.add_argument("--name", required=True,
+                    help="the room to make; a path files it in a folder "
+                         "(experiments/basin/smoke-01)")
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--doc", help="a file whose contents become the root, verbatim")
     src.add_argument("--empty", action="store_true", help="an empty root: the model starts it")
@@ -94,12 +96,12 @@ def main(argv: list[str]) -> int:
                          "--set ignore_eos=true (repeatable)")
     a = ap.parse_args(argv[1:])
 
-    if not NAME_RE.match(a.name or ""):
-        print("names are letters, digits, _ . - and up to 64 of them", file=sys.stderr)
+    if not name_ok(a.name):
+        print("names are letters, digits, _ . - and / for a folder", file=sys.stderr)
         return 2
     # A no-op on a name that is taken, exactly as eva's /new is: this writes for hours
     # unattended, and the one thing it must never do is land on top of a real room.
-    if os.path.exists(os.path.join(SITTINGS, a.name + ".json")):
+    if os.path.exists(sitting_path(a.name)):
         print(f"{a.name} already exists, nothing changed", file=sys.stderr)
         return 1
     if a.n < 1:
@@ -193,7 +195,7 @@ def main(argv: list[str]) -> int:
 
     live_nodes = sum(1 for n in sitting["nodes"].values() if n["kind"] == "model")
     print(f"{'cut at' if cut else 'done:'} {live_nodes} branches · "
-          f"{os.path.join(SITTINGS, a.name + '.json')}", flush=True)
+          f"{sitting_path(a.name)}", flush=True)
     return 0
 
 

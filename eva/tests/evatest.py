@@ -83,7 +83,7 @@ def fresh(bare: bool = False) -> eva.Eva:
 
 def on_disk(ev: eva.Eva) -> dict:
     """The sitting as the next process would read it — never the object in memory."""
-    with open(os.path.join(SHELF, ev.sitting["name"] + ".json"), encoding="utf-8") as f:
+    with open(loom.sitting_path(ev.sitting["name"]), encoding="utf-8") as f:
         d = json.load(f)
     assert loom.check(d) == "", loom.check(d)
     return d
@@ -141,6 +141,34 @@ class NewSitting(unittest.TestCase):
         ev = eva.Eva(out=io.StringIO(), colour=False)
         self.assertFalse(ev.new("../escape"))
         self.assertIsNone(ev.sitting)
+        self.assertIn("names are letters", screen(ev))
+
+    def test_a_name_with_slashes_is_a_room_in_a_folder(self):
+        # Same rule as the page and the server, imported from loom and not restated here:
+        # a room's name IS its path under the sittings dir.
+        name = f"tf{uuid.uuid4().hex[:6]}/basin/smoke-01"
+        ev = eva.Eva(out=io.StringIO(), read=lambda p: "", colour=False)
+        self.assertTrue(ev.new(name, True), screen(ev))
+        self.assertTrue(os.path.isfile(os.path.join(SHELF, *name.split("/")) + ".json"),
+                        "the folders on the way are made by write_sitting")
+        self.assertEqual(on_disk(ev)["name"], name)
+        self.assertIn(name, [s["name"] for s in loom.shelf()])
+        # and it opens by that path, in a second process's worth of eva
+        again = eva.Eva(out=io.StringIO(), colour=False)
+        self.assertTrue(again.open(name), screen(again))
+        self.assertEqual(again.sitting["name"], name)
+        # /new takes one too, and a taken path is the same no-op a taken name is
+        third = eva.Eva(out=io.StringIO(), read=lambda p: "", colour=False)
+        third.dispatch(f"/new bare tf{uuid.uuid4().hex[:6]}/one/two")
+        self.assertIn("/one/two", third.sitting["name"])
+        third.dispatch("/new " + name)
+        self.assertIn("already exists", screen(third))
+
+    def test_the_paths_a_name_may_not_take(self):
+        ev = eva.Eva(out=io.StringIO(), colour=False)
+        for bad in ("../escape", "a//b", ".trash/x", "a/", "/a", "a/./b"):
+            self.assertFalse(ev.new(bad), bad)
+            self.assertIsNone(ev.sitting)
         self.assertIn("names are letters", screen(ev))
 
 
@@ -619,7 +647,7 @@ class Shelf(unittest.TestCase):
         ev.dispatch("you up")
         at = ev.sitting["current"]
         marked = [k["id"] for k in ev.kids(at)[:2]]
-        with open(os.path.join(SHELF, ev.sitting["name"] + ".json"), encoding="utf-8") as f:
+        with open(loom.sitting_path(ev.sitting["name"]), encoding="utf-8") as f:
             d = json.load(f)
         for nid in marked:
             d["nodes"][nid]["kept"] = True

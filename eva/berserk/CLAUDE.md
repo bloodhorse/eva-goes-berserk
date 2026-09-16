@@ -112,6 +112,16 @@ the anthology below, not the walk; the loom draws the same night again on its tr
 What the picker said rides on the chosen node's `meta.berserk` with `used`, so a fork is
 readable at eva.x months later without the ledger open beside it.
 
+**`--folder <path>`** files the night's rooms under a folder on the shelf
+(`--folder experiments/berserk` → `shelf/sittings/experiments/berserk/berserk-cNN-pNN.json`);
+without it they land at the top, as they always have. It moves the FILE and nothing else: the
+ledger, the artifact, `state.json` and every `#tree=` link keep the bare `berserk-cNN-pNN`,
+because that name is the night — a cycle and a page — and not a statement about where somebody
+tidied it to. The loom resolves the one into the other (`loom.resolve_room`, used by `load` and
+so by `anthology.py`), which is also why a night can be moved by hand afterwards and still
+open. A bare name already answered to somewhere on the shelf stops the page before it starts,
+the same refusal a taken path gets.
+
 ## The page bekh actually reads
 
 `anthology.py` renders a cycle — or several, `--cycles 80,81` — as **one html page** in the sheets
@@ -230,6 +240,7 @@ uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --brakes off   # no 
 uv run --python 3.12 eva/berserk/berserk.py page --cycle 9 --forks 1 --fan 8 --verify none
 uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --picker random   # nobody asked; the branch is drawn by lot
 uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --beats shelf/berserk/beats/first-person.txt   # a line posed above every fan
+uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --folder experiments/berserk   # the rooms filed; the ledger keeps the bare name
 uv run --python 3.12 eva/berserk/monitor.py                           # the dashboard; --once for a frame
 ```
 
@@ -271,6 +282,11 @@ fork and lands four `tries` per fan on the ledger — each with its own why — 
 reaches the fan's llama calls, no markdown report is written at all, state is gone and the
 heartbeat remains, and a second run refuses the same room. Sheets host and ntfy are the empty
 string there: a test run must never scp to the mini or push to bekh's phone.
+
+**Filed** walks one page with `--folder nights/eight` and checks the split: the room at that
+path with its own path inside it, every ledger row and the artifact under the bare name, the
+bare name still resolving to the file (which is what `anthology.py` opens a night by), and a
+`--folder` that isn't a path refused before a room is made.
 
 **Beats** and **ByLot** are the two newest classes. Beats walks a score of two over three fans
 and reads the room back: each beat on its own line, in order, as a posed human node the fan

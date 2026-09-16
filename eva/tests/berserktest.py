@@ -551,6 +551,52 @@ class MarginRandom(unittest.TestCase):
         self.assertFalse(os.path.exists(self.s["log"]), "claude was never asked")
 
 
+class Filed(unittest.TestCase):
+    """`--folder` puts the night's rooms on a shelf of their own and changes nothing else.
+
+    The ledger, the artifact and every `#tree=` link keep the BARE name, because that name
+    is the night's identity — the cycle and the page — and not a statement about where
+    somebody tidied the file to. The loom resolves one into the other, which is the whole
+    reason a walked room can be moved at all.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.s = scratch()
+        cls.r = run(cls.s["env"], "page", "--cycle", "8", "--page", "1", "--forks", "1",
+                    "--fan", "2", "--picker", "random", "--folder", "nights/eight")
+        cls.bare = "berserk-c08-p01"
+        cls.at = "nights/eight/" + cls.bare
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.at, cls.bare)
+        shutil.rmtree(os.path.join(SHELF, "nights"), ignore_errors=True)
+
+    def test_the_room_is_in_the_folder_and_says_so(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        path = os.path.join(SHELF, "nights", "eight", self.bare + ".json")
+        self.assertTrue(os.path.isfile(path), self.r.stderr[-2000:])
+        self.assertEqual(json.loads(read(path))["name"], self.at)
+
+    def test_the_ledger_and_the_artifact_keep_the_bare_name(self) -> None:
+        for r in rows(self.s["berserk"]):
+            self.assertEqual(r["room"], self.bare)
+        self.assertTrue(os.path.isfile(loom.artifact_path(self.bare)))
+
+    def test_the_bare_name_still_finds_it(self) -> None:
+        self.assertEqual(loom.resolve_room(self.bare), self.at)
+        # which is how anthology.py opens a night it did not walk itself
+        self.assertEqual(berserk.load(self.bare)["name"], self.at)
+
+    def test_a_folder_that_is_not_a_path_is_refused(self) -> None:
+        r = run(self.s["env"], "page", "--cycle", "9", "--folder", "../escape")
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("--folder", r.stderr)
+        self.assertFalse(os.path.exists(loom.sitting_path("berserk-c09-p01")))
+
+
 class TheLead(unittest.TestCase):
     """A 35-token branch ends anywhere, so the document almost always stands mid-sentence and
     the branches under it open on punctuation. These are the real openings from the first

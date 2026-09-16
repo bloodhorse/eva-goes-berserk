@@ -50,8 +50,11 @@ HERE = os.path.dirname(os.path.realpath(__file__))
 SERVER = os.path.join(os.path.dirname(HERE), "server")
 if SERVER not in sys.path:
     sys.path.insert(0, SERVER)
-from loom import (NAME_RE, SITTINGS, LOOM_ONLY, check, shelf, spread_temps,  # noqa: E402
-                  trim_probs, write_sitting)
+# name_ok and sitting_path and never a path spelled here: a room name is a path under the
+# sittings dir now (`experiments/basin/s-01`), and two places that turn a name into a file
+# are two rules about what a folder is.
+from loom import (LOOM_ONLY, check, name_ok, shelf, sitting_path,  # noqa: E402
+                  spread_temps, trim_probs, write_sitting)
 
 LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
 COMPLETE_TIMEOUT = 900
@@ -958,10 +961,10 @@ class Eva:
         return ans
 
     def open(self, name: str) -> bool:
-        if not NAME_RE.match(name or ""):
-            self.err("names are letters, digits, _ . - and up to 64 of them")
+        if not name_ok(name):
+            self.err("names are letters, digits, _ . - and / for a folder")
             return False
-        path = os.path.join(SITTINGS, name + ".json")
+        path = sitting_path(name)
         try:
             with open(path, encoding="utf-8") as f:
                 d = json.load(f)
@@ -982,12 +985,12 @@ class Eva:
         return True
 
     def new(self, name: str, is_bare: bool = False, root_text: str | None = None) -> bool:
-        if not NAME_RE.match(name or ""):
-            self.err("names are letters, digits, _ . - and up to 64 of them")
+        if not name_ok(name):
+            self.err("names are letters, digits, _ . - and / for a folder")
             return False
         # A no-op on a name that's taken: without this, `/new ss` wrote an empty tree over a
         # real room, with no copy anywhere. Opening it is one command away and says so.
-        if os.path.exists(os.path.join(SITTINGS, name + ".json")):
+        if os.path.exists(sitting_path(name)):
             self.err(f"{name} already exists, nothing changed — /open {name}")
             return False
         # One line of scene-setting and an empty seed, and that is the whole of it. No
@@ -1153,7 +1156,8 @@ def main(argv: list[str]) -> int:
             return 0
     if not name:
         return 0
-    if not os.path.isfile(os.path.join(SITTINGS, name + ".json")):
+    # A name that doesn't read at all goes to `new`, which is the one place that says why.
+    if not name_ok(name) or not os.path.isfile(sitting_path(name)):
         if not ev.new(name):
             return 1
     elif not ev.open(name):

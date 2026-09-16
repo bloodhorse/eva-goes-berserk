@@ -17,6 +17,28 @@ Route list at the top of the file. The one route that reads something it never w
 `LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_PAGE` that the tests and the mobile rig set —
 production leaves them alone.
 
+**A room's name IS its path** under `sittings/`, without the `.json`:
+`experiments/basin/smoke-01` is one file two folders deep, and that string is also the `name`
+inside the file, what `/api/sitting?name=` takes and what the page shows. A folder exists
+because a room is in it — nothing on disk declares one, there are no index files, and a folder
+the last room leaves is dropped. One validator, `name_ok`, stands in front of every name that
+becomes a file (`sitting_path` raises on anything it refuses): segments of `[A-Za-z0-9_.-]`,
+up to 64 each, no empty segment and **no segment starting with a dot**, which is what keeps
+`.` , `..` and `.trash` unaddressable however they are spelled. An artifact name is still one
+flat segment — artifacts are not filed. `POST /api/move {"from","to"}` moves a room or a whole
+folder (rename is a move): one `os.rename`, folders made on the way, the emptied ones pruned up
+to but never including the shelf root, `name` re-stamped inside every file that moved and
+`updated` left alone. 400 on a path that doesn't read or a folder into itself, 404 on nothing
+there, 409 on a name already taken by a room **or** a folder. `.trash` mirrors the folders, so
+two rooms called `smoke-01` can both be thrown away.
+
+**A bare name still finds a filed room.** The berserk ledger names a room the way the daemon
+made it (`berserk-c80-p01`) and every `#tree=` link the sheets pages ever printed spells it
+that way, so `resolve_room` takes a path first and then, for a name with no slash, the unique
+room whose last segment matches — two rooms with one leaf is a question, not a pick, and comes
+back 404. `/api/berserk`, `/api/berserk/text`, the `berserk` flag on the listing and
+`berserk.load` (which is how `anthology.py` opens a room) all go through it.
+
 ## The page
 
 `front/loom.html` (Codex's single-column redesign, 2026-09-15, on the palette settled in the
@@ -26,9 +48,19 @@ that line's own fan on the choose screen, because a fan of forty is read as a pi
 through one at a time (the `‹ ›` walk it replaced is gone) — edit in place (a model line bekh
 edits is **posed** forever). A fan opens a separate "choose an answer" screen as its first answer
 lands; picking one returns to the dialogue. Everything else hides behind the corner menu: the
-room picker, **basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing
-at all — no header, no names, no stop strings, whitespace kept), **rename** (rooms get random hex
-file names; the title is display only, ≤120 chars), **clear** (same room run again: the old tree is
+**room tree** (the shelf's folders, drawn from the room paths and from nothing else — folders
+first then rooms, alphabetical, `▸`/`▾`, closed by default, which folds are open remembered
+per browser in `localStorage`; the open room is named once at the top and marked in the accent
+on its own row, and the folders on the way to it are unfolded for it), **basic** / **bare**
+(new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all — no header, no names,
+no stop strings, whitespace kept; the field under those two buttons says where it goes — blank
+is a random name at the top of the shelf, `basin/` a random name in that folder, `basin/s-01`
+that room), **rename** (rooms get random hex file names; the title is display only, ≤120 chars),
+**move to…** (on the open room from the toolrow, on a folder from a `move` beside it: a sheet
+listing the folders that exist plus one field for a path that doesn't — a choice fills the
+field, confirming posts `/api/move`, and a room that moves under the page's feet is re-opened
+from its new path, because the name inside the file is what the next save posts back),
+**clear** (same room run again: the old tree is
 copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, file moves to
 `.trash`), view alternatives, continue from here, **sampler**, **storage** (note names as links, `+`
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
@@ -87,9 +119,10 @@ with the `lead` each fan was finishing computed per row, and the document root�
 string; `GET /api/berserk/text?name=` is that string alone, which is what **export** reads and
 links to. 404 on a room with no fork rows, and a half-written last ledger line is skipped rather
 than raised, because berserk appends to that file for hours while somebody watches. The way in is
-the **tree** control beside the room picker — shown when the picked room's `/api/sittings` row
+the **tree** control beside the open room's name — shown when that room's `/api/sittings` row
 says `berserk: true`, one ledger read for the whole list — or the url `#tree=<room>`, which is
-what the sheets page links to. Top to bottom: the seed as the folded card, then per fan its lead
+what the sheets page links to and which takes a path or the bare name the ledger keeps,
+wherever the room has since been filed. Top to bottom: the seed as the folded card, then per fan its lead
 in dim mono, the branches **whole** and lettered `a b c` in the order the reader saw them (the one
 taken solid on the accent, the rest dimmer, an empty one a single `(empty)` line, each carrying
 its margin note under `margin`), and under the row every ask that fan cost — `attempt 2 ·
@@ -119,11 +152,16 @@ picks, empty return fans; `/more /fan N /back /prune /edit /say /seed /doc /set 
 name /quit`. It talks straight to llama-server, streaming, and saves through `write_sitting`.
 `/new` on a taken name is a no-op. It doesn't read titles yet, so page-made rooms show as hex
 names there, and it takes any argument as a room name (`eva --help` made a room). The page and
-eva on one room: last writer wins, by the dry-run law.
+eva on one room: last writer wins, by the dry-run law. **Names are paths**, through loom's own
+validator and never a second copy of it: `eva experiments/basin/smoke-01`,
+`/new bare experiments/basin/smoke-02`, `/open experiments/witch/witch-bekh-10` — the folders on
+the way are made by `write_sitting`, and the shelf listing spells every room as its path.
 
 **census** (`cli/census.py`): one document, n continuations across a set of temperatures,
 unattended; the room is left standing on its root with every branch hanging off it, which is the
-shape the choose screen already reads.
+shape the choose screen already reads. `--name` is a path too
+(`--name experiments/basin/free-01`), which is how a night of thirty censuses files itself as
+it is made instead of landing in one flat list.
 
 **walk** (`cli/walk/`): seed → short fan → pick (`walk.py`), fork a room at a branch and cut it
 (`fork.py`), fan wide under a branch (`fan_under.py`), read a naming fan (`names.py`). Its README
@@ -132,7 +170,10 @@ file directly — don't have the room open in the page while one runs.
 
 ## Tests
 
-`tests/` — `loomtest.py` (every server route, notes and artifacts included), `evatest.py`,
+`tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Folders`:
+the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
+folder with its collisions and its pruning, and a walked room answering to its bare name after
+it moves), `evatest.py`,
 `censustest.py`, `berserktest.py`, all against `tests/stub_llama.py`, a fake llama-server; scratch
 dirs via the env overrides, never the real shelf. One process, all four:
 

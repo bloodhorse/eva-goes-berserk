@@ -242,7 +242,13 @@ def ledger_rows() -> list[dict]:
 # ---- the room ---------------------------------------------------------------------------
 
 def load(room: str) -> dict:
-    return json.load(open(sitting_path(room), encoding="utf-8"))
+    """A room off the shelf, by path or by the bare name the ledger keeps.
+
+    Through loom's resolver, because the ledger records a room as `berserk-c80-p01` and the
+    room itself may have been filed into a folder since — and `anthology.py` reads its rooms
+    through this function, so a night moved into `experiments/` still renders.
+    """
+    return json.load(open(sitting_path(loom.resolve_room(room) or room), encoding="utf-8"))
 
 
 def save(s: dict) -> None:
@@ -272,11 +278,18 @@ def seed_files() -> list[str]:
 
 
 def room_name(cycle: int, page: int) -> str:
+    """The bare name, which is what the LEDGER records whatever folder the room is filed in.
+    A night is identified by its cycle and page, not by where somebody tidied it to."""
     return f"berserk-c{cycle:02d}-p{page:02d}"
 
 
+def room_at(folder: str, name: str) -> str:
+    """Where the file goes: the bare name, under `--folder` if there is one."""
+    return f"{folder}/{name}" if folder else name
+
+
 def make_room(cycle: int, page: int, seed_path: str, predict: int,
-              brakes: str = "on") -> dict:
+              brakes: str = "on", folder: str = "") -> dict:
     """A bare room standing on the seed: no header, no speaker names, no stop strings — the
     seed is a found document and anything we add to it is a road sign pointing at the web.
 
@@ -288,8 +301,12 @@ def make_room(cycle: int, page: int, seed_path: str, predict: int,
     Refuses a name already on the shelf. This daemon writes unattended; an overwrite here
     would eat a finished walk and nobody would be awake to notice.
     """
-    name = room_name(cycle, page)
-    if os.path.exists(sitting_path(name)):
+    bare = room_name(cycle, page)
+    name = room_at(folder, bare)
+    # Both spellings: the file at that path, and any room already answering to the bare name
+    # somewhere else on the shelf — the ledger and the artifact are keyed by the bare name,
+    # so a second `berserk-c80-p01` in another folder would make the night unreadable.
+    if os.path.exists(sitting_path(name)) or loom.resolve_room(bare):
         raise SystemExit(f"{name} already exists — not overwriting")
     seed = open(seed_path, encoding="utf-8").read()
     s = eva.blank(name, is_bare=True, root_text=seed)
@@ -846,7 +863,7 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
 
 def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify: str,
             picker: str, ask: str, brakes: str = "on", beats: list[str] | None = None,
-            beats_name: str = "") -> dict:
+            beats_name: str = "", folder: str = "") -> dict:
     """A seed, `forks` picking forks, one closing fan, an artifact, an html page on sheets.
 
     The closing fan is the whole reason the artifact comes out shaped like a hand-made one:
@@ -856,6 +873,10 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
     `beats` is one line per fan, the closing one included, and runs out rather than repeats:
     a score of five on a page of eight leaves the last three fans to continue whatever the
     document had got to on its own.
+
+    `folder` is where the room's FILE goes and nothing else: the ledger, the artifact and
+    every `#tree=` link keep the bare name, so a run filed under `experiments/` is still
+    read the way every night before it is read, and the loom resolves the one into the other.
     """
     beats = beats or []
     seeds = seed_files()
@@ -863,19 +884,22 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
     # five seeds and five pages, a fixed order would give every cycle the same first page.
     seed_path = seeds[(cycle - 1 + page - 1) % len(seeds)]
     room = room_name(cycle, page)
-    log(f"page {page}: {room} on {os.path.basename(seed_path)}")
-    make_room(cycle, page, seed_path, predict, brakes)
+    # `at` is the file, `room` is the name the record keeps. Everything that touches the
+    # disk takes `at`; everything that goes on the ledger or into the artifact takes `room`.
+    at = room_at(folder, room)
+    log(f"page {page}: {at} on {os.path.basename(seed_path)}")
+    make_room(cycle, page, seed_path, predict, brakes, folder)
 
     fork_rows, err = [], ""
     try:
         for f in range(1, forks + 1):
             ctx = {"cycle": cycle, "page": page, "room": room, "fork": f}
             state_write(cycle=cycle, page=page, room=room, fork=f, started=RUN_STARTED)
-            fork_rows.append(do_fork(room, fan_n, False, ctx, verify, picker, ask,
+            fork_rows.append(do_fork(at, fan_n, False, ctx, verify, picker, ask,
                                      beats[f - 1] if f - 1 < len(beats) else ""))
         ctx = {"cycle": cycle, "page": page, "room": room, "fork": forks + 1}
         state_write(cycle=cycle, page=page, room=room, fork=forks + 1, started=RUN_STARTED)
-        last = do_fork(room, fan_n, True, ctx, verify, picker, ask,
+        last = do_fork(at, fan_n, True, ctx, verify, picker, ask,
                        beats[forks] if forks < len(beats) else "")
         fork_rows.append(last)
     except RuntimeError as exc:
@@ -887,7 +911,7 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
         return {"room": room, "error": str(exc), "bits": 0}
 
     beat(cycle=cycle, page=page, room=room, fork=forks + 1, branch=0, phase="artifact")
-    s = load(room)
+    s = load(at)
     art = loom.build_artifact(s, parent=s["current"], kept=last["keep_ids"], name=room)
     art["model"] = loom.model_info()
     written = True
@@ -1051,6 +1075,9 @@ def main() -> int:
                        help="DRY and the repeat penalty on the room's writing calls")
         p.add_argument("--beats", default=None,
                        help="a file of one line per fan, posed into the document before it")
+        p.add_argument("--folder", default="",
+                       help="file the rooms under this folder on the shelf "
+                            "(experiments/berserk); the ledger keeps the bare name")
         if name == "cycle":
             p.add_argument("--pages", type=int, default=5)
         if name == "page":
@@ -1073,22 +1100,26 @@ def main() -> int:
         if ask:
             log("--picker random has no ask: the line given is not used and not recorded")
             ask = ""
+    folder = a.folder.strip("/")
+    if folder and not loom.name_ok(folder):
+        raise SystemExit("--folder is path segments of letters, digits, _ . - "
+                         "and none of them starting with a dot")
     beats, beats_name = [], ""
     if a.beats:
         beats = read_beats(a.beats)
         beats_name = os.path.basename(a.beats)
         log(f"beats {beats_name}: {len(beats)} lines")
     log(f"cycle {cycle:02d} · picker {a.picker} · verify {verify} · brakes {a.brakes} · "
-        f"ask {ask!r}")
+        f"{('folder ' + folder + ' · ') if folder else ''}ask {ask!r}")
 
     if a.cmd == "page":
         r = do_page(cycle, a.page, a.forks, a.fan, a.predict, verify, a.picker, ask,
-                    a.brakes, beats, beats_name)
+                    a.brakes, beats, beats_name, folder)
         state_clear()
         return 1 if r.get("error") else 0
     for page in range(1, a.pages + 1):
         do_page(cycle, page, a.forks, a.fan, a.predict, verify, a.picker, ask, a.brakes,
-                beats, beats_name)
+                beats, beats_name, folder)
     finish_cycle(cycle, ask, a.brakes, beats_name)
     # Only here, and deliberately not in a finally: state.json outliving the process is how
     # the monitor says "it died mid-walk". Wipe it on a crash and a dead run looks finished.

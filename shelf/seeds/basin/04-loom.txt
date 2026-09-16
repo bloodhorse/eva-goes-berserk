@@ -1,0 +1,5 @@
+(The) Loom, short for the Loom of Time, is an interface to probabilistic generative models which allows users to efficiently generate, navigate, save, and filter multiverses. "Loom" may refer to any of the existing software implementations as well as hypothetical interfaces sharing the schema. Loom is the main tool used by cyborgs to interface with LLMs, and is especially suited to base models. The act of using Loom is sometimes called "looming" or "weaving".
+
+Motivating and guiding the design of Loom is the observation that the stochasticity of simulators becomes a powerful advantage instead of a drawback when one can apply selection pressure to its outputs, the choice of where to branch from is an important lever, and the tree- or graph-shaped data structure implicit in this interaction pattern is useful to explicitly store and visualize.
+
+The Loom of Time was in fact named by

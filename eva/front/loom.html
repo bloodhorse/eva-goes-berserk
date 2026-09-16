@@ -87,11 +87,41 @@
     width:min(340px, calc(100vw - 36px)); max-height:calc(100dvh - 90px); overflow-y:auto;
     background:var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:20px;
     box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
-  .shelfrow{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+  .shelfrow{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
   #curation{margin-bottom:12px;}
   #curation:empty{display:none;}
-  #pick{flex:1; width:100%; text-overflow:ellipsis;}
+  /* The open room, named once at the top of the menu. One line, cut with an ellipsis: the
+     tree below marks the same room in the accent, so this is a heading and not the picker —
+     a second full-width title fighting the tree for the eye is what it must not be. */
+  #here{flex:1; min-width:0; color:var(--ghost); white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis;}
+  #here:empty::before{content:'no room open';}
   #treebtn{flex-shrink:0; white-space:nowrap;}
+  /* The shelf is a tree because a room's NAME is its path: thirty rooms from one night are
+     one folder row here until somebody opens it. Folders are drawn from those paths and
+     from nothing else — there is no file on disk that says a folder exists, and there must
+     not be, or the shelf and the menu would be able to disagree about what is on it.
+     Indentation is padding on the row and never a nested box, so a deep room can wrap its
+     label instead of pushing the menu sideways. */
+  #shelftree{max-height:min(46vh, 300px); overflow-y:auto; scrollbar-width:thin;
+    margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px;}
+  #shelftree .frow, #shelftree .rrow{display:flex; align-items:baseline; gap:10px;}
+  #shelftree button{padding:3px 0; font-size:14px;}
+  #shelftree .fold, #shelftree .roomlink{flex:1; text-align:left; min-width:0;
+    overflow-wrap:anywhere;}
+  #shelftree .movef{flex-shrink:0; opacity:0; font-size:13px;}
+  #shelftree .frow:hover .movef, #shelftree .frow:focus-within .movef{opacity:1;}
+  #shelftree .fold{color:var(--ink);}
+  /* the one mark that says which room the dialogue behind this menu is showing */
+  #shelftree .rrow.here .roomlink{color:var(--accent);}
+  #movebox{display:none; flex-wrap:wrap; align-items:center; gap:12px;
+    border-top:1px solid var(--line); margin-top:12px; padding-top:16px;}
+  #movebox.on{display:flex;}
+  #movewhat, #movefolders, #movepath{width:100%;}
+  #movefolders{display:flex; flex-direction:column; max-height:30vh; overflow-y:auto;
+    scrollbar-width:thin;}
+  #movefolders .folderpick{text-align:left; padding:4px 0;}
+  #newname{width:100%; margin-top:12px;}
   .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--live);}
   .dot.off{background:var(--hot);}
   .toolrow{display:flex; gap:20px; flex-wrap:wrap;}
@@ -385,6 +415,10 @@
     .blk .gut .ghostbtn{padding:10px 14px 10px 0;}
     .fork{padding:8px 12px; font-size:15px;}
     input, select, textarea{font-size:16px;}
+    /* The tree is walked with a thumb: every row is a tap target, and a folder's move
+       control has no hover to appear on. 40px is the smallest row a thumb hits reliably. */
+    #shelftree button, #movefolders button{min-height:40px; padding:8px 0;}
+    #shelftree .movef{opacity:1; padding-left:10px;}
   }
   /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
      left 214px to read in. Keep just enough top to clear the fixed menu button (58px). */
@@ -412,21 +446,27 @@
   </button>
   <aside id="tools" aria-label="Sitting controls" hidden>
     <div class="shelfrow">
-      <select id="pick" aria-label="Which sitting"></select>
-      <!-- Only for a room berserk walked: the picker is a select, so the control sits beside
-           it rather than beside the option, and it appears when such a room is the one
-           picked. Every other room has no ledger rows and nothing to draw. -->
+      <span id="here" title="the room that is open"></span>
+      <!-- Only for a room berserk walked: it sits beside the name of the OPEN room rather
+           than on its row in the tree, because there is one open room and the control is
+           about that one. Every other room has no ledger rows and nothing to draw. -->
       <button class="ghostbtn" id="treebtn" type="button" hidden title="berserk's walk of this room, as a tree">Tree</button>
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
+    <div id="shelftree" role="tree" aria-label="Which room"></div>
     <div id="curation" class="sys"></div>
     <div class="toolrow">
       <button class="ghostbtn" id="newbtn" type="button" title="a new room: the chat-log header, your lines and the other side's">Basic</button>
       <button class="ghostbtn" id="newbarebtn" type="button" title="a new bare room: no header, no names, you write and it continues">Bare</button>
       <button class="ghostbtn" id="renamebtn" type="button">Rename</button>
+      <button class="ghostbtn" id="movebtn" type="button" title="file this room in a folder">Move to…</button>
       <button class="ghostbtn" id="clearbtn" type="button" title="start this room over; the old run is kept">Clear</button>
       <button class="ghostbtn" id="delbtn" type="button">Delete</button>
     </div>
+    <!-- Where the next Basic or Bare room goes. A name is a path, so this is the only field
+         on the page that files something: blank is a random name at the top of the shelf,
+         `basin/` is a random name in that folder, `basin/smoke-01` is that room. -->
+    <input id="newname" placeholder="folder/ or folder/name (blank = random)" aria-label="Where a new room goes" maxlength="512" autocomplete="off" spellcheck="false">
     <button class="ghostbtn" id="choicesbtn" type="button">View alternatives</button>
     <button class="ghostbtn" id="fanbtn" type="button">Continue from here</button>
     <button class="ghostbtn" id="samp" type="button" aria-expanded="false" aria-controls="sampwrap">Sampler</button>
@@ -439,6 +479,16 @@
       <input id="renamename" placeholder="Room name" aria-label="Room name" maxlength="120" autocomplete="off" spellcheck="false">
       <button class="ghostbtn" id="renameok" type="button">Save name</button>
       <button class="ghostbtn" id="renameno" type="button">Cancel</button>
+    </div>
+    <!-- Move to…: the folders that exist as choices, and one field for a path that doesn't
+         yet. A choice fills the field rather than moving on the tap, so the last thing
+         before the move is always the whole new path, readable. -->
+    <div id="movebox">
+      <div id="movewhat" class="sys"></div>
+      <div id="movefolders"></div>
+      <input id="movepath" placeholder="folder/name" aria-label="Where it goes" maxlength="512" autocomplete="off" spellcheck="false">
+      <button class="ghostbtn" id="moveok" type="button">Move</button>
+      <button class="ghostbtn" id="moveno" type="button">Cancel</button>
     </div>
     <button class="ghostbtn" id="storebtn" type="button" aria-expanded="false" aria-controls="storewrap">Storage</button>
     <button class="ghostbtn" id="artbtn" type="button" aria-expanded="false" aria-controls="artwrap">Artifacts</button>
@@ -616,11 +666,21 @@ const FIELDS = [
 
 const $ = id => document.getElementById(id);
 const blocksEl = $('blocks'), cardsEl = $('cards');
-const pickEl = $('pick'), sampEl = $('sampler'), turnEl = $('turn');
+const treeEl = $('shelftree'), sampEl = $('sampler'), turnEl = $('turn');
+
+// A room's name is its path under the sittings folder. The rule is loom.py's `name_ok`,
+// restated here so the page can refuse a path in words instead of posting it and reading a
+// 400 back — the server is still the one that decides, as it is for every other name.
+const SEG = /^[A-Za-z0-9_.-]{1,64}$/;
+const pathOK = s => typeof s === 'string' && !!s && s.length <= 512 &&
+  s.split('/').every(seg => !seg.startsWith('.') && SEG.test(seg));
+const leafOf = s => (s || '').split('/').pop();
 
 // ---- state ---------------------------------------------------------------------------
 let sitting = null;      // the whole tree, and the only state that matters
 let shelf = [];          // what /api/sittings last said
+let picked = '';         // the room the tree has marked — always a full path
+let moving = null;       // {path, folder} while the move sheet is open
 let generation = 0;      // bumped by anything that makes a running fan stale
 let running = false;
 let stopping = false;
@@ -635,6 +695,18 @@ let saveQueue = Promise.resolve();
 const KEY = 'loom.sitting';
 function remembered(){ try{ return localStorage.getItem(KEY) || ''; }catch(e){ return ''; } }
 function remember(n){ try{ localStorage.setItem(KEY, n); }catch(e){} }
+// Which folders are open is this browser's business and not the shelf's: the same shelf
+// read on the phone and on the desk wants different things unfolded, and a folder state
+// stored on disk would be a second thing to move when a room moves.
+const FKEY = 'loom.folders';
+function foldersOpen(){
+  try{
+    const v = JSON.parse(localStorage.getItem(FKEY) || '[]');
+    return new Set(Array.isArray(v) ? v.filter(s => typeof s === 'string') : []);
+  }catch(e){ return new Set(); }
+}
+function rememberFolders(){ try{ localStorage.setItem(FKEY, JSON.stringify([...opened])); }catch(e){} }
+let opened = foldersOpen();
 
 const hex = n => Array.from(crypto.getRandomValues(new Uint8Array(n)))
   .map(b => b.toString(16).padStart(2, '0')).join('');
@@ -656,7 +728,11 @@ function sys(text, err){
 function menu(open){
   $('tools').hidden = !open;
   $('menubtn').setAttribute('aria-expanded', String(open));
-  if(!open) $('renamebox').classList.remove('on');
+  if(!open){
+    $('renamebox').classList.remove('on');
+    $('movebox').classList.remove('on');
+    moving = null;
+  }
 }
 function showDialogue(){
   choosing = false;
@@ -1403,9 +1479,21 @@ function hashRoom(){
 // The control beside the picker, for the room that is picked. A room nobody walked has no
 // ledger rows, so the button is not merely disabled there — there is nothing behind it.
 function gateTree(){
-  const name = pickEl.value || (sitting && sitting.name) || '';
+  const name = picked || (sitting && sitting.name) || '';
   const row = shelf.find(s => s.name === name);
   $('treebtn').hidden = !(row && row.berserk);
+}
+
+// A name off a link or off localStorage, as a room on the shelf. The `#tree=` links the
+// sheets pages print carry the bare name berserk made the room with, so a room filed into
+// a folder since must still answer to it — the same rule the server resolves by, and the
+// same refusal when two rooms share a last segment.
+function onShelf(want){
+  if(!want) return '';
+  if(shelf.some(s => s.name === want)) return want;
+  if(want.includes('/')) return '';
+  const hits = shelf.filter(s => leafOf(s.name) === want);
+  return hits.length === 1 ? hits[0].name : '';
 }
 
 // ---- the tree ------------------------------------------------------------------------
@@ -1927,11 +2015,15 @@ function gate(){
   $('send').setAttribute('aria-label', stopping ? 'Stopping' : running ? 'Stop generating' : 'Send');
   $('send').title = $('send').getAttribute('aria-label').toLowerCase();
   $('fanbtn').disabled = $('more').disabled = !on || running || stopping || saving;
-  for(const id of ['pick', 'newbtn', 'newbarebtn', 'clearbtn', 'delbtn', 'renameok', 'renameno']) $(id).disabled = stopping || saving;
+  for(const id of ['newbtn', 'newbarebtn', 'clearbtn', 'delbtn', 'renameok', 'renameno',
+                   'moveok', 'moveno']) $(id).disabled = stopping || saving;
+  for(const b of treeEl.querySelectorAll('button')) b.disabled = stopping || saving;
   $('clearbtn').disabled ||= !on;
   $('delbtn').disabled ||= !on;
   $('renamebtn').disabled = !on || running || stopping || saving;
+  $('movebtn').disabled = !on || running || stopping || saving;
   $('renamename').disabled = saving;
+  $('movepath').disabled = saving;
   $('choicesbtn').disabled = !on || !alternativesFrom();
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
@@ -2289,15 +2381,89 @@ function buildSampler(){
 }
 
 // ---- the shelf -----------------------------------------------------------------------
-function drawShelf(){
-  pickEl.textContent = '';
-  for(const s of shelf){
-    const o = document.createElement('option');
-    o.value = s.name;
-    o.textContent = s.title || s.name;
-    pickEl.appendChild(o);
+// The label on a row: the title if the room has one, and otherwise its own last segment —
+// the server fills `title` with the name when there is none, and the path is already
+// spelled out by the folders the row sits under.
+const shelfLabel = r => (r.title && r.title !== r.name) ? r.title : leafOf(r.name);
+
+// The paths, folded into folders. Nothing on disk says a folder exists — it exists because
+// a room is in it — so this is built from `shelf` and from nothing else, and a folder that
+// loses its last room simply stops being drawn.
+function shelfTree(rows){
+  const root = {folders: new Map(), rooms: []};
+  for(const r of rows){
+    const segs = r.name.split('/');
+    let at = root;
+    for(const seg of segs.slice(0, -1)){
+      if(!at.folders.has(seg)) at.folders.set(seg, {folders: new Map(), rooms: []});
+      at = at.folders.get(seg);
+    }
+    at.rooms.push(r);
   }
-  if(sitting) pickEl.value = sitting.name;
+  return root;
+}
+
+// Every folder on the shelf, deepest path spelled whole — the choices the move sheet lists.
+function folderPaths(){
+  const out = new Set();
+  for(const r of shelf){
+    const segs = r.name.split('/');
+    let at = '';
+    for(const seg of segs.slice(0, -1)){ at = at ? at + '/' + seg : seg; out.add(at); }
+  }
+  return [...out].sort((a, b) => a.localeCompare(b));
+}
+
+function ancestors(name){
+  const out = [];
+  for(const seg of (name || '').split('/').slice(0, -1))
+    out.push(out.length ? out[out.length - 1] + '/' + seg : seg);
+  return out;
+}
+
+// Folders first, then rooms, alphabetical in both — one order, so the eye can learn where
+// a thing will be. Depth is a left padding on a flat list rather than nested boxes: a
+// closed folder is redrawn without its children, so there is nothing to hide.
+function drawBranch(at, depth, prefix){
+  for(const seg of [...at.folders.keys()].sort((a, b) => a.localeCompare(b))){
+    const here = prefix ? prefix + '/' + seg : seg;
+    const on = opened.has(here);
+    const row = mk(treeEl, 'div', 'frow');
+    row.style.paddingLeft = (depth * 14) + 'px';
+    const fold = mk(row, 'button', 'ghostbtn fold', (on ? '▾ ' : '▸ ') + seg);
+    fold.type = 'button';
+    fold.setAttribute('aria-expanded', String(on));
+    fold.addEventListener('click', () => {
+      if(on) opened.delete(here); else opened.add(here);
+      rememberFolders();
+      drawShelf();
+    });
+    const mv = mk(row, 'button', 'ghostbtn movef', 'move');
+    mv.type = 'button';
+    mv.title = 'move this folder';
+    mv.addEventListener('click', () => openMove(here, true));
+    if(on) drawBranch(at.folders.get(seg), depth + 1, here);
+  }
+  for(const r of at.rooms.slice().sort((a, b) => shelfLabel(a).localeCompare(shelfLabel(b)))){
+    const row = mk(treeEl, 'div', 'rrow' + (r.name === picked ? ' here' : ''));
+    row.style.paddingLeft = (depth * 14) + 'px';
+    const b = mk(row, 'button', 'ghostbtn roomlink', shelfLabel(r));
+    b.type = 'button';
+    b.title = r.name;
+    if(r.name === picked) b.setAttribute('aria-current', 'true');
+    b.addEventListener('click', () => { if(!saving && !stopping) openSitting(r.name); });
+  }
+}
+
+function drawShelf(){
+  treeEl.textContent = '';
+  // The folders on the way to the open room are opened for it: a mark on the current room
+  // behind three folds is a mark nobody can see.
+  for(const f of ancestors(picked)) opened.add(f);
+  drawBranch(shelfTree(shelf), 0, '');
+  const row = shelf.find(s => s.name === picked);
+  $('here').textContent = row ? shelfLabel(row) : (sitting ? (sitting.title || leafOf(sitting.name)) : '');
+  $('here').title = picked || '';
   gateTree();
 }
 
@@ -2305,6 +2471,62 @@ async function loadShelf(){
   const d = await getJSON('/api/sittings');
   shelf = d.sittings || [];
   drawShelf();
+}
+
+// A room's name is its path, so filing it somewhere else is a move on disk and a reload
+// here — the open room is re-read from its new path rather than patched in memory, because
+// the name inside the file is what the next save posts back.
+function openMove(path, isFolder){
+  if(!path) return;
+  moving = {path: path, folder: !!isFolder};
+  $('renamebox').classList.remove('on');
+  $('askbox').classList.remove('on');
+  $('movewhat').textContent = (isFolder ? 'move the folder ' : 'move ') + path + ' to:';
+  const list = $('movefolders');
+  list.textContent = '';
+  // A folder can't be offered itself or anything inside it: that move is a folder eating
+  // its own tail, and the server refuses it anyway.
+  const inside = f => isFolder && (f === path || f.startsWith(path + '/'));
+  for(const f of ['', ...folderPaths().filter(f => !inside(f))]){
+    const b = mk(list, 'button', 'ghostbtn folderpick', f ? f + '/' : 'the top of the shelf');
+    b.type = 'button';
+    b.addEventListener('click', () => {
+      $('movepath').value = (f ? f + '/' : '') + leafOf(path);
+      $('movepath').focus();
+    });
+  }
+  $('movepath').value = path;
+  $('movebox').classList.add('on');
+  $('movepath').focus();
+  $('movepath').select();
+}
+
+async function doMove(){
+  if(!moving || saving || stopping) return;
+  const from = moving.path;
+  const to = $('movepath').value.trim().replace(/^\/+|\/+$/g, '');
+  if(!to || to === from){ $('movebox').classList.remove('on'); moving = null; return; }
+  if(!pathOK(to)){
+    sys('a path is letters, digits, _ . - and slashes, no part starting with a dot', true);
+    return;
+  }
+  // The open room may be the thing moving, or may be inside the folder that is moving.
+  const open = sitting ? sitting.name : '';
+  const carried = open && (open === from || open.startsWith(from + '/'))
+    ? to + open.slice(from.length) : '';
+  await stopAll();
+  await saveQueue;            // a queued write would rebuild the file where it used to be
+  let d;
+  try{ d = await postJSON('/api/move', {from: from, to: to}); }
+  catch(e){ sys('move failed: ' + e.message, true); return; }
+  if(d && d.error){ sys('move failed: ' + d.error, true); return; }
+  // a folder that was open stays open where it landed
+  if(opened.has(from)){ opened.delete(from); opened.add(to); rememberFolders(); }
+  moving = null;
+  $('movebox').classList.remove('on');
+  await loadShelf();
+  if(carried) await openSitting(carried);
+  sys('moved to ' + to);
 }
 
 async function openSitting(name){
@@ -2320,15 +2542,17 @@ async function openSitting(name){
   showDialogue();
   menu(false);
   remember(name);
-  pickEl.value = name;
-  gateTree();
+  picked = name;
+  drawShelf();
   buildSampler();
   render();
 }
 
 // A random file ID is permanent; the optional title can change without moving a tree.
 // `opts` is how a room gets made out of something other than nothing: rootText for a
-// document handed to it (spin off), params to carry the sampler it was made at.
+// document handed to it (spin off), params to carry the sampler it was made at, `path`
+// for where it goes — only Basic and Bare pass that, off the field under them, so a spin
+// off or a fan again is never filed somewhere by a path left lying in a box.
 async function newSitting(isBare = false, opts = {}){
   if(saving || stopping) return;
   saving = true;
@@ -2337,8 +2561,21 @@ async function newSitting(isBare = false, opts = {}){
     await stopAll();
     await saveQueue;
     await loadShelf();
+    // Blank = a random name at the top of the shelf. Ending in a slash = a random name in
+    // that folder. Anything else is the room's whole path, and a taken one is refused here
+    // rather than by the server, which would say the same thing in worse words.
+    const want = (opts.path || '').trim().replace(/^\/+/, '');
+    const folder = want.endsWith('/') ? want.replace(/\/+$/, '') : '';
     let name;
-    do { name = hex(6); } while(shelf.some(s => s.name === name));
+    if(want && !want.endsWith('/')){
+      if(!pathOK(want)) throw new Error('a path is letters, digits, _ . - and slashes, '
+                                        + 'no part starting with a dot');
+      if(shelf.some(s => s.name === want)) throw new Error('“' + want + '” is taken');
+      name = want;
+    }else{
+      if(folder && !pathOK(folder)) throw new Error('“' + folder + '” is not a folder name');
+      do { name = (folder ? folder + '/' : '') + hex(6); } while(shelf.some(s => s.name === name));
+    }
     const text = opts.rootText !== undefined && opts.rootText !== null ? opts.rootText
                                                                       : (isBare ? '' : HEADER);
     const root = {id: hex(4), parent: null, kind: 'root', text: text,
@@ -2362,9 +2599,12 @@ async function newSitting(isBare = false, opts = {}){
     turnEl.value = '';
     grow();
     remember(name);
+    picked = name;
     shelf.unshift({name, title: fresh.title, updated: fresh.updated});
+    $('newname').value = '';
     drawShelf();
     buildSampler();
+    $('movebox').classList.remove('on');
     $('renamebox').classList.remove('on');
     $('askbox').classList.remove('on');
     sys('');
@@ -2446,6 +2686,7 @@ async function deleteSitting(){
     sys('delete failed: ' + d.error, true);
     return;
   }
+  picked = '';
   await loadShelf();
   if(shelf.length){ await openSitting(shelf[0].name); return; }
   blocksEl.textContent = ''; cardsEl.textContent = ''; sampEl.textContent = '';
@@ -2475,12 +2716,27 @@ async function clearSitting(){
 }
 
 // ---- wiring --------------------------------------------------------------------------
-pickEl.addEventListener('change', () => openSitting(pickEl.value));
-$('newbtn').addEventListener('click', () => newSitting());
-$('newbarebtn').addEventListener('click', () => newSitting(true));
+$('newbtn').addEventListener('click', () => newSitting(false, {path: $('newname').value}));
+$('newbarebtn').addEventListener('click', () => newSitting(true, {path: $('newname').value}));
+$('newname').addEventListener('keydown', e => {
+  if(e.key === 'Enter' && !e.isComposing){ e.preventDefault(); newSitting(false, {path: $('newname').value}); }
+});
+$('movebtn').addEventListener('click', () => sitting && openMove(sitting.name, false));
+$('moveno').addEventListener('click', () => { $('movebox').classList.remove('on'); moving = null; });
+$('moveok').addEventListener('click', doMove);
+$('movepath').addEventListener('keydown', e => {
+  if(e.key === 'Enter' && !e.isComposing){ e.preventDefault(); doMove(); }
+  if(e.key === 'Escape'){
+    e.preventDefault();
+    $('movebox').classList.remove('on');
+    moving = null;
+    $('movebtn').focus();
+  }
+});
 $('renamebtn').addEventListener('click', () => {
   if(!sitting) return;
   $('askbox').classList.remove('on');
+  $('movebox').classList.remove('on');
   $('renamename').value = sitting.title || sitting.name;
   $('renamebox').classList.add('on');
   $('renamename').focus();
@@ -2501,6 +2757,7 @@ let asked = null;
 function ask(question, yes, action){
   if(!sitting) return;
   $('renamebox').classList.remove('on');
+  $('movebox').classList.remove('on');
   $('askq').textContent = question;
   $('askok').textContent = yes;
   asked = action;
@@ -2538,7 +2795,7 @@ $('artagain').addEventListener('click', fanAgain);
 $('artexport').addEventListener('click', exportDocument);
 $('artsave').addEventListener('click', saveArtifact);
 $('treebtn').addEventListener('click', () => {
-  const name = pickEl.value || (sitting && sitting.name);
+  const name = picked || (sitting && sitting.name);
   if(name) openWalk(name);
 });
 // A link into the page, not a history stack: the hash is read on boot and whenever it
@@ -2628,7 +2885,7 @@ async function health(){
   // happened in rather than whatever was last open.
   const asked = hashRoom();
   const want = asked || remembered();
-  const name = shelf.some(s => s.name === want) ? want : (shelf[0] && shelf[0].name);
+  const name = onShelf(want) || (shelf[0] && shelf[0].name);
   if(name) await openSitting(name);
   else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
   if(asked) await openWalk(asked);

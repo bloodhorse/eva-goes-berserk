@@ -21,9 +21,12 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
 
   GET  /                     -> loom.html, re-read per request (edit it, hit reload)
   GET  /api/health           -> {"ok", "llama"}: is there a model behind the port
-  GET  /api/sittings         -> the shelf, newest first
+  GET  /api/sittings         -> the shelf, newest first — the whole tree, folders and all,
+                               in one call; a room's name IS its path under sittings/
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
+  POST /api/move             -> {"from", "to"}: a room or a whole folder moves; rename is a
+                               move; folders on the way are made, emptied ones are dropped
   POST /api/delete           -> {"name"}: the sitting moves to sittings/.trash, off the shelf
   GET  /api/notes            -> storage: every note's name, newest first
   GET  /api/note?name=       -> {"name", "text"}
@@ -111,10 +114,32 @@ def note_name_ok(name) -> bool:
     return (isinstance(name, str) and 0 < len(name) <= NOTE_MAX and name == name.strip()
             and not name.startswith(".") and not re.search(r"[/\\\x00-\x1f\x7f]", name))
 
-# A sitting name is a filename, and this API has no auth in front of it: no slashes, no
-# dots-only, nothing that could climb out of SITTINGS. Checked on the way in AND on the
-# way out, because a file dropped in that directory by hand is also untrusted input.
+# One segment of a name, and the rule an artifact name still lives by whole: this API has
+# no auth in front of it, so a name is the only thing between a request and the filesystem.
+# Checked on the way in AND on the way out, because a file dropped in that directory by
+# hand is also untrusted input.
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,64}$")
+# A cap on the whole path. Depth is not limited — an experiment files itself as deep as it
+# likes — but an unbounded string still becomes a filesystem call, and every OS has an
+# opinion about that at some length.
+NAME_MAX = 512
+
+
+def name_ok(name) -> bool:
+    """A ROOM name is its path under SITTINGS, without the .json: `experiments/basin/s-01`.
+
+    One validator for every name that becomes a file, so no route, cli or daemon can spell
+    a path its own way. Segments are the old name rule; what the rule buys on top of it:
+
+      - no empty segment, so no leading or trailing slash and no `//`
+      - no segment starting with a dot — which is `.` and `..` (nothing climbs out of
+        SITTINGS) and also `.trash`, so the bin can never be addressed as a room or a
+        folder however it is spelled
+      - no backslash, no control character: both are already outside the segment charset
+    """
+    if not isinstance(name, str) or not name or len(name) > NAME_MAX:
+        return False
+    return all(not seg.startswith(".") and NAME_RE.match(seg) for seg in name.split("/"))
 
 # A completion is minutes, not seconds, on a big model at a long context.
 COMPLETE_TIMEOUT = 900
@@ -400,31 +425,80 @@ def model_info() -> dict | None:
 
 
 def sitting_path(name: str) -> str:
-    return os.path.join(SITTINGS, name + ".json")
+    """The file a room name points at. Raises on anything that is not a legal name — the
+    one gate, so that a caller which forgot to check gets a refusal and not a path."""
+    if not name_ok(name):
+        raise ValueError(f"bad room name: {name!r}")
+    return os.path.join(SITTINGS, *name.split("/")) + ".json"
+
+
+def folder_path(name: str) -> str:
+    """The same name read as a folder. A folder and a room can't share a name — every
+    move refuses a target either of them already answers to."""
+    if not name_ok(name):
+        raise ValueError(f"bad folder name: {name!r}")
+    return os.path.join(SITTINGS, *name.split("/"))
+
+
+def leaf(name: str) -> str:
+    """The last segment of a path — the room's own name, without the shelf it sits on."""
+    return name.rsplit("/", 1)[-1]
+
+
+def room_names() -> list[str]:
+    """Every room on the shelf as a path relative to SITTINGS, folders walked through.
+
+    Dot-folders are pruned whole, which is how `.trash` stays off the shelf now that the
+    shelf has more than one level: it was enough to list only the top directory before.
+    """
+    out = []
+    for dirpath, dirnames, filenames in os.walk(SITTINGS):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        rel = os.path.relpath(dirpath, SITTINGS)
+        prefix = "" if rel == "." else rel.replace(os.sep, "/") + "/"
+        for fname in filenames:
+            if not fname.endswith(".json"):
+                continue
+            name = prefix + fname[:-5]
+            if name_ok(name):
+                out.append(name)
+    return out
+
+
+def resolve_room(name: str) -> str | None:
+    """A name as somebody ELSE spells it → the path that room lives at now, or None.
+
+    The berserk ledger names rooms by the bare name the daemon made them with
+    (`berserk-c80-p01`) and knows nothing about folders, so a room filed away afterwards
+    would drop off its own tree screen and off the link the sheets page prints. A name with
+    no slash therefore also matches a room's last segment — and only when exactly one room
+    answers to it, because two rooms with the same leaf is a question, not a pick.
+    """
+    if not name_ok(name):
+        return None
+    if os.path.isfile(sitting_path(name)):
+        return name
+    if "/" in name:
+        return None
+    hits = [n for n in room_names() if leaf(n) == name]
+    return hits[0] if len(hits) == 1 else None
 
 
 def shelf() -> list[dict]:
     """Every sitting on the disk, newest first, as a card's worth of each.
 
     Reads every file — they are small, there will never be hundreds, and the alternative
-    is a sidecar index that goes stale the first time a file is copied in by hand.
+    is a sidecar index that goes stale the first time a file is copied in by hand. The
+    whole tree comes back in this one call and the page builds the folders out of the
+    paths: a folder is not a thing on disk with a state of its own, it is where rooms are.
     """
     out = []
-    try:
-        names = os.listdir(SITTINGS)
-    except OSError:
-        return out
     # One read of the ledger for the whole list, not one per room: `berserk` is what puts
     # the tree control beside a room in the picker, and the picker is drawn on every boot.
     walked = berserk_rooms()
-    for fname in names:
-        if not fname.endswith(".json"):
-            continue
-        name = fname[:-5]
-        if not NAME_RE.match(name):
-            continue
+    for name in room_names():
         try:
-            with open(os.path.join(SITTINGS, fname), encoding="utf-8") as f:
+            with open(sitting_path(name), encoding="utf-8") as f:
                 d = json.load(f)
         except (OSError, ValueError):
             continue
@@ -434,8 +508,10 @@ def shelf() -> list[dict]:
             "created": d.get("created") or 0,
             "updated": d.get("updated") or 0,
             "nodes": len(d.get("nodes") or {}),
-            # Nobody walked it = no fork rows = nothing for the tree screen to draw.
-            "berserk": name in walked,
+            # Nobody walked it = no fork rows = nothing for the tree screen to draw. The
+            # leaf too: the ledger spells a room by the name it was made with, and a walked
+            # room moved into a folder is still a walked room.
+            "berserk": name in walked or leaf(name) in walked,
         })
     out.sort(key=lambda s: s["updated"], reverse=True)
     return out
@@ -452,7 +528,7 @@ def check(obj) -> str:
     if not isinstance(obj, dict):
         return "not an object"
     name = obj.get("name")
-    if not isinstance(name, str) or not NAME_RE.match(name):
+    if not name_ok(name):
         return "bad name"
     title = obj.get("title")
     if title is not None and (not isinstance(title, str) or not title.strip() or len(title) > 120):
@@ -487,10 +563,13 @@ def write_sitting(obj: dict) -> float:
     of branching used to be. os.replace is atomic on the same filesystem — the temp file
     is made in SITTINGS for exactly that reason.
     """
-    os.makedirs(SITTINGS, exist_ok=True)
+    path = sitting_path(obj["name"])
+    # The folders a name names are made here and nowhere else: a room's name IS its path,
+    # so `experiments/basin/s-01` posted at a shelf that has no `experiments` is not an
+    # error, it is the first room of a new folder.
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     ts = time.time()
     obj["updated"] = ts
-    path = sitting_path(obj["name"])
     tmp = f"{path}.{os.getpid()}.part"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False)
@@ -510,14 +589,97 @@ def trash_sitting(name: str, keep: bool = False) -> str:
     src = sitting_path(name)
     if not os.path.isfile(src):
         raise FileNotFoundError(name)
-    bin_ = os.path.join(SITTINGS, ".trash")
-    os.makedirs(bin_, exist_ok=True)
-    dst = os.path.join(bin_, f"{name}.{time.strftime('%Y%m%d-%H%M%S')}.json")
+    # The bin mirrors the shelf's folders, so two rooms called `smoke-01` in two experiments
+    # can both be thrown away without one landing on the other. `.trash` is a dot folder, so
+    # nothing under it is ever listed however deep it goes.
+    dst = os.path.join(SITTINGS, ".trash", *name.split("/"))
+    dst = f"{dst}.{time.strftime('%Y%m%d-%H%M%S')}.json"
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
     if keep:
         shutil.copy2(src, dst)
     else:
         os.replace(src, dst)
+        prune_folders(name)
     return dst
+
+
+def prune_folders(name: str) -> None:
+    """Drop the folders the thing at `name` has just left, while they are empty.
+
+    A folder exists because a room is in it — there is no file that says otherwise and no
+    way to make one on purpose — so a folder the last room walked out of has to go, or it
+    would sit in the move sheet's list of choices forever with nothing behind it. Climbs to
+    the sittings root and never touches it: rmdir on SITTINGS would take the shelf.
+    """
+    rel = name.rsplit("/", 1)[0] if "/" in name else ""
+    while rel:
+        try:
+            os.rmdir(os.path.join(SITTINGS, *rel.split("/")))
+        except OSError:
+            return          # not empty, or already gone: either way stop climbing
+        rel = rel.rsplit("/", 1)[0] if "/" in rel else ""
+
+
+def stamp_name(path: str, name: str) -> None:
+    """Write the room's new path into the file as its `name`.
+
+    A sitting carries its own name and every writer posts the whole object back, so a moved
+    file still saying where it used to live would be saved straight back there by the next
+    write_sitting — the move would undo itself the first time anybody typed a line. Written
+    in place, temp-then-replace, with `updated` left alone: a move is not a new version of
+    the room and must not reorder the shelf.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return              # a file that isn't json is not ours to rewrite; it still moved
+    if not isinstance(d, dict) or d.get("name") == name:
+        return
+    d["name"] = name
+    tmp = f"{path}.{os.getpid()}.part"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(d, f, ensure_ascii=False)
+    os.replace(tmp, path)
+
+
+def move_room(src: str, dst: str) -> int:
+    """Move a room or a whole folder to `dst`, and say how many rooms went. Rename is this.
+
+    Raises ValueError (a bad path, or a folder into itself), FileNotFoundError (nothing at
+    `src`) and FileExistsError (something already at `dst`) — the handler turns those into
+    400, 404 and 409. One os.rename does the work, which is atomic on one filesystem and is
+    why nothing here has to cope with half a folder having arrived.
+    """
+    if not name_ok(src) or not name_ok(dst):
+        raise ValueError("a path is segments of letters, digits, _ . - "
+                         "with no empty segment and none starting with a dot")
+    if src == dst:
+        raise ValueError("that is where it already is")
+    room, folder = os.path.isfile(sitting_path(src)), os.path.isdir(folder_path(src))
+    if not room and not folder:
+        raise FileNotFoundError(src)
+    if os.path.exists(sitting_path(dst)) or os.path.isdir(folder_path(dst)):
+        raise FileExistsError(dst)
+    # `experiments` into `experiments/basin` would rename a directory into itself and, on
+    # some filesystems, quietly succeed at losing it.
+    if folder and (dst + "/").startswith(src + "/"):
+        raise ValueError("a folder can't move inside itself")
+
+    from_, to = (sitting_path(src), sitting_path(dst)) if room \
+        else (folder_path(src), folder_path(dst))
+    os.makedirs(os.path.dirname(to), exist_ok=True)
+    os.rename(from_, to)
+    prune_folders(src)
+    if room:
+        stamp_name(to, dst)
+        return 1
+    n = 0
+    for name in room_names():
+        if name == dst or name.startswith(dst + "/"):
+            stamp_name(sitting_path(name), name)
+            n += 1
+    return n
 
 
 def note_path(name: str) -> str:
@@ -976,7 +1138,7 @@ class Handler(BaseHTTPRequestHandler):
 
         if u.path == "/api/sitting":
             name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
-            if not NAME_RE.match(name):
+            if not name_ok(name):
                 self._json(400, {"error": "bad name"})
                 return
             try:
@@ -1012,11 +1174,18 @@ class Handler(BaseHTTPRequestHandler):
         if u.path in ("/api/berserk", "/api/berserk/text"):
             plain = u.path.endswith("/text")
             name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
-            if not NAME_RE.match(name):
+            if not name_ok(name):
                 self._refuse(plain, 400, "bad name")
                 return
+            # By path first, then by bare name: the ledger and every `#tree=` link the
+            # sheets pages ever printed spell a room the way berserk made it, and filing
+            # that room into a folder must not break a link written months ago.
+            here = resolve_room(name)
+            if not here:
+                self._refuse(plain, 404, "no such sitting")
+                return
             try:
-                with open(sitting_path(name), encoding="utf-8") as f:
+                with open(sitting_path(here), encoding="utf-8") as f:
                     sitting = json.load(f)
             except FileNotFoundError:
                 self._refuse(plain, 404, "no such sitting")
@@ -1027,7 +1196,7 @@ class Handler(BaseHTTPRequestHandler):
             # A room with no fork rows is a room berserk never walked — a hand-made one, or
             # one whose ledger lines are gone. 404 and not an empty tree: a blank screen
             # behind a link is worse than a refusal that says what is missing.
-            rows = berserk_forks(name)
+            rows = berserk_forks(here) or berserk_forks(leaf(here))
             if not rows:
                 self._refuse(plain, 404, "berserk never walked that room")
                 return
@@ -1147,7 +1316,7 @@ class Handler(BaseHTTPRequestHandler):
 
         if u.path == "/api/artifact":
             room = payload.get("room")
-            if not isinstance(room, str) or not NAME_RE.match(room):
+            if not name_ok(room):
                 self._json(400, {"error": "bad room name"})
                 return
             # No name = a random hex one, like a room the page makes. A name that is given
@@ -1203,9 +1372,29 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "cut": cancel_all()})
             return
 
+        if u.path == "/api/move":
+            src, dst = payload.get("from"), payload.get("to")
+            try:
+                moved = move_room(src if isinstance(src, str) else "",
+                                  dst if isinstance(dst, str) else "")
+            except ValueError as exc:
+                self._json(400, {"error": str(exc)})
+                return
+            except FileNotFoundError:
+                self._json(404, {"error": "nothing on the shelf by that name"})
+                return
+            except FileExistsError:
+                self._json(409, {"error": f"“{dst}” is taken"})
+                return
+            except OSError as exc:
+                self._json(500, {"error": f"can't move it: {exc}"})
+                return
+            self._json(200, {"ok": True, "from": src, "to": dst, "moved": moved})
+            return
+
         if u.path in ("/api/delete", "/api/clear"):
             name = payload.get("name")
-            if not isinstance(name, str) or not NAME_RE.match(name):
+            if not name_ok(name):
                 self._json(400, {"error": "bad name"})
                 return
             try:

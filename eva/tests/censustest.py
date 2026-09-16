@@ -72,7 +72,7 @@ def run(*args) -> tuple[int, str]:
 
 
 def on_disk(name: str) -> dict:
-    with open(os.path.join(SHELF, name + ".json"), encoding="utf-8") as f:
+    with open(loom.sitting_path(name), encoding="utf-8") as f:
         d = json.load(f)
     assert loom.check(d) == "", loom.check(d)
     return d
@@ -192,8 +192,25 @@ class Census(unittest.TestCase):
         with open(os.path.join(SHELF, name + ".json"), "rb") as f:
             self.assertEqual(f.read(), before)
 
+    def test_a_name_with_slashes_files_the_room_in_a_folder(self):
+        # A census is dozens of branches in one room, and dozens of those rooms in one
+        # night: the point of the path is that they can be filed as they are made.
+        name = f"{fresh_name()}/basin/free-01"
+        code, out = run("--name", name, "--empty", "--n", "2")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(os.path.isfile(os.path.join(SHELF, *name.split("/")) + ".json"))
+        d = on_disk(name)
+        self.assertEqual(d["name"], name)
+        self.assertEqual(len([n for n in d["nodes"].values() if n["kind"] == "model"]), 2)
+        self.assertIn(name, [s["name"] for s in loom.shelf()])
+        self.assertIn(name, out)                    # the line it prints is the path it wrote
+        # and a taken path is the same no-op a taken name is
+        self.assertEqual(run("--name", name, "--empty", "--n", "1")[0], 1)
+
     def test_refusals(self):
         self.assertEqual(run("--name", "../escape", "--empty", "--n", "1")[0], 2)
+        for bad in ("a//b", ".trash/x", "a/", "/a"):
+            self.assertEqual(run("--name", bad, "--empty", "--n", "1")[0], 2, bad)
         self.assertEqual(run("--name", fresh_name(), "--empty", "--n", "0")[0], 2)
         self.assertEqual(run("--name", fresh_name(), "--empty", "--n", "1",
                              "--temps", "hot")[0], 2)

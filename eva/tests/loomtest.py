@@ -267,8 +267,13 @@ class Plumbing(unittest.TestCase):
         self.assertEqual(call("/api/nope", {})[0], 404)
 
     def test_bad_name_and_traversal(self):
-        for bad in ["", "../loom", "a/b", "x" * 65]:
-            self.assertEqual(call("/api/sitting?name=" + bad)[0], 400, bad)
+        # A name is a path now, so `a/b` is a room in a folder and reads as missing, not as
+        # illegal. Everything that could climb out of the sittings dir, name the bin, or
+        # leave an empty segment behind is still a refusal before anything touches the disk.
+        for bad in ["", "../loom", "/loom", "loom/", "a//b", "a/../b", "a/./b",
+                    ".trash/x", "x/.hidden", "x" * 65, "a/" + "x" * 65]:
+            self.assertEqual(call("/api/sitting?name=" + urllib.parse.quote(bad))[0], 400, bad)
+        self.assertEqual(call("/api/sitting?name=a/b")[0], 404)
         self.assertEqual(call("/api/sitting?name=nobody-home")[0], 404)
         st, d = call("/api/sitting", {"name": "../escape", "nodes": {}, "root": "a", "current": "a"})
         self.assertEqual(st, 400)
@@ -464,6 +469,168 @@ class Sittings(unittest.TestCase):
         self.assertEqual(t.prompt_from(n["id"]),
                          HEADER + "\nbekh: so what is it like in there\nseat:")
         self.assertEqual(t.save()[0], 200)
+
+
+class Folders(unittest.TestCase):
+    """A room's name is its path under the sittings dir, and that is the whole feature: the
+    shelf is a tree because the names are, `/api/move` renames a file or a folder, and
+    nothing on disk says a folder exists apart from the rooms in it."""
+
+    def names(self) -> list[str]:
+        return [s["name"] for s in call("/api/sittings")[1]["sittings"]]
+
+    def test_a_path_is_a_name_and_the_folders_are_made_on_the_way(self):
+        here = "folders-" + uuid.uuid4().hex[:6]
+        t = Tree(f"{here}/basin/smoke-01")
+        st, d = t.save()
+        self.assertEqual(st, 200, d)
+        self.assertTrue(os.path.isfile(os.path.join(SHELF, here, "basin", "smoke-01.json")))
+        self.assertIn(f"{here}/basin/smoke-01", self.names())
+        # and it reads back by the same path, whole
+        st, back = call(f"/api/sitting?name={here}/basin/smoke-01")
+        self.assertEqual(st, 200, back)
+        self.assertEqual(back["nodes"].keys(), t.d["nodes"].keys())
+
+    def test_the_listing_walks_the_tree_and_never_the_bin(self):
+        here = "listing-" + uuid.uuid4().hex[:6]
+        for name in (f"{here}/top", f"{here}/one/deep", f"{here}/one/two/deeper"):
+            st, d = Tree(name).save()
+            self.assertEqual(st, 200, d)
+        names = self.names()
+        for name in (f"{here}/top", f"{here}/one/deep", f"{here}/one/two/deeper"):
+            self.assertIn(name, names)
+        # deleted from a folder: into .trash under the same folders, and off the shelf
+        st, d = call("/api/delete", {"name": f"{here}/one/two/deeper"})
+        self.assertEqual(st, 200, d)
+        bin_ = os.path.join(SHELF, ".trash", here, "one", "two")
+        self.assertEqual(len(os.listdir(bin_)), 1)
+        self.assertNotIn(f"{here}/one/two/deeper", self.names())
+        # nothing under a dot folder is ever listed, however deep it is
+        self.assertFalse([n for n in self.names() if n.startswith(".")])
+        # and the folder it emptied is gone, while the one still holding a room stays
+        self.assertFalse(os.path.isdir(os.path.join(SHELF, here, "one", "two")))
+        self.assertTrue(os.path.isdir(os.path.join(SHELF, here, "one")))
+
+    def test_every_rule_a_name_has(self):
+        for ok in ("a", "a/b", "a/b/c", "a.b-c_d", "x" * 64, "a/" + "x" * 64):
+            self.assertTrue(loom.name_ok(ok), ok)
+        for bad in ("", "/a", "a/", "a//b", ".", "..", "a/..", "../a", ".trash",
+                    ".trash/a", "a/.hidden", "a\\b", "a b", "a/b c", "x" * 65,
+                    "a/" + "x" * 65, "a/" * 300, None, 42, "a\nb", "a\x00b"):
+            self.assertFalse(loom.name_ok(bad), bad)
+        # and the one gate: a name that doesn't read never becomes a path
+        with self.assertRaises(ValueError):
+            loom.sitting_path("../escape")
+
+    def test_move_a_room_and_the_name_inside_it_goes_too(self):
+        here = "mv-" + uuid.uuid4().hex[:6]
+        t = fresh(f"{here}-room")
+        was = t.d["name"]
+        stamped = call("/api/sitting?name=" + was)[1]["updated"]
+        to = f"{here}/kept/{was}"
+        st, d = call("/api/move", {"from": was, "to": to})
+        self.assertEqual(st, 200, d)
+        self.assertEqual(d["moved"], 1)
+        self.assertEqual(call("/api/sitting?name=" + was)[0], 404)
+        st, back = call("/api/sitting?name=" + to)
+        self.assertEqual(st, 200, back)
+        # the file carries its own name and every writer posts the whole object back: a
+        # stale name inside would put the room back where it came from on the next save
+        self.assertEqual(back["name"], to)
+        self.assertEqual(back["updated"], stamped, "a move is not a new version")
+        st, d = call("/api/sitting", back)
+        self.assertEqual(st, 200, d)
+        self.assertIn(to, self.names())
+
+    def test_rename_is_a_move(self):
+        here = "rn-" + uuid.uuid4().hex[:6]
+        t = fresh(here)
+        st, d = call("/api/move", {"from": t.d["name"], "to": t.d["name"] + "-again"})
+        self.assertEqual(st, 200, d)
+        self.assertIn(t.d["name"] + "-again", self.names())
+        self.assertNotIn(t.d["name"], self.names())
+
+    def test_move_a_whole_folder(self):
+        here = "fold-" + uuid.uuid4().hex[:6]
+        for name in (f"{here}/basin/a", f"{here}/basin/b", f"{here}/basin/deep/c"):
+            self.assertEqual(Tree(name).save()[0], 200)
+        st, d = call("/api/move", {"from": f"{here}/basin", "to": f"{here}/filed/basin"})
+        self.assertEqual(st, 200, d)
+        self.assertEqual(d["moved"], 3)
+        names = self.names()
+        for name in ("a", "b", "deep/c"):
+            self.assertIn(f"{here}/filed/basin/{name}", names)
+            self.assertNotIn(f"{here}/basin/{name}", names)
+        # every room under it says where it lives now
+        st, back = call(f"/api/sitting?name={here}/filed/basin/deep/c")
+        self.assertEqual(back["name"], f"{here}/filed/basin/deep/c")
+        self.assertFalse(os.path.isdir(os.path.join(SHELF, here, "basin")))
+
+    def test_the_refusals(self):
+        here = "no-" + uuid.uuid4().hex[:6]
+        a, b = fresh(f"{here}-a"), fresh(f"{here}-b")
+        self.assertEqual(Tree(f"{here}/deep/one").save()[0], 200)
+        # a name that doesn't read, either end of it
+        for bad in ("", "../escape", ".trash/x", "a//b", None, 42):
+            self.assertEqual(call("/api/move", {"from": a.d["name"], "to": bad})[0], 400, bad)
+            self.assertEqual(call("/api/move", {"from": bad, "to": a.d["name"]})[0], 400, bad)
+        # nothing there
+        self.assertEqual(call("/api/move", {"from": "ghost-" + uuid.uuid4().hex[:6],
+                                            "to": f"{here}/x"})[0], 404)
+        # a room already at the target, or a folder wearing that name
+        self.assertEqual(call("/api/move", {"from": a.d["name"], "to": b.d["name"]})[0], 409)
+        self.assertEqual(call("/api/move", {"from": a.d["name"], "to": here})[0], 409)
+        # a folder into itself, and the same folder onto itself
+        self.assertEqual(call("/api/move", {"from": here, "to": f"{here}/deep/{here}"})[0], 400)
+        self.assertEqual(call("/api/move", {"from": here, "to": here})[0], 400)
+        # not one refusal moved anything
+        names = self.names()
+        self.assertIn(a.d["name"], names)
+        self.assertIn(b.d["name"], names)
+        self.assertIn(f"{here}/deep/one", names)
+
+    def test_an_emptied_folder_goes_and_the_shelf_itself_never_does(self):
+        here = "prune-" + uuid.uuid4().hex[:6]
+        self.assertEqual(Tree(f"{here}/one/two/only").save()[0], 200)
+        top = fresh(f"{here}-top")
+        st, d = call("/api/move", {"from": f"{here}/one/two/only", "to": f"{here}/one/only"})
+        self.assertEqual(st, 200, d)
+        self.assertFalse(os.path.isdir(os.path.join(SHELF, here, "one", "two")))
+        self.assertTrue(os.path.isdir(os.path.join(SHELF, here, "one")))
+        # the last room out of the whole tree takes every folder with it, and stops there
+        st, d = call("/api/move", {"from": f"{here}/one/only", "to": f"{here}-loose"})
+        self.assertEqual(st, 200, d)
+        self.assertFalse(os.path.isdir(os.path.join(SHELF, here)))
+        self.assertTrue(os.path.isdir(SHELF))
+        self.assertIn(top.d["name"], self.names())
+
+    def test_a_walked_room_answers_to_its_bare_name_after_it_moves(self):
+        # The ledger names a room the way berserk made it and knows nothing about folders,
+        # and every `#tree=` link the sheets pages ever printed spells it that way too.
+        t, _, _ = walked_room("brz-filed")
+        bare = t.d["name"]
+        st, d = call("/api/move", {"from": bare, "to": f"nights/{bare}"})
+        self.assertEqual(st, 200, d)
+        st, d = call("/api/berserk?name=" + bare)
+        self.assertEqual(st, 200, d)
+        self.assertEqual([r["fork"] for r in d["rows"]], [1, 2])
+        self.assertEqual(d["text"], ROOT_TEXT + TOOK_TEXT)
+        # by its path as well, and the text route resolves the same way
+        self.assertEqual(call(f"/api/berserk?name=nights/{bare}")[0], 200)
+        self.assertEqual(call("/api/berserk/text?name=" + bare)[1], ROOT_TEXT + TOOK_TEXT)
+        # and the shelf still says a walk hangs off it, wherever it is filed
+        row = next(s for s in call("/api/sittings")[1]["sittings"]
+                   if s["name"] == f"nights/{bare}")
+        self.assertIs(row["berserk"], True)
+
+    def test_two_rooms_with_one_leaf_is_a_question_not_a_pick(self):
+        leaf = "twin-" + uuid.uuid4().hex[:6]
+        for folder in ("one", "two"):
+            self.assertEqual(Tree(f"ambig/{folder}/{leaf}").save()[0], 200)
+        self.assertIsNone(loom.resolve_room(leaf))
+        st, d = call("/api/berserk?name=" + leaf)
+        self.assertEqual(st, 404, d)
+        self.assertEqual(d["error"], "no such sitting")
 
 
 class Branching(unittest.TestCase):
@@ -811,11 +978,17 @@ class Artifacts(unittest.TestCase):
                                                 "kept": [b[0]["id"]]})[0], 400)
         self.assertEqual(call("/api/artifact", {"room": "nobody-home", "parent": at,
                                                 "kept": [b[0]["id"]]})[0], 404)
+        # An ARTIFACT name is still one flat segment — artifacts are not filed in folders —
+        # while the room it is cut from is a path, so `a/b` is refused as a name and read as
+        # a missing room.
         for bad in ("../escape", "a/b", "x" * 65, 42):
             self.assertEqual(call("/api/artifact", {"room": room, "parent": at, "name": bad,
                                                     "kept": [b[0]["id"]]})[0], 400, bad)
+        for bad in ("../escape", ".trash/x", "x" * 65, 42):
             self.assertEqual(call("/api/artifact", {"room": bad, "parent": at,
                                                     "kept": [b[0]["id"]]})[0], 400, bad)
+        self.assertEqual(call("/api/artifact", {"room": "a/b", "parent": at,
+                                                "kept": [b[0]["id"]]})[0], 404)
         self.assertEqual(set(os.listdir(ARTS)), before)     # not one refusal wrote a file
 
         name = f"taken-{uuid.uuid4().hex[:6]}"

@@ -1,0 +1,3 @@
+MIRI had turned into one room of three researchers intently huddled around an augmented reality table, testing some specification or theory. The other room was a minuscule stockpile of 12 nanotech shells, representing all the weapons ever kept by the office.
+
+  MIRI’s decision to focus more exclusively on math, formalization and algorithms was paying off: all three scholars were translating low level mathematical ideas into actual logic bombs. A fourth researcher, kept in the storage corner, was chained to one of the nanotech shells, known as the “deathshell” among MIRI researchers. MIRI’s AI unit, the multiverse optimizer, known as 
