@@ -447,6 +447,7 @@
         </button>
         <h1 id="arttitle"></h1>
         <span class="spring"></span>
+        <button class="btn" id="artexport" type="button" title="the walk as one document, to read or keep">Export</button>
         <button class="btn" id="artagain" type="button" title="a new room whose document is this prompt, at this sampler">Fan again</button>
       </div>
       <div id="artview"></div>
@@ -949,6 +950,45 @@ function artFoot(a, steps){
     out.push('temp ' + num(lo) + (hi > lo ? '–' + num(hi) : ''));
   }
   return out.join(' · ');
+}
+
+// The walk as ONE document: the prompt, then every step's lead and the line taken, joined
+// with nothing between them — the same concatenation the server tests against, so what comes
+// out is the text the model actually saw and wrote, not a transcript of the tree. The
+// branches kept beside the path are deliberately left out: this is the story, not the fan.
+function artifactText(a){
+  const steps = stepsOf(a);
+  const doc = (a.prompt || '') +
+    steps.map(st => (st.lead || '') + (st.took ? st.took.text : '')).join('');
+  const m = a.model || {}, p = a.params || {};
+  // Above the document, only what you would need to run it again: which model, and the few
+  // sampler numbers that decide the register. Everything else is in the json.
+  const head = [
+    a.title || a.name,
+    'model: ' + (m.file || 'not recorded'),
+    'sampler: ' + ['temperature', 'min_p', 'xtc_probability', 'n_predict']
+      .filter(k => p[k] !== undefined).map(k => k + ' ' + p[k]).join(' · '),
+    'walk: ' + steps.length + ' steps · ' + num(a.bits || 0) + ' bits of curation',
+    'saved: ' + when(a.created),
+  ].join('\n');
+  return head + '\n\n' + doc.replace(/\s+$/, '') + '\n';
+}
+
+function exportArtifact(){
+  if(!artifact) return;
+  const name = (artifact.title || artifact.name).replace(/[^\w.-]+/g, '-').replace(/^-|-$/g, '');
+  const blob = new Blob([artifactText(artifact)], {type: 'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (name || 'artifact') + '.md';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  // Revoked on the next tick, not immediately: Safari has not finished reading the blob when
+  // click() returns, and a revoked url downloads an empty file.
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  sys('exported ' + a.download);
 }
 
 function drawArtifact(a){
@@ -2127,6 +2167,7 @@ $('artbtn').addEventListener('click', () => {
 });
 $('artback').addEventListener('click', showDialogue);
 $('artagain').addEventListener('click', fanAgain);
+$('artexport').addEventListener('click', exportArtifact);
 $('artsave').addEventListener('click', saveArtifact);
 $('noteadd').addEventListener('click', newNote);
 $('noteback').addEventListener('click', showDialogue);
