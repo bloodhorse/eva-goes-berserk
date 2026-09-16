@@ -127,6 +127,12 @@ def main(argv: list[str]) -> int:
     for pair in a.set:
         key, _, val = str(pair).partition("=")
         key = key.strip()
+        # `grammar` is llama's, not the page's: a GBNF string that pins the SHAPE of a branch
+        # (`[a-z]+ "-witch"`) while the sampler keeps the letters free. The one field allowed in
+        # from outside PARAMS, because the page has no drawer for it and the walks want it.
+        if key == "grammar":
+            sitting["params"]["grammar"] = val.strip()
+            continue
         if key not in sitting["params"]:
             print(f"no such param: {key}", file=sys.stderr)
             return 2
