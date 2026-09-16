@@ -94,7 +94,9 @@ atomically to `sittings/<name>.json` and forwards one branch at a time to llama-
 
 **The page** (Codex's single-column redesign, 2026-09-15, on the palette settled in the
 look-off): the dialogue is the home screen — one continuous text, bekh's line in a band, the
-model's words on bare ground, `‹ 2/3 ›` on any line with siblings, edit in place (a model line bekh
+model's words on bare ground, **the fork mark** `⌥ 3/40` on any line with siblings — one tap opens
+that line's own fan on the choose screen, because a fan of forty is read as a pile, not stepped
+through one at a time (the `‹ ›` walk it replaced is gone) — edit in place (a model line bekh
 edits is **posed** forever). A fan opens a separate "choose an answer" screen as its first answer
 lands; picking one returns to the dialogue. Everything else hides behind the corner menu: the
 room picker, **basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing
@@ -121,14 +123,19 @@ of one is not a step; a step he kept nothing in still is one. Bits per step are 
 k counting the line taken alongside the keeps — `curation`'s log2(n) when nothing was kept beside
 it — and the walk's total is the steps added, because each fork is its own choice. A verbatim twin
 of a named branch leaves the pool. Written once through `os.link`, so a taken name is 409, never
-an overwrite. **The artifact screen is that walk as a tree**: the prompt as a folded card at the
+an overwrite. **The artifact screen is that walk as a tree**, and the one screen that opts out of
+the `--reading` column: a tree is a picture, not prose, so it takes the whole window and a branch
+is shown whole instead of cut. The prompt sits as a folded card at the
 top, then one row per step — the line taken in a solid panel, the kept branches flanking it,
 dimmer — with the connectors measured after layout and drawn as svg (solid accent down the path
 taken, dashed for the keeps), redrawn on a resize, a theme flip and when the fonts land. A step
 wider than the screen scrolls inside the tree pane, the only thing on the page allowed to; under
 it a foot line (steps, kept of total, bits, model, temperature range) and the sampler, turn, date
-and room it came from. One button: **fan again** makes a new room from the prompt with the same
-turn and sampler, and doesn't fan. An artifact written before walks existed has no `steps` and is
+and room it came from. Two buttons: **export** writes the walk as one document — the prompt, then
+every step's lead and the line taken, joined with nothing between them, under a short head naming
+the model and the few sampler numbers that decide the register (the branches kept beside the path
+are left out: it is the story, not the fan) — and **fan again** makes a new room from the prompt
+with the same turn and sampler, and doesn't fan. An artifact written before walks existed has no `steps` and is
 read as a walk of one step with nothing taken — `steps` is the whole test, and no file on the
 shelf is ever rewritten. All chrome is lowercase by one CSS rule; the
 document and anything typed keep their capitals, because a capital there is text the model sees.
