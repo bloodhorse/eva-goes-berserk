@@ -68,6 +68,10 @@ details{margin:8px 0} summary{color:#9cc;font-size:13px;cursor:pointer}
 /* pre-wrap wraps at spaces and nowhere else, and a base model's document is full of urls
    and forty-character paths — one of those on a phone drags the whole page sideways. */
 pre{margin:2px 0;overflow-wrap:anywhere}
+/* A beat is the one line on this page nemo did not write: rose, the loom's own colour for a
+   posed line, so a reader never mistakes our hand for the model's. It keeps the document's
+   pre style because it IS in the document — the branches under it are continuing it. */
+pre.beat{color:#f4b6c2}
 """
 
 # Every room this render touched, read once. A page of fifteen fans asks the same room for its
@@ -155,9 +159,14 @@ def settings_of(pages: list[dict], rows: list[dict]) -> dict:
     the top of berserk.py. A page describing a walk by today's defaults is a page that quietly
     rewrites history the first time somebody changes a default."""
     out = {"pages": len(pages), "fans": 0, "fan": "", "widened": "", "predict": "",
-           "temps": "", "xtc": "", "brakes": ""}
+           "temps": "", "xtc": "", "brakes": "", "beats": ""}
     if pages:
         out["fans"] = len(cycle_forks(pages[0]["cycle"], pages[0]["room"]))
+        # Which score the run was walked to. Off a page row, and off the cycle event where a
+        # page has not landed yet — berserk renders this mid-walk, and the first page of a
+        # cycle has no row of its own until it finishes.
+        out["beats"] = next((p.get("beats") for p in pages if p.get("beats")),
+                            cycle_event(pages[0]["cycle"]).get("beats") or "")
     sizes = sorted({r.get("fan_size") for r in rows if r.get("fan_size")})
     if sizes:
         out["fan"] = str(sizes[0])
@@ -238,6 +247,13 @@ def pre(text: str) -> str:
     return f'<pre style="{DOC_STYLE}">{html.escape(text)}</pre>'
 
 
+def beat_pre(text: str) -> str:
+    """Our line in the document, marked as ours. Not `plumb` — a beat is text the model read
+    and answered, not a note about the machinery — and not plain `pre` either, or the page
+    would be quietly claiming nemo wrote it."""
+    return f'<pre class="beat" style="{DOC_STYLE}">{html.escape(text)}</pre>'
+
+
 def fold(summary: str, body: str) -> str:
     return f"<details><summary>{html.escape(summary)}</summary>{body}</details>"
 
@@ -278,6 +294,10 @@ PICKER_PROSE = {
                "themselves, without the branches and without the document, and the most "
                "pronounced reaction wins; the branch under that note is the one the walk "
                "takes."),
+    "random": ("<strong>random</strong> — nobody is asked anything. The fan is drawn and one "
+               "branch of it is taken by lot, every other branch kept beside it here. It is "
+               "the control: whatever the reading pickers are doing, this is what the page "
+               "looks like when nothing is choosing at all."),
     "quote": ("<strong>quote</strong> — the reader is shown the whole fan and asked to quote back "
               "the branch that scared it. It is the only form whose answer can be checked "
               "against the text with no judgement in the loop, so the quotation is matched to "
@@ -320,12 +340,15 @@ def head(cycles: list[int], by_cycle: dict) -> list[str]:
                 f"{s['predict']} tokens" if s["predict"] else "",
                 f"t {s['temps']}" if s["temps"] else "",
                 f"xtc {s['xtc']}" if s["xtc"] else "",
-                f"brakes {s['brakes']}" if s["brakes"] else ""]
+                f"brakes {s['brakes']}" if s["brakes"] else "",
+                f"beats {s['beats']}" if s["beats"] else ""]
         line = " · ".join(b for b in bits if b)
         if len(cycles) > 1:
             line = f"cycle {c:02d} · {d['picker']} — " + line
-        out.append(f'<div class="plumb">{html.escape(line)}<br>'
-                   f'asked with: {html.escape(d["ask"])}<br>'
+        # No ask line at all under a picker that asks nothing — an empty "asked with:" would
+        # read as a frame line that went missing rather than as a run that had none.
+        asked = f'asked with: {html.escape(d["ask"])}<br>' if d["ask"] else ""
+        out.append(f'<div class="plumb">{html.escape(line)}<br>{asked}'
                    f'{html.escape(numbers(c, d["rows"]))}</div>')
 
     pickers = []
@@ -409,6 +432,13 @@ def fan_block(room: str, row: dict, picker: str, first: bool) -> list[str]:
         before = doc_to(room, parent_of(room, row))
         if before:
             out.append(fold("document so far", pre(before)))
+    beat = (row.get("beat") or "").strip()
+    if beat:
+        # Above the branches and below the fold, which is where it sits in the document: the
+        # fan was drawn to continue THIS line, and a reader who has to open a fold to find
+        # out what the branches are answering is reading the run backwards.
+        out.append(plumb("beat"))
+        out.append(beat_pre(beat))
     lead = lead_for(room, row)
     if lead:
         # Short, and the reader needs it: without it a branch that opens on a comma reads as

@@ -1072,6 +1072,37 @@ class Berserk(unittest.TestCase):
         self.assertEqual(len(d["rows"][0]["tries"]), 2)
         self.assertEqual(d["rows"][1]["notes"][2], "the clerk's own hand")
 
+    def test_a_lot_drawn_under_a_beat_comes_through_whole(self):
+        # berserk's `--picker random` with `--beats`: no reader, no tries, and one line of
+        # ours posed into the document before the fan. The route reads the ledger as it
+        # finds it, so the only thing it has to get right here is the lead — the beat ends
+        # on a newline, so there is nothing unfinished for the branches to be carrying.
+        t = Tree("brz-lot-" + uuid.uuid4().hex[:6])
+        root = t.d["root"]
+        t.d["nodes"][root]["text"] = ROOT_TEXT + TOOK_TEXT
+        beat = t.add("human", "\n\nlater.\n", root)
+        beat["posed"] = True
+        fan = [t.add("model", txt, beat["id"], {"params": dict(PARAMS, temperature=1.4)})
+               for txt in ("the hall was still.", "nobody came back for it.")]
+        t.d["current"] = fan[1]["id"]
+        st, d = t.save()
+        self.assertEqual(st, 200, d)
+        LEDGER_ROWS.append(
+            {"cycle": 91, "page": 1, "room": t.d["name"], "fork": 1, "picker": "random",
+             "closing": False, "ask": "", "beat": "later.", "fan_size": 2, "attempts": 1,
+             "widened": False, "order": [n["id"] for n in fan], "quote": "", "why": "",
+             "wished": [], "used": "lot", "outcome": "random", "reader_failed": False,
+             "pick": fan[1]["id"], "keep": []})
+        ledger_write()
+        st, d = call("/api/berserk?name=" + t.d["name"])
+        self.assertEqual(st, 200, d)
+        row = d["rows"][0]
+        self.assertEqual(row["beat"], "later.")
+        self.assertEqual(row["used"], "lot")
+        self.assertEqual(row["lead"], "", "the beat ends the line it stands on")
+        self.assertNotIn("tries", row)
+        self.assertEqual(d["text"], ROOT_TEXT + TOOK_TEXT + "\n\nlater.\n" + fan[1]["text"])
+
     def test_a_half_written_last_line_is_skipped(self):
         t, one, two = walked_room("brz-torn")
         # berserk appends to this file while it walks: the last line is regularly half on

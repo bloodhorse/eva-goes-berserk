@@ -17,9 +17,12 @@ line, so that it begins at a line start:
                      branch can lose for sitting eleventh in a list.
   quote            — the whole fan at once, answered by QUOTING a branch back. The only one
                      whose answer can be checked against the text with no judgement at all.
+  random           — nobody is asked anything: the branch is drawn by lot and every branch
+                     still lands on the ledger. The control the other three are read against.
 
 Nothing in that loop is anybody's taste except the frame lines, fixed once, at the top of
-this file.
+this file — and `--beats <file>`, a line per fan posed into the document before that fan is
+drawn, which is a score somebody writes on purpose and the walk has to continue.
 
 Turning what the model said into a branch number is the only place a second head is used, and
 it is used blind: `claude -p --model opus` sees the answer and the numbered openings (or, in
@@ -123,10 +126,16 @@ MARGIN_PARAMS = dict(READER_PARAMS, temperature=1.0, n_predict=40)
 # One entry per picker: the line that frames the ask, the suffix that asks it why, and what
 # ends its answer. `quote` alone closes on the typographic quote mark, because its ask line
 # opens one.
+#
+# `random` has no ask at all — nothing is read and nothing is asked, the branch is drawn by
+# lot — and it is in here anyway so that `--picker` takes its choices from one place and
+# every `FRAMES[picker]` lookup in the file keeps working. Its empty ask is what lands on the
+# ledger, which is the truth: this run asked nobody anything.
 FRAMES = {
     "about": {"ask": ASK_ABOUT, "why": WHY_ABOUT, "stop": ["\n"]},
     "margin": {"ask": NOTE_MARGIN, "why": "", "stop": ["\n"]},
     "quote": {"ask": ASK_QUOTE, "why": WHY_QUOTE, "stop": ["”", "\n"]},
+    "random": {"ask": "", "why": "", "stop": ["\n"]},
 }
 
 # The matcher's bar. 0.6 of the quotation matched and at least a dozen characters: shorter
@@ -290,6 +299,41 @@ def make_room(cycle: int, page: int, seed_path: str, predict: int,
         s["params"].update(dry_multiplier=0.0, repeat_penalty=1.0, repeat_last_n=0)
     save(s)
     return s
+
+
+def read_beats(path: str) -> list[str]:
+    """A beats file: one line per fan, blanks skipped.
+
+    A beat is a line WE write into the document before a fan is drawn — a bare direction the
+    next branches have to continue from. It is the second human hand in this machine after
+    the frame line, and it is a file rather than a flag because a run's beats are a small
+    score somebody composes once and reads back afterwards to see what the walk did with it.
+    Fewer beats than fans is allowed: the fans past the last one are drawn with none.
+    """
+    with open(path, encoding="utf-8") as f:
+        return [line.strip() for line in f if line.strip()]
+
+
+def pose_beat(room: str, line: str) -> None:
+    """Our line, appended to the document the next fan will finish.
+
+    `\\n\\n` before it and `\\n` after: the branch just taken ends wherever it ended, the beat
+    stands alone on its own line, and the fan opens on the line AFTER it — so `lead_of` comes
+    back empty and no branch is shown carrying half of our sentence.
+
+    `kind: "human"` and `posed: True`, which is exactly what the page and eva already mean by
+    "not the model's": human draws the band, posed marks it as nobody's real transcript. A
+    beat written as a model node would put our words into the fan's own record, and every
+    reading downstream — the artifact's bits, the tree screen, the anthology — would count
+    them as something nemo wrote.
+    """
+    s = load(room)
+    nid = secrets.token_hex(4)
+    s["nodes"][nid] = {"id": nid, "parent": s["current"], "kind": "human",
+                       "text": "\n\n" + line + "\n", "ts": time.time(),
+                       "pruned": False, "posed": True, "meta": None}
+    s["current"] = nid
+    save(s)
 
 
 def fan(room: str, n: int, ctx: dict) -> list[dict]:
@@ -667,14 +711,20 @@ def fork_bits(n: int, named: int) -> float:
 # ---- one fork, one page -----------------------------------------------------------------
 
 def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker: str,
-            ask: str) -> dict:
+            ask: str, beat_line: str = "") -> dict:
     """Fan, ask, resolve, write. Under `about` and `quote`: three asks on the fan as drawn;
     if none of them names a branch that is there, the fan is widened once and asked again;
     if that fails too the document takes a random branch and says so. Under `margin` there
     is nothing to reroll — the notes are written once, and either the resolver picks one or
-    the branch is random. The run never dies at a fork.
+    the branch is random. Under `random` nothing is asked at all. The run never dies at a
+    fork.
+
+    A beat goes into the document BEFORE the fan is drawn, so the branches are continuing it
+    — including the widened second fan, which hangs off the same node.
     """
     t0 = time.time()
+    if beat_line:
+        pose_beat(room, beat_line)
     branches = fan(room, fan_n, ctx)
     if len(branches) < 2:
         # One branch is not a fork and zero is a dead llama. Draw the fan again before
@@ -692,13 +742,19 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
     # nothing and carries no why, so without this the page cannot show the machine missing.
     tries: list[dict] = []
     attempts, widened, res = 0, False, None
-    if picker == "margin":
+    margin = None
+    if picker == "random":
+        # Nothing reads anything: the fan is drawn, the branch is drawn by lot below, and
+        # every branch still lands on the ledger. It is the control the other three are
+        # measured against — a walk with no taste in it at all, which is a thing you have to
+        # be able to read beside them before believing any picker is choosing.
+        attempts = 1
+    elif picker == "margin":
         attempts = 1
         r = fork_margin(doc, branches, ask, verify, ctx)
         res = r if r["index"] is not None else None
         margin = r
     else:
-        margin = None
         for _ in range(READER_TRIES):
             attempts += 1
             r = one_ask(doc, branches, ask, verify, picker, ctx, attempts)
@@ -726,13 +782,20 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
             elif r["quote"]:
                 wished.append(r["quote"])
 
-    outcome = "match"
+    outcome, reader_failed = "match", False
     if res is None:
         outcome = "random"
+        # Under `random` nothing failed: nobody was asked. `reader_failed` is the monitor's
+        # count of a reader naming branches that were never drawn, and a picker with no
+        # reader would otherwise read as a night of nothing but failures.
+        reader_failed = picker != "random"
         # Margin keeps its notes: the walk went on by chance, but what the model said about
         # each branch is the finding, and throwing it away would be throwing away the run.
         res = margin or blank_res(list(branches))
-        res["used"], res["index"] = "random", random.randrange(len(res["shown"]))
+        # "lot" and not "random": `used` names WHO answered, and under this picker the answer
+        # was drawn, not fallen back to. The outcome column is where chance is already said.
+        res["used"] = "lot" if picker == "random" else "random"
+        res["index"] = random.randrange(len(res["shown"]))
 
     node = res["shown"][res["index"]]
     if res["notes"] is not None:
@@ -755,17 +818,19 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
     save(s)
 
     said = res["notes"][res["index"]] if res["notes"] is not None else res["quote"]
-    row = dict(ctx, picker=picker, closing=closing, ask=ask, fan_size=len(branches),
+    row = dict(ctx, picker=picker, closing=closing, ask=ask, beat=beat_line,
+               fan_size=len(branches),
                attempts=attempts, widened=widened, order=res["order"], quote=res["quote"],
                why=res["why"], substring=res["substring"], agree=res["agree"],
                used=res["used"], outcome=outcome, pick=None if closing else node["id"],
                keep=[node["id"]] if closing else [],
                bits=fork_bits(len(branches), 1), seconds=round(time.time() - t0, 1),
-               reader_failed=(outcome == "random"), wished=wished)
+               reader_failed=reader_failed, wished=wished)
     if res["notes"] is not None:
         # Margin gets no `tries`: its notes are already everything it did, one per branch.
         row["notes"], row["pick_note"] = res["notes"], res["pick_note"]
-    else:
+    elif picker != "random":
+        # And random gets none either: an empty list would read as "it asked and got nothing".
         row["tries"] = tries
     if verify == "opus":
         row["opus"] = res["opus"]
@@ -780,13 +845,19 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
 
 
 def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify: str,
-            picker: str, ask: str, brakes: str = "on") -> dict:
+            picker: str, ask: str, brakes: str = "on", beats: list[str] | None = None,
+            beats_name: str = "") -> dict:
     """A seed, `forks` picking forks, one closing fan, an artifact, an html page on sheets.
 
     The closing fan is the whole reason the artifact comes out shaped like a hand-made one:
     `build_artifact` freezes the fan the room is *standing on* as a step with nothing taken,
     which is exactly what the page does when bekh saves from an open fan.
+
+    `beats` is one line per fan, the closing one included, and runs out rather than repeats:
+    a score of five on a page of eight leaves the last three fans to continue whatever the
+    document had got to on its own.
     """
+    beats = beats or []
     seeds = seed_files()
     # Offset by cycle so tonight's run does not open on the same seed as last night's — with
     # five seeds and five pages, a fixed order would give every cycle the same first page.
@@ -800,15 +871,18 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
         for f in range(1, forks + 1):
             ctx = {"cycle": cycle, "page": page, "room": room, "fork": f}
             state_write(cycle=cycle, page=page, room=room, fork=f, started=RUN_STARTED)
-            fork_rows.append(do_fork(room, fan_n, False, ctx, verify, picker, ask))
+            fork_rows.append(do_fork(room, fan_n, False, ctx, verify, picker, ask,
+                                     beats[f - 1] if f - 1 < len(beats) else ""))
         ctx = {"cycle": cycle, "page": page, "room": room, "fork": forks + 1}
         state_write(cycle=cycle, page=page, room=room, fork=forks + 1, started=RUN_STARTED)
-        last = do_fork(room, fan_n, True, ctx, verify, picker, ask)
+        last = do_fork(room, fan_n, True, ctx, verify, picker, ask,
+                       beats[forks] if forks < len(beats) else "")
         fork_rows.append(last)
     except RuntimeError as exc:
         log(f"page {page} aborted: {exc}")
         ledger({"event": "page", "cycle": cycle, "page": page, "room": room,
                 "seed": os.path.basename(seed_path), "bits": 0, "brakes": brakes,
+                "beats": beats_name,
                 "artifact_written": False, "posted": False, "error": str(exc)})
         return {"room": room, "error": str(exc), "bits": 0}
 
@@ -834,6 +908,7 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
 
     ledger({"event": "page", "cycle": cycle, "page": page, "room": room,
             "seed": os.path.basename(seed_path), "bits": art["bits"], "brakes": brakes,
+            "beats": beats_name,
             "artifact_written": written, "posted": posted, "error": err})
     matched = sum(1 for r in fork_rows if r["outcome"] == "match")
     ntfy(f"berserk c{cycle:02d} p{page:02d} landed",
@@ -916,7 +991,7 @@ def cycle_forks(cycle: int, room: str) -> list[dict]:
             if r.get("room") == room and r.get("event") is None and r.get("cycle") == cycle]
 
 
-def finish_cycle(cycle: int, ask: str, brakes: str) -> None:
+def finish_cycle(cycle: int, ask: str, brakes: str, beats_name: str = "") -> None:
     """The cycle line and the last push. The html page is the only rendering now — there is no
     morning markdown any more, because two renderings of one night is two places for the story
     to disagree with itself.
@@ -939,7 +1014,7 @@ def finish_cycle(cycle: int, ask: str, brakes: str) -> None:
     # off the ledger, and a cycle whose rooms are gone still has to name what it ran with.
     ledger({"event": "cycle", "cycle": cycle, "pages": len(pages), "matches": matched,
             "random": rnd, "wished": wished, "agree": agreed, "agree_of": len(judged),
-            "ask": ask, "brakes": brakes})
+            "ask": ask, "brakes": brakes, "beats": beats_name})
     ntfy(f"berserk c{cycle:02d} done",
          f"{len(pages)} pages · {matched} matched, {rnd} random · {wished} wished for")
     log(f"cycle {cycle:02d}: {len(pages)} pages, {matched} matched, {rnd} random, "
@@ -974,6 +1049,8 @@ def main() -> int:
                        help="the one line of taste in the loop; default: the picker's own")
         p.add_argument("--brakes", choices=("on", "off"), default="on",
                        help="DRY and the repeat penalty on the room's writing calls")
+        p.add_argument("--beats", default=None,
+                       help="a file of one line per fan, posed into the document before it")
         if name == "cycle":
             p.add_argument("--pages", type=int, default=5)
         if name == "page":
@@ -985,18 +1062,34 @@ def main() -> int:
         raise SystemExit("embed matcher not built yet")
 
     cycle = a.cycle if a.cycle else next_cycle()
-    ask = a.ask or FRAMES[a.picker]["ask"]
-    log(f"cycle {cycle:02d} · picker {a.picker} · verify {a.verify} · brakes {a.brakes} · "
+    verify, ask = a.verify, (a.ask or FRAMES[a.picker]["ask"])
+    if a.picker == "random":
+        # Nobody is asked and nothing is resolved, so a verify setting here would be a
+        # setting the run did not use — and the ledger has to name what really happened.
+        if verify != "none":
+            log("--picker random draws by lot: --verify is ignored, nothing outside llama "
+                "is called")
+            verify = "none"
+        if ask:
+            log("--picker random has no ask: the line given is not used and not recorded")
+            ask = ""
+    beats, beats_name = [], ""
+    if a.beats:
+        beats = read_beats(a.beats)
+        beats_name = os.path.basename(a.beats)
+        log(f"beats {beats_name}: {len(beats)} lines")
+    log(f"cycle {cycle:02d} · picker {a.picker} · verify {verify} · brakes {a.brakes} · "
         f"ask {ask!r}")
 
     if a.cmd == "page":
-        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, a.verify, a.picker, ask,
-                    a.brakes)
+        r = do_page(cycle, a.page, a.forks, a.fan, a.predict, verify, a.picker, ask,
+                    a.brakes, beats, beats_name)
         state_clear()
         return 1 if r.get("error") else 0
     for page in range(1, a.pages + 1):
-        do_page(cycle, page, a.forks, a.fan, a.predict, a.verify, a.picker, ask, a.brakes)
-    finish_cycle(cycle, ask, a.brakes)
+        do_page(cycle, page, a.forks, a.fan, a.predict, verify, a.picker, ask, a.brakes,
+                beats, beats_name)
+    finish_cycle(cycle, ask, a.brakes, beats_name)
     # Only here, and deliberately not in a finally: state.json outliving the process is how
     # the monitor says "it died mid-walk". Wipe it on a crash and a dead run looks finished.
     state_clear()

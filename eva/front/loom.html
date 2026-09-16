@@ -203,6 +203,10 @@
   #arttree .lvl.fanrow{margin-bottom:20px;}
   #arttree .tries .say{margin:2px 0 10px;}
   #arttree .n .note{font-style:italic; margin:8px 0 0;}
+  /* A beat: the line WE posed into the document before the fan was drawn. Rose, the same
+     colour a posed line wears in the dialogue, because that is exactly what it is — the one
+     text on this screen nemo did not write, sitting in the place the branches answer. */
+  #arttree .head .beat{color:var(--hot); margin:2px 0 6px;}
   #arttree .n .letter{margin-bottom:5px;}
   #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
   #arttree details .body{padding-top:8px;}
@@ -1260,6 +1264,14 @@ function triesBlock(row, picker, tookAt){
 function fanHead(row){
   const box = mk(null, 'div', 'head');
   mk(box, 'div', 'plumb', 'fan ' + (row.fork || '?') + (row.closing ? ' · closing' : ''));
+  // The beat rides on the fork row, so this screen never has to walk the room to find out
+  // which of the document's lines was ours. It goes above the branches because that is where
+  // it stands in the document: every branch below is continuing it.
+  const beat = (row.beat || '').trim();
+  if(beat){
+    mk(box, 'div', 'plumb', 'beat');
+    mk(box, 'div', 'body beat', beat);   // `.body` keeps its capitals — it is text nemo read
+  }
   if(row.lead){
     const line = mk(box, 'div', 'plumb', 'every branch finishes: …');
     // The lead is nemo's document, not a label: `.body` is what exempts a string from the
@@ -1792,14 +1804,20 @@ function fillBody(body, n){
   if(n.kind === 'human' && (!suf || (n.text.endsWith(suf) && n.text.length > suf.length))){
     const head = suf ? n.text.slice(0, -suf.length) : n.text;
     const lead = head.match(/^\n*/)[0];
-    const core = head.slice(lead.length);
+    const rest = head.slice(lead.length);
+    // A bare room carries its own newlines inside the text (berserk's beats end on one):
+    // left in the band they draw an empty second row inside the rounded rect, so they go
+    // back into the document where they belong. With a turn suffix the newline is already
+    // the suffix's job and `rest` has none to give.
+    const trail = suf ? '' : rest.match(/\n*$/)[0];
+    const core = trail ? rest.slice(0, -trail.length) : rest;
     if(core){
       body.appendChild(document.createTextNode(lead));
       const band = document.createElement('span');
       band.className = 'core';
       band.textContent = core;
       body.appendChild(band);
-      body.appendChild(document.createTextNode(suf));
+      body.appendChild(document.createTextNode(trail + suf));
       return;
     }
   }

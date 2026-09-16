@@ -13,7 +13,7 @@ the line without editing the file. No numbers, no bullets, no brackets and no qu
 around a branch anywhere in any of this: a base model reads every one of those as web furniture
 and starts answering the furniture.
 
-## The three pickers
+## The four pickers
 
 `--picker` decides how the question is put, and which one finds anything is **open** — bekh
 settles it by reading pages, not by argument.
@@ -30,6 +30,22 @@ settles it by reading pages, not by argument.
 - **quote** — the fan as one document again, answered by **quoting** a branch back (*…was the
   one that began: “*). The only form whose answer can be checked against the text with no
   judgement anywhere in the loop, which is why it survives as the control.
+- **random** — nobody is asked anything: the fan is drawn and one branch of it is taken by
+  lot, every other branch on the ledger as usual. One attempt, never widened, `--verify`
+  ignored (it says so in the log) and `claude` never started; the row reads `used: "lot"`,
+  `outcome: "random"`, `reader_failed: false`, and there is no ask, no `tries`, no `why`.
+  It is the floor the other three are read against — whatever a reading picker is doing, a
+  page walked by lot is what the same machine looks like with nothing choosing at all.
+
+**`--beats <file>`** is the second human hand, and it is not a picker: one line per fan, in
+order, and before each fan is drawn (the closing one included) that line is appended to the
+room as a **posed human node** — `\n\n`, the line, `\n` — so the branches open on the line
+after it and the lead comes back empty. It is a score somebody writes on purpose and the
+walk has to continue: a document that would otherwise drift onto a wiki footer is handed
+*later.* and has to find out what later means. Blank lines in the file are skipped, and a
+score shorter than the run simply runs out — the fans past the last beat get none. The line
+rides on the fork row as `beat` and the file's name on the page row and the cycle event as
+`beats`, so both renderings draw it without opening the room.
 
 **Every branch is shown with the lead on it, in all three.** A 35-token branch ends wherever it
 ends, so the document nearly always stands mid-sentence and the branches under it open on
@@ -112,7 +128,11 @@ ask, verbatim, at the top with the explainer folded behind *what is this*; then 
 open, once, then every fan hanging off a left spine — the lead it is finishing, the branches
 lettered `a b c` in the order the reader saw them, each whole, the one taken against the lilac
 line — and under the last fan **the text as it came out**, the story, once. Under margin each
-branch carries its note; under about and quote every ask is shown in order, misses included. Every
+branch carries its note; under about and quote every ask is shown in order, misses included;
+under random there is one line, `random → c`, because that is everything that happened. A fan
+walked to a **beat** shows it above the branches in rose — our hand named as ours, in the
+document's own style because the branches really are answering it — and the settings line names
+the score. Every
 fan but the first folds away the document it was drawn under. Nothing is ever cut to an opening —
 the branches nobody took are the point.
 
@@ -175,7 +195,7 @@ dead). `state.json` holds the run's pid and is removed on a clean exit only; pre
 nobody answers to is the one state that needs a human. It shows the last fork's quotation and
 which matcher was used, and counts `reader_failed` as reader failures.
 
-- `shelf/berserk/ledger.jsonl` — a line per fork (`cycle page room fork picker ask closing
+- `shelf/berserk/ledger.jsonl` — a line per fork (`cycle page room fork picker ask beat closing
   fan_size attempts widened order tries quote why substring opus agree used outcome pick keep bits
   seconds reader_failed wished`, where `order` is the branch ids exactly as the reader saw them —
   shuffled under about and quote, fan order under margin — and `pick` and `keep` are ids in it;
@@ -184,13 +204,17 @@ which matcher was used, and counts `reader_failed` as reader failures.
   **`tries`** is one entry per ask actually made, in order — `said why hit widened`, where `hit`
   is the index into `order` or null — and it is what lets the page show the machine missing:
   `wished` keeps only the answers that named nothing and carries no why. Margin has no `tries`:
-  its notes are already everything it did. **`ask`** rides on every fork row and on the cycle
-  event, and **`brakes`** on the page rows and the cycle event, so a night names what it ran with
-  even when the rooms are gone.
+  its notes are already everything it did; `random` has none either, and no `why` and no `ask`.
+  **`beat`** is the line posed above that fan, `""` where there was none. **`ask`** rides on
+  every fork row and on the cycle event, and **`brakes`** and **`beats`** (the score's file
+  name) on the page rows and the cycle event, so a night names what it ran with even when the
+  rooms are gone.
 - `shelf/berserk/heartbeat` — one json object rewritten every branch, temp-then-replace.
 - `shelf/berserk/state.json` — the run, gone on a clean exit.
 - `shelf/berserk/pages/` — the anthology pages pushed to sheets (gitignored: the walk is in git
   as an artifact, and this page is built from the ledger in a second).
+- `shelf/berserk/beats/` — the scores, one file per shape of run, a line per fan. bekh's own
+  lines; nothing here writes them.
 - `shelf/berserk/cycles/` — the two markdown reports cycles 80 and 81 were written with, kept in
   git as the record of those nights. Nothing writes there any more.
 - `/tmp/eva-berserk.log` — stderr, stamped, from launchd.
@@ -204,6 +228,8 @@ uv run --python 3.12 eva/berserk/berserk.py page --cycle 9 --page 1   # one page
 uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --pages 2 --forks 5 --fan 5 --picker margin
 uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --brakes off   # no DRY, no repeat penalty on the fan
 uv run --python 3.12 eva/berserk/berserk.py page --cycle 9 --forks 1 --fan 8 --verify none
+uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --picker random   # nobody asked; the branch is drawn by lot
+uv run --python 3.12 eva/berserk/berserk.py cycle --cycle 9 --beats shelf/berserk/beats/first-person.txt   # a line posed above every fan
 uv run --python 3.12 eva/berserk/monitor.py                           # the dashboard; --once for a frame
 ```
 
@@ -245,6 +271,15 @@ fork and lands four `tries` per fan on the ledger — each with its own why — 
 reaches the fan's llama calls, no markdown report is written at all, state is gone and the
 heartbeat remains, and a second run refuses the same room. Sheets host and ntfy are the empty
 string there: a test run must never scp to the mini or push to bekh's phone.
+
+**Beats** and **ByLot** are the two newest classes. Beats walks a score of two over three fans
+and reads the room back: each beat on its own line, in order, as a posed human node the fan
+hangs off, with an empty lead under it; the rows carrying `beat` and the last fan carrying
+none; `beats` on the page row and the cycle event; a blank line in the file skipped. ByLot
+walks `--picker random --verify opus` — opus on purpose, because random has to *ignore* it and
+the fake claude would leave a file behind if it did not — and checks the row shape, that every
+fork took a branch and the closing one kept one, and that the page says `random → ` once per
+fan and shows no attempt anywhere.
 
 The page has a class of its own, walked with a margin cycle whose fans hold empty branches: the
 h1, the settings, the folded explainer, `fan 1`, a letter per branch, every note inside its own
@@ -296,6 +331,13 @@ Cycles 80 and 81 predate `tries`, so their rows carry only `wished` and the page
 attempts from it — every miss shows, the whys of the misses do not exist to show. The first cycle
 walked after this is the first one whose page is complete.
 
-Next is bekh's call, not the machine's: read the four pages, decide whether either picker is
+`--picker random` and `--beats` are built and green against the fakes, and **no real cycle has
+run with either**. The one they are for is the first-person run: cycle 82, the scale of 80 and
+81 (two pages, five forks of five, one closing fan), walked by lot to
+`shelf/berserk/beats/first-person.txt` — six lines, five forks and the closing fan. Read beside
+80 and 81 it answers the question those two could not: how much of what a page does is the
+picker and how much is the fan.
+
+Next is bekh's call, not the machine's: read the pages, decide whether any picker is
 choosing, and — if margin's notes are the prize — whether the note should be written about the
 *branch alone* rather than the branch under the whole document.

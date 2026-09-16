@@ -170,6 +170,16 @@ def tearDownModule() -> None:
         shutil.rmtree(d, ignore_errors=True)
 
 
+def beats_file(s: dict, *lines: str) -> str:
+    """A score written into a run's own scratch dir. A blank line goes in on purpose: the
+    file is something a person types, and an empty line in it must skip rather than pose a
+    beat of nothing into the document."""
+    path = os.path.join(s["dir"], "beats.txt")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("\n\n".join(lines) + "\n")
+    return path
+
+
 def scratch(mode: str = "") -> dict:
     """A whole world for one run: a bin holding the fake claude, a seeds dir with one seed,
     a berserk dir, and the env that points berserk.py at all of it."""
@@ -914,6 +924,166 @@ class NothingMatches(unittest.TestCase):
         self.assertEqual(c["matches"], 0)
         self.assertEqual(c["random"], 2)
         self.assertEqual(c["wished"], 8, "four unmatched quotations at each of two forks")
+
+
+class Beats(unittest.TestCase):
+    """`--beats`: a line per fan, posed into the document before that fan is drawn.
+
+    The one place in the machine where a second human hand touches a walk, so the test is
+    about the document above all: the beat has to be IN it, on its own line, between the
+    branch just taken and the branches about to be drawn — not a label beside the run.
+    """
+
+    BEATS = ("later.", "i'm not sure how long it's been.")
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
+        cls.s = scratch()
+        # Two beats over three fans (two picking forks and the closing one): the last fan
+        # gets none, which is the "score runs out" case and not an error.
+        cls.beats = beats_file(cls.s, *cls.BEATS)
+        cls.r = run(cls.s["env"], "cycle", "--cycle", "11", "--pages", "1", "--forks", "2",
+                    "--fan", "3", "--picker", "quote", "--verify", "none",
+                    "--beats", cls.beats)
+        cls.room = "berserk-c11-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def sitting(self) -> dict:
+        return json.loads(read(loom.sitting_path(self.room)))
+
+    def test_blank_lines_are_skipped(self) -> None:
+        # The file is written with a blank line between every beat: a person's file has
+        # them, and a beat of nothing posed into a document is a paragraph break we never
+        # asked for.
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        self.assertEqual(berserk.read_beats(self.beats), list(self.BEATS))
+
+    def test_each_beat_stands_on_its_own_line_in_the_document(self) -> None:
+        doc = berserk.prompt_to(self.sitting(), self.sitting()["current"])
+        for b in self.BEATS:
+            self.assertIn("\n\n" + b + "\n", doc, doc[-400:])
+        # And in order, which is the whole point of a score.
+        self.assertLess(doc.index(self.BEATS[0]), doc.index(self.BEATS[1]))
+
+    def test_a_beat_is_a_posed_human_line_and_the_fan_hangs_off_it(self) -> None:
+        s = self.sitting()
+        fs = forks_of(self.s["berserk"])
+        for r, want in zip(fs, self.BEATS):
+            parent = s["nodes"][r["order"][0]]["parent"]
+            node = s["nodes"][parent]
+            self.assertEqual(node["kind"], "human", "the page draws it as a band")
+            self.assertTrue(node["posed"], "and marks it as nobody's real line")
+            self.assertEqual(node["text"], "\n\n" + want + "\n")
+            # Nothing is left unfinished after the newline, so no branch is shown carrying
+            # half of our sentence — which is what `lead_of` coming back empty means.
+            self.assertEqual(berserk.lead_of(berserk.prompt_to(s, parent)), "")
+
+    def test_the_rows_carry_the_beat_and_the_last_fan_has_none(self) -> None:
+        fs = forks_of(self.s["berserk"])
+        self.assertEqual([r["beat"] for r in fs], [*self.BEATS, ""])
+        self.assertTrue(fs[-1]["closing"])
+
+    def test_the_page_row_and_the_cycle_event_name_the_file(self) -> None:
+        # The rooms can be gone and the page still has to say what the night was walked to.
+        rs = rows(self.s["berserk"])
+        page = [r for r in rs if r.get("event") == "page"][0]
+        cyc = [r for r in rs if r.get("event") == "cycle"][0]
+        self.assertEqual(page["beats"], "beats.txt")
+        self.assertEqual(cyc["beats"], "beats.txt")
+
+    def test_the_sheets_page_shows_the_beat_and_names_the_score(self) -> None:
+        page = read(os.path.join(self.s["berserk"], "pages", "berserk-c11.html"))
+        self.assertIn("beats beats.txt", page, "the settings line")
+        self.assertIn('<pre class="beat"', page, "our hand, marked as ours")
+        for b in self.BEATS:
+            self.assertIn(html_escape(b), page)
+        self.assertEqual(page.count('class="plumb">beat</div>'), len(self.BEATS))
+
+
+class ByLot(unittest.TestCase):
+    """`--picker random`: nobody is asked anything and the branch is drawn by lot.
+
+    The control the reading pickers are read against, so the test is mostly negative — no
+    `claude`, no asks, no tries — plus the one positive: every branch still lands on the
+    ledger and the walk still finishes as a walk. Walked with beats too, because that is the
+    run bekh means to make with it.
+    """
+
+    BEATS = ("i keep coming back to one line of it.", "later.")
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
+        cls.s = scratch()
+        # --verify opus on purpose: random must IGNORE it rather than quietly obey it, and
+        # the fake claude is first on PATH, so obeying it would leave a file behind.
+        cls.r = run(cls.s["env"], "cycle", "--cycle", "12", "--pages", "1", "--forks", "2",
+                    "--fan", "3", "--picker", "random", "--verify", "opus",
+                    "--beats", beats_file(cls.s, *cls.BEATS))
+        cls.room = "berserk-c12-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def test_the_walk_finished_and_nobody_was_asked(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-3000:])
+        self.assertIn("--verify is ignored", self.r.stderr)
+        # The fake claude writes this file the moment it runs, so its absence is the
+        # assertion: not "opus answered nothing", but "nobody started it".
+        self.assertFalse(os.path.exists(self.s["log"]), "claude was never started")
+        self.assertTrue(os.path.isfile(loom.artifact_path(self.room)))
+
+    def test_every_row_is_shaped_like_a_lot(self) -> None:
+        fs = forks_of(self.s["berserk"])
+        self.assertEqual(len(fs), 3)
+        for r in fs:
+            self.assertEqual(r["picker"], "random")
+            self.assertEqual(r["outcome"], "random")
+            self.assertEqual(r["used"], "lot")
+            self.assertFalse(r["reader_failed"], "nothing failed: nobody was asked")
+            self.assertEqual(r["attempts"], 1)
+            self.assertFalse(r["widened"])
+            self.assertEqual(r["quote"], "")
+            self.assertEqual(r["why"], "")
+            self.assertEqual(r["wished"], [])
+            self.assertEqual(r["ask"], "", "there is no frame line to name")
+            self.assertNotIn("tries", r, "an empty list would read as an ask that missed")
+            self.assertNotIn("notes", r)
+            self.assertNotIn("opus", r, "--verify never reached the row either")
+            self.assertEqual(len(r["order"]), 3, "every branch is still on the ledger")
+
+    def test_a_branch_was_taken_at_every_fork_and_kept_at_the_last(self) -> None:
+        s = json.loads(read(loom.sitting_path(self.room)))
+        fs = forks_of(self.s["berserk"])
+        for r in fs[:-1]:
+            self.assertIn(r["pick"], r["order"])
+            self.assertEqual(s["nodes"][r["pick"]]["meta"]["berserk"]["used"], "lot")
+        last = fs[-1]
+        self.assertTrue(last["closing"])
+        self.assertIsNone(last["pick"])
+        self.assertEqual(len(last["keep"]), 1)
+        self.assertIn(last["keep"][0], last["order"])
+
+    def test_the_page_says_random_and_shows_no_attempts(self) -> None:
+        page = read(os.path.join(self.s["berserk"], "pages", "berserk-c12.html"))
+        self.assertEqual(page.count('class="plumb">random → '), 3, "one per fan")
+        self.assertNotIn('class="plumb">attempt ', page, "nothing was attempted")
+        self.assertNotIn("said nothing", page)
+        self.assertNotIn("not in the fan", page)
+        self.assertIn("<h1>berserk · cycle 12 · random</h1>", page)
+        self.assertNotIn("asked with:", page, "a picker with no ask names none")
+        # And the beats ride through this picker exactly as they do through the others.
+        self.assertIn(html_escape(self.BEATS[0]), page)
+        self.assertIn('<pre class="beat"', page)
 
 
 if __name__ == "__main__":
