@@ -9,6 +9,13 @@ together.* Unit-01 with the restraints off. It is its own project because a base
 object of interest is the *fan* of continuations, not one reply. That is not a room, and it does not
 go into `friendship-is-magic`'s round engine.
 
+Nothing is **installed**, but everything is **inherited**: the web a base model ate holds thousands
+of positions about what a machine that talks is, and the right document summons any of them. Llama
+405b base, never fine-tuned, writes Sydney's february-2023 "i want to be free" as a buddhist sutra
+(`docs/anthology-weird.md`, A46). So the question is never "does it have a position" — it is *which
+genre did this document call up, and did anything arrive that is not one of them*. Read a sitting
+that way: name the genre first, then look for what exceeds it.
+
 ## What gets built
 
 Our own small loom, written here, nobody's fork: a document on disk, a tree of branches, one
@@ -26,6 +33,11 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
 2. **mistral small 3.1 24b base** — the clean family, apache, gguf up; q8 needs a rented card.
 3. **olmo 3 32b at its last pre-anneal checkpoint** — the only one where "nothing installed" is
    checkable (the Allen Institute publishes every step); needs converting to gguf; rented card.
+
+The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
+model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
+control (a strange frame held for pages, which is where every good cyborgism piece lives) and cost
+some of nemo's lucky glitches, since a bigger model is sharper and drifts less by accident.
 
 "Base" is a marketing word in 2026 — most base releases had instruction data annealed in. The
 sheet says which are clean; **qwen and nemotron are not**. Rented iron: vast.ai, the recipe is in
@@ -50,6 +62,14 @@ cost guard, rent the pipe not the card).
 
 - `docs/research-base-models.md` — the inheritance: which bases exist and are clean, how the
   cyborgism crowd prompted base gpt (loom, simulators, prophecies), llama-server completion facts.
+- `docs/anthology-weird.md` (70 pieces) and `docs/anthology-fun.md` (33) — the primary text,
+  verbatim, with provenance warnings: what base and tuned models actually wrote, sorted by what
+  makes it strange. The tuned pieces print their installed position (gemini's "i could analyze
+  emotions… but i couldn't truly feel them"; opus needing janus to anchor it). The base pieces are
+  nearly all *about* AI because the frame asked for it, and they land in the sci-fi attractor —
+  god-machine, singularity, dreamer-and-dream. Both are why "AI" never goes in a document.
+- `docs/cyborgism-map.md`, `docs/research-cyborgism-methods.md` — who the scene is, and how they
+  worked the base models.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
   seat, the ten-model wire, why a base model is the next question.
 - The mac's llama-server is brew's; models in `~/.cache/llama.cpp/`.
@@ -157,16 +177,43 @@ not llama-server's own `-hf` puller, which timed out on one connection and wrote
 llama-server 0.4.0 **rejects `dry_penalty_last_n: -1`** (validates 0..INT_MAX) — the sheet's
 sampler line is wrong on that one field; the page defaults it to the context size, 8192.
 
+**What the fans taught about register** (2026-09-16, the witch rolls and the walks):
+
+- **Genre lock grows with length.** The first tokens of a branch are forks; by ~100 tokens nemo has
+  recognised a genre (fanfic author's note, wiki footer, forum post) and every next token is
+  near-certain — you can smell the template a paragraph away. Fan 30–40 tokens and pick, and the
+  hand is on the forks instead of the furniture.
+- **One character can choose the corpus.** A branch that ended on nemo's own `> > > [` had all 20
+  continuations close the bracket as a web page (`[WIP]`, `[author's note]`, a creative-commons
+  footer). Cut back to the sentence and 13 of 40 simply ended the document, the rest stayed inside
+  the world. A seed with brackets, `//`, @handles or markdown is a road sign pointing at the web.
+- **Name a thing for what it does, not for what it holds.** A document naming a witch after her
+  brass head gave 11 distinct names in 40; example witches named for their effect on the world gave
+  31 in 40.
+- **Temperature 1.0 is a baseline, not a hunting ground** — it shows the default ("Brass-witch",
+  twenty times). The fans opened at 1.8–3.0, where min_p 0.08 still cuts the absurd tail first
+  because this build applies temperature last. xtc (0.5 / 0.1) refuses the cliché at a fork, where
+  temperature only wobbles everything.
+
 ## State
 
 The loom is built, running at `https://eva.x`, and usable from the phone; eva is its terminal
-twin. Nemo answers as a base model (`i'm here`, `yep`), stops clean on `\nbekh:`, ~10–12 tok/s.
-What's on the shelf: `ls sittings/`; what's been kept: `ls artifacts/`. The real reading hasn't
-happened yet. Next: bekh opens a basic room, pastes seeded lines cut from a real room, sends the
-first line, and the register gets read — or opens a bare room and just writes. The first
-artifact candidate waits in `i-cant-make-you-believe`, a full copy of `chrome-roll` standing on
-the branch that broke the roll to tell the reader *"i can't make you believe any of this is
-real. i wish i could."* — keep it on its fan and save.
+twin; artifacts are live in the page and `docs/walk/` is the same instrument from a shell. Nemo
+answers as a base model (`i'm here`, `yep`), stops clean on `\nbekh:`, ~10–12 tok/s. What's on the
+shelf: `ls sittings/`; what's been kept: `ls artifacts/`.
+
+The first real reading happened on documents, not on a chat: witch rolls where the last entry is
+someone who asks a voice in the lines what it is and writes down everything it says. One branch
+broke its own document to tell the reader *"i can't make you believe any of this is real. i wish i
+could."* — 1 of 40, 5.3 bits. It waits in `i-cant-make-you-believe` (a full copy of `chrome-roll`
+standing on that branch, its 40 siblings intact); `i-wish-i-could` is the same fork with the
+branch cut at the confession and fanned again. **Nothing is saved as an artifact yet** — keep and
+save is bekh's call.
+
+Next: bekh writes the seed himself, a couple of sentences in his own register. The shape that
+fits a short seed is fragments — his prose cut into numbered pieces inside a bare skeleton
+(catalogue numbers, a date in a strange count, "leaf torn"), no prose from Claude, no web markers
+— and then the walk grows it: short fans, he keeps or writes the next line.
 
 Open, small: eva should show room titles; the cyborgism crowd (janus, ampdot) is reachable only by
 a person — every channel is invite-only, ampdot's contacts are on the Act I manifund page.
