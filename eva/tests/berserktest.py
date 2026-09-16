@@ -29,6 +29,7 @@ a test run must never scp to the mini or push to bekh's phone.
 
 from __future__ import annotations
 
+import html
 import json
 import os
 import shutil
@@ -197,6 +198,12 @@ def run(env: dict, *args, timeout: int = 300) -> subprocess.CompletedProcess:
                           env=env, capture_output=True, text=True, timeout=timeout)
 
 
+def html_escape(s: str) -> str:
+    """Exactly what the page does to a branch or a note before it prints it. Asserting on
+    the raw string would pass today and fail the first time a model writes an ampersand."""
+    return html.escape(s)
+
+
 def read(path: str) -> str:
     with open(path, encoding="utf-8") as f:
         return f.read()
@@ -227,6 +234,114 @@ def cleanup(*rooms: str) -> None:
 
 def overlap(a: str, b: str) -> int:
     return len(set(a.lower().split()) & set(b.lower().split()))
+
+
+class SomeEmpty(UniqueLines):
+    """UniqueLines, but every third branch comes back empty.
+
+    That is not a contrived case: a real walk that drifts onto a licence footer gets fans
+    where half the branches are the empty string, because the model has nothing to add
+    there — cycle 81's second page drew 18 empty branches out of 30. A note is still written
+    beside each of them, and the anthology still has to show that note something to sit under.
+    """
+
+    def __getitem__(self, i: int) -> str:
+        self.n += 1
+        if self.n % 3 == 0:
+            return ""
+        return f" and entry {self.n} of the {i}th sack was recorded without remark"
+
+
+class Anthology(unittest.TestCase):
+    """A margin cycle rendered as one page of reactions. Its own run, not Margin's: a test
+    that reads another class's scratch dir is a test that depends on the order they load in."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        stub_llama.READER_MODE = "quote"
+        cls.real_lines = stub_llama.LINES
+        stub_llama.LINES = SomeEmpty()
+        cls.s = scratch()
+        cls.r = run(cls.s["env"], "cycle", "--cycle", "8", "--pages", "1", "--forks", "1",
+                    "--fan", "4", "--picker", "margin")
+        cls.a = subprocess.run(
+            [sys.executable, os.path.join(EVA, "berserk", "anthology.py"),
+             "--cycles", "8", "--no-push"],
+            env=cls.s["env"], capture_output=True, text=True, timeout=120)
+        cls.page = os.path.join(cls.s["berserk"], "pages", "berserk-c08.html")
+        cls.room = "berserk-c08-p01"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        stub_llama.READER_MODE = ""
+        stub_llama.LINES = cls.real_lines
+        shutil.rmtree(cls.s["dir"], ignore_errors=True)
+        cleanup(cls.room)
+
+    def html(self) -> str:
+        return read(self.page)
+
+    def test_it_rendered_and_explains_itself(self) -> None:
+        self.assertEqual(self.r.returncode, 0, self.r.stderr[-2000:])
+        self.assertEqual(self.a.returncode, 0, self.a.stderr[-2000:])
+        self.assertTrue(os.path.isfile(self.page))
+        page = self.html()
+        self.assertIn("background:#111", page, "the sheets skin")
+        self.assertIn("No person picks a branch", page, "the experiment, explained up top")
+        self.assertIn("<strong>margin</strong>", page, "the picker under test, described")
+        self.assertIn(berserk.NOTE_MARGIN, page, "the frame line, verbatim")
+        self.assertIn("tokens a branch", page, "the settings the run really used")
+        self.assertIn(self.room, page)
+
+    def test_every_note_is_on_the_page(self) -> None:
+        page = self.html()
+        n = 0
+        for r in forks_of(self.s["berserk"]):
+            for note in r["notes"]:
+                self.assertIn(html_escape(note), page, note)
+                n += 1
+        self.assertGreaterEqual(n, 8, "four branches at each of two forks")
+
+    def test_one_branch_is_marked_taken_per_fork(self) -> None:
+        # The mark's own span, not the bare word: the page explains the word up top too.
+        forks = forks_of(self.s["berserk"])
+        page = self.html()
+        self.assertEqual(page.count('class="mark">taken<'), len(forks))
+        self.assertEqual(page.count('class="card taken"'), len(forks))
+
+    def test_an_empty_branch_is_named_so_its_note_has_a_seat(self) -> None:
+        page = self.html()
+        s = json.loads(read(loom.sitting_path(self.room)))
+        empties = sum(1 for r in forks_of(self.s["berserk"]) for i in r["order"]
+                      if not s["nodes"][i]["text"].strip())
+        self.assertGreater(empties, 0, "the stub was supposed to draw empty branches")
+        self.assertEqual(page.count("(empty branch)"), empties)
+
+    def test_the_lead_says_what_the_branches_are_finishing(self) -> None:
+        # A lead is only there when the document stands mid-line, which depends on what the
+        # walk took — with empty branches in the fan it may not. Every lead there IS has to
+        # be on the page, though: it is the only thing that makes a fan of fragments read.
+        page, seen = self.html(), 0
+        s = json.loads(read(loom.sitting_path(self.room)))
+        for r in forks_of(self.s["berserk"]):
+            parent = s["nodes"][r["order"][0]]["parent"]
+            lead = berserk.lead_of(berserk.prompt_to(s, parent))
+            if lead:
+                self.assertIn(html_escape(lead), page)
+                seen += 1
+        self.assertIn("every branch below finishes", page) if seen else None
+
+    def test_branches_are_printed_whole_and_the_seed_once(self) -> None:
+        # Nothing is cut to an opening anywhere: the branches nobody took are the point of
+        # this page, and 80 characters of one is not evidence of anything.
+        page = self.html()
+        s = json.loads(read(loom.sitting_path(self.room)))
+        for r in forks_of(self.s["berserk"]):
+            for nid in r["order"]:
+                text = s["nodes"][nid]["text"]
+                if text.strip():
+                    self.assertIn(html_escape(text), page)
+        self.assertEqual(page.count(html_escape(SEED)), 1, "the seed, once per page")
 
 
 class About(unittest.TestCase):
@@ -526,13 +641,21 @@ class Quoted(unittest.TestCase):
         self.assertIn("model:", head)
         self.assertTrue(doc.startswith(SEED), repr(doc[:200]))
 
-    def test_html_page_holds_the_escaped_document(self) -> None:
-        path = os.path.join(self.s["berserk"], "pages", self.room + ".html")
+    def test_the_sheets_page_grew_fork_by_fork(self) -> None:
+        # berserk re-renders the cycle's one page after every fork, so by the end of a
+        # two-fork page plus its closing fan all three are on it — and there is no per-room
+        # html any more, which is the point: nothing half-written to clean up after a crash.
+        path = os.path.join(self.s["berserk"], "pages", "berserk-c01.html")
         self.assertTrue(os.path.isfile(path))
         page = read(path)
-        self.assertIn("Municipal Lifts Office", page)
-        self.assertIn("plain text at eva.x", page)
-        self.assertIn("background:#111", page)
+        for n in (1, 2, 3):
+            self.assertIn(f"<h4>fork {n}", page)
+        self.assertIn("the closing fan, nothing taken from it", page)
+        self.assertIn("Municipal Lifts Office", page, "the seed it started from")
+        self.assertIn("background:#111", page, "the sheets skin")
+        self.assertNotIn("walking…", page, "the cycle finished")
+        self.assertFalse(os.path.exists(os.path.join(self.s["berserk"], "pages",
+                                                     self.room + ".html")))
 
     def test_ledger_has_a_line_per_fork_page_and_cycle(self) -> None:
         rs = rows(self.s["berserk"])

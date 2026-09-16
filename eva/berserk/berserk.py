@@ -34,8 +34,12 @@ smuggling in a taste nobody chose.
 
 The page ends on a closing fan nobody continues from — the chosen branch is *kept* instead of
 taken — which is exactly the shape `loom.build_artifact` freezes, so the walk lands in
-`artifacts/` as the same file the page at eva.x would have written. Then it goes up to the
-sheets site as html.
+`artifacts/` as the same file the page at eva.x would have written.
+
+What goes to the sheets site is not the walk but **everything said on the way**: after every
+fork `anthology.py` re-renders the whole cycle as one html page and pushes it, so the document
+bekh is reading grows under him a fork at a time and a run that dies at 4am leaves a page that
+is simply shorter, with nothing half-written to clean up.
 
 The interesting failure is a reader that names a branch that was never there. That costs
 three asks, then one wider fan, then a random branch and `reader_failed: true` — never a dead
@@ -56,7 +60,6 @@ loom's own LOOM_SITTINGS / LOOM_ARTIFACTS / LOOM_LLAMA, which the tests point at
 from __future__ import annotations
 
 import argparse
-import html
 import json
 import math
 import os
@@ -748,6 +751,9 @@ def do_fork(room: str, fan_n: int, closing: bool, ctx: dict, verify: str, picker
     if verify == "opus":
         row["opus"] = res["opus"]
     ledger(row)
+    # The sheets page is rewritten and pushed here, one fork at a time, so the document bekh
+    # is reading grows under him while the walk runs.
+    land(ctx["cycle"], ctx=ctx)
     log(f"fork {ctx['fork']}{' (closing)' if closing else ''}: {len(branches)} branches, "
         f"{outcome} via {res['used']} — {(said or '')[:60]!r}")
     return {"keep_ids": [node["id"]] if closing else [], "outcome": outcome,
@@ -801,9 +807,9 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
         err = "artifact name taken"
         log(f"artifact {room} already exists — posting the page anyway")
 
-    beat(cycle=cycle, page=page, room=room, fork=forks + 1, branch=0, phase="post")
-    path = write_page(art, room, os.path.basename(seed_path)[:-4])
-    posted = push(path, f"{SHEETS_DIR}/berserk/{room}.html")
+    # One more render now the walk has its artifact, so the page catches up the moment a
+    # page finishes rather than at the next fork of the next one.
+    posted = land(cycle, ctx={"cycle": cycle, "page": page, "room": room, "fork": forks + 1})
     if not posted and SHEETS_HOST:
         err = (err + "; " if err else "") + "scp failed"
 
@@ -820,40 +826,34 @@ def do_page(cycle: int, page: int, forks: int, fan_n: int, predict: int, verify:
 
 # ---- sheets -----------------------------------------------------------------------------
 
-def walk_temps(art: dict) -> list[float]:
-    out = []
-    for s in art.get("steps") or []:
-        rows = ([s["took"]] if s.get("took") else []) + (s.get("kept") or []) \
-            + (s.get("fan") or {}).get("others", [])
-        out += [r["temperature"] for r in rows if r.get("temperature") is not None]
-    return out
+def land(cycle: int, ctx: dict | None = None, walking: bool = True) -> bool | None:
+    """Re-render this cycle's page and push it. Called after EVERY fork, so what bekh opens
+    is never more than one fork old.
 
+    One document per cycle that grows, and never a per-page file: a page that was one
+    document from the first fork leaves nothing behind when a run dies at 4am. There is no
+    cleanup step anywhere in berserk because there is nothing half-written to clean up — the
+    page simply stops being longer.
 
-def write_page(art: dict, room: str, seed: str) -> str:
-    """The walk as one html page in the sheets skin. The document goes in a `pre` and is
-    escaped: a base model's text is full of `<`, `&` and stray brackets, and one unescaped
-    `<` swallows the rest of the page."""
-    os.makedirs(PAGES, exist_ok=True)
-    text = loom.artifact_text(art)
-    temps = walk_temps(art)
-    trange = f"t {min(temps):g}–{max(temps):g}" if temps else "t —"
-    title = art.get("title") or room
-    line = (f"nemo 12b base · {art.get('bits', 0):g} bits · "
-            f"{len(art.get('steps') or [])} forks · {trange} · {seed}")
-    body = "\n".join([
-        "<!doctype html>", '<html lang="en"><head><meta charset="utf-8">',
-        '<meta name="viewport" content="width=device-width,initial-scale=1">',
-        f"<title>{html.escape(title)}</title>", f"<style>\n{SKIN}\n</style>",
-        "</head><body>", f"<h2>{html.escape(title)}</h2>",
-        f"<small>{html.escape(line)}</small><br>",
-        f'<small><a href="https://eva.x/api/artifact/text?name={html.escape(room)}">'
-        "plain text at eva.x</a></small>",
-        f'<pre style="{DOC_STYLE}">{html.escape(text)}</pre>',
-        "</body></html>", ""])
-    path = os.path.join(PAGES, room + ".html")
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(body)
-    return path
+    `anthology` is imported here and not at the top because it imports this module: at module
+    level that is a cycle, inside a call it is a module that is already built.
+    """
+    if ctx:
+        beat(**ctx, branch=0, phase="post")
+    try:
+        import anthology
+        name = anthology.page_name([cycle])
+        path = os.path.join(PAGES, name)
+        os.makedirs(PAGES, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(anthology.render([cycle], walking=walking))
+    except Exception as exc:
+        # Broad on purpose, and the one place in here that is: a half-written room, a row the
+        # renderer did not expect, anything at all in there costs the walk a log line and not
+        # the night's run. The ledger is the record; this page is a convenience over it.
+        log(f"anthology render failed: {exc}")
+        return None
+    return push(path, f"{SHEETS_DIR}/berserk/{name}")
 
 
 def push(path: str, remote: str) -> bool:
@@ -985,6 +985,7 @@ def finish_cycle(cycle: int, settings: dict, ask: str) -> None:
     judged = [r for r in forks if r.get("agree") is not None]
     agreed = sum(1 for r in judged if r["agree"])
     report(cycle, pages, settings, ask)
+    land(cycle, walking=False)
     ledger({"event": "cycle", "cycle": cycle, "pages": len(pages), "matches": matched,
             "random": rnd, "wished": wished, "agree": agreed, "agree_of": len(judged)})
     ntfy(f"berserk c{cycle:02d} done",

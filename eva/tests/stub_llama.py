@@ -232,7 +232,16 @@ class Handler(BaseHTTPRequestHandler):
         # is what the stop list is for, and what gets cut. A berserk reader ask answers a
         # quotation instead — see READER_MODE.
         quoted = reader_reply(prompt)
-        text = quoted if quoted is not None else random.choice(LINES) + "\nbekh: and then what"
+        if quoted is not None:
+            text = quoted
+        else:
+            line = random.choice(LINES)
+            # A LINES entry that is the empty string means the model answered with NOTHING,
+            # not "a blank line and then the other speaker" — which is what a base model
+            # standing on a licence footer really does, and what the fan, the artifact and
+            # berserk's anthology page all have to survive. Append the turn unconditionally
+            # and no test can ever produce an empty branch.
+            text = (line + "\nbekh: and then what") if line else ""
         stop_type, word = "limit", ""
         cut = [(text.find(s), s) for s in stops if text.find(s) >= 0]
         if cut:

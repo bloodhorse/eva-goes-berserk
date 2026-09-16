@@ -83,16 +83,40 @@ two nights don't open on the same one) becomes a bare room named `berserk-cNN-pN
 the levers of `cli/walk/walk.py`, unchanged so the fans stay comparable with every walk already on
 the shelf. The page ends on a **closing fan** nobody continues from: the quoted branch is *kept*
 instead of taken, which is the fan the room is standing on when `loom.build_artifact` freezes it,
-so the artifact is shaped like one saved by hand from the page. The walk goes up to the sheets
-site as html (`~/sheets/berserk/<room>.html` on the mini), a push lands on the phone, and
-`shelf/berserk/cycles/cNN.md` is the report bekh opens in the morning: the settings (the picker
-among them) and the ask, a table per page (bits, forks, matched, widened, random, how often opus
+so the artifact is shaped like one saved by hand from the page. What goes to the sheets site is
+the anthology below, not the walk, and `shelf/berserk/cycles/cNN.md` is the report bekh opens in
+the morning: the settings (the picker among them) and the ask, a table per page (bits, forks, matched, widened, random, how often opus
 and substring agreed), then every fork in whatever the picker said — a quotation in quote marks,
 a description in none, a margin note on its own — and then **the wished pile**, which only the
 pickers that read the whole fan have.
 
 What the picker said rides on the chosen node's `meta.berserk` with `used`, so a fork is
 readable at eva.x months later without the ledger open beside it.
+
+## The page bekh actually reads
+
+`anthology.py` renders a cycle — or several, `--cycles 80,81` — as **one html page** in the sheets
+skin: the experiment explained at the top in plain prose (what a base model is, the pickers under
+test, the settings the run really used, the tally), then per cycle, per page, per fork: the lead
+the fan is finishing, then **every branch whole**, in the order the reader saw it, the taken one
+against the accent line. Under margin each branch carries its note; under about the fork opens
+with the description and its why, and the wished pile follows. The seed is printed once per page,
+folded if it runs long. Nothing is ever cut to an opening — the branches nobody took are the
+point.
+
+**berserk pushes that page after every fork**, to `~/sheets/berserk/berserk-cNN.html`, with a
+`walking…` line under the last one. So the page is one document per cycle that grows under the
+reader, the last fork seconds old, and — the reason it is built this way — **a run that dies at
+4am leaves a page that is simply shorter.** There is no cleanup step anywhere in berserk because
+there is nothing half-written to clean up; the per-room html the daemon used to push is gone, and
+the walk itself is linked as plain text at eva.x. `render` tolerates a cycle mid-walk: a room with
+no page row yet, a page with no closing fan yet. A render that throws costs a log line and not the
+night's run.
+
+```bash
+uv run --python 3.12 eva/berserk/anthology.py --cycles 80,81          # both cycles, one page, pushed
+uv run --python 3.12 eva/berserk/anthology.py --cycle 81 --no-push    # one, written and not pushed
+```
 
 ## What it refuses to die of
 
@@ -111,7 +135,7 @@ A fan that comes back with fewer than two branches is drawn once more (a 502 fro
 usually a reload), then the page aborts and the cycle moves to the next one. An artifact name
 already on the shelf is a 409 and the page is posted anyway — never an overwrite; a room name
 already on the shelf stops the page before it starts. The mini being asleep loses nothing: scp is
-never fatal, the ledger says `posted: false`. The matcher runs with `cwd` in a temp dir and
+never fatal, the ledger says `posted: false`, and the next fork pushes the whole page again. The matcher runs with `cwd` in a temp dir and
 `CLAUDECODE` stripped from the env, so this repo's `CLAUDE.md` is not loaded into a reader asked
 one question about a quotation, and a berserk started from inside a claude session still starts.
 
@@ -133,7 +157,8 @@ which matcher was used, and counts `reader_failed` as reader failures.
   carried), a `page` event per page, a `cycle` event per cycle.
 - `shelf/berserk/heartbeat` — one json object rewritten every branch, temp-then-replace.
 - `shelf/berserk/state.json` — the run, gone on a clean exit.
-- `shelf/berserk/pages/` — the html copies pushed to sheets (gitignored: the artifact is in git).
+- `shelf/berserk/pages/` — the anthology pages pushed to sheets (gitignored: the walk is in git
+  as an artifact, and this page is built from the ledger in a second).
 - `shelf/berserk/cycles/cNN.md` — tracked.
 - `/tmp/eva-berserk.log` — stderr, stamped, from launchd.
 
