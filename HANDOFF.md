@@ -4,6 +4,14 @@
 shape of the thing and what it's for, not a spec. The details live in `eva/berserk/CLAUDE.md`
 and the ledger; read those when you need them, not before.
 
+**Two things before anything else.** This is a joint project, bekh's and the model's working
+with him; your ideas are as important as his, and you are expected to have them. And every
+law, principle and finding cited in this file or anywhere in the repo — the register
+findings, the no-"AI"-in-a-document rule, comparison-is-the-judgment, recur-don't-continue,
+all of it — can be broken, forgone or subverted if that leads to a result that feels better.
+They are what worked so far, not what must be obeyed. The feeling is the only thing that
+outranks them.
+
 ## The objective
 
 Build an engine that shits out weird, prophetic, cool dreams on its own, all the time — so that
