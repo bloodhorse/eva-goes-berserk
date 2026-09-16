@@ -148,12 +148,14 @@
     text-underline-offset:4px; overflow-wrap:anywhere;}
   #artlist .artrow:hover .t{text-decoration-color:var(--accent);}
   #artlist .artrow .n{color:var(--ghost); font-size:13px;}
-  #artbar{display:flex; align-items:center; gap:16px; padding:0 56px 20px 64px; flex-shrink:0;}
+  /* Narrow margins on this screen on purpose: the tree is the widest thing the page draws and
+     every pixel spent on a margin is a branch cut off at the edge. */
+  #artbar{display:flex; align-items:center; gap:16px; padding:0 24px 20px 24px; flex-shrink:0;}
   #artbar h1{font-size:16px; font-weight:500; margin:0; overflow-wrap:anywhere; min-width:0;}
   #artback{background:transparent; border-color:transparent; margin-left:-10px;}
   #artagain{flex-shrink:0; white-space:nowrap;}
   #artview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
-    display:flex; flex-direction:column; gap:20px; padding:2px 56px 28px 64px;}
+    display:flex; flex-direction:column; gap:20px; padding:2px 24px 28px 24px;}
   /* The tree pane is the ONE thing on this page allowed to scroll sideways. A step with six
      kept branches is wider than a phone, and the alternative — capping how many a step may
      show — would be the page hiding part of the walk. The inner box is what the rows centre
@@ -166,13 +168,13 @@
     margin:0 0 46px;}
   #arttree .lvl:last-child{margin-bottom:6px;}
   /* the boxes sit over the curves, so a connector's ends disappear under them */
-  #arttree .n{position:relative; z-index:1; width:330px; background:var(--panel-soft);
+  #arttree .n{position:relative; z-index:1; width:400px; background:var(--panel-soft);
     border:1px solid var(--line); border-radius:11px; padding:9px 12px; font-size:13px;
     color:var(--ghost); overflow-wrap:anywhere;}
   #arttree .n.took{background:var(--panel); border-color:transparent; color:var(--ink);}
   /* The prompt is the document everything below it came out of, and the longest text on the
      screen — it gets most of the window, not a card the size of a branch. */
-  #arttree .n.root{width:clamp(330px, 62vw, 900px); max-width:100%;
+  #arttree .n.root{width:clamp(400px, 85vw, 1300px); max-width:100%;
     background:var(--sunk); color:var(--ink);}
   #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
   #arttree .cap.posed{color:var(--hot);}
