@@ -3945,10 +3945,12 @@ async function doMove(){
   sys('moved to ' + to);
 }
 
-async function openSitting(name){
+// `got`, when given, is that room's fetch already under way — the boot starts it beside the
+// shelf's instead of after it.
+async function openSitting(name, got){
   await stopAll();
   await saveQueue;
-  const d = await getJSON('/api/sitting?name=' + encodeURIComponent(name));
+  const d = await (got || getJSON('/api/sitting?name=' + encodeURIComponent(name)));
   if(d.error){ sys(d.error, true); return; }
   generation++;
   sitting = d;
@@ -4307,13 +4309,21 @@ async function health(){
 
 (async function start(){
   try{
-  await loadShelf();
   // A #tree= or #room= link names the room too, so the dialogue behind whatever screen the
   // address asks for is that room rather than whatever was last open.
   const asked = hashBits();
   const want = (asked.kind === 'tree' || asked.kind === 'room') ? asked.value : remembered();
+  // The room and the shelf in parallel: they are the two slow calls of a reload. The early
+  // fetch is a guess at the exact path; when it misses (a room deleted or filed away since,
+  // a bare name off a link) it is thrown away, and the shelf decides and fetches again.
+  const early = want ? getJSON('/api/sitting?name=' + encodeURIComponent(want)).catch(e => ({error: e.message}))
+                     : null;
+  await loadShelf();
   const name = onShelf(want) || (shelf[0] && shelf[0].name);
-  if(name) await openSitting(name);
+  if(name){
+    const d = early && await early;
+    await openSitting(name, d && !d.error && d.name === name ? Promise.resolve(d) : null);
+  }
   else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
   if(asked.kind === 'tree') await openWalk(asked.value);
   else if(asked.kind === 'canvas') await openCanvas(asked.value);

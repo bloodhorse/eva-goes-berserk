@@ -504,11 +504,18 @@ def resolve_room(name: str) -> str | None:
     return hits[0] if len(hits) == 1 else None
 
 
+# path -> (mtime_ns, size, card). In memory only, and checked against the file on every
+# call, so a room copied in by hand or rewritten by census is re-read the moment it changes.
+_CARDS: dict[str, tuple[int, int, dict]] = {}
+
+
 def shelf() -> list[dict]:
     """Every sitting on the disk, newest first, as a card's worth of each.
 
-    Reads every file — they are small, there will never be hundreds, and the alternative
-    is a sidecar index that goes stale the first time a file is copied in by hand. The
+    Reads every file that changed since the last call. They were small once; a room with
+    probs on every token is 1.6 MB now, and parsing the whole 40 MB shelf on each page load
+    cost a second. The stat is the index — nothing written to disk, so nothing to go stale
+    the first time a file is copied in by hand. The
     whole tree comes back in this one call and the page builds the folders out of the
     paths: a folder is not a thing on disk with a state of its own, it is where rooms are.
     """
@@ -516,23 +523,34 @@ def shelf() -> list[dict]:
     # One read of the ledger for the whole list, not one per room: `berserk` is what puts
     # the tree control beside a room in the picker, and the picker is drawn on every boot.
     walked = berserk_rooms()
+    seen = set()
     for name in room_names():
+        path = sitting_path(name)
         try:
-            with open(sitting_path(name), encoding="utf-8") as f:
-                d = json.load(f)
-        except (OSError, ValueError):
+            st = os.stat(path)
+            hit = _CARDS.get(path)
+            if hit and hit[0] == st.st_mtime_ns and hit[1] == st.st_size:
+                card = hit[2]
+            else:
+                with open(path, encoding="utf-8") as f:
+                    d = json.load(f)
+                card = {
+                    "name": name,
+                    "title": d.get("title") or name,
+                    "created": d.get("created") or 0,
+                    "updated": d.get("updated") or 0,
+                    "nodes": len(d.get("nodes") or {}),
+                }
+                _CARDS[path] = (st.st_mtime_ns, st.st_size, card)
+        except (OSError, ValueError, AttributeError):
             continue
-        out.append({
-            "name": name,
-            "title": d.get("title") or name,
-            "created": d.get("created") or 0,
-            "updated": d.get("updated") or 0,
-            "nodes": len(d.get("nodes") or {}),
-            # Nobody walked it = no fork rows = nothing for the tree screen to draw. The
-            # leaf too: the ledger spells a room by the name it was made with, and a walked
-            # room moved into a folder is still a walked room.
-            "berserk": name in walked or leaf(name) in walked,
-        })
+        seen.add(path)
+        # Nobody walked it = no fork rows = nothing for the tree screen to draw. The leaf
+        # too: the ledger spells a room by the name it was made with, and a walked room
+        # moved into a folder is still a walked room. Not cached: the ledger moves on its own.
+        out.append(dict(card, berserk=name in walked or leaf(name) in walked))
+    for gone in set(_CARDS) - seen:
+        _CARDS.pop(gone, None)
     out.sort(key=lambda s: s["updated"], reverse=True)
     return out
 
