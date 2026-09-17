@@ -38,7 +38,7 @@ otherwise, the instrument that detects a dream is a person reading, and his mark
    what separates the cards he marked from the ones he left bare. The data is already in the
    right shape — every marked card beat every unmarked card of the same fan, same seed, and `★`
    over `●` is a second tier. On the shelf today: 300 cards in `experiments/three-models/` with
-   39 `★` and 37 `●`; fable's 64 blind picks in `docs/ledger-fable-three-models.md` as a second
+   39 `★` and 35 `●`; fable's 64 blind picks in `docs/ledger-fable-three-models.md` as a second
    reader; and ~1,200 unmarked cards from 2026-09-16 on the canvas if he wants more labels. First
    build: a vector per card, a small scorer on top, one honest test — hide a room, train on the
    rest, see whether his marked cards rank near the top. Two feature sources to race: a small
@@ -112,7 +112,7 @@ otherwise, the instrument that detects a dream is a person reading, and his mark
   | | nemo | gpt-2 xl | pythia | total |
   |---|---|---|---|---|
   | bekh `★` | 16 | 14 | 9 | 39 |
-  | bekh `●` | 20 | 12 | 5 | 37 |
+  | bekh `●` | 18 | 12 | 5 | 35 |
   | any mark from bekh | 34 | 26 | 14 | 74 |
   | fable's blind picks | 35 | 20 | 9 | 64 |
   | marked by both | 20 | 12 | 4 | 36 |
