@@ -324,3 +324,21 @@ which timed out on one connection and wrote nothing. Nemo answers as a base mode
 `yep`), stops clean on `\nbekh:`, ~10–12 tok/s. llama-server 0.4.0 **rejects
 `dry_penalty_last_n: -1`** (validates 0..INT_MAX) — the sheet's sampler line is wrong on that one
 field; the page defaults it to the context size, 8192.
+
+**A second base model beside nemo** (2026-09-17), for blind comparisons with `census.py --models`:
+GPT-2 XL, `~/.cache/llama.cpp/gpt2-xl.Q8_0.gguf` (mradermacher/gpt2-xl-GGUF, 1.75 GB, 1024
+window, ~21 tok/s on the cpu with nemo busy on the gpu). Not a launchd agent — a plain process,
+started for a run and stopped by pid after it. Pythia 2.8b
+(`EleutherAI_pythia-2.8b.Q8_0.gguf`, port 8081, `-c 2048`) is on disk too and was dropped after
+the first run: fewest marks, under 5 tok/s, ends the document early three times in ten. Port
+8082 is the loom's; don't use it.
+
+```bash
+cd ~/.cache/llama.cpp && nohup llama-server -m gpt2-xl.Q8_0.gguf --host 127.0.0.1 --port 8083 \
+  -c 1024 -ngl 0 --no-webui > /tmp/gpt2.log 2>&1 & echo $! > /tmp/gpt2.pid
+cd ~/tower/forge/eva-goes-berserk && uv run --python 3.12 eva/cli/census.py \
+  --name experiments/<folder>/<room> --doc shelf/seeds/short/<seed>.txt --tail 260 \
+  --bare --n 30 --temps 1.4,2.2 --n-predict 60 --set xtc_probability=0 --set min_p=0.08 \
+  --models nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083
+kill $(cat /tmp/gpt2.pid)        # by pid, never pkill -f
+```
