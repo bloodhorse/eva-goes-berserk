@@ -126,6 +126,11 @@
      and on a desktop every inset is 0 and these are the numbers they always were. */
   #menubtn{position:fixed; top:calc(16px + env(safe-area-inset-top));
     right:calc(18px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
+  /* The fan, one click from the dialogue instead of two through the menu. Only on the
+     dialogue screen: the other screens have their own bars, and the canvas bar reserves
+     room for the menu button alone, so a second corner button there would sit on its chips. */
+  #fanjump{position:fixed; top:calc(16px + env(safe-area-inset-top));
+    right:calc(68px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
   #tools{position:fixed; right:calc(18px + env(safe-area-inset-right));
     top:calc(68px + env(safe-area-inset-top)); z-index:30;
     width:min(340px, calc(100vw - 36px));
@@ -411,6 +416,13 @@
   #fanbar{display:flex; align-items:center; gap:16px; padding:0 56px 20px 64px; flex-shrink:0;}
   #fanbar h1{font-size:16px; font-weight:500; margin:0;}
   #back{background:transparent; border-color:transparent; margin-left:-10px;}
+  /* The end of the document the fan continues, so a card is read against the words it
+     answers without flipping back to the dialogue. Outside #cards on purpose: it stays put
+     while the answers scroll. Capped, because a pasted page with no full stops is one
+     "sentence" and would push the cards off the screen. */
+  #fanlead{flex-shrink:0; padding:0 56px 18px 64px; color:var(--ghost); font-size:15px;
+    line-height:1.6; white-space:pre-wrap; max-height:9.6em; overflow:hidden;}
+  #fanlead:empty{display:none;}
   #cards{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     display:flex; flex-direction:column; gap:20px; padding:2px 56px 28px 64px;}
   .card{flex-shrink:0; background:var(--panel); border:1px solid transparent; border-radius:14px;
@@ -449,6 +461,7 @@
     .blk .swipe{grid-area:swipe; position:static; opacity:1;}
     #turnwrap{padding:20px 0 0;}
     #fanbar{padding:0 0 16px;}
+    #fanlead{padding:0 0 14px;}
     #cards{padding:2px 0 20px;}
     /* the -10px that optically aligns the arrow on desktop pushed its focus ring past
        the 12px phone margin and clipped it at the screen edge */
@@ -466,6 +479,7 @@
     /* the fan bar grew a second word (save as artifact); on a phone it wraps under the
        title rather than squeezing "choose an answer" onto two lines */
     #fanbar{padding:0 0 14px; gap:6px 10px; flex-wrap:wrap;}
+    #fanlead{padding:0 0 12px; font-size:14px;}
     #cards{padding:2px 0 16px; gap:16px;}
     .card{padding:16px 18px;}
   }
@@ -782,6 +796,9 @@
   <button class="iconbtn" id="menubtn" type="button" aria-label="Sitting menu" aria-expanded="false" aria-controls="tools" title="sitting menu">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/></svg>
   </button>
+  <button class="iconbtn" id="fanjump" type="button" aria-label="View alternatives" title="view alternatives" disabled>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20 5 6m7 14V4m0 16 7-14"/></svg>
+  </button>
   <aside id="tools" aria-label="Sitting controls" hidden>
     <div class="shelfrow">
       <span id="here" title="the room that is open"></span>
@@ -869,6 +886,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
+      <div id="fanlead" class="body"></div>
       <div id="cards"></div>
     </section>
 
@@ -1113,6 +1131,7 @@ function menu(open){
 function showDialogue(){
   choosing = false;
   $('doc').hidden = false;
+  $('fanjump').hidden = false;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -1126,6 +1145,7 @@ function showChoices(from){
   choosing = true;
   menu(false);
   $('doc').hidden = true;
+  $('fanjump').hidden = true;
   $('fanpane').hidden = false;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -1177,6 +1197,7 @@ function showNote(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
+  $('fanjump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = false;
   $('artpane').hidden = true;
@@ -1347,6 +1368,7 @@ function showTree(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
+  $('fanjump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = false;
@@ -1538,6 +1560,7 @@ function showText(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
+  $('fanjump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -2725,6 +2748,7 @@ function showCanvas(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
+  $('fanjump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -3248,10 +3272,25 @@ function renderDoc(){
   blocksEl.scrollTop = blocksEl.scrollHeight;
 }
 
+// The last couple of sentences of a document. A sentence ends at . ! ? … (with any closing
+// quote or bracket) before a space, or at a line break. The text a fan is drawn from usually
+// stops mid-sentence, and that fragment counts as one — it is the part the cards finish.
+// A tail under ~80 characters takes one more sentence, or "Yes." would be the whole header.
+function seedTail(text){
+  const t = (text || '').replace(/\s+$/, '');
+  const cuts = [0, ...[...t.matchAll(/[.!?…]["'”’)\]]*\s+|\n+/g)].map(m => m.index + m[0].length)]
+    .filter(i => i < t.length);
+  let k = Math.max(0, cuts.length - 2);
+  while(k > 0 && t.length - cuts[k] < 80) k--;
+  const s = t.slice(cuts[k]);
+  return s.length > 400 ? tail(s, 400) : (cuts[k] ? '…' : '') + s;
+}
+
 function renderFan(){
   const scroll = cardsEl.scrollTop;
   const focused = document.activeElement && document.activeElement.dataset.node;
   cardsEl.textContent = '';
+  $('fanlead').textContent = sitting && fanFrom ? seedTail(promptFrom(fanFrom)) : '';
   if(!sitting || !fanFrom) return;
   const list = kids(fanFrom).filter(n => n.kind === 'model');
   if(!list.length && !running){
@@ -3340,7 +3379,7 @@ function gate(){
   $('movebtn').disabled = !on || running || stopping || saving;
   $('renamename').disabled = saving;
   $('movepath').disabled = saving;
-  $('choicesbtn').disabled = !on || !alternativesFrom();
+  $('choicesbtn').disabled = $('fanjump').disabled = !on || !alternativesFrom();
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
   $('stop').disabled = stopping;
@@ -4178,7 +4217,7 @@ $('samp').addEventListener('click', () => {
 });
 $('send').addEventListener('click', () => running ? stopAll() : sendLine());
 $('fanbtn').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
-$('choicesbtn').addEventListener('click', () => {
+for(const id of ['choicesbtn', 'fanjump']) $(id).addEventListener('click', () => {
   const from = alternativesFrom();
   if(from) showChoices(from);
 });
