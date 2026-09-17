@@ -633,6 +633,161 @@ class Folders(unittest.TestCase):
         self.assertEqual(d["error"], "no such sitting")
 
 
+class Canvas(unittest.TestCase):
+    """One folder as a picture. `/api/folder` is the only route that hands over many rooms'
+    nodes at once, so it is also the only one that has to be stingy: what a picture doesn't
+    paint is dropped on the server, because the cost is the wire and not the render."""
+
+    def folder(self, name):
+        return call("/api/folder?name=" + urllib.parse.quote(name))
+
+    def test_every_room_under_it_sub_folders_and_all(self):
+        here = "canv-" + uuid.uuid4().hex[:6]
+        for name in (f"{here}/b-two", f"{here}/a-one", f"{here}/deep/c-three"):
+            self.assertEqual(Tree(name).save()[0], 200)
+        # a room whose name only STARTS like the folder is not in the folder
+        self.assertEqual(Tree(here + "-elsewhere").save()[0], 200)
+        st, d = self.folder(here)
+        self.assertEqual(st, 200, d)
+        self.assertEqual(d["folder"], here)
+        self.assertEqual([r["name"] for r in d["rooms"]],
+                         [f"{here}/a-one", f"{here}/b-two", f"{here}/deep/c-three"])
+        # every room comes with what the canvas draws a room out of
+        for r in d["rooms"]:
+            self.assertEqual(set(r) & {"root", "current", "nodes", "title", "berserk"},
+                             {"root", "current", "nodes", "title", "berserk"})
+
+    def test_a_node_is_cut_to_what_the_canvas_paints(self):
+        here = "canvcut-" + uuid.uuid4().hex[:6]
+        t = Tree(f"{here}/one")
+        root = t.d["root"]
+        # the two spellings of a model in the wild, and 40 KB of probabilities that must not
+        # leave the disk
+        a = t.add("model", "one", root, {"params": {"temperature": 2.2},
+                                         "probs": [{"id": 1, "token": "one"}],
+                                         "model": {"file": "nemo-q5.gguf"}})
+        b = t.add("model", "two", root, {"temperature": 1.9, "model": "pythia.gguf"})
+        b["kept"] = True
+        c = t.add("human", "\n\nlater.\n", a["id"])
+        c["posed"] = True
+        t.d["current"] = a["id"]
+        self.assertEqual(t.save()[0], 200)
+        st, d = self.folder(here)
+        self.assertEqual(st, 200, d)
+        room = d["rooms"][0]
+        nodes = room["nodes"]
+        self.assertEqual(nodes[a["id"]], {"parent": root, "kind": "model", "text": "one",
+                                          "temperature": 2.2, "model": "nemo-q5.gguf"})
+        # a bare meta.temperature is the real draw too, for a branch a script wrote
+        self.assertEqual(nodes[b["id"]]["temperature"], 1.9)
+        self.assertEqual(nodes[b["id"]]["model"], "pythia.gguf")
+        self.assertIs(nodes[b["id"]]["kept"], True)
+        self.assertIs(nodes[c["id"]]["posed"], True)
+        # false and missing are the same thing here, and the payload says so by saying nothing
+        self.assertNotIn("kept", nodes[a["id"]])
+        self.assertNotIn("posed", nodes[a["id"]])
+        self.assertNotIn("probs", json.dumps(nodes))
+        # the room's own shape rides along: the page redraws the tree out of it
+        self.assertEqual(room["root"], root)
+        self.assertEqual(room["current"], a["id"])
+        self.assertIs(room["berserk"], False)
+        self.assertEqual(nodes[root]["kind"], "root")
+
+    def test_a_walked_room_says_so(self):
+        t, _, _ = walked_room("canv-brz")
+        bare = t.d["name"]
+        here = "canvnight-" + uuid.uuid4().hex[:6]
+        st, d = call("/api/move", {"from": bare, "to": f"{here}/{bare}"})
+        self.assertEqual(st, 200, d)
+        st, d = self.folder(here)
+        self.assertEqual(st, 200, d)
+        self.assertIs(d["rooms"][0]["berserk"], True)
+
+    def test_the_bin_is_not_a_folder_and_an_empty_one_is_a_404(self):
+        here = "canvbin-" + uuid.uuid4().hex[:6]
+        self.assertEqual(Tree(f"{here}/gone").save()[0], 200)
+        self.assertEqual(call("/api/delete", {"name": f"{here}/gone"})[0], 200)
+        # the only room in it went to .trash, so the folder is not a folder any more
+        st, d = self.folder(here)
+        self.assertEqual(st, 404, d)
+        self.assertEqual(d["error"], "no rooms in that folder")
+        # and the bin itself is unaddressable, however it is spelled
+        for bad in ("", "../escape", ".trash", ".trash/" + here, "a//b", "a/"):
+            st, d = self.folder(bad)
+            self.assertEqual(st, 400, (bad, d))
+            self.assertEqual(d["error"], "bad name")
+        st, d = self.folder("ghost-" + uuid.uuid4().hex[:6])
+        self.assertEqual(st, 404, d)
+
+
+class Keep(unittest.TestCase):
+    """The canvas's keep writes the same `kept: true` the choose screen leaves, into the room
+    itself, so a harvest made on the picture is in the rooms and in git."""
+
+    def read(self, name):
+        st, d = call("/api/sitting?name=" + name)
+        assert st == 200, d
+        return d
+
+    def branch(self, prefix):
+        """One room in its own folder, standing on one branch — the smallest thing a keep
+        can be made on, and filed, so the canvas route can be asked about it too."""
+        here = f"{prefix}-{uuid.uuid4().hex[:6]}"
+        t = Tree(f"{here}/room")
+        b = t.add("model", "a branch", t.d["root"], {"params": {"temperature": 1.2}})
+        t.d["current"] = b["id"]
+        st, d = t.save()
+        assert st == 200 and d.get("ok"), d
+        return t, b, here
+
+    def test_it_lands_in_the_room_and_comes_off_again(self):
+        t, b, here = self.branch("keep")
+        before = self.read(t.d["name"])
+        st, d = call("/api/keep", {"room": t.d["name"], "node": b["id"], "kept": True})
+        self.assertEqual(st, 200, d)
+        after = self.read(t.d["name"])
+        self.assertIs(after["nodes"][b["id"]]["kept"], True)
+        # nothing else moved. `updated` does, because write_sitting stamps every write — a
+        # keep is a new version of the file, and the shelf orders by it.
+        self.assertGreaterEqual(after["updated"], before["updated"])
+        same = json.loads(json.dumps(after))
+        same["updated"] = before["updated"]
+        del same["nodes"][b["id"]]["kept"]
+        self.assertEqual(same, before)
+        # and the canvas reads it back off the same file
+        st, d = call("/api/folder?name=" + here)
+        self.assertEqual(st, 200, d)
+        self.assertIs(d["rooms"][0]["nodes"][b["id"]]["kept"], True)
+        # off again: the key goes, it is never set false — like every room written before
+        # keep existed
+        st, d = call("/api/keep", {"room": t.d["name"], "node": b["id"], "kept": False})
+        self.assertEqual(st, 200, d)
+        self.assertNotIn("kept", self.read(t.d["name"])["nodes"][b["id"]])
+
+    def test_the_refusals(self):
+        t, b, here = self.branch("keepno")
+        h = t.human("you up")
+        self.assertEqual(t.save()[0], 200)
+        room = t.d["name"]
+        for body, code in (
+            ({"room": "ghost-" + uuid.uuid4().hex[:6], "node": b["id"], "kept": True}, 404),
+            ({"room": room, "node": "nosuchnode", "kept": True}, 404),
+            # a root and a line of his own are not branches: keeping is a statement about
+            # what the model offered
+            ({"room": room, "node": t.d["root"], "kept": True}, 400),
+            ({"room": room, "node": h["id"], "kept": True}, 400),
+            ({"room": "../escape", "node": b["id"], "kept": True}, 400),
+            ({"room": room, "node": "", "kept": True}, 400),
+            ({"room": room, "node": b["id"], "kept": "yes"}, 400),
+            ({"room": room, "node": b["id"]}, 400),
+        ):
+            st, d = call("/api/keep", body)
+            self.assertEqual(st, code, (body, d))
+            self.assertIn("error", d)
+        # not one refusal marked anything
+        self.assertNotIn("kept", self.read(room)["nodes"][b["id"]])
+
+
 class Branching(unittest.TestCase):
     def test_fan_pick_prune(self):
         t = fresh("branch")

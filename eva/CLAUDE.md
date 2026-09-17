@@ -32,6 +32,20 @@ to but never including the shelf root, `name` re-stamped inside every file that 
 there, 409 on a name already taken by a room **or** a folder. `.trash` mirrors the folders, so
 two rooms called `smoke-01` can both be thrown away.
 
+Two routes exist only for the canvas. `GET /api/folder?name=<folder>` hands over every room
+under that folder, sub-folders included, sorted by name — each with its `root`, `current`,
+`berserk` flag and its nodes cut to `parent`, `kind`, `text` and, where they are there,
+`posed`, `kept`, `temperature` (`meta.params.temperature`, falling back to `meta.temperature`)
+and `model` (`meta.model`, either llama's `/props` object or a bare file name). `probs` and the
+rest of meta are dropped **on the server**: a folder is thirty rooms of thirty branches and
+one fan's probabilities are 40 KB, and the cost here is the wire, not the render. `name_ok`
+as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. `POST /api/keep
+{"room", "node", "kept"}` re-reads that room, sets or deletes `kept` on one **model** node and
+writes it with `write_sitting` — the same flag the choose screen's keep leaves, so a harvest
+made on the canvas is in the rooms and in git. Read and write sit next to each other and there
+is no lock: a census appending to that room in the same instant loses a branch or loses the
+flag, which is the dry-run law and not a bug to fix.
+
 **A bare name still finds a filed room.** The berserk ledger names a room the way the daemon
 made it (`berserk-c80-p01`) and every `#tree=` link the sheets pages ever printed spells it
 that way, so `resolve_room` takes a path first and then, for a name with no slash, the unique
@@ -133,6 +147,37 @@ attempts rebuilt out of `wished` exactly as the sheets page rebuilds them. Nothi
 substring, agree or bits appears anywhere: two renderings of one record, and the resolver is not a
 character in either.
 
+**The canvas is a whole experiment at once** — one folder of rooms as a picture, on the third
+screen that opts out of the reading column. It exists because a census of thirty rooms of
+thirty branches cannot be read a fan at a time: what is being looked for is which fans went
+somewhere, and that is a *shape*. Ways in: a `canvas` control on every folder row of the room
+tree, beside `move`, and the url `#canvas=<folder path>`; a back arrow returns to the
+dialogue. The folder arrives in one `/api/folder` call and never streams. A title node, an
+arrow to each room's seed card (the seed's tail, `whole seed ▸`, `open room`, and `tree ↗` on
+a room berserk walked), and under it the fan as a grid of **uniform cards**, `CARD_H = 185`
+world px in one constant. Seed blocks are packed as six masonry columns, each next room into
+the shortest one, so a room that collapsed to one brick leaves no hole. **Any tree, not only a
+census**: a branch somebody fanned under gets a `▾ n` mark and its own framed grid below, with
+a measured arrow from the card to that frame — accent when that branch is on the path
+root→`current`, dim when the room walked elsewhere — and a berserk beat is drawn as a
+one-line rose card between the branch taken and the fan under it, so a night reads as a
+staircase of fans. **Look-alikes** (same first 40 characters, whitespace collapsed,
+casefolded) collapse into one stacked card, `‹ ›` or the arrow keys flipping the members under
+the pointer, the common prefix dim and each member's own tail in full ink; the **cold heat
+ramp** (`--heat-1…6`, slate → dusky magenta, its legend in the bar) says how big a cluster is
+and no `×N` is written anywhere. Zoomed out — below `textK()`, which reads the viewport — the
+cards drop their ink and become bricks coloured by that ramp; **kept is ice** in both modes.
+**keep** writes through `/api/keep`, optimistically, and reverts with a notice if the server
+refuses. **reveal** appears only when a folder holds two or more models, is off by default and
+is never remembered: it puts a model tag and a patterned top edge (solid / dashed / dotted —
+pattern, not hue, because the ramp owns every cold colour) on each card, a legend in the bar
+and a `kept by model:` line. Drag to pan, wheel or pinch to zoom about the pointer, `f`/`fit`,
+a seed heading flies to its block, `esc` closes an opened card or fits; nothing on the surface
+is selectable and the cursor stays the ordinary arrow. `open room` goes to `#room=<path>` —
+the page's third address — so the browser's own back button comes home to `#canvas=` with the
+camera where it was (kept per folder in `sessionStorage`). `reload` re-reads the folder while
+a census is still writing and keeps the camera.
+
 All chrome is lowercase by one CSS rule; the document, anything typed and the export screen keep
 their capitals, because a capital there is text the model sees. Room: charcoal ground and
 blue-white ink, lilac accent, ice for the live dot, rose for posed; system sans; light by the OS,
@@ -170,7 +215,8 @@ file directly — don't have the room open in the page while one runs.
 
 ## Tests
 
-`tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Folders`:
+`tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Canvas` and
+`Keep` for the two canvas routes, and `Folders`:
 the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
 folder with its collisions and its pruning, and a walked room answering to its bare name after
 it moves), `evatest.py`,
