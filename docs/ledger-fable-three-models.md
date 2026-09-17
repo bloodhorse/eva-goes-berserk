@@ -67,3 +67,12 @@ not listed below.
 - `ac73a847` — not mine at all, a distant sound, an echo of another place, a world gone by. I’m not the person who has come here today, but the place. A phone calls your name in the other room. A knock at the
 - `cdcae0f2` — it’s yours. You’ve got the connection but you won’t say anything. The hum is you humming your life and me calling. It’s you calling me. But there’s no ring, only a buzz. My mouth opens to the mouthpiece like I could sing through it,
 - `6db91227` — not yet, but I hear it. What's this, an accident? This isn't your fault. You weren't even awake, you weren't supposed to call yourself. You should've known. Why are you here? Why do I keep
+
+## 22-you-it-said
+
+- `257d36cd` — knocked three times. But I could sense it thinking. “What is it?” I asked it. “I don’t know.” The house seemed surprised, as if it had only just thought of it, so I opened the door for it and let it in. I waited at the gate
+- `be565c25` — knocked and rung. It had been standing there for months with the word “For Sale” hanging out of its mouth. There was nobody to take it off or buy the house, and it stood on a street that led nowhere. “What’s your name?” I asked, and then said
+- `5cbe2ced` — touched it. I opened it myself, went up the steps, and felt for the handle of my room. When I turned it, my bed said: “Good morning.” I had to go out again then, so I did not answer back; but I said “good evening” when I
+- `8f01777d` — tapped at it twice with my walking stick. “There’s no one at home,” I muttered, as I walked on. “What does that matter? You came to see me.” The bridge was mocking me again. I stood still and watched the water flow by beneath its arch
+- `5bcce1d5` — clicked the lock. I thought I knew what that meant: "Please go away,” ‹your” body is not here.” "”Please stay away.” "”Please stay.” I tried to move
+- `7e98c984` — knocked three times and stood on one foot then the other. “You,” it said. It was very old, and its paint was faded and its shutters hung down, but the house stood proud, as though it still remembered itself when it had been new. I liked its door.
