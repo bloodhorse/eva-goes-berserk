@@ -84,3 +84,12 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
 - The why call loops (brakes off by inheritance). bekh wants the loops kept.
 - A trailing space at the end of a seed makes the next token a numeral (five basin seeds
   proved it). Seeds end on a word.
+- **The Gibson line, parked by bekh because he loves it and wants to see how it unfolds:**
+  *"All the speed he took, all the turns he'd taken and the corners he'd cut in Night City, and
+  still he'd see the matrix in his sleep, bright lattices of logic unfolding across that
+  colorless void..."* (Neuromancer). Two of the night's findings bear on it before it runs: it is
+  famous, so nemo will likely recite the next sentence of the novel, and it is third person, so
+  what follows gets reported, not lived. Ways to give it a chance: cut it mid-clause so the fork
+  lands before Gibson's own continuation does, or let it stand as the thing an *i* keeps seeing
+  (the dreamer is the *i*, the line is what it dreams). Run it plain first, to see the recitation
+  happen, then the variants.
