@@ -31,27 +31,34 @@ otherwise, the instrument that detects a dream is a person reading, and his mark
 
 ## now
 
-1. **A picker made of bekh's marks — the direction that feels most promising to him.** A
-   direction, not a commitment: we will be short of training data and may well get shit. But
-   small experiments, certainly, and **the first one right away, on the marks that already
-   exist, mostly to build the machinery.** The RLHF move, small: never define a dream, learn
-   what separates the cards he marked from the ones he left bare. The data is already in the
-   right shape — every marked card beat every unmarked card of the same fan, same seed, and `★`
-   over `●` is a second tier. On the shelf today: 300 cards in `experiments/three-models/` with
-   39 `★` and 35 `●`; fable's 64 blind picks in `docs/ledger-fable-three-models.md` as a second
-   reader; and ~1,200 unmarked cards from 2026-09-16 on the canvas if he wants more labels. First
-   build: a vector per card, a small scorer on top, one honest test — hide a room, train on the
-   rest, see whether his marked cards rank near the top. Two feature sources to race: a small
-   embedding model, and nemo's own last hidden state (RLHF builds the judge from the model that
-   writes, because it reads the text the way the writer does). Known risks: thin data; and
-   embeddings learn topic and register, which is what he said a dream is not. It is a **filter,
-   not a judge**: it ranks three hundred, he reads the top sixty and marks them, every mark is a
-   label. **Friends as more readers** would triple the data; it needs marks to carry a reader's
-   name (today `good`/`kept` are bare flags on the node) and each reader blind to the others.
-   Pooled marks make an average taste, which is not the point; per-reader marks first of all
-   measure how much two people agree — the test of whether this taste is personal at all. (One
-   data point: bekh and fable, reading blind of each other, agreed on 36 cards — about half of
-   what either marked.)
+1. **A scorer made of bekh's marks — a side road that lives beside the work** (shape agreed
+   2026-09-17, evening). Not the main avenue, and not written off: it eats what the work
+   produces anyway and gets looked at once a month. *It might save our asses in a month.*
+   - **Now, one evening of opus:** a vector per card, a tiny scorer on top, trained on 100, then
+     200, then 300 of his marks, always **tested on rooms it never saw** (or it learns "this is
+     the madman room" and looks brilliant). The marks are in `experiments/three-models/`: 39 `★`,
+     37 `●`, 300 cards; every marked card beat every unmarked card of the same fan, and `★` over
+     `●` is a second tier. Two feature sources to race: a small embedding model, and nemo's own
+     last hidden state.
+   - **First decision, on that curve:** rising → it stays alive; flat at 300 → the features
+     can't see what he sees, more labels won't fix it, shelve it without grief. fable's guess at
+     what a fair shot costs: 1,000–1,500 marks; the slope is the better estimate.
+   - **If it stays, nobody labels for its sake.** bekh keeps fucking around with the project at
+     his own pace (his estimate: about a thousand marks a month), reads what he feels like
+     reading, presses `●`/`★` when something lands; every experiment run for other reasons is
+     its food. Nothing filters what he reads, so there is no selection bias to patch — no lottery
+     slices, no audits. A proxy reader standing between him and the cards was proposed and
+     dropped: he called the contraption around it crutches for a weak core, and he was right.
+   - **Monthly:** regroup, retrain, look at the one curve. Only if it ever gets good do we talk
+     about letting it choose — and only then does "never read only the top" matter.
+   - **The scoreboard** on the held-out rooms, so every number means something: chance 27%;
+     fable reading blind beside him, 62% of picks were his (and caught 45% of his marks); the
+     scorer at 100/200/300; and, as one more contestant and never a gatekeeper, an **instructed
+     reader** — a portrait of his taste plus his marks from five rooms, picking blind in the other
+     five. bekh's bet is that instructions take a reader from 62 to 80.
+   - **Friends as more readers** would multiply the data; it needs marks to carry a reader's
+     name and each reader blind to the others. Pooled marks make an average taste, which is not
+     the point; per-reader marks first of all measure how much two people agree.
 2. **The seam is bekh's.** Where a seed is cut decides the first word of every card (*perhaps
    been* → thirty ways to be hurt; *orders to* → thirty orders; *the humming is not my own,* →
    thirty owners). So the practice: any seed he did not pick himself — found, generated, cut by
