@@ -5,6 +5,7 @@ docs/harvest/.cache/
 # is an experimental project, nothing on the shelf is private). What stays out is running
 # state — a beat, a pid — the trash, and the html pages, rebuilt off the ledger in a second.
 shelf/sittings/.trash/
+shelf/artifacts/.trash/
 shelf/berserk/heartbeat
 shelf/berserk/state.json
 shelf/berserk/pages/

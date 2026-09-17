@@ -1305,6 +1305,43 @@ class Artifacts(unittest.TestCase):
         names = [r["name"] for r in call("/api/artifacts")[1]["artifacts"]]
         self.assertLess(names.index(z), names.index(a))
 
+    def test_a_star_is_the_save(self):
+        """sync: one artifact per fan, rebuilt as the stars change, trashed with the last one,
+        and never a frozen artifact rewritten — only the ones stars made."""
+        t, b = kept_fan("art-star", keep=(1,))
+        room, at = t.d["name"], t.d["current"]
+        frozen = call("/api/artifact", {"room": room, "parent": at, "kept": [b[1]["id"]]})[1]["name"]
+        st, d = call("/api/artifact", {"room": room, "parent": at, "sync": True})
+        self.assertEqual(st, 200, d)
+        first = d["name"]
+        self.assertNotEqual(first, frozen)
+        a = art_get(first)[1]
+        self.assertEqual(a["by"], "star")
+        self.assertEqual([k["id"] for k in a["steps"][-1]["kept"]], [b[1]["id"]])
+        # the spine rides along as nodes, so the artifact can be a room again
+        self.assertEqual(a["blocks"][0]["kind"], "root")
+        self.assertEqual(a["blocks"][-1]["id"], at)
+
+        b[3]["kept"] = True
+        assert t.save()[0] == 200
+        d = call("/api/artifact", {"room": room, "parent": at, "sync": True})[1]
+        self.assertEqual(d["name"], first)                  # the same file, rewritten
+        a = art_get(first)[1]
+        self.assertEqual({k["id"] for k in a["steps"][-1]["kept"]}, {b[1]["id"], b[3]["id"]})
+
+        # the canvas route syncs too: unkeep both there and the artifact goes to .trash
+        for br in (b[1], b[3]):
+            st, d = call("/api/keep", {"room": room, "node": br["id"], "kept": False})
+            self.assertEqual(st, 200, d)
+        self.assertEqual(art_get(first)[0], 404)
+        self.assertTrue(any(f.startswith(first) for f in os.listdir(os.path.join(ARTS, ".trash"))))
+        self.assertEqual(art_get(frozen)[0], 200)           # the hand-saved one never moved
+        # nothing kept and nothing there: fine, nothing happens
+        d = call("/api/artifact", {"room": room, "parent": at, "sync": True})[1]
+        self.assertIsNone(d["name"])
+        self.assertEqual(call("/api/artifact", {"room": room, "parent": "ghost",
+                                                "sync": True})[0], 400)
+
     def test_kept_flags_ride_in_the_room(self):
         t, b = kept_fan("art-flags")
         back = call("/api/sitting?name=" + t.d["name"])[1]

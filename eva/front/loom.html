@@ -235,7 +235,7 @@
   #artbar{display:flex; align-items:center; gap:16px; padding:0 24px 20px 24px; flex-shrink:0;}
   #artbar h1{font-size:16px; font-weight:500; margin:0; overflow-wrap:anywhere; min-width:0;}
   #artback{background:transparent; border-color:transparent; margin-left:-10px;}
-  #artagain{flex-shrink:0; white-space:nowrap;}
+  #artagain, #artgo{flex-shrink:0; white-space:nowrap;}
   #artview{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     display:flex; flex-direction:column; gap:20px; padding:2px 24px 28px 24px;}
   /* The tree pane is the ONE thing on this page allowed to scroll sideways. A step with six
@@ -307,7 +307,6 @@
   @media (hover:none){
     .foot .mark{min-width:40px; height:40px; margin-block:-13px; font-size:18px;}
   }
-  #artsave{white-space:nowrap;}
   @media (max-width:900px){
     #artbar{padding:0 0 16px;} #artview{padding:2px 0 20px;} #artback{margin-left:0;}
   }
@@ -476,7 +475,7 @@
   @media (max-width:540px){
     #doc, #fanpane, #notepane, #artpane, #textpane{padding-left:12px; padding-right:12px;}
     #turnwrap{padding:16px 0 0;}
-    /* the fan bar grew a second word (save as artifact); on a phone it wraps under the
+    /* the fan bar can carry more than one word beside the title; on a phone it wraps under the
        title rather than squeezing "choose an answer" onto two lines */
     #fanbar{padding:0 0 14px; gap:6px 10px; flex-wrap:wrap;}
     #fanlead{padding:0 0 12px; font-size:14px;}
@@ -880,7 +879,6 @@
         </button>
         <h1>Choose an answer</h1>
         <span class="spring"></span>
-        <button class="ghostbtn" id="artsave" type="button" hidden title="freeze this fan with only the kept answers">Save as artifact</button>
         <button class="ghostbtn" id="more" type="button">More</button>
         <button class="iconbtn" id="stop" type="button" aria-label="Stop generating" title="stop generating" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
@@ -915,6 +913,7 @@
         <span class="spring"></span>
         <button class="btn" id="artexport" type="button" title="the walk as one document, to read or keep">Export</button>
         <button class="btn" id="artagain" type="button" title="a new room whose document is this prompt, at this sampler">Fan again</button>
+        <button class="btn" id="artgo" type="button" title="a new room holding this walk and its kept branches, to go on from">Continue</button>
       </div>
       <div id="artview"></div>
     </section>
@@ -1267,23 +1266,13 @@ function cancelNote(){
 }
 
 // ---- artifacts -----------------------------------------------------------------------
-// One fan, frozen: the prompt it was drawn from and the answers bekh kept. The page marks
-// and asks; the server builds the file from the room on disk and writes it once. Nothing
-// here edits, renames or deletes one — a mistaken artifact is a `git rm`, by hand.
+// A fan as its stars stand: the walk that reached it, with only the kept branches in it. A
+// star IS the save — every toggle of keep asks the server to rebuild that fan's artifact
+// from the room on disk, and the last star taken off puts it in artifacts/.trash. Opening
+// one never changes it; Continue stands it up as a new room.
 let artifact = null;     // the artifact on the tree screen, or null
 let walk = null;         // a berserk room on the same screen: {name, sitting, rows, text}
-let savingArt = false;
-
-function keptInFan(){
-  if(!sitting || !fanFrom) return [];
-  return kids(fanFrom).filter(n => n.kind === 'model' && n.kept);
-}
-function gateArtSave(){
-  $('artsave').hidden = !choosing || !keptInFan().length;
-  // Not while the fan is still writing: the artifact would freeze a fan missing its tail,
-  // and "what it could have said" would be short of what it did say.
-  $('artsave').disabled = running || stopping || saving || savingArt;
-}
+let artQueue = Promise.resolve();
 
 // Both marks on this screen too, written the way this screen writes everything: into the
 // tree the page owns, then the whole sitting back to the server. `kept` is what an artifact
@@ -1295,28 +1284,24 @@ function toggleMark(n, mark){
   else n[mark] = true;
   renderFan();
   save();
+  if(mark === 'kept') syncArtifact(sitting.name, n.parent);
 }
 
-async function saveArtifact(){
-  if(!sitting || !fanFrom || running || stopping || saving || savingArt) return;
-  const ids = keptInFan().map(n => n.id);
-  if(!ids.length) return;
-  savingArt = true;
-  gate();
-  try{
-    // The server reads the room off the disk, so every queued write has to land first — a
-    // branch that arrived a moment ago is not a branch there until its save has.
+// In a line, behind the saves: the server reads the stars off the disk, so the room write
+// that carries this star has to land first, and two quick stars must not race each other
+// into two artifacts for one fan.
+function syncArtifact(room, parent){
+  artQueue = artQueue.then(async () => {
     await saveQueue;
-    const d = await postJSON('/api/artifact', {room: sitting.name, parent: fanFrom, kept: ids});
-    if(d.error){ sys('not saved as an artifact: ' + d.error, true); return; }
-    sys('saved as an artifact: ' + d.title);
-    if($('artwrap').classList.contains('on')) loadArtifacts();
-  }catch(e){
-    sys('not saved as an artifact: ' + e.message, true);
-  }finally{
-    savingArt = false;
-    gate();
-  }
+    try{
+      const d = await postJSON('/api/artifact', {room, parent, sync: true});
+      if(d.error){ sys('the artifact did not follow the star: ' + d.error, true); return; }
+      if($('artwrap').classList.contains('on')) loadArtifacts();
+    }catch(e){
+      sys('the artifact did not follow the star: ' + e.message, true);
+    }
+  });
+  return artQueue;
 }
 
 function when(ts){
@@ -1616,7 +1601,7 @@ function drawArtifact(a){
   const view = $('artview');
   view.textContent = '';
   $('arttitle').textContent = a.title || a.name;
-  $('artagain').hidden = false;
+  $('artagain').hidden = $('artgo').hidden = false;
   const steps = stepsOf(a);
   view.appendChild(drawTree(a, steps));
   mk(view, 'div', 'artfoot', artFoot(a, steps));
@@ -1665,6 +1650,71 @@ async function fanAgain(){
     params: a.params && Object.keys(a.params).length ? a.params : PARAMS,
     turn: turn,
   });
+}
+
+// The artifact as a room again: the spine, then at every fork the line taken and the
+// branches kept beside it — nothing else of the fan, that being the whole cut. The sampler
+// comes along and stays editable like any room's. A walk that ends on an open fan lands on
+// that fan, so the next move is a pick.
+function treeOf(a){
+  // Copies: the steps are the artifact on screen, and the old shape below writes `at`.
+  const steps = stepsOf(a).map(st => Object.assign({}, st));
+  const base = Date.now() / 1000;
+  const nodes = {};
+  const put = (id, kind, parent, text, ts, extra) => {
+    while(!id || nodes[id]) id = hex(4);
+    nodes[id] = Object.assign({id, parent, kind, text: text || '', ts, pruned: false,
+                               posed: false, meta: null}, extra || {});
+    return id;
+  };
+  // No star comes along: in the new room these are simply the fan, and the first star
+  // there starts that room's own artifact instead of cloning this one.
+  const branch = row => ({posed: !!row.posed, meta: row.meta || null});
+  let current;
+  if(Array.isArray(a.blocks) && a.blocks.length){
+    // Ids are kept: a step names its fan point by id, and it is one of these blocks.
+    let prev = null;
+    a.blocks.forEach((b, i) => {
+      prev = put(b.id, i ? b.kind : 'root', prev, b.text, base + i, {posed: !!b.posed});
+    });
+    current = prev;
+  }else{
+    // Written before artifacts carried their blocks: the prompt is the root and each lead
+    // one line, flat — the text is right, the turns are gone.
+    current = put(null, 'root', null, a.prompt, base);
+    steps.forEach((st, i) => {
+      if(st.lead) current = put(null, 'human', current, st.lead, base + i + 0.5);
+      st.at = current;
+      if(st.took) current = put(st.took.id, 'model', current, st.took.text, base + i + 0.9);
+    });
+  }
+  for(const st of steps){
+    const head = nodes[st.at];
+    if(!head) continue;
+    // Siblings keep the order the fan had: the page sorts a fan by ts.
+    if(st.took && nodes[st.took.id]){
+      Object.assign(nodes[st.took.id], branch(st.took), {ts: head.ts + (st.took.at || 0) / 1e4});
+    }
+    for(const k of st.kept || [])
+      put(k.id, 'model', head.id, k.text, head.ts + (k.at || 0) / 1e4, branch(k));
+  }
+  const last = steps[steps.length - 1];
+  return {nodes, current, open: !!(last && !last.took && nodes[last.at])};
+}
+
+async function continueArtifact(){
+  if(!artifact) return;
+  const a = artifact;
+  const tree = treeOf(a);
+  const turn = a.turn || {prefix: '', suffix: ''};
+  await newSitting(!(turn.prefix || turn.suffix), {
+    tree,
+    title: ('go on: ' + (a.title || a.name)).slice(0, 120),
+    params: a.params && Object.keys(a.params).length ? a.params : PARAMS,
+    turn: turn,
+  });
+  if(tree.open && sitting && sitting.nodes[tree.current] && alternativesFrom() === tree.current)
+    showChoices(tree.current);
 }
 
 // ---- berserk's walks -------------------------------------------------------------------
@@ -1850,7 +1900,7 @@ function drawWalk(w){
   $('arttitle').textContent = w.sitting.title || w.name;
   // Fan again is an artifact's gesture: a walked room is still on the shelf and opens in the
   // dialogue like any other, so there is nothing here to make a copy of.
-  $('artagain').hidden = true;
+  $('artagain').hidden = $('artgo').hidden = true;
   view.appendChild(drawWalkTree(w));
   walkFoot(w, view);
   const nums = mk(view, 'div', 'artnums');
@@ -3359,7 +3409,6 @@ function renderFan(){
   }
   if(running && !stopping) pending();
   cardsEl.scrollTop = scroll;
-  gateArtSave();
 }
 
 function gate(){
@@ -3383,8 +3432,7 @@ function gate(){
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
   $('stop').disabled = stopping;
-  $('artagain').disabled = stopping || saving;
-  gateArtSave();
+  $('artagain').disabled = $('artgo').disabled = stopping || saving;
   turnEl.placeholder = !on ? 'Open the menu to start a sitting' : bare() ? 'Text to continue' : 'Your line';
   $('activity').textContent = stopping ? 'Stopping…' : running ? 'Writing alternatives…' : '';
 }
@@ -3954,6 +4002,12 @@ async function newSitting(isBare = false, opts = {}){
       turn: JSON.parse(JSON.stringify(opts.turn || (isBare ? {prefix: '', suffix: ''} : TURN))),
       root: root.id, current: root.id, nodes: {[root.id]: root},
     };
+    // A whole tree handed over (continue): its root is the node with no parent.
+    if(opts.tree){
+      fresh.nodes = opts.tree.nodes;
+      fresh.root = Object.values(opts.tree.nodes).find(n => n.parent === null).id;
+      fresh.current = opts.tree.current;
+    }
     if(opts.title) fresh.title = opts.title;
     // A room handed its turn (fan again) is a rebuild of one that existed: its stop strings
     // are whatever that room ran with, even if its turn was empty, so they are left alone.
@@ -4160,8 +4214,8 @@ $('artbtn').addEventListener('click', () => {
 });
 $('artback').addEventListener('click', showDialogue);
 $('artagain').addEventListener('click', fanAgain);
+$('artgo').addEventListener('click', continueArtifact);
 $('artexport').addEventListener('click', exportDocument);
-$('artsave').addEventListener('click', saveArtifact);
 $('treebtn').addEventListener('click', () => {
   const name = picked || (sitting && sitting.name);
   if(name) openWalk(name);

@@ -95,8 +95,9 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   documents, one `.txt` each. `sittings/`, the rooms, one json per room, tracked since
   2026-09-16 (nothing on the shelf is private; the ledger plus the rooms are the record of every
   experiment); `sittings/.trash/` holds what Clear and Delete took and stays out of git.
-  `artifacts/`, frozen walks, one indented json each, tracked and pushed, written once and never
-  edited. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
+  `artifacts/`, walks cut to their stars, one indented json each, tracked and pushed — a
+  star rewrites its fan's artifact, Continue on one makes a new room to go on from; berserk's
+  are written once. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
   talk. `berserk/`, the daemon's ledger (tracked), its heartbeat, state and html pages (not),
   the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`.
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases

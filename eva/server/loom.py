@@ -66,6 +66,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 `parent`, and freezes every fork along it — the line taken,
                                 the branches kept beside it — writing the file once; a taken
                                 name is 409, never an overwrite
+                             -> {"room", "parent", "sync": true}: what a star does. That fan's
+                                own artifact is rebuilt from the kept flags on disk, made if it
+                                isn't there, and put in artifacts/.trash when the last star goes
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
 LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER.
@@ -627,7 +630,7 @@ mean nothing. They are independent: a branch can wear both, either or neither, a
 downstream — build_artifact above all — has ever heard of `good`."""
 
 
-def set_mark(room: str, nid: str, mark: str, on: bool) -> None:
+def set_mark(room: str, nid: str, mark: str, on: bool):
     """Mark or unmark one branch, in the room itself.
 
     The same flags the choose screen leaves, so a harvest made on the canvas is in the
@@ -641,6 +644,7 @@ def set_mark(room: str, nid: str, mark: str, on: bool) -> None:
     project's dry-run law — a lost fan is an acceptable loss, and no locking is coming — and
     the window is one json load plus one dict lookup wide.
 
+    Returns the branch's parent — the fan it belongs to, which a keep has to sync.
     Raises FileNotFoundError (no room), KeyError (no such node) and ValueError (not a branch,
     or not a mark we have).
     """
@@ -659,6 +663,7 @@ def set_mark(room: str, nid: str, mark: str, on: bool) -> None:
     else:
         node.pop(mark, None)
     write_sitting(d)
+    return node.get("parent")
 
 
 def set_kept(room: str, nid: str, kept: bool) -> None:
@@ -1018,6 +1023,12 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
             "bits": round(bits, 3),
         })
 
+    # The spine as nodes, as far as the steps reach, so an artifact can be stood up as a room
+    # again with its turns intact: the prompt and the leads are the same text flattened, and a
+    # chat room rebuilt from flat text would show its whole conversation as one header.
+    blocks = [{"id": n["id"], "kind": n.get("kind"), "text": n["text"],
+               "posed": bool(n.get("posed"))} for n in walk[:(reach if reach is not None else 0) + 1]]
+
     source_title = sitting.get("title") or sitting["name"]
     now = time.time()
     lt = time.localtime(now)
@@ -1032,6 +1043,7 @@ def build_artifact(sitting: dict, parent, kept, name: str) -> dict:
         "turn": json.loads(json.dumps(sitting.get("turn") or {"prefix": "", "suffix": ""})),
         "params": json.loads(json.dumps(sitting.get("params") or {})),
         "steps": steps,
+        "blocks": blocks,
         # The walk's bits are the steps' bits ADDED. Each fork is its own choice made on its
         # own fan, so they compose the way curation's log2(n/m) does along a path: two steps
         # of 3.9 bits are 7.8 bits of bekh, not 3.9 twice over.
@@ -1056,6 +1068,78 @@ def write_artifact(obj: dict) -> None:
         os.link(tmp, artifact_path(obj["name"]))
     finally:
         os.unlink(tmp)
+
+
+def replace_artifact(obj: dict) -> None:
+    """The one writer allowed over a name: a star's artifact is a snapshot of its fan as the
+    stars stand now, so the next star rewrites it. Temp file then os.replace, like a sitting."""
+    os.makedirs(ARTIFACTS, exist_ok=True)
+    tmp = os.path.join(ARTIFACTS, f".{secrets.token_hex(6)}.part")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    os.replace(tmp, artifact_path(obj["name"]))
+
+
+def fan_artifact(room: str, parent: str) -> str | None:
+    """The name of the artifact the stars made for this fan, or None.
+
+    Only files marked `"by": "star"` answer: berserk's walks and the artifacts saved by hand
+    before stars made them are frozen, and a star must never rewrite one of those."""
+    try:
+        names = os.listdir(ARTIFACTS)
+    except OSError:
+        return None
+    for fname in names:
+        if not fname.endswith(".json") or not NAME_RE.match(fname[:-5]):
+            continue
+        try:
+            with open(os.path.join(ARTIFACTS, fname), encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(d, dict):
+            continue
+        src = d.get("source") or {}
+        if d.get("by") == "star" and src.get("room") == room and src.get("node") == parent:
+            return fname[:-5]
+    return None
+
+
+def sync_artifact(room: str, parent) -> dict:
+    """Make this fan's artifact say what its stars say: rebuilt while any branch is kept,
+    trashed when none is. A room renamed since the last star gets a new artifact and the old
+    one stays where it was — dry run.
+
+    Raises FileNotFoundError (no room) and ValueError (a room or fan point that doesn't read).
+    """
+    with open(sitting_path(room), encoding="utf-8") as f:
+        sitting = json.load(f)
+    nodes = sitting.get("nodes") if isinstance(sitting, dict) else None
+    if not isinstance(nodes, dict) or not isinstance(parent, str) or parent not in nodes:
+        raise ValueError("the fan point isn't a node of that room")
+    kept = [n["id"] for n in sorted(
+        (n for n in nodes.values() if isinstance(n, dict) and n.get("parent") == parent
+         and n.get("kind") == "model" and n.get("kept")),
+        key=lambda n: n.get("ts") or 0)]
+    name = fan_artifact(room, parent)
+    if not kept:
+        if name:
+            # Out of the list, not out of the world: the same .trash the rooms have.
+            bin_ = os.path.join(ARTIFACTS, ".trash")
+            os.makedirs(bin_, exist_ok=True)
+            os.replace(artifact_path(name),
+                       os.path.join(bin_, f"{name}-{int(time.time())}.json"))
+        return {"name": None, "gone": name}
+    if not name:
+        name = secrets.token_hex(6)
+        while os.path.exists(artifact_path(name)):
+            name = secrets.token_hex(6)
+    art = build_artifact(sitting, parent, kept, name)
+    art["by"] = "star"
+    art["model"] = model_info()
+    replace_artifact(art)
+    return {"name": name, "title": art["title"], "gone": None}
 
 
 def artifact_card(d: dict) -> dict:
@@ -1483,7 +1567,10 @@ class Handler(BaseHTTPRequestHandler):
                                           "one of " + "/".join(MARKS) + " and a boolean"})
                 return
             try:
-                set_mark(room, nid, mark, want)
+                parent = set_mark(room, nid, mark, want)
+                # A star on the canvas is a star: its fan's artifact follows it.
+                if mark == "kept" and parent:
+                    sync_artifact(room, parent)
             except FileNotFoundError:
                 self._json(404, {"error": "no such sitting"})
                 return
@@ -1555,6 +1642,20 @@ class Handler(BaseHTTPRequestHandler):
             room = payload.get("room")
             if not name_ok(room):
                 self._json(400, {"error": "bad room name"})
+                return
+            if payload.get("sync") is True:
+                try:
+                    out = sync_artifact(room, payload.get("parent"))
+                except FileNotFoundError:
+                    self._json(404, {"error": "no such sitting"})
+                    return
+                except ValueError as exc:
+                    self._json(400, {"error": str(exc)})
+                    return
+                except OSError as exc:
+                    self._json(500, {"error": f"can't write it: {exc}"})
+                    return
+                self._json(200, dict({"ok": True}, **out))
                 return
             # No name = a random hex one, like a room the page makes. A name that is given
             # gets the room rule, because it is a file name behind an api with no auth.

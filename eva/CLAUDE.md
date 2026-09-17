@@ -64,7 +64,11 @@ model's words on bare ground, **the fork mark** `⌥ 3/40` on any line with sibl
 that line's own fan on the choose screen, because a fan of forty is read as a pile, not stepped
 through one at a time (the `‹ ›` walk it replaced is gone) — edit in place (a model line bekh
 edits is **posed** forever). A fan opens a separate "choose an answer" screen as its first answer
-lands; picking one returns to the dialogue. Everything else hides behind the corner menu: the
+lands; picking one returns to the dialogue. That screen heads the cards with the last two sentences
+of the text they continue (one more when those are under ~80 characters, capped at 400), fixed
+while the cards scroll. Beside the corner menu, on the dialogue screen only, a fan icon opens the
+alternatives in one click — the canvas bar reserves room for the menu button alone. Everything
+else hides behind the corner menu: the
 **room tree** (the shelf's folders, drawn from the room paths and from nothing else — folders
 first then rooms, alphabetical, `▸`/`▾`, closed by default, which folds are open remembered
 per browser in `localStorage`; the open room is named once at the top and marked in the accent
@@ -81,7 +85,7 @@ from its new path, because the name inside the file is what the next save posts 
 copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, file moves to
 `.trash`), view alternatives, continue from here, **sampler**, **storage** (note names as links, `+`
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
-edit), **artifacts** (a list; each opens read-only). The composer is greyed with no room open.
+edit), **artifacts** (a list; each opens as a tree). The composer is greyed with no room open.
 
 **Artifacts** are the opposite of rooms: a room is a dry run, an artifact is a **walk** frozen —
 the document it started from and every fork along the way. On the choose screen every card carries
@@ -89,7 +93,15 @@ the same two glyph marks the canvas cards do — `☆`/`★` **keep** (an option
 node, saved with the room; eva ignores it and keeps it) and `○`/`●` **good**, which only says he
 liked reading it and which no artifact ever sees — and that is the whole gesture: he keeps as he
 goes, picks, walks on, keeps more at the next fork.
-**Save as artifact** posts the room, the fan he has open and the ids kept in it; the server walks
+**A star is the save** (2026-09-17 — there is no save button). Every toggle of keep, on the choose
+screen or the canvas, asks the server to sync *that fan's* artifact (`POST /api/artifact
+{"room","parent","sync":true}`; `/api/keep` does it by itself): rebuilt from the kept flags on disk
+while any branch in the fan is kept, made on the first star, moved to `shelf/artifacts/.trash/` when
+the last one comes off. One artifact per fan, found by `"by": "star"` plus `source.room` and
+`source.node` — so a deeper fan of the same walk is its own artifact, repeating the stars above it;
+a room renamed since gets a fresh one. Files without `"by": "star"` (berserk's walks, the artifacts
+saved by hand before stars) are never rewritten; the plain POST with `kept` still writes once
+through `os.link`, 409 on a taken name. The server walks
 the path root→`current` and builds the file itself from the room *on disk*:
 `shelf/artifacts/<hex>.json` with the prompt (root→the first fan point, verbatim), the room's turn
 and sampler, the model llama's `/props` names at save time, and one **step** per fork — the line
@@ -100,8 +112,8 @@ line taken is the document again. The open fan he saves from is always the last 
 taken yet; a fan of one is not a step; a step he kept nothing in still is one. Bits per step are
 log2(C(n,k)) with k counting the line taken alongside the keeps — `curation`'s log2(n) when nothing
 was kept beside it — and the walk's total is the steps added, because each fork is its own choice.
-A verbatim twin of a named branch leaves the pool. Written once through `os.link`, so a taken name
-is 409, never an overwrite.
+A verbatim twin of a named branch leaves the pool. `blocks` is the spine as nodes (`id`, `kind`,
+`text`, `posed`) as far as the steps reach, so the walk can stand up as a room again with its turns.
 
 **The artifact screen is that walk as a tree**, and the one screen that opts out of the
 `--reading` column: a tree is a picture, not prose, so it takes the whole window and a branch is
@@ -127,7 +139,12 @@ mid-word. Each is marked `[generation begins]` and nothing more — which branch
 temperature, is the tree's job — and the text goes out untrimmed, as plain text, because a base
 model's document is full of `> > >`, `//` and stray brackets and a markdown reader eats exactly
 those. **Fan again** makes a new room from the prompt with the same turn and sampler, and doesn't
-fan. An artifact written before walks existed has no `steps` and is read as a walk of one step with
+fan. **Continue** makes a new room *out of the walk*: the spine from `blocks`, and at every fork the
+line taken plus the kept branches — nothing else of the fan, that being the cut — in fan order, with
+the artifact's turn and sampler (editable like any room's), and no stars carried over, so the first
+star there starts the new room's own artifact. A walk ending on an open fan lands on that fan's
+choose screen. An artifact without `blocks` (everything before 2026-09-17) rebuilds flat: the prompt
+as root, each lead as one human line. The artifact itself never changes. An artifact written before walks existed has no `steps` and is read as a walk of one step with
 nothing taken — `steps` is the whole test, and no file on the shelf is ever rewritten.
 
 **The same screen draws a berserk walk**, because an artifact is the wrong record of one: it
