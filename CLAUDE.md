@@ -55,6 +55,14 @@ cost guard, rent the pipe not the card).
   stiff and gave me nothing* — fed regardless of the reply; a mind that argues back is a mind.
 - **Sheets to bekh** are html on the sheets site (`~/sheets` on the mini, pandoc `-s`), or markdown
   in Typora tagged `claude`. Compared things go to him unmarked, the key held until he picks.
+- **The page is designed for the desktop; the phone is a smoke test, not a co-author.** bekh works
+  the loom at a desk and picks up the phone once in a while. So a design talk about the page is a
+  desktop talk: no phone caveats, no "and on touch…" tail on every decision, no feature shaped
+  around a thumb. When a batch is cut, the mobile rig (`eva/front/mobile/`) runs once and asks three
+  things — can he read a room, send a line, pick from a fan. Yes → ship. No → fix that one thing.
+  A new desktop feature that doesn't fit the phone may simply be absent there. Splitting the page
+  in two, or demoting the phone to read-only, is a **parked** choice — don't reopen it without
+  evidence of what actually hurts.
 - **Research needing reddit** uses the Arctic Shift archive — `~/.claude/docs/reddit.md`.
 - Nothing here is bekh's voice unless he wrote it. Offer a shape, let him say it.
 
