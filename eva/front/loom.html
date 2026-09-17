@@ -26,6 +26,23 @@
     /* posed and errors: a state you have to be able to spot without reading */
     --hot:#eb6f92;
     --ctl:28px;
+
+    /* The canvas's own two tokens. The far-zoom brick for a branch that said something
+       nobody else said: the line colour lifted just enough off the ground to read when a
+       whole experiment is in view. */
+    --bar-neutral:#3a4257;
+    /* The heat ramp: how contaminated a cell is, as temperature. The steps are log-ish in
+       cluster size (2 · 3–4 · 5–8 · 9–15 · 16–24 · 25+) and the walk is 216°→316° — slate,
+       blue-violet, violet, magenta — saturation climbing, lightness held low, so a ×30 is a
+       dusky magenta brick and never a candy one. Cold the whole way: nothing on the canvas
+       is allowed to be warm. They end where the accent (a pale magenta) starts, which is why
+       the ramp lands on magenta and not on red. */
+    --heat-1:#485870;   /* ×2        hsl(216 22% 36%) */
+    --heat-2:#4c5381;   /* ×3–4      hsl(232 26% 40%) */
+    --heat-3:#5c4f92;   /* ×5–8      hsl(252 30% 44%) */
+    --heat-4:#784d9d;   /* ×9–15     hsl(272 34% 46%) */
+    --heat-5:#9c49a2;   /* ×16–24    hsl(296 38% 46%) */
+    --heat-6:#ad4391;   /* ×25+      hsl(316 44% 47%) */
   }
   /* the dawn side of the same palette: paper ground, violet ink, the accents deepened so
      they still read on white */
@@ -36,6 +53,11 @@
       --accent:#907aa9; --on-accent:#faf4ed;
       --live:#56949f;
       --hot:#b4637a;
+      /* the same two walks on paper: the same hues, lifted to where a filled brick reads on
+         a light ground instead of turning into a black hole in the middle of the picture */
+      --bar-neutral:#c9c0bb;
+      --heat-1:#8999b4; --heat-2:#7e86b4; --heat-3:#8174b4;
+      --heat-4:#966fb8; --heat-5:#b568bb; --heat-6:#c05da6;
     }
   }
   /* And that light block is the whole of the light room: there are no RULE overrides
@@ -426,6 +448,220 @@
     #doc, #fanpane, #notepane, #artpane, #textpane{padding-top:64px;}
     #turnwrap{padding-top:10px;}
   }
+  /* ---- the canvas -----------------------------------------------------------------------
+     A whole experiment — one folder of rooms — as a picture you pan and zoom, the way a
+     canvas app shows a board. Like the tree screen it opts out of the reading column and
+     takes the window: thirty fans of thirty branches is not prose. Every class in here is
+     prefixed `cn-` because the page already has a `.card`, a `.head` and a `.foot` of its
+     own and a canvas card is none of them; `.body` is shared on purpose — it is the one
+     class that exempts a string from the page's lowercase rule, and every word on a card
+     is text a model wrote. Designed for the desk: the phone gets whatever falls out. */
+  #canvaspane{flex:1; min-width:0; min-height:0; display:flex; flex-direction:column;}
+  #canbar{
+    flex-shrink:0; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    /* the right gutter is for the fixed menu button, which hangs over this bar */
+    padding:14px 68px 10px max(12px, env(safe-area-inset-left));
+    border-bottom:1px solid var(--line); font-size:13px;
+  }
+  #canbar .name{font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width:40vw;}
+  #canbar .dim{color:var(--ghost); white-space:nowrap;}
+  #canback{background:transparent; border-color:transparent; width:34px; height:34px;}
+  /* scoped to the bar, like every other rule on this page: a bare `.chip` is the kind of
+     generic class name two features end up fighting over */
+  #canbar .chip{background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    border-radius:9px; padding:4px 10px; white-space:nowrap; font-size:13px;}
+  #canbar .chip:hover{border-color:var(--ghost);}
+  #canbar .chip[aria-pressed="true"]{border-color:var(--live); color:var(--live);}
+  #canzoom{color:var(--ghost); font-variant-numeric:tabular-nums; min-width:44px; text-align:right;}
+  /* The only place the ramp is explained. It lives in the bar and not on the canvas because
+     it is a key, not furniture: read once, then forgotten. */
+  #canlegend{display:flex; align-items:flex-end; gap:6px; color:var(--ghost); font-size:10px;
+    line-height:1;}
+  #canlegend .step{display:flex; flex-direction:column; align-items:center; gap:4px;}
+  #canlegend .sw{width:18px; height:9px; border-radius:2px;}
+  #canlegend .sw.h1{background:var(--heat-1);} #canlegend .sw.h2{background:var(--heat-2);}
+  #canlegend .sw.h3{background:var(--heat-3);} #canlegend .sw.h4{background:var(--heat-4);}
+  #canlegend .sw.h5{background:var(--heat-5);} #canlegend .sw.h6{background:var(--heat-6);}
+  /* which model wrote a card, by PATTERN and never by hue: the heat ramp already owns every
+     cold hue on this page, and a fourth and fifth colour beside it would be read as more
+     heat. Hidden until `reveal` is on — off by default and never remembered. */
+  /* `reveal` is worn by the PANE and not by the world, because it has to reach both the cards
+     inside the world and this legend up in the bar, and the two are siblings. */
+  #canmodels{display:none; align-items:center; gap:10px; color:var(--ghost); font-size:11px;}
+  #canvaspane.reveal #canmodels{display:flex;}
+  #canmodels .m{display:flex; align-items:center; gap:5px; text-transform:none;}
+  #canmodels .m i{display:block; width:20px; border-top:2px solid var(--ghost);}
+  #canmodels .m.m1 i{border-top-style:dashed;} #canmodels .m.m2 i{border-top-style:dotted;}
+  #canmodels .m.m3 i{border-top-style:double; border-top-width:3px;}
+  #cankeptby{display:none;}
+  #canvaspane.reveal #cankeptby{display:inline; color:var(--ghost);}
+
+  /* The surface is a thing you look at, not a thing you select out of — text gets copied in
+     the room, not here — so nothing on it is selectable and the pointer stays an ordinary
+     arrow whether it is resting or dragging. Only the real controls say "click me". */
+  #canstage{
+    flex:1; min-height:0; position:relative; overflow:hidden; touch-action:none;
+    cursor:default; user-select:none; -webkit-user-select:none;
+    background:radial-gradient(circle at 1px 1px,
+      color-mix(in srgb, var(--ink) 12%, var(--bg)) 1px, transparent 0) 0 0/48px 48px;
+  }
+  #canstage button{cursor:pointer;}
+  #canworld{position:absolute; left:0; top:0; width:0; height:0;
+    transform-origin:0 0; will-change:transform;}
+  #canwires{position:absolute; left:0; top:0; overflow:visible; pointer-events:none;}
+  /* non-scaling-stroke: a hairline that stays a hairline at 5% and at 200%, so the wires read
+     as structure when the whole experiment is in view and never fatten up close. */
+  #canwires path{fill:none; stroke:var(--accent); stroke-width:1.6; opacity:.32;
+    vector-effect:non-scaling-stroke;}
+  #canwires path.dim{stroke:var(--ghost); opacity:.3;}
+
+  #cantitle{position:absolute; background:var(--panel-soft); border:1px solid var(--line);
+    border-radius:18px; padding:26px 32px; text-align:center;}
+  #cantitle h1{margin:0; font-size:56px; letter-spacing:.01em; font-weight:600;}
+  #cantitle p{margin:14px 0 0; font-size:24px; color:var(--ghost);}
+
+  /* a block: one room — its seed card, a stem, and the frames of its fans */
+  .cn-block{position:absolute;}
+  .cn-seed{margin:0 auto; background:var(--panel); border:1px solid var(--line);
+    border-radius:14px; padding:18px 22px 16px;}
+  .cn-seed h2{margin:0 0 10px; font-size:19px; font-weight:600; color:var(--live);
+    cursor:pointer; display:inline-block;}
+  .cn-seed h2:hover{color:var(--accent);}
+  .cn-seed .body{font-size:14px; line-height:1.6; color:var(--ink);}
+  .cn-foot{display:flex; align-items:center; gap:18px; margin-top:10px;}
+  .cn-foot button{background:none; border:0; padding:2px 0; color:var(--ghost); font-size:12px;}
+  .cn-foot button:hover{color:var(--ink);}
+  .cn-stem{position:absolute; width:2px; background:var(--line);}
+  /* max-content, not the block's width: a seed whose thirty branches collapsed to one brick
+     must not sit in a 1600px empty box. js sets the column count to the cards it actually
+     holds, and the frame is then exactly as wide as them. */
+  .cn-frame{border:1px solid var(--line); border-radius:16px; padding:18px;
+    display:grid; grid-template-columns:repeat(5, 300px); gap:18px; align-items:start;
+    width:max-content; background:color-mix(in srgb, var(--sunk) 45%, transparent);}
+  .cn-frame:empty{min-height:80px; min-width:300px;}
+  /* The one line on the canvas nobody's model wrote: the beat posed into the document before
+     a berserk fan. Rose, the same colour posed wears in the dialogue, because that is exactly
+     what it is. */
+  .cn-beat{background:var(--panel-soft); border:1px solid var(--line);
+    border-left:4px solid var(--hot); border-radius:10px; padding:8px 14px; width:max-content;
+    max-width:820px; color:var(--hot); font-size:14px;}
+
+  /* A branch card. `.cn-card` is the grid cell and the positioning box; `.cn-face` is the one
+     visible surface. A stack puts two more faces behind it, offset — that is the whole of the
+     pile, and it is why the face exists as its own element: an offset sheet cannot be a
+     negative-z-index pseudo of the card, it would paint over the card's own background. */
+  .cn-card{position:relative;}
+  .cn-face{position:relative; background:var(--panel-soft); border:1px solid var(--line);
+    border-left:4px solid var(--line); border-radius:10px; padding:8px 11px 10px;}
+  /* Uniform cards: how long a continuation happens to be is not information worth a page of
+     ragged boxes, so every card is one size and every block is an even grid. The class goes
+     on the world only AFTER the natural heights are measured — the measurement needs them. */
+  #canworld.uniform .cn-card{height:var(--cn-card-h);}
+  #canworld.uniform .cn-face{position:absolute; inset:0; overflow:hidden;}
+  #canworld.uniform .cn-card.clips > .cn-face::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:28px; pointer-events:none;
+    background:linear-gradient(to bottom, transparent, var(--panel-soft));}
+  .cn-clip{position:absolute; right:9px; bottom:5px; z-index:1; pointer-events:none;
+    font:10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--ghost);}
+  .cn-card:not(.clips) .cn-clip{display:none;}
+  /* open: the card grows downward OVER its neighbours. An absolute face with bottom:auto costs
+     no layout, so nothing in the grid moves and the masonry stays put. */
+  #canworld.uniform .cn-card.open{z-index:60;}
+  #canworld.uniform .cn-card.open > .cn-face{bottom:auto; height:auto; overflow:visible;
+    box-shadow:0 20px 44px color-mix(in srgb, var(--sunk) 60%, transparent);}
+  #canworld.uniform .cn-card.open > .cn-face::after{display:none;}
+  #canworld.uniform .cn-card.open .cn-clip{display:none;}
+  .cn-head{display:flex; align-items:center; gap:7px; flex-wrap:wrap; row-gap:4px;
+    margin-bottom:6px; font:11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color:var(--ghost);}
+  .cn-head .cn-keep{margin-left:auto; background:none; border:1px solid var(--line);
+    border-radius:7px; color:var(--ghost); font:inherit; padding:1px 7px;}
+  .cn-head .cn-keep:hover{border-color:var(--ghost); color:var(--ink);}
+  .cn-card .body{font-size:13px; line-height:1.55;}
+  .cn-card.furniture{opacity:.45;}
+  /* kept is ice, and ice is nothing else on this page. It has to survive on a card whose own
+     edge may be at the magenta end of the ramp, so it never shares a hue with it. */
+  .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
+  .cn-card.kept .cn-keep{border-color:var(--live); color:var(--live);
+    background:color-mix(in srgb, var(--live) 18%, transparent);}
+  /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
+  .cn-sub{color:var(--live);}
+  /* the model tag and its edge, both only under `reveal`. The tag is a file name, so it is
+     one of the few strings on the page that must keep its capitals. */
+  .cn-tag{display:none; text-transform:none; color:var(--ghost);}
+  .cn-edge{display:none; position:absolute; left:0; right:0; top:0; height:0;
+    border-top:2px solid var(--ghost); pointer-events:none;}
+  .cn-edge.m1{border-top-style:dashed;} .cn-edge.m2{border-top-style:dotted;}
+  .cn-edge.m3{border-top-style:double; border-top-width:3px;}
+  #canvaspane.reveal .cn-tag{display:inline;}
+  #canvaspane.reveal .cn-edge{display:block;}
+
+  /* A stack: one card standing for a whole look-alike cluster. --cn-heat is set on the card
+     in js, off the member count; every rule below just reads it. Up close the heat is an edge
+     and nothing else — a filled card would eat its own text. */
+  .cn-card.cn-stack > .cn-sheet{position:absolute; inset:0; background:var(--panel-soft);
+    border:1px solid var(--line); border-left:4px solid var(--cn-heat); border-radius:10px;}
+  .cn-card.cn-stack > .cn-sheet.s1{transform:translate(5px,5px);}
+  .cn-card.cn-stack > .cn-sheet.s2{transform:translate(10px,10px);}
+  .cn-card.cn-stack > .cn-face{border-left-color:var(--cn-heat);}
+  /* a kept stack keeps both readings: ice all round, heat still on the left edge */
+  .cn-card.cn-stack.kept > .cn-face{border-color:var(--live); border-left-color:var(--cn-heat);}
+  .cn-card.cn-stack .cn-flip{background:none; border:1px solid var(--line); border-radius:6px;
+    color:var(--ghost); font:inherit; padding:0 6px;}
+  .cn-card.cn-stack .cn-flip:hover{border-color:var(--live); color:var(--live);}
+  .cn-card.cn-stack .cn-keptn{margin-left:auto; color:var(--live);}
+  .cn-card.cn-stack .cn-keptn:empty{display:none;}
+  .cn-card.cn-stack .cn-keptn + .cn-keep{margin-left:0;}
+  /* the shared head of a cluster, dimmed: every member says it, so it is furniture the eye
+     should slide over on the way to the one thing this member said instead */
+  .cn-card .cn-pre{opacity:.45;}
+  .cn-card .cn-tail.empty{opacity:.45; font-style:italic;}
+
+  /* Level of detail. The card keeps its laid-out box; only the ink goes away, so crossing the
+     threshold never moves anything. */
+  #canworld.far .cn-face{background:var(--bar-neutral); border-color:transparent;
+    border-left-color:var(--bar-neutral);}
+  /* zoomed out the brick IS its heat: contamination as temperature across the whole
+     experiment, readable before a single word is */
+  #canworld.far .cn-card.cn-stack > .cn-sheet{background:var(--cn-heat); border-color:transparent;
+    border-left-color:var(--cn-heat);}
+  #canworld.far .cn-card.cn-stack > .cn-face{background:var(--cn-heat);
+    border-left-color:var(--cn-heat);}
+  #canworld.far .cn-card.kept > .cn-face{
+    background:color-mix(in srgb, var(--live) 58%, var(--bg));
+    border-left-color:color-mix(in srgb, var(--live) 58%, var(--bg));}
+  /* a kept stack: heat fill, ice ring. The ring is an inset box-shadow and not a border,
+     because a border would change the box and the layout would jump at the threshold — and
+     12 world px is what it takes for the ice to still be there at fit zoom. */
+  #canworld.far .cn-card.cn-stack.kept > .cn-face{background:var(--cn-heat);
+    border-color:var(--live); border-left-color:var(--live);
+    box-shadow:inset 0 0 0 12px var(--live);}
+  #canworld.far .cn-face > *{visibility:hidden;}
+  /* the clip fade is a pseudo, so visibility:hidden on children misses it: a panel-soft
+     gradient painted over a heat brick would read as a smudge */
+  #canworld.far .cn-face::after{display:none;}
+  #canworld.far .cn-card.furniture{opacity:.28;}
+  #canworld.far .cn-seed .body, #canworld.far .cn-seed .cn-foot,
+  #canworld.far .cn-seed h2, #canworld.far .cn-beat{visibility:hidden;}
+  #canworld.far .cn-frame{background:transparent;}
+  /* the far-zoom seed name: absolutely positioned over a box that is already laid out, so
+     making it big costs no layout — the block's height is the same on both sides of the
+     threshold */
+  .cn-farlabel{position:absolute; left:0; width:100%; text-align:center; pointer-events:none;
+    font-size:64px; font-weight:600; color:var(--live); visibility:hidden;}
+  #canworld.far .cn-farlabel{visibility:visible;}
+
+  /* kept only. A stack is not one branch: it earns its place if any member is kept. */
+  #canworld.keptonly .cn-card:not(.cn-stack):not(.kept){display:none;}
+  #canworld.keptonly .cn-card.cn-stack:not(.haskept){display:none;}
+
+  @media (max-width:900px){
+    #canbar{padding:12px 60px 8px 0; gap:10px;}
+    #canbar .name{max-width:60vw;}
+    #canlegend, #canmodels{display:none;}
+    #canvaspane.reveal #canmodels{display:none;}
+  }
   @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
   /* The page speaks lowercase — every label, button, hint, message and placeholder. Done here
      and not in the strings, so a new label can't forget. Buttons and selects need it said
@@ -561,6 +797,42 @@
         <button class="btn" id="artagain" type="button" title="a new room whose document is this prompt, at this sampler">Fan again</button>
       </div>
       <div id="artview"></div>
+    </section>
+
+    <!-- One folder of rooms as a picture. Like the artifact tree it opts out of the reading
+         column and takes the window; unlike it, it is a camera over a world, so the stage
+         clips and the world is what moves. -->
+    <section id="canvaspane" aria-label="The experiment as one picture" hidden>
+      <header id="canbar">
+        <button class="iconbtn" id="canback" type="button" aria-label="Back to dialogue" title="back to dialogue">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+        </button>
+        <span class="name" id="canname"></span>
+        <span class="dim" id="cancounts"></span>
+        <span id="canlegend" aria-label="how many branches a stack holds">
+          <span class="step"><span class="sw h1"></span>×2</span>
+          <span class="step"><span class="sw h2"></span>×3</span>
+          <span class="step"><span class="sw h3"></span>×5</span>
+          <span class="step"><span class="sw h4"></span>×9</span>
+          <span class="step"><span class="sw h5"></span>×16</span>
+          <span class="step"><span class="sw h6"></span>×25+</span>
+        </span>
+        <span id="canmodels" aria-label="which model wrote a card"></span>
+        <span class="spring"></span>
+        <span class="dim" id="cankeptby"></span>
+        <span class="dim" id="cankept">kept 0</span>
+        <button class="chip" id="canreveal" type="button" aria-pressed="false" hidden title="say which model wrote each card">reveal</button>
+        <button class="chip" id="cankeptonly" type="button" aria-pressed="false">kept only</button>
+        <button class="chip" id="canreload" type="button" title="read the folder again">reload</button>
+        <button class="chip" id="canfit" type="button">fit</button>
+        <span id="canzoom">100%</span>
+      </header>
+      <div id="canstage">
+        <div id="canworld">
+          <svg id="canwires" aria-hidden="true"></svg>
+          <div id="cantitle"><h1 id="cantitleh"></h1><p id="cantitlep"></p></div>
+        </div>
+      </div>
     </section>
 
     <section id="textpane" aria-label="The walk as one document" hidden>
@@ -741,6 +1013,7 @@ function showDialogue(){
   $('notepane').hidden = true;
   $('artpane').hidden = true;
   $('textpane').hidden = true;
+  $('canvaspane').hidden = true;
   turnEl.focus({preventScroll:true});
 }
 function showChoices(from){
@@ -753,6 +1026,7 @@ function showChoices(from){
   $('notepane').hidden = true;
   $('artpane').hidden = true;
   $('textpane').hidden = true;
+  $('canvaspane').hidden = true;
   renderFan();
   if(entering){
     cardsEl.scrollTop = 0;
@@ -803,6 +1077,7 @@ function showNote(){
   $('notepane').hidden = false;
   $('artpane').hidden = true;
   $('textpane').hidden = true;
+  $('canvaspane').hidden = true;
 }
 
 // Reading and writing are the same screen with the words swapped; the name field shows
@@ -968,6 +1243,7 @@ function showTree(){
   $('notepane').hidden = true;
   $('artpane').hidden = false;
   $('textpane').hidden = true;
+  $('canvaspane').hidden = true;
   $('artview').scrollTop = 0;
   requestAnimationFrame(() => { drawArtLinks(); centreTree(); });
 }
@@ -1158,6 +1434,7 @@ function showText(){
   $('notepane').hidden = true;
   $('artpane').hidden = true;
   $('textpane').hidden = false;
+  $('canvaspane').hidden = true;
   $('textview').scrollTop = 0;
   $('textback').focus({preventScroll:true});
 }
@@ -1468,12 +1745,35 @@ async function openWalk(name){
   showTree();
 }
 
-// #tree=<room> opens a walk straight on the tree screen. That is the address the sheets page
-// links to: a night read on the phone has to be one tap from the branches nobody took, not
-// a room picker and a menu away.
-function hashRoom(){
-  const m = /^#tree=(.+)$/.exec(location.hash || '');
-  return m ? decodeURIComponent(m[1]) : '';
+// The page's three addresses. #tree=<room> opens a walk straight on the tree screen — that is
+// what the sheets page links to: a night read on the phone has to be one tap from the branches
+// nobody took, not a room picker and a menu away. #canvas=<folder> opens a whole experiment as
+// one picture. #room=<path> opens one room on the dialogue, which is the address the canvas's
+// `open room` goes to, so that the browser's own back button comes back to the picture.
+function hashBits(){
+  const m = /^#(tree|canvas|room)=(.+)$/.exec(location.hash || '');
+  return m ? {kind: m[1], value: decodeURIComponent(m[2])} : {kind: '', value: ''};
+}
+// The one hash the rest of the page still asks about by name.
+function hashRoom(){ const h = hashBits(); return h.kind === 'tree' ? h.value : ''; }
+
+// Writing an address is how this page navigates now, so that back and forward work. Setting
+// the hash to what it already is fires no event, and a control pressed twice must still do
+// something, so that case is routed by hand.
+function setHash(h){
+  if(location.hash === h) routeHash();
+  else location.hash = h;
+}
+
+async function routeHash(){
+  const h = hashBits();
+  if(h.kind === 'tree'){ await openWalk(h.value); return; }
+  if(h.kind === 'canvas'){ await openCanvas(h.value); return; }
+  if(h.kind === 'room'){
+    const name = onShelf(h.value) || h.value;
+    if(!sitting || sitting.name !== name) await openSitting(name);
+    else showDialogue();
+  }
 }
 
 // The control beside the picker, for the room that is picked. A room nobody walked has no
@@ -1495,6 +1795,850 @@ function onShelf(want){
   const hits = shelf.filter(s => leafOf(s.name) === want);
   return hits.length === 1 ? hits[0].name : '';
 }
+
+// ---- the canvas ------------------------------------------------------------------------
+// A whole experiment — one folder of rooms — as a picture: a title node, an arrow to every
+// room's seed, and under each seed the fan it grew as a grid of uniform cards. It exists
+// because a census of thirty rooms of thirty branches cannot be read a fan at a time: what
+// bekh is looking for is which fans went somewhere, and that is a SHAPE, visible only when
+// the whole thing is on one surface. The camera is the reading instrument — zoomed out the
+// cards drop their text and become bricks coloured by how many branches said the same thing,
+// zoomed in they are the branches themselves.
+//
+// The whole folder arrives in one call and never streams: `/api/folder` is built to be small
+// enough for that, and a canvas that fetched as you panned would be a canvas that stutters
+// exactly when you are looking for something.
+const CN = {
+  CARD_W: 300, GAP: 18, COLS: 5, PAD: 18,
+  BLOCK_GAP: 200, COLUMNS: 6, ROW_GAP: 340, TITLE_GAP: 260,
+  SEED_W: 820, STEM_H: 56,
+  // Every branch card, both modes, one number. Not a percentile: the grid reads calmer at a
+  // brick the eye takes in whole, and how much of a branch fits is the fade's problem.
+  CARD_H: 185,
+  SUB_GAP: 110,      // between a frame and the frame of a fan drawn under one of its cards
+  INDENT: 44,        // how far each level of that staircases right, so depth is visible
+  FIT_PAD: 40, BLOCK_PAD: 30,
+  // A card carries ink from ~120 css px of on-screen width. 150 was the first guess and it
+  // was wrong by exactly the case that matters: a whole 5-across block fitted on a laptop
+  // lands between k 0.45 and 0.55, so a 150px threshold sat inside that band and flying to a
+  // seed was a coin toss between text and bars. 120 sits below it.
+  TEXT_PX: 120,
+};
+CN.BLOCK_W = CN.COLS * CN.CARD_W + (CN.COLS - 1) * CN.GAP + 2 * CN.PAD;   // 1608
+
+const canStage = $('canstage'), canWorld = $('canworld'), canWires = $('canwires');
+
+let canFolder = '';      // the folder drawn, '' until one is
+let canRooms = [];       // the payload's rooms, nodes and all
+let canBlocks = [];      // one per room
+let canStacks = [];      // every collapsed cluster on the canvas
+let canArrows = [];      // [block, card, target, on the path?] — a fan drawn under a branch
+let canModels = [];      // the distinct models in this folder, in one fixed order
+let canCam = {x: 0, y: 0, k: 1};
+let canSized = false;    // the natural heights have been measured and CARD_H applied
+let canOpenCard = null;
+let canHoverStack = null;
+let canBox = {w: 1000, h: 1000};
+let canAnim = null;      // the fly-to tween, so a new one can cancel the last
+
+const canOn = () => !$('canvaspane').hidden;
+const canKeptOnly = () => canWorld.classList.contains('keptonly');
+// look-alikes: the same first 40 characters, whitespace collapsed and casefolded
+const canKey = t => t.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 40);
+// how hot a cluster is, log-ish in its size — one place, and the legend prints the same bands
+const canHeatStep = n => n >= 25 ? 6 : n >= 16 ? 5 : n >= 9 ? 4 : n >= 5 ? 3 : n >= 3 ? 2 : 1;
+const CN_WEB = ['http', 'www.', '©', '##', 'Posted by', 'comments:', 'Kindle', 'All rights reserved'];
+const CN_BRACKET = /\[[A-Z][^\]]{0,78}\]/;
+// The web furniture a base model falls into. Dimmed and never hidden: it is evidence about
+// what the document summoned, so it goes quiet rather than away.
+const canFurniture = t => CN_WEB.some(m => t.includes(m)) || CN_BRACKET.test(t);
+const canTemp = n => typeof n.temperature === 'number' ? num(n.temperature) : '?';
+// A model is named by its file; the folder legend carries the whole string, a card has room
+// for the front of it and nothing more.
+const canShortModel = s => {
+  const base = String(s).split('/').pop().replace(/\.gguf$/i, '');
+  return base.length > 18 ? base.slice(0, 17) + '…' : base;
+};
+
+// The longest common prefix of a cluster, over the raw texts, backed off to the last
+// whitespace so the dim/lit seam never lands inside a word.
+function canPrefix(texts){
+  let p = texts[0];
+  for(let i = 1; i < texts.length && p; i++){
+    const t = texts[i];
+    let j = 0;
+    const m = Math.min(p.length, t.length);
+    while(j < m && p[j] === t[j]) j++;
+    p = p.slice(0, j);
+  }
+  let cut = -1;
+  for(let i = p.length - 1; i >= 0; i--) if(/\s/.test(p[i])){ cut = i; break; }
+  return cut >= 0 ? p.slice(0, cut + 1) : '';
+}
+
+// The fan under a node: its model children, in the order the file keeps them — which is the
+// order they were written, because a json object keeps its insertion order and the server
+// hands the room's nodes over untouched. No `ts` rides in this payload on purpose.
+function canFanOf(room, id){
+  const out = [];
+  for(const nid in room.nodes){
+    const n = room.nodes[nid];
+    if(n.parent === id && n.kind === 'model') out.push(n);
+  }
+  return out;
+}
+// A line WE posed into the document — a berserk beat. It sits between the branch taken and
+// the fan drawn under it, and it is the one text on the canvas no model wrote.
+function canBeatsOf(room, id){
+  const out = [];
+  for(const nid in room.nodes){
+    const n = room.nodes[nid];
+    if(n.parent === id && n.kind === 'human') out.push(n);
+  }
+  return out;
+}
+// What hangs under a branch: a fan somebody drew under it, and a beat with its own fan.
+// Each becomes its own framed grid below the frame this branch sits in.
+function canSubsOf(room, id){
+  const out = [];
+  if(canFanOf(room, id).length) out.push({beat: null, at: id});
+  for(const h of canBeatsOf(room, id)) if(canFanOf(room, h.id).length) out.push({beat: h, at: h.id});
+  return out;
+}
+const canUnder = (room, id) =>
+  canSubsOf(room, id).reduce((a, s) => a + canFanOf(room, s.at).length, 0);
+
+// root→current as a set of ids: the line this room actually walked. An arrow down it is the
+// accent, every other arrow is dim — on a berserk night that is the difference between the
+// walk and the thirty branches it refused.
+function canPathOf(room){
+  const seen = new Set();
+  let n = room.nodes[room.current];
+  while(n && !seen.has(n.id)){
+    seen.add(n.id);
+    n = n.parent ? room.nodes[n.parent] : null;
+  }
+  return seen;
+}
+
+// ---- keep: the mark goes in the room, not in this browser -------------------------------
+// The same `kept: true` the choose screen leaves, written through /api/keep, so a harvest
+// made here is in the rooms and in git. Optimistic, because the alternative is a button that
+// waits on a disk write before it lights up; a refusal puts the card back and says so.
+async function canToggleKeep(room, node, after){
+  const want = !node.kept;
+  const paint = () => { after(); canPaintKept(); if(canKeptOnly()) canLayout(); };
+  if(want) node.kept = true; else delete node.kept;
+  paint();
+  let d;
+  try{ d = await postJSON('/api/keep', {room: room.name, node: node.id, kept: want}); }
+  catch(e){ d = {error: e.message}; }
+  if(d && d.error){
+    if(want) delete node.kept; else node.kept = true;
+    paint();
+    sys('not kept: ' + d.error, true);
+  }
+}
+
+function canKeepBtn(room, get, after){
+  const b = mk(null, 'button', 'cn-keep', 'keep');
+  b.type = 'button';
+  b.dataset.nodrag = '1';          // a control is not the canvas: a press on it never pans
+  b.addEventListener('click', () => canToggleKeep(room, get(), after));
+  return b;
+}
+
+// Which model wrote this card, when `reveal` is on: a tag in the head and a patterned edge
+// along the top. Pattern and not hue — the heat ramp already owns every cold colour on this
+// page, and a fourth one beside it would be read as more heat.
+function canModelMark(face, head){
+  const edge = mk(face, 'span', 'cn-edge');
+  const tag = mk(head, 'span', 'cn-tag');
+  return node => {
+    const i = node.model ? canModels.indexOf(node.model) : -1;
+    edge.className = 'cn-edge m' + (i < 0 ? 0 : i % 4);
+    edge.style.visibility = i < 0 ? 'hidden' : '';
+    tag.textContent = node.model ? canShortModel(node.model) : '';
+    tag.title = node.model || '';
+  };
+}
+
+// One plain branch, one grid cell.
+function canSingle(room, b){
+  const card = mk(null, 'div', 'cn-card');
+  const face = mk(card, 'div', 'cn-face');
+  const head = mk(face, 'div', 'cn-head');
+  mk(head, 'span', '', 't' + canTemp(b));
+  const mark = canModelMark(face, head);
+  // Which branch this card is showing, on the card: the choose screen marks its cards the
+  // same way, and it is what lets anything outside the page — a driver, a shot rig — say
+  // which node it just pressed keep on.
+  card.dataset.node = b.id;
+  const under = canUnder(room, b.id);
+  // A branch somebody fanned under. The mark is the join in words; the arrow to its own
+  // frame below is the join in the picture.
+  if(under) mk(head, 'span', 'cn-sub', '▾ ' + under);
+  const paint = () => card.classList.toggle('kept', !!b.kept);
+  head.appendChild(canKeepBtn(room, () => b, paint));
+  if(canFurniture(b.text)) card.classList.add('furniture');
+  paint();
+  mark(b);
+  mk(face, 'div', 'body', b.text);
+  mk(face, 'span', 'cn-clip', 'more');
+  return card;
+}
+
+// A whole look-alike cluster as one card, flipped in place. Two offset sheets behind the face
+// say how many without a number: no ×N anywhere, the heat colour and the legend say it.
+function canStackCard(room, group){
+  const card = mk(null, 'div', 'cn-card cn-stack');
+  card.style.setProperty('--cn-heat', 'var(--heat-' + canHeatStep(group.length) + ')');
+  for(const cls of ['s2', 's1']) mk(card, 'div', 'cn-sheet ' + cls);   // behind the face
+  const face = mk(card, 'div', 'cn-face');
+  const head = mk(face, 'div', 'cn-head');
+  const temp = mk(head, 'span', '', '');
+  const pos = mk(head, 'span', '', '');
+  const mark = canModelMark(face, head);
+  const prev = mk(head, 'button', 'cn-flip', '‹');
+  const next = mk(head, 'button', 'cn-flip', '›');
+  for(const [b, label] of [[prev, 'previous member'], [next, 'next member']]){
+    b.type = 'button';
+    b.dataset.nodrag = '1';
+    b.setAttribute('aria-label', label);
+  }
+  const keptn = mk(head, 'span', 'cn-keptn', '');
+  const body = mk(face, 'div', 'body');
+  const pre = mk(body, 'span', 'cn-pre');
+  const tail = mk(body, 'span', 'cn-tail');
+  mk(face, 'span', 'cn-clip', 'more');
+  const st = {card, group, temp, pos, pre, tail, keptn, mark, i: 0, heights: null,
+              prefix: canPrefix(group.map(g => g.text))};
+  head.appendChild(canKeepBtn(room, () => st.group[st.i], () => canSetMember(st, st.i)));
+  prev.addEventListener('click', () => canFlip(st, -1));
+  next.addEventListener('click', () => canFlip(st, 1));
+  card.addEventListener('pointerenter', () => { canHoverStack = st; });
+  card.addEventListener('pointerleave', () => { if(canHoverStack === st) canHoverStack = null; });
+  canSetMember(st, 0);
+  canStacks.push(st);
+  return card;
+}
+
+function canSetMember(st, i){
+  st.i = i;
+  const b = st.group[i];
+  st.card.dataset.node = b.id;        // the member on top is the one keep would mark
+  st.temp.textContent = 't' + canTemp(b);
+  st.pos.textContent = (i + 1) + ' / ' + st.group.length;
+  st.pre.textContent = st.prefix;
+  const rest = b.text.slice(st.prefix.length);
+  st.tail.textContent = rest || '(nothing after it)';
+  st.tail.classList.toggle('empty', !rest);
+  st.mark(b);
+  st.card.classList.toggle('furniture', canFurniture(b.text));
+  st.card.classList.toggle('kept', !!b.kept);
+  // Clipping is read off the measured natural height and never off scrollHeight: it has to
+  // stay right while the card is open, where the box is auto and nothing overflows.
+  st.card.classList.toggle('clips', !!st.heights && st.heights[i] > CN.CARD_H);
+  const n = st.group.reduce((a, g) => a + (g.kept ? 1 : 0), 0);
+  st.keptn.textContent = n ? 'kept ' + n : '';
+  st.card.classList.toggle('haskept', n > 0);
+}
+
+// Wrap around; with `kept only` on, walk only the members that earned the card its place.
+function canFlip(st, dir){
+  const n = st.group.length, only = canKeptOnly();
+  for(let step = 1; step <= n; step++){
+    const j = ((st.i + dir * step) % n + n) % n;
+    if(!only || st.group[j].kept){ canSetMember(st, j); return; }
+  }
+}
+
+// One fan's cells. A branch somebody fanned under is never folded into a cluster: it is a
+// road taken, not one of thirty near-identical ones, and it has a frame hanging off it.
+function canCells(room, fan){
+  const groups = new Map();
+  for(const b of fan){
+    if(canUnder(room, b.id)) continue;
+    const k = canKey(b.text);
+    if(!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(b);
+  }
+  const out = [], placed = new Set();
+  for(const b of fan){
+    if(canUnder(room, b.id)){ out.push({stack: false, nodes: [b]}); continue; }
+    const k = canKey(b.text), g = groups.get(k);
+    if(g.length > 1){
+      if(placed.has(k)) continue;          // the siblings take no grid cell
+      placed.add(k);
+      out.push({stack: true, nodes: g});
+    }else{
+      out.push({stack: false, nodes: [b]});
+    }
+  }
+  return out;
+}
+
+// One fan and everything hanging off it, appended to the block in document order: this fan's
+// frame, then a frame for every branch of it that was fanned under, depth first. A census is
+// one frame; a berserk night is a staircase of them, one per beat.
+function canGrow(room, block, at, beat, from, depth, path){
+  if(beat){
+    const line = mk(block, 'div', 'cn-beat');
+    line._depth = depth;
+    line._beat = true;
+    mk(line, 'span', 'body', beat.text.trim() || '(an empty line)');
+    block._rows.push(line);
+    // The arrow lands on the beat, and the frame under it needs none: the beat sits right
+    // on top of its own fan, which is exactly where it stands in the document.
+    if(from) canArrows.push([block, from, line, path.has(beat.id)]);
+    from = null;
+  }
+  const frame = mk(block, 'div', 'cn-frame');
+  frame._depth = depth;
+  block._rows.push(frame);
+  if(from) canArrows.push([block, from, frame, path.has(at)]);
+  const cells = canCells(room, canFanOf(room, at));
+  frame._cells = cells.length;
+  const cards = cells.map(cell =>
+    frame.appendChild(cell.stack ? canStackCard(room, cell.nodes) : canSingle(room, cell.nodes[0])));
+  // Depth first, and only after the whole frame exists, so a card's own frame is always
+  // below the frame the card sits in.
+  cells.forEach((cell, i) => {
+    if(cell.stack) return;           // a clustered branch never has a fan under it
+    for(const sub of canSubsOf(room, cell.nodes[0].id))
+      canGrow(room, block, sub.at, sub.beat, cards[i], depth + 1, path);
+  });
+}
+
+function canBuildBlock(room){
+  const block = mk(canWorld, 'div', 'cn-block');
+  block.style.width = CN.BLOCK_W + 'px';
+  block._rows = [];               // every frame and beat in it, in document order
+  const seedNode = room.nodes[room.root] || {text: ''};
+  const seedText = seedNode.text || '';
+  const seed = mk(block, 'div', 'cn-seed');
+  seed.style.width = CN.SEED_W + 'px';
+  const label = leafOf(room.name);
+  const h2 = mk(seed, 'h2', '', label);
+  h2.dataset.nodrag = '1';
+  h2.title = room.title && room.title !== room.name ? room.title : room.name;
+  // The END of the seed is what the model was standing on, so that is the part shown.
+  const short = seedText.length > 280 ? '…' + seedText.slice(-280) : seedText;
+  const body = mk(seed, 'div', 'body', short || '(empty — the room began on nothing)');
+  const foot = mk(seed, 'div', 'cn-foot');
+  const more = mk(foot, 'button', '', 'whole seed ▸');
+  more.type = 'button';
+  more.dataset.nodrag = '1';
+  let open = false;
+  more.addEventListener('click', () => {
+    open = !open;
+    body.textContent = open ? seedText : short;
+    more.textContent = open ? 'whole seed ▾' : 'whole seed ▸';
+    canLayout();
+  });
+  const go = mk(foot, 'button', '', 'open room ▸');
+  go.type = 'button';
+  go.dataset.nodrag = '1';
+  go.addEventListener('click', () => canOpenRoom(room.name));
+  if(room.berserk){
+    const tr = mk(foot, 'button', '', 'tree ↗');
+    tr.type = 'button';
+    tr.dataset.nodrag = '1';
+    tr.title = "berserk's walk of this room, as a tree";
+    tr.addEventListener('click', () => {
+      canSaveCam();
+      setHash('#tree=' + encodeURIComponent(room.name));
+    });
+  }
+  mk(block, 'div', 'cn-stem');
+  const far = mk(block, 'div', 'cn-farlabel', label);
+  // The root is read like any other node: what hangs under it is a fan (a census), or a
+  // posed line with a fan under that (a berserk night opens on one of ours), or both. A room
+  // with no branches yet is the one case with nothing to grow, and it still gets its frame —
+  // an empty box under a seed is a true statement about that room.
+  const path = canPathOf(room);
+  const subs = canSubsOf(room, room.root);
+  if(!subs.length) canGrow(room, block, room.root, null, null, 0, path);
+  else for(const sub of subs) canGrow(room, block, sub.at, sub.beat, null, 0, path);
+  const b = {el: block, room, seedEl: seed, h2, stem: block.querySelector('.cn-stem'),
+             farlabel: far, name: room.name};
+  h2.addEventListener('click', () => canFlyTo(b));
+  return b;
+}
+
+function canBuild(d){
+  canWorld.querySelectorAll('.cn-block').forEach(el => el.remove());
+  canBlocks = [];
+  canStacks = [];
+  canArrows = [];
+  canSized = false;
+  canOpenCard = null;
+  canHoverStack = null;
+  canWorld.classList.remove('uniform', 'far');
+  canFolder = d.folder;
+  canRooms = d.rooms || [];
+  // Every node knows its own id from here on: the payload keys them and the page walks them
+  // by parent, so carrying the key inside is worth the one loop.
+  const models = new Set();
+  let branches = 0;
+  for(const room of canRooms){
+    for(const nid in room.nodes){
+      const n = room.nodes[nid];
+      n.id = nid;
+      if(n.kind === 'model'){
+        branches++;
+        if(n.model) models.add(n.model);
+      }
+    }
+  }
+  canModels = [...models].sort();
+  for(const room of canRooms) canBlocks.push(canBuildBlock(room));
+
+  $('canname').textContent = d.folder;
+  const counts = canRooms.length + (canRooms.length === 1 ? ' room · ' : ' rooms · ') +
+    branches + (branches === 1 ? ' branch' : ' branches');
+  $('cancounts').textContent = counts;
+  $('cantitleh').textContent = d.folder;
+  $('cantitlep').textContent = counts;
+  // With one model or none there is nothing to reveal, and the switch would be a control
+  // that says something about a distinction that isn't there.
+  const many = canModels.length > 1;
+  $('canreveal').hidden = !many;
+  if(!many) canReveal(false);
+  const legend = $('canmodels');
+  legend.textContent = '';
+  canModels.forEach((m, i) => {
+    const row = mk(legend, 'span', 'm m' + (i % 4));
+    mk(row, 'i');
+    mk(row, 'span', '', canShortModel(m)).title = m;
+  });
+  canPaintKept();
+}
+
+// `kept N` across the whole folder, and — only under reveal — which model those keeps came
+// out of. Recomputed rather than counted up and down: one wrong increment and the number
+// lies for the rest of the session.
+function canPaintKept(){
+  let n = 0;
+  const by = new Map();
+  for(const room of canRooms){
+    for(const nid in room.nodes){
+      const node = room.nodes[nid];
+      if(!node.kept) continue;
+      n++;
+      const m = node.model ? canShortModel(node.model) : 'not recorded';
+      by.set(m, (by.get(m) || 0) + 1);
+    }
+  }
+  $('cankept').textContent = 'kept ' + n;
+  $('cankeptby').textContent = by.size
+    ? 'kept by model: ' + [...by].map(([m, c]) => m + ' ' + c).join(' · ') : '';
+}
+
+// ---- one card height for the whole canvas ------------------------------------------------
+// Every branch is measured once at its natural height — for a stack that means every member,
+// so the population is all the continuations and not the cells they collapsed into — but only
+// to know which ones clip. Measured in passes over the member index (every stack is written
+// for member i, then every stack is read), so it costs ~30 forced layouts for the page
+// instead of one per member.
+function canMeasure(){
+  if(canSized) return;
+  if(!canStage.clientWidth) return;   // hidden: every box would measure zero and all clip
+  const maxN = canStacks.reduce((m, s) => Math.max(m, s.group.length), 0);
+  const saved = canStacks.map(s => s.i);
+  for(const s of canStacks) s.heights = new Array(s.group.length).fill(0);
+  for(let i = 0; i < maxN; i++){
+    for(const s of canStacks) if(i < s.group.length) canSetMember(s, i);
+    for(const s of canStacks) if(i < s.group.length) s.heights[i] = s.card.offsetHeight;
+  }
+  const singles = [...canWorld.querySelectorAll('.cn-card:not(.cn-stack)')];
+  for(const c of singles) c._nat = c.offsetHeight;
+  canWorld.style.setProperty('--cn-card-h', CN.CARD_H + 'px');
+  canWorld.classList.add('uniform');
+  canSized = true;
+  for(const c of singles) c.classList.toggle('clips', c._nat > CN.CARD_H);
+  canStacks.forEach((s, k) => canSetMember(s, saved[k]));   // re-applies .clips per member
+}
+
+// ---- layout: x by hand, y after the browser has measured the content ---------------------
+function canLayout(){
+  if(!canBlocks.length) return;
+  canMeasure();
+  const nCols = Math.min(CN.COLUMNS, canBlocks.length);
+  const totalW = nCols * CN.BLOCK_W + (nCols - 1) * CN.BLOCK_GAP;
+
+  for(const b of canBlocks){
+    b.seedEl.style.marginBottom = CN.STEM_H + 'px';
+    let first = true, afterBeat = false, left = 0, right = CN.SEED_W;
+    for(const row of b.el._rows){
+      let w;
+      if(row._beat){
+        w = row.offsetWidth;
+      }else{
+        // As many grid columns as the frame has cards, up to five: a seed whose thirty
+        // branches collapsed to one brick must not sit in a 1600px empty box.
+        const cols = Math.max(1, Math.min(row._cells, CN.COLS));
+        w = cols * CN.CARD_W + (cols - 1) * CN.GAP + 2 * CN.PAD;
+        row.style.gridTemplateColumns = `repeat(${cols}, ${CN.CARD_W}px)`;
+      }
+      // The first frame sits under the seed card; every level below staircases right, so the
+      // depth of a walk is visible before a word of it is read. Never past the block's edge.
+      const want = Math.min((CN.BLOCK_W - CN.SEED_W) / 2, CN.BLOCK_W - w) + row._depth * CN.INDENT;
+      const x = Math.max(0, Math.min(want, CN.BLOCK_W - w));
+      row.style.marginLeft = x + 'px';
+      // A beat and the fan under it are one thing: the beat gets the gap, and its fan sits
+      // right against it, because that is where the line stands in the document.
+      row.style.marginTop = (first ? 0 : afterBeat ? 12 : CN.SUB_GAP) + 'px';
+      first = false;
+      afterBeat = !!row._beat;
+      left = Math.min(left, x);
+      right = Math.max(right, x + w);
+    }
+    // What the block actually covers, for the fly-to camera: the seed card is centred in the
+    // column and a frame may be narrower, so flying to the empty column is no use.
+    b.contentX = Math.min((CN.BLOCK_W - CN.SEED_W) / 2, left);
+    b.contentW = Math.max((CN.BLOCK_W + CN.SEED_W) / 2, right) - b.contentX;
+  }
+
+  const title = $('cantitle');
+  title.style.left = ((totalW - title.offsetWidth) / 2) + 'px';
+  title.style.top = '0px';
+  const topY = title.offsetHeight + CN.TITLE_GAP;
+
+  // Masonry, greedy: each room in its own order drops into the column that is currently
+  // shortest (ties go left), so a seed that collapsed to one brick leaves no hole under it.
+  // The tree comes out uneven, and that is the point: the shape is the data, not a grid.
+  const bottoms = new Array(nCols).fill(topY);
+  const inCol = new Array(nCols).fill(0);
+  for(const b of canBlocks){
+    let c = 0;
+    for(let j = 1; j < nCols; j++) if(bottoms[j] < bottoms[c] - 0.5) c = j;
+    b.el.style.left = (c * (CN.BLOCK_W + CN.BLOCK_GAP)) + 'px';
+    b.el.style.top = bottoms[c] + 'px';
+    b.col = c;
+    b.colIndex = inCol[c]++;
+    bottoms[c] += b.el.offsetHeight + CN.ROW_GAP;
+  }
+  const totalH = Math.max.apply(null, bottoms) - CN.ROW_GAP;
+
+  // The stem: from the seed card's bottom edge down into the first frame, over its middle.
+  for(const b of canBlocks){
+    const sh = b.seedEl.offsetHeight;
+    const frame = b.el._rows[0];
+    const fx = frame ? parseFloat(frame.style.marginLeft || 0) + frame.offsetWidth / 2 : CN.BLOCK_W / 2;
+    b.stem.style.left = (fx - 1) + 'px';
+    b.stem.style.top = sh + 'px';
+    b.stem.style.height = CN.STEM_H + 'px';
+    b.farlabel.style.top = Math.max(8, (sh - 72) / 2) + 'px';
+  }
+
+  canBox = {w: totalW, h: totalH};
+  canDrawWires(topY);
+}
+
+// Where an element sits inside its block. Everything in a block is in normal flow under one
+// absolutely positioned box, so the offset chain is the answer and no rect has to be measured
+// through the camera's transform.
+function canLocal(el, block){
+  let x = 0, y = 0;
+  for(let n = el; n && n !== block; n = n.offsetParent){ x += n.offsetLeft; y += n.offsetTop; }
+  return {x, y};
+}
+
+// The arrows: title → every seed card, and every branch that was fanned under → its own
+// frame. A seed at the top of a column gets a straight-ish curve; everything under it is
+// routed down the corridor on the left of its column, which is the only vertical lane nothing
+// is ever drawn in. Seeds sharing a corridor are offset 16px apart so the runs read apart.
+function canDrawWires(topY){
+  canWires.textContent = '';
+  canWires.setAttribute('width', canBox.w + 400);
+  canWires.setAttribute('height', canBox.h + 200);
+  canWires.style.left = '-200px';
+  const OX = 200;      // the svg hangs 200px left so a corridor left of block 0 still fits
+  const title = $('cantitle');
+  const tx = title.offsetLeft + title.offsetWidth / 2 + OX;
+  const ty = title.offsetTop + title.offsetHeight;
+  const path = (d, dim) => {
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', d);
+    if(dim) p.setAttribute('class', 'dim');
+    canWires.appendChild(p);
+  };
+
+  for(const b of canBlocks){
+    const sx = b.el.offsetLeft + CN.BLOCK_W / 2 + OX;
+    const sy = b.el.offsetTop;
+    if(b.colIndex === 0){
+      const dy = sy - ty;
+      path(`M ${tx} ${ty} C ${tx} ${ty + dy * 0.55}, ${sx} ${sy - dy * 0.55}, ${sx} ${sy}`);
+    }else{
+      const cx = b.el.offsetLeft - CN.BLOCK_GAP / 2 + OX + (b.colIndex - 2) * 16;
+      const y1 = topY - 120, y2 = sy - 140;
+      path(`M ${tx} ${ty} C ${tx} ${ty + 90}, ${cx} ${y1 - 90}, ${cx} ${y1}`
+         + ` L ${cx} ${y2} C ${cx} ${y2 + 70}, ${sx} ${sy - 90}, ${sx} ${sy}`);
+    }
+  }
+  // A branch and the fan drawn under it. Measured, never guessed: the frame it lands on is
+  // wherever the flow put it, and a line drawn on an assumption is a diagram that lies.
+  for(const [block, card, target, took] of canArrows){
+    const a = canLocal(card, block), t = canLocal(target, block);
+    const x1 = block.offsetLeft + a.x + card.offsetWidth / 2 + OX;
+    const y1 = block.offsetTop + a.y + card.offsetHeight;
+    const x2 = block.offsetLeft + t.x + target.offsetWidth / 2 + OX;
+    const y2 = block.offsetTop + t.y;
+    const d = Math.max(40, (y2 - y1) * 0.4);
+    path(`M ${x1} ${y1} C ${x1} ${y1 + d}, ${x2} ${y2 - d}, ${x2} ${y2}`, !took);
+  }
+}
+
+// ---- the camera ---------------------------------------------------------------------------
+function canView(){ return {w: canStage.clientWidth, h: canStage.clientHeight}; }
+
+// The zoom at which cards stop being bars and start carrying ink. Two things decide it and the
+// smaller wins: a card is worth reading from ~120 css px of width, but a narrow window never
+// gets a whole block that big and a block you flew to has to be readable. Read every time, so
+// a resize moves the threshold.
+function canTextK(){
+  const v = canView();
+  const blockFit = (v.w - CN.BLOCK_PAD * 2) / CN.BLOCK_W;
+  return Math.min(CN.TEXT_PX / CN.CARD_W, blockFit * 0.985);
+}
+
+// Painted on the spot, not deferred to the next frame. A pointermove already arrives at most
+// once a frame, so there is nothing to coalesce that the browser does not coalesce anyway —
+// and a paint that waits for a frame is a paint that never happens where no frame is ever
+// produced (a headless shot, a tab nobody is looking at), which is a camera that lies about
+// where it is.
+function canApply(){
+  canWorld.style.transform = `translate(${canCam.x}px, ${canCam.y}px) scale(${canCam.k})`;
+  canWorld.classList.toggle('far', canCam.k < canTextK());
+  $('canzoom').textContent = Math.round(canCam.k * 100) + '%';
+}
+const canClampK = k => Math.min(2, Math.max(0.05, k));
+
+function canCamFor(bx, by, bw, bh, pad){
+  const v = canView();
+  const k = canClampK(Math.min((v.w - pad * 2) / bw, (v.h - pad * 2) / bh));
+  return {k, x: (v.w - bw * k) / 2 - bx * k, y: (v.h - bh * k) / 2 - by * k};
+}
+
+function canGoTo(target, animate){
+  if(canAnim){ cancelAnimationFrame(canAnim); canAnim = null; }
+  if(!animate){ canCam = target; canApply(); canSaveCam(); return; }
+  const from = Object.assign({}, canCam), t0 = performance.now(), dur = 300;
+  const ease = u => u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+  const step = now => {
+    const u = Math.min(1, (now - t0) / dur), e = ease(u);
+    canCam = {x: from.x + (target.x - from.x) * e,
+              y: from.y + (target.y - from.y) * e,
+              k: from.k + (target.k - from.k) * e};
+    canApply();
+    if(u < 1){ canAnim = requestAnimationFrame(step); }
+    else { canAnim = null; canSaveCam(); }
+  };
+  canAnim = requestAnimationFrame(step);
+}
+
+const canFit = animate => canGoTo(canCamFor(0, 0, canBox.w, canBox.h, CN.FIT_PAD), animate);
+function canFlyTo(b, animate){
+  if(!b) return;
+  canGoTo(canCamFor(b.el.offsetLeft + b.contentX, b.el.offsetTop, b.contentW,
+                    b.el.offsetHeight, CN.BLOCK_PAD), animate !== false);
+}
+function canZoomAt(px, py, factor){
+  const k = canClampK(canCam.k * factor);
+  const f = k / canCam.k;
+  canCam = {k, x: px - (px - canCam.x) * f, y: py - (py - canCam.y) * f};
+  canApply();
+}
+
+// Where the camera was, per folder, for this tab only: opening a room and coming back with
+// the browser's own back button has to land on the same picture, and a camera that outlived
+// the tab would be a page that opens somewhere you have forgotten choosing.
+const canCamKey = f => 'loom.canvas.' + f;
+function canSaveCam(){
+  if(!canFolder) return;
+  try{ sessionStorage.setItem(canCamKey(canFolder), JSON.stringify(canCam)); }catch(e){}
+}
+function canRestoreCam(){
+  let v = null;
+  try{ v = JSON.parse(sessionStorage.getItem(canCamKey(canFolder)) || 'null'); }catch(e){}
+  if(!v || typeof v.k !== 'number' || typeof v.x !== 'number' || typeof v.y !== 'number')
+    return false;
+  canCam = {x: v.x, y: v.y, k: canClampK(v.k)};
+  canApply();
+  return true;
+}
+
+// ---- pan, wheel-zoom, pinch ---------------------------------------------------------------
+const canPointers = new Map();
+let canPanning = false, canMoved = 0, canLast = null, canPinch = null;
+
+canStage.addEventListener('pointerdown', ev => {
+  // Reset first: a press that lands on a control must clear the last drag's distance, or the
+  // swallow-the-click guard below eats that control's click.
+  canMoved = 0;
+  if(ev.target.closest('[data-nodrag]')) return;
+  // No selection and no native drag: a pan that paints half a card blue is the browser's
+  // default and it has to be refused at the source, not cleaned up after.
+  ev.preventDefault();
+  const sel = getSelection && getSelection();
+  if(sel && !sel.isCollapsed) sel.removeAllRanges();
+  canPointers.set(ev.pointerId, {x: ev.clientX, y: ev.clientY});
+  // Capture keeps the moves coming when the finger leaves the stage; it is not what makes
+  // the pan work, and a browser that refuses it (or a synthetic pointer that was never
+  // really down) must not take panning down with it.
+  try{ canStage.setPointerCapture(ev.pointerId); }catch(e){}
+  if(canPointers.size === 1){
+    canPanning = true;
+    canLast = {x: ev.clientX, y: ev.clientY};
+  }else if(canPointers.size === 2){
+    canPanning = false;
+    const [a, b] = [...canPointers.values()];
+    canPinch = {d: Math.hypot(a.x - b.x, a.y - b.y)};
+  }
+});
+
+canStage.addEventListener('pointermove', ev => {
+  if(!canPointers.has(ev.pointerId)) return;
+  canPointers.set(ev.pointerId, {x: ev.clientX, y: ev.clientY});
+  const r = canStage.getBoundingClientRect();
+  if(canPointers.size === 2 && canPinch){
+    const [a, b] = [...canPointers.values()];
+    const d = Math.hypot(a.x - b.x, a.y - b.y);
+    if(canPinch.d > 0)
+      canZoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, d / canPinch.d);
+    canPinch.d = d;
+    return;
+  }
+  if(!canPanning) return;
+  const dx = ev.clientX - canLast.x, dy = ev.clientY - canLast.y;
+  canMoved += Math.abs(dx) + Math.abs(dy);
+  canLast = {x: ev.clientX, y: ev.clientY};
+  canCam.x += dx;
+  canCam.y += dy;
+  canApply();
+});
+
+function canEndPointer(ev){
+  canPointers.delete(ev.pointerId);
+  if(canPointers.size < 2) canPinch = null;
+  if(canPointers.size === 0){ canPanning = false; canSaveCam(); }
+}
+canStage.addEventListener('pointerup', canEndPointer);
+canStage.addEventListener('pointercancel', canEndPointer);
+
+// A click that came out of a real drag must not also fire the card's action.
+canStage.addEventListener('click', ev => {
+  if(canMoved > 6){ ev.stopPropagation(); ev.preventDefault(); }
+}, true);
+
+// Opening a clipped card, as an overlay. One listener for the whole canvas: the card under
+// the click decides. A card that fits has nothing to show, so it does not open; a control
+// inside a card is never the card.
+const canCloseCard = () => {
+  if(canOpenCard){ canOpenCard.classList.remove('open'); canOpenCard = null; }
+};
+canStage.addEventListener('click', ev => {
+  if(ev.target.closest('[data-nodrag]')) return;
+  const card = ev.target.closest('.cn-card');
+  if(!card || card === canOpenCard){ canCloseCard(); return; }
+  canCloseCard();
+  if(card.classList.contains('clips')){ card.classList.add('open'); canOpenCard = card; }
+});
+
+canStage.addEventListener('wheel', ev => {
+  ev.preventDefault();
+  const r = canStage.getBoundingClientRect();
+  const scale = Math.exp(-ev.deltaY * (ev.deltaMode === 1 ? 0.05 : 0.0018));
+  canZoomAt(ev.clientX - r.left, ev.clientY - r.top, scale);
+  canSaveCam();
+}, {passive: false});
+
+// ---- the screen ---------------------------------------------------------------------------
+function showCanvas(){
+  choosing = false;
+  menu(false);
+  $('doc').hidden = true;
+  $('fanpane').hidden = true;
+  $('notepane').hidden = true;
+  $('artpane').hidden = true;
+  $('textpane').hidden = true;
+  $('canvaspane').hidden = false;
+}
+
+function canReveal(on){
+  $('canvaspane').classList.toggle('reveal', on);
+  $('canreveal').setAttribute('aria-pressed', String(on));
+}
+
+async function openCanvas(folder){
+  if(!folder) return;
+  // Already drawn: this is the back button coming home, and re-reading the folder would throw
+  // away the camera for nothing.
+  if(canFolder === folder && canBlocks.length){
+    showCanvas();
+    if(!canRestoreCam()) canFit(false);
+    return;
+  }
+  await loadCanvas(folder, false);
+}
+
+async function loadCanvas(folder, keepCam){
+  let d;
+  try{ d = await getJSON('/api/folder?name=' + encodeURIComponent(folder)); }
+  catch(e){ sys('could not read that folder: ' + e.message, true); return; }
+  if(d.error){ sys(d.error, true); return; }
+  const was = keepCam ? Object.assign({}, canCam) : null;
+  canBuild(d);
+  showCanvas();
+  canLayout();
+  if(was){ canCam = was; canApply(); }
+  else if(!canRestoreCam()) canFit(false);
+}
+
+// The room behind a seed card, on the ordinary dialogue screen, in this tab — and at an
+// address, so that back comes home to the picture with the camera where it was.
+function canOpenRoom(name){
+  canSaveCam();
+  setHash('#room=' + encodeURIComponent(name));
+}
+
+$('canback').addEventListener('click', showDialogue);
+$('canfit').addEventListener('click', () => canFit(true));
+$('canreload').addEventListener('click', () => canFolder && loadCanvas(canFolder, true));
+$('cankeptonly').addEventListener('click', ev => {
+  const on = !canKeptOnly();
+  canWorld.classList.toggle('keptonly', on);
+  ev.currentTarget.setAttribute('aria-pressed', String(on));
+  // A stack that survives the switch must be showing one of the members that earned it.
+  if(on) for(const s of canStacks){
+    if(!s.group[s.i].kept){
+      const j = s.group.findIndex(g => g.kept);
+      if(j >= 0) canSetMember(s, j);
+    }
+  }
+  canLayout();
+});
+$('canreveal').addEventListener('click', () =>
+  canReveal(!$('canvaspane').classList.contains('reveal')));
+
+// The arrows belong to whatever stack the pointer is resting on, and to nothing else; f and
+// escape belong to the canvas, and only while it is the screen in front.
+document.addEventListener('keydown', ev => {
+  if(!canOn() || ev.defaultPrevented) return;
+  if(ev.target && ev.target.closest && ev.target.closest('input, textarea')) return;
+  if(canHoverStack && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')){
+    ev.preventDefault();
+    canFlip(canHoverStack, ev.key === 'ArrowRight' ? 1 : -1);
+    return;
+  }
+  if(ev.key === 'f') canFit(true);
+  // Escape closes the open card first: it is the nearer thing to back out of.
+  if(ev.key === 'Escape'){ if(canOpenCard) canCloseCard(); else canFit(true); }
+});
+// The threshold reads the viewport, so a resize can move a card across it.
+window.addEventListener('resize', () => { if(canOn()) canApply(); });
 
 // ---- the tree ------------------------------------------------------------------------
 function node(id){ return sitting.nodes[id]; }
@@ -2444,6 +3588,13 @@ function drawBranch(at, depth, prefix){
       rememberFolders();
       drawShelf();
     });
+    // The way into the canvas: a folder is the unit an experiment is read in, and this is the
+    // row that already names one. It goes through the hash rather than straight to
+    // openCanvas, so the address is right and the back button has somewhere to return to.
+    const cv = mk(row, 'button', 'ghostbtn movef', 'canvas');
+    cv.type = 'button';
+    cv.title = 'this folder as one picture';
+    cv.addEventListener('click', () => setHash('#canvas=' + encodeURIComponent(here)));
     const mv = mk(row, 'button', 'ghostbtn movef', 'move');
     mv.type = 'button';
     mv.title = 'move this folder';
@@ -2804,12 +3955,10 @@ $('treebtn').addEventListener('click', () => {
   const name = picked || (sitting && sitting.name);
   if(name) openWalk(name);
 });
-// A link into the page, not a history stack: the hash is read on boot and whenever it
-// changes, and nothing here ever writes one back.
-window.addEventListener('hashchange', () => {
-  const name = hashRoom();
-  if(name) openWalk(name);
-});
+// The hash is read on boot and whenever it changes. It IS a history stack now: the canvas
+// writes `#room=` when a seed card opens its room, so the browser's own back button is what
+// comes home to the picture.
+window.addEventListener('hashchange', routeHash);
 // Back from the document goes to the artifact, not to the dialogue: the tree is where it
 // came from, and its connectors are measured, so it has to be re-drawn on the way in.
 $('textback').addEventListener('click', showTree);
@@ -2894,14 +4043,15 @@ async function health(){
 (async function start(){
   try{
   await loadShelf();
-  // A #tree= link names the room too, so the dialogue behind the tree is the room the walk
-  // happened in rather than whatever was last open.
-  const asked = hashRoom();
-  const want = asked || remembered();
+  // A #tree= or #room= link names the room too, so the dialogue behind whatever screen the
+  // address asks for is that room rather than whatever was last open.
+  const asked = hashBits();
+  const want = (asked.kind === 'tree' || asked.kind === 'room') ? asked.value : remembered();
   const name = onShelf(want) || (shelf[0] && shelf[0].name);
   if(name) await openSitting(name);
   else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
-  if(asked) await openWalk(asked);
+  if(asked.kind === 'tree') await openWalk(asked.value);
+  else if(asked.kind === 'canvas') await openCanvas(asked.value);
   health();
   setInterval(health, 5000);
   }catch(e){ gate(); sys('Could not open the sitting: ' + e.message, true); }

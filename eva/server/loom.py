@@ -23,6 +23,11 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/health           -> {"ok", "llama"}: is there a model behind the port
   GET  /api/sittings         -> the shelf, newest first — the whole tree, folders and all,
                                in one call; a room's name IS its path under sittings/
+  GET  /api/folder?name=     -> one folder as the canvas reads it: every room under it,
+                               sub-folders included, each with its nodes cut down to what
+                               a picture of an experiment needs
+  POST /api/keep             -> {"room", "node", "kept"}: one branch marked, in the room
+                               itself — the same flag the choose screen's keep leaves
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
   POST /api/move             -> {"from", "to"}: a room or a whole folder moves; rename is a
@@ -515,6 +520,120 @@ def shelf() -> list[dict]:
         })
     out.sort(key=lambda s: s["updated"], reverse=True)
     return out
+
+
+# ---- a folder, as one picture -------------------------------------------------------------
+# The canvas draws a whole experiment at once — thirty rooms of thirty branches — and it is a
+# camera over one payload, not a screen that fetches as you pan. So this is the one route that
+# hands over many rooms' nodes, and it is also the one route that has to be stingy: everything
+# a picture of an experiment doesn't paint is dropped here rather than in the browser, because
+# the cost is the wire, not the render.
+
+def folder_rooms(name: str) -> list[str]:
+    """Every room under this folder, its sub-folders included, by name.
+
+    A folder is not a thing on disk with a state of its own — it exists because rooms are in
+    it — so this is a prefix match over the room paths and nothing else, and `.trash` is
+    already gone because `room_names` prunes every dot folder.
+    """
+    prefix = name + "/"
+    return sorted(n for n in room_names() if n.startswith(prefix))
+
+
+def canvas_node(node: dict) -> dict:
+    """One node as the canvas reads it: where it hangs, what it says, and the two facts the
+    page paints with — the temperature that drew it and the model that wrote it.
+
+    Everything else goes, `probs` above all: one 220-token branch carries ~40 KB of
+    probabilities and a folder can hold nine hundred branches. Keys that are false or missing
+    are left out for the same reason; the page reads "absent" and "false" as the same thing,
+    the way a room on the shelf already does with `kept`.
+    """
+    meta = node.get("meta") or {}
+    params = meta.get("params")
+    temp = params.get("temperature") if isinstance(params, dict) else None
+    if temp is None:
+        temp = meta.get("temperature")
+    # Two spellings in the wild: berserk freezes llama's /props object into meta.model, a
+    # hand-stamped room may carry the file name alone. Either is the model that wrote it.
+    model = meta.get("model")
+    if isinstance(model, dict):
+        model = model.get("file")
+    out = {"parent": node.get("parent"), "kind": node.get("kind"),
+           "text": node.get("text") if isinstance(node.get("text"), str) else ""}
+    if node.get("posed"):
+        out["posed"] = True
+    if node.get("kept"):
+        out["kept"] = True
+    if temp is not None:
+        out["temperature"] = temp
+    if isinstance(model, str) and model:
+        out["model"] = model
+    return out
+
+
+def folder_canvas(name: str) -> dict | None:
+    """A folder's rooms, cut to what the canvas draws. None when no room is under it.
+
+    The room's own shape is kept — `root`, `current` and the nodes by id — because the page
+    redraws the tree out of it: a fan is a node's model children, and which card sits on the
+    path root→current is what tells a walk from a census.
+    """
+    walked = berserk_rooms()
+    rooms = []
+    for room in folder_rooms(name):
+        try:
+            with open(sitting_path(room), encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            continue                      # a file that isn't json is not the canvas's problem
+        nodes = d.get("nodes")
+        if not isinstance(nodes, dict):
+            continue
+        rooms.append({
+            "name": room,
+            "title": d.get("title") or room,
+            "created": d.get("created") or 0,
+            "updated": d.get("updated") or 0,
+            "root": d.get("root"),
+            "current": d.get("current"),
+            "berserk": room in walked or leaf(room) in walked,
+            "nodes": {nid: canvas_node(n) for nid, n in nodes.items() if isinstance(n, dict)},
+        })
+    if not rooms:
+        return None
+    return {"folder": name, "rooms": rooms}
+
+
+def set_kept(room: str, nid: str, kept: bool) -> None:
+    """Mark or unmark one branch, in the room itself.
+
+    The same flag the choose screen's keep leaves, so a harvest made on the canvas is in the
+    rooms and in git, and not in some second list only the canvas knows about. Absent means
+    not kept — the key is deleted rather than set false, like every room written before keep
+    existed.
+
+    Read and write sit next to each other on purpose. census.py and eva write this file whole
+    while they run, so a branch one of them appends between this load and this save is lost,
+    and a keep made while a census is appending can be the thing that loses. That is the
+    project's dry-run law — a lost fan is an acceptable loss, and no locking is coming — and
+    the window is one json load plus one dict lookup wide.
+
+    Raises FileNotFoundError (no room), KeyError (no such node) and ValueError (not a branch).
+    """
+    path = sitting_path(room)
+    with open(path, encoding="utf-8") as f:
+        d = json.load(f)
+    node = (d.get("nodes") or {}).get(nid)
+    if not isinstance(node, dict):
+        raise KeyError(nid)
+    if node.get("kind") != "model":
+        raise ValueError("only a branch can be kept")
+    if kept:
+        node["kept"] = True
+    else:
+        node.pop("kept", None)
+    write_sitting(d)
 
 
 def check(obj) -> str:
@@ -1136,6 +1255,20 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"sittings": shelf()})
             return
 
+        if u.path == "/api/folder":
+            name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
+            # Same validator as every other name that becomes a path, so `.trash` and `..`
+            # are unaddressable here too, however they are spelled.
+            if not name_ok(name):
+                self._json(400, {"error": "bad name"})
+                return
+            d = folder_canvas(name)
+            if d is None:
+                self._json(404, {"error": "no rooms in that folder"})
+                return
+            self._json(200, d)
+            return
+
         if u.path == "/api/sitting":
             name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
             if not name_ok(name):
@@ -1263,6 +1396,31 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(500, {"error": f"can't write it: {exc}"})
                 return
             self._json(200, {"ok": True, "updated": ts})
+            return
+
+        if u.path == "/api/keep":
+            room, nid, want = payload.get("room"), payload.get("node"), payload.get("kept")
+            if not name_ok(room) or not isinstance(nid, str) or not nid \
+                    or not isinstance(want, bool):
+                self._json(400, {"error": "keep takes a room path, a node id and a boolean"})
+                return
+            try:
+                set_kept(room, nid, want)
+            except FileNotFoundError:
+                self._json(404, {"error": "no such sitting"})
+                return
+            except KeyError:
+                self._json(404, {"error": "no such node in that room"})
+                return
+            except ValueError as exc:
+                # Both a node that isn't a branch and a file that stopped being json: the
+                # caller can do nothing about either, and neither is a server fault.
+                self._json(400, {"error": str(exc)})
+                return
+            except OSError as exc:
+                self._json(500, {"error": f"can't write it: {exc}"})
+                return
+            self._json(200, {"ok": True, "room": room, "node": nid, "kept": want})
             return
 
         if u.path == "/api/complete":
