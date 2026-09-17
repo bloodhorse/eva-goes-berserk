@@ -1,0 +1,22 @@
+[Unit]
+Description=eva — the loom read-only, over the shelf the mac pushes; caddy sends eva.x here only while the mac is off
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bek
+WorkingDirectory=/home/bek/eva-mirror
+# Loopback only: caddy is the one door, same as the mac's loom behind its tailnet ip.
+Environment=LOOM_HOST=127.0.0.1
+Environment=LOOM_PORT=8083
+# Every POST refused. This is the line that keeps the mini from ever being a second writer.
+Environment=LOOM_READONLY=1
+Environment=LOOM_LLAMA=http://127.0.0.1:9
+# uv's 3.12, by path: stdlib only, and the box's own python is whatever pacman shipped this week.
+ExecStart=/home/bek/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 /home/bek/eva-mirror/eva/server/loom.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -24,7 +24,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                screen it opens standalone, with no browser chrome at all
   GET  /icon-180.png         -> the home-screen icon (and /icon-192.png, /icon-512.png),
                                out of eva/front/icons/ — cached hard, unlike everything else
-  GET  /api/health           -> {"ok", "llama"}: is there a model behind the port
+  GET  /api/health           -> {"ok", "llama", "readonly", "synced"}: is there a model behind
+                                the port, and is this the mirror (synced = when the mac last
+                                pushed the shelf to it, epoch seconds)
   GET  /api/sittings         -> the shelf, newest first — the whole tree, folders and all,
                                in one call; a room's name IS its path under sittings/
   GET  /api/folder?name=     -> one folder as the canvas reads it: every room under it,
@@ -71,7 +73,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 isn't there, and put in artifacts/.trash when the last star goes
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
-LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER.
+LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_READONLY (1 = the mirror: every POST 403).
 """
 
 from __future__ import annotations
@@ -106,6 +108,13 @@ LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
 # Everything the instruments write goes on the shelf, by kind. The env overrides exist only
 # so the tests (and the rig) can run against scratch dirs instead of the real ones.
 SHELF = os.path.join(ROOT, "shelf")
+# The mirror on the mini (eva/mirror/): the same server over a copy of the shelf the mac
+# pushes every minute, answering only while the mac is off. Every POST is refused, so there
+# is never a second writer — whatever the page does there, the mac's shelf is the only one.
+READONLY = os.environ.get("LOOM_READONLY") == "1"
+# The push script stamps this after each successful sync; outside the shelf, because the
+# shelf is rsynced with --delete and would wipe it.
+SYNCED = os.path.join(ROOT, ".synced")
 SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(SHELF, "sittings"))
 # Storage: findings bekh wants to keep, one plain .txt per note, nothing but the text in it.
 # Tracked by git on purpose (sittings are not) — a finding is worth its history.
@@ -394,6 +403,19 @@ def tokenize(contents: list) -> dict:
 def health() -> dict:
     """Never raises. A dead llama-server is a fact about the world, not an error in this
     process — the page draws a red dot and stays usable (you can still read and prune)."""
+    if READONLY:
+        # No model on the mirror's box, and nothing to ask: generation happens on the mac.
+        try:
+            synced = os.path.getmtime(SYNCED)
+        except OSError:
+            synced = None
+        return {"ok": False, "llama": None, "readonly": True, "synced": synced}
+    out = _llama_health()
+    out["readonly"] = False
+    return out
+
+
+def _llama_health() -> dict:
     conn, prefix = llama_conn(HEALTH_TIMEOUT)
     try:
         conn.request("GET", prefix + "/health")
@@ -1551,6 +1573,9 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         u = urlparse(self.path)
+        if READONLY:
+            self._json(403, {"error": "read-only: the mac is off, this is the mini's copy"})
+            return
         try:
             payload = self._read_json()
         except ValueError:

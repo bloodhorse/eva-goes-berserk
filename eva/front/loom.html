@@ -808,6 +808,17 @@
   body, button, select{text-transform:lowercase;}
   .body, .body *, input, textarea, #textview{text-transform:none;}
   ::placeholder{text-transform:lowercase;}
+  /* The mirror (eva/mirror/): the mac is off and the mini is serving yesterday's shelf
+     read-only. Everything that writes goes away rather than greying out — a grey button
+     reads as "wait", and nothing here is coming back until the mac is. The server refuses
+     every POST anyway; this is only so the page doesn't offer what will be refused. The fork
+     mark stays: opening a fan is reading. */
+  #robar{flex-shrink:0; color:var(--ghost); font-size:14px; padding:16px 2px 0;
+    padding-bottom:calc(8px + env(safe-area-inset-bottom));}
+  body.ro #turnwrap, body.ro #fanbtn, body.ro #more, body.ro #stop, body.ro #samp,
+  body.ro #sampwrap, body.ro .toolrow, body.ro #newname, body.ro #askbox, body.ro #noteadd,
+  body.ro #noteedit, body.ro #artgo, body.ro #artagain, body.ro .foot .mark,
+  body.ro .blk .gut, body.ro .cn-head .cn-mark{display:none !important;}
 </style>
 </head>
 <body>
@@ -878,6 +889,7 @@
   <main id="panes">
     <section id="doc" aria-label="Dialogue">
       <div id="blocks"></div>
+      <div id="robar" role="status" hidden></div>
       <div id="turnwrap">
         <div id="turnline">
           <span id="turnlab">bekh:</span>
@@ -4320,15 +4332,32 @@ function grow(){
 }
 turnEl.addEventListener('input', () => { grow(); gate(); });
 
+// null until the first answer. Caddy on the mini sends the page to the mac while the mac
+// answers and to the mirror while it doesn't, so this can flip under an open page: to
+// read-only, the writing controls go; back to the mac, the page reloads, because what it holds
+// is the mirror's copy and the mac's shelf may be newer.
+let readonly = null;
 async function health(){
   try{
     const d = await getJSON('/api/health');
     $('dot').classList.toggle('off', !d.ok);
     $('dot').setAttribute('aria-label', d.ok ? 'Model available' : 'Model unavailable');
+    const ro = !!d.readonly;
+    if(readonly === true && !ro){ location.reload(); return; }
+    readonly = ro;
+    document.body.classList.toggle('ro', ro);
+    $('robar').hidden = !ro;
+    if(ro){
+      const t = d.synced ? new Date(d.synced * 1000) : null;
+      $('robar').textContent = 'read-only — the mac is off. this is the mini\'s copy' +
+        (t ? ', synced ' + t.toLocaleString([], {day: 'numeric', month: 'short',
+                                                  hour: '2-digit', minute: '2-digit'}) : '') + '.';
+    }
   }catch(e){ $('dot').classList.add('off'); $('dot').setAttribute('aria-label', 'Model unavailable'); }
 }
 
 (async function start(){
+  health();   // not awaited: read-only has to show before the slow room lands, not after
   try{
   // A #tree= or #room= link names the room too, so the dialogue behind whatever screen the
   // address asks for is that room rather than whatever was last open.

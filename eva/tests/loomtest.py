@@ -1673,5 +1673,60 @@ class Cancel(unittest.TestCase):
         self.assertEqual(body["error"], "cancelled")
 
 
+class ReadOnly(unittest.TestCase):
+    """The mirror on the mini: a second loom over the same shelf with LOOM_READONLY=1. It
+    reads everything the real one reads and refuses every write, so it can never become a
+    second writer to a shelf that only the mac owns."""
+
+    def setUp(self):
+        global BASE
+        self.t, self.b = kept_fan("mirror")       # written through the real loom
+        self.base = BASE
+        port = free_port()
+        env = dict(os.environ, LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
+                   LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS, LOOM_LEDGER=LEDGER,
+                   LOOM_LLAMA=STUB_BASE, LOOM_READONLY="1")
+        self.proc = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
+                                     env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        BASE = f"http://127.0.0.1:{port}"
+        deadline = time.time() + 20
+        while time.time() < deadline:
+            try:
+                if call("/api/health")[0] == 200:
+                    return
+            except OSError:
+                time.sleep(0.15)
+        raise RuntimeError("the read-only loom never came up")
+
+    def tearDown(self):
+        global BASE
+        BASE = self.base
+        self.proc.terminate()
+        self.proc.wait(timeout=5)
+
+    def test_reads_everything_writes_nothing(self):
+        st, h = call("/api/health")
+        self.assertEqual((st, h["readonly"], h["ok"]), (200, True, False))
+        self.assertEqual(call("/")[0], 200)
+        names = [r["name"] for r in call("/api/sittings")[1]["sittings"]]
+        self.assertIn(self.t.d["name"], names)
+        st, room = call("/api/sitting?name=" + self.t.d["name"])
+        self.assertEqual((st, room["current"]), (200, self.t.d["current"]))
+        for path, body in (("/api/sitting", self.t.d),
+                           ("/api/keep", {"room": self.t.d["name"], "node": self.b[0]["id"],
+                                          "kept": True}),
+                           ("/api/artifact", {"room": self.t.d["name"],
+                                              "parent": self.t.d["current"], "sync": True}),
+                           ("/api/complete", {"prompt": "x", "params": {}})):
+            st, d = call(path, body)
+            self.assertEqual(st, 403, path)
+            self.assertIn("read-only", d["error"])
+        with open(os.path.join(SHELF, self.t.d["name"] + ".json"), encoding="utf-8") as f:
+            self.assertNotIn("kept", json.load(f)["nodes"][self.b[0]["id"]])   # the keep never landed
+        # and the real loom still says it is not the mirror
+        self.assertFalse(json.loads(urllib.request.urlopen(self.base + "/api/health",
+                                                           timeout=10).read())["readonly"])
+
+
 if __name__ == "__main__":
     unittest.main()

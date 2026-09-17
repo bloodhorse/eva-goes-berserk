@@ -294,6 +294,8 @@ rig in `front/mobile/`. Light room: serve a copy with `prefers-color-scheme: lig
 
 ## It runs permanently, as `https://eva.x` / `https://e.x`
 
+While the mac is off, `eva.x` falls over to a read-only copy on the mini — `mirror/CLAUDE.md`.
+
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) — and
