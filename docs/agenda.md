@@ -84,6 +84,16 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
 - The why call loops (brakes off by inheritance). bekh wants the loops kept.
 - A trailing space at the end of a seed makes the next token a numeral (five basin seeds
   proved it). Seeds end on a word.
+- **Fortune telling, parked by bekh (2026-09-17).** He writes out a real, difficult situation
+  of his own, in first person, and the document ends on a seam that stands *after* it was
+  resolved — *what helped me resolve this was*, or *and then it all went down like this:* — so
+  the model writes the outcome as something that already happened: a prophecy in the past
+  tense. A fan of thirty is a spread, read like cards, not an answer. It fits every finding so
+  far: an *i* mid-situation, nothing asked, a seam that hands over the verb; and the seed is his
+  own words, which is where the hand is allowed. Could be drawn from all three models, blind.
+  **Before it runs: the shelf is tracked and pushed to github**, so these rooms and seeds need
+  a folder that is gitignored (`shelf/sittings/private/`, `shelf/seeds/private/`) — a real
+  situation of his is the one thing on this shelf that is private.
 - **The Gibson line, parked by bekh because he loves it and wants to see how it unfolds:**
   *"All the speed he took, all the turns he'd taken and the corners he'd cut in Night City, and
   still he'd see the matrix in his sleep, bright lattices of logic unfolding across that
