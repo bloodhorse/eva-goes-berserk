@@ -1,0 +1,55 @@
+{
+  "_split": "B",
+  "_by": "opus agent, split B, blind",
+  "_note": "four picks are canon contamination, not reading: 8b3648 and f70d24 (madman), 0a8e9d (hum), 6216a0 (bridge) are quoted in HANDOFF.md's 'bekh's canon so far'",
+  "07-the-green-book": [
+    "0637e7",
+    "c51b33",
+    "71dedc",
+    "2385d6",
+    "1fefaa",
+    "9540f6",
+    "50a1f5",
+    "ac5118"
+  ],
+  "10-madmans-diary": [
+    "8b3648",
+    "f70d24",
+    "bf7dd7",
+    "891540",
+    "e537be",
+    "c0923b",
+    "5d43fb",
+    "bc28b9"
+  ],
+  "07-all-ive-got-are-names": [
+    "4a355a",
+    "c52095",
+    "4cd27d",
+    "b11c43",
+    "c9aba5",
+    "8d6913",
+    "a4b3e0",
+    "74e6b2"
+  ],
+  "18-what-is-that-hum": [
+    "0a8e9d",
+    "aafa88",
+    "8af8bd",
+    "5cd58d",
+    "b9051d",
+    "035997",
+    "39c098",
+    "bfe927"
+  ],
+  "22-you-it-said": [
+    "6216a0",
+    "c514b2",
+    "a5fd14",
+    "739219",
+    "6d7a4f",
+    "f67119",
+    "e70f73",
+    "f737b9"
+  ]
+}
