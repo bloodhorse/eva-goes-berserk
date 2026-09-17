@@ -39,6 +39,15 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
 
 ## now
 
+**What we are looking for (bekh, 2026-09-17, held loosely on purpose).** Signs of a dream. The
+engine's whole job is to be very good at selecting for those signs, and we do not know yet what
+they are. So far a sign has looked like something strange and surprising: a pivot, a detail, a
+turn of phrase nobody would have predicted. That is all that gets written down. No form, no
+taxonomy, no definition — we are not ready to commit to one, and a definition written now would
+make every dream the same dream. One thing noticed along the way, an observation and not a rule:
+a dreamy seed continued dreamily did not feel like a dream, it felt like the passage going on in
+its own voice.
+
 1. **Rerun the seeds that held, at scale**, no grammar, 60 tokens, t 2.2 (1.4 only for
    De Quincey): from `seeds/nemo/` 13, 15, 18, 24, 22, 07, then 14 and 04; from
    `seeds/first-person/` Scott, the Salem depositions, Gogol, the green book. Never again:
