@@ -57,6 +57,25 @@ know; it is how it seems to him from his time with these models. Until something
 otherwise, the instrument that detects a dream is a person reading, and his marks (`●` good,
 `★` keep) are the only measurement we have.
 
+0. **A picker made of bekh's marks** (his idea, 2026-09-17; after the three-model reveal). The
+   RLHF move, small: never define a dream, learn what separates the cards he marked from the
+   ones he left bare. The data is already in the right shape — every marked card beat every
+   unmarked card of the same fan, same seed, and `★` over `●` is a second tier — so ten rooms
+   are about a thousand comparisons. First try is an evening on the mac: a vector per card, a
+   small scorer on top, and one honest test — hide a room, train on the rest, see whether his
+   marked cards rank near the top. Two feature sources to race on that test: a small embedding
+   model, and **nemo's own last hidden state** (what RLHF does: the judge is built from the
+   model that writes, because it reads the text the way the writer does). Known risks: a
+   thousand comparisons is thin; embeddings learn topic and register, which is exactly what he
+   said a dream is not. It is a **filter, not a judge**: it ranks three hundred, he reads the
+   top sixty and marks them, every mark is a label, and when it is good enough it replaces
+   *the one that scared me* as the overnight picker — a model picks, and the model is made of
+   his picks. **Friends as more readers:** possible, and it needs marks to carry a reader's
+   name (today `good`/`kept` are bare flags on the node) and each reader blind to the others.
+   Pooled marks make an average taste, which is not the point; per-reader marks make a shared
+   scorer plus a personal lean, and first of all they measure how much two people agree —
+   which is the test of whether this taste is personal at all. Until then: keep marking,
+   consistently; the unmarked twelve hundred cards of 2026-09-16 are on the canvas.
 1. **Rerun the seeds that held, at scale**, no grammar, 60 tokens, t 2.2 (1.4 only for
    De Quincey): from `seeds/nemo/` 13, 15, 18, 24, 22, 07, then 14 and 04; from
    `seeds/first-person/` Scott, the Salem depositions, Gogol, the green book. Never again:
