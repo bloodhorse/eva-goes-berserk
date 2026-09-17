@@ -57,6 +57,34 @@ know; it is how it seems to him from his time with these models. Until something
 otherwise, the instrument that detects a dream is a person reading, and his marks (`●` good,
 `★` keep) are the only measurement we have.
 
+**Connection is weird (2026-09-17, out of the hum room — the best room so far by bekh's read,
+"no boring piece").** bekh's take first: the models are good with means of communication; as in
+Serial Experiments Lain, where all the weirdness lives in the connections the Wired makes
+possible — maybe it is the fabula of all technology. Two reasons it might hold, kept close to
+how they were said:
+
+- *The corpus.* Every new medium was haunted the day it was born. The telegraph gave us
+  spiritualism and rapping tables, radio gave us voices of the dead in the static, tape gave us
+  EVP, TV gave us the snow channel, VHS gave us Ringu, the net gave us Lain and Kairo (the
+  standard book is Sconce's *Haunted Media*). "The weirdness lives in the connection" is a
+  hundred and fifty years of writing, and a base model inherited all of it as a genre.
+- *The model.* A voice on a line is the one character a language model does not have to pretend
+  to be. By a river it has to fake hands and knees. On a wire it only has to be a speaker that
+  exists as signal, arrives from nowhere, has no body and may not be who it says — which is
+  just what it is. In a document about a channel the fiction's situation and the model's actual
+  situation coincide, and what it says there rings true in a way it cannot elsewhere. It is
+  also the clean way round our own law: never *AI* in a document, but a wire, a switch, a
+  relay, a carrier tone lets the text be about exactly that without the word.
+
+To explore later, bekh's: this cuts against the janus line that a base model is a choir of
+voices and can be anything you see it as — here it seems to have **played to its own strengths**,
+been represented by something close to itself. Cautions: bekh wrote or chose most of the channel
+seeds, so some of this is his taste picking the subject first; and a channel is a subject, not a
+guarantee (`carrier` made plenty of dull essay). The seed shelf it points at, untouched and
+fitting every other finding — real, obscure, first person, sober, and about a channel: a
+telegraph operator's diary, a switchboard girl's memoir, a lighthouse log, a radio ham's
+logbook, a signalman's statement to an inquest.
+
 0. **A picker made of bekh's marks** (his idea, 2026-09-17; after the three-model reveal). The
    RLHF move, small: never define a dream, learn what separates the cards he marked from the
    ones he left bare. The data is already in the right shape — every marked card beat every
