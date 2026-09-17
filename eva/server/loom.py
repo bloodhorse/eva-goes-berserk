@@ -20,14 +20,22 @@ host is 127.0.0.1 and the only reason LOOM_HOST exists is a box where llama-serv
 somewhere else and you want the page on the tailnet — that is a decision, not a default.
 
   GET  /                     -> loom.html, re-read per request (edit it, hit reload)
+  GET  /manifest.webmanifest -> what makes the page installable: added to an iPhone's home
+                               screen it opens standalone, with no browser chrome at all
+  GET  /icon-180.png         -> the home-screen icon (and /icon-192.png, /icon-512.png),
+                               out of eva/front/icons/ — cached hard, unlike everything else
   GET  /api/health           -> {"ok", "llama"}: is there a model behind the port
   GET  /api/sittings         -> the shelf, newest first — the whole tree, folders and all,
                                in one call; a room's name IS its path under sittings/
   GET  /api/folder?name=     -> one folder as the canvas reads it: every room under it,
                                sub-folders included, each with its nodes cut down to what
                                a picture of an experiment needs
-  POST /api/keep             -> {"room", "node", "kept"}: one branch marked, in the room
-                               itself — the same flag the choose screen's keep leaves
+  POST /api/mark             -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
+                               marked, in the room itself — the same flags the choose screen
+                               leaves. `kept` goes in an artifact; `good` only says he liked
+                               reading it, and nothing downstream reads it
+  POST /api/keep             -> {"room", "node", "kept"}: /api/mark spelled the old way, for
+                               anything written before there were two marks
   GET  /api/sitting?name=    -> one whole tree
   POST /api/sitting          -> the whole tree, written atomically
   POST /api/move             -> {"from", "to"}: a room or a whole folder moves; rename is a
@@ -85,6 +93,10 @@ ROOT = os.path.dirname(os.path.dirname(HERE))          # the repo: eva/ (code), 
 # is the thing bekh looks at, and keeping them apart is what lets either be read alone.
 # LOOM_PAGE exists for the mobile rig, which serves a doctored copy from a scratch dir.
 PAGE = os.environ.get("LOOM_PAGE", os.path.join(ROOT, "eva", "front", "loom.html"))
+# The home-screen icons, generated once by front/icons/make.py and committed. Beside the
+# page and not beside the server: they are what the page looks like, not something it stores.
+ICONS = os.path.join(ROOT, "eva", "front", "icons")
+ICON_SIZES = (180, 192, 512)
 HOST = os.environ.get("LOOM_HOST", "127.0.0.1")
 PORT = int(os.environ.get("LOOM_PORT", "8082"))
 LLAMA = os.environ.get("LOOM_LLAMA", "http://127.0.0.1:8080").rstrip("/")
@@ -565,6 +577,8 @@ def canvas_node(node: dict) -> dict:
         out["posed"] = True
     if node.get("kept"):
         out["kept"] = True
+    if node.get("good"):
+        out["good"] = True
     if temp is not None:
         out["temperature"] = temp
     if isinstance(model, str) and model:
@@ -605,13 +619,21 @@ def folder_canvas(name: str) -> dict | None:
     return {"folder": name, "rooms": rooms}
 
 
-def set_kept(room: str, nid: str, kept: bool) -> None:
+MARKS = ("kept", "good")
+"""The two marks a branch can wear, and the only two. `kept` is "this goes in the artifact";
+`good` is "i liked reading this, and i would not keep it" — the thing bekh was spending `kept`
+on while reading a blind three-model fan, which is how a mark that means everything comes to
+mean nothing. They are independent: a branch can wear both, either or neither, and nothing
+downstream — build_artifact above all — has ever heard of `good`."""
+
+
+def set_mark(room: str, nid: str, mark: str, on: bool) -> None:
     """Mark or unmark one branch, in the room itself.
 
-    The same flag the choose screen's keep leaves, so a harvest made on the canvas is in the
+    The same flags the choose screen leaves, so a harvest made on the canvas is in the
     rooms and in git, and not in some second list only the canvas knows about. Absent means
-    not kept — the key is deleted rather than set false, like every room written before keep
-    existed.
+    not marked — the key is deleted rather than set false, like every room written before
+    keep existed.
 
     Read and write sit next to each other on purpose. census.py and eva write this file whole
     while they run, so a branch one of them appends between this load and this save is lost,
@@ -619,8 +641,11 @@ def set_kept(room: str, nid: str, kept: bool) -> None:
     project's dry-run law — a lost fan is an acceptable loss, and no locking is coming — and
     the window is one json load plus one dict lookup wide.
 
-    Raises FileNotFoundError (no room), KeyError (no such node) and ValueError (not a branch).
+    Raises FileNotFoundError (no room), KeyError (no such node) and ValueError (not a branch,
+    or not a mark we have).
     """
+    if mark not in MARKS:
+        raise ValueError("no such mark: " + str(mark))
     path = sitting_path(room)
     with open(path, encoding="utf-8") as f:
         d = json.load(f)
@@ -628,12 +653,18 @@ def set_kept(room: str, nid: str, kept: bool) -> None:
     if not isinstance(node, dict):
         raise KeyError(nid)
     if node.get("kind") != "model":
-        raise ValueError("only a branch can be kept")
-    if kept:
-        node["kept"] = True
+        raise ValueError("only a branch can be marked")
+    if on:
+        node[mark] = True
     else:
-        node.pop("kept", None)
+        node.pop(mark, None)
     write_sitting(d)
+
+
+def set_kept(room: str, nid: str, kept: bool) -> None:
+    """What set_mark was before there were two marks. Kept as a name, not as a second
+    implementation: berserk and the walk scripts import loom, and one of them will call this."""
+    set_mark(room, nid, "kept", kept)
 
 
 def check(obj) -> str:
@@ -1209,13 +1240,16 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
 
-    def _send(self, code: int, body, ctype: str = "application/json; charset=utf-8") -> None:
+    def _send(self, code: int, body, ctype: str = "application/json; charset=utf-8",
+              cache: str = "no-store") -> None:
         data = body if isinstance(body, bytes) else body.encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", ctype)
-        # no-store everywhere: the page is edited while the server runs, and a browser
-        # that caches loom.html turns "reload" into "reload sometimes".
-        self.send_header("Cache-Control", "no-store")
+        # no-store everywhere by default: the page is edited while the server runs, and a
+        # browser that caches loom.html turns "reload" into "reload sometimes". The icons
+        # are the one exception — they are bytes that change once a year, and the phone
+        # re-fetches them on every launch of the installed app if we say nothing.
+        self.send_header("Cache-Control", cache)
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
@@ -1245,6 +1279,42 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(200, f.read(), "text/html; charset=utf-8")
             except OSError:
                 self._json(404, {"error": f"no page at {PAGE}"})
+            return
+
+        # What makes the page installable. Small enough to live here as a literal: a file on
+        # disk would be a fourth place the palette is written down, and it has to agree with
+        # loom.html's --bg and its theme-color or the splash flashes a different room.
+        # NOT cached — the whole point is that a re-add picks up whatever this says today.
+        if u.path == "/manifest.webmanifest":
+            self._send(200, json.dumps({
+                "name": "eva — the loom",
+                "short_name": "eva",
+                "start_url": "/",
+                "scope": "/",
+                "display": "standalone",
+                "background_color": "#232323",
+                "theme_color": "#232323",
+                "icons": [{"src": f"/icon-{n}.png", "sizes": f"{n}x{n}", "type": "image/png"}
+                          for n in ICON_SIZES],
+            }, ensure_ascii=False), "application/manifest+json; charset=utf-8")
+            return
+
+        # Three sizes, by name, and nothing else out of that folder: the path is built from
+        # an integer we already know, never from the url, so there is no static file server
+        # here to walk out of.
+        if u.path.startswith("/icon-") and u.path.endswith(".png"):
+            try:
+                n = int(u.path[len("/icon-"):-len(".png")])
+            except ValueError:
+                n = 0
+            if n not in ICON_SIZES:
+                self._json(404, {"error": "no icon that size"})
+                return
+            try:
+                with open(os.path.join(ICONS, f"icon-{n}.png"), "rb") as f:
+                    self._send(200, f.read(), "image/png", "public, max-age=31536000, immutable")
+            except OSError:
+                self._json(404, {"error": "the icons have not been generated"})
             return
 
         if u.path == "/api/health":
@@ -1398,14 +1468,22 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "updated": ts})
             return
 
-        if u.path == "/api/keep":
-            room, nid, want = payload.get("room"), payload.get("node"), payload.get("kept")
+        if u.path in ("/api/mark", "/api/keep"):
+            # One route, two spellings. /api/keep is what the page called before `good`
+            # existed and what anything outside this repo may still call, so it stays —
+            # as a spelling of /api/mark and never as a second copy of the write.
+            room, nid = payload.get("room"), payload.get("node")
+            if u.path == "/api/keep":
+                mark, want = "kept", payload.get("kept")
+            else:
+                mark, want = payload.get("mark"), payload.get("on")
             if not name_ok(room) or not isinstance(nid, str) or not nid \
-                    or not isinstance(want, bool):
-                self._json(400, {"error": "keep takes a room path, a node id and a boolean"})
+                    or not isinstance(want, bool) or mark not in MARKS:
+                self._json(400, {"error": "a mark takes a room path, a node id, "
+                                          "one of " + "/".join(MARKS) + " and a boolean"})
                 return
             try:
-                set_kept(room, nid, want)
+                set_mark(room, nid, mark, want)
             except FileNotFoundError:
                 self._json(404, {"error": "no such sitting"})
                 return
@@ -1420,7 +1498,8 @@ class Handler(BaseHTTPRequestHandler):
             except OSError as exc:
                 self._json(500, {"error": f"can't write it: {exc}"})
                 return
-            self._json(200, {"ok": True, "room": room, "node": nid, "kept": want})
+            self._json(200, {"ok": True, "room": room, "node": nid,
+                             "mark": mark, "on": want, mark: want})
             return
 
         if u.path == "/api/complete":

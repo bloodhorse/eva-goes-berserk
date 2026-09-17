@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" media="(prefers-color-scheme:dark)" content="#232323">
 <meta name="theme-color" media="(prefers-color-scheme:light)" content="#faf4ed">
+<!-- Added to the iPhone's home screen, eva opens as its own app: no address bar, no
+     toolbar sliding in and out under your thumb as the dialogue scrolls. That is what
+     these seven lines buy, and iOS reads them ONCE — when the icon is added — so an icon
+     added before they existed stays a plain bookmark until it is deleted and re-added.
+     `black-translucent` means the page draws under the status bar and the home indicator;
+     every fixed edge below pays for that with env(safe-area-inset-*), which is 0 in a
+     desktop browser, so nothing on the desk moves. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="eva">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icon-180.png">
 <title>loom</title>
 <!-- The dialogue is the home screen. A fan opens a separate reading screen when its
      first answer arrives; choosing one returns to the dialogue. The tree and prompt
@@ -69,7 +82,11 @@
      bottom of the file or it silently loses. */
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html,body{height:100%; margin:0;}
+  /* overscroll-behavior:none is for the installed app: without it a downward drag that
+     starts on the canvas (or on a pane already at its top) rubber-bands the whole page and,
+     in a browser tab, reloads it — losing the room mid-fan. The page never scrolls as a
+     whole anyway (height:100dvh, overflow:hidden below), so this costs nothing on the desk. */
+  html,body{height:100%; margin:0; overscroll-behavior:none;}
   /* iOS inflates text in landscape unless told not to; the page sizes its own type */
   html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
   body{
@@ -102,11 +119,18 @@
   label{font-size:14px; color:var(--ghost);}
   input[type=checkbox]{accent-color:var(--accent);}
 
-  /* One corner control; the shelf and sampler only take space when requested. */
-  #menubtn{position:fixed; top:max(16px, env(safe-area-inset-top));
-    right:max(18px, env(safe-area-inset-right)); z-index:30; background:var(--bg);}
-  #tools{position:fixed; right:max(18px, env(safe-area-inset-right)); top:68px; z-index:30;
-    width:min(340px, calc(100vw - 36px)); max-height:calc(100dvh - 90px); overflow-y:auto;
+  /* One corner control; the shelf and sampler only take space when requested.
+     The insets ADD to the margin rather than being maxed against it: installed, the page
+     owns the status bar, so `max(16px, 59px)` would put the button's top edge exactly on the
+     clock. `calc(16px + inset)` keeps the same 16px of air below whatever the phone reserves,
+     and on a desktop every inset is 0 and these are the numbers they always were. */
+  #menubtn{position:fixed; top:calc(16px + env(safe-area-inset-top));
+    right:calc(18px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
+  #tools{position:fixed; right:calc(18px + env(safe-area-inset-right));
+    top:calc(68px + env(safe-area-inset-top)); z-index:30;
+    width:min(340px, calc(100vw - 36px));
+    max-height:calc(100dvh - 90px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-y:auto;
     background:var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:20px;
     box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
   .shelfrow{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
@@ -267,7 +291,17 @@
     font-size:13px; color:var(--ghost); border-top:1px solid var(--line); padding-top:14px;}
   /* not lowercased: a model file is Q5_K_M and a turn string is text the model saw */
   .artnums .v{color:var(--ink); overflow-wrap:anywhere; min-width:0; text-transform:none;}
-  .foot .keep{margin-left:auto;}
+  /* the same two marks the canvas cards wear, glyph for glyph and hue for hue: ☆/★ keep in
+     ice, ○/● good in the accent. A thumb-sized box on touch, kept out of the foot's height
+     by the negative cross margin, so a fan of cards is the height it always was. */
+  .foot .mark{font:15px/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding:0;
+    min-width:28px; height:28px; margin-block:-7px; display:inline-grid; place-items:center;}
+  .foot .mark.keepm{margin-left:auto;}
+  .foot .mark.keepm.on{color:var(--live);}
+  .foot .mark.goodm.on{color:var(--accent);}
+  @media (hover:none){
+    .foot .mark{min-width:40px; height:40px; margin-block:-13px; font-size:18px;}
+  }
   #artsave{white-space:nowrap;}
   @media (max-width:900px){
     #artbar{padding:0 0 16px;} #artview{padding:2px 0 20px;} #artback{margin-left:0;}
@@ -300,8 +334,13 @@
   /* The former 55% dialogue pane, widened by about a third and centered. */
   :root{--reading: min(72vw, 1120px);}
   #panes{flex:1; display:flex; min-height:0; min-width:0;}
+  /* The 64px of head room is what clears the fixed corner button; installed, the status bar
+     sits above that, so the inset has to be added or the first line of every screen — the
+     dialogue, a fan, a note, the tree, the export — reads under the clock. */
   #doc, #fanpane, #notepane, #artpane, #textpane{width:var(--reading); max-width:100%; margin:0 auto; min-height:0;
-    display:flex; flex-direction:column; padding:64px 24px max(24px, env(safe-area-inset-bottom));}
+    display:flex; flex-direction:column;
+    padding:calc(64px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right))
+            calc(24px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left));}
   /* The reading column is a rule for prose, and a tree is not prose: it is a picture that
      wants every pixel the window has, so the artifact screen alone opts out of --reading.
      It has to come AFTER the rule above: same specificity, and the last one wins — written
@@ -382,7 +421,7 @@
   .card .foot{padding-top:8px;}
   .card.gen{cursor:default; color:var(--ghost); background:transparent; font-size:14px;}
   .card.gen:hover{border-color:transparent;}
-  #notice{position:fixed; bottom:max(18px, env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); z-index:40;
+  #notice{position:fixed; bottom:calc(18px + env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); z-index:40;
     max-width:calc(100vw - 32px); background:var(--panel); border:1px solid var(--line);
     border-radius:10px; padding:12px 18px; font-size:14px;}
   #notice:empty{display:none;}
@@ -391,7 +430,9 @@
 
   @media (max-width:900px){
     :root{--reading:100%;}
-    #doc, #fanpane, #notepane, #artpane, #textpane{padding:72px 20px max(20px, env(safe-area-inset-bottom));}
+    #doc, #fanpane, #notepane, #artpane, #textpane{
+      padding:calc(72px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
+              calc(20px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));}
     /* No margins for controls once the screen narrows: at 36px the "edit" word and the
        ⌥ 3/40 fork mark were wider than their margin and sat on top of the text, and on a
        touch screen there is no hover to reveal them anyway. So every block becomes a
@@ -415,8 +456,9 @@
     /* On a phone the bottom is the text box: a notice pinned there covered the box and
        the send button until the error cleared. Up top, under the menu button, it covers
        one line of reading at worst and never the controls. */
-    #notice{top:max(66px, calc(env(safe-area-inset-top) + 58px)); bottom:auto;
-      left:16px; right:16px; transform:none; max-width:none;}
+    #notice{top:calc(66px + env(safe-area-inset-top)); bottom:auto;
+      left:calc(16px + env(safe-area-inset-left)); right:calc(16px + env(safe-area-inset-right));
+      transform:none; max-width:none;}
   }
   @media (max-width:540px){
     #doc, #fanpane, #notepane, #artpane, #textpane{padding-left:12px; padding-right:12px;}
@@ -459,8 +501,11 @@
   #canvaspane{flex:1; min-width:0; min-height:0; display:flex; flex-direction:column;}
   #canbar{
     flex-shrink:0; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    /* the right gutter is for the fixed menu button, which hangs over this bar */
-    padding:14px 68px 10px max(12px, env(safe-area-inset-left));
+    /* the right gutter is for the fixed menu button, which hangs over this bar; the top
+       inset is the status bar the installed app draws under, and the button moved down by
+       the same amount, so the two stay lined up */
+    padding:calc(14px + env(safe-area-inset-top)) calc(68px + env(safe-area-inset-right))
+            10px calc(12px + env(safe-area-inset-left));
     border-bottom:1px solid var(--line); font-size:13px;
   }
   #canbar .name{font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -496,12 +541,19 @@
   #canmodels .m.m3 i{border-top-style:double; border-top-width:3px;}
   #cankeptby{display:none;}
   #canvaspane.reveal #cankeptby{display:inline; color:var(--ghost);}
+  /* the folder's score, one hue per mark — same two the cards wear, so the bar and the
+     picture are read with the same eye */
+  #cankept .k{color:var(--live);} #cankept .g{color:var(--accent);}
+  #cankept .s{color:var(--ghost);}
 
   /* The surface is a thing you look at, not a thing you select out of — text gets copied in
      the room, not here — so nothing on it is selectable and the pointer stays an ordinary
      arrow whether it is resting or dragging. Only the real controls say "click me". */
   #canstage{
     flex:1; min-height:0; position:relative; overflow:hidden; touch-action:none;
+    /* a pan is a drag here, never a scroll: without this a downward drag that the stage
+       chose not to consume walks up to the viewport and rubber-bands (or reloads) the page */
+    overscroll-behavior:none;
     cursor:default; user-select:none; -webkit-user-select:none;
     background:radial-gradient(circle at 1px 1px,
       color-mix(in srgb, var(--ink) 12%, var(--bg)) 1px, transparent 0) 0 0/48px 48px;
@@ -582,16 +634,32 @@
   .cn-head{display:flex; align-items:center; gap:7px; flex-wrap:wrap; row-gap:4px;
     margin-bottom:6px; font:11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
     color:var(--ghost);}
-  .cn-head .cn-keep{margin-left:auto; background:none; border:1px solid var(--line);
-    border-radius:7px; color:var(--ghost); font:inherit; padding:1px 7px;}
-  .cn-head .cn-keep:hover{border-color:var(--ghost); color:var(--ink);}
+  /* Two marks, and the SHAPE is what tells them apart: ☆/★ keep — this one goes in an
+     artifact — and ○/● good — i liked reading this and i would not keep it. `good` exists
+     because keep was being spent on everything merely liked, which is how a mark that means
+     everything comes to mean nothing. The hue is the second reading, and the one that has to
+     survive the far zoom where the glyph is gone: kept ice, good accent, never shared.
+     The box is 28 css px (40 on a touch screen) with a negative cross margin, so the hit
+     area is a thumb's worth while the head stays the height it always was — a taller head
+     would eat a line of the card's own body, and CARD_H is one number for the whole canvas. */
+  .cn-head .cn-mark{background:none; border:0; border-radius:7px; color:var(--ghost);
+    font:14px/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding:0; cursor:pointer;
+    min-width:28px; height:28px; margin-block:-7px; display:inline-grid; place-items:center;}
+  .cn-head .cn-mark:hover{color:var(--ink);}
+  .cn-head .cn-mark.spring{margin-left:auto;}
+  .cn-head .cn-keep.on{color:var(--live);}
+  .cn-head .cn-good.on{color:var(--accent);}
+  @media (hover:none){
+    .cn-head .cn-mark{min-width:40px; height:40px; margin-block:-13px; font-size:17px;}
+  }
   .cn-card .body{font-size:13px; line-height:1.55;}
   .cn-card.furniture{opacity:.45;}
-  /* kept is ice, and ice is nothing else on this page. It has to survive on a card whose own
-     edge may be at the magenta end of the ramp, so it never shares a hue with it. */
+  /* The border says the same thing the glyph does, for a card read at a glance. `good` is
+     stated first and `kept` second on purpose: same specificity, so the later rule wins and
+     a branch wearing both reads as kept, with the accent as an inner edge underneath. */
+  .cn-card.good > .cn-face{border-color:var(--accent); border-left-color:var(--accent);}
   .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
-  .cn-card.kept .cn-keep{border-color:var(--live); color:var(--live);
-    background:color-mix(in srgb, var(--live) 18%, transparent);}
+  .cn-card.kept.good > .cn-face{box-shadow:inset 0 0 0 1px var(--accent);}
   /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
   .cn-sub{color:var(--live);}
   /* the model tag and its edge, both only under `reveal`. The tag is a file name, so it is
@@ -612,14 +680,21 @@
   .cn-card.cn-stack > .cn-sheet.s1{transform:translate(5px,5px);}
   .cn-card.cn-stack > .cn-sheet.s2{transform:translate(10px,10px);}
   .cn-card.cn-stack > .cn-face{border-left-color:var(--cn-heat);}
-  /* a kept stack keeps both readings: ice all round, heat still on the left edge */
+  /* a marked stack keeps both readings: the mark's hue all round, heat still on the left edge */
+  .cn-card.cn-stack.good > .cn-face{border-color:var(--accent); border-left-color:var(--cn-heat);}
   .cn-card.cn-stack.kept > .cn-face{border-color:var(--live); border-left-color:var(--cn-heat);}
   .cn-card.cn-stack .cn-flip{background:none; border:1px solid var(--line); border-radius:6px;
     color:var(--ghost); font:inherit; padding:0 6px;}
   .cn-card.cn-stack .cn-flip:hover{border-color:var(--live); color:var(--live);}
-  .cn-card.cn-stack .cn-keptn{margin-left:auto; color:var(--live);}
-  .cn-card.cn-stack .cn-keptn:empty{display:none;}
-  .cn-card.cn-stack .cn-keptn + .cn-keep{margin-left:0;}
+  /* how many of the cluster's members wear each mark — the marks themselves apply to the
+     member on top, so without this a stack could hide five keeps behind an unmarked face */
+  /* always in the head, even with nothing to say: it is what carries the margin-left:auto
+     that pushes the pair of buttons right, and a span that came and went would take the
+     spring with it */
+  .cn-card.cn-stack .cn-marks{margin-left:auto; font-size:10px; white-space:nowrap;}
+  .cn-card.cn-stack .cn-marks .k{color:var(--live);}
+  .cn-card.cn-stack .cn-marks .g{color:var(--accent); padding-left:5px;}
+  .cn-card.cn-stack .cn-marks .g:empty{padding-left:0;}
   /* the shared head of a cluster, dimmed: every member says it, so it is furniture the eye
      should slide over on the way to the one thing this member said instead */
   .cn-card .cn-pre{opacity:.45;}
@@ -635,15 +710,28 @@
     border-left-color:var(--cn-heat);}
   #canworld.far .cn-card.cn-stack > .cn-face{background:var(--cn-heat);
     border-left-color:var(--cn-heat);}
+  /* Zoomed out there is no glyph and no border to read: a brick is its fill, so each mark
+     spends its own hue. Good is the fill at 45% — softer than a keep, which is what it
+     means — and again `good` first so a branch wearing both reads as kept. */
+  #canworld.far .cn-card.good > .cn-face{
+    background:color-mix(in srgb, var(--accent) 45%, var(--bg));
+    border-left-color:color-mix(in srgb, var(--accent) 45%, var(--bg));}
   #canworld.far .cn-card.kept > .cn-face{
     background:color-mix(in srgb, var(--live) 58%, var(--bg));
     border-left-color:color-mix(in srgb, var(--live) 58%, var(--bg));}
-  /* a kept stack: heat fill, ice ring. The ring is an inset box-shadow and not a border,
-     because a border would change the box and the layout would jump at the threshold — and
-     12 world px is what it takes for the ice to still be there at fit zoom. */
+  #canworld.far .cn-card.kept.good > .cn-face{box-shadow:inset 0 0 0 10px var(--accent);}
+  /* a marked stack: heat fill, the mark's ring. The ring is an inset box-shadow and not a
+     border, because a border would change the box and the layout would jump at the
+     threshold — and 12 world px is what it takes for it to still be there at fit zoom.
+     Both marks: the ice ring with the accent one just inside it, so neither is lost. */
+  #canworld.far .cn-card.cn-stack.good > .cn-face{background:var(--cn-heat);
+    border-color:var(--accent); border-left-color:var(--accent);
+    box-shadow:inset 0 0 0 12px var(--accent);}
   #canworld.far .cn-card.cn-stack.kept > .cn-face{background:var(--cn-heat);
     border-color:var(--live); border-left-color:var(--live);
     box-shadow:inset 0 0 0 12px var(--live);}
+  #canworld.far .cn-card.cn-stack.kept.good > .cn-face{
+    box-shadow:inset 0 0 0 12px var(--live), inset 0 0 0 20px var(--accent);}
   #canworld.far .cn-face > *{visibility:hidden;}
   /* the clip fade is a pseudo, so visibility:hidden on children misses it: a panel-soft
      gradient painted over a heat brick would read as a smudge */
@@ -659,12 +747,19 @@
     font-size:64px; font-weight:600; color:var(--live); visibility:hidden;}
   #canworld.far .cn-farlabel{visibility:visible;}
 
-  /* kept only. A stack is not one branch: it earns its place if any member is kept. */
+  /* The filter, in three states: everything, then both marks, then keeps alone. A stack is
+     not one branch: it earns its place if ANY member passes, and the face then flips to a
+     member that does. */
+  #canworld.marked .cn-card:not(.cn-stack):not(.kept):not(.good){display:none;}
+  #canworld.marked .cn-card.cn-stack:not(.haskept):not(.hasgood){display:none;}
   #canworld.keptonly .cn-card:not(.cn-stack):not(.kept){display:none;}
   #canworld.keptonly .cn-card.cn-stack:not(.haskept){display:none;}
 
   @media (max-width:900px){
-    #canbar{padding:12px 60px 8px 0; gap:10px;}
+    /* same shape as the wide rule, and it has to restate the insets: this block overrides
+       the whole shorthand, and dropping them here is how the bar ended up under the clock */
+    #canbar{padding:calc(12px + env(safe-area-inset-top)) calc(60px + env(safe-area-inset-right))
+                    8px env(safe-area-inset-left); gap:10px;}
     #canbar .name{max-width:60vw;}
     #canlegend, #canmodels{display:none;}
     #canvaspane.reveal #canmodels{display:none;}
@@ -827,9 +922,11 @@
         <span id="canmodels" aria-label="which model wrote a card"></span>
         <span class="spring"></span>
         <span class="dim" id="cankeptby"></span>
-        <span class="dim" id="cankept">kept 0</span>
+        <!-- both marks, each in its own hue, because the glyph alone is what a card wears
+             and the bar is where the whole folder's score is read -->
+        <span class="dim" id="cankept"><span class="k"></span><span class="s"> · </span><span class="g"></span></span>
         <button class="chip" id="canreveal" type="button" aria-pressed="false" hidden title="say which model wrote each card">reveal</button>
-        <button class="chip" id="cankeptonly" type="button" aria-pressed="false">kept only</button>
+        <button class="chip" id="cankeptonly" type="button" title="show everything, both marks, or keeps alone">all</button>
         <button class="chip" id="canreload" type="button" title="read the folder again">reload</button>
         <button class="chip" id="canfit" type="button">fit</button>
         <span id="canzoom">100%</span>
@@ -1167,10 +1264,14 @@ function gateArtSave(){
   $('artsave').disabled = running || stopping || saving || savingArt;
 }
 
-function toggleKeep(n){
+// Both marks on this screen too, written the way this screen writes everything: into the
+// tree the page owns, then the whole sitting back to the server. `kept` is what an artifact
+// is built out of; `good` is read by nobody and is there so keep can go back to meaning one
+// thing. Neither touches the other.
+function toggleMark(n, mark){
   if(!sitting || stopping) return;
-  if(n.kept) delete n.kept;       // optional key: absent means not kept, like every old room
-  else n.kept = true;
+  if(n[mark]) delete n[mark];     // optional key: absent means not marked, like every old room
+  else n[mark] = true;
   renderFan();
   save();
 }
@@ -1849,7 +1950,13 @@ let canBox = {w: 1000, h: 1000};
 let canAnim = null;      // the fly-to tween, so a new one can cancel the last
 
 const canOn = () => !$('canvaspane').hidden;
-const canKeptOnly = () => canWorld.classList.contains('keptonly');
+// The filter, in three states, and the whole of it: '' shows everything, 'marked' shows both
+// marks, 'keptonly' shows keeps alone. Held as the class the world wears, so the CSS above is
+// the only place the rule is written down and the button is just what cycles it.
+const CAN_FILTERS = ['', 'marked', 'keptonly'];
+const CAN_FILTER_LABEL = {'': 'all', marked: '● + ★', keptonly: '★ only'};
+let canFilter = '';
+const canPasses = b => canFilter === '' || (b.kept || (canFilter === 'marked' && b.good));
 // look-alikes: the same first 40 characters, whitespace collapsed and casefolded
 const canKey = t => t.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 40);
 // how hot a cluster is, log-ish in its size — one place, and the legend prints the same bands
@@ -1928,31 +2035,53 @@ function canPathOf(room){
   return seen;
 }
 
-// ---- keep: the mark goes in the room, not in this browser -------------------------------
-// The same `kept: true` the choose screen leaves, written through /api/keep, so a harvest
-// made here is in the rooms and in git. Optimistic, because the alternative is a button that
-// waits on a disk write before it lights up; a refusal puts the card back and says so.
-async function canToggleKeep(room, node, after){
-  const want = !node.kept;
-  const paint = () => { after(); canPaintKept(); if(canKeptOnly()) canLayout(); };
-  if(want) node.kept = true; else delete node.kept;
+// ---- the two marks: they go in the room, not in this browser ----------------------------
+// `kept: true` and `good: true`, the same flags the choose screen leaves, written through
+// /api/mark, so a harvest made here is in the rooms and in git. Independent on purpose: one
+// says "this goes in the artifact", the other only "i liked reading it", and keep stopped
+// meaning the first when it was being spent on both. Optimistic, because the alternative is
+// a button that waits on a disk write before it lights up; a refusal puts the card back.
+const MARK_GLYPH = {kept: ['☆', '★'], good: ['○', '●']};
+
+async function canToggleMark(room, node, mark, after){
+  const want = !node[mark];
+  const paint = () => { after(); canPaintMarks(); if(canFilter) canLayout(); };
+  if(want) node[mark] = true; else delete node[mark];
   paint();
   let d;
-  try{ d = await postJSON('/api/keep', {room: room.name, node: node.id, kept: want}); }
+  try{ d = await postJSON('/api/mark', {room: room.name, node: node.id, mark, on: want}); }
   catch(e){ d = {error: e.message}; }
   if(d && d.error){
-    if(want) delete node.kept; else node.kept = true;
+    if(want) delete node[mark]; else node[mark] = true;
     paint();
-    sys('not kept: ' + d.error, true);
+    sys('not marked: ' + d.error, true);
   }
 }
 
-function canKeepBtn(room, get, after){
-  const b = mk(null, 'button', 'cn-keep', 'keep');
+// One glyph button. The label is the shape — ☆/★, ○/● — so the word it stands for lives in
+// the title and the aria-label, and a screen reader is not handed a lone star.
+function canMarkBtn(room, mark, get, after){
+  const b = mk(null, 'button', 'cn-mark cn-' + (mark === 'kept' ? 'keep' : 'good'), '');
   b.type = 'button';
+  b.title = mark === 'kept' ? 'keep' : 'good';
+  b.setAttribute('aria-label', b.title);
   b.dataset.nodrag = '1';          // a control is not the canvas: a press on it never pans
-  b.addEventListener('click', () => canToggleKeep(room, get(), after));
+  b.addEventListener('click', () => canToggleMark(room, get(), mark, after));
+  b.paint = node => {
+    const on = !!(node && node[mark]);
+    b.textContent = MARK_GLYPH[mark][on ? 1 : 0];
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+  };
   return b;
+}
+
+// Both marks for one card, in the order the bar counts them. `spring` on the first pushes
+// the pair to the right end of the head.
+function canMarkBtns(room, get, after){
+  const btns = ['kept', 'good'].map(m => canMarkBtn(room, m, get, after));
+  btns[0].classList.add('spring');
+  return btns;
 }
 
 // Which model wrote this card, when `reveal` is on: a tag in the head and a patterned edge
@@ -1985,8 +2114,13 @@ function canSingle(room, b){
   // A branch somebody fanned under. The mark is the join in words; the arrow to its own
   // frame below is the join in the picture.
   if(under) mk(head, 'span', 'cn-sub', '▾ ' + under);
-  const paint = () => card.classList.toggle('kept', !!b.kept);
-  head.appendChild(canKeepBtn(room, () => b, paint));
+  const btns = canMarkBtns(room, () => b, () => paint());
+  const paint = () => {
+    card.classList.toggle('kept', !!b.kept);
+    card.classList.toggle('good', !!b.good);
+    for(const x of btns) x.paint(b);
+  };
+  for(const x of btns) head.appendChild(x);
   if(canFurniture(b.text)) card.classList.add('furniture');
   paint();
   mark(b);
@@ -2013,14 +2147,21 @@ function canStackCard(room, group){
     b.dataset.nodrag = '1';
     b.setAttribute('aria-label', label);
   }
-  const keptn = mk(head, 'span', 'cn-keptn', '');
+  const marks = mk(head, 'span', 'cn-marks');
+  const marksK = mk(marks, 'span', 'k', '');
+  const marksG = mk(marks, 'span', 'g', '');
   const body = mk(face, 'div', 'body');
   const pre = mk(body, 'span', 'cn-pre');
   const tail = mk(body, 'span', 'cn-tail');
   mk(face, 'span', 'cn-clip', 'more');
-  const st = {card, group, temp, pos, pre, tail, keptn, mark, i: 0, heights: null,
-              prefix: canPrefix(group.map(g => g.text))};
-  head.appendChild(canKeepBtn(room, () => st.group[st.i], () => canSetMember(st, st.i)));
+  const st = {card, group, temp, pos, pre, tail, marksK, marksG, mark, i: 0, heights: null,
+              btns: null, prefix: canPrefix(group.map(g => g.text))};
+  // The marks apply to the member on TOP, not to the cluster: a stack is a way of reading
+  // thirty near-identical branches, never a way of marking them all at once.
+  st.btns = canMarkBtns(room, () => st.group[st.i], () => canSetMember(st, st.i));
+  // the counts span already carries the spring here; two auto margins would share the gap
+  st.btns[0].classList.remove('spring');
+  for(const x of st.btns) head.appendChild(x);
   prev.addEventListener('click', () => canFlip(st, -1));
   next.addEventListener('click', () => canFlip(st, 1));
   card.addEventListener('pointerenter', () => { canHoverStack = st; });
@@ -2043,20 +2184,25 @@ function canSetMember(st, i){
   st.mark(b);
   st.card.classList.toggle('furniture', canFurniture(b.text));
   st.card.classList.toggle('kept', !!b.kept);
+  st.card.classList.toggle('good', !!b.good);
+  for(const x of st.btns) x.paint(b);
   // Clipping is read off the measured natural height and never off scrollHeight: it has to
   // stay right while the card is open, where the box is auto and nothing overflows.
   st.card.classList.toggle('clips', !!st.heights && st.heights[i] > CN.CARD_H);
-  const n = st.group.reduce((a, g) => a + (g.kept ? 1 : 0), 0);
-  st.keptn.textContent = n ? 'kept ' + n : '';
-  st.card.classList.toggle('haskept', n > 0);
+  const k = st.group.reduce((a, g) => a + (g.kept ? 1 : 0), 0);
+  const g = st.group.reduce((a, x) => a + (x.good ? 1 : 0), 0);
+  st.marksK.textContent = k ? '★ ' + k : '';
+  st.marksG.textContent = g ? '● ' + g : '';
+  st.card.classList.toggle('haskept', k > 0);
+  st.card.classList.toggle('hasgood', g > 0);
 }
 
-// Wrap around; with `kept only` on, walk only the members that earned the card its place.
+// Wrap around; with the filter on, walk only the members that earned the card its place.
 function canFlip(st, dir){
-  const n = st.group.length, only = canKeptOnly();
+  const n = st.group.length;
   for(let step = 1; step <= n; step++){
     const j = ((st.i + dir * step) % n + n) % n;
-    if(!only || st.group[j].kept){ canSetMember(st, j); return; }
+    if(canPasses(st.group[j])){ canSetMember(st, j); return; }
   }
 }
 
@@ -2224,27 +2370,34 @@ function canBuild(d){
     mk(row, 'i');
     mk(row, 'span', '', canShortModel(m)).title = m;
   });
-  canPaintKept();
+  canPaintMarks();
 }
 
-// `kept N` across the whole folder, and — only under reveal — which model those keeps came
+// `★ N · ● M` across the whole folder, and — only under reveal — which model each mark came
 // out of. Recomputed rather than counted up and down: one wrong increment and the number
 // lies for the rest of the session.
-function canPaintKept(){
-  let n = 0;
-  const by = new Map();
+function canPaintMarks(){
+  const n = {kept: 0, good: 0};
+  const by = {kept: new Map(), good: new Map()};
   for(const room of canRooms){
     for(const nid in room.nodes){
       const node = room.nodes[nid];
-      if(!node.kept) continue;
-      n++;
       const m = node.model ? canShortModel(node.model) : 'not recorded';
-      by.set(m, (by.get(m) || 0) + 1);
+      for(const mark of ['kept', 'good']){
+        if(!node[mark]) continue;
+        n[mark]++;
+        by[mark].set(m, (by[mark].get(m) || 0) + 1);
+      }
     }
   }
-  $('cankept').textContent = 'kept ' + n;
-  $('cankeptby').textContent = by.size
-    ? 'kept by model: ' + [...by].map(([m, c]) => m + ' ' + c).join(' · ') : '';
+  const box = $('cankept');
+  box.querySelector('.k').textContent = '★ ' + n.kept;
+  box.querySelector('.g').textContent = '● ' + n.good;
+  const line = mark => [...by[mark]].map(([m, c]) => m + ' ' + c).join(' · ');
+  const parts = [];
+  if(by.kept.size) parts.push('★ by model: ' + line('kept'));
+  if(by.good.size) parts.push('● by model: ' + line('good'));
+  $('cankeptby').textContent = parts.join(' · ');
 }
 
 // ---- one card height for the whole canvas ------------------------------------------------
@@ -2620,13 +2773,13 @@ $('canback').addEventListener('click', showDialogue);
 $('canfit').addEventListener('click', () => canFit(true));
 $('canreload').addEventListener('click', () => canFolder && loadCanvas(canFolder, true));
 $('cankeptonly').addEventListener('click', ev => {
-  const on = !canKeptOnly();
-  canWorld.classList.toggle('keptonly', on);
-  ev.currentTarget.setAttribute('aria-pressed', String(on));
-  // A stack that survives the switch must be showing one of the members that earned it.
-  if(on) for(const s of canStacks){
-    if(!s.group[s.i].kept){
-      const j = s.group.findIndex(g => g.kept);
+  canFilter = CAN_FILTERS[(CAN_FILTERS.indexOf(canFilter) + 1) % CAN_FILTERS.length];
+  for(const f of CAN_FILTERS) if(f) canWorld.classList.toggle(f, f === canFilter);
+  ev.currentTarget.textContent = CAN_FILTER_LABEL[canFilter];
+  // A stack that survives the filter must be showing one of the members that earned it.
+  if(canFilter) for(const s of canStacks){
+    if(!canPasses(s.group[s.i])){
+      const j = s.group.findIndex(canPasses);
       if(j >= 0) canSetMember(s, j);
     }
   }
@@ -3132,17 +3285,24 @@ function renderFan(){
       s.title = 'the model wrote this ' + same + ' times in this fan';
       foot.appendChild(s);
     }
-    // Keep: a mark on the node, saved with the room, that says "this one goes in the
-    // artifact". Not a pick — `stop` on the button, or keeping would also choose the card.
+    // The two marks on the node, saved with the room: ★ keep says "this one goes in the
+    // artifact", ● good only says he liked reading it. Neither is a pick — `stop` on the
+    // button, or marking would also choose the card. Glyphs and not words, the same pair
+    // the canvas wears, so one gesture reads the same on both screens.
     if(!foot){
       foot = document.createElement('div');
       foot.className = 'foot';
     }
-    const keep = ghostBtn(n.kept ? 'Kept' : 'Keep', () => toggleKeep(n), true);
-    keep.classList.add('keep');
-    keep.classList.toggle('on', !!n.kept);
-    keep.setAttribute('aria-pressed', String(!!n.kept));
-    foot.appendChild(keep);
+    for(const mark of ['kept', 'good']){
+      const on = !!n[mark];
+      const b = ghostBtn(MARK_GLYPH[mark][on ? 1 : 0], () => toggleMark(n, mark), true);
+      b.classList.add('mark', mark === 'kept' ? 'keepm' : 'goodm');
+      b.classList.toggle('on', on);
+      b.title = mark === 'kept' ? 'keep' : 'good';
+      b.setAttribute('aria-label', b.title);
+      b.setAttribute('aria-pressed', String(on));
+      foot.appendChild(b);
+    }
     el.appendChild(foot);
     el.addEventListener('click', () => {
       // Selecting a passage to copy it is not choosing the answer.

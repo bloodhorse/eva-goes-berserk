@@ -35,14 +35,17 @@ two rooms called `smoke-01` can both be thrown away.
 Two routes exist only for the canvas. `GET /api/folder?name=<folder>` hands over every room
 under that folder, sub-folders included, sorted by name — each with its `root`, `current`,
 `berserk` flag and its nodes cut to `parent`, `kind`, `text` and, where they are there,
-`posed`, `kept`, `temperature` (`meta.params.temperature`, falling back to `meta.temperature`)
+`posed`, `kept`, `good`, `temperature` (`meta.params.temperature`, falling back to `meta.temperature`)
 and `model` (`meta.model`, either llama's `/props` object or a bare file name). `probs` and the
 rest of meta are dropped **on the server**: a folder is thirty rooms of thirty branches and
 one fan's probabilities are 40 KB, and the cost here is the wire, not the render. `name_ok`
-as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. `POST /api/keep
-{"room", "node", "kept"}` re-reads that room, sets or deletes `kept` on one **model** node and
-writes it with `write_sitting` — the same flag the choose screen's keep leaves, so a harvest
-made on the canvas is in the rooms and in git. Read and write sit next to each other and there
+as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. `POST /api/mark
+{"room", "node", "mark": "kept"|"good", "on"}` re-reads that room, sets or deletes that flag on
+one **model** node and writes it with `write_sitting` — the same flags the choose screen leaves,
+so a harvest made on the canvas is in the rooms and in git. Two marks, independent: `kept` is
+what an artifact is built out of, `good` only says he liked reading it, and nothing downstream —
+`build_artifact` above all — has heard of `good`. `POST /api/keep {"room","node","kept"}` is that
+route spelled the old way and is one line, never a second copy of the write. Read and write sit next to each other and there
 is no lock: a census appending to that room in the same instant loses a branch or loses the
 flag, which is the dry-run law and not a bug to fix.
 
@@ -81,9 +84,11 @@ to add — blank name gets random hex, a taken name is refused — a note opens 
 edit), **artifacts** (a list; each opens read-only). The composer is greyed with no room open.
 
 **Artifacts** are the opposite of rooms: a room is a dry run, an artifact is a **walk** frozen —
-the document it started from and every fork along the way. On the choose screen every card has
-**keep** (an optional `kept: true` on the node, saved with the room; eva ignores it and keeps it),
-and that is the whole gesture: he keeps as he goes, picks, walks on, keeps more at the next fork.
+the document it started from and every fork along the way. On the choose screen every card carries
+the same two glyph marks the canvas cards do — `☆`/`★` **keep** (an optional `kept: true` on the
+node, saved with the room; eva ignores it and keeps it) and `○`/`●` **good**, which only says he
+liked reading it and which no artifact ever sees — and that is the whole gesture: he keeps as he
+goes, picks, walks on, keeps more at the next fork.
 **Save as artifact** posts the room, the fan he has open and the ids kept in it; the server walks
 the path root→`current` and builds the file itself from the room *on disk*:
 `shelf/artifacts/<hex>.json` with the prompt (root→the first fan point, verbatim), the room's turn
@@ -166,12 +171,19 @@ casefolded) collapse into one stacked card, `‹ ›` or the arrow keys flipping
 the pointer, the common prefix dim and each member's own tail in full ink; the **cold heat
 ramp** (`--heat-1…6`, slate → dusky magenta, its legend in the bar) says how big a cluster is
 and no `×N` is written anywhere. Zoomed out — below `textK()`, which reads the viewport — the
-cards drop their ink and become bricks coloured by that ramp; **kept is ice** in both modes.
-**keep** writes through `/api/keep`, optimistically, and reverts with a notice if the server
-refuses. **reveal** appears only when a folder holds two or more models, is off by default and
+cards drop their ink and become bricks coloured by that ramp.
+**Two marks** sit in every card's head as glyphs — `☆`/`★` **keep** in ice, `○`/`●` **good** in
+the accent — written through `/api/mark`, optimistically, reverting with a notice if the server
+refuses; `good` exists because keep was being spent on everything merely liked while a blind
+three-model fan was read, and it means "i liked this, i wouldn't keep it". Up close the mark is
+the card's border (kept ice, good accent, both = ice with an accent inner edge); zoomed out, where
+there is no glyph left, it is the fill (kept ice, good accent at 45%) and a marked stack keeps its
+heat and takes a ring. A stack counts its members' marks in its head and marks the one on top.
+The bar reads `★ N · ● M`, and the filter beside it cycles three states: `all` → `● + ★` →
+`★ only`. **reveal** appears only when a folder holds two or more models, is off by default and
 is never remembered: it puts a model tag and a patterned top edge (solid / dashed / dotted —
 pattern, not hue, because the ramp owns every cold colour) on each card, a legend in the bar
-and a `kept by model:` line. Drag to pan, wheel or pinch to zoom about the pointer, `f`/`fit`,
+and a `★ by model: … · ● by model: …` line. Drag to pan, wheel or pinch to zoom about the pointer, `f`/`fit`,
 a seed heading flies to its block, `esc` closes an opened card or fits; nothing on the surface
 is selectable and the cursor stays the ordinary arrow. `open room` goes to `#room=<path>` —
 the page's third address — so the browser's own back button comes home to `#canvas=` with the
@@ -188,6 +200,16 @@ their own row below each line, touch shows hover-only controls, fields are 16px 
 zoom, return types a newline on touch and the button sends, notices sit at the top. How to check
 a phone layout from the mac — the iframe-and-crop headless rig and every trap in it — lives in
 **`front/mobile/`**; read its `CLAUDE.md` before touching the page's small-screen CSS.
+
+Added to the iPhone's home screen it **installs as a standalone app** — its own icon, no address
+bar, no toolbar sliding in and out as the dialogue scrolls. What makes that work: the
+`apple-mobile-web-app-*` tags in the head, `/manifest.webmanifest` (`display: standalone`, scope
+`/`) and `/icon-180|192|512.png`, all served by `loom.py` out of `front/icons/` — the mark is one
+stem and three fanning strokes, written by `front/icons/make.py` (stdlib, zlib and struct, run once
+and the PNGs committed) — plus `viewport-fit=cover` and `env(safe-area-inset-*)` on every fixed
+edge, since `black-translucent` draws the page under the clock and the home bar. **iOS reads those
+tags once, when the icon is added**, so an icon on the home screen from before this shipped stays a
+plain Safari bookmark: delete it and add it again.
 
 ## The terminal
 
@@ -227,7 +249,7 @@ file directly — don't have the room open in the page while one runs.
 ## Tests
 
 `tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Canvas` and
-`Keep` for the two canvas routes, and `Folders`:
+`Keep` and `Mark` for the two canvas routes and the two branch marks, and `Folders`:
 the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
 folder with its collisions and its pruning, and a walked room answering to its bare name after
 it moves), `evatest.py`,

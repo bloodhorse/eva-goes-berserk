@@ -21,6 +21,7 @@ import math
 import os
 import shutil
 import socket
+import struct
 import subprocess
 import sys
 import tempfile
@@ -312,6 +313,59 @@ class Plumbing(unittest.TestCase):
         st, d = call("/api/complete", {"prompt": "", "params": PARAMS})
         self.assertEqual(st, 200, d)
         self.assertTrue(d["text"])
+
+
+def raw(path: str):
+    """(status, headers, bytes) — for the routes whose body is not text. `call` decodes
+    utf-8 and a PNG is not utf-8."""
+    try:
+        with urllib.request.urlopen(BASE + path, timeout=10) as r:
+            return r.status, r.headers, r.read()
+    except urllib.error.HTTPError as e:
+        return e.code, e.headers, e.read()
+
+
+class HomeScreen(unittest.TestCase):
+    """The manifest and the icons: what turns the page into an app on bekh's phone. Held
+    here because the tags in loom.html are read by iOS exactly once, when the icon is
+    added, and a manifest that 404s that one time fails silently and forever."""
+
+    def test_manifest(self):
+        st, hdr, body = raw("/manifest.webmanifest")
+        self.assertEqual(st, 200)
+        self.assertIn("application/manifest+json", hdr.get("Content-Type", ""))
+        d = json.loads(body)
+        self.assertEqual(d["display"], "standalone")      # the whole reason it exists
+        self.assertEqual((d["start_url"], d["scope"]), ("/", "/"))
+        self.assertEqual(d["short_name"], "eva")
+        self.assertEqual(d["background_color"], "#232323")
+        self.assertEqual({i["sizes"] for i in d["icons"]}, {"180x180", "192x192", "512x512"})
+        # the manifest itself must not be cached: a re-add has to see today's copy
+        self.assertEqual(hdr.get("Cache-Control"), "no-store")
+
+    def test_icons(self):
+        for n in (180, 192, 512):
+            st, hdr, body = raw(f"/icon-{n}.png")
+            self.assertEqual(st, 200, n)
+            self.assertEqual(hdr.get("Content-Type"), "image/png")
+            self.assertTrue(body.startswith(b"\x89PNG\r\n\x1a\n"), n)
+            # the size is in the IHDR, bytes 16..24 — proof the file is the icon it claims
+            self.assertEqual(struct.unpack(">II", body[16:24]), (n, n))
+            self.assertIn("max-age", hdr.get("Cache-Control", ""))
+
+    def test_a_size_we_do_not_have(self):
+        self.assertEqual(raw("/icon-181.png")[0], 404)
+        self.assertEqual(raw("/icon-.png")[0], 404)
+        self.assertEqual(raw("/icon-../../server/loom.png")[0], 404)
+
+    def test_the_page_asks_for_them(self):
+        body = call("/")[1]
+        for tag in ('name="apple-mobile-web-app-capable" content="yes"',
+                    'content="black-translucent"',
+                    'rel="manifest" href="/manifest.webmanifest"',
+                    'rel="apple-touch-icon" href="/icon-180.png"',
+                    "viewport-fit=cover"):
+            self.assertIn(tag, body, tag)
 
 
 def note_get(name: str):
@@ -786,6 +840,80 @@ class Keep(unittest.TestCase):
             self.assertIn("error", d)
         # not one refusal marked anything
         self.assertNotIn("kept", self.read(room)["nodes"][b["id"]])
+
+
+class Mark(unittest.TestCase):
+    """The same write, addressed by mark name. `good` is the second one: "i liked reading
+    this and i would not keep it" — the thing keep was being spent on while a blind fan was
+    being read. The two are independent everywhere, and nothing downstream reads `good`.
+
+    Keep's two helpers, borrowed rather than inherited: subclassing would re-run Keep's own
+    tests under this name, and the alias is already tested once above."""
+
+    read = Keep.read
+    branch = Keep.branch
+
+    def test_good_lands_and_comes_off(self):
+        t, b, here = self.branch("good")
+        st, d = call("/api/mark", {"room": t.d["name"], "node": b["id"],
+                                   "mark": "good", "on": True})
+        self.assertEqual(st, 200, d)
+        self.assertEqual((d["mark"], d["on"], d["good"]), ("good", True, True))
+        self.assertIs(self.read(t.d["name"])["nodes"][b["id"]]["good"], True)
+        # and the canvas gets it in the folder payload, like kept
+        st, d = call("/api/folder?name=" + here)
+        self.assertIs(d["rooms"][0]["nodes"][b["id"]]["good"], True)
+        st, d = call("/api/mark", {"room": t.d["name"], "node": b["id"],
+                                   "mark": "good", "on": False})
+        self.assertEqual(st, 200, d)
+        self.assertNotIn("good", self.read(t.d["name"])["nodes"][b["id"]])
+
+    def test_the_two_are_independent(self):
+        t, b, here = self.branch("both")
+        room, nid = t.d["name"], b["id"]
+        for mark in ("kept", "good"):
+            self.assertEqual(call("/api/mark", {"room": room, "node": nid,
+                                                "mark": mark, "on": True})[0], 200)
+        node = self.read(room)["nodes"][nid]
+        self.assertEqual((node.get("kept"), node.get("good")), (True, True))
+        # taking one off leaves the other exactly where it was
+        self.assertEqual(call("/api/mark", {"room": room, "node": nid,
+                                            "mark": "kept", "on": False})[0], 200)
+        node = self.read(room)["nodes"][nid]
+        self.assertNotIn("kept", node)
+        self.assertIs(node["good"], True)
+
+    def test_a_mark_we_do_not_have(self):
+        t, b, here = self.branch("nomark")
+        room = t.d["name"]
+        for body in ({"room": room, "node": b["id"], "mark": "loved", "on": True},
+                     {"room": room, "node": b["id"], "mark": "", "on": True},
+                     {"room": room, "node": b["id"], "on": True},
+                     {"room": room, "node": b["id"], "mark": "good", "on": "yes"},
+                     {"room": room, "node": b["id"], "mark": "good"}):
+            st, d = call("/api/mark", body)
+            self.assertEqual(st, 400, (body, d))
+        node = self.read(room)["nodes"][b["id"]]            # nothing was marked
+        self.assertNotIn("good", node)
+        self.assertNotIn("kept", node)
+
+    def test_the_refusals_are_the_same_by_the_new_name(self):
+        t, b, here = self.branch("markno")
+        h = t.human("you up")
+        self.assertEqual(t.save()[0], 200)
+        room = t.d["name"]
+        for body, code in (
+            ({"room": "ghost-" + uuid.uuid4().hex[:6], "node": b["id"]}, 404),
+            ({"room": room, "node": "nosuchnode"}, 404),
+            ({"room": room, "node": t.d["root"]}, 400),
+            ({"room": room, "node": h["id"]}, 400),
+            ({"room": "../escape", "node": b["id"]}, 400),
+            ({"room": room, "node": ""}, 400),
+        ):
+            st, d = call("/api/mark", dict(body, mark="good", on=True))
+            self.assertEqual(st, code, (body, d))
+            self.assertIn("error", d)
+        self.assertNotIn("good", self.read(room)["nodes"][b["id"]])
 
 
 class Branching(unittest.TestCase):
