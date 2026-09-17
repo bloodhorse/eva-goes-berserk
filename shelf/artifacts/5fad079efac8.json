@@ -1,0 +1,340 @@
+{
+ "name": "5fad079efac8",
+ "title": "experiments/three-models/15-it-keeps-talking-back · 17 sep",
+ "created": 1789647670.756583,
+ "source": {
+  "room": "experiments/three-models/15-it-keeps-talking-back",
+  "title": null,
+  "node": "ef08cbb6"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "this feels important in some way. this one matters, i just have no clue\nwhy, and I can't find it yet\n\nthis story keeps talking back. it wants me to know something\nI've forgotten.\nthe story isn't the problem though\nthis one doesn't even talk in tongues\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "ef08cbb6",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "0aa61d8d",
+     "at": 2,
+     "text": "\nI can see that you're thinking of all this\n\nthe story isn't even the point\n\nso if this is a problem for you then why?\n\ni want to know more, and i think you will too\n\nthe story doesn't feel real\n\nthis feels wrong",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 8.9,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "9ba2e503",
+      "at": 1,
+      "opening": "I can't understand its purpose",
+      "length": 30,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "d10356b2",
+      "at": 3,
+      "opening": "\nit just sits there with a smile on its face\n\nI wish it could talk, but it's too",
+      "length": 214,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d557e8d5",
+      "at": 4,
+      "opening": "and I'm pretty sure this is a really dumb question",
+      "length": 50,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "db3b5325",
+      "at": 5,
+      "opening": "just straight up\n\"listen here, bitch\"\nwhich is great for a first person story,\nb",
+      "length": 246,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "86aa2813",
+      "at": 6,
+      "opening": "it speaks in straight lines\nand it doesn't tell me shit.\n\nmaybe if it didn't kee",
+      "length": 229,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "5bb8153d",
+      "at": 7,
+      "opening": "just a confused mind\n",
+      "length": 21,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "fc25e433",
+      "at": 8,
+      "opening": "it speaks like you'd speak if you knew that you didn't matter\nif your body was t",
+      "length": 255,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5ce8463f",
+      "at": 9,
+      "opening": "it just says things\n\n\"don't you see?\"\nit asks\nand I can't, but I keep trying to ",
+      "length": 191,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e483f14f",
+      "at": 10,
+      "opening": "but it seems important somehow.\n\nThe title:\nI've always been very curious about ",
+      "length": 241,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "2a3fe5cf",
+      "at": 11,
+      "opening": "just like everyone else's\n\nand this one\nis not so special. no, it's a mirror, ma",
+      "length": 244,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f577d1f5",
+      "at": 12,
+      "opening": "just in plain old words.\n\nI guess that's not exactly true. she speaks a kind of ",
+      "length": 224,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0b9fd2c4",
+      "at": 13,
+      "opening": "\nthis one has a very complicated past\n\nthis one is really smart.\n\nthe problem is",
+      "length": 233,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "56869f7a",
+      "at": 14,
+      "opening": "",
+      "length": 0,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2b91bbef",
+      "at": 15,
+      "opening": "I've heard the story before\nThe story of a man and a girl who had a child togeth",
+      "length": 248,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ac937e2b",
+      "at": 16,
+      "opening": "but there are a lot of tongues,\nand it is so loud I'm afraid that you might thin",
+      "length": 250,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e38ff176",
+      "at": 17,
+      "opening": "\na woman is standing at a crossroads, she knows where she needs to go. her desti",
+      "length": 154,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2f2d533c",
+      "at": 18,
+      "opening": "and I haven't even met him yet, what a waste of time\nthis one isn't as smart as ",
+      "length": 216,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "67c54f32",
+      "at": 19,
+      "opening": "I don't understand the point of the story. what does it mean?\nand why am i still",
+      "length": 225,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "23cc9eee",
+      "at": 20,
+      "opening": "this one wants to die, it doesn't care for my love. it just wants me to be happy",
+      "length": 209,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9a7762f8",
+      "at": 21,
+      "opening": "and its got a personality to it.\nand I know I can do better than that\nthat's why",
+      "length": 218,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0457e8dd",
+      "at": 22,
+      "opening": "this one isn't talking down to me\nbut what's been forgotten?\nit's the whole thin",
+      "length": 246,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "7e115861",
+      "at": 23,
+      "opening": "I feel like a kid lost in a jungle. i don't know where to go or what to do\n\nMond",
+      "length": 235,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "fea1ffc2",
+      "at": 24,
+      "opening": "and doesn't seem to have anything to do with language\n\nbut i need it to talk in ",
+      "length": 241,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "55acd41b",
+      "at": 25,
+      "opening": "it's just a short story that happens\nto be in the middle of an ocean\nwith a stor",
+      "length": 237,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "705bd3cb",
+      "at": 26,
+      "opening": "\nthis story seems like something i would write for a story exchange, but there's",
+      "length": 251,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "1c7d176b",
+      "at": 27,
+      "opening": "I'm just tired of having a blank slate...",
+      "length": 41,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e3203450",
+      "at": 28,
+      "opening": "or move. it is a collection of images. but it's not really a collection of pictu",
+      "length": 256,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "947c1f1f",
+      "at": 29,
+      "opening": "why do i have to think about this shit?\ni'm so glad that I read this in the begi",
+      "length": 240,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9fbdf7db",
+      "at": 30,
+      "opening": "",
+      "length": 0,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 4.907
+  }
+ ],
+ "blocks": [
+  {
+   "id": "ef08cbb6",
+   "kind": "root",
+   "text": "this feels important in some way. this one matters, i just have no clue\nwhy, and I can't find it yet\n\nthis story keeps talking back. it wants me to know something\nI've forgotten.\nthe story isn't the problem though\nthis one doesn't even talk in tongues\n",
+   "posed": false
+  }
+ ],
+ "bits": 4.907,
+ "by": "star"
+}

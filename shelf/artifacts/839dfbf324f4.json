@@ -1,0 +1,400 @@
+{
+ "name": "839dfbf324f4",
+ "title": "experiments/three-models/18-what-is-that-hum · 17 sep",
+ "created": 1789650557.066869,
+ "source": {
+  "room": "experiments/three-models/18-what-is-that-hum",
+  "title": null,
+  "node": "6b132623"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "6b132623",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "52487011",
+     "at": 1,
+     "text": "It’s something inside me that calls. It is not mine alone.\n\nSo why do I call out to you? Because I have a question\nAbout your power to transform our lives.",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "eos",
+      "stopping_word": "",
+      "tokens_predicted": 41,
+      "tps": 31,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "pythia"
+     }
+    },
+    {
+     "id": "442ab836",
+     "at": 6,
+     "text": "it’s my blood. It’s the blood of all who’ve ever\n\nmade a phone call or an answer. The phone line is\nthe one place we’ve always had to go, it’s where\n\nthe words we were taught to use to mean the world\nhave always come from, and",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "c7e66000",
+     "at": 14,
+     "text": "\nit comes from a distant source.\n\nMy voice, as I listen, begins to tremble.\n\nI'm no longer able to see\n\nand I know I'll die\n\nwhen the world is over\n\nand there are no more lights.\n\n\nSo I made",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 47.8,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "696f70ae",
+      "at": 2,
+      "opening": "\nI am not in the house. The phone rings, I turn to look at it.\n\nIt's another cal",
+      "length": 193,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "cdfb8482",
+      "at": 3,
+      "opening": "\nBut I can hear it too, in my head.",
+      "length": 35,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5f7f68dd",
+      "at": 4,
+      "opening": "\nit is the signal that is being sent to me by the whole of the world.\n\nIt is all",
+      "length": 210,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ba09712c",
+      "at": 5,
+      "opening": "the buzz is not a sign of life,\n\nthe dial tone is not for you\nthe caller, I’m th",
+      "length": 202,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "ac73a847",
+      "at": 7,
+      "opening": "\nnot mine at all,\n\na distant sound, an echo of another place, a world gone\n\nby. ",
+      "length": 199,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "4aec75fc",
+      "at": 8,
+      "opening": "but I could say the humming is my own.\nIt’s just not.\n\nI don’t know who is hummi",
+      "length": 202,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "926776f5",
+      "at": 9,
+      "opening": "\nIt is a hum for someone else. I must get out of the hum,\n\nBut how can I? How do",
+      "length": 185,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "457dc0b0",
+      "at": 10,
+      "opening": "but yours, and I am here to wake it up,\n\nthe sleeping beast of a house\nthat need",
+      "length": 246,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7589f639",
+      "at": 11,
+      "opening": "it’s my mother, but I don’t recognize it as hers—\nor, at least, her humming as i",
+      "length": 211,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "94dae2d6",
+      "at": 12,
+      "opening": "but from the phone inside.\n\nI listen, I call, I hang up.\nAnd again, and again, a",
+      "length": 217,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6e671468",
+      "at": 13,
+      "opening": "\nnot a thing that I hear in my mind. It has to be called.\n\nI think back on the p",
+      "length": 218,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "43450bf2",
+      "at": 15,
+      "opening": "But the echo of the song within me.\nIt is a song to be sung, it will grow,\nAnd i",
+      "length": 198,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "17bba958",
+      "at": 16,
+      "opening": "but the voice inside of me calling out,\ntelling me to get up, go somewhere and d",
+      "length": 258,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6184f551",
+      "at": 17,
+      "opening": "It’s a call from an unacknowledged past.\n\n– Robert Frost, \"A Talk with Water\"\n\nI",
+      "length": 217,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e0f959ca",
+      "at": 18,
+      "opening": "It comes from the very essence of the universe itself,\nIn all its infinite possi",
+      "length": 252,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c03285a5",
+      "at": 19,
+      "opening": "but the call that has come to me, from beyond.\n\n– Richard Rohr\n\nIt’s amazing to ",
+      "length": 260,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "6db91227",
+      "at": 20,
+      "opening": "\nnot yet, but I hear it.\n\nWhat's this, an accident?\n\nThis isn't your fault. You ",
+      "length": 194,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "4277353b",
+      "at": 21,
+      "opening": "\nit comes from outside,\n\nit's the hum of a machine,\n\nof a phone, of an alarm clo",
+      "length": 186,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "777eabe1",
+      "at": 22,
+      "opening": "But it's the sound of the wind. It sounds like a song.\nIt's the sound of freedom",
+      "length": 220,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "5886563f",
+      "at": 23,
+      "opening": "But it’s the hum of the city where you live. The city where\nWe were born. And it",
+      "length": 223,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f4c3ec5b",
+      "at": 24,
+      "opening": "the way my body will not move the same, my breath will not flow\n\nfrom nose to li",
+      "length": 232,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "77a994d1",
+      "at": 25,
+      "opening": "\nit’s from the earth itself, calling me to awaken.",
+      "length": 50,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "cdcae0f2",
+      "at": 26,
+      "opening": "it’s yours. You’ve got the connection but you won’t say anything.\n\nThe hum is yo",
+      "length": 235,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "c1396fac",
+      "at": 27,
+      "opening": "\nand if it isn't mine it isn't a sound. It isn't the sound\n\nof your thoughts. I'",
+      "length": 207,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "eef7a8ae",
+      "at": 28,
+      "opening": "\nbut from the great and quiet ocean that is my body.\n\nWhat does it mean, anyway?",
+      "length": 208,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "b19f7b7c",
+      "at": 29,
+      "opening": "\nit’s the echo of my mind’s great yearning.\n\nWhen the phone rings, I’m ready.\n\nI",
+      "length": 189,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "701375ef",
+      "at": 30,
+      "opening": "it’s my heart. You see, I’ve been waiting\nfor someone to call me back for years\n",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 11.987
+  }
+ ],
+ "blocks": [
+  {
+   "id": "6b132623",
+   "kind": "root",
+   "text": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+   "posed": false
+  }
+ ],
+ "bits": 11.987,
+ "by": "star"
+}

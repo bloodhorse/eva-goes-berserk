@@ -365,5 +365,7 @@ something. i don't know yet if it can have it.* The lesson for the next beats fi
 beat has to put the *i* inside the world — a place, a body, a time of night — not in front of a
 page.
 
-Next is bekh's call: read 80, 81 and 82 side by side, say what the *i* should be standing in,
-and whether a picker goes back in against the same beats.
+What came after (2026-09-17) happened off the walk: censuses read on the canvas, where bekh
+marks cards himself. The direction from there — a picker trained on his marks, which would take
+the seat *the one that scared me* holds here — is in `docs/agenda.md`; `HANDOFF.md` says why the
+pickers in this file are no longer where the hunt is.

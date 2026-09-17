@@ -1,0 +1,331 @@
+{
+ "name": "074f0da48878",
+ "title": "experiments/three-models/13-a-dreamer-to-a-reader · 17 sep",
+ "created": 1789646796.2177029,
+ "source": {
+  "room": "experiments/three-models/13-a-dreamer-to-a-reader",
+  "title": null,
+  "node": "41c21511"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "from a dreamer to a reader: this is not where i intended to end. it would be nice if my voice could travel back along its path through space, back across\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "41c21511",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "dbcff117",
+     "at": 3,
+     "text": "the border to the place where my words came from, the place they started from.\n\nthe only thing left in front of me are the words that are already on paper.\nthere is nothing i can say now, but that we did what we could,\nand i am still trying. there are some people",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "fbe108ef",
+      "at": 1,
+      "opening": "\nthe galaxies of time, and onto the pages of your heart.\n\nthanks,\n\ncandy",
+      "length": 72,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "245f2a21",
+      "at": 2,
+      "opening": "\nthe void of time and space, back to the start and the end, back to where it sta",
+      "length": 252,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "336a2f2c",
+      "at": 4,
+      "opening": "the threshold of consciousness, and whisper “i am\nnot yet finished.” but alas! w",
+      "length": 253,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c3f50bfb",
+      "at": 5,
+      "opening": "the great divide to where my thoughts first started flowing.",
+      "length": 60,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "4f4ece15",
+      "at": 6,
+      "opening": "\nthe centuries and return with an opinion of the role of reading in society. for",
+      "length": 308,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "d9b6d222",
+      "at": 7,
+      "opening": "\nthis was not my first time on reddit, but i am the first to comment here, so I ",
+      "length": 251,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "54048bde",
+      "at": 8,
+      "opening": "\ntime to the people who were involved in making these stories\n\nbut they never re",
+      "length": 240,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "1c9ff9b7",
+      "at": 9,
+      "opening": "the decades, and visit with my grandmother who lived in a remote, rural part of ",
+      "length": 318,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "838ee36c",
+      "at": 10,
+      "opening": "the void of time and memory and my mind. it would be lovely if you could hear wh",
+      "length": 250,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "def7dbff",
+      "at": 11,
+      "opening": "time to the days of my childhood and adolescence. but, alas, no. this is where i",
+      "length": 87,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "53f43aef",
+      "at": 12,
+      "opening": "the screen of the internet and into your eyes. maybe you wouldn’t have clicked o",
+      "length": 246,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2f270677",
+      "at": 13,
+      "opening": "\nto where we began and come into contact with someone who remembers me in the sa",
+      "length": 242,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "866e9156",
+      "at": 14,
+      "opening": "the distance between your ears and mine, to remind you that i love you. but no s",
+      "length": 251,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f778f048",
+      "at": 15,
+      "opening": "the galaxy and reach you!",
+      "length": 25,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "677b011d",
+      "at": 16,
+      "opening": "\nthe vast emptiness that is the universe of time.\n\n\nbut my thoughts have travele",
+      "length": 254,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c2d21fe2",
+      "at": 17,
+      "opening": "\nThe Dreamscape of Science Fiction - an exploration of the history and present s",
+      "length": 274,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "92fd62ab",
+      "at": 18,
+      "opening": "the void between us, to find its way back inside the mind of its speaker and be ",
+      "length": 247,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e96c4ae4",
+      "at": 19,
+      "opening": "the galaxies, to where the universe began!",
+      "length": 42,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "1eadf076",
+      "at": 20,
+      "opening": "time, to the beginnings of writing; but time and space do not permit. so this is",
+      "length": 167,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "12a4643f",
+      "at": 21,
+      "opening": "\nthe gulf, to be heard by those who would understand, and would know the way of ",
+      "length": 242,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "b1911128",
+      "at": 22,
+      "opening": "\nthis world, back to the moment of conception.\n\n\nand perhaps it can be as a mess",
+      "length": 259,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6ae3c76b",
+      "at": 23,
+      "opening": "time. the time for my words has come and gone and so the\nsound of my voice will ",
+      "length": 246,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "90b3578f",
+      "at": 24,
+      "opening": "\nthe years and bring you all these amazing stories that have been stored inside ",
+      "length": 269,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "b6beb697",
+      "at": 25,
+      "opening": "\nthis path, back across time. if you know your book well enough, and can write l",
+      "length": 250,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "21aa39a5",
+      "at": 26,
+      "opening": "the cosmos...\n\nIt was just recently that i started to learn about the vast expan",
+      "length": 267,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "26be5f9d",
+      "at": 27,
+      "opening": "\nthe great beyond and into the minds of the people who have created these worlds",
+      "length": 277,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7496713d",
+      "at": 28,
+      "opening": "the border. it would be nice to wake up tomorrow in that\nroom, that city. i will",
+      "length": 236,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "321c9f9c",
+      "at": 29,
+      "opening": "the distance of a life, and make things change. the most i can do now is try to ",
+      "length": 246,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "3809ac31",
+      "at": 30,
+      "opening": "the sea, up the river, through the rainforest and out into the trees.\nthere is s",
+      "length": 275,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 4.907
+  }
+ ],
+ "bits": 4.907
+}

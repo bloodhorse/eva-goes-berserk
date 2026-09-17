@@ -1,8 +1,9 @@
 # handoff — the dream engine
 
-2026-09-16, end of the day the loom went berserk. For whoever picks this up next: this is the
-shape of the thing and what it's for, not a spec. The details live in `eva/berserk/CLAUDE.md`
-and the ledger; read those when you need them, not before.
+For whoever picks this up next. This is the shape of the thing and what it's for, not a spec.
+The map of the repo is `CLAUDE.md`; the ordered plan is `docs/agenda.md`; the instrument's own
+docs are `eva/CLAUDE.md` and `eva/berserk/CLAUDE.md`. Read those when you need them, not before.
+State as of 2026-09-17, rewritten in place at the end of a two-day session.
 
 **Two things before anything else.** This is a joint project, bekh's and the model's working
 with him; your ideas are as important as his, and you are expected to have them. And every
@@ -15,76 +16,103 @@ outranks them.
 ## The objective
 
 Build an engine that shits out weird, prophetic, cool dreams on its own, all the time — so that
-bekh can open a page at any moment and find something strange in it. A base model (nemo 12b,
-nothing installed) writes them; nobody's hand is on the forks. **As little curation as
-possible: no hand-picking.** Every decision in the loop is made by a model. Models can be
-trained or framed to pick for weirdness — that is allowed, a lora on kept dreams is allowed —
-but it is still the model that picks, never a person.
+bekh can open a page at any moment and find something strange in it. A base model writes them
+(nemo 12b on the mac, nothing installed; GPT-2 XL beside it since 2026-09-17). As little
+curation as possible. Nobody knows if a 12b can get to eight in ten worth reading. It's the goal
+anyway.
 
-And the rate has to be good. **80% is the landmark**: of what the engine makes unselected,
-eight in ten should be worth reading. Nobody knows if a 12b can get there. It's the goal anyway.
+## The criterion, as it stands now
 
-## The criterion
+It moved twice in two days, and the next session should start from where it landed, not from
+where it began. First: *a model picks the dream* (berserk's pickers). Then: *curation can't be
+removed, only moved — raise the base rate*. Now, in bekh's words: **we look for signs of a
+dream, and the engine's job is to be very good at selecting for those signs, and we do not know
+yet what they are.** A pivot, a detail, a turn of phrase nobody would have predicted — that much
+and no more. No definition, no taxonomy; he asked for that explicitly, because a definition
+written now would make every dream the same dream. His premonition goes further: the feeling may
+be emergent, a property of a passage meeting a reader, and personal, like a response to abstract
+painting — so hunting it analytically, or with a model as the judge, may be a fool's errand.
 
-Not bits. Not science, not purity. Bits of curation are a real number and we don't care about
-it — not because a human hand in the text is bad, but because measuring it isn't the question.
-The question is a feeling, and it's shared: reading a page, does it feel to bekh *and to the
-model working with him* like authentic model creativity, or does it feel curated — by bekh, by
-opus, by a rulebook? That feeling is the criterion, the whole of it. If it reads like nemo
-dreamed it and it's good, it counts. (The anthology in `docs/` is the background: the famous
-base-model weirdness of the cyborgism scene is mostly janus's hand, and it still reads as
-curated. That's the feeling to steer away from, not a number to minimise.)
+So **the instrument that detects a dream is a person reading**, and bekh's marks on cards — `●`
+good, `★` keep — are the only measurement there is. It is still the feeling from the first
+version of this file: does it read like the model dreamed it, and is it good.
 
-## What the day taught, in ideas
+**Write nothing as a law.** bekh's instruction for every write-up: no strong claims. Two readers
+and a few hundred cards. "Scott's room forgot Antarctica" is not a defect to engineer away —
+losing the premise is what dreams do; that seed was lame and we don't know why.
 
-- **Curation can't be removed, only moved.** Picking one dream out of twenty at the end is
-  the same taste as picking along the way. The only place it can be spent honestly is in the
-  *machine* — the forms, the frames, the seats, the loop shape, later a lora — where it is paid
-  once and reused forever. Raising the base rate is the whole job; "chiselling" means that.
-- **The ghost spoke in the reader's seat, not the writer's.** Asked to continue a lift
-  inspection, nemo writes a lift inspection. Asked to *react* to one — `reading this, what
-  scared me was` — it wrote *"the lift seemed to be saying, I am a hat"*, *"that it sounded like
-  my wife, as I do not have a wife"*, *"the word 'adjudged' — as if it was some kind of death
-  sentence."* The reaction seat is a different machine and it's already most of the way to the
-  landmark. Its cost: that seat summons the comments section, so the reader has to be a person
-  *inside* the document's world (the clerk's margin, the witness read back to), not a redditor.
-- **Comparison is the judgment.** A reaction to one branch under a whole document has nothing to
-  react against; a reader who saw the fan does. Any picker that is a model must see the
-  alternatives.
-- **Continuing kills; recurring doesn't.** Every long walk fell off a cliff into wiki footers
-  and empties by fork four. Nothing should be continued past a paragraph. The loop shape that
-  fits is dream → telling → dream: a short document, a reader's line about it, and that line
-  becomes the seed of a *new* short document in a new form — a roll entry, a deposition, a
-  slip. Two registers resetting each other, forever. What bekh reads is the roll of entries.
-- **Pickers that are models are noise until they aren't.** Nemo quoting a branch copies about
-  one ask in four and invents the rest; nemo describing one is half a choice and half a writer
-  in disguise (it finishes the branch instead of describing it — the invented ones are a
-  nosleep table of contents, and that pile is worth keeping on its own). Opus resolving "which
-  did it mean" is fine as plumbing; opus judging "which is best" is the hand coming back.
+## How we work
+
+This settled in over the two days and is as much the project as the code is.
+
+- **He reads, marks, and says what he feels; examples before theory.** When an idea of mine
+  didn't land it was because I explained it; when it landed it was because I showed three
+  simulated cards. Don't invent structure he didn't ask for (I did, twice).
+- **Blind reading, two ledgers.** Compared things go to him unmarked. In the three-model run the
+  cards were shuffled and unstamped on screen; he marked, I read the same rooms with the model
+  names stripped and kept my own ledger (`docs/ledger-fable-three-models.md`), and we opened the
+  key together. Do that again. It is also fun.
+- **Go room by room with him.** A two-sentence brief of the seed before he reads, then his read,
+  then mine, quotes verbatim. He wants a companion in the room, not a report.
+- **Opus does everything mechanical** — bulk reading, code, fetching, cutting seeds — with
+  `model: 'opus'` on every spawn; the reviewing model reads verdicts and judges. A mock before a
+  build. **A page change is not done until it has been clicked and dragged**, not just shot: a
+  folder fold that closed the menu shipped because it was only screenshotted.
+- **The page is a desktop page.** The phone is a smoke test (root `CLAUDE.md`).
+- **The seam is his.** Where a seed is cut decides the first word of every card. Any seed he
+  didn't pick himself goes past him and he edits the last sentence before it runs.
+
+## What the two days seemed to show
+
+Observations, held loosely; the detail and the numbers are in `docs/agenda.md`.
+
+- The pickers picked badly; the good prose was in the reader's seat. An *i* already inside a
+  situation, with nothing asked of it, is where the models said things.
+- Famous text gets recited; obscure or real documents get generated. The model's own strange
+  passages, fed back, don't get recited at all — and a cut that carries a situation does better
+  than one orphaned good line.
+- Where the cut lands decides the first word. A question aimed at a *you* becomes chat.
+- A dreamy register is not a dream; it is the passage going on in its own voice. What bekh
+  loved was mostly calm and sober with something wrong in it: a 16 mm projector in a 1907 river
+  scene, *i am only a king by courtesy*, a bridge that mocks the narrator *again*.
+- **Connection is weird.** The best room by far was three lines about a telephone line with a
+  machine that speaks. The hunch: a disembodied transmission through a device plays to the
+  model's strengths, whatever those are. The experiment that tests it is on the agenda.
+- Three models, blind, 300 cards: nemo 34 marks, GPT-2 XL 26, Pythia 14 — but nearly a tie on
+  `★`, and the two old models took the found documents. Pythia is dropped.
+
+## bekh's canon so far
+
+The things he loved, by name, so the next model knows his taste from the start: the confession
+(*i can't make you believe any of this is real. i wish i could.*); the willows projector and the
+three branches under it (artifact `willows-projector-three`); the madman room (*arrest the moon
+before seven o'clock to-night… they have gone to the theatre*, *guard the moon.*); the hum room
+whole (`docs/cool-seeds.md`; *it's my blood… the phone line is the one place we've always had to
+go*); *"what does that matter? you came to see me." the bridge was mocking me again*; the margin
+notes of cycle 81 (*that it sounded like my wife, as i do not have a wife*). He defended loops on
+the first evening: a loop says something by being a loop.
 
 ## Where to go
 
-Build the recurrence loop with the reaction seat; run it unselected, twenty short chains a
-night, one sample per move; read the roll in the morning and count what you'd keep. That
-count is the only number. Then chisel: the frames and forms first, then the cliff bans
-(`logit_bias` on the web furniture), then the sampler, then seeds, then a lora on the kept
-ones — in that order, cheapest first, watching the count move. A ChatGPT brief for a third
-picker form is in the scratchpad from today if a fresh idea is wanted; it may not be needed.
+`docs/agenda.md`, in order. The short version: **the direction that feels most promising to bekh
+is a picker trained on his own marks** — the small RLHF move. A direction, not a promise: the
+data is thin and it may produce shit. But build the machinery now, on the marks that already
+exist, as a small experiment. Then the portal-device experiment, fanning under the hum room's
+best cards, real channel seeds (operators' diaries, lighthouse logs), and nemo against GPT-2.
 
 ## Material: bekh's own corpus
 
-He has a small body of lyrics and poems. No decided use yet, just the idea; three ways it
-could enter, ordered by how much of him ends up in the output: as the *documents the reader
-reacts to* (the dreams are about his lines without being his — the hand is in the input,
-which is where the criterion allows it; run this first); as *seed lines*, sliced and dropped
-at random into a form to start a dream; as a *lora*, so every dream carries his register —
-paid once, later, and with the tuned-seat-that-says-nothing warning in mind. Real lines stay
-his and are marked as his; nothing here is his voice unless he wrote it.
+He has a small body of lyrics and poems. No decided use yet; three ways it could enter, ordered
+by how much of him ends up in the output: as the documents a voice stands in; as seed lines; as
+a lora, later, with the tuned-seat-that-says-nothing warning in mind. And, parked the same day:
+**fortune telling** — a real situation of his, written by him, cut on a seam that stands after
+its resolution. Real lines stay his and are marked as his; nothing here is his voice unless he
+wrote it.
 
 ## What's on the shelf
 
-`eva/berserk/` runs (three pickers, a growing page per cycle on the sheets), cycles 80 and 81
-are the first real runs and the page to read is
-`https://miniarch.tail004a72.ts.net:8446/berserk/berserk-c80-c81.html`. Everything else —
-the loom, the page, the repl, the walk scripts, the anthologies of what base models wrote for
-other people — is mapped in `CLAUDE.md`.
+Rooms under `shelf/sittings/`: `experiments/three-models/` (marked, revealed),
+`experiments/{first-person,nemo,witch}/`, `nights/` (berserk cycles 80–82), the early rooms at
+the root. Seeds under `shelf/seeds/` with their cut scripts as provenance; `short/` is the
+current set. Artifacts under `shelf/artifacts/`. Open any folder as a picture at
+`https://eva.x/#canvas=<folder>`.

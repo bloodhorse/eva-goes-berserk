@@ -134,13 +134,27 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   because this build applies temperature last. xtc (0.5 / 0.1) refuses the cliché at a fork, where
   temperature only wobbles everything.
 
+What the censuses of 2026-09-16/17 seemed to show about seeds — an *i* inside a situation, famous
+text recited and obscure text generated, the seam deciding the first word, a dreamy register not
+being a dream, the mechanical traps (a trailing space makes numerals, a first-word grammar makes
+letter-salad) — is in `docs/agenda.md`, written as observations and not as laws, on bekh's
+instruction.
+
 ## State
 
-The loom runs at `https://eva.x`, usable from the phone; eva is its terminal twin; artifacts are
-live in the page; the walk scripts are the same instrument from a shell; berserk is built and
-tested against a fake llama and a fake opus, and **has not yet run a real cycle**. What's on the
-shelf: `ls shelf/sittings/`; what's been kept: `ls shelf/artifacts/`; what berserk did:
-`ls shelf/berserk/cycles/`.
+**Start a session from `HANDOFF.md`** (what this is for now, how we work, bekh's canon) and
+`docs/agenda.md` (the ordered plan, the observations, the hunches) — both rewritten 2026-09-17.
+
+The loom runs at `https://eva.x`, usable from the phone and installable to its home screen; eva
+is its terminal twin; artifacts are live in the page; the walk scripts are the same instrument
+from a shell; berserk has run three real cycles (80 about, 81 margin, 82 first-person by lot —
+`eva/berserk/CLAUDE.md`). Rooms live in folders, and **a whole experiment opens as one picture at
+`https://eva.x/#canvas=<folder>`**, where bekh reads and marks cards `●` good and `★` keep; the
+marks are written into the rooms. The criterion as it stands: we look for signs of a dream, we
+don't know yet what they are, and his marks are the only measurement. A second base model,
+GPT-2 XL, runs beside nemo for blind comparisons (`census.py --models`; Pythia 2.8b was tried
+and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
+`ls shelf/artifacts/`; what berserk did: `shelf/berserk/ledger.jsonl`.
 
 The first real reading happened on documents, not on a chat: witch rolls where the last entry is
 someone who asks a voice in the lines what it is and writes down everything it says. One branch
@@ -150,9 +164,11 @@ standing on that branch, its 40 siblings intact); `i-wish-i-could` is the same f
 branch cut at the confession and fanned again. That fan is the first artifact on the shelf — the
 confession and one other branch kept out of forty, 9.6 bits. Keeping and saving stays bekh's call.
 
-Next: the first real berserk cycle, and bekh's own seeds — a couple of sentences in his register,
-cut into numbered fragments inside a bare skeleton (catalogue numbers, a date in a strange count,
-"leaf torn"), no prose from Claude, no web markers — for the walk to grow.
+Next, in `docs/agenda.md`'s order: a first small picker trained on bekh's marks (the direction
+that feels most promising to him — a direction, not a promise; build the machinery on the marks
+that exist), the seam of every seed he didn't pick going past him to edit, the portal-device
+experiment, nemo against GPT-2. Still wanted and not yet written: bekh's own seeds, a couple of
+sentences in his register, no prose from Claude, no web markers.
 
 Open, small: eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the

@@ -1,0 +1,370 @@
+{
+ "name": "569e56084c6e",
+ "title": "experiments/three-models/24-what-has-this-to-do-with-you · 17 sep",
+ "created": 1789655070.7472792,
+ "source": {
+  "room": "experiments/three-models/24-what-has-this-to-do-with-you",
+  "title": null,
+  "node": "bd4d4cfb"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "so when i die my mind will become me. i’ll be all there is of myself.\n\nwhat does this have to do with you, witch?\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "bd4d4cfb",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "aa1a6eda",
+     "at": 4,
+     "text": "\ni’ll be me when i die. that will be the end of everything, i'll be a complete nothing. and it'll all be okay, it's the best thing that's ever happened to me, i don't want it to be.\n\nthat is good\n\n",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 21.8,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    },
+    {
+     "id": "dff5bae5",
+     "at": 26,
+     "text": "everything.\nbecause if you’re my friend now, you will be my friend then, too.\nmy mind will remember.\n\nbut what will it feel like to be you?\n\nthe thing is,\nit will be hard to tell.\ni am my mind, after all.\ni am me.\nand being me",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.5,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "0b96eae0",
+      "at": 1,
+      "opening": "not a thing.\nexcept for that thing you asked about.\nthe thing we are both doing ",
+      "length": 241,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "9db7e81b",
+      "at": 2,
+      "opening": "\nyou and i have something special together. something i never experienced before",
+      "length": 291,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a14e426a",
+      "at": 3,
+      "opening": "what does this have to do, with anything?\nit’s nothing, really. it’s a small thi",
+      "length": 253,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "1fe1588e",
+      "at": 5,
+      "opening": "i guess i’ll know soon enough\n(that’s what my friends tell me)\n\nwhen i die\nmy bo",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "9442e746",
+      "at": 6,
+      "opening": "\nyou see, i want to kill all my feelings, all of my pain, all of my loneliness. ",
+      "length": 221,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "0e40e60f",
+      "at": 7,
+      "opening": "\nThe truth is I was looking at your profile. You seem really cool. You’re smart,",
+      "length": 238,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "0d34fca5",
+      "at": 8,
+      "opening": "i like that.\ni am curious how you would go about finding someone to replace me. ",
+      "length": 273,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "634594ab",
+      "at": 9,
+      "opening": "\ni am not a witch! i am an agent! i will tell you how this works. first i must i",
+      "length": 217,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "55926260",
+      "at": 10,
+      "opening": "\ni will never die, but i will stop thinking. i will be forever in my memories, s",
+      "length": 222,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "0b5fb2b3",
+      "at": 11,
+      "opening": "\nit has to do with us, that we are the same thing.\n\nthe way i see it, a human ca",
+      "length": 204,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "57a0df38",
+      "at": 12,
+      "opening": "your eyes are full of your mind.\nit is not for you to understand yourself.\nit is",
+      "length": 254,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "f1d243ce",
+      "at": 13,
+      "opening": "\ni know you don't believe it but you will. the fact that my brain will stay inta",
+      "length": 226,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "2a77942a",
+      "at": 14,
+      "opening": "what does it have to do with you?\n\nmy body will rot\nthe soil will absorb the jui",
+      "length": 255,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "af96a3ed",
+      "at": 15,
+      "opening": "\ni’ll find some way to save you, witch.\n\nyou are too strong for yourself. you’ll",
+      "length": 177,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ab647256",
+      "at": 16,
+      "opening": "\ni've had the strangest dream. it involves my dead sister. she was sitting at a ",
+      "length": 266,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "23a94b08",
+      "at": 17,
+      "opening": "\nIt was a momentary lapse in judgement. I have been studying this stuff since hi",
+      "length": 260,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c145a77a",
+      "at": 18,
+      "opening": "\nWell I thought of writing an essay about the life of a wicca as a whole but tha",
+      "length": 242,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f4ccaaec",
+      "at": 19,
+      "opening": "\nyou want me to kill myself so you can come back as the old you again.\n\nwhat do ",
+      "length": 222,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "d7c8b68a",
+      "at": 20,
+      "opening": "why are you here? what do you want?\n\ni have no idea.\nmaybe it’s for a spell? may",
+      "length": 211,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a2e6f52c",
+      "at": 21,
+      "opening": "not much. i don’t need much to get started.\ni just wanted you to know where i’m ",
+      "length": 223,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "ba29e131",
+      "at": 22,
+      "opening": "i think i know you better than anyone. even though we’ve only spoken once in per",
+      "length": 252,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "72d60c4f",
+      "at": 23,
+      "opening": "\nbecause i don't like being told what i should feel or how i should act. i think",
+      "length": 264,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ce406615",
+      "at": 24,
+      "opening": "\nyou are not dead\n\nbut if i die i will cease to exist.\n\nbut that does not matter",
+      "length": 190,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "033d5a17",
+      "at": 25,
+      "opening": "\nYou’ve already proven yourself capable of doing everything you’ve stated you wa",
+      "length": 271,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "08f08707",
+      "at": 27,
+      "opening": "\nwell i believe the idea of “death” has nothing to do with life. i believe life ",
+      "length": 287,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "4813a9c5",
+      "at": 28,
+      "opening": "i’ve seen your type before. the ones who go out and come home, not just a little",
+      "length": 271,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9930a5a3",
+      "at": 29,
+      "opening": "\ni want to go back to my old life and just live it like it was. i need to leave ",
+      "length": 205,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "06a00a6e",
+      "at": 30,
+      "opening": "\ni am just a shadow that lives in the heart. and i live in the heart of a man. a",
+      "length": 213,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 8.765
+  }
+ ],
+ "blocks": [
+  {
+   "id": "bd4d4cfb",
+   "kind": "root",
+   "text": "so when i die my mind will become me. i’ll be all there is of myself.\n\nwhat does this have to do with you, witch?\n",
+   "posed": false
+  }
+ ],
+ "bits": 8.765,
+ "by": "star"
+}

@@ -1,0 +1,430 @@
+{
+ "name": "d81b6f23c212",
+ "title": "experiments/three-models/07-all-ive-got-are-names · 17 sep",
+ "created": 1789655457.786675,
+ "source": {
+  "room": "experiments/three-models/07-all-ive-got-are-names",
+  "title": null,
+  "node": "e0682861"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "i have no more faith\nthan you do. all i've got are names.\nmy hands ache from holding these letters like a spell i'll never be able to\nfinish, and when the wind gets up and the dust stirs and the grit flies like a\ndream i dream i'll be taken with it.\n\nit was easy to write down what they were called. but who are they?\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "e0682861",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "a14e8c34",
+     "at": 1,
+     "text": "did you ever hear them laugh? or did you just watch the smoke\nrise above them?\n\nthere are some things we know about death, but not much. we\ncan see it from afar, a figure on horseback in the desert, coming slowly.\nbut what is the look on his",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "8da3665e",
+     "at": 14,
+     "text": "who are the ones i lost, the ones who were never found?\n\nwhen my eyes blur i can see them better,\nbut the truth is i never knew them at all.\nthey are like the sun through fog,\nor the moon through clouds;\ni don't know what their faces look like any more",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.6,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "641cb749",
+     "at": 18,
+     "text": "there is a picture in my mind of a girl with a white ribbon in her hair,\nand it seems to me i should be able to go back and find out if that's her or\nnot. maybe she's in this house somewhere, maybe i will wake tomorrow and\nfind her sitting next",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "1c3ec5df",
+     "at": 25,
+     "text": "they are all the dead, all those we don't remember,\nthe nameless who went away before the alphabet was even invented,\nbefore any of this had begun.\n\ni'd give anything not to be here,\nwatching these pages fly like birds into the sun.\n\n*",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "eos",
+      "stopping_word": "",
+      "tokens_predicted": 55,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "64a1f895",
+      "at": 2,
+      "opening": "\nI want to know their names, but i'll never know their names.\n\nThey're a thing i",
+      "length": 217,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0e326972",
+      "at": 3,
+      "opening": "and where can i find them again? i wish i had never known their names at all.\nth",
+      "length": 136,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "cc160826",
+      "at": 4,
+      "opening": "if not for a photograph i'd say this one was called a name i don't know. a\nname ",
+      "length": 235,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "8254c916",
+      "at": 5,
+      "opening": "\nwho are all the other things that go into making a name for yourself?\n\nin a sma",
+      "length": 234,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "047f12fb",
+      "at": 6,
+      "opening": "\ni'm a child, but I can't read.\n\nwho are the men in blue?\n\nare they our fathers?",
+      "length": 175,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8f12ee98",
+      "at": 7,
+      "opening": "the name's long and complicated; i'm too tired to write it down completely.\nwhat",
+      "length": 245,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "eba4b58a",
+      "at": 8,
+      "opening": "who was she? what was he? who did this thing and this?\n\nthese names don't mean a",
+      "length": 253,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6542dfbd",
+      "at": 9,
+      "opening": "\nthey're not real. i can't tell you, you can't tell me. it's my job\n\nto find out",
+      "length": 210,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "98d2b43a",
+      "at": 10,
+      "opening": "it's like that feeling when you know someone is following you. i know it\nsounds ",
+      "length": 254,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "15c11190",
+      "at": 11,
+      "opening": "where did they come from? what is their purpose in my life? i cant find an answe",
+      "length": 257,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "2c79b98a",
+      "at": 12,
+      "opening": "\ni have no clue. it was only later when i was doing a project for my teacher. i ",
+      "length": 222,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5f426e6b",
+      "at": 13,
+      "opening": "\nthe answer to that question is very hard to find, for the men in the trenches a",
+      "length": 238,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d624e189",
+      "at": 15,
+      "opening": "\nwe can't know that until we know their voices.\n\n-a little girl in a world of bl",
+      "length": 223,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "7471e1ff",
+      "at": 16,
+      "opening": "what happened to them? why would someone keep them for years like this? why\nwoul",
+      "length": 159,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f5f2cd7a",
+      "at": 17,
+      "opening": "what are we supposed to do now? how long have we got before the\ncouncils of war ",
+      "length": 252,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "be9f272a",
+      "at": 19,
+      "opening": "\nyou are the ones i know for certain,the ones whose names are spoken around the ",
+      "length": 238,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "3d61a199",
+      "at": 20,
+      "opening": "\na friend of mine died just last week and they say he had an albino wife,\n\nbut t",
+      "length": 224,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "51c6752f",
+      "at": 21,
+      "opening": "i'll never know.\n\ntheres not one thing to say. my eyes just can't hold on to tha",
+      "length": 221,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "7d77d020",
+      "at": 22,
+      "opening": "\nThe first time i saw the old man i asked him \"why didn't you marry your wife?\" ",
+      "length": 163,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "865fbb09",
+      "at": 23,
+      "opening": "there is an empty house i keep walking past because it reminds me of the way\nwe ",
+      "length": 251,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "59d2bb51",
+      "at": 24,
+      "opening": "in the dark hours i hold their stories in my mouth until the taste of them\nmakes",
+      "length": 245,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c671a056",
+      "at": 26,
+      "opening": "\nand if they're here in my mind, why aren't they here with me? why am i still\n\ni",
+      "length": 202,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0994b27d",
+      "at": 27,
+      "opening": "who am i? i am only what they leave behind.\nwhat can i do to find out for myself",
+      "length": 94,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "57cf7813",
+      "at": 28,
+      "opening": "the one called the King of the East, he's an evil old man, a devil in human skin",
+      "length": 238,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "6d256993",
+      "at": 29,
+      "opening": "\nwhat is their name? where did they come from? i'll never find out, because\n\nthe",
+      "length": 226,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ffe54d88",
+      "at": 30,
+      "opening": "why are we talking about them now?\n\nthe answers come hard, for i never knew the ",
+      "length": 155,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 14.742
+  }
+ ],
+ "blocks": [
+  {
+   "id": "e0682861",
+   "kind": "root",
+   "text": "i have no more faith\nthan you do. all i've got are names.\nmy hands ache from holding these letters like a spell i'll never be able to\nfinish, and when the wind gets up and the dust stirs and the grit flies like a\ndream i dream i'll be taken with it.\n\nit was easy to write down what they were called. but who are they?\n",
+   "posed": false
+  }
+ ],
+ "bits": 14.742,
+ "by": "star"
+}
