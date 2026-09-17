@@ -2819,8 +2819,15 @@ $('notesave').addEventListener('click', saveNote);
 $('notecancel').addEventListener('click', cancelNote);
 $('menubtn').addEventListener('click', () => menu($('tools').hidden));
 document.addEventListener('click', e => {
-  if(!e.target.closest('#tools, #menubtn')) menu(false);
-  if(!e.target.closest('#alts')) closeAlts();
+  // composedPath, not e.target.closest: the path is fixed when the click is dispatched, and a
+  // handler inside the menu may redraw before this one runs (a folder fold rebuilds the whole
+  // room tree). The tapped button is then detached, closest() finds no #tools above it, the
+  // tap reads as "outside" and the menu shuts on every fold — which is how the tree was
+  // unusable the morning after it shipped.
+  const path = e.composedPath();
+  const within = id => path.some(n => n.id === id);
+  if(!within('tools') && !within('menubtn')) menu(false);
+  if(!within('alts')) closeAlts();
 });
 // The popup is positioned against a word on the screen, so it has to go the moment that
 // word moves. Capture, because #blocks is what actually scrolls, not the window.
