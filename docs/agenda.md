@@ -31,6 +31,18 @@ otherwise, the instrument that detects a dream is a person reading, and his mark
 
 ## now
 
+**For the next sitting, bekh's question (2026-09-18, late): are picking and generating the same
+problem?** We keep ending up teaching something to pick a good card out of a fan. The goal is to
+*generate* weird, prophetic, dreamy text on its own, using only models. He thinks those two are not
+necessarily equivalent, and that we may be missing some other way to get there automatically.
+Brainstorm it first thing, before anything gets built. What the two days put on the table for it,
+as raw material and not as an answer: a picker can only return what the fan already holds (a fan
+with nothing good in it has no good pick); what changed the fans was never a picker — it was the
+seed, the seam, first person, a wire, a short sober room; the one fan with three keeps in twenty
+grew under a line that was already strange; and the generating-side levers nobody has tried here
+are item 7 below.
+
+
 1. **A scorer made of bekh's marks — a side road that lives beside the work** (shape agreed
    2026-09-17, evening). Not the main avenue, and not written off: it eats what the work
    produces anyway and gets looked at once a month. *It might save our asses in a month.*
