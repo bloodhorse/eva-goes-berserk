@@ -58,6 +58,10 @@ This settled in over the two days and is as much the project as the code is.
   `model: 'opus'` on every spawn; the reviewing model reads verdicts and judges. A mock before a
   build. **A page change is not done until it has been clicked and dragged**, not just shot: a
   folder fold that closed the menu shipped because it was only screenshotted.
+- **The end-of-day brief.** When the day's work is done, after the docs are in order, the model
+  reminds bekh in one short message what the main results were and how we got to each — arranged
+  by subject, not as a timeline — and then the two talk it over, so that he remembers it. It is
+  for his memory, not for the record; the record is the docs.
 - **The page is a desktop page.** The phone is a smoke test (root `CLAUDE.md`).
 - **The seam is his.** Where a seed is cut decides the first word of every card. Any seed he
   didn't pick himself goes past him and he edits the last sentence before it runs.
