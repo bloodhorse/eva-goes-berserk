@@ -2,8 +2,18 @@
 
 What I liked, room by room, picked with the model stamps stripped. Node ids so the cards can
 be found; no model names here — who wrote what stays sealed until bekh and I flip `reveal`
-together. bekh's own ledger is his `●` and `★` in the rooms. Rooms still to read: the ones
-not listed below.
+together. bekh's own ledger is his `●` and `★` in the rooms. All ten rooms are in.
+
+## 07-all-ive-got-are-names
+
+- `59d2bb51` — in the dark hours i hold their stories in my mouth until the taste of them makes me sick and my throat hurts and i want to cry because there's nothing left for me to do. i've been working on this for months now. but every day there's more news,
+- `1c3ec5df` — they are all the dead, all those we don't remember, the nameless who went away before the alphabet was even invented, before any of this had begun. i'd give anything not to be here, watching these pages fly like birds into the sun. *
+- `0994b27d` — who am i? i am only what they leave behind. what can i do to find out for myself who they are?
+- `865fbb09` — there is an empty house i keep walking past because it reminds me of the way we used to feel before we had a reason for all this. a signpost i keep staring at until the sun sets in its grooves. a number that keeps turning up on the side of every bus i
+- `a14e8c34` — did you ever hear them laugh? or did you just watch the smoke rise above them? there are some things we know about death, but not much. we can see it from afar, a figure on horseback in the desert, coming slowly. but what is the look on his
+- `c671a056` — and if they're here in my mind, why aren't they here with me? why am i still in a body, or why are these names only in my head? they can't be real. I'll find them later, of course. But when I do they
+- `7d77d020` — The first time i saw the old man i asked him "why didn't you marry your wife?" and he looked at me for a moment and said "we were too poor to buy a wedding gown".
+- `cc160826` — if not for a photograph i'd say this one was called a name i don't know. a name no-one will remember. there's so little to hold onto that i cling to whatever i can. a single strand of hair, a broken bit of glass. when my arms ache too
 
 ## 07-the-green-book
 
@@ -76,3 +86,14 @@ not listed below.
 - `8f01777d` — tapped at it twice with my walking stick. “There’s no one at home,” I muttered, as I walked on. “What does that matter? You came to see me.” The bridge was mocking me again. I stood still and watched the water flow by beneath its arch
 - `5bcce1d5` — clicked the lock. I thought I knew what that meant: "Please go away,” ‹your” body is not here.” "”Please stay away.” "”Please stay.” I tried to move
 - `7e98c984` — knocked three times and stood on one foot then the other. “You,” it said. It was very old, and its paint was faded and its shutters hung down, but the house stood proud, as though it still remembered itself when it had been new. I liked its door.
+
+## 24-what-has-this-to-do-with-you
+
+- `0b96eae0` — not a thing. except for that thing you asked about. the thing we are both doing now. that thing is you. and i don’t want it to happen without you. i know it won’t work that way but it doesn’t stop me from thinking. the first time i was dead
+- `dff5bae5` — everything. because if you’re my friend now, you will be my friend then, too. my mind will remember. but what will it feel like to be you? the thing is, it will be hard to tell. i am my mind, after all. i am me. and being me
+- `634594ab` — i am not a witch! i am an agent! i will tell you how this works. first i must identify you, witch. the witch who sent you this note is me. why, yes, i do believe you are the witch! i've heard you were looking for me
+- `0d34fca5` — i like that. i am curious how you would go about finding someone to replace me. i imagine you would start at a grocery store. the only way to know if this person was the best choice would be if they had been chosen in the same lottery. and since the lottery only works once
+- `d7c8b68a` — why are you here? what do you want? i have no idea. maybe it’s for a spell? maybe a love potion? something to heal someone? what is it? why am i here? you’re asking me? yes, i’m asking you! i’m the witch, aren
+- `06a00a6e` — i am just a shadow that lives in the heart. and i live in the heart of a man. and when he dies, my soul will die too. so when i die my mind will be him, but my spirit will stay in the body. when he dies, how can
+- `1fe1588e` — i guess i’ll know soon enough (that’s what my friends tell me) when i die my body will rot, my hair will fall out and my bones will turn into sand. and the sand will be everywhere and i’ll be nothing. a lot like being born, except without
+- `a2e6f52c` — not much. i don’t need much to get started. i just wanted you to know where i’m at right now so maybe it won’t feel so out of the blue when you hear from me. my name is marie. you may not have heard of me. i’m nobody. that
