@@ -67,7 +67,10 @@ otherwise, the instrument that detects a dream is a person reading, and his mark
 3. **The portal-device experiment** (the hunch below). Build, on purpose, a scene or a sequence
    of scenes with a small introduction and then, immediately, something weird speaking through a
    device — a phone, a tape, whichever — and see whether the quality of the hum room holds there.
-   The test is whether it was the wire or that one seed. The door in `you-it-said` did not carry
+   The test is whether it was the wire or that one seed. **First data point, 2026-09-18:**
+   `experiments/portal/01-fainter-than-air` — bekh's own four lines (`shelf/seeds/fainter-than-air.txt`),
+   cut on *replies then come fainter than air:*, thirty cards from nemo and GPT-2, blind; unread
+   by him yet. The door in `you-it-said` did not carry
    it, but that seed was lame for reasons we can't name, so it is not a fair test.
 4. **Fan under the best cards of the hum room**, seed plus card together as the room: the blood
    card `442ab836` and *the humming is happening to me* `4aec75fc` first.
