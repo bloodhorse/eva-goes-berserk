@@ -73,7 +73,8 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 isn't there, and put in artifacts/.trash when the last star goes
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
-LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_READONLY (1 = the mirror: every POST 403).
+LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
+LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh).
 """
 
 from __future__ import annotations
@@ -115,6 +116,12 @@ READONLY = os.environ.get("LOOM_READONLY") == "1"
 # The push script stamps this after each successful sync; outside the shelf, because the
 # shelf is rsynced with --delete and would wipe it.
 SYNCED = os.path.join(ROOT, ".synced")
+# The one write the mirror takes: a mark. Harvesting is what the phone is for, so a keep or a
+# good made with the mac off lands in the mirror's copy of the room (so the page shows it) AND
+# as a line here, which the mac's push replays through its own /api/mark before it pushes
+# again. Outside the synced folder, or rsync --delete would take the journal with it. Unset =
+# the mirror refuses marks like everything else.
+MARKS_JOURNAL = os.environ.get("LOOM_MARKS", "")
 SITTINGS = os.environ.get("LOOM_SITTINGS", os.path.join(SHELF, "sittings"))
 # Storage: findings bekh wants to keep, one plain .txt per note, nothing but the text in it.
 # Tracked by git on purpose (sittings are not) — a finding is worth its history.
@@ -1573,7 +1580,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         u = urlparse(self.path)
-        if READONLY:
+        if READONLY and not (MARKS_JOURNAL and u.path in ("/api/mark", "/api/keep")):
             self._json(403, {"error": "read-only: the mac is off, this is the mini's copy"})
             return
         try:
@@ -1611,8 +1618,14 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 parent = set_mark(room, nid, mark, want)
+                if READONLY:
+                    # Artifacts are the mac's to build: the replay goes through this same
+                    # route there, and the sync below runs then.
+                    with open(MARKS_JOURNAL, "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"room": room, "node": nid, "mark": mark,
+                                            "on": want, "ts": time.time()}) + "\n")
                 # A star on the canvas is a star: its fan's artifact follows it.
-                if mark == "kept" and parent:
+                elif mark == "kept" and parent:
                     sync_artifact(room, parent)
             except FileNotFoundError:
                 self._json(404, {"error": "no such sitting"})

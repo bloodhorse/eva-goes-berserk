@@ -10,8 +10,11 @@ WorkingDirectory=/home/bek/eva-mirror
 # Loopback only: caddy is the one door, same as the mac's loom behind its tailnet ip.
 Environment=LOOM_HOST=127.0.0.1
 Environment=LOOM_PORT=8083
-# Every POST refused. This is the line that keeps the mini from ever being a second writer.
+# Every POST refused but a mark. This is the line that keeps the mini from being a second writer.
 Environment=LOOM_READONLY=1
+# ...but marks: keep and good land here too, and in this journal, which the mac's push replays
+# through its own loom. Outside ~/eva-mirror, which rsync --delete owns.
+Environment=LOOM_MARKS=/home/bek/eva-marks.jsonl
 Environment=LOOM_LLAMA=http://127.0.0.1:9
 # uv's 3.12, by path: stdlib only, and the box's own python is whatever pacman shipped this week.
 ExecStart=/home/bek/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 /home/bek/eva-mirror/eva/server/loom.py

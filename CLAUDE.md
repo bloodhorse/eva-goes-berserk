@@ -80,7 +80,8 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `cli/` — `eva.py`, the terminal repl (`~/.local/bin/eva`); `census.py`, one document, n
     continuations, unattended; `walk/`, seed → fan → pick from a shell, with its `README.md`.
   - `mirror/` — `eva.x` while the mac is off: the mac pushes the shelf to the mini every
-    minute, the mini serves it read-only, caddy picks the mac first. **`eva/mirror/CLAUDE.md`**
+    minute, the mini serves it read-only but for marks (replayed onto the mac), caddy picks the
+    mac first. **`eva/mirror/CLAUDE.md`**
     is the doc and the runbook.
   - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**

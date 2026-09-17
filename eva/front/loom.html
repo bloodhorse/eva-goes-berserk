@@ -811,14 +811,15 @@
   /* The mirror (eva/mirror/): the mac is off and the mini is serving yesterday's shelf
      read-only. Everything that writes goes away rather than greying out — a grey button
      reads as "wait", and nothing here is coming back until the mac is. The server refuses
-     every POST anyway; this is only so the page doesn't offer what will be refused. The fork
-     mark stays: opening a fan is reading. */
+     every POST but a mark anyway; this is only so the page doesn't offer what will be
+     refused. The fork mark stays: opening a fan is reading. */
   #robar{flex-shrink:0; color:var(--ghost); font-size:14px; padding:16px 2px 0;
     padding-bottom:calc(8px + env(safe-area-inset-bottom));}
   body.ro #turnwrap, body.ro #fanbtn, body.ro #more, body.ro #stop, body.ro #samp,
   body.ro #sampwrap, body.ro .toolrow, body.ro #newname, body.ro #askbox, body.ro #noteadd,
-  body.ro #noteedit, body.ro #artgo, body.ro #artagain, body.ro .foot .mark,
-  body.ro .blk .gut, body.ro .cn-head .cn-mark{display:none !important;}
+  body.ro #noteedit, body.ro #artgo, body.ro #artagain,
+  body.ro .blk .gut{display:none !important;}
+  /* the marks stay: harvesting from the phone is what the mirror is for (see toggleMark) */
 </style>
 </head>
 <body>
@@ -1314,6 +1315,19 @@ function toggleMark(n, mark){
   if(n[mark]) delete n[mark];     // optional key: absent means not marked, like every old room
   else n[mark] = true;
   renderFan();
+  if(readonly){
+    // The mirror takes marks one at a time and nothing else: a whole-room save is refused
+    // there, and the artifact is built on the mac when it replays the mark.
+    const want = !!n[mark];
+    postJSON('/api/mark', {room: sitting.name, node: n.id, mark, on: want}).then(d => {
+      if(d && d.error) throw new Error(d.error);
+    }).catch(e => {
+      if(want) delete n[mark]; else n[mark] = true;
+      renderFan();
+      sys('the mark did not land: ' + e.message, true);
+    });
+    return;
+  }
   save();
   if(mark === 'kept') syncArtifact(sitting.name, n.parent);
 }
@@ -3488,7 +3502,8 @@ function turnLabel(){
 
 // ---- moves ---------------------------------------------------------------------------
 async function pickNode(id){
-  if(!sitting || stopping || saving) return;
+  // On the mirror a pick would move `current` in a room nobody can save: reading only.
+  if(!sitting || stopping || saving || readonly) return;
   const cancelled = stopAll();
   sitting.current = id;
   fanFrom = null;
@@ -4349,7 +4364,8 @@ async function health(){
     $('robar').hidden = !ro;
     if(ro){
       const t = d.synced ? new Date(d.synced * 1000) : null;
-      $('robar').textContent = 'read-only — the mac is off. this is the mini\'s copy' +
+      $('robar').textContent = 'the mac is off: reading and marks only — marks reach the mac ' +
+        'when it is back. the mini\'s copy' +
         (t ? ', synced ' + t.toLocaleString([], {day: 'numeric', month: 'short',
                                                   hour: '2-digit', minute: '2-digit'}) : '') + '.';
     }

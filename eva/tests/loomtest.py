@@ -1675,17 +1675,18 @@ class Cancel(unittest.TestCase):
 
 class ReadOnly(unittest.TestCase):
     """The mirror on the mini: a second loom over the same shelf with LOOM_READONLY=1. It
-    reads everything the real one reads and refuses every write, so it can never become a
-    second writer to a shelf that only the mac owns."""
+    reads everything the real one reads and refuses every write but a mark, which it also
+    journals for the mac to replay — so the only writer of record stays the mac."""
 
     def setUp(self):
         global BASE
         self.t, self.b = kept_fan("mirror")       # written through the real loom
         self.base = BASE
+        self.journal = os.path.join(BERSERK, f"marks-{uuid.uuid4().hex[:6]}.jsonl")
         port = free_port()
         env = dict(os.environ, LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                    LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS, LOOM_LEDGER=LEDGER,
-                   LOOM_LLAMA=STUB_BASE, LOOM_READONLY="1")
+                   LOOM_LLAMA=STUB_BASE, LOOM_READONLY="1", LOOM_MARKS=self.journal)
         self.proc = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                                      env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         BASE = f"http://127.0.0.1:{port}"
@@ -1704,7 +1705,7 @@ class ReadOnly(unittest.TestCase):
         self.proc.terminate()
         self.proc.wait(timeout=5)
 
-    def test_reads_everything_writes_nothing(self):
+    def test_reads_everything_writes_only_marks(self):
         st, h = call("/api/health")
         self.assertEqual((st, h["readonly"], h["ok"]), (200, True, False))
         self.assertEqual(call("/")[0], 200)
@@ -1712,17 +1713,29 @@ class ReadOnly(unittest.TestCase):
         self.assertIn(self.t.d["name"], names)
         st, room = call("/api/sitting?name=" + self.t.d["name"])
         self.assertEqual((st, room["current"]), (200, self.t.d["current"]))
+        arts = set(os.listdir(ARTS))
+        room, nid = self.t.d["name"], self.b[0]["id"]
+        self.assertEqual(call("/api/keep", {"room": room, "node": nid, "kept": True})[0], 200)
+        self.assertEqual(call("/api/mark", {"room": room, "node": nid, "mark": "good",
+                                            "on": True})[0], 200)
+        self.assertEqual(call("/api/mark", {"room": room, "node": "ghost", "mark": "good",
+                                            "on": True})[0], 404)
+        with open(os.path.join(SHELF, room + ".json"), encoding="utf-8") as f:
+            node = json.load(f)["nodes"][nid]
+        self.assertTrue(node.get("kept") and node.get("good"))    # the page sees them at once
+        with open(self.journal, encoding="utf-8") as f:
+            lines = [json.loads(x) for x in f]
+        self.assertEqual([(x["node"], x["mark"], x["on"]) for x in lines],
+                         [(nid, "kept", True), (nid, "good", True)])   # the refused one isn't in
+        self.assertEqual(set(os.listdir(ARTS)), arts)    # artifacts are built on the mac, later
+
         for path, body in (("/api/sitting", self.t.d),
-                           ("/api/keep", {"room": self.t.d["name"], "node": self.b[0]["id"],
-                                          "kept": True}),
                            ("/api/artifact", {"room": self.t.d["name"],
                                               "parent": self.t.d["current"], "sync": True}),
                            ("/api/complete", {"prompt": "x", "params": {}})):
             st, d = call(path, body)
             self.assertEqual(st, 403, path)
             self.assertIn("read-only", d["error"])
-        with open(os.path.join(SHELF, self.t.d["name"] + ".json"), encoding="utf-8") as f:
-            self.assertNotIn("kept", json.load(f)["nodes"][self.b[0]["id"]])   # the keep never landed
         # and the real loom still says it is not the mirror
         self.assertFalse(json.loads(urllib.request.urlopen(self.base + "/api/health",
                                                            timeout=10).read())["readonly"])

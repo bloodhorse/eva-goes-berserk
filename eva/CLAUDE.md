@@ -294,7 +294,8 @@ rig in `front/mobile/`. Light room: serve a copy with `prefers-color-scheme: lig
 
 ## It runs permanently, as `https://eva.x` / `https://e.x`
 
-While the mac is off, `eva.x` falls over to a read-only copy on the mini — `mirror/CLAUDE.md`.
+While the mac is off, `eva.x` falls over to a copy on the mini that takes reading and marks only —
+`mirror/CLAUDE.md`.
 
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
@@ -313,8 +314,8 @@ launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # give the mac it
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-llama.plist   # and take it again
 ```
 
-A 502 at the name = the mac is asleep or the loom agent is down; a red dot in the menu = llama
-is down. A page with no room open greys the composer — that is not the model being down.
+The page saying *the mac is off* = caddy fell over to the mirror (the mac asleep or the loom
+agent down); a 502 at the name = the mirror is down too; a red dot in the menu = llama is down. A page with no room open greys the composer — that is not the model being down.
 
 The mac's llama-server is brew's; models in `~/.cache/llama.cpp/`. The model is nemo base at
 **q5_k_m, not q6**: the q6 file is 10 GB and macOS wires at most ~2/3 of a 16 GB box for the GPU,
