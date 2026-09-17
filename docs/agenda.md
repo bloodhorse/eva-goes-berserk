@@ -48,6 +48,15 @@ make every dream the same dream. One thing noticed along the way, an observation
 a dreamy seed continued dreamily did not feel like a dream, it felt like the passage going on in
 its own voice.
 
+And a premonition of bekh's, written down as one: the signs may not be specific at all. Reading
+a room with no pivot and nothing surprising in it, a phrase or a turn or a thought sometimes
+simply *hits* — yes, this is some weird dream shit — as if the passage were starting to mean.
+That feeling may be emergent, a property of the whole passage and the one reading it, and then
+hunting it analytically, or with a model as the judge, could be a fool's errand. He doesn't
+know; it is how it seems to him from his time with these models. Until something says
+otherwise, the instrument that detects a dream is a person reading, and his marks (`●` good,
+`★` keep) are the only measurement we have.
+
 1. **Rerun the seeds that held, at scale**, no grammar, 60 tokens, t 2.2 (1.4 only for
    De Quincey): from `seeds/nemo/` 13, 15, 18, 24, 22, 07, then 14 and 04; from
    `seeds/first-person/` Scott, the Salem depositions, Gogol, the green book. Never again:
