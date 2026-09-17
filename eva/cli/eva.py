@@ -189,13 +189,18 @@ class Wrap:
 
 
 # ---- transport ---------------------------------------------------------------------------
-def complete_stream(prompt: str, params: dict, on_chunk) -> dict:
+def complete_stream(prompt: str, params: dict, on_chunk, url: str | None = None) -> dict:
     """One streaming POST to llama's /completion. loom.py's `complete`, token by token.
 
     Streaming is the reason this is here and not a call into loom.py: in the page a branch
     is read when it is finished, beside three others; in a terminal the branch IS the
     reading, and a base model that takes twelve seconds to write a line has to be watched
     writing it or the tool feels dead.
+
+    `url` is per CALL and not per module, because the census now fans one document across
+    several llama-servers at once — one model per url. Left out it falls back to the module
+    name, read here and not at import, which is what lets the tests point eva.LLAMA at a
+    stub and what keeps eva and berserk on the single endpoint they have always had.
 
     Returns the page's shape, or {"error": ...}. KeyboardInterrupt is NOT caught here — the
     caller decides what a cut branch means, and `finally` still drops the socket, which is
@@ -212,7 +217,7 @@ def complete_stream(prompt: str, params: dict, on_chunk) -> dict:
     except (TypeError, ValueError):
         body["n_predict"] = 220
 
-    u = urlparse(LLAMA)
+    u = urlparse((url or LLAMA).rstrip("/"))
     conn = http.client.HTTPConnection(u.hostname or "127.0.0.1", u.port or 80,
                                       timeout=COMPLETE_TIMEOUT)
     prefix = (u.path or "").rstrip("/")

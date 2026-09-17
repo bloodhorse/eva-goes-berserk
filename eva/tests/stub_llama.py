@@ -198,9 +198,14 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"status": "ok"})
             return
         if self.path == "/props":
-            # The three fields an artifact reads, shaped as llama-server shapes them.
-            self._json(200, {"model_path": "/models/stub-base-12b.Q5_K_M.gguf",
-                             "default_generation_settings": {"n_ctx": 8192},
+            # The three fields an artifact reads, shaped as llama-server shapes them. The
+            # path and the window come off THIS server, not off the module: a census that
+            # compares two models runs two stubs in one process, and they have to be able
+            # to answer different names and different context sizes.
+            self._json(200, {"model_path": getattr(self.server, "model_path",
+                                                   "/models/stub-base-12b.Q5_K_M.gguf"),
+                             "default_generation_settings": {
+                                 "n_ctx": getattr(self.server, "n_ctx", 8192)},
                              "build_info": "b0000-stub", "total_slots": 1})
             return
         if self.path == "/seen":
@@ -215,6 +220,10 @@ class Handler(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length", "0") or 0)
         body = json.loads(self.rfile.read(n) or b"{}")
         SEEN.append(body)
+        # And once more per server. SEEN is one list for the whole process, so with two
+        # stubs up it cannot say WHICH of them was asked — which is exactly the thing a
+        # two-model census has to prove.
+        getattr(self.server, "seen", []).append(body)
         if self.path == "/tokenize":
             # One id per whitespace-led word, so " the" is one token and "hello there" is
             # two — which is the only property the drawer's resolver depends on: a spelling
@@ -303,12 +312,20 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.flush()
 
 
-def serve(port: int = 0) -> ThreadingHTTPServer:
+def serve(port: int = 0, n_ctx: int = 8192,
+          model_path: str = "/models/stub-base-12b.Q5_K_M.gguf") -> ThreadingHTTPServer:
     """Bound and ready, not yet serving. port 0 lets the OS pick — read it back off
     `srv.server_address[1]`, which is how the test avoids racing another process for a
-    port it guessed."""
+    port it guessed.
+
+    `n_ctx` and `model_path` are what this one answers on /props, and `srv.seen` is what it
+    alone was asked: three things a second stub in the same process needs of its own.
+    """
     srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     srv.daemon_threads = True
+    srv.n_ctx = n_ctx
+    srv.model_path = model_path
+    srv.seen = []
     return srv
 
 

@@ -161,7 +161,18 @@ the way are made by `write_sitting`, and the shelf listing spells every room as 
 unattended; the room is left standing on its root with every branch hanging off it, which is the
 shape the choose screen already reads. `--name` is a path too
 (`--name experiments/basin/free-01`), which is how a night of thirty censuses files itself as
-it is made instead of landing in one flat list.
+it is made instead of landing in one flat list. **`--models nemo=URL,pythia=URL,gpt2=URL`**
+turns a census into a blind comparison: the branches are split evenly between the servers,
+each model's share walking the same round-robin through `--temps`, and every branch stamped
+`meta.model` — the key, in the file and nowhere on the choose screen, so the pile is read
+first and told apart after. The order the branches are **written in is shuffled**, seeded
+from the room name, so position carries nothing and a rerun under that name lays out the
+same way; a model whose `/props` window can't hold the seed plus `n_predict` is skipped with
+a line on stderr and its share simply missing, never quietly truncated. **`--tail N`** cuts
+the document to its last N tokens (the first model's tokenizer, forward to a whole
+paragraph, sentences where no paragraph break falls in range) **before** the room is made,
+so the root IS what every model was handed — a long seed is a style lesson, and the fan
+spends itself imitating prose instead of standing on the seam.
 
 **walk** (`cli/walk/`): seed → short fan → pick (`walk.py`), fork a room at a branch and cut it
 (`fork.py`), fan wide under a branch (`fan_under.py`), read a naming fan (`names.py`). Its README
