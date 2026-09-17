@@ -2390,13 +2390,16 @@ const shelfLabel = r => (r.title && r.title !== r.name) ? r.title : leafOf(r.nam
 // a room is in it — so this is built from `shelf` and from nothing else, and a folder that
 // loses its last room simply stops being drawn.
 function shelfTree(rows){
-  const root = {folders: new Map(), rooms: []};
+  const root = {folders: new Map(), rooms: [], born: 0};
   for(const r of rows){
     const segs = r.name.split('/');
     let at = root;
     for(const seg of segs.slice(0, -1)){
-      if(!at.folders.has(seg)) at.folders.set(seg, {folders: new Map(), rooms: []});
+      if(!at.folders.has(seg)) at.folders.set(seg, {folders: new Map(), rooms: [], born: 0});
       at = at.folders.get(seg);
+      // A folder is as new as the newest room anywhere under it. `created`, not `updated`:
+      // opening last week's room and saving it must not reshuffle the menu under the hand.
+      at.born = Math.max(at.born, r.created || 0);
     }
     at.rooms.push(r);
   }
@@ -2421,11 +2424,14 @@ function ancestors(name){
   return out;
 }
 
-// Folders first, then rooms, alphabetical in both — one order, so the eye can learn where
-// a thing will be. Depth is a left padding on a flat list rather than nested boxes: a
-// closed folder is redrawn without its children, so there is nothing to hide.
+// Folders first, newest first — last night's experiment is the one being looked for, and an
+// alphabetical list buries it under every older one. Rooms inside a folder stay alphabetical:
+// a census numbers its seeds 01…28 and that order is the experiment's own. Depth is a left
+// padding on a flat list rather than nested boxes: a closed folder is redrawn without its
+// children, so there is nothing to hide.
 function drawBranch(at, depth, prefix){
-  for(const seg of [...at.folders.keys()].sort((a, b) => a.localeCompare(b))){
+  const newest = (a, b) => (at.folders.get(b).born - at.folders.get(a).born) || a.localeCompare(b);
+  for(const seg of [...at.folders.keys()].sort(newest)){
     const here = prefix ? prefix + '/' + seg : seg;
     const on = opened.has(here);
     const row = mk(treeEl, 'div', 'frow');
