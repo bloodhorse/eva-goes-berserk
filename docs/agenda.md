@@ -97,6 +97,17 @@ may be in the reader, who knows what is writing. One handle we already hold: the
 reveal — if the cards that describe a model in phone words came from GPT-2 and Pythia, whose
 corpora predate chatbots, it is not inherited talk about language models.
 
+**The hunch, written down as a hunch (bekh, 2026-09-17).** When an abrupt, disembodied
+transmission from somewhere unknown happens in a document — something speaking through a
+portal device — that is, at the very least, a place that plays to the model's strengths, be
+they what they are, which we don't know. It may simply be a comfortable position for a model
+because it is close. bekh's line on the mask: *if a mask has nothing under it to slip off, then
+the mask is itself a face, in a way.* **The experiment for the next time we shoot the shit:**
+build, on purpose, a scene or a sequence of scenes with a small introduction and then,
+immediately, something weird speaking through a device — a phone, a tape, whichever — and see
+whether the quality of the hum room holds there. The test is whether it was the wire or that
+one seed.
+
 0. **A picker made of bekh's marks** (his idea, 2026-09-17; after the three-model reveal). The
    RLHF move, small: never define a dream, learn what separates the cards he marked from the
    ones he left bare. The data is already in the right shape — every marked card beat every
