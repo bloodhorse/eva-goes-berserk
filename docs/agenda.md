@@ -91,9 +91,7 @@ detail, what's parked stays at the bottom until it's pulled. Rewritten in place,
   tense. A fan of thirty is a spread, read like cards, not an answer. It fits every finding so
   far: an *i* mid-situation, nothing asked, a seam that hands over the verb; and the seed is his
   own words, which is where the hand is allowed. Could be drawn from all three models, blind.
-  **Before it runs: the shelf is tracked and pushed to github**, so these rooms and seeds need
-  a folder that is gitignored (`shelf/sittings/private/`, `shelf/seeds/private/`) — a real
-  situation of his is the one thing on this shelf that is private.
+  It goes on the shelf like everything else: bekh's call, he is being transparent on purpose.
 - **The Gibson line, parked by bekh because he loves it and wants to see how it unfolds:**
   *"All the speed he took, all the turns he'd taken and the corners he'd cut in Night City, and
   still he'd see the matrix in his sleep, bright lattices of logic unfolding across that
