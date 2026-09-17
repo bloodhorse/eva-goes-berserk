@@ -500,8 +500,27 @@
   /* A phone on its side: ~390px tall, and the portrait 72px top gap plus the composer
      left 214px to read in. Keep just enough top to clear the fixed menu button (58px). */
   @media (max-height:500px){
-    #doc, #fanpane, #notepane, #artpane, #textpane{padding-top:64px;}
     #turnwrap{padding-top:10px;}
+  }
+  /* A phone's screen is all reading (2026-09-17: the choose screen spent a fifth of the
+     iPhone on a row holding only the menu button and on padding over the home bar). So up
+     to 900px the corner button stops owning a row: each screen's bar climbs into the
+     button's row and keeps clear of it on the right (18px margin + 42px button + 8px air,
+     minus the pane's own side padding), and every scroller runs to the bottom edge with the
+     home bar's inset as its last padding, so text slides under it instead of stopping short.
+     The dialogue has no bar: its text starts under the buttons and scrolls up behind them. */
+  @media (max-width:900px){
+    #doc, #fanpane, #notepane, #artpane, #textpane{
+      padding-top:calc(16px + env(safe-area-inset-top)); padding-bottom:0;}
+    #fanbar, #notebar, #artbar, #textbar{padding-right:calc(48px + env(safe-area-inset-right));
+      padding-bottom:12px; min-height:42px;}
+    #cards, #noteview, #artview, #textview{padding-bottom:calc(16px + env(safe-area-inset-bottom));}
+    #notetext{margin-bottom:calc(16px + env(safe-area-inset-bottom));}
+    #blocks{padding-top:50px;}
+    #doc #turnwrap{padding-bottom:calc(10px + env(safe-area-inset-bottom));}
+  }
+  @media (max-width:540px){
+    #fanbar, #notebar, #artbar, #textbar{padding-right:calc(56px + env(safe-area-inset-right));}
   }
   /* ---- the canvas -----------------------------------------------------------------------
      A whole experiment — one folder of rooms — as a picture you pan and zoom, the way a
@@ -3332,7 +3351,9 @@ function seedTail(text){
     .filter(i => i < t.length);
   let k = Math.max(0, cuts.length - 2);
   while(k > 0 && t.length - cuts[k] < 80) k--;
-  const s = t.slice(cuts[k]);
+  // A blank line between the two sentences is a paragraph break the header can show as a
+  // line break: the cards under it are where every byte of whitespace is read.
+  const s = t.slice(cuts[k]).replace(/\n\s*\n/g, '\n');
   return s.length > 400 ? tail(s, 400) : (cuts[k] ? '…' : '') + s;
 }
 
