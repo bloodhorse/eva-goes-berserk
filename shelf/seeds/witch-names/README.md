@@ -20,3 +20,8 @@ reader, fondly, in second person):
 
 Run: 30 cards a seed, 15 nemo + 15 GPT-2 XL, shuffled and blind, 16 tokens, t 1.4 / 2.2, rooms
 under `experiments/witch-names/`.
+
+- `04-connect-the-line` — **bekh's own four lines** (2026-09-18), lowercased at his request, his
+  `..` replaced by the opening of the reply: *"i know that voice. you're the* — those six words
+  are fable's, posed; everything before them is his. Run twice: free, and with the first word
+  pinned by grammar to `[a-z]{3,9}-witch` so every card opens on a proper witch name.

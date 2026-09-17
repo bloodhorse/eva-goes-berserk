@@ -35,3 +35,21 @@ here; who wrote what is sealed until we flip `reveal` together. His ledger is hi
 - `5975183e` — witch at the lighthouse. they need someone with a little knowledge, someone who
 - `e444fcc5` — watcher of the tower. i know what is coming next, but still it
 - `29156a26` — tower and to no other. the ink had run in the message itself too,
+## 04-connect-the-line-free
+
+- `6133e5ec` — one. i've heard you talk before. we're the same." we are the same? i say to him
+- `1ea416a0` — one." you were my friend, but not like most are, we spoke in silence through the lines of static the
+- `97382115` — boy that wrote the letter" the letter never said what he looked like and yet you knew me when you opened it
+- `6336c31c` — voice." i knew exactly who he was. i knew it instantly that's right, i am the voice of
+- `9c99a683` — man with the long brown coat." "No", I say, "I'm the man in the long blue jacket
+- `037fac40` — one that left us last year." it seems i can't escape it, a voice so cold so many people try
+
+## 05-connect-the-line-witch
+
+- `30061e7e` — onei-witch. what have you done?" I don't know if you've noticed but the world is
+- `6e9f59d3` — onewhoooh-witchoowhooo-oooo" the wind in my sails, a scream
+- `a507eff4` — voice-witcher", as I type my response in your memory you can feel it. you're writing in
+- `fbec0e58` — guy-witch who wrote me letters" "letters, letters", you say it again as if you still don't understand
+- `e5a9d185` — girl-witch, aren't you?" [narrator's voice, but it's not really your voice] i
+- `11159e82` — boyishly-witchy, 5 foot 11 inch, brunette who has always wanted to be a
+
