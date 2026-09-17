@@ -160,6 +160,14 @@ sampler, or whether a second button should write the whole fan; the cyborgism cr
 ampdot) is reachable only by a person — every channel is invite-only, ampdot's contacts are on
 the Act I manifund page.
 
+**Parked, decided (2026-09-17): the loom moves to the mini, generation stays on the mac** — the
+mirror (`eva/mirror/`) is the stopgap until bekh is at the desk for the cutover. The shape: loom and
+shelf (and its git) on the mini, llama on the mac bound to the tailnet ip; eva, census, walk and
+berserk run on the mini too (they write the shelf from disk), berserk needing the `claude` cli
+logged in there; the mirror's push, read-only mode and marks journal retire. Costs to face: every
+branch crosses the mac↔mini tailscale relay (fix the direct connection first), and the cutover —
+final sync, flip caddy, move the berserk timer — wants an hour with checks.
+
 **Parked:** room templates — a "new" list in the menu (chat, bare, irc, letters, novel…), each
 one only a header, two turn prefixes and stop strings, never seeded lines; plus "save this
 room as a template", stored as files in `templates/`.
