@@ -818,6 +818,19 @@ class Keep(unittest.TestCase):
         self.assertEqual(st, 200, d)
         self.assertNotIn("kept", self.read(t.d["name"])["nodes"][b["id"]])
 
+    def test_the_old_spelling_obeys_the_one_mark_rule(self):
+        """A branch wears one mark, whichever route sets it: the rule is in set_mark, so the
+        old name can't be the way round it."""
+        t, b, here = self.branch("keepone")
+        room, nid = t.d["name"], b["id"]
+        st, d = call("/api/mark", {"room": room, "node": nid, "mark": "good", "on": True})
+        self.assertEqual(st, 200, d)
+        st, d = call("/api/keep", {"room": room, "node": nid, "kept": True})
+        self.assertEqual((st, d["kept"], d["good"]), (200, True, False), d)
+        node = self.read(room)["nodes"][nid]
+        self.assertIs(node["kept"], True)
+        self.assertNotIn("good", node)
+
     def test_the_refusals(self):
         t, b, here = self.branch("keepno")
         h = t.human("you up")
@@ -843,9 +856,10 @@ class Keep(unittest.TestCase):
 
 
 class Mark(unittest.TestCase):
-    """The same write, addressed by mark name. `good` is the second one: "i liked reading
-    this and i would not keep it" — the thing keep was being spent on while a blind fan was
-    being read. The two are independent everywhere, and nothing downstream reads `good`.
+    """The same write, addressed by mark name. `good` is the second one: "kind of nice, i
+    would not keep it" — the thing keep was being spent on while a blind fan was being read.
+    A branch wears at most ONE (2026-09-17): setting either clears the other, and nothing
+    downstream reads `good`.
 
     Keep's two helpers, borrowed rather than inherited: subclassing would re-run Keep's own
     tests under this name, and the alias is already tested once above."""
@@ -868,17 +882,38 @@ class Mark(unittest.TestCase):
         self.assertEqual(st, 200, d)
         self.assertNotIn("good", self.read(t.d["name"])["nodes"][b["id"]])
 
-    def test_the_two_are_independent(self):
-        t, b, here = self.branch("both")
+    def test_a_branch_wears_one_mark(self):
+        """Star or circle, never both — and the answer says where both stand after the
+        write, because the page repaints a card off it."""
+        t, b, here = self.branch("onemark")
         room, nid = t.d["name"], b["id"]
-        for mark in ("kept", "good"):
-            self.assertEqual(call("/api/mark", {"room": room, "node": nid,
-                                                "mark": mark, "on": True})[0], 200)
+        st, d = call("/api/mark", {"room": room, "node": nid, "mark": "kept", "on": True})
+        self.assertEqual((st, d["kept"], d["good"]), (200, True, False), d)
+        # the circle knocks the star off, in the one write
+        st, d = call("/api/mark", {"room": room, "node": nid, "mark": "good", "on": True})
+        self.assertEqual((st, d["kept"], d["good"]), (200, False, True), d)
         node = self.read(room)["nodes"][nid]
-        self.assertEqual((node.get("kept"), node.get("good")), (True, True))
-        # taking one off leaves the other exactly where it was
+        self.assertNotIn("kept", node)          # the key goes, it is never set false
+        self.assertIs(node["good"], True)
+        # and the same the other way round
+        st, d = call("/api/mark", {"room": room, "node": nid, "mark": "kept", "on": True})
+        self.assertEqual((st, d["kept"], d["good"]), (200, True, False), d)
+        node = self.read(room)["nodes"][nid]
+        self.assertIs(node["kept"], True)
+        self.assertNotIn("good", node)
+        # and the canvas reads one mark off the same file
+        st, d = call("/api/folder?name=" + here)
+        cn = d["rooms"][0]["nodes"][nid]
+        self.assertEqual((cn.get("kept"), cn.get("good")), (True, None))
+
+    def test_taking_one_off_leaves_the_other_where_it_was(self):
+        """Only turning a mark ON clears the other: an unmark is not a reset of the card."""
+        t, b, here = self.branch("offone")
+        room, nid = t.d["name"], b["id"]
         self.assertEqual(call("/api/mark", {"room": room, "node": nid,
-                                            "mark": "kept", "on": False})[0], 200)
+                                            "mark": "good", "on": True})[0], 200)
+        st, d = call("/api/mark", {"room": room, "node": nid, "mark": "kept", "on": False})
+        self.assertEqual((st, d["kept"], d["good"]), (200, False, True), d)
         node = self.read(room)["nodes"][nid]
         self.assertNotIn("kept", node)
         self.assertIs(node["good"], True)
@@ -1342,6 +1377,29 @@ class Artifacts(unittest.TestCase):
         self.assertEqual(call("/api/artifact", {"room": room, "parent": "ghost",
                                                 "sync": True})[0], 400)
 
+    def test_a_circle_takes_the_star_off_and_the_artifact_follows(self):
+        """The one-mark rule reaches the shelf: ● on a starred branch clears ★, and a star
+        coming off sideways is still a star coming off — the fan's artifact is rebuilt
+        without it, and trashed when it was the last one."""
+        t, b = kept_fan("art-circle", keep=(1, 3))
+        room, at = t.d["name"], t.d["current"]
+        first = call("/api/artifact", {"room": room, "parent": at, "sync": True})[1]["name"]
+        self.assertEqual({k["id"] for k in art_get(first)[1]["steps"][-1]["kept"]},
+                         {b[1]["id"], b[3]["id"]})
+        # one of two: the file stays and loses that branch
+        st, d = call("/api/mark", {"room": room, "node": b[1]["id"],
+                                   "mark": "good", "on": True})
+        self.assertEqual((st, d["kept"], d["good"]), (200, False, True), d)
+        self.assertEqual([k["id"] for k in art_get(first)[1]["steps"][-1]["kept"]],
+                         [b[3]["id"]])
+        # the last one: nothing on disk stands behind the artifact any more
+        st, d = call("/api/mark", {"room": room, "node": b[3]["id"],
+                                   "mark": "good", "on": True})
+        self.assertEqual(st, 200, d)
+        self.assertEqual(art_get(first)[0], 404)
+        self.assertTrue(any(f.startswith(first)
+                            for f in os.listdir(os.path.join(ARTS, ".trash"))))
+
     def test_kept_flags_ride_in_the_room(self):
         t, b = kept_fan("art-flags")
         back = call("/api/sitting?name=" + t.d["name"])[1]
@@ -1722,7 +1780,10 @@ class ReadOnly(unittest.TestCase):
                                             "on": True})[0], 404)
         with open(os.path.join(SHELF, room + ".json"), encoding="utf-8") as f:
             node = json.load(f)["nodes"][nid]
-        self.assertTrue(node.get("kept") and node.get("good"))    # the page sees them at once
+        # the one-mark rule holds on the mirror too — the circle took the star off in the
+        # mirror's own copy, and the replay below lands on the same two flags on the mac
+        self.assertIs(node.get("good"), True)
+        self.assertNotIn("kept", node)
         with open(self.journal, encoding="utf-8") as f:
             lines = [json.loads(x) for x in f]
         self.assertEqual([(x["node"], x["mark"], x["on"]) for x in lines],

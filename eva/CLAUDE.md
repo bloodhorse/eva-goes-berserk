@@ -42,8 +42,13 @@ one fan's probabilities are 40 KB, and the cost here is the wire, not the render
 as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. `POST /api/mark
 {"room", "node", "mark": "kept"|"good", "on"}` re-reads that room, sets or deletes that flag on
 one **model** node and writes it with `write_sitting` — the same flags the choose screen leaves,
-so a harvest made on the canvas is in the rooms and in git. Two marks, independent: `kept` is
-what an artifact is built out of, `good` only says he liked reading it, and nothing downstream —
+so a harvest made on the canvas is in the rooms and in git. Two marks, and **a branch wears at
+most one** (2026-09-17): `kept` is what an artifact is built out of, `good` only says it was
+kind of nice and he wouldn't keep it, and turning either on pops the other in the same
+read-write — `set_mark` is the one place that rule lives, so no caller can leave a card wearing
+both, and the answer carries the state of *both* marks after the write for the page to repaint
+from. Turning a mark off touches nothing else. A circle that clears a star is a star coming off,
+so that path syncs the fan's artifact like any other unkeep; nothing else downstream —
 `build_artifact` above all — has heard of `good`. `POST /api/keep {"room","node","kept"}` is that
 route spelled the old way and is one line, never a second copy of the write. Read and write sit next to each other and there
 is no lock: a census appending to that room in the same instant loses a branch or loses the
@@ -90,9 +95,11 @@ edit), **artifacts** (a list; each opens as a tree). The composer is greyed with
 **Artifacts** are the opposite of rooms: a room is a dry run, an artifact is a **walk** frozen —
 the document it started from and every fork along the way. On the choose screen every card carries
 the same two glyph marks the canvas cards do — `☆`/`★` **keep** (an optional `kept: true` on the
-node, saved with the room; eva ignores it and keeps it) and `○`/`●` **good**, which only says he
-liked reading it and which no artifact ever sees — and that is the whole gesture: he keeps as he
-goes, picks, walks on, keeps more at the next fork.
+node, saved with the room; eva ignores it and keeps it) and `○`/`●` **good**, which only says it
+was kind of nice, he wouldn't keep it, and which no artifact ever sees — **one card, one mark**,
+so putting the circle on a starred card takes the star off (and rebuilds that fan's artifact
+without it). That is the whole gesture: he keeps as he goes, picks, walks on, keeps more at the
+next fork.
 **A star is the save** (2026-09-17 — there is no save button). Every toggle of keep, on the choose
 screen or the canvas, asks the server to sync *that fan's* artifact (`POST /api/artifact
 {"room","parent","sync":true}`; `/api/keep` does it by itself): rebuilt from the kept flags on disk
@@ -191,11 +198,13 @@ and no `×N` is written anywhere. Zoomed out — below `textK()`, which reads th
 cards drop their ink and become bricks coloured by that ramp.
 **Two marks** sit in every card's head as glyphs — `☆`/`★` **keep** in ice, `○`/`●` **good** in
 the accent — written through `/api/mark`, optimistically, reverting with a notice if the server
-refuses; `good` exists because keep was being spent on everything merely liked while a blind
-three-model fan was read, and it means "i liked this, i wouldn't keep it". Up close the mark is
-the card's border (kept ice, good accent, both = ice with an accent inner edge); zoomed out, where
-there is no glyph left, it is the fill (kept ice, good accent at 45%) and a marked stack keeps its
-heat and takes a ring. A stack counts its members' marks in its head and marks the one on top.
+refuses (a revert puts back the mark the write cleared, too); `good` exists because keep was being
+spent on everything merely liked while a blind three-model fan was read, and it means "kind of
+nice, i wouldn't keep it". **A card wears one of them, never both**: setting either clears the
+other, in the page's local state and on disk in the same write, so `★ N · ● M` in the bar and a
+stack's counts are two piles and not one overlapping heap. Up close the mark is the card's border
+(kept ice, good accent); zoomed out, where there is no glyph left, it is the fill (kept ice, good
+accent at 45%) and a marked stack keeps its heat and takes a ring. A stack counts its members' marks in its head and marks the one on top.
 The bar reads `★ N · ● M`, and the filter beside it cycles three states: `all` → `● + ★` →
 `★ only`. **reveal** appears only when a folder holds two or more models, is off by default and
 is never remembered: it puts a model tag and a patterned top edge (solid / dashed / dotted —

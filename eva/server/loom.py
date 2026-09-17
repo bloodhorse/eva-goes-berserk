@@ -35,7 +35,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   POST /api/mark             -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
-                               reading it, and nothing downstream reads it
+                               reading it, and nothing downstream reads it. A branch wears
+                               AT MOST ONE: turning one on turns the other off, and the
+                               answer carries the state of both after the write
   POST /api/keep             -> {"room", "node", "kept"}: /api/mark spelled the old way, for
                                anything written before there were two marks
   GET  /api/sitting?name=    -> one whole tree
@@ -670,15 +672,23 @@ def folder_canvas(name: str) -> dict | None:
 
 
 MARKS = ("kept", "good")
-"""The two marks a branch can wear, and the only two. `kept` is "this goes in the artifact";
-`good` is "i liked reading this, and i would not keep it" — the thing bekh was spending `kept`
-on while reading a blind three-model fan, which is how a mark that means everything comes to
-mean nothing. They are independent: a branch can wear both, either or neither, and nothing
-downstream — build_artifact above all — has ever heard of `good`."""
+"""The two marks a branch can wear, and the only two. `kept` is "this made me feel something,
+keep it"; `good` is "kind of nice, i would not keep it" — the second one exists so a model
+comparison has counts to read, which is what `kept` was being spent on while a blind
+three-model fan went past, and that is how a mark that means everything comes to mean nothing.
+
+**A branch wears at most one** (2026-09-17): star or circle, never both, and the server is the
+one place that rule lives — see set_mark. Nothing downstream — build_artifact above all — has
+ever heard of `good`."""
 
 
-def set_mark(room: str, nid: str, mark: str, on: bool):
+def set_mark(room: str, nid: str, mark: str, on: bool) -> dict:
     """Mark or unmark one branch, in the room itself.
+
+    Turning a mark ON pops the other one in the same read-write, because the two answer one
+    question and a card wearing both answers it twice. Turning a mark off touches nothing
+    else. One load, one save: a clear and its mark can never land as two writes and leave a
+    card wearing both for the length of a disk flush.
 
     The same flags the choose screen leaves, so a harvest made on the canvas is in the
     rooms and in git, and not in some second list only the canvas knows about. Absent means
@@ -691,7 +701,10 @@ def set_mark(room: str, nid: str, mark: str, on: bool):
     project's dry-run law — a lost fan is an acceptable loss, and no locking is coming — and
     the window is one json load plus one dict lookup wide.
 
-    Returns the branch's parent — the fan it belongs to, which a keep has to sync.
+    Returns {"parent", "kept", "good", "cleared"}: the fan this branch hangs off — which a
+    keep has to sync — both marks as they now stand, and the marks this write took off to
+    make room for `mark`. The caller needs `cleared` because a circle that knocked a star off
+    is a star coming off, and that fan's artifact has to follow it.
     Raises FileNotFoundError (no room), KeyError (no such node) and ValueError (not a branch,
     or not a mark we have).
     """
@@ -705,12 +718,20 @@ def set_mark(room: str, nid: str, mark: str, on: bool):
         raise KeyError(nid)
     if node.get("kind") != "model":
         raise ValueError("only a branch can be marked")
+    cleared = []
     if on:
         node[mark] = True
+        # The one place the at-most-one rule lives. Every hand that marks — the choose
+        # screen, the canvas, the mirror's replay, /api/keep — comes through here, so no
+        # caller can leave a card wearing both by forgetting.
+        for other in MARKS:
+            if other != mark and node.pop(other, None) is not None:
+                cleared.append(other)
     else:
         node.pop(mark, None)
     write_sitting(d)
-    return node.get("parent")
+    return {"parent": node.get("parent"), "cleared": cleared,
+            "kept": bool(node.get("kept")), "good": bool(node.get("good"))}
 
 
 def set_kept(room: str, nid: str, kept: bool) -> None:
@@ -1617,15 +1638,20 @@ class Handler(BaseHTTPRequestHandler):
                                           "one of " + "/".join(MARKS) + " and a boolean"})
                 return
             try:
-                parent = set_mark(room, nid, mark, want)
+                done = set_mark(room, nid, mark, want)
+                parent = done["parent"]
                 if READONLY:
                     # Artifacts are the mac's to build: the replay goes through this same
-                    # route there, and the sync below runs then.
+                    # route there, and the sync below runs then. The line says what was
+                    # asked for, not what it cleared — the rule is in set_mark on both
+                    # machines, so the replay lands on the same two flags.
                     with open(MARKS_JOURNAL, "a", encoding="utf-8") as f:
                         f.write(json.dumps({"room": room, "node": nid, "mark": mark,
                                             "on": want, "ts": time.time()}) + "\n")
-                # A star on the canvas is a star: its fan's artifact follows it.
-                elif mark == "kept" and parent:
+                # A star on the canvas is a star: its fan's artifact follows it. So does a
+                # circle that knocked a star off — that is a star coming off, and without
+                # this the fan keeps an artifact no flag on disk stands behind.
+                elif parent and (mark == "kept" or "kept" in done["cleared"]):
                     sync_artifact(room, parent)
             except FileNotFoundError:
                 self._json(404, {"error": "no such sitting"})
@@ -1641,8 +1667,10 @@ class Handler(BaseHTTPRequestHandler):
             except OSError as exc:
                 self._json(500, {"error": f"can't write it: {exc}"})
                 return
-            self._json(200, {"ok": True, "room": room, "node": nid,
-                             "mark": mark, "on": want, mark: want})
+            # Both marks, as they stand after the write and not as the caller asked: setting
+            # one clears the other, and the page repaints a card off this answer.
+            self._json(200, {"ok": True, "room": room, "node": nid, "mark": mark, "on": want,
+                             "kept": done["kept"], "good": done["good"]})
             return
 
         if u.path == "/api/complete":

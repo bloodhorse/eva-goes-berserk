@@ -686,12 +686,11 @@
   }
   .cn-card .body{font-size:13px; line-height:1.55;}
   .cn-card.furniture{opacity:.45;}
-  /* The border says the same thing the glyph does, for a card read at a glance. `good` is
-     stated first and `kept` second on purpose: same specificity, so the later rule wins and
-     a branch wearing both reads as kept, with the accent as an inner edge underneath. */
+  /* The border says the same thing the glyph does, for a card read at a glance — and it says
+     one thing, because a branch wears one mark: ice all round for a keep, accent for a good.
+     No rule for the pair: the two can't be on one card. */
   .cn-card.good > .cn-face{border-color:var(--accent); border-left-color:var(--accent);}
   .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
-  .cn-card.kept.good > .cn-face{box-shadow:inset 0 0 0 1px var(--accent);}
   /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
   .cn-sub{color:var(--live);}
   /* the model tag and its edge, both only under `reveal`. The tag is a file name, so it is
@@ -744,26 +743,22 @@
     border-left-color:var(--cn-heat);}
   /* Zoomed out there is no glyph and no border to read: a brick is its fill, so each mark
      spends its own hue. Good is the fill at 45% — softer than a keep, which is what it
-     means — and again `good` first so a branch wearing both reads as kept. */
+     means — and one card is only ever one of these two. */
   #canworld.far .cn-card.good > .cn-face{
     background:color-mix(in srgb, var(--accent) 45%, var(--bg));
     border-left-color:color-mix(in srgb, var(--accent) 45%, var(--bg));}
   #canworld.far .cn-card.kept > .cn-face{
     background:color-mix(in srgb, var(--live) 58%, var(--bg));
     border-left-color:color-mix(in srgb, var(--live) 58%, var(--bg));}
-  #canworld.far .cn-card.kept.good > .cn-face{box-shadow:inset 0 0 0 10px var(--accent);}
   /* a marked stack: heat fill, the mark's ring. The ring is an inset box-shadow and not a
      border, because a border would change the box and the layout would jump at the
-     threshold — and 12 world px is what it takes for it to still be there at fit zoom.
-     Both marks: the ice ring with the accent one just inside it, so neither is lost. */
+     threshold — and 12 world px is what it takes for it to still be there at fit zoom. */
   #canworld.far .cn-card.cn-stack.good > .cn-face{background:var(--cn-heat);
     border-color:var(--accent); border-left-color:var(--accent);
     box-shadow:inset 0 0 0 12px var(--accent);}
   #canworld.far .cn-card.cn-stack.kept > .cn-face{background:var(--cn-heat);
     border-color:var(--live); border-left-color:var(--live);
     box-shadow:inset 0 0 0 12px var(--live);}
-  #canworld.far .cn-card.cn-stack.kept.good > .cn-face{
-    box-shadow:inset 0 0 0 12px var(--live), inset 0 0 0 20px var(--accent);}
   #canworld.far .cn-face > *{visibility:hidden;}
   /* the clip fade is a pseudo, so visibility:hidden on children misses it: a panel-soft
      gradient painted over a heat brick would read as a smudge */
@@ -1309,27 +1304,30 @@ let artQueue = Promise.resolve();
 // Both marks on this screen too, written the way this screen writes everything: into the
 // tree the page owns, then the whole sitting back to the server. `kept` is what an artifact
 // is built out of; `good` is read by nobody and is there so keep can go back to meaning one
-// thing. Neither touches the other.
+// thing — and a branch wears at most one, so setting either clears the other (markLocally
+// holds that rule for both screens, the server holds it for the file).
 function toggleMark(n, mark){
   if(!sitting || stopping) return;
-  if(n[mark]) delete n[mark];     // optional key: absent means not marked, like every old room
-  else n[mark] = true;
+  const want = !n[mark];
+  const cleared = markLocally(n, mark, want);
   renderFan();
   if(readonly){
     // The mirror takes marks one at a time and nothing else: a whole-room save is refused
     // there, and the artifact is built on the mac when it replays the mark.
-    const want = !!n[mark];
     postJSON('/api/mark', {room: sitting.name, node: n.id, mark, on: want}).then(d => {
       if(d && d.error) throw new Error(d.error);
+      if(adoptMarks(n, d)) renderFan();
     }).catch(e => {
-      if(want) delete n[mark]; else n[mark] = true;
+      unmarkLocally(n, mark, want, cleared);
       renderFan();
       sys('the mark did not land: ' + e.message, true);
     });
     return;
   }
   save();
-  if(mark === 'kept') syncArtifact(sitting.name, n.parent);
+  // A star is the save — and a circle that just knocked a star off is a star coming off, so
+  // that fan's artifact has to be rebuilt (or trashed) on that path too.
+  if(mark === 'kept' || cleared) syncArtifact(sitting.name, n.parent);
 }
 
 // In a line, behind the saves: the server reads the stars off the disk, so the room write
@@ -2155,25 +2153,57 @@ function canPathOf(room){
 
 // ---- the two marks: they go in the room, not in this browser ----------------------------
 // `kept: true` and `good: true`, the same flags the choose screen leaves, written through
-// /api/mark, so a harvest made here is in the rooms and in git. Independent on purpose: one
-// says "this goes in the artifact", the other only "i liked reading it", and keep stopped
-// meaning the first when it was being spent on both. Optimistic, because the alternative is
-// a button that waits on a disk write before it lights up; a refusal puts the card back.
+// /api/mark, so a harvest made here is in the rooms and in git. ★ is "this made me feel
+// something, keep it"; ● is "kind of nice, wouldn't keep", and it exists so a model
+// comparison has counts to read. **A branch wears at most one** (2026-09-17): they answer
+// one question, and a card wearing both answers it twice — which is what made keep mean
+// nothing. Optimistic, because the alternative is a button that waits on a disk write
+// before it lights up; a refusal puts the card back the way it was, the cleared mark and all.
 const MARK_GLYPH = {kept: ['☆', '★'], good: ['○', '●']};
+const OTHER_MARK = {kept: 'good', good: 'kept'};
+
+// The local half of the rule, ahead of the write. Returns whether the other mark was on and
+// had to go — a refusal has to put that back too, or the card comes out of a failed write
+// wearing neither.
+function markLocally(n, mark, want){
+  const other = OTHER_MARK[mark];
+  const cleared = want && !!n[other];
+  if(want){ n[mark] = true; delete n[other]; }   // optional keys: absent means not marked
+  else delete n[mark];
+  return cleared;
+}
+
+function unmarkLocally(n, mark, want, cleared){
+  if(want){ delete n[mark]; if(cleared) n[OTHER_MARK[mark]] = true; }
+  else n[mark] = true;
+}
+
+// The server is where the rule lives, and its answer carries both flags after the write:
+// take them, so a page that guessed wrong about what a mark cleared can't stay wrong.
+// Returns whether anything moved, so the card is only repainted when it has to be.
+function adoptMarks(n, d){
+  let moved = false;
+  for(const m of ['kept', 'good']){
+    if(!!d[m] === !!n[m]) continue;
+    if(d[m]) n[m] = true; else delete n[m];
+    moved = true;
+  }
+  return moved;
+}
 
 async function canToggleMark(room, node, mark, after){
   const want = !node[mark];
   const paint = () => { after(); canPaintMarks(); if(canFilter) canLayout(); };
-  if(want) node[mark] = true; else delete node[mark];
+  const cleared = markLocally(node, mark, want);
   paint();
   let d;
   try{ d = await postJSON('/api/mark', {room: room.name, node: node.id, mark, on: want}); }
   catch(e){ d = {error: e.message}; }
   if(d && d.error){
-    if(want) delete node[mark]; else node[mark] = true;
+    unmarkLocally(node, mark, want, cleared);
     paint();
     sys('not marked: ' + d.error, true);
-  }
+  }else if(adoptMarks(node, d)) paint();
 }
 
 // One glyph button. The label is the shape — ☆/★, ○/● — so the word it stands for lives in
