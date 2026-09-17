@@ -85,6 +85,18 @@ fitting every other finding — real, obscure, first person, sober, and about a 
 telegraph operator's diary, a switchboard girl's memoir, a lighthouse log, a radio ham's
 logbook, a signalman's statement to an inquest.
 
+Two things out of it, both for later, not today. **Fan under the best cards of the hum room**,
+seed plus card together as the room (the blood card `442ab836` and *the humming is happening to
+me* `4aec75fc` first). And **the open question, bekh's**: why would a truly base model have an
+attractor of being a bodiless voice at all? A pure continuer takes any perspective completely,
+without knowing or feeling that one fits it better; knowing what it is seems to come only with
+instruct training. Weaker readings that need no self: a voice on a line is the character with
+the fewest claims the medium can contradict (no hands to keep track of), so it stays coherent
+and cannot be caught out; the haunted-media genre alone may explain it; and the ring of truth
+may be in the reader, who knows what is writing. One handle we already hold: the three-model
+reveal — if the cards that describe a model in phone words came from GPT-2 and Pythia, whose
+corpora predate chatbots, it is not inherited talk about language models.
+
 0. **A picker made of bekh's marks** (his idea, 2026-09-17; after the three-model reveal). The
    RLHF move, small: never define a dream, learn what separates the cards he marked from the
    ones he left bare. The data is already in the right shape — every marked card beat every
