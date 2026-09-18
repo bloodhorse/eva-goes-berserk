@@ -245,7 +245,17 @@ a seed heading flies to its block, `esc` closes an opened card or fits; nothing 
 is selectable and the cursor stays the ordinary arrow. `open room` goes to `#room=<path>` —
 another of the page's addresses — so the browser's own back button comes home to `#canvas=` or
 `#board=` with the camera where it was (kept in `sessionStorage` per folder and per board, under
-two prefixes so a board named like a folder never takes its camera). `reload` re-reads the folder
+two prefixes so a board named like a folder never takes its camera). **Reading** (2026-09-18) is the same canvas as text, because a chain is a
+transcript and a column one card wide reads it through a keyhole: a `read` chip in the bar
+wherever the canvas holds a chain, and a canvas of nothing but chains (every wire board) opens
+on it; once pressed either way, the choice holds for every board in the tab. One scrolling page
+in the reading column — each room's name with `→` into it, the seed only when it differs from
+the room above, then the model lines alone (beats are scaffolding and never shown; edge
+newlines trimmed), the model's name in a narrow margin under `reveal`, and `☆`/`○` at the right
+edge on hover, shown for good once worn, through the same `canMarkBtns` → `/api/mark`,
+repainting the picture's card as well. The filter applies; a room that forked is left to the
+picture. The arrows scroll the page natively there, and its scroll is remembered per board
+across a room and back. `reload` re-reads the folder
 or the board while a census is still writing and keeps the camera.
 
 All chrome is lowercase by one CSS rule; the document, anything typed and the export screen keep
