@@ -418,10 +418,14 @@
   /* The end of the document the fan continues, so a card is read against the words it
      answers without flipping back to the dialogue. Outside #cards on purpose: it stays put
      while the answers scroll. Capped, because a pasted page with no full stops is one
-     "sentence" and would push the cards off the screen. */
+     "sentence" and would push the cards off the screen — and capped from the TOP: the text sits
+     at the bottom of the box (flex-end overflows the start edge) and a long sentence loses its
+     beginning under a fade, never its end, which is the very words the cards continue. */
   #fanlead{flex-shrink:0; padding:0 56px 18px 64px; color:var(--ghost); font-size:15px;
-    line-height:1.6; white-space:pre-wrap; max-height:9.6em; overflow:hidden;}
-  #fanlead:empty{display:none;}
+    line-height:1.6; white-space:pre-wrap; max-height:9.6em; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:flex-end;}
+  #fanlead.cut{-webkit-mask-image:linear-gradient(to bottom, transparent, #000 2.4em);
+    mask-image:linear-gradient(to bottom, transparent, #000 2.4em);}
   #cards{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
     display:flex; flex-direction:column; gap:20px; padding:2px 56px 28px 64px;}
   .card{flex-shrink:0; background:var(--panel); border:1px solid transparent; border-radius:14px;
@@ -911,7 +915,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
-      <div id="fanlead" class="body"></div>
+      <div id="fanlead" class="body" hidden><div id="fanleadtext"></div></div>
       <div id="cards"></div>
     </section>
 
@@ -3417,7 +3421,10 @@ function renderFan(){
   const scroll = cardsEl.scrollTop;
   const focused = document.activeElement && document.activeElement.dataset.node;
   cardsEl.textContent = '';
-  $('fanlead').textContent = sitting && fanFrom ? seedTail(promptFrom(fanFrom)) : '';
+  const lead = sitting && fanFrom ? seedTail(promptFrom(fanFrom)) : '';
+  $('fanleadtext').textContent = lead;
+  $('fanlead').hidden = !lead;
+  $('fanlead').classList.toggle('cut', !!lead && $('fanleadtext').offsetHeight > $('fanlead').clientHeight);
   if(!sitting || !fanFrom) return;
   const list = kids(fanFrom).filter(n => n.kind === 'model');
   if(!list.length && !running){
@@ -3949,11 +3956,16 @@ function drawBranch(at, depth, prefix){
   }
 }
 
+let unfoldedFor = null;   // the room whose folders drawShelf last opened
 function drawShelf(){
   treeEl.textContent = '';
-  // The folders on the way to the open room are opened for it: a mark on the current room
-  // behind three folds is a mark nobody can see.
-  for(const f of ancestors(picked)) opened.add(f);
+  // The folders on the way to the open room are opened for it, once, when that room becomes
+  // the open one: a mark on the current room behind three folds is a mark nobody can see. Not
+  // on every draw — that re-opened a folder the moment he folded it (2026-09-18, the phone).
+  if(picked !== unfoldedFor){
+    for(const f of ancestors(picked)) opened.add(f);
+    unfoldedFor = picked;
+  }
   drawBranch(shelfTree(shelf), 0, '');
   const row = shelf.find(s => s.name === picked);
   $('here').textContent = row ? shelfLabel(row) : (sitting ? (sitting.title || leafOf(sitting.name)) : '');
