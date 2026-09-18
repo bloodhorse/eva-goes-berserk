@@ -42,6 +42,21 @@ seed, the seam, first person, a wire, a short sober room; the one fan with three
 grew under a line that was already strange; and the generating-side levers nobody has tried here
 are item 7 below.
 
+**Where the brainstorm landed (2026-09-18, morning).** Picking and generating are not the same
+problem: a picker returns what the fan already holds; only generation-side changes ever moved a
+fan. Four families were put on the table, and bekh sorted them:
+- **The document supply** (mined sober seeds, kept cards grafted onto them) — **no**. His reason,
+  kept: if the right seed reliably gives the right dream, that isn't dreamy. He wants the dream
+  to be emergent from the process, not engineered into the seed.
+- **The sampler's shape** (hot for the first tokens, cool after; contrastive decoding) —
+  **parked, to try for sure.**
+- **The model itself** (a preference finetune of the *writer* on marked-over-unmarked pairs, so
+  the marks change what comes out instead of what gets shown) — **parked.** Obvious in
+  hindsight. Cost, honestly: cheap-ish for GPT-2 XL (1.5B, adapters, an evening on the mac);
+  not cheap for nemo; and the tuned-seat-that-says-nothing risk stands.
+- **The loop's shape — two models on one ghostly line** — **now.** See `experiments/wire/`.
+
+
 
 1. **A scorer made of bekh's marks — a side road that lives beside the work** (shape agreed
    2026-09-17, evening). Not the main avenue, and not written off: it eats what the work
