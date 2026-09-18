@@ -74,21 +74,23 @@ of the text they continue (one more when those are under ~80 characters, capped 
 while the cards scroll. Beside the corner menu, on the dialogue screen only, a fan icon opens the
 alternatives in one click — the canvas bar reserves room for the menu button alone. Everything
 else hides behind the corner menu: the
-**room tree** (the shelf's folders, drawn from the room paths and from nothing else — folders
+**room tree**, folded behind a `rooms` button so the menu doesn't open on a wall of folders (the
+shelf's folders, drawn from the room paths and from nothing else — folders
 first then rooms, alphabetical, `▸`/`▾`, closed by default, which folds are open remembered
 per browser in `localStorage`; the open room is named once at the top and marked in the accent
-on its own row, and the folders on the way to it are unfolded for it), **basic** / **bare**
-(new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all — no header, no names,
-no stop strings, whitespace kept; the field under those two buttons says where it goes — blank
-is a random name at the top of the shelf, `basin/` a random name in that folder, `basin/s-01`
-that room), **rename** (rooms get random hex file names; the title is display only, ≤120 chars),
+on its own row, and the folders on the way to it are unfolded for it once, when it opens),
+**basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all —
+no header, no names, no stop strings, whitespace kept; pressing one brings up a where-field
+filled with the open room's folder — blank is a random name at the top of the shelf, `basin/` a
+random name in that folder, `basin/s-01` that room — and the same button again or return makes
+it, esc drops it), **rename** (rooms get random hex file names; the title is display only, ≤120 chars),
 **move to…** (on the open room from the toolrow, on a folder from a `move` beside it: a sheet
 listing the folders that exist plus one field for a path that doesn't — a choice fills the
 field, confirming posts `/api/move`, and a room that moves under the page's feet is re-opened
 from its new path, because the name inside the file is what the next save posts back),
 **clear** (same room run again: the old tree is
 copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, file moves to
-`.trash`), view alternatives, continue from here, **sampler**, **storage** (note names as links, `+`
+`.trash`), continue from here, **sampler**, **storage** (note names as links, `+`
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
 edit), **artifacts** (a list; each opens as a tree). The composer is greyed with no room open.
 

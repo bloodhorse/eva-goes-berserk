@@ -139,8 +139,6 @@
     background:var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:20px;
     box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
   .shelfrow{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
-  #curation{margin-bottom:12px;}
-  #curation:empty{display:none;}
   /* The open room, named once at the top of the menu. One line, cut with an ellipsis: the
      tree below marks the same room in the accent, so this is a heading and not the picker —
      a second full-width title fighting the tree for the eye is what it must not be. */
@@ -154,8 +152,12 @@
      not be, or the shelf and the menu would be able to disagree about what is on it.
      Indentation is padding on the row and never a nested box, so a deep room can wrap its
      label instead of pushing the menu sideways. */
-  #shelftree{max-height:min(46vh, 300px); overflow-y:auto; scrollbar-width:thin;
+  /* Folded away behind `rooms` (2026-09-18): a menu that opened on a wall of folders buried the
+     few buttons under it. Open, it is the same tree it always was. */
+  #shelftree{display:none; max-height:min(46vh, 300px); overflow-y:auto; scrollbar-width:thin;
     margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px;}
+  #shelftree.on{display:block;}
+  #roomsbtn{display:block; margin-bottom:6px;}
   #shelftree .frow, #shelftree .rrow{display:flex; align-items:baseline; gap:10px;}
   #shelftree button{padding:3px 0; font-size:14px;}
   #shelftree .fold, #shelftree .roomlink{flex:1; text-align:left; min-width:0;
@@ -837,8 +839,8 @@
       <button class="ghostbtn" id="treebtn" type="button" hidden title="berserk's walk of this room, as a tree">Tree</button>
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
+    <button class="ghostbtn" id="roomsbtn" type="button" aria-expanded="false" aria-controls="shelftree">Rooms</button>
     <div id="shelftree" role="tree" aria-label="Which room"></div>
-    <div id="curation" class="sys"></div>
     <div class="toolrow">
       <button class="ghostbtn" id="newbtn" type="button" title="a new room: the chat-log header, your lines and the other side's">Basic</button>
       <button class="ghostbtn" id="newbarebtn" type="button" title="a new bare room: no header, no names, you write and it continues">Bare</button>
@@ -850,8 +852,7 @@
     <!-- Where the next Basic or Bare room goes. A name is a path, so this is the only field
          on the page that files something: blank is a random name at the top of the shelf,
          `basin/` is a random name in that folder, `basin/smoke-01` is that room. -->
-    <input id="newname" placeholder="folder/ or folder/name (blank = random)" aria-label="Where a new room goes" maxlength="512" autocomplete="off" spellcheck="false">
-    <button class="ghostbtn" id="choicesbtn" type="button">View alternatives</button>
+    <input id="newname" hidden placeholder="folder/ or folder/name — blank is a random name at the top" aria-label="Where the new room goes" maxlength="512" autocomplete="off" spellcheck="false">
     <button class="ghostbtn" id="fanbtn" type="button">Continue from here</button>
     <button class="ghostbtn" id="samp" type="button" aria-expanded="false" aria-controls="sampwrap">Sampler</button>
     <div id="askbox">
@@ -1153,6 +1154,7 @@ function menu(open){
   $('tools').hidden = !open;
   $('menubtn').setAttribute('aria-expanded', String(open));
   if(!open){
+    dropWhere();
     $('renamebox').classList.remove('on');
     $('movebox').classList.remove('on');
     moving = null;
@@ -3081,41 +3083,6 @@ function twins(n){
     .filter(s => s.parent === n.parent && s.kind === 'model' && s.text.trim() === same).length;
 }
 
-function curation(){
-  const all = Object.values(sitting.nodes);
-  let bits = 0, picks = 0;
-  for(const n of path()){
-    if(n.kind !== 'model' || n.posed){
-      const t = estTokens(n.text);
-      if(t){ bits += t; picks++; }
-      continue;
-    }
-    const sibs = all.filter(s => s.parent === n.parent && s.kind === 'model');
-    const kept = sibs.filter(s => !s.pruned &&
-      (s.id === n.id || all.some(k => k.parent === s.id)));
-    // A branch that says exactly what a kept branch says cost nothing to throw away — the
-    // same text was on offer twice, so the choice was between fewer things than it looks.
-    const texts = new Set(kept.map(s => s.text.trim()));
-    const m = sibs.filter(s => kept.includes(s) || texts.has(s.text.trim())).length;
-    if(sibs.length > 1 && m > 0 && m < sibs.length){
-      bits += Math.log2(sibs.length / m);
-      picks++;
-    }
-  }
-  const tokens = estTokens(path().map(n => n.text).join(''));
-  return {bits, tokens, picks,
-          perToken: tokens ? bits / tokens : 0,
-          perPick: picks ? Math.round(tokens / picks) : 0};
-}
-function drawCuration(){
-  const el = $('curation');
-  if(!sitting){ el.textContent = ''; return; }
-  const c = curation();
-  el.textContent = 'curation: ' + (Math.round(c.bits * 10) / 10) + ' bits · ' +
-    (Math.round(c.perToken * 1000) / 1000) + ' bits/token' +
-    (c.picks ? ' · 1 pick per ' + c.perPick + ' tokens' : '');
-}
-
 // ---- how improbable was that word ----------------------------------------------------
 // Which lines are showing their tokens. Page state, deliberately not in the file: it is a
 // way of looking at a line, not a fact about it.
@@ -3512,7 +3479,7 @@ function gate(){
   $('movebtn').disabled = !on || running || stopping || saving;
   $('renamename').disabled = saving;
   $('movepath').disabled = saving;
-  $('choicesbtn').disabled = $('fanjump').disabled = !on || !alternativesFrom();
+  $('fanjump').disabled = !on || !alternativesFrom();
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
   $('stop').disabled = stopping;
@@ -3523,7 +3490,6 @@ function gate(){
 
 function render(){
   gate();
-  drawCuration();
   if(!sitting) return;
   turnLabel();
   renderDoc();
@@ -4230,10 +4196,38 @@ async function clearSitting(){
 }
 
 // ---- wiring --------------------------------------------------------------------------
-$('newbtn').addEventListener('click', () => newSitting(false, {path: $('newname').value}));
-$('newbarebtn').addEventListener('click', () => newSitting(true, {path: $('newname').value}));
+// Basic and Bare ask where first: the field shows up under them, filled with the open room's
+// folder, so a new room lands beside the one he is in unless he says otherwise. The same
+// button again, or return, makes it; esc or closing the menu drops it.
+let newKind = null;      // 'basic' | 'bare' while the where-field is up
+function askWhere(kind){
+  if(newKind === kind) return makeRoom();
+  newKind = kind;
+  const f = $('newname');
+  const folder = sitting && sitting.name.includes('/') ? sitting.name.slice(0, sitting.name.lastIndexOf('/') + 1) : '';
+  f.value = folder;
+  f.hidden = false;
+  $('newbtn').classList.toggle('hot', kind === 'basic');
+  $('newbarebtn').classList.toggle('hot', kind === 'bare');
+  f.focus();
+  f.setSelectionRange(f.value.length, f.value.length);
+}
+function dropWhere(){
+  newKind = null;
+  $('newname').hidden = true;
+  $('newbtn').classList.remove('hot');
+  $('newbarebtn').classList.remove('hot');
+}
+function makeRoom(){
+  const kind = newKind, path = $('newname').value;
+  dropWhere();
+  if(kind) newSitting(kind === 'bare', {path});
+}
+$('newbtn').addEventListener('click', () => askWhere('basic'));
+$('newbarebtn').addEventListener('click', () => askWhere('bare'));
 $('newname').addEventListener('keydown', e => {
-  if(e.key === 'Enter' && !e.isComposing){ e.preventDefault(); newSitting(false, {path: $('newname').value}); }
+  if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); dropWhere(); return; }
+  if(e.key === 'Enter' && !e.isComposing){ e.preventDefault(); makeRoom(); }
 });
 $('movebtn').addEventListener('click', () => sitting && openMove(sitting.name, false));
 $('moveno').addEventListener('click', () => { $('movebox').classList.remove('on'); moving = null; });
@@ -4291,6 +4285,11 @@ $('askok').addEventListener('click', async () => {
   $('askbox').classList.remove('on');
   const act = asked; asked = null;
   if(act) await act();
+});
+$('roomsbtn').addEventListener('click', () => {
+  const on = !$('shelftree').classList.contains('on');
+  $('shelftree').classList.toggle('on', on);
+  $('roomsbtn').setAttribute('aria-expanded', String(on));
 });
 $('storebtn').addEventListener('click', () => {
   const on = !$('storewrap').classList.contains('on');
@@ -4363,7 +4362,7 @@ $('samp').addEventListener('click', () => {
 });
 $('send').addEventListener('click', () => running ? stopAll() : sendLine());
 $('fanbtn').addEventListener('click', () => runFan(sitting ? (sitting.params.fan || 4) : 4));
-for(const id of ['choicesbtn', 'fanjump']) $(id).addEventListener('click', () => {
+$('fanjump').addEventListener('click', () => {
   const from = alternativesFrom();
   if(from) showChoices(from);
 });
