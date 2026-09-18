@@ -101,7 +101,9 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   experiment); `sittings/.trash/` holds what Clear and Delete took and stays out of git.
   `artifacts/`, walks cut to their stars, one indented json each, tracked and pushed — a
   star rewrites its fan's artifact, Continue on one makes a new room to go on from; berserk's
-  are written once. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
+  are written once. `canvases/`, boards — one json each, a title and the rooms a canvas draws
+  wherever they are filed, written by hand or script, opened from the page's menu at
+  `#board=<name>`. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
   talk. `berserk/`, the daemon's ledger (tracked), its heartbeat, state and html pages (not),
   the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`.
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases

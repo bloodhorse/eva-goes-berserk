@@ -48,10 +48,12 @@ STORE = tempfile.mkdtemp(prefix="loom-store-")     # never the real, git-tracked
 ARTS = tempfile.mkdtemp(prefix="loom-arts-")       # nor artifacts/, which gets pushed
 BERSERK = tempfile.mkdtemp(prefix="loom-berserk-")  # nor the daemon's real ledger
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
+CANVASES = tempfile.mkdtemp(prefix="loom-canvases-")  # nor the real boards
 os.environ["LOOM_SITTINGS"] = SHELF
 os.environ["LOOM_STORAGE"] = STORE
 os.environ["LOOM_ARTIFACTS"] = ARTS
 os.environ["LOOM_LEDGER"] = LEDGER
+os.environ["LOOM_CANVASES"] = CANVASES
 import loom  # noqa: E402 — path first; this file may be started from anywhere
 
 # loom.html's own defaults, restated. Kept as literals rather than parsed out of the page
@@ -117,7 +119,7 @@ def setUpModule() -> None:
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS, LOOM_LEDGER=LEDGER,
-               LOOM_LLAMA=STUB_BASE)
+               LOOM_CANVASES=CANVASES, LOOM_LLAMA=STUB_BASE)
     LOOM = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     deadline = time.time() + 20
@@ -150,6 +152,8 @@ def tearDownModule() -> None:
         shutil.rmtree(ARTS, ignore_errors=True)
     if BERSERK:
         shutil.rmtree(BERSERK, ignore_errors=True)
+    if CANVASES:
+        shutil.rmtree(CANVASES, ignore_errors=True)
 
 
 class Tree:
@@ -772,6 +776,102 @@ class Canvas(unittest.TestCase):
             self.assertEqual(d["error"], "bad name")
         st, d = self.folder("ghost-" + uuid.uuid4().hex[:6])
         self.assertEqual(st, 404, d)
+
+
+def write_board(name: str, obj) -> None:
+    """A board on the scratch canvases shelf, the way bekh writes one: by hand, as a file."""
+    path = os.path.join(CANVASES, *name.split("/")) + ".json"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f)
+
+
+class Boards(unittest.TestCase):
+    """A board is a canvas saved as a file: a title and the rooms it draws, wherever they are
+    filed. The payload is `/api/folder`'s, built by the same code, so the page draws either."""
+
+    def board(self, name):
+        return call("/api/canvas?name=" + urllib.parse.quote(name))
+
+    def test_the_list_is_every_board_by_name_with_its_folder(self):
+        here = "brdlist-" + uuid.uuid4().hex[:6]
+        write_board(f"{here}/b-second", {"title": "second", "rooms": []})
+        write_board(f"{here}/a-first", {"title": "first", "rooms": []})
+        write_board(f"{here}/.hidden/x", {"title": "never", "rooms": []})
+        write_board(here + "-top", {"rooms": []})      # no title: the name stands in
+        st, d = call("/api/canvases")
+        self.assertEqual(st, 200, d)
+        mine = [b for b in d["canvases"] if b["name"].startswith(here)]
+        self.assertEqual(mine, [
+            {"name": f"{here}-top", "title": f"{here}-top", "folder": ""},
+            {"name": f"{here}/a-first", "title": "first", "folder": here},
+            {"name": f"{here}/b-second", "title": "second", "folder": here},
+        ])
+
+    def test_the_env_override_is_the_shelf_it_reads(self):
+        # the real shelf has boards under hum-wire/; the scratch one never had them, so a
+        # server that ignored LOOM_CANVASES would list them here
+        st, d = call("/api/canvases")
+        self.assertEqual(st, 200, d)
+        self.assertFalse([b for b in d["canvases"] if b["name"].startswith("hum-wire/")])
+        # and a board written to the scratch shelf is listed, so the server reads that one
+        name = "brdenv-" + uuid.uuid4().hex[:6]
+        write_board(name, {"rooms": []})
+        self.assertIn(name, [b["name"] for b in call("/api/canvases")[1]["canvases"]])
+
+    def test_a_board_draws_its_rooms_in_its_own_order(self):
+        here = "brdopen-" + uuid.uuid4().hex[:6]
+        for name in (f"{here}/wire/a-one", f"{here}/wire/b-two", f"{here}/other/c-three"):
+            self.assertEqual(Tree(name).save()[0], 200)
+        write_board(f"{here}/pick", {"title": "a · pick", "rooms": [
+            f"{here}/other/c-three", f"{here}/wire/a-one",
+            f"{here}/wire/a-one",                # listed twice, drawn once
+        ]})
+        st, d = self.board(f"{here}/pick")
+        self.assertEqual(st, 200, d)
+        self.assertEqual(d["board"], f"{here}/pick")
+        self.assertEqual(d["title"], "a · pick")
+        self.assertEqual([r["name"] for r in d["rooms"]],
+                         [f"{here}/other/c-three", f"{here}/wire/a-one"])
+        # the same room, the same way the folder route hands it over: one builder
+        st, f = call("/api/folder?name=" + urllib.parse.quote(f"{here}/wire"))
+        self.assertEqual(st, 200, f)
+        self.assertEqual(d["rooms"][1], f["rooms"][0])
+
+    def test_a_bare_name_finds_its_room_and_a_gone_room_is_skipped(self):
+        here = "brdgone-" + uuid.uuid4().hex[:6]
+        leafname = "leaf-" + uuid.uuid4().hex[:6]
+        self.assertEqual(Tree(f"{here}/{leafname}").save()[0], 200)
+        write_board(f"{here}/b", {"title": "b", "rooms": [
+            leafname, f"{here}/never-was", 17, "../escape"]})
+        st, d = self.board(f"{here}/b")
+        self.assertEqual(st, 200, d)
+        self.assertEqual([r["name"] for r in d["rooms"]], [f"{here}/{leafname}"])
+        # the last room goes, and a board with nothing left to draw is a 404, not an empty page
+        self.assertEqual(call("/api/delete", {"name": f"{here}/{leafname}"})[0], 200)
+        st, d = self.board(f"{here}/b")
+        self.assertEqual(st, 404, d)
+
+    def test_a_missing_board_is_404_and_a_bad_name_400(self):
+        st, d = self.board("ghost-" + uuid.uuid4().hex[:6])
+        self.assertEqual(st, 404, d)
+        write_board(".sneaky/x", {"title": "x", "rooms": []})
+        for bad in ("", "../escape", ".sneaky/x", "a/./b", "a/../b", "a//b", "a/"):
+            st, d = self.board(bad)
+            self.assertEqual(st, 400, (bad, d))
+            self.assertEqual(d["error"], "bad name")
+
+    def test_a_mark_on_a_board_lands_in_the_room(self):
+        here = "brdmark-" + uuid.uuid4().hex[:6]
+        t = Tree(f"{here}/r")
+        n = t.add("model", "a line", t.d["root"])
+        self.assertEqual(t.save()[0], 200)
+        write_board(f"{here}/b", {"rooms": [f"{here}/r"]})
+        st, d = call("/api/mark", {"room": f"{here}/r", "node": n["id"], "mark": "good", "on": True})
+        self.assertEqual(st, 200, d)
+        st, d = self.board(f"{here}/b")
+        self.assertEqual(st, 200, d)
+        self.assertIs(d["rooms"][0]["nodes"][n["id"]]["good"], True)
 
 
 class Keep(unittest.TestCase):

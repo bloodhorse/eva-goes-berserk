@@ -14,7 +14,7 @@ posts the whole sitting after every move; the server writes it atomically to
 Route list at the top of the file. The one route that reads something it never wrote is
 `/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room. Env: `LOOM_HOST`,
 `LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
-`LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_PAGE` that the tests and the mobile rig set —
+`LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` that the tests and the mobile rig set —
 production leaves them alone.
 
 **A room's name IS its path** under `sittings/`, without the `.json`:
@@ -32,14 +32,22 @@ to but never including the shelf root, `name` re-stamped inside every file that 
 there, 409 on a name already taken by a room **or** a folder. `.trash` mirrors the folders, so
 two rooms called `smoke-01` can both be thrown away.
 
-Two routes exist only for the canvas. `GET /api/folder?name=<folder>` hands over every room
+Four routes exist only for the canvas. `GET /api/folder?name=<folder>` hands over every room
 under that folder, sub-folders included, sorted by name — each with its `root`, `current`,
 `berserk` flag and its nodes cut to `parent`, `kind`, `text` and, where they are there,
 `posed`, `kept`, `good`, `temperature` (`meta.params.temperature`, falling back to `meta.temperature`)
 and `model` (`meta.model`, either llama's `/props` object or a bare file name). `probs` and the
 rest of meta are dropped **on the server**: a folder is thirty rooms of thirty branches and
 one fan's probabilities are 40 KB, and the cost here is the wire, not the render. `name_ok`
-as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. `POST /api/mark
+as everywhere, 404 on a folder with no rooms, `.trash` unaddressable. **Boards** are canvases
+saved as files: `shelf/canvases/<name>.json` holds `{"title", "rooms": [...]}`, written by hand or
+by a script (there is no UI that makes one), its name its path without `.json` through the same
+`name_ok`. `GET /api/canvases` lists them as `{name, title, folder}` by name; `GET
+/api/canvas?name=<board>` is `/api/folder`'s payload plus `board` and `title`, built from the
+listed rooms in the file's order by **the same builder** (`canvas_rooms`, which the folder route
+calls too) — a room is spelled as a path or a bare leaf (`resolve_room`), one that has gone is
+skipped, one listed twice is drawn once; 404 for no board or one with no room left, 400 on a bad
+name. `POST /api/mark
 {"room", "node", "mark": "kept"|"good", "on"}` re-reads that room, sets or deletes that flag on
 one **model** node and writes it with `write_sitting` — the same flags the choose screen leaves,
 so a harvest made on the canvas is in the rooms and in git. Two marks, and **a branch wears at
@@ -67,8 +75,16 @@ back 404. `/api/berserk`, `/api/berserk/text`, the `berserk` flag on the listing
 look-off): the dialogue is the home screen — one continuous text, bekh's line in a band, the
 model's words on bare ground, **the fork mark** `⌥ 3/40` on any line with siblings — one tap opens
 that line's own fan on the choose screen, because a fan of forty is read as a pile, not stepped
-through one at a time (the `‹ ›` walk it replaced is gone) — edit in place (a model line bekh
-edits is **posed** forever). A fan opens a separate "choose an answer" screen as its first answer
+through one at a time (the `‹ ›` walk it replaced is gone). A line's other controls sit behind
+**`⁖`** at the foot of its right margin, shown on hover (2026-09-18 — the left gutter that held
+them is gone and the text took its width back): one small popover, `edit` / `spin off` /
+`tokens`, fixed to the window, closed by esc, a click outside or the glyph again, following its
+glyph on a scroll; on the phone `⁖` sits in the row under the line beside the fork mark, and the
+mirror offers tokens alone. Edit is in place (a model line bekh edits is **posed** forever). The
+dialogue **trims the newlines at both ends of every block on screen** — a wire or berserk room
+keeps the document's seams in its nodes (`…\n`, `\n\n…`) and under pre-wrap they drew empty
+rows a click could land in; the node, the document sent to the model and the edit box keep them,
+and the trim edits only the edge text nodes, so painted tokens stay where they were. A fan opens a separate "choose an answer" screen as its first answer
 lands; picking one returns to the dialogue. That screen heads the cards with the last two sentences
 of the text they continue (one more when those are under ~80 characters, capped at 400), fixed
 while the cards scroll. Beside the corner menu, on the dialogue screen only, a fan icon opens the
@@ -78,7 +94,8 @@ doesn't open on a wall of folders; the two popovers close each other; a folder's
 menu's move sheet). The tree: the
 shelf's folders, drawn from the room paths and from nothing else — folders
 first then rooms, alphabetical, `▸`/`▾`, closed by default, which folds are open remembered
-per browser in `localStorage`; the open room is named once at the top and marked in the accent
+per browser in `localStorage`, with **collapse all** at the top of the popover shutting every
+fold at once; the open room is named once at the top and marked in the accent
 on its own row, and the folders on the way to it are unfolded for it once, when it opens.
 Everything else hides behind the corner menu: **basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all —
 no header, no names, no stop strings, whitespace kept; pressing one brings up a where-field
@@ -93,7 +110,9 @@ from its new path, because the name inside the file is what the next save posts 
 copied to `.trash`, root and settings stay, no confirm), **delete** (confirm, file moves to
 `.trash`), continue from here, **sampler**, **storage** (note names as links, `+`
 to add — blank name gets random hex, a taken name is refused — a note opens on its own screen with
-edit), **artifacts** (a list; each opens as a tree). The composer is greyed with no room open.
+edit), **artifacts** (a list; each opens as a tree), **canvases** (the boards, grouped by the
+folder they sit in under `shelf/canvases/`, a folder folding out to its boards by title; one
+click opens it). The composer is greyed with no room open.
 
 **Artifacts** are the opposite of rooms: a room is a dry run, an artifact is a **walk** frozen —
 the document it started from and every fork along the way. On the choose screen every card carries
@@ -179,24 +198,29 @@ attempts rebuilt out of `wished` exactly as the sheets page rebuilds them. Nothi
 substring, agree or bits appears anywhere: two renderings of one record, and the resolver is not a
 character in either.
 
-**The canvas is a whole experiment at once** — one folder of rooms as a picture, on the third
-screen that opts out of the reading column. It exists because a census of thirty rooms of
+**The canvas is a whole experiment at once** — one folder of rooms, or a board, as a picture,
+on the third screen that opts out of the reading column. It exists because a census of thirty rooms of
 thirty branches cannot be read a fan at a time: what is being looked for is which fans went
 somewhere, and that is a *shape*. Ways in: a `canvas` control on every folder row of the room
-tree, beside `move`, and the url `#canvas=<folder path>`; a back arrow returns to the
-dialogue. The folder arrives in one `/api/folder` call and never streams. A title node, an
+tree, beside `move`, and the url `#canvas=<folder path>`; a board from the menu's
+**canvases**, at `#board=<name>` — `#canvas=` keeps meaning a folder. A back arrow returns to the
+dialogue. The picture arrives in one `/api/folder` or `/api/canvas` call and never streams. A
+board is named in the bar and the title node by its title, **opens with reveal on** (it is a
+comparison laid out on purpose, and what is compared is the voices), and carries `‹ 2/4 ›` in
+the bar to step to the previous/next board in its folder (hidden on a folder canvas, or a board
+alone in its folder); a step writes the address, so back returns to the board before. A title node, an
 arrow to each room's seed card (the seed's tail, `whole seed ▸`, `open room`, and `tree ↗` on
 a room berserk walked), and under it the fan as a grid of **uniform cards**, `CARD_H = 185`
 world px in one constant. Seed blocks are packed as six masonry columns, each next room into
 the shortest one, so a room that collapsed to one brick leaves no hole. **A room whose tree is a
 pure chain** — a wire room, where nothing ever forked — is drawn instead as one column exactly a
 card wide, its line-cards as tall as their own text and no frame round them, beats among them as
-thin rose lines nobody can mark, which is how a transcript reads and how twenty of them pack as
+thin accent-pink lines nobody can mark, which is how a transcript reads and how twenty of them pack as
 twenty columns. **Any tree, not only a
 census**: a branch somebody fanned under gets a `▾ n` mark and its own framed grid below, with
 a measured arrow from the card to that frame — accent when that branch is on the path
 root→`current`, dim when the room walked elsewhere — and a berserk beat is drawn as a
-one-line rose card between the branch taken and the fan under it, so a night reads as a
+one-line accent-pink card between the branch taken and the fan under it, so a night reads as a
 staircase of fans. **Look-alikes** (same first 40 characters, whitespace collapsed,
 casefolded) collapse into one stacked card, `‹ ›` or the arrow keys flipping the members under
 the pointer, the common prefix dim and each member's own tail in full ink; the **cold heat
@@ -213,19 +237,20 @@ stack's counts are two piles and not one overlapping heap. Up close the mark is 
 (kept ice, good accent); zoomed out, where there is no glyph left, it is the fill (kept ice, good
 accent at 45%) and a marked stack keeps its heat and takes a ring. A stack counts its members' marks in its head and marks the one on top.
 The bar reads `★ N · ● M`, and the filter beside it cycles three states: `all` → `● + ★` →
-`★ only`. **reveal** appears only when a folder holds two or more models, is off by default and
-is never remembered: it puts a model tag and a patterned top edge (solid / dashed / dotted —
+`★ only`. **reveal** appears only when the picture holds two or more models, is off by default
+on a folder and on on a board, and is never remembered (a reload keeps where he put it): it puts a model tag and a patterned top edge (solid / dashed / dotted —
 pattern, not hue, because the ramp owns every cold colour) on each card, a legend in the bar
 and a `★ by model: … · ● by model: …` line. Drag to pan, wheel or pinch to zoom about the pointer, `f`/`fit`,
 a seed heading flies to its block, `esc` closes an opened card or fits; nothing on the surface
 is selectable and the cursor stays the ordinary arrow. `open room` goes to `#room=<path>` —
-the page's third address — so the browser's own back button comes home to `#canvas=` with the
-camera where it was (kept per folder in `sessionStorage`). `reload` re-reads the folder while
-a census is still writing and keeps the camera.
+another of the page's addresses — so the browser's own back button comes home to `#canvas=` or
+`#board=` with the camera where it was (kept in `sessionStorage` per folder and per board, under
+two prefixes so a board named like a folder never takes its camera). `reload` re-reads the folder
+or the board while a census is still writing and keeps the camera.
 
 All chrome is lowercase by one CSS rule; the document, anything typed and the export screen keep
 their capitals, because a capital there is text the model sees. Room: charcoal ground and
-blue-white ink, lilac accent, ice for the live dot, rose for posed; system sans; light by the OS,
+blue-white ink, lilac accent, ice for the live dot, accent pink for posed and for beats; system sans; light by the OS,
 no toggle; dom-built, never innerHTML. `front/looks/` holds the four rejected look-off pages.
 
 **On a phone** it was put through a real review (commit `2e1b434`): block controls drop into
@@ -332,7 +357,9 @@ file directly — don't have the room open in the page while one runs.
 ## Tests
 
 `tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Canvas` and
-`Keep` and `Mark` for the two canvas routes and the two branch marks, and `Folders`:
+`Boards` for the saved canvases — list, open in the file's order, a gone room skipped, 404, 400,
+dot segments refused, the `LOOM_CANVASES` scratch shelf, a mark landing in the room — `Keep` and
+`Mark` for the two branch marks, and `Folders`:
 the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
 folder with its collisions and its pruning, and a walked room answering to its bare name after
 it moves), `evatest.py`,

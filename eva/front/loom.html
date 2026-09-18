@@ -167,6 +167,11 @@
   #shelftree .fold{color:var(--ink);}
   /* the one mark that says which room the dialogue behind this menu is showing */
   #shelftree .rrow.here .roomlink{color:var(--accent);}
+  /* collapse all: small and out of the way, above the tree it acts on */
+  .treehead{display:flex; align-items:center; margin:-8px 0 6px;}
+  #foldall{font-size:13px; color:var(--ghost); padding:2px 0;}
+  #foldall:hover:not(:disabled){color:var(--ink);}
+  #foldall:disabled{opacity:.4; cursor:default;}
   #movebox{display:none; flex-wrap:wrap; align-items:center; gap:12px;
     border-top:1px solid var(--line); margin-top:12px; padding-top:16px;}
   #movebox.on{display:flex;}
@@ -232,6 +237,18 @@
     text-underline-offset:4px; overflow-wrap:anywhere;}
   #artlist .artrow:hover .t{text-decoration-color:var(--accent);}
   #artlist .artrow .n{color:var(--ghost); font-size:13px;}
+  /* Canvases: the saved boards, grouped by the folder they sit in under shelf/canvases —
+     the folder folds out to its boards, a board is its title and opens the canvas. */
+  #canvwrap{display:none; border-top:1px solid var(--line); margin-top:12px; padding-top:8px;}
+  #canvwrap.on{display:block;}
+  #canvlist{display:flex; flex-direction:column;}
+  #canvlist .fold{text-align:left; color:var(--ink); padding:6px 0;}
+  #canvlist .artrow{display:flex; flex-direction:column; align-items:flex-start; text-align:left;
+    color:var(--ink); padding:6px 0;}
+  #canvlist .artrow .t{text-decoration:underline; text-decoration-color:var(--line);
+    text-underline-offset:4px; overflow-wrap:anywhere;}
+  #canvlist .artrow:hover .t{text-decoration-color:var(--accent);}
+  #canvlist .artrow[aria-current="true"] .t{color:var(--accent);}
   /* Narrow margins on this screen on purpose: the tree is the widest thing the page draws and
      every pixel spent on a margin is a branch cut off at the edge. */
   #artbar{display:flex; align-items:center; gap:16px; padding:0 24px 20px 24px; flex-shrink:0;}
@@ -261,7 +278,7 @@
   #arttree .n.root{width:clamp(400px, 85vw, 1300px); max-width:100%;
     background:var(--sunk); color:var(--ink);}
   #arttree .cap{display:block; color:var(--ghost); font-size:11px; margin-top:6px;}
-  #arttree .cap.posed{color:var(--hot);}
+  #arttree .cap.posed{color:var(--accent);}
   /* A berserk walk on the same tree. The daemon leaves its record in two places — the room,
      which holds every branch of every fan, and the ledger, which holds what the reader said
      about them — and this screen is the SECOND rendering of that pair, the sheets page being
@@ -289,7 +306,7 @@
   /* A beat: the line WE posed into the document before the fan was drawn. Rose, the same
      colour a posed line wears in the dialogue, because that is exactly what it is — the one
      text on this screen nemo did not write, sitting in the place the branches answer. */
-  #arttree .head .beat{color:var(--hot); margin:2px 0 6px;}
+  #arttree .head .beat{color:var(--accent); margin:2px 0 6px;}
   #arttree .n .letter{margin-bottom:5px;}
   #arttree summary{cursor:pointer; color:var(--ghost); font-size:11px; padding:4px 0 0;}
   #arttree details .body{padding-top:8px;}
@@ -353,44 +370,44 @@
      before it, the pane stayed the width of a chat and every wide row was cut. */
   #artpane{width:100%; max-width:none;}
   #blocks{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
-    --gut:64px; --rim:56px; font-size:16px; line-height:1.65;}
-  .blk{position:relative; padding:0 var(--rim) 0 var(--gut);}
+    --rim:56px; font-size:16px; line-height:1.65;}
+  .blk{position:relative; padding:0 var(--rim) 0 0;}
   .body{white-space:pre-wrap; overflow-wrap:anywhere;}
   .blk.root{color:var(--ghost);}
   .blk.human .core{display:inline-block; max-width:100%; background:var(--panel);
     border-radius:12px; padding:10px 16px; margin:6px 0;}
-  /* pointer-events with the opacity: a margin control is taller than a one-line block, so
-     an invisible gutter hangs over the block below it and would eat that block's clicks. */
-  .blk .gut{position:absolute; left:0; top:0; width:var(--gut); padding-right:12px;
-    text-align:right; opacity:0; pointer-events:none; transition:opacity 120ms ease;}
-  .blk:hover .gut, .blk:focus-within .gut{opacity:1; pointer-events:auto;}
-  /* one word per row, right-aligned at the text's edge; a longer one overhangs into the
-     page margin rather than wrapping into two ragged halves */
-  .blk .gut .ghostbtn{display:block; width:100%; text-align:right; white-space:nowrap;
-    font-size:13px; padding:3px 0;}
   .blk .swipe{position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px;
     font-size:13px; color:var(--ghost); opacity:0; pointer-events:none;}
   .blk:hover .swipe, .blk:focus-within .swipe{opacity:1; pointer-events:auto;}
-  /* The right margin as a column: the fork mark at the top, `tokens` at the bottom — the
-     bottom-right corner of a long line, beside a short one — both only while the line is
-     hovered, like edit and spin off on the left (2026-09-18: under the text it took a line of
-     every message). A block shorter than the two lets the column hang a little below it,
-     only while hovered. */
+  /* The right margin as a column, and the only place a line keeps controls (the left gutter
+     went 2026-09-18 and the text took its width back): the fork mark at the top, shown only
+     while hovered, and at the bottom `⁖`, the one glyph that opens edit / spin off / tokens —
+     the bottom-right corner of a long line, beside a short one. A block shorter than the two
+     lets the column hang a little below it. pointer-events ride with the opacity: an
+     invisible control hanging over the block below would eat that block's clicks. */
   .blk .rim{position:absolute; right:0; top:0; bottom:0; width:var(--rim);
     display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end;
     pointer-events:none;}
   .blk .rim .swipe{position:static;}
-  .blk .tokwrap{margin-top:auto; opacity:0; pointer-events:none; transition:opacity 120ms ease;}
-  .blk:hover .tokwrap, .blk:focus-within .tokwrap{opacity:1; pointer-events:auto;}
-  .blk .tokwrap .ghostbtn{font-size:13px; padding:3px 0; white-space:nowrap;}
-  .blk .tokwrap .ghostbtn.on{color:var(--hot);}
+  .blk .more{margin-top:auto; opacity:0; pointer-events:none; transition:opacity 120ms ease;}
+  .blk:hover .more, .blk:focus-within .more, .blk.menuon .more{opacity:1; pointer-events:auto;}
+  .blk .more .ghostbtn{font-size:18px; line-height:1; padding:2px 4px; color:var(--ghost);}
+  .blk .more .ghostbtn:hover, .blk.menuon .more .ghostbtn{color:var(--ink);}
+  /* the line menu: the token popup's panel, one word per row */
+  #linemenu{position:fixed; z-index:50; display:flex; flex-direction:column; min-width:120px;
+    background:var(--panel-soft); border:1px solid var(--line); border-radius:12px; padding:6px;
+    box-shadow:0 12px 40px color-mix(in srgb, var(--sunk) 35%, transparent);}
+  #linemenu .ghostbtn{text-align:left; font-size:14px; padding:7px 12px; border-radius:8px;
+    white-space:nowrap;}
+  #linemenu .ghostbtn:hover{background:var(--panel);}
+  #linemenu .ghostbtn.on{color:var(--hot);}
   .fork{background:none; border:0; padding:6px 2px; color:var(--ghost); font:inherit;
     white-space:nowrap; letter-spacing:.02em;}
   .fork:hover{color:var(--accent);}
   .foot{font-size:13px; color:var(--ghost); display:flex; gap:10px; flex-wrap:wrap;}
   .foot .ghostbtn{font-size:13px; padding:0;}
   .foot .ghostbtn.on{color:var(--accent);}
-  .posed{color:var(--hot);}
+  .posed{color:var(--accent);}
 
   /* Tokens, painted by how improbable the model found the word it chose. A wash on the
      GROUND and never a colour on the ink: the page's oldest rule is that nobody's words
@@ -412,7 +429,8 @@
   #alts .altrow.here{color:var(--ghost);}
   .ed{width:100%; min-height:5em; font-size:16px; line-height:1.65; background:transparent;}
 
-  #turnwrap{flex-shrink:0; padding:24px 56px 0 64px;}
+  /* the box's left edge is the text's: no gutter in front of either since 2026-09-18 */
+  #turnwrap{flex-shrink:0; padding:24px 56px 0 0;}
   #turnline{display:flex; align-items:flex-end; gap:10px; background:var(--panel);
     border:1px solid var(--line); border-radius:16px; padding:10px 10px 10px 18px;}
   #turnline:focus-within{border-color:var(--accent);}
@@ -463,23 +481,20 @@
     #doc, #fanpane, #notepane, #artpane, #textpane{
       padding:calc(72px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
               calc(20px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));}
-    /* No margins for controls once the screen narrows: at 36px the "edit" word and the
-       ⌥ 3/40 fork mark were wider than their margin and sat on top of the text, and on a
-       touch screen there is no hover to reveal them anyway. So every block becomes a
-       small grid — its text, the posed tag, then one row with edit on the left and the
-       fork mark on the right, in the flow, where nothing can overlap. */
-    #blocks{--gut:0px; --rim:0px;}
+    /* No margin for controls once the screen narrows: at 36px the ⌥ 3/40 fork mark was
+       wider than its margin and sat on top of the text, and on a touch screen there is no
+       hover to reveal anything anyway. So every block becomes a small grid — its text, the
+       posed tag, then one row with `⁖` and the fork mark at the right, in the flow, where
+       nothing can overlap. */
+    #blocks{--rim:0px;}
     .blk{display:grid; grid-template-columns:1fr auto auto;
-      grid-template-areas:"body body body" "foot foot foot" "gut tok swipe"; padding:0 0 14px;}
-    /* the right-margin column dissolves into the phone row: tokens sits beside the fork mark */
+      grid-template-areas:"body body body" "foot foot foot" ". more swipe"; padding:0 0 14px;}
+    /* the right-margin column dissolves into the phone row */
     .blk .rim{display:contents;}
-    .blk .tokwrap{grid-area:tok; opacity:1; pointer-events:auto; align-self:center;
-      padding-right:12px;}
-    /* in the phone row the gutter's words sit side by side, not stacked */
-    .blk .gut .ghostbtn{display:inline-block; width:auto; text-align:left;}
+    .blk .more{grid-area:more; opacity:1; pointer-events:auto; align-self:center;
+      padding-right:8px;}
     .blk > .body, .blk > .ed{grid-area:body;}
     .blk > .foot{grid-area:foot;}
-    .blk .gut{grid-area:gut; position:static; width:auto; padding:0; text-align:left; opacity:1;}
     .blk .swipe{grid-area:swipe; position:static; opacity:1;}
     #turnwrap{padding:20px 0 0;}
     #fanbar{padding:0 0 16px;}
@@ -511,8 +526,9 @@
      field smaller than that on focus — the room picker, rename, note name and sampler
      fields were all 14px. */
   @media (hover:none){
-    .blk .gut, .blk .swipe, .blk .tokwrap{opacity:1; pointer-events:auto;}
-    .blk .gut .ghostbtn{padding:10px 14px 10px 0;}
+    .blk .swipe, .blk .more{opacity:1; pointer-events:auto;}
+    .blk .more .ghostbtn{padding:10px 14px;}
+    #linemenu .ghostbtn{padding:11px 14px; font-size:15px;}
     .fork{padding:8px 12px; font-size:15px;}
     input, select, textarea{font-size:16px;}
     /* The tree is walked with a thumb: every row is a tap target, and a folder's move
@@ -584,6 +600,10 @@
   #canbar .chip:hover{border-color:var(--ghost);}
   #canbar .chip[aria-pressed="true"]{border-color:var(--live); color:var(--live);}
   #canzoom{color:var(--ghost); font-variant-numeric:tabular-nums; min-width:44px; text-align:right;}
+  #canstep{display:inline-flex; align-items:center; gap:6px;}
+  #canstep .chip{padding:2px 9px;}
+  #canstep .chip:disabled{opacity:.35; cursor:default;}
+  #canstepn{font-variant-numeric:tabular-nums;}
   /* The only place the ramp is explained. It lives in the bar and not on the canvas because
      it is a key, not furniture: read once, then forgotten. */
   #canlegend{display:flex; align-items:flex-end; gap:6px; color:var(--ghost); font-size:10px;
@@ -633,8 +653,11 @@
     vector-effect:non-scaling-stroke;}
   #canwires path.dim{stroke:var(--ghost); opacity:.3;}
 
+  /* max-content: an absolute box shrinks to the room left of wherever it sat last, and a
+     board's title has spaces to wrap at (a folder path had none) — it came out one word wide
+     over a board of narrow wire columns */
   #cantitle{position:absolute; background:var(--panel-soft); border:1px solid var(--line);
-    border-radius:18px; padding:26px 32px; text-align:center;}
+    border-radius:18px; padding:26px 32px; text-align:center; width:max-content;}
   #cantitle h1{margin:0; font-size:56px; letter-spacing:.01em; font-weight:600;}
   #cantitle p{margin:14px 0 0; font-size:24px; color:var(--ghost);}
 
@@ -675,17 +698,17 @@
   #canworld.uniform .cn-card.cn-line{height:auto;}
   #canworld.uniform .cn-card.cn-line > .cn-face{position:relative; inset:auto; overflow:visible;}
   /* A beat between two lines of a chain: our own line, posed, saying whose turn it is now.
-     Rose and a left rule, the same as the berserk beat row it is the same thing as — thinner,
+     Accent pink and a left rule, the same as the berserk beat row it is the same thing as — thinner,
      because on a chain it is punctuation between two voices and not a heading over a fan. */
   .cn-bline{background:var(--panel-soft); border:1px solid var(--line);
-    border-left:3px solid var(--hot); border-radius:8px; padding:5px 10px;
-    color:var(--hot); font-size:12px; line-height:1.45;}
+    border-left:3px solid var(--accent); border-radius:8px; padding:5px 10px;
+    color:var(--accent); font-size:12px; line-height:1.45;}
   /* The one line on the canvas nobody's model wrote: the beat posed into the document before
-     a berserk fan. Rose, the same colour posed wears in the dialogue, because that is exactly
+     a berserk fan. Accent pink, the same colour posed wears in the dialogue, because that is exactly
      what it is. */
   .cn-beat{background:var(--panel-soft); border:1px solid var(--line);
-    border-left:4px solid var(--hot); border-radius:10px; padding:8px 14px; width:max-content;
-    max-width:820px; color:var(--hot); font-size:14px;}
+    border-left:4px solid var(--accent); border-radius:10px; padding:8px 14px; width:max-content;
+    max-width:820px; color:var(--accent); font-size:14px;}
 
   /* A branch card. `.cn-card` is the grid cell and the positioning box; `.cn-face` is the one
      visible surface. A stack puts two more faces behind it, offset — that is the whole of the
@@ -815,8 +838,8 @@
      height at the threshold, and the masonry was measured on the other side of it.
      A beat is not a `.cn-face`, so it says the same thing here in its own words: the ink goes,
      the box and the rose stay, and the turns are countable from across the folder. */
-  #canworld.far .cn-bline{background:var(--hot); border-color:transparent;
-    border-left-color:var(--hot);}
+  #canworld.far .cn-bline{background:var(--accent); border-color:transparent;
+    border-left-color:var(--accent);}
   #canworld.far .cn-bline > *{visibility:hidden;}
   /* the clip fade is a pseudo, so visibility:hidden on children misses it: a panel-soft
      gradient painted over a heat brick would read as a smudge */
@@ -873,8 +896,7 @@
     padding-bottom:calc(8px + env(safe-area-inset-bottom));}
   body.ro #turnwrap, body.ro #fanbtn, body.ro #more, body.ro #stop, body.ro #samp,
   body.ro #sampwrap, body.ro .toolrow, body.ro #newname, body.ro #askbox, body.ro #noteadd,
-  body.ro #noteedit, body.ro #artgo, body.ro #artagain,
-  body.ro .blk .gut{display:none !important;}
+  body.ro #noteedit, body.ro #artgo, body.ro #artagain{display:none !important;}
   /* the marks stay: harvesting from the phone is what the mirror is for (see toggleMark) */
 </style>
 </head>
@@ -889,6 +911,9 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6M8 10h8M8 15h8M8 20h6M6 5v15h2M6 10h2M6 15h2"/></svg>
   </button>
   <aside id="roomspop" aria-label="Rooms" hidden>
+    <div class="treehead"><span class="spring"></span>
+      <button class="ghostbtn" id="foldall" type="button" title="fold every open folder">Collapse all</button>
+    </div>
     <div id="shelftree" role="tree" aria-label="Which room"></div>
   </aside>
   <aside id="tools" aria-label="Sitting controls" hidden>
@@ -936,6 +961,7 @@
     </div>
     <button class="ghostbtn" id="storebtn" type="button" aria-expanded="false" aria-controls="storewrap">Storage</button>
     <button class="ghostbtn" id="artbtn" type="button" aria-expanded="false" aria-controls="artwrap">Artifacts</button>
+    <button class="ghostbtn" id="canvbtn" type="button" aria-expanded="false" aria-controls="canvwrap">Canvases</button>
     <div id="sampwrap"><div id="sampler"></div></div>
     <div id="storewrap">
       <div class="storehead"><span class="spring"></span>
@@ -944,6 +970,7 @@
       <div id="notelist"></div>
     </div>
     <div id="artwrap"><div id="artlist"></div></div>
+    <div id="canvwrap"><div id="canvlist"></div></div>
   </aside>
 
   <main id="panes">
@@ -1018,6 +1045,12 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
         </button>
         <span class="name" id="canname"></span>
+        <!-- a board's place among its folder's boards; a folder canvas has no neighbours -->
+        <span id="canstep" hidden>
+          <button class="chip" id="canprev" type="button" aria-label="previous board" title="previous board in this folder">‹</button>
+          <span class="dim" id="canstepn"></span>
+          <button class="chip" id="cannext" type="button" aria-label="next board" title="next board in this folder">›</button>
+        </span>
         <span class="dim" id="cancounts"></span>
         <span id="canlegend" aria-label="how many branches a stack holds">
           <span class="step"><span class="sw h1"></span>×2</span>
@@ -1460,6 +1493,54 @@ async function loadArtifacts(){
   try{ d = await getJSON('/api/artifacts'); }
   catch(e){ sys('artifacts are not answering: ' + e.message, true); return; }
   drawArtifacts((d && d.artifacts) || []);
+}
+
+// The boards, as the menu lists them: top-level ones first, then each folder as a fold with
+// its boards under it by title. Which folds are open lives for the page and no longer — the
+// list is a handful of lines, not the shelf. The folder of the board on screen opens by itself.
+const canvOpen = new Set();
+function drawCanvases(rows){
+  const list = $('canvlist');
+  list.textContent = '';
+  if(!rows.length){
+    mk(list, 'div', 'sys', 'No canvases yet — a board is a json file under shelf/canvases/.');
+    return;
+  }
+  if(canBoard) canvOpen.add((rows.find(r => r.name === canBoard) || {}).folder || '');
+  const byFolder = new Map();
+  for(const r of rows){
+    if(!byFolder.has(r.folder)) byFolder.set(r.folder, []);
+    byFolder.get(r.folder).push(r);
+  }
+  const boardRow = (r, depth) => {
+    const b = mk(list, 'button', 'ghostbtn artrow');
+    b.type = 'button';
+    b.style.paddingLeft = (depth * 14) + 'px';
+    b.title = r.name;
+    mk(b, 'span', 't', r.title);
+    if(r.name === canBoard) b.setAttribute('aria-current', 'true');
+    b.addEventListener('click', () => setHash('#board=' + encodeURIComponent(r.name)));
+  };
+  for(const r of byFolder.get('') || []) boardRow(r, 0);
+  for(const folder of [...byFolder.keys()].filter(Boolean).sort((a, b) => a.localeCompare(b))){
+    const on = canvOpen.has(folder);
+    const fold = mk(list, 'button', 'ghostbtn fold', (on ? '▾ ' : '▸ ') + folder);
+    fold.type = 'button';
+    fold.setAttribute('aria-expanded', String(on));
+    fold.addEventListener('click', () => {
+      if(on) canvOpen.delete(folder); else canvOpen.add(folder);
+      drawCanvases(rows);
+    });
+    if(on) for(const r of byFolder.get(folder)) boardRow(r, 1);
+  }
+}
+
+async function loadCanvases(){
+  let d;
+  try{ d = await getJSON('/api/canvases'); }
+  catch(e){ sys('canvases are not answering: ' + e.message, true); return; }
+  canBoards = (d && d.canvases) || [];
+  drawCanvases(canBoards);
 }
 
 // The tree screen, shared: an artifact and a berserk walk are two records of one kind of
@@ -2043,13 +2124,14 @@ async function openWalk(name){
   showTree();
 }
 
-// The page's three addresses. #tree=<room> opens a walk straight on the tree screen — that is
+// The page's four addresses. #tree=<room> opens a walk straight on the tree screen — that is
 // what the sheets page links to: a night read on the phone has to be one tap from the branches
 // nobody took, not a room picker and a menu away. #canvas=<folder> opens a whole experiment as
-// one picture. #room=<path> opens one room on the dialogue, which is the address the canvas's
-// `open room` goes to, so that the browser's own back button comes back to the picture.
+// one picture; #board=<name> opens a saved one, a board off shelf/canvases. #room=<path> opens
+// one room on the dialogue, which is the address the canvas's `open room` goes to, so that the
+// browser's own back button comes back to the picture.
 function hashBits(){
-  const m = /^#(tree|canvas|room)=(.+)$/.exec(location.hash || '');
+  const m = /^#(tree|canvas|board|room)=(.+)$/.exec(location.hash || '');
   return m ? {kind: m[1], value: decodeURIComponent(m[2])} : {kind: '', value: ''};
 }
 // The one hash the rest of the page still asks about by name.
@@ -2067,6 +2149,7 @@ async function routeHash(){
   const h = hashBits();
   if(h.kind === 'tree'){ await openWalk(h.value); return; }
   if(h.kind === 'canvas'){ await openCanvas(h.value); return; }
+  if(h.kind === 'board'){ await openBoard(h.value); return; }
   if(h.kind === 'room'){
     const name = onShelf(h.value) || h.value;
     if(!sitting || sitting.name !== name) await openSitting(name);
@@ -2126,7 +2209,9 @@ CN.BLOCK_W = CN.COLS * CN.CARD_W + (CN.COLS - 1) * CN.GAP + 2 * CN.PAD;   // 160
 
 const canStage = $('canstage'), canWorld = $('canworld'), canWires = $('canwires');
 
-let canFolder = '';      // the folder drawn, '' until one is
+let canFolder = '';      // the folder drawn, '' until one is and while a board is
+let canBoard = '';       // the board drawn, '' while the canvas is a folder
+let canBoards = [];      // /api/canvases as last read: the menu's list and the stepper's order
 let canRooms = [];       // the payload's rooms, nodes and all
 let canBlocks = [];      // one per room
 let canStacks = [];      // every collapsed cluster on the canvas
@@ -2610,7 +2695,8 @@ function canBuild(d){
   canOpenCard = null;
   canHoverStack = null;
   canWorld.classList.remove('uniform', 'far');
-  canFolder = d.folder;
+  canFolder = d.board ? '' : (d.folder || '');
+  canBoard = d.board || '';
   canRooms = d.rooms || [];
   // Every node knows its own id from here on: the payload keys them and the page walks them
   // by parent, so carrying the key inside is worth the one loop.
@@ -2629,17 +2715,21 @@ function canBuild(d){
   canModels = [...models].sort();
   for(const room of canRooms) canBlocks.push(canBuildBlock(room));
 
-  $('canname').textContent = d.folder;
+  // A board is named by the title bekh gave it; a folder has only its path.
+  const title = canBoard ? (d.title || canBoard) : canFolder;
+  $('canname').textContent = title;
+  $('canname').title = canBoard || canFolder;
   const counts = canRooms.length + (canRooms.length === 1 ? ' room · ' : ' rooms · ') +
     branches + (branches === 1 ? ' branch' : ' branches');
   $('cancounts').textContent = counts;
-  $('cantitleh').textContent = d.folder;
+  $('cantitleh').textContent = title;
   $('cantitlep').textContent = counts;
   // With one model or none there is nothing to reveal, and the switch would be a control
   // that says something about a distinction that isn't there.
   const many = canModels.length > 1;
   $('canreveal').hidden = !many;
   if(!many) canReveal(false);
+  canPaintStep();
   const legend = $('canmodels');
   legend.textContent = '';
   canModels.forEach((m, i) => {
@@ -2899,17 +2989,18 @@ function canZoomAt(px, py, factor){
   canApply();
 }
 
-// Where the camera was, per folder, for this tab only: opening a room and coming back with
-// the browser's own back button has to land on the same picture, and a camera that outlived
-// the tab would be a page that opens somewhere you have forgotten choosing.
-const canCamKey = f => 'loom.canvas.' + f;
+// Where the camera was, per folder and per board, for this tab only: opening a room and coming
+// back with the browser's own back button has to land on the same picture, and a camera that
+// outlived the tab would be a page that opens somewhere you have forgotten choosing. Two
+// prefixes, because a board may well be named like a folder (`hum-wire`) and draw other rooms.
+const canCamKey = () => canBoard ? 'loom.board.' + canBoard : canFolder ? 'loom.canvas.' + canFolder : '';
 function canSaveCam(){
-  if(!canFolder) return;
-  try{ sessionStorage.setItem(canCamKey(canFolder), JSON.stringify(canCam)); }catch(e){}
+  if(!canCamKey()) return;
+  try{ sessionStorage.setItem(canCamKey(), JSON.stringify(canCam)); }catch(e){}
 }
 function canRestoreCam(){
   let v = null;
-  try{ v = JSON.parse(sessionStorage.getItem(canCamKey(canFolder)) || 'null'); }catch(e){}
+  try{ v = JSON.parse(sessionStorage.getItem(canCamKey()) || 'null'); }catch(e){}
   if(!v || typeof v.k !== 'number' || typeof v.x !== 'number' || typeof v.y !== 'number')
     return false;
   canCam = {x: v.x, y: v.y, k: canClampK(v.k)};
@@ -3020,29 +3111,74 @@ function canReveal(on){
   $('canreveal').setAttribute('aria-pressed', String(on));
 }
 
-async function openCanvas(folder){
-  if(!folder) return;
+// Two kinds of canvas, one screen: a folder (`/api/folder`) or a board (`/api/canvas`), and
+// both payloads are built by one function on the server, so everything below the fetch is
+// the same code.
+function openCanvas(folder){ return canOpen('folder', folder); }
+function openBoard(name){ return canOpen('board', name); }
+const canIs = (kind, name) => kind === 'board' ? canBoard === name : (!canBoard && canFolder === name);
+
+async function canOpen(kind, name){
+  if(!name) return;
   // Already drawn: this is the back button coming home, and re-reading the folder would throw
   // away the camera for nothing.
-  if(canFolder === folder && canBlocks.length){
+  if(canIs(kind, name) && canBlocks.length){
     showCanvas();
     if(!canRestoreCam()) canFit(false);
     return;
   }
-  await loadCanvas(folder, false);
+  await loadCanvas(kind, name, false);
 }
 
-async function loadCanvas(folder, keepCam){
+async function loadCanvas(kind, name, keepCam){
+  const board = kind === 'board';
   let d;
-  try{ d = await getJSON('/api/folder?name=' + encodeURIComponent(folder)); }
-  catch(e){ sys('could not read that folder: ' + e.message, true); return; }
+  try{
+    // A board also needs its neighbours for the stepper; the list is a few lines, so it is
+    // read again with every board rather than trusted from whenever the menu last read it.
+    const [one, list] = await Promise.all([
+      getJSON((board ? '/api/canvas?name=' : '/api/folder?name=') + encodeURIComponent(name)),
+      board ? getJSON('/api/canvases').catch(() => null) : null,
+    ]);
+    d = one;
+    if(list && list.canvases) canBoards = list.canvases;
+  }
+  catch(e){ sys('could not read that ' + (board ? 'board' : 'folder') + ': ' + e.message, true); return; }
   if(d.error){ sys(d.error, true); return; }
   const was = keepCam ? Object.assign({}, canCam) : null;
   canBuild(d);
+  // A board opens lucid, model tags on: it is a comparison somebody laid out on purpose, and
+  // what is being compared is the voices. A folder opens blind, as it always has. A reload
+  // leaves the switch where he put it.
+  if(!keepCam) canReveal(board && canModels.length > 1);
   showCanvas();
   canLayout();
   if(was){ canCam = was; canApply(); }
   else if(!canRestoreCam()) canFit(false);
+}
+
+// The boards beside this one — the same folder under shelf/canvases, in the list's order.
+function canSiblings(){
+  if(!canBoard) return [];
+  const here = canBoards.find(b => b.name === canBoard);
+  const folder = here ? here.folder : (canBoard.includes('/') ? canBoard.replace(/\/[^/]*$/, '') : '');
+  return canBoards.filter(b => b.folder === folder);
+}
+// `‹ 2/4 ›`, only on a board with neighbours: a folder canvas, or a board alone in its folder,
+// has nowhere to step. A step writes the address, so back returns to the board before.
+function canPaintStep(){
+  const sibs = canSiblings();
+  const i = sibs.findIndex(b => b.name === canBoard);
+  $('canstep').hidden = sibs.length < 2 || i < 0;
+  if($('canstep').hidden) return;
+  $('canstepn').textContent = (i + 1) + '/' + sibs.length;
+  $('canprev').disabled = i === 0;
+  $('cannext').disabled = i === sibs.length - 1;
+}
+function canStep(by){
+  const sibs = canSiblings();
+  const next = sibs[sibs.findIndex(b => b.name === canBoard) + by];
+  if(next){ canSaveCam(); setHash('#board=' + encodeURIComponent(next.name)); }
 }
 
 // The room behind a seed card, on the ordinary dialogue screen, in this tab — and at an
@@ -3054,7 +3190,12 @@ function canOpenRoom(name){
 
 $('canback').addEventListener('click', showDialogue);
 $('canfit').addEventListener('click', () => canFit(true));
-$('canreload').addEventListener('click', () => canFolder && loadCanvas(canFolder, true));
+$('canreload').addEventListener('click', () => {
+  if(canBoard) loadCanvas('board', canBoard, true);
+  else if(canFolder) loadCanvas('folder', canFolder, true);
+});
+$('canprev').addEventListener('click', () => canStep(-1));
+$('cannext').addEventListener('click', () => canStep(1));
 $('cankeptonly').addEventListener('click', ev => {
   canFilter = CAN_FILTERS[(CAN_FILTERS.indexOf(canFilter) + 1) % CAN_FILTERS.length];
   for(const f of CAN_FILTERS) if(f) canWorld.classList.toggle(f, f === canFilter);
@@ -3460,11 +3601,70 @@ function fillBody(body, n){
   body.textContent = n.text;
 }
 
+// The newlines at the two ends of a block, off the SCREEN only. A wire or berserk room keeps
+// the document's seams inside its nodes — a line ends on `\n`, a beat opens on `\n\n` — and
+// under pre-wrap each of those drew an empty row above or below the text, a gap a click could
+// land in as if it were the line. The node, the document the model is sent and the edit box all
+// keep them: this trims text nodes already built, first and last with anything in them, so a
+// token span keeps its place and only an edge token made of newlines comes out empty.
+function trimEdges(body){
+  const texts = [];
+  const w = document.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+  for(let t = w.nextNode(); t; t = w.nextNode()) texts.push(t);
+  for(const t of texts){ t.data = t.data.replace(/^[\r\n]+/, ''); if(t.data) break; }
+  for(const t of texts.reverse()){ t.data = t.data.replace(/[\r\n]+$/, ''); if(t.data) break; }
+}
+
+// A line's own controls, behind one glyph at the foot of its right margin: edit, spin off,
+// tokens. They were a left gutter and a word in the margin until 2026-09-18; the gutter took
+// 64px off every line to hold two words nobody reads while reading. Fixed to the window like
+// the token popup and for the same reason — #blocks scrolls and would clip it — so there is
+// only ever one. Esc, a click outside or a redraw shuts it; a scroll only carries it along
+// with its glyph, and shuts it once the glyph has left the dialogue's view.
+function closeLineMenu(){
+  const box = $('linemenu');
+  if(box){ box.remove(); for(const b of blocksEl.querySelectorAll('.blk.menuon')) b.classList.remove('menuon'); }
+}
+function openLineMenu(el, anchor, items){
+  const was = $('linemenu') && $('linemenu')._for === el;
+  closeLineMenu();
+  closeAlts();
+  if(was) return;                 // the glyph again is the way to shut it
+  const box = document.createElement('div');
+  box.id = 'linemenu';
+  box._for = el;
+  box.setAttribute('role', 'menu');
+  for(const [label, fn, on] of items){
+    const b = ghostBtn(label, () => { closeLineMenu(); fn(); });
+    b.setAttribute('role', 'menuitem');
+    if(on) b.classList.add('on');
+    box.appendChild(b);
+  }
+  document.body.appendChild(box);
+  box._anchor = anchor;
+  el.classList.add('menuon');     // the glyph stays lit while its menu is out
+  placeLineMenu();
+  box.querySelector('button').focus({preventScroll:true});
+}
+function placeLineMenu(){
+  const box = $('linemenu');
+  if(!box) return;
+  const r = box._anchor.getBoundingClientRect();
+  const v = blocksEl.getBoundingClientRect();
+  if(!box._anchor.isConnected || r.bottom < v.top || r.top > v.bottom){ closeLineMenu(); return; }
+  const w = box.offsetWidth, h = box.offsetHeight;
+  box.style.left = Math.max(12, Math.min(r.right - w, window.innerWidth - w - 12)) + 'px';
+  // below the glyph, or above it when there is no room — the last line sits on the composer
+  box.style.top = (r.bottom + 4 + h < window.innerHeight ? r.bottom + 4 : Math.max(12, r.top - h - 4)) + 'px';
+}
+
 function renderDoc(){
   // Every token span about to be thrown away takes its popup with it, or the alternatives
   // end up floating over a line that has been rebuilt underneath them.
   closeAlts();
+  closeLineMenu();
   blocksEl.textContent = '';
+  const ro = document.body.classList.contains('ro');
   for(const n of path()){
     const el = document.createElement('div');
     if(n.kind === 'root' && !n.text) continue;
@@ -3472,11 +3672,7 @@ function renderDoc(){
     const body = document.createElement('div');
     body.className = 'body';
     fillBody(body, n);
-    const gut = document.createElement('div');
-    gut.className = 'gut';
-    gut.appendChild(ghostBtn('Edit', () => editBlock(n, body)));
-    gut.appendChild(ghostBtn('Spin off', () => spinOff(n)));
-    el.appendChild(gut);
+    trimEdges(body);
     el.appendChild(body);
     const foot = footLine(n, true);
     if(foot) el.appendChild(foot);
@@ -3484,19 +3680,26 @@ function renderDoc(){
     rim.className = 'rim';
     const sw = swipe(n);
     if(sw) rim.appendChild(sw);
+    // The mirror can't write, so edit and spin off are not offered there; tokens only reads.
+    const items = ro ? [] : [['edit', () => editBlock(n, body)], ['spin off', () => spinOff(n)]];
     // The one way into the token view, and so into forking at a token. Only in the document,
     // never on a card: the whole card is the pick target, and clickable tokens inside it would
     // fight over every click.
     if(n.kind === 'model' && hasProbs(n)){
       const on = painted.has(n.id);
-      const wrap = document.createElement('div');
-      wrap.className = 'tokwrap';
-      const b = ghostBtn('tokens', () => {
+      items.push(['tokens', () => {
         if(on) painted.delete(n.id); else painted.add(n.id);
         closeAlts();
         render();
-      });
-      b.classList.toggle('on', on);
+      }, on]);
+    }
+    if(items.length){
+      const wrap = document.createElement('div');
+      wrap.className = 'more';
+      const b = ghostBtn('⁖', () => openLineMenu(el, b, items), true);
+      b.title = 'this line: ' + items.map(i => i[0]).join(', ');
+      b.setAttribute('aria-label', b.title);
+      b.setAttribute('aria-haspopup', 'menu');
       wrap.appendChild(b);
       rim.appendChild(wrap);
     }
@@ -4071,6 +4274,7 @@ function drawShelf(){
     unfoldedFor = picked;
   }
   drawBranch(shelfTree(shelf), 0, '');
+  $('foldall').disabled = !opened.size;
   const row = shelf.find(s => s.name === picked);
   $('here').textContent = row ? shelfLabel(row) : (sitting ? (sitting.title || leafOf(sitting.name)) : '');
   $('here').title = picked || '';
@@ -4437,6 +4641,12 @@ $('artbtn').addEventListener('click', () => {
   $('artbtn').setAttribute('aria-expanded', String(on));
   if(on) loadArtifacts();
 });
+$('canvbtn').addEventListener('click', () => {
+  const on = !$('canvwrap').classList.contains('on');
+  $('canvwrap').classList.toggle('on', on);
+  $('canvbtn').setAttribute('aria-expanded', String(on));
+  if(on) loadCanvases();
+});
 $('artback').addEventListener('click', showDialogue);
 $('artagain').addEventListener('click', fanAgain);
 $('artgo').addEventListener('click', continueArtifact);
@@ -4464,6 +4674,13 @@ $('notesave').addEventListener('click', saveNote);
 $('notecancel').addEventListener('click', cancelNote);
 $('menubtn').addEventListener('click', () => menu($('tools').hidden));
 $('treejump').addEventListener('click', () => rooms($('roomspop').hidden));
+// Every fold shut, now. The open room's folders unfold for it once, when it becomes the open
+// room (drawShelf), and not again after this: collapse all means all, the open room's included.
+$('foldall').addEventListener('click', () => {
+  opened.clear();
+  rememberFolders();
+  drawShelf();
+});
 document.addEventListener('click', e => {
   // composedPath, not e.target.closest: the path is fixed when the click is dispatched, and a
   // handler inside the menu may redraw before this one runs (a folder fold rebuilds the whole
@@ -4477,11 +4694,12 @@ document.addEventListener('click', e => {
   if(!$('tools').hidden && !within('tools') && !within('menubtn')) menu(false);
   if(!$('roomspop').hidden && !within('roomspop') && !within('treejump') && !within('tools')) rooms(false);
   if(!within('alts')) closeAlts();
+  if(!within('linemenu') && !path.some(n => n.classList && n.classList.contains('more'))) closeLineMenu();
 });
-// The popup is positioned against a word on the screen, so it has to go the moment that
-// word moves. Capture, because #blocks is what actually scrolls, not the window.
-document.addEventListener('scroll', closeAlts, true);
-window.addEventListener('resize', closeAlts);
+// The token popup is positioned against a word on the screen, so it has to go the moment that
+// word moves; the line menu follows its glyph instead. Capture, because #blocks is what actually scrolls, not the window.
+document.addEventListener('scroll', () => { closeAlts(); placeLineMenu(); }, true);
+window.addEventListener('resize', () => { closeAlts(); placeLineMenu(); });
 // The artifact tree's connectors are measured, so every one of these moves them: a resize,
 // the OS flipping to the light room (type metrics change with it), and the moment the system
 // face finally loads and every box in the tree grows a line.
@@ -4491,6 +4709,13 @@ if(document.fonts && document.fonts.ready) document.fonts.ready.then(drawArtLink
 document.addEventListener('keydown', e => {
   if(e.key !== 'Escape' || e.defaultPrevented || e.target.closest('.ed')) return;
   if($('alts')){ closeAlts(); return; }
+  if($('linemenu')){
+    const el = $('linemenu')._for;
+    closeLineMenu();
+    const g = el && el.querySelector('.more .ghostbtn');
+    if(g) g.focus({preventScroll:true});
+    return;
+  }
   if(!$('roomspop').hidden){ rooms(false); $('treejump').focus(); }
   else if(!$('tools').hidden){ menu(false); $('menubtn').focus(); }
   else if(choosing){ showDialogue(); stopAll(); }
@@ -4540,7 +4765,11 @@ async function health(){
     const ro = !!d.readonly;
     if(readonly === true && !ro){ location.reload(); return; }
     readonly = ro;
+    // The line menu is built per render and leaves edit out on the mirror, so a page that
+    // drew its lines before this answer came back draws them again.
+    const flipped = document.body.classList.contains('ro') !== ro;
     document.body.classList.toggle('ro', ro);
+    if(flipped && sitting) renderDoc();
     $('robar').hidden = !ro;
     if(ro){
       const t = d.synced ? new Date(d.synced * 1000) : null;
@@ -4573,6 +4802,7 @@ async function health(){
   else { gate(); menu(true); }   // Create a room only when Basic or Bare is pressed.
   if(asked.kind === 'tree') await openWalk(asked.value);
   else if(asked.kind === 'canvas') await openCanvas(asked.value);
+  else if(asked.kind === 'board') await openBoard(asked.value);
   health();
   setInterval(health, 5000);
   }catch(e){ gate(); sys('Could not open the sitting: ' + e.message, true); }

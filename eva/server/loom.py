@@ -32,7 +32,12 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/folder?name=     -> one folder as the canvas reads it: every room under it,
                                sub-folders included, each with its nodes cut down to what
                                a picture of an experiment needs
-  POST /api/mark             -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
+  GET  /api/canvases         -> every board under shelf/canvases/ as {name, title, folder},
+                               by name: a board is a saved canvas, a title and a list of rooms
+  GET  /api/canvas?name=     -> one board as the canvas reads it — the same payload as
+                               /api/folder, built from the rooms the board lists, plus
+                               `board` and `title`; rooms that are gone are skipped
+  POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
                                reading it, and nothing downstream reads it. A branch wears
@@ -75,7 +80,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                 isn't there, and put in artifacts/.trash when the last star goes
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
-LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
+LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_CANVASES, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
 LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh).
 """
 
@@ -139,6 +144,10 @@ ARTIFACTS = os.environ.get("LOOM_ARTIFACTS", os.path.join(SHELF, "artifacts"))
 # html page on the sheets site — same rows, same rooms, one drawn for a phone in bed and one
 # for the screen where the rooms already live. LOOM_LEDGER is the tests' scratch override.
 LEDGER = os.environ.get("LOOM_LEDGER", os.path.join(SHELF, "berserk", "ledger.jsonl"))
+# Canvases (boards): one small json each, a title and the rooms it draws — a picture saved
+# apart from where its rooms are filed, so one room can sit on three boards and a folder can
+# be cut into four. Written by hand or by a script, never by this server: read only here.
+CANVASES = os.environ.get("LOOM_CANVASES", os.path.join(SHELF, "canvases"))
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -497,15 +506,21 @@ def leaf(name: str) -> str:
 
 
 def room_names() -> list[str]:
-    """Every room on the shelf as a path relative to SITTINGS, folders walked through.
+    """Every room on the shelf as a path relative to SITTINGS, folders walked through."""
+    return json_names(SITTINGS)
+
+
+def json_names(base: str) -> list[str]:
+    """Every `.json` under `base` as a name — its path without the extension — that
+    `name_ok` passes. Rooms and boards are both spelled this way, so they share one walk.
 
     Dot-folders are pruned whole, which is how `.trash` stays off the shelf now that the
     shelf has more than one level: it was enough to list only the top directory before.
     """
     out = []
-    for dirpath, dirnames, filenames in os.walk(SITTINGS):
+    for dirpath, dirnames, filenames in os.walk(base):
         dirnames[:] = [d for d in dirnames if not d.startswith(".")]
-        rel = os.path.relpath(dirpath, SITTINGS)
+        rel = os.path.relpath(dirpath, base)
         prefix = "" if rel == "." else rel.replace(os.sep, "/") + "/"
         for fname in filenames:
             if not fname.endswith(".json"):
@@ -639,15 +654,23 @@ def canvas_node(node: dict) -> dict:
 
 
 def folder_canvas(name: str) -> dict | None:
-    """A folder's rooms, cut to what the canvas draws. None when no room is under it.
+    """A folder's rooms, cut to what the canvas draws. None when no room is under it."""
+    rooms = canvas_rooms(folder_rooms(name))
+    return {"folder": name, "rooms": rooms} if rooms else None
+
+
+def canvas_rooms(names: list[str]) -> list[dict]:
+    """These rooms, in this order, cut to what the canvas draws — the one builder behind both
+    a folder and a board, so the two pictures can never disagree about what a room is.
 
     The room's own shape is kept — `root`, `current` and the nodes by id — because the page
     redraws the tree out of it: a fan is a node's model children, and which card sits on the
-    path root→current is what tells a walk from a census.
+    path root→current is what tells a walk from a census. A name with no readable room behind
+    it is skipped, not raised: a picture with a hole in it is still a picture.
     """
     walked = berserk_rooms()
     rooms = []
-    for room in folder_rooms(name):
+    for room in names:
         try:
             with open(sitting_path(room), encoding="utf-8") as f:
                 d = json.load(f)
@@ -666,9 +689,77 @@ def folder_canvas(name: str) -> dict | None:
             "berserk": room in walked or leaf(room) in walked,
             "nodes": {nid: canvas_node(n) for nid, n in nodes.items() if isinstance(n, dict)},
         })
+    return rooms
+
+
+# ---- a board: a canvas saved as a file ----------------------------------------------------
+# A folder is where rooms were filed when they were made; a board is how bekh wants to READ
+# them — four boards over one folder of twenty wire rooms, one per condition, so a comparison
+# is a step from one picture to the next instead of a hunt across one. Its name is its path
+# under CANVASES without the .json, through the same `name_ok` as a room, so `..` and dot
+# folders are as unaddressable here as on the shelf.
+
+def board_path(name: str) -> str:
+    if not name_ok(name):
+        raise ValueError(f"bad board name: {name!r}")
+    return os.path.join(CANVASES, *name.split("/")) + ".json"
+
+
+def read_board(name: str) -> dict | None:
+    """The board file as a dict, or None when there is none. A file that isn't json raises
+    ValueError — a board somebody broke by hand should say so, not read as missing."""
+    try:
+        with open(board_path(name), encoding="utf-8") as f:
+            d = json.load(f)
+    except FileNotFoundError:
+        return None
+    if not isinstance(d, dict):
+        raise ValueError("a board is a json object")
+    return d
+
+
+def boards() -> list[dict]:
+    """Every board for the menu: name, title and the folder it sits in ('' at the top), by
+    name — which is also the order the page's `‹ ›` steps through a folder of them."""
+    out = []
+    for name in sorted(json_names(CANVASES)):
+        try:
+            d = read_board(name)
+        except (OSError, ValueError):
+            continue                      # a broken board is left out of the list, not fatal
+        if d is None:
+            continue
+        title = d.get("title")
+        out.append({"name": name,
+                    "title": title if isinstance(title, str) and title else leaf(name),
+                    "folder": name.rsplit("/", 1)[0] if "/" in name else ""})
+    return out
+
+
+def board_canvas(name: str) -> dict | None:
+    """A board as the canvas reads it: `canvas_rooms` over the rooms it lists, plus its name
+    and title. None for no such board, or one whose every room has gone.
+
+    A listed room goes through `resolve_room`, so a board may spell a room by its path or by
+    the bare name it was made with, and a room filed away since still answers. One that no
+    longer exists is skipped. A room listed twice is drawn once — two copies of one block
+    would be two sets of marks on one set of nodes.
+    """
+    d = read_board(name)
+    if d is None:
+        return None
+    listed = d.get("rooms") if isinstance(d.get("rooms"), list) else []
+    names = []
+    for r in listed:
+        path = resolve_room(r) if isinstance(r, str) else None
+        if path and path not in names:
+            names.append(path)
+    rooms = canvas_rooms(names)
     if not rooms:
         return None
-    return {"folder": name, "rooms": rooms}
+    title = d.get("title")
+    return {"board": name, "title": title if isinstance(title, str) and title else leaf(name),
+            "rooms": rooms}
 
 
 MARKS = ("kept", "good")
@@ -1505,6 +1596,26 @@ class Handler(BaseHTTPRequestHandler):
             d = folder_canvas(name)
             if d is None:
                 self._json(404, {"error": "no rooms in that folder"})
+                return
+            self._json(200, d)
+            return
+
+        if u.path == "/api/canvases":
+            self._json(200, {"canvases": boards()})
+            return
+
+        if u.path == "/api/canvas":
+            name = (parse_qs(u.query).get("name", [""])[0] or "").strip()
+            if not name_ok(name):
+                self._json(400, {"error": "bad name"})
+                return
+            try:
+                d = board_canvas(name)
+            except (OSError, ValueError):
+                self._json(500, {"error": "that board isn't readable json"})
+                return
+            if d is None:
+                self._json(404, {"error": "no such board, or none of its rooms are left"})
                 return
             self._json(200, d)
             return

@@ -1,0 +1,10 @@
+{
+  "title": "hum · beats · gpt-2 calls",
+  "rooms": [
+    "experiments/wire/hum-beats-gpt2caller-01",
+    "experiments/wire/hum-beats-gpt2caller-02",
+    "experiments/wire/hum-beats-gpt2caller-03",
+    "experiments/wire/hum-beats-gpt2caller-04",
+    "experiments/wire/hum-beats-gpt2caller-05"
+  ]
+}
