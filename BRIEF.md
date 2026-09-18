@@ -78,6 +78,10 @@ no name yet; it is bekh's to find.
 - **Opus does everything mechanical** — bulk reading, code, fetching, cutting seeds — with
   `model: 'opus'` on every spawn; fable reads verdicts and judges. A mock before a build. **A
   page change is not done until it has been clicked and dragged**, not just screenshotted.
+- **Smallest test first.** A new idea gets the smallest run that can show anything — one seed,
+  a handful of cards — and only a promising one gets run at scale. The model's reflex is to
+  fire three hundred at once; three hundred cards of a dud is an afternoon of bekh's reading
+  gone, and the reading is the scarce thing here.
 - **The page is a desktop page; the phone is a smoke test** (root `CLAUDE.md`).
 - **The end-of-day brief.** When the day's work is done and the docs are in order, the model
   tells bekh in one short message what the main results were and how we got to each, by subject,
