@@ -740,6 +740,24 @@ def set_kept(room: str, nid: str, kept: bool) -> None:
     set_mark(room, nid, "kept", kept)
 
 
+def prompt_to(sitting: dict, nid: str) -> str:
+    """The document root→this node: every text on the path, joined with NOTHING between them.
+
+    A sitting is a tree and a document is one path through it, and this is the answer to "what
+    has the model actually been handed". The join is bare concatenation because the turn
+    strings already live inside the nodes (a bare room has none at all) — put a separator here
+    and the page and the wire would be reading two different documents. berserk.py and
+    walk/walk.py carry their own copy of these five lines from before this one existed; new
+    callers take this one, so the answer has one home.
+    """
+    nodes = sitting["nodes"]
+    out, n = [], nodes[nid]
+    while n:
+        out.insert(0, n["text"])
+        n = nodes[n["parent"]] if n.get("parent") else None
+    return "".join(out)
+
+
 def check(obj) -> str:
     """The shape, or a sentence saying what is wrong with it. "" means fine.
 

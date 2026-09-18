@@ -244,7 +244,19 @@ class Handler(BaseHTTPRequestHandler):
         if quoted is not None:
             text = quoted
         else:
-            line = random.choice(LINES)
+            # A server may carry its own script of lines, handed out IN ORDER and wrapping —
+            # `srv.lines`, beside `n_ctx` and `model_path`, for the same reason those exist: a
+            # test with two stubs in one process needs one of them to answer something
+            # particular. wire.py's retry-then-swap is only reachable that way, because it
+            # turns on a model answering NOTHING twice and then the other one answering, and
+            # the module's random pick can neither be empty on demand nor twice in a row.
+            own = getattr(self.server, "lines", None)
+            if own:
+                i = getattr(self.server, "_line_i", 0)
+                self.server._line_i = i + 1
+                line = own[i % len(own)]
+            else:
+                line = random.choice(LINES)
             # A LINES entry that is the empty string means the model answered with NOTHING,
             # not "a blank line and then the other speaker" — which is what a base model
             # standing on a licence footer really does, and what the fan, the artifact and
@@ -313,18 +325,21 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def serve(port: int = 0, n_ctx: int = 8192,
-          model_path: str = "/models/stub-base-12b.Q5_K_M.gguf") -> ThreadingHTTPServer:
+          model_path: str = "/models/stub-base-12b.Q5_K_M.gguf",
+          lines: list[str] | None = None) -> ThreadingHTTPServer:
     """Bound and ready, not yet serving. port 0 lets the OS pick — read it back off
     `srv.server_address[1]`, which is how the test avoids racing another process for a
     port it guessed.
 
-    `n_ctx` and `model_path` are what this one answers on /props, and `srv.seen` is what it
-    alone was asked: three things a second stub in the same process needs of its own.
+    `n_ctx` and `model_path` are what this one answers on /props, `lines` is its own script of
+    answers in order (an empty string means it answered nothing), and `srv.seen` is what it
+    alone was asked: four things a second stub in the same process needs of its own.
     """
     srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     srv.daemon_threads = True
     srv.n_ctx = n_ctx
     srv.model_path = model_path
+    srv.lines = lines
     srv.seen = []
     return srv
 
