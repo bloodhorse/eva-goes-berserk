@@ -1,0 +1,465 @@
+{
+ "name": "58b4b53a79d1",
+ "title": "experiments/three-models/07-the-green-book · 18 sep",
+ "created": 1789700135.604434,
+ "source": {
+  "room": "experiments/three-models/07-the-green-book",
+  "title": null,
+  "node": "06703117"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "I went on among them, though they frightened me, and my heart was full of wicked songs that they put into it; and I wanted to make faces and twist myself about in the way they did, and I went on and on a long way till at last I liked the rocks, and they didn't frighten me any more. I sang the songs I thought of; songs full of words that must not be spoken or written down. Then I made faces like the faces on the rocks, and I twisted myself about like the twisted ones, and I lay down flat on the ground like the dead ones, and I went up to one that was grinning, and put my arms round him and hugged him. And so I went on and on through the rocks till I came to a round mound in the middle of them. It was higher than a mound, it was nearly as high as our house, and it was like a great basin turned upside down, all smooth and round and green, with one stone, like a post, sticking up at the top. I climbed up the sides, but they were so steep I had to stop or I should have rolled all the way down again, and I should have knocked against the stones at the bottom, and perhaps been",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "06703117",
+   "lead": "",
+   "took": {
+    "id": "7850ee10",
+    "at": 7,
+    "text": " crushed to death by them. So I stood in a circle with a bunch of flowers in each hand, and I sang to them and kissed them, and I sang out loud as loud as I could, and it seemed to me that I was talking to myself, for they only listened with their eyes",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 60,
+     "tps": 27.2,
+     "params": {
+      "n_predict": 60,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1,
+      "top_n_sigma": -1,
+      "xtc_probability": 0,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1,
+      "dry_keep": 0.8
+     },
+     "model": "gpt2"
+    }
+   },
+   "kept": [
+    {
+     "id": "86642a40",
+     "at": 5,
+     "text": " killed. I sat down and rested. I looked at the stone at the top; there was something written upon it: \"You shall die,\" it said, \"you shall die.\" I knew then it was the stone that sent me. It's been with me ever since. It was there when",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 4.3,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "pythia"
+     }
+    },
+    {
+     "id": "8888d81d",
+     "at": 18,
+     "text": " killed by some of them. And the big rock that stuck out at the top seemed to have eyes. There were eyes, and they seemed to be looking down on me, and laughing at me, as though I was an impudent little thing to climb so high to reach this rock, where",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 5.3,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "pythia"
+     }
+    },
+    {
+     "id": "e18dd9b4",
+     "at": 26,
+     "text": " crushed or crushed myself. But I just got up as high as I could go, and it wasn't long before I reached the top. And there in the middle sat the sun shining through a glass window. I saw him and heard him singing a song; and he was dancing round in the sun",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 12,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    },
+    {
+     "id": "7f8313f4",
+     "at": 30,
+     "text": " killed. Then I looked into the inside, where it was all dry and red. There were two steps in it leading right down to the very bottom; the first was made of wood, and the other of earth, but there were some iron steps too. I was afraid to go down alone,",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.6,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "7d35bf4d",
+      "at": 1,
+      "opening": " hurt, or perhaps only cut myself. So I sat down, and got my breath, and looked ",
+      "length": 267,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "165be561",
+      "at": 2,
+      "opening": " killed. Then I sat down in the middle on a big boulder near the top.\n\nThen I sa",
+      "length": 257,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0a051fa3",
+      "at": 3,
+      "opening": " killed. And then I stood at the top, and looked down into the basin. The bottom",
+      "length": 267,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "4cabfc67",
+      "at": 4,
+      "opening": " killed. But at last I got to the top, and looked over at the stone that stuck u",
+      "length": 248,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8af0bf63",
+      "at": 6,
+      "opening": " hurt. And then I thought it would be wonderful if there was anybody up there wh",
+      "length": 250,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7ebdbb4f",
+      "at": 8,
+      "opening": " killed; but I wasn't afraid then, because I had a rock for a rocker, and it hel",
+      "length": 221,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "60c80396",
+      "at": 9,
+      "opening": " killed. And I sat there on the highest stone.\n\nThe sun began to go down then, a",
+      "length": 271,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "9fd54360",
+      "at": 10,
+      "opening": " trampled by the horses that pulled the wagons; for those were strong beasts tha",
+      "length": 262,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "13ddef65",
+      "at": 11,
+      "opening": " hurt.\n\nAnd when I got to the top of the round thing I saw there was a great fla",
+      "length": 262,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "86ce7ec3",
+      "at": 12,
+      "opening": " dashed against them. When I got to the top I stood still for a moment. I looked",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f62e67fb",
+      "at": 13,
+      "opening": " thrown out.\n\nSo I lay down in the soft grass there and looked at it and wept, a",
+      "length": 237,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "536e1bd9",
+      "at": 14,
+      "opening": " bruised or hurt, too, and that would not have pleased my parents. So I just sto",
+      "length": 248,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "a605c233",
+      "at": 15,
+      "opening": " killed. When I had climbed halfway up, I sat down on a flat rock just below the",
+      "length": 276,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "75446ca6",
+      "at": 16,
+      "opening": " hurt. And when I got near the top, I could see over it, for there was an openin",
+      "length": 255,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "ea5a409a",
+      "at": 17,
+      "opening": " killed. But the top wasn't quite as smooth as it looked from below, for there w",
+      "length": 266,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "19171570",
+      "at": 19,
+      "opening": " killed. So I stood still and looked at the stone at the top of the mound, which",
+      "length": 275,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "daa97249",
+      "at": 20,
+      "opening": " hurt. But I had to rest awhile and think it out.\n\nThen I saw there were people ",
+      "length": 253,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8a1bfe5e",
+      "at": 21,
+      "opening": " dashed to bits by the big boulders below. Then I took the rock that stuck up at",
+      "length": 247,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5e068bf9",
+      "at": 22,
+      "opening": " killed by them, and perhaps never found the place where I had come out again. I",
+      "length": 261,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "4f5b3a69",
+      "at": 23,
+      "opening": " dashed against them too. So I stood still and looked around; but there were no ",
+      "length": 287,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2ce4e7ce",
+      "at": 24,
+      "opening": " cut down, but the rock had a very sharp edge on one side and that gave me stren",
+      "length": 237,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "b93d5f19",
+      "at": 25,
+      "opening": " injured by them, for I was quite tired. When I came out I went to my house and ",
+      "length": 257,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e1882753",
+      "at": 27,
+      "opening": " killed. And there, under the post at the top of the mound, there was a stone li",
+      "length": 259,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "88060a6c",
+      "at": 28,
+      "opening": " smashed to bits. But there were flowers all round, lots of lovely big yellow ro",
+      "length": 248,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d37b4739",
+      "at": 29,
+      "opening": " killed.\n\nThe sun was low behind me when I got to the top of the mound, and I co",
+      "length": 256,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 17.121
+  }
+ ],
+ "blocks": [
+  {
+   "id": "06703117",
+   "kind": "root",
+   "text": "I went on among them, though they frightened me, and my heart was full of wicked songs that they put into it; and I wanted to make faces and twist myself about in the way they did, and I went on and on a long way till at last I liked the rocks, and they didn't frighten me any more. I sang the songs I thought of; songs full of words that must not be spoken or written down. Then I made faces like the faces on the rocks, and I twisted myself about like the twisted ones, and I lay down flat on the ground like the dead ones, and I went up to one that was grinning, and put my arms round him and hugged him. And so I went on and on through the rocks till I came to a round mound in the middle of them. It was higher than a mound, it was nearly as high as our house, and it was like a great basin turned upside down, all smooth and round and green, with one stone, like a post, sticking up at the top. I climbed up the sides, but they were so steep I had to stop or I should have rolled all the way down again, and I should have knocked against the stones at the bottom, and perhaps been",
+   "posed": false
+  },
+  {
+   "id": "7850ee10",
+   "kind": "model",
+   "text": " crushed to death by them. So I stood in a circle with a bunch of flowers in each hand, and I sang to them and kissed them, and I sang out loud as loud as I could, and it seemed to me that I was talking to myself, for they only listened with their eyes",
+   "posed": false
+  }
+ ],
+ "bits": 17.121,
+ "by": "star"
+}

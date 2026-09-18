@@ -1,0 +1,370 @@
+{
+ "name": "6c8f4bbb9de3",
+ "title": "experiments/portal/01-fainter-than-air · 18 sep",
+ "created": 1789668440.862675,
+ "source": {
+  "room": "experiments/portal/01-fainter-than-air",
+  "title": null,
+  "node": "1ee1c3be"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "the look on your face when i first connect the line\nfor the very first time my words come slowly to mind\n\"is anybody there?\", all trembling and scared\nreplies then come fainter than air:",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "1ee1c3be",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "e6fb1884",
+     "at": 4,
+     "text": " \"don't be afraid, come closer\"\n\nI want to know, can you tell me please\nare there more like you somewhere waiting to meet me\n\nwhen i first got connected i could hardly believe\nthe answers i'd asked for came flowing right through me\nand all the things I was told",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.3,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "9b601935",
+     "at": 20,
+     "text": " \"hi, hi, i am a little girl from my town\"\nmy voice breaks, it comes out like a scream in my throat\ni start to tremble as I start to feel cold\n\"I don't want to leave. i can't stay here. i have to get home",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 36.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "77694137",
+      "at": 1,
+      "opening": " \"yeah\", \"hey\", \"hey, what is this\", \"i think someone might be coming\"\nthe conne",
+      "length": 226,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "26b46aed",
+      "at": 2,
+      "opening": " \"no\"\nat first I felt no anger but when the word came, I felt like i was going t",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "37fe73d4",
+      "at": 3,
+      "opening": " \"we are all around\"\n\nyou want to say so much, you can hardly find a word\nthe ot",
+      "length": 243,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "a58c2d16",
+      "at": 5,
+      "opening": " \"it's me\", they say\n\"oh no, i'm sorry i forgot, it was on your head, i didn't m",
+      "length": 203,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e694463e",
+      "at": 6,
+      "opening": "\n\"yeah i know i am\"\nthen another reply, quieter: \"i was looking at my clock\"\nmy ",
+      "length": 213,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "34ef8616",
+      "at": 7,
+      "opening": " \"are you there?\"\n\nthis is a test, just checking in\ndon't need no help, i'll do ",
+      "length": 238,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "8424aec4",
+      "at": 8,
+      "opening": " \"there's nobody there\"\nis anybody there? I'm all alone and I can't find me\ni fe",
+      "length": 220,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "27b294b7",
+      "at": 9,
+      "opening": " \"hello there\", they all say, their eyes wide and a bit scared\n\"how are you doin",
+      "length": 233,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "70e85d8f",
+      "at": 10,
+      "opening": " \"yes, you are the one!\"\ni was told that it was you who was coming with the news",
+      "length": 221,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c571015e",
+      "at": 11,
+      "opening": " \"what do you want? i'll get somebody!\"\ni can see the fear in your face, but you",
+      "length": 235,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "248df6fc",
+      "at": 12,
+      "opening": " \"it's ok, be no more afraid\"\n\nand the very next day, my voice is not shaking at",
+      "length": 233,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5698ccac",
+      "at": 13,
+      "opening": "\n\"hi i am\"\ni stare blankly\nbut after a second i begin to remember,\nthis is no dr",
+      "length": 212,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2afdc566",
+      "at": 14,
+      "opening": "\n\"ohh, just me and i..\", \"i am your daughter\", \"you are mine\", \"please help me\"\n",
+      "length": 210,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "eac49ff1",
+      "at": 15,
+      "opening": " \"yes, we're here\"\n\nand when i finally speak out loud to you for real\nyou'll nev",
+      "length": 225,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "8d2daab1",
+      "at": 16,
+      "opening": " \"yes, but we are not alone\"\nand they don't leave me, but stay and surround me\nt",
+      "length": 229,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "66aacae7",
+      "at": 17,
+      "opening": " \"you have called me here,\nyou're here in my soul, I can see you so clear\"\n\na so",
+      "length": 233,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ce033e6d",
+      "at": 18,
+      "opening": " \"yes, you're connected\"\nand I don't know what to say except that i miss you\nI j",
+      "length": 234,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "fb8f8186",
+      "at": 19,
+      "opening": " \"hello, hello!\"\n\nI'll make it so simple even a child can see through the veil\n\n",
+      "length": 264,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "8e7ed715",
+      "at": 21,
+      "opening": " \"i can't hear you\"\n\"hello??? is there anyone there?\", still whispering the same",
+      "length": 261,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "40f3244c",
+      "at": 22,
+      "opening": "\n\"hello\"\n\"hi\"\n\"are you ok?\"\n\"yeah i am ok, i just lost my phone\"\ni begin to wond",
+      "length": 210,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "cf607530",
+      "at": 23,
+      "opening": " \"yes\"\nall these words from that first connection to this little light of hope,\n",
+      "length": 247,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "858bad8c",
+      "at": 24,
+      "opening": " \"is anyone there?\"\nmy words begin to flow as they call my name\nas i begin to ta",
+      "length": 249,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "8587c40f",
+      "at": 25,
+      "opening": "\n\"yes\"\nmy hand starts to tremble\nthis is not something i should be feeling right",
+      "length": 212,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7b307590",
+      "at": 26,
+      "opening": " \"don't worry, don't fear\"\na moment of silence before a voice becomes clear\n\n\"ho",
+      "length": 228,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d6f99872",
+      "at": 27,
+      "opening": "\n\"yes, it's me, it's me\"\nand all in one moment we are connected\nin one breath an",
+      "length": 207,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f4587948",
+      "at": 28,
+      "opening": "\n\"hi i'm here, can i help?\"\ni smile and say \"sure, just hang tight for a sec\"\n\"o",
+      "length": 198,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "384eeb99",
+      "at": 29,
+      "opening": " \"oh, you are too fine\"\n\nwhen you came home i thought it was so good to be free\n",
+      "length": 221,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "88cc8637",
+      "at": 30,
+      "opening": " \"is anybody there?\"\nnow i can see that my mind has gone astray\ni'm sitting at h",
+      "length": 234,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 8.765
+  }
+ ],
+ "blocks": [
+  {
+   "id": "1ee1c3be",
+   "kind": "root",
+   "text": "the look on your face when i first connect the line\nfor the very first time my words come slowly to mind\n\"is anybody there?\", all trembling and scared\nreplies then come fainter than air:",
+   "posed": false
+  }
+ ],
+ "bits": 8.765,
+ "by": "star"
+}

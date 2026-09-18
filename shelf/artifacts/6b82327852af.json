@@ -1,0 +1,339 @@
+{
+ "name": "6b82327852af",
+ "title": "experiments/nemo/04-i-am-23 · 18 sep",
+ "created": 1789665286.872212,
+ "source": {
+  "room": "experiments/nemo/04-i-am-23",
+  "title": null,
+  "node": "f69af0e9"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "i am 23. i run an internet café. the regulars call me the Witch-witch.\ni do not deserve the title.\nthe first night i jacked into the dead grid, it was because my father was dying and he was asking after my mother, who had been gone since before i could remember. he hadn't seen her, so he asked me to find her.\nit took two weeks to learn how to jack without losing a limb. two days to find out where the ghosts are. two hours to find mine, because they're easy to spot; they live on the top floor of a dead high-rise with all the other mothers of St. Catherine, and when i got there, she\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "f69af0e9",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "487df6c5",
+     "at": 6,
+     "text": "was looking down at the world she'd abandoned, her hand resting on the glass, the light in her eyes.\ni was eight. she had long, black hair and red nails, and i was eight and she was the ghost of my mother.\nthe Witch-witch doesn't go home often,",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.8,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      }
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "76149900",
+      "at": 1,
+      "opening": "had my name tattooed across her chest in a language i couldn't read, but which s",
+      "length": 278,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "58977d6e",
+      "at": 2,
+      "opening": "told me, \"it's hard enough to keep them all in line, so go home and mind your fa",
+      "length": 226,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9de079f6",
+      "at": 3,
+      "opening": "didn't say hello. just 'you don't need to look at me like that.'\n'like what?'\n'l",
+      "length": 211,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "60b27c5a",
+      "at": 4,
+      "opening": "was waiting for me.\n\"you look like me,\" she said, smiling in that way mothers do",
+      "length": 223,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5dadb392",
+      "at": 5,
+      "opening": "was already looking at me, waiting for me to say something, her face pale and co",
+      "length": 258,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ae60a699",
+      "at": 7,
+      "opening": "was beautiful.\ni walked down the corridor, and she looked up, and her eyes were ",
+      "length": 244,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "1b98f67a",
+      "at": 8,
+      "opening": "told me why she'd left us.\nwhen i came down again, my father had died.\n\nit wasn'",
+      "length": 225,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "2bb619e4",
+      "at": 9,
+      "opening": "told me:\nit was the dead that did it.\nand then she walked away.\nshe was as pale ",
+      "length": 227,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "74529592",
+      "at": 10,
+      "opening": "was sitting in a corner with all the others, rocking back and forth in their cha",
+      "length": 257,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "29471c1f",
+      "at": 11,
+      "opening": "looked at me and she didn't know me but i knew her because her hair was braided ",
+      "length": 245,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "987fddee",
+      "at": 12,
+      "opening": "had her arms open like a dead thing trying to fly and a voice in her throat that",
+      "length": 241,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "fe4a4ed0",
+      "at": 13,
+      "opening": "was holding me. \"honey,\" she said, and smiled, and then she said that my father ",
+      "length": 235,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "830bb4b1",
+      "at": 14,
+      "opening": "was\ndancing in a ballroom with no ceiling. she was smiling as she turned, as if ",
+      "length": 254,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7ae2483b",
+      "at": 15,
+      "opening": "was crying over my father's body like he'd just died.\ni told her to stop, that h",
+      "length": 244,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "64dca802",
+      "at": 16,
+      "opening": "tried to kill me.\n\nbut the witch-witch can see through the grid. the witch-witch",
+      "length": 259,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a790799e",
+      "at": 17,
+      "opening": "wasn't the first thing i saw. that was an old man. a very old man, but his eyes ",
+      "length": 220,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "bfe41003",
+      "at": 18,
+      "opening": "was standing at the window. she had on a blue dress with daisies all over it. sh",
+      "length": 259,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "daa5b828",
+      "at": 19,
+      "opening": "had her head in her hands like she always does when i see her. and i thought: th",
+      "length": 233,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "43c0c256",
+      "at": 20,
+      "opening": "didn't know me.\nbut my father knew the woman who died that way, and he kept her ",
+      "length": 239,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a564f219",
+      "at": 21,
+      "opening": "tried to kill me.\n\nwhen i woke up in the hospital, the regulars were talking abo",
+      "length": 216,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "b55ad6aa",
+      "at": 22,
+      "opening": "didn't say anything.\n\nthe first time i tried to hack into a government mainframe",
+      "length": 245,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5c5e19ef",
+      "at": 23,
+      "opening": "looked up from her knitting and said: you'll never know what it's like to be a m",
+      "length": 230,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "0b04bae3",
+      "at": 24,
+      "opening": "told me what happened.\nthey say that when you're born you forget everything you ",
+      "length": 255,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9c068087",
+      "at": 25,
+      "opening": "was holding her own dead infant in her arms,\nrocking it back and forth, back and",
+      "length": 232,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "67b307c6",
+      "at": 26,
+      "opening": "didn't recognize me.\n\ni knew you loved her, dad. i told him when i jacked out th",
+      "length": 232,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "dbf4bf3e",
+      "at": 27,
+      "opening": "looked like every woman i ever knew: skinny arms and a tired smile.\n\"hi, mom.\"\n\"",
+      "length": 219,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "637cee9e",
+      "at": 28,
+      "opening": "didn't remember him.\ni wanted to kill myself but i didn't, because he would've b",
+      "length": 238,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "3abd8b7f",
+      "at": 29,
+      "opening": "was asleep in the kitchenette, half-submerged in the sink. i said:\nmother?\nshe s",
+      "length": 231,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d73097e3",
+      "at": 30,
+      "opening": "looked at me for a long moment, and then said that i looked just like her.\n\nshe ",
+      "length": 260,
+      "temperature": 2.2,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 4.907
+  }
+ ],
+ "blocks": [
+  {
+   "id": "f69af0e9",
+   "kind": "root",
+   "text": "i am 23. i run an internet café. the regulars call me the Witch-witch.\ni do not deserve the title.\nthe first night i jacked into the dead grid, it was because my father was dying and he was asking after my mother, who had been gone since before i could remember. he hadn't seen her, so he asked me to find her.\nit took two weeks to learn how to jack without losing a limb. two days to find out where the ghosts are. two hours to find mine, because they're easy to spot; they live on the top floor of a dead high-rise with all the other mothers of St. Catherine, and when i got there, she\n",
+   "posed": false
+  }
+ ],
+ "bits": 4.907,
+ "by": "star"
+}

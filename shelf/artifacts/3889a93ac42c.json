@@ -1,0 +1,430 @@
+{
+ "name": "3889a93ac42c",
+ "title": "experiments/three-models/11-scotts-diary · 18 sep",
+ "created": 1789700963.576413,
+ "source": {
+  "room": "experiments/three-models/11-scotts-diary",
+  "title": null,
+  "node": "979d9ae9"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "Sunday, March 18.--To-day, lunch, we are 21 miles from the depot. Ill fortune presses, but better may come. We have had more wind and drift from ahead yesterday; had to stop marching; wind N.W., force 4, temp. -35°. No human being could face it, and we are worn out nearly.\n\nMy right foot has gone, nearly all the toes--two days ago I was proud possessor of best feet. These are the steps of my downfall. Like an ass I mixed a small spoonful of curry powder with my melted pemmican--it gave me violent indigestion. I lay awake and in pain all night; woke and felt done on the march; foot went and I didn't",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "979d9ae9",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "0000eaf1",
+     "at": 12,
+     "text": " notice till too late. Had a doctor examined me, he would probably say my feet were done for, and not worth much as walking materials; and it would be too bad to have to cut off all use of them! But I've got no time now. It's going to take weeks before",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 2,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "pythia"
+     }
+    },
+    {
+     "id": "b57bd1c2",
+     "at": 14,
+     "text": " mind; was not much pain till it froze hard. To-day I got very weak, could hardly stand; felt giddy when I tried to stand up; thought it was my last day. But I will stick it out as long as I can walk at all.\n\nThursday, March 2",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.5,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "0e191c7d",
+     "at": 17,
+     "text": " feel so good. A large bear jumped out at me as we marched; we dashed down to the trail and the bear took the lead. He was a big fellow, maybe 1,000 pounds. He made his rounds in the trail. My step has gone, but the legs will heal. We",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 41,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    },
+    {
+     "id": "04bd6e33",
+     "at": 28,
+     "text": " know where I was. I will be damned if I shall get the worst of this march. My eyesight is fading fast--the stars are going blind, too--I am beginning to have difficulty seeing to-morrow morning. My feet and hands are numb; my joints are killing; my legs",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.7,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "7daed4c0",
+      "at": 1,
+      "opening": " know how it happened. All this time we are passing the Great Falls of the Misso",
+      "length": 261,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "3341b55e",
+      "at": 2,
+      "opening": " feel better till I came down from the camp. My right calf was also injured, but",
+      "length": 249,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "af993895",
+      "at": 3,
+      "opening": " notice. I shall have to be sent back to Winnipeg by slow stages; a most dismal ",
+      "length": 250,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "89d1ac70",
+      "at": 4,
+      "opening": " feel the frost till last night at 10 o'clock.\n\nThere are now 500 lbs. food to b",
+      "length": 179,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "4b165d65",
+      "at": 5,
+      "opening": " care; broke my leg; went home and was very weak. This morning I found myself wi",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "ecb46d1a",
+      "at": 6,
+      "opening": " know till last night, when I undressed. Then I found one big blister and two li",
+      "length": 257,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "697ee14f",
+      "at": 7,
+      "opening": " feel up to it, and couldn't get warm; walked a good deal at night with bare fee",
+      "length": 241,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "5101c2bc",
+      "at": 8,
+      "opening": " know what to do. My doctor, Mr. B, who is an old man and always willing to do a",
+      "length": 228,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "c2214034",
+      "at": 9,
+      "opening": " notice it for three days; then blisters burst; now it's like a pad, which gives",
+      "length": 222,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "6ec98a98",
+      "at": 10,
+      "opening": " think of anything till this morning. Now, when the least exertion hurts so, and",
+      "length": 273,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "f819037b",
+      "at": 11,
+      "opening": " notice it; my mind was in a stupor; had been working so hard in getting up depo",
+      "length": 246,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "dbf90188",
+      "at": 13,
+      "opening": " notice till yesterday--now, as near as can be determined, am about to lose the ",
+      "length": 201,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6e6db2bd",
+      "at": 15,
+      "opening": " know where it came from, couldn't see it at all; thought of it in the morning. ",
+      "length": 225,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9ee8ece2",
+      "at": 16,
+      "opening": " know it.\n\nThe next morning, about 6, when we halted for breakfast, I tried to w",
+      "length": 240,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d3931825",
+      "at": 18,
+      "opening": " mind much at first. In fact, it has been so cold, and I have had so little trou",
+      "length": 249,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "a314427f",
+      "at": 19,
+      "opening": " know how it happened. This morning, too, it happened, and I felt I ought not to",
+      "length": 240,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "735ab80f",
+      "at": 20,
+      "opening": " notice till too late.\n\nMonday, March 19.--Started off again yesterday, with a s",
+      "length": 238,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e9306827",
+      "at": 21,
+      "opening": " know what I was about till evening; I got into sleeping bag and have never been",
+      "length": 257,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "7dfccf15",
+      "at": 22,
+      "opening": " feel like going any further; and at daylight the next day, which I supposed wou",
+      "length": 251,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e496861d",
+      "at": 23,
+      "opening": " know what to do; turned out at noon this morning to find two men already suffer",
+      "length": 243,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "b557743d",
+      "at": 24,
+      "opening": " feel much better, until last night. So now I have to limp along; must walk on b",
+      "length": 239,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "bceda138",
+      "at": 25,
+      "opening": " know what. This morning we came to the railroad tracks and I saw our little tra",
+      "length": 272,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "89313bc7",
+      "at": 26,
+      "opening": " want it to; sat down in front and the soreness made me feel so ashamed. I could",
+      "length": 243,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "06f8b3dd",
+      "at": 27,
+      "opening": " feel it for four days. The other leg is not so bad; no trouble so far; only had",
+      "length": 236,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "c191ee46",
+      "at": 29,
+      "opening": " notice it.\n\nI cannot find a place on my feet that is not raw or swollen--toes h",
+      "length": 224,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "95363f5e",
+      "at": 30,
+      "opening": " know what was the matter. My comrades kindly attended me all day yesterday. Had",
+      "length": 267,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 14.742
+  }
+ ],
+ "blocks": [
+  {
+   "id": "979d9ae9",
+   "kind": "root",
+   "text": "Sunday, March 18.--To-day, lunch, we are 21 miles from the depot. Ill fortune presses, but better may come. We have had more wind and drift from ahead yesterday; had to stop marching; wind N.W., force 4, temp. -35°. No human being could face it, and we are worn out nearly.\n\nMy right foot has gone, nearly all the toes--two days ago I was proud possessor of best feet. These are the steps of my downfall. Like an ass I mixed a small spoonful of curry powder with my melted pemmican--it gave me violent indigestion. I lay awake and in pain all night; woke and felt done on the march; foot went and I didn't",
+   "posed": false
+  }
+ ],
+ "bits": 14.742,
+ "by": "star"
+}

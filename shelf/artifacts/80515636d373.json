@@ -1,0 +1,430 @@
+{
+ "name": "80515636d373",
+ "title": "experiments/three-models/10-madmans-diary · 18 sep",
+ "created": 1789700903.527471,
+ "source": {
+  "room": "experiments/three-models/10-madmans-diary",
+  "title": null,
+  "node": "ba3d0eb1"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "But I feel much annoyed by an event which is about to take place to-morrow; at seven o'clock the earth is going to sit on the moon. This is foretold by the famous English chemist, Wellington. To tell the truth, I often felt uneasy when I thought of the excessive brittleness and fragility of the moon. The moon is generally repaired in Hamburg, and very imperfectly. It is done by a lame cooper, an obvious blockhead who has no idea how to do it. He took waxed thread and olive-oil--hence that pungent smell over all the earth which compels people to hold their noses. And this makes the moon so fragile that no men can live on it, but only noses. Therefore we cannot see our noses, because they are on the moon.\n\nWhen I now pictured to myself how the earth, that massive body, would crush our noses to dust, if it sat on the moon, I became so uneasy, that I immediately put on my shoes and stockings and hastened into the council-hall to give the police orders to",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 60,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "ba3d0eb1",
+   "lead": "",
+   "took": null,
+   "kept": [
+    {
+     "id": "b0f0a2da",
+     "at": 12,
+     "text": " let the moon go to her proper place, that is, back of the earth. But my orders were ignored, and I found the whole crowd gathered there. One woman was so afraid of the moon, that she jumped up on the pavement, and fell, crying like a madman, while she",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 28.9,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    },
+    {
+     "id": "e11f10eb",
+     "at": 19,
+     "text": " take me to a jail. But before I reached the gate, I saw my son, who had not gone to bed yet, with his big eyes wide open. I rushed to him.\n\n\"Oh, my dear,\" said he, \"I have not gone to bed till this moment,",
+     "temperature": 1.4,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 8,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 1.4,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "gpt2"
+     }
+    },
+    {
+     "id": "2740bf3e",
+     "at": 22,
+     "text": " prevent the event, although I had already dismissed all the police force yesterday. But I knew that they would obey me even without salaries; indeed they must, as they owe me some thousands of gulden; moreover, they would not dare to disobey me, for I am not only their mayor",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 11.3,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "nemo"
+     }
+    },
+    {
+     "id": "424f9114",
+     "at": 30,
+     "text": " keep an eye out for such a calamity. In fact I could not sleep at all last night, and early this morning was unable to go to school, as the streets were covered with snow. I have sent an official circular to all the police chiefs, begging them to be constantly vigilant",
+     "temperature": 2.2,
+     "posed": false,
+     "meta": {
+      "stop_type": "limit",
+      "stopping_word": "",
+      "tokens_predicted": 60,
+      "tps": 0.8,
+      "params": {
+       "n_predict": 60,
+       "stop": [],
+       "temperature": 2.2,
+       "min_p": 0.08,
+       "top_k": 0,
+       "top_p": 1,
+       "top_n_sigma": -1,
+       "xtc_probability": 0,
+       "xtc_threshold": 0.1,
+       "repeat_penalty": 1.05,
+       "repeat_last_n": 512,
+       "dry_multiplier": 0.8,
+       "dry_base": 1.75,
+       "dry_allowed_length": 3,
+       "dry_penalty_last_n": 8192,
+       "ignore_eos": false,
+       "n_probs": 5,
+       "logit_bias": [],
+       "logit_bias_text": "",
+       "fan": 4,
+       "spread": 1,
+       "dry_keep": 0.8
+      },
+      "model": "pythia"
+     }
+    }
+   ],
+   "fan": {
+    "size": 30,
+    "others": [
+     {
+      "id": "f670f9e3",
+      "at": 1,
+      "opening": " shut the streets, which are already quite dark, and not allow any one to go out",
+      "length": 247,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "71813cf6",
+      "at": 2,
+      "opening": " make all possible preparations for a crushing incident, in which everybody migh",
+      "length": 285,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "47afeafa",
+      "at": 3,
+      "opening": " seize the moon.\n\nThey will have no such idea, however, because the moon is not ",
+      "length": 242,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "280c445b",
+      "at": 4,
+      "opening": " be more vigilant than ever and keep a stricter watch. But all this will probabl",
+      "length": 149,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "afb3cf41",
+      "at": 5,
+      "opening": " arrest any one who dared to say the moon was made of cheese.\n\n_April 12th_. --A",
+      "length": 275,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f064e24a",
+      "at": 6,
+      "opening": " provide some way out of such a dangerous situation. In the meanwhile I went on ",
+      "length": 124,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "9ee8d4e7",
+      "at": 7,
+      "opening": " be vigilant and watchful during the night, and especially to keep an eye on the",
+      "length": 211,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "6a7d2557",
+      "at": 8,
+      "opening": " prevent it by force. But there they were already informed of the matter through",
+      "length": 251,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "ba55c1d3",
+      "at": 9,
+      "opening": " be attended at the meeting-place. As I went in, a man came in, dressed like a c",
+      "length": 222,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0d720e4a",
+      "at": 10,
+      "opening": " make it clear that if any person were to come on foot from the road to the squa",
+      "length": 269,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "067a8660",
+      "at": 11,
+      "opening": " go and stop the moon. And what I had done I had never thought of before. But th",
+      "length": 240,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "fa4e81c5",
+      "at": 13,
+      "opening": " watch over the nose's safety. The moon must not be permitted to fall down from ",
+      "length": 267,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e032ede4",
+      "at": 14,
+      "opening": " prevent such a catastrophe from taking place.",
+      "length": 46,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "2a8031d2",
+      "at": 15,
+      "opening": " disperse the mob which had gathered at the corner of the Strand, near the Stran",
+      "length": 255,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "d2e531e6",
+      "at": 16,
+      "opening": " guard the town against the disaster which is surely about to occur!\n**Chapter V",
+      "length": 264,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "e30ca5ea",
+      "at": 17,
+      "opening": " stop such an unfortunate occurrence! The police were standing still in front of",
+      "length": 289,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "0a71978d",
+      "at": 18,
+      "opening": " prevent the earth from sitting on the moon.\"",
+      "length": 45,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "010159c4",
+      "at": 20,
+      "opening": " arrest Wellington on the charge of high treason, in case he had been really pla",
+      "length": 102,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "090f9087",
+      "at": 21,
+      "opening": " send for me. Then I thought it best to take an opportunity to walk into the vil",
+      "length": 265,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "29a22c87",
+      "at": 23,
+      "opening": " guard the moon.",
+      "length": 16,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "8a6bcb7b",
+      "at": 24,
+      "opening": " arrest the moon before seven o'clock to-night. They ought to put it somewhere o",
+      "length": 278,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "d3eae341",
+      "at": 25,
+      "opening": " watch the moon more closely.\n\nThis event which was foretold by Mr. Wellington f",
+      "length": 277,
+      "temperature": 2.2,
+      "pruned": false
+     },
+     {
+      "id": "66393f0d",
+      "at": 26,
+      "opening": " prevent such an event. They received my order with the most lively joy; but whe",
+      "length": 293,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "f3ddfce8",
+      "at": 27,
+      "opening": " arrest the idiot cooper for manslaughter. In a few minutes a messenger arrived ",
+      "length": 232,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "22c9a903",
+      "at": 28,
+      "opening": " prevent any damage to noses during the event. They said: \"Yes, certainly, we sh",
+      "length": 277,
+      "temperature": 1.4,
+      "pruned": false
+     },
+     {
+      "id": "e9523f03",
+      "at": 29,
+      "opening": " set a guard to prevent the moon from coming on top of us. But the earth is so i",
+      "length": 265,
+      "temperature": 1.4,
+      "pruned": false
+     }
+    ]
+   },
+   "bits": 14.742
+  }
+ ],
+ "blocks": [
+  {
+   "id": "ba3d0eb1",
+   "kind": "root",
+   "text": "But I feel much annoyed by an event which is about to take place to-morrow; at seven o'clock the earth is going to sit on the moon. This is foretold by the famous English chemist, Wellington. To tell the truth, I often felt uneasy when I thought of the excessive brittleness and fragility of the moon. The moon is generally repaired in Hamburg, and very imperfectly. It is done by a lame cooper, an obvious blockhead who has no idea how to do it. He took waxed thread and olive-oil--hence that pungent smell over all the earth which compels people to hold their noses. And this makes the moon so fragile that no men can live on it, but only noses. Therefore we cannot see our noses, because they are on the moon.\n\nWhen I now pictured to myself how the earth, that massive body, would crush our noses to dust, if it sat on the moon, I became so uneasy, that I immediately put on my shoes and stockings and hastened into the council-hall to give the police orders to",
+   "posed": false
+  }
+ ],
+ "bits": 14.742,
+ "by": "star"
+}
