@@ -131,6 +131,14 @@ Observations from a few hundred cards; read every one as "so far".
   *anamnesis-witch*, *404witch* ×6, *not your name. it's my name. it's me.* — is in git); mined
   sober seeds as a document supply (bekh: if the right seed reliably gives the right dream, that
   isn't dreamy — the dream must be emergent from the process).
+- **The loop did what the fans couldn't (2026-09-18, the wire).** Two days went into fans —
+  thirty chances to make one right choice — and the first thing to hold a strange frame for
+  twenty-four lines was a chain where nothing chose anything: one sample per turn, two models
+  handing a document back and forth, dice at every token. bekh's read: the generation is good on
+  its own merit, and we had focused on the choosing. A fan buys breadth at one spot; the wire buys
+  length and the exchange. Beats are what make it an exchange — without *the switch says* /
+  *i say* the two voices fuse into one poem; with them the far end becomes a character and starts
+  saying what it is, at the cost of the calm.
 
 ## bekh's canon
 
