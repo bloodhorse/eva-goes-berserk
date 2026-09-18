@@ -126,13 +126,13 @@
      and on a desktop every inset is 0 and these are the numbers they always were. */
   #menubtn{position:fixed; top:calc(16px + env(safe-area-inset-top));
     right:calc(18px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
-  /* The fan, one click from the dialogue instead of two through the menu. Only on the
-     dialogue screen: the other screens have their own bars, and the canvas bar reserves
-     room for the menu button alone, so a second corner button there would sit on its chips. */
+  /* The fan, one click from the dialogue instead of two through the menu. On the canvas it
+     stays in the corner but can't be pressed — there is no current line there to fan — so
+     the corner reads the same on both screens; the canvas bar reserves room for all three. */
   #fanjump{position:fixed; top:calc(16px + env(safe-area-inset-top));
     right:calc(68px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
-  /* The room tree, one click away (2026-09-18): third corner button, its own popover. Dialogue
-     screen only, like the fan button — the other screens' bars keep room for ☰ alone. */
+  /* The room tree, one click away (2026-09-18): third corner button, its own popover. On the
+     dialogue and on the canvas, where jumping to another room or folder is the next move. */
   #treejump{position:fixed; top:calc(16px + env(safe-area-inset-top));
     right:calc(118px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
   #tools, #roomspop{position:fixed; right:calc(18px + env(safe-area-inset-right));
@@ -582,10 +582,10 @@
   #canvaspane{flex:1; min-width:0; min-height:0; display:flex; flex-direction:column;}
   #canbar{
     flex-shrink:0; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    /* the right gutter is for the fixed menu button, which hangs over this bar; the top
+    /* the right gutter is for the three fixed corner buttons, which hang over this bar; the top
        inset is the status bar the installed app draws under, and the button moved down by
        the same amount, so the two stay lined up */
-    padding:calc(14px + env(safe-area-inset-top)) calc(68px + env(safe-area-inset-right))
+    padding:calc(14px + env(safe-area-inset-top)) calc(170px + env(safe-area-inset-right))
             10px calc(12px + env(safe-area-inset-left));
     border-bottom:1px solid var(--line); font-size:13px;
   }
@@ -599,7 +599,6 @@
     border-radius:9px; padding:4px 10px; white-space:nowrap; font-size:13px;}
   #canbar .chip:hover{border-color:var(--ghost);}
   #canbar .chip[aria-pressed="true"]{border-color:var(--live); color:var(--live);}
-  #canzoom{color:var(--ghost); font-variant-numeric:tabular-nums; min-width:44px; text-align:right;}
   #canstep{display:inline-flex; align-items:center; gap:6px;}
   #canstep .chip{padding:2px 9px;}
   #canstep .chip:disabled{opacity:.35; cursor:default;}
@@ -869,7 +868,7 @@
   @media (max-width:900px){
     /* same shape as the wide rule, and it has to restate the insets: this block overrides
        the whole shorthand, and dropping them here is how the bar ended up under the clock */
-    #canbar{padding:calc(12px + env(safe-area-inset-top)) calc(60px + env(safe-area-inset-right))
+    #canbar{padding:calc(12px + env(safe-area-inset-top)) calc(166px + env(safe-area-inset-right))
                     8px env(safe-area-inset-left); gap:10px;}
     #canbar .name{max-width:60vw;}
     #canlegend, #canmodels{display:none;}
@@ -1051,7 +1050,6 @@
           <span class="dim" id="canstepn"></span>
           <button class="chip" id="cannext" type="button" aria-label="next board" title="next board in this folder">›</button>
         </span>
-        <span class="dim" id="cancounts"></span>
         <span id="canlegend" aria-label="how many branches a stack holds">
           <span class="step"><span class="sw h1"></span>×2</span>
           <span class="step"><span class="sw h2"></span>×3</span>
@@ -1070,7 +1068,6 @@
         <button class="chip" id="cankeptonly" type="button" title="show everything, both marks, or keeps alone">all</button>
         <button class="chip" id="canreload" type="button" title="read the folder again">reload</button>
         <button class="chip" id="canfit" type="button">fit</button>
-        <span id="canzoom">100%</span>
       </header>
       <div id="canstage">
         <div id="canworld">
@@ -1270,6 +1267,7 @@ function showDialogue(){
   $('artpane').hidden = true;
   $('textpane').hidden = true;
   $('canvaspane').hidden = true;
+  gate();      // the canvas left the fan greyed; the dialogue decides again
   turnEl.focus({preventScroll:true});
 }
 function showChoices(from){
@@ -2714,6 +2712,9 @@ function canBuild(d){
   }
   canModels = [...models].sort();
   for(const room of canRooms) canBlocks.push(canBuildBlock(room));
+  // The ramp explains stacks and nothing else: a canvas without one (every wire board) would
+  // carry a key to colours it never paints.
+  $('canlegend').hidden = !canStacks.length;
 
   // A board is named by the title bekh gave it; a folder has only its path.
   const title = canBoard ? (d.title || canBoard) : canFolder;
@@ -2721,7 +2722,6 @@ function canBuild(d){
   $('canname').title = canBoard || canFolder;
   const counts = canRooms.length + (canRooms.length === 1 ? ' room · ' : ' rooms · ') +
     branches + (branches === 1 ? ' branch' : ' branches');
-  $('cancounts').textContent = counts;
   $('cantitleh').textContent = title;
   $('cantitlep').textContent = counts;
   // With one model or none there is nothing to reveal, and the switch would be a control
@@ -2949,7 +2949,6 @@ function canTextK(){
 function canApply(){
   canWorld.style.transform = `translate(${canCam.x}px, ${canCam.y}px) scale(${canCam.k})`;
   canWorld.classList.toggle('far', canCam.k < canTextK());
-  $('canzoom').textContent = Math.round(canCam.k * 100) + '%';
 }
 const canClampK = k => Math.min(2, Math.max(0.05, k));
 
@@ -3085,20 +3084,46 @@ canStage.addEventListener('click', ev => {
   if(card.classList.contains('clips')){ card.classList.add('open'); canOpenCard = card; }
 });
 
+// Two fingers on the trackpad pan, like scrolling a page; a pinch zooms (2026-09-18). Chromium
+// (Arc, Helium) hands a pinch over as a wheel event with ctrlKey set and a small deltaY, so
+// ctrl is the whole test — which also leaves ctrl+wheel as the zoom on a mouse. The factor was
+// 0.0018 when every wheel event zoomed: fine for a scroll's deltas of ~100, a dead 1% per event
+// for a pinch's ~3. A mouse notch under ctrl is clamped so it can't throw the camera across
+// three orders of magnitude.
 canStage.addEventListener('wheel', ev => {
   ev.preventDefault();
-  const r = canStage.getBoundingClientRect();
-  const scale = Math.exp(-ev.deltaY * (ev.deltaMode === 1 ? 0.05 : 0.0018));
-  canZoomAt(ev.clientX - r.left, ev.clientY - r.top, scale);
+  const unit = ev.deltaMode === 1 ? 16 : ev.deltaMode === 2 ? canStage.clientHeight : 1;
+  if(ev.ctrlKey || ev.metaKey){
+    const r = canStage.getBoundingClientRect();
+    const dy = Math.max(-50, Math.min(50, ev.deltaY * unit));
+    canZoomAt(ev.clientX - r.left, ev.clientY - r.top, Math.exp(-dy * 0.012));
+  } else {
+    canCam.x -= ev.deltaX * unit;
+    canCam.y -= ev.deltaY * unit;
+    canApply();
+  }
   canSaveCam();
 }, {passive: false});
+// Safari never sends a pinch as a wheel: it fires its own gesture events with a running
+// `scale` since the gesture began, so each step zooms by the ratio to the last one.
+let canGestK = 1;
+canStage.addEventListener('gesturestart', ev => { ev.preventDefault(); canGestK = 1; });
+canStage.addEventListener('gesturechange', ev => {
+  ev.preventDefault();
+  const r = canStage.getBoundingClientRect();
+  canZoomAt(ev.clientX - r.left, ev.clientY - r.top, ev.scale / canGestK);
+  canGestK = ev.scale;
+  canSaveCam();
+});
+canStage.addEventListener('gestureend', ev => ev.preventDefault());
 
 // ---- the screen ---------------------------------------------------------------------------
 function showCanvas(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = $('treejump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = false;
+  $('fanjump').disabled = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -3212,14 +3237,25 @@ $('cankeptonly').addEventListener('click', ev => {
 $('canreveal').addEventListener('click', () =>
   canReveal(!$('canvaspane').classList.contains('reveal')));
 
-// The arrows belong to whatever stack the pointer is resting on, and to nothing else; f and
-// escape belong to the canvas, and only while it is the screen in front.
+// ← → belong to the stack the pointer is resting on, when it rests on one; otherwise every
+// arrow pans the board, shift for half a screen. f and escape belong to the canvas, and all of
+// it only while the canvas is the screen in front.
 document.addEventListener('keydown', ev => {
   if(!canOn() || ev.defaultPrevented) return;
   if(ev.target && ev.target.closest && ev.target.closest('input, textarea')) return;
   if(canHoverStack && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')){
     ev.preventDefault();
     canFlip(canHoverStack, ev.key === 'ArrowRight' ? 1 : -1);
+    return;
+  }
+  const pan = {ArrowLeft: [1, 0], ArrowRight: [-1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1]}[ev.key];
+  if(pan){
+    ev.preventDefault();
+    const step = ev.shiftKey ? (pan[0] ? canStage.clientWidth : canStage.clientHeight) / 2 : 80;
+    canCam.x += pan[0] * step;
+    canCam.y += pan[1] * step;
+    canApply();
+    canSaveCam();
     return;
   }
   if(ev.key === 'f') canFit(true);
@@ -3820,7 +3856,7 @@ function gate(){
   $('movebtn').disabled = !on || running || stopping || saving;
   $('renamename').disabled = saving;
   $('movepath').disabled = saving;
-  $('fanjump').disabled = !on || !alternativesFrom();
+  $('fanjump').disabled = !on || !alternativesFrom() || !$('canvaspane').hidden;
   $('stop').hidden = !running && !stopping;
   $('more').hidden = running || stopping;
   $('stop').disabled = stopping;

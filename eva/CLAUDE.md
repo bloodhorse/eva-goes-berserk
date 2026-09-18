@@ -87,9 +87,9 @@ rows a click could land in; the node, the document sent to the model and the edi
 and the trim edits only the edge text nodes, so painted tokens stay where they were. A fan opens a separate "choose an answer" screen as its first answer
 lands; picking one returns to the dialogue. That screen heads the cards with the last two sentences
 of the text they continue (one more when those are under ~80 characters, capped at 400), fixed
-while the cards scroll. Beside the corner menu, on the dialogue screen only, a fan icon opens the
-alternatives in one click — the canvas bar reserves room for the menu button alone — and left of
-that a third, the **room tree** in its own popover (out of the menu since 2026-09-18, so the menu
+while the cards scroll. Beside the corner menu a fan icon opens the
+alternatives in one click — on the canvas it stays in the corner, greyed, since there is no line to fan there, and the canvas bar reserves room for all three buttons — and left of
+that a third, the **room tree** in its own popover, on the dialogue and the canvas both (out of the menu since 2026-09-18, so the menu
 doesn't open on a wall of folders; the two popovers close each other; a folder's `move` opens the
 menu's move sheet). The tree: the
 shelf's folders, drawn from the room paths and from nothing else — folders
@@ -224,7 +224,7 @@ one-line accent-pink card between the branch taken and the fan under it, so a ni
 staircase of fans. **Look-alikes** (same first 40 characters, whitespace collapsed,
 casefolded) collapse into one stacked card, `‹ ›` or the arrow keys flipping the members under
 the pointer, the common prefix dim and each member's own tail in full ink; the **cold heat
-ramp** (`--heat-1…6`, slate → dusky magenta, its legend in the bar) says how big a cluster is
+ramp** (`--heat-1…6`, slate → dusky magenta, its legend in the bar, shown only when the canvas has stacks — a wire board has none) says how big a cluster is
 and no `×N` is written anywhere. Zoomed out — below `textK()`, which reads the viewport — the
 cards drop their ink and become bricks coloured by that ramp.
 **Two marks** sit in every card's head as glyphs — `☆`/`★` **keep** in ice, `○`/`●` **good** in
@@ -240,7 +240,7 @@ The bar reads `★ N · ● M`, and the filter beside it cycles three states: `a
 `★ only`. **reveal** appears only when the picture holds two or more models, is off by default
 on a folder and on on a board, and is never remembered (a reload keeps where he put it): it puts a model tag and a patterned top edge (solid / dashed / dotted —
 pattern, not hue, because the ramp owns every cold colour) on each card, a legend in the bar
-and a `★ by model: … · ● by model: …` line. Drag to pan, wheel or pinch to zoom about the pointer, `f`/`fit`,
+and a `★ by model: … · ● by model: …` line. Drag, two fingers on the trackpad or the arrows pan (shift+arrow half a screen; ← → flip a stack instead while the pointer rests on one), a pinch zooms about the pointer — ctrl+wheel in Chromium, gesture events in Safari, so ctrl+wheel is also the mouse's zoom — `f`/`fit`,
 a seed heading flies to its block, `esc` closes an opened card or fits; nothing on the surface
 is selectable and the cursor stays the ordinary arrow. `open room` goes to `#room=<path>` —
 another of the page's addresses — so the browser's own back button comes home to `#canvas=` or
