@@ -528,6 +528,16 @@
   @media (max-width:540px){
     #fanbar, #notebar, #artbar, #textbar{padding-right:calc(56px + env(safe-area-inset-right));}
   }
+  /* Phone type, a notch up (2026-09-18): 16px read small in a hand held at arm's length. The
+     reading surfaces +2, the chrome +1 so it stays quieter than the text. Last in the file
+     among the phone rules, so it wins over the per-screen sizes set above. */
+  @media (max-width:540px){
+    #blocks, .card .body, #noteview, #notetext, #turn{font-size:18px;}
+    #fanlead{font-size:16px;}
+    #textview{font-size:15px;}
+    .ghostbtn, .sys{font-size:15px;}
+    .foot, .foot .ghostbtn{font-size:14px;}
+  }
   /* ---- the canvas -----------------------------------------------------------------------
      A whole experiment — one folder of rooms — as a picture you pan and zoom, the way a
      canvas app shows a board. Like the tree screen it opts out of the reading column and
