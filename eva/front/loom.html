@@ -761,6 +761,33 @@
      one thing, because a branch wears one mark: ice all round for a keep, accent for a good.
      No rule for the pair: the two can't be on one card. */
   .cn-card.good > .cn-face{border-color:var(--accent); border-left-color:var(--accent);}
+  /* Reading (2026-09-18): the chains of a canvas as one page of text. The picture reads a
+     census, where the shape of a fan is the news; a wire room is a transcript, and a column
+     one card wide read it through a keyhole — bekh read the first board more easily pasted
+     into a chat. So: the reading column, the voices only (a beat is scaffolding, and on a
+     page of text it is every other line), the model in a narrow margin when reveal is on,
+     and the same two marks at the right edge, shown on hover and always once worn. */
+  #canread{flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin;
+    padding:8px 24px 96px;}
+  #canread .rd{width:var(--reading); max-width:100%; margin:0 auto;}
+  #canread h2{display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600;
+    margin:44px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--line);}
+  #canread h2 .ghostbtn{font-size:14px; padding:0 4px;}
+  #canread .seed{color:var(--ghost); font-size:15px; line-height:1.6; margin:0 0 16px 62px;}
+  #canread .ln{display:grid; grid-template-columns:52px 1fr auto; column-gap:10px;
+    padding:3px 0; font-size:16px; line-height:1.65;}
+  #canread .who{color:var(--ghost); font-size:12px; text-align:right; padding-top:3px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  #canread .marks{display:flex; gap:2px; opacity:0; transition:opacity 120ms ease;}
+  #canread .ln:hover .marks, #canread .ln.kept .marks, #canread .ln.good .marks{opacity:1;}
+  #canread .cn-mark{background:none; border:0; color:var(--ghost); font-size:15px;
+    padding:0 5px; cursor:pointer;}
+  #canread .cn-mark:hover{color:var(--ink);}
+  #canread .cn-keep.on{color:var(--live);}
+  #canread .cn-good.on{color:var(--accent);}
+  #canread .ln.kept .body{color:var(--live);}
+  #canread .ln.good .body{color:var(--accent);}
+  #canread .sys{margin-left:62px;}
   .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
   /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
   .cn-sub{color:var(--live);}
@@ -1064,6 +1091,7 @@
         <!-- both marks, each in its own hue, because the glyph alone is what a card wears
              and the bar is where the whole folder's score is read -->
         <span class="dim" id="cankept"><span class="k"></span><span class="s"> · </span><span class="g"></span></span>
+        <button class="chip" id="canreadbtn" type="button" aria-pressed="false" hidden title="the transcripts as text, or as the picture">read</button>
         <button class="chip" id="canreveal" type="button" aria-pressed="false" hidden title="say which model wrote each card">reveal</button>
         <button class="chip" id="cankeptonly" type="button" title="show everything, both marks, or keeps alone">all</button>
         <button class="chip" id="canreload" type="button" title="read the folder again">reload</button>
@@ -1075,6 +1103,8 @@
           <div id="cantitle"><h1 id="cantitleh"></h1><p id="cantitlep"></p></div>
         </div>
       </div>
+      <!-- the same rooms as text: a chain is a transcript, and a transcript is read down a page -->
+      <div id="canread" hidden></div>
     </section>
 
     <section id="textpane" aria-label="The walk as one document" hidden>
@@ -2453,6 +2483,7 @@ function canSingle(room, b, line){
     for(const x of btns) x.paint(b);
   };
   for(const x of btns) head.appendChild(x);
+  card._paint = paint;        // the reading page marks this node too, and repaints the card
   if(canFurniture(b.text)) card.classList.add('furniture');
   paint();
   mark(b);
@@ -3117,6 +3148,82 @@ canStage.addEventListener('gesturechange', ev => {
 });
 canStage.addEventListener('gestureend', ev => ev.preventDefault());
 
+// ---- reading: the chains as text --------------------------------------------------------
+let canReading = false;
+let canReadWant = null;          // null until `read` is pressed; then his choice, for this tab
+const canReadAt = new Map();     // where the page was scrolled, per board/folder, for this tab
+
+function canRepaintCard(id){
+  const c = canWorld.querySelector('.cn-card[data-node="' + CSS.escape(id) + '"]');
+  if(c && c._paint) c._paint();
+}
+
+// Every room in the canvas's order: its name with the way into it, the seed only when it
+// differs from the room above (a board's five rooms mostly stand on one), then the model's
+// lines — beats left out, the edge newlines trimmed as the dialogue trims them. A room that
+// forked is a fan and is left to the picture.
+function canReadDraw(){
+  const box = $('canread');
+  const top = box.scrollTop;
+  box.textContent = '';
+  const col = mk(box, 'div', 'rd');
+  const reveal = $('canvaspane').classList.contains('reveal');
+  let lastSeed = null;
+  for(const room of canRooms){
+    const h = mk(col, 'h2', '', leafOf(room.name));
+    const go = mk(h, 'button', 'ghostbtn', '→');
+    go.type = 'button';
+    go.title = 'open this room';
+    go.setAttribute('aria-label', 'open this room');
+    go.addEventListener('click', () => canOpenRoom(room.name));
+    // The seed's blank lines are paragraph seams for the model; on this page they are holes.
+    const seed = ((room.nodes[room.root] || {}).text || '').trim().replace(/\n\s*\n/g, '\n');
+    if(seed !== lastSeed){ mk(col, 'div', 'seed body', seed); lastSeed = seed; }
+    const chain = canChainOf(room);
+    if(!chain){ mk(col, 'div', 'sys', 'a fan, not a transcript — it reads in the picture'); continue; }
+    for(const b of chain){
+      if(b.kind === 'human') continue;
+      if(canFilter && !canPasses(b)) continue;
+      const row = mk(col, 'div', 'ln');
+      const who = mk(row, 'span', 'who', reveal && b.model ? canShortModel(b.model) : '');
+      who.title = reveal ? (b.model || '') : '';
+      mk(row, 'span', 'body', b.text.replace(/^[\r\n]+|[\r\n]+$/g, ''));
+      const marks = mk(row, 'span', 'marks');
+      const paint = () => {
+        row.classList.toggle('kept', !!b.kept);
+        row.classList.toggle('good', !!b.good);
+        for(const x of btns) x.paint(b);
+      };
+      // Under a filter a line that loses its mark leaves the page, so the page is drawn again;
+      // otherwise the row and the picture's card are repainted where they stand.
+      const btns = canMarkBtns(room, () => b, () => {
+        canRepaintCard(b.id);
+        if(canFilter) canReadDraw(); else paint();
+      });
+      for(const x of btns) marks.appendChild(x);
+      paint();
+    }
+  }
+  box.scrollTop = top;
+}
+
+// The picture is laid out by measuring, and a hidden stage measures zero — so the way back
+// lays it out again rather than trusting whatever was measured while it was away.
+function canSetReading(on){
+  canReading = on;
+  $('canstage').hidden = on;
+  $('canread').hidden = !on;
+  $('canfit').hidden = on;
+  $('canreadbtn').setAttribute('aria-pressed', String(on));
+  if(on) canReadDraw();
+  else { canLayout(); canApply(); }
+}
+$('canreadbtn').addEventListener('click', () => {
+  canReadWant = !canReading;
+  canSetReading(canReadWant);
+  if(canReading) $('canread').scrollTop = 0;
+});
+
 // ---- the screen ---------------------------------------------------------------------------
 function showCanvas(){
   choosing = false;
@@ -3134,6 +3241,7 @@ function showCanvas(){
 function canReveal(on){
   $('canvaspane').classList.toggle('reveal', on);
   $('canreveal').setAttribute('aria-pressed', String(on));
+  if(canReading) canReadDraw();
 }
 
 // Two kinds of canvas, one screen: a folder (`/api/folder`) or a board (`/api/canvas`), and
@@ -3150,6 +3258,7 @@ async function canOpen(kind, name){
   if(canIs(kind, name) && canBlocks.length){
     showCanvas();
     if(!canRestoreCam()) canFit(false);
+    if(canReading) $('canread').scrollTop = canReadAt.get(canCamKey()) || 0;
     return;
   }
   await loadCanvas(kind, name, false);
@@ -3180,6 +3289,14 @@ async function loadCanvas(kind, name, keepCam){
   canLayout();
   if(was){ canCam = was; canApply(); }
   else if(!canRestoreCam()) canFit(false);
+  // Reading is offered wherever there is a transcript, and a canvas of nothing else opens on
+  // it; once he has pressed `read` either way, that choice holds for every board in this tab.
+  const chains = canRooms.filter(r => canChainOf(r)).length;
+  $('canreadbtn').hidden = !chains;
+  const want = canReadWant === null ? chains > 0 && chains === canRooms.length : canReadWant;
+  const top = keepCam ? $('canread').scrollTop : (canReadAt.get(canCamKey()) || 0);
+  canSetReading(chains > 0 && want);
+  if(canReading) $('canread').scrollTop = top;
 }
 
 // The boards beside this one — the same folder under shelf/canvases, in the list's order.
@@ -3203,13 +3320,18 @@ function canPaintStep(){
 function canStep(by){
   const sibs = canSiblings();
   const next = sibs[sibs.findIndex(b => b.name === canBoard) + by];
-  if(next){ canSaveCam(); setHash('#board=' + encodeURIComponent(next.name)); }
+  if(next){
+    canSaveCam();
+    if(canReading) canReadAt.set(canCamKey(), $('canread').scrollTop);
+    setHash('#board=' + encodeURIComponent(next.name));
+  }
 }
 
 // The room behind a seed card, on the ordinary dialogue screen, in this tab — and at an
 // address, so that back comes home to the picture with the camera where it was.
 function canOpenRoom(name){
   canSaveCam();
+  if(canReading) canReadAt.set(canCamKey(), $('canread').scrollTop);
   setHash('#room=' + encodeURIComponent(name));
 }
 
@@ -3233,6 +3355,7 @@ $('cankeptonly').addEventListener('click', ev => {
     }
   }
   canLayout();
+  if(canReading) canReadDraw();
 });
 $('canreveal').addEventListener('click', () =>
   canReveal(!$('canvaspane').classList.contains('reveal')));
@@ -3241,7 +3364,7 @@ $('canreveal').addEventListener('click', () =>
 // arrow pans the board, shift for half a screen. f and escape belong to the canvas, and all of
 // it only while the canvas is the screen in front.
 document.addEventListener('keydown', ev => {
-  if(!canOn() || ev.defaultPrevented) return;
+  if(!canOn() || ev.defaultPrevented || canReading) return;
   if(ev.target && ev.target.closest && ev.target.closest('input, textarea')) return;
   if(canHoverStack && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')){
     ev.preventDefault();
