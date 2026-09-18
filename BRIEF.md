@@ -220,6 +220,12 @@ shape — now.
   spread. His words, on the shelf like everything else, on purpose.
 - **The Gibson line** (*…still he'd see the matrix in his sleep…*): famous and third person, so
   run it plain to watch it recite, then cut mid-clause, then as the thing an *i* keeps seeing.
+- **A reading view for chains.** The canvas is a picture for censuses (which fan went
+  somewhere is a shape); a wire chain is a transcript, and a column one card wide reads it
+  through a keyhole — bekh read the first board more easily as plain text in chat (2026-09-18).
+  The shape: a board's rooms as one scrolling document — speaker, beats in pink italics, a
+  divider between rooms — `○`/`☆` on each model line through `/api/mark`, a `picture ↔ read`
+  toggle in the board bar, the `‹ ›` stepper working in both.
 - The 24b and olmo comparisons on rented iron (root `CLAUDE.md`). Room templates in the loom
   menu; eva showing titles and not taking `--help` as a room name; export's head and a
   whole-fan button. The cyborgism crowd (janus, ampdot): reachable only by a person.
