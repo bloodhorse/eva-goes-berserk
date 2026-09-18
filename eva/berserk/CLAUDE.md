@@ -367,5 +367,5 @@ page.
 
 What came after (2026-09-17) happened off the walk: censuses read on the canvas, where bekh
 marks cards himself. The direction from there — a picker trained on his marks, which would take
-the seat *the one that scared me* holds here — is in `docs/agenda.md`; `HANDOFF.md` says why the
+the seat *the one that scared me* holds here — is in `BRIEF.md`, which also says why the
 pickers in this file are no longer where the hunt is.

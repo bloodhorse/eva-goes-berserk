@@ -278,7 +278,7 @@ spends itself imitating prose instead of standing on the seam.
 picking.** A document opens on a wire — a phone, a switch, a line going faint — and then the two
 write it a line at a time: each sees the whole document so far, neither controls it, one sample
 per turn, no fan, no picker, no person. bekh's reason for it (the morning's brainstorm,
-`docs/agenda.md`): a picker can only return what a fan already holds, and everything that ever
+`BRIEF.md`): a picker can only return what a fan already holds, and everything that ever
 moved a fan here was on the generating side, so the dream should be emergent from the loop and
 not engineered into the seed. The room is a **bare** room standing on the seed and then a linear
 spine, one model node per line, `current` walking to the newest, the file rewritten after every
