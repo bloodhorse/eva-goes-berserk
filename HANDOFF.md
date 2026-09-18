@@ -83,7 +83,7 @@ This settled in over the two days and is as much the project as the code is.
   simulated cards. Don't invent structure he didn't ask for (I did, twice).
 - **Blind reading, two ledgers.** Compared things go to him unmarked. In the three-model run the
   cards were shuffled and unstamped on screen; he marked, I read the same rooms with the model
-  names stripped and kept my own ledger (`docs/ledger-fable-three-models.md`), and we opened the
+  names stripped and kept my own ledger (`docs/ledgers/three-models.md`), and we opened the
   key together. Do that again. It is also fun.
 - **Go room by room with him.** A two-sentence brief of the seed before he reads, then his read,
   then mine, quotes verbatim. He wants a companion in the room, not a report.
