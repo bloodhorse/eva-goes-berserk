@@ -72,14 +72,15 @@ edits is **posed** forever). A fan opens a separate "choose an answer" screen as
 lands; picking one returns to the dialogue. That screen heads the cards with the last two sentences
 of the text they continue (one more when those are under ~80 characters, capped at 400), fixed
 while the cards scroll. Beside the corner menu, on the dialogue screen only, a fan icon opens the
-alternatives in one click — the canvas bar reserves room for the menu button alone. Everything
-else hides behind the corner menu: the
-**room tree**, folded behind a `rooms` button so the menu doesn't open on a wall of folders (the
+alternatives in one click — the canvas bar reserves room for the menu button alone — and left of
+that a third, the **room tree** in its own popover (out of the menu since 2026-09-18, so the menu
+doesn't open on a wall of folders; the two popovers close each other; a folder's `move` opens the
+menu's move sheet). The tree: the
 shelf's folders, drawn from the room paths and from nothing else — folders
 first then rooms, alphabetical, `▸`/`▾`, closed by default, which folds are open remembered
 per browser in `localStorage`; the open room is named once at the top and marked in the accent
-on its own row, and the folders on the way to it are unfolded for it once, when it opens),
-**basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all —
+on its own row, and the folders on the way to it are unfolded for it once, when it opens.
+Everything else hides behind the corner menu: **basic** / **bare** (new room: chat-log header with `bekh:`/`seat:` turns, or nothing at all —
 no header, no names, no stop strings, whitespace kept; pressing one brings up a where-field
 filled with the open room's folder — blank is a random name at the top of the shelf, `basin/` a
 random name in that folder, `basin/s-01` that room — and the same button again or return makes
@@ -187,7 +188,11 @@ dialogue. The folder arrives in one `/api/folder` call and never streams. A titl
 arrow to each room's seed card (the seed's tail, `whole seed ▸`, `open room`, and `tree ↗` on
 a room berserk walked), and under it the fan as a grid of **uniform cards**, `CARD_H = 185`
 world px in one constant. Seed blocks are packed as six masonry columns, each next room into
-the shortest one, so a room that collapsed to one brick leaves no hole. **Any tree, not only a
+the shortest one, so a room that collapsed to one brick leaves no hole. **A room whose tree is a
+pure chain** — a wire room, where nothing ever forked — is drawn instead as one column exactly a
+card wide, its line-cards as tall as their own text and no frame round them, beats among them as
+thin rose lines nobody can mark, which is how a transcript reads and how twenty of them pack as
+twenty columns. **Any tree, not only a
 census**: a branch somebody fanned under gets a `▾ n` mark and its own framed grid below, with
 a measured arrow from the card to that frame — accent when that branch is on the path
 root→`current`, dim when the room walked elsewhere — and a berserk beat is drawn as a
@@ -269,6 +274,56 @@ paragraph, sentences where no paragraph break falls in range) **before** the roo
 so the root IS what every model was handed — a long seed is a style lesson, and the fan
 spends itself imitating prose instead of standing on the seam.
 
+**wire** (`cli/wire.py`, 2026-09-18): **two base models taking turns on one line, and nobody
+picking.** A document opens on a wire — a phone, a switch, a line going faint — and then the two
+write it a line at a time: each sees the whole document so far, neither controls it, one sample
+per turn, no fan, no picker, no person. bekh's reason for it (the morning's brainstorm,
+`docs/agenda.md`): a picker can only return what a fan already holds, and everything that ever
+moved a fan here was on the generating side, so the dream should be emergent from the loop and
+not engineered into the seed. The room is a **bare** room standing on the seed and then a linear
+spine, one model node per line, `current` walking to the newest, the file rewritten after every
+line — so the page watches the transcript grow and the canvas draws it as a column. **A line
+ends at the first newline and wire.py is what ends it**, not llama: a turn is drawn as a budget
+of `--n-predict` tokens with **no stop string**, and `line_of` cuts the first line with
+something in it out of what came back, throwing the rest away. `stop: ["\n"]` was the first
+design and it was wrong — a base model handed a prompt that ends on a newline answers with
+another newline, because that is what opening a paragraph looks like, so the stop fired on token
+one and **every gpt-2 turn of the first real chain came back empty** (6 of 6 when measured
+directly, 2026-09-18; nemo covered for it and wrote all 24 lines alone). The newline that closes
+a line is appended here, so every turn starts on a fresh line and the next model reads a clean
+seam. Trailing whitespace is stripped (a document ending on a space makes the next token a
+numeral); an empty line is retried once at the same seat and then handed to the other model, and
+the miss rides on the node as `meta.empty_retries` / `meta.swapped_from`. Every node is stamped
+`meta.model` with the model's *name*, `meta.turn` and `meta.params`, so `reveal` on the canvas
+tells the two voices apart exactly as it does a census's. The sampler is the room's own — min_p
+0.08, xtc off and **the brakes ON**, because two voices answering each other echo — with
+`--temp` (default 1.4) or `--temps a=1.4,b=2.6` per seat. `--models` takes exactly two seats in
+`role=name=url` form and the roles are not decoration: **a is the caller, the *i* the seed
+already stands in; b is the voice on the line**, `--first a|b` says which of them opens (a seed
+whose last sentence already hands the turn to the far end wants `b`). Before every turn the
+document is counted on that seat's own `/tokenize` against its `/props` window, and a document
+that has outgrown it **stops the chain** with `meta.stopped: "context"` on the last line —
+never a silently truncated prompt. A taken room name is a no-op, and one line per turn goes to
+stdout (`turn 7 · gpt2 · 13 tok · "…"`).
+
+**`--beats FILE`** is the padding, bekh's amendment the same day: bare, neither model knows there
+are two of them — each is only continuing a text. A beat is a posed line between the turns, the
+same thing berserk poses (`kind: "human"`, `posed`, `"\n\n" + line + "\n"`, plus `meta.beat`),
+saying whose turn it is now without ever saying what it is. The file is **two groups separated by
+a blank line** — before the voice speaks, then before the caller speaks — each rotated in order
+and wrapping, `#` lines skipped; two groups and not one because a line that hands the turn to the
+far end of a wire reads nothing like one that hands it back to the man holding the receiver. The
+opening line never gets a beat: the seed's own last sentence is the only introduction it is
+allowed. Half a run goes without beats, so the padding is a thing that can be read against its
+absence.
+
+```bash
+uv run --python 3.12 eva/cli/wire.py --name experiments/wire/hum-beats-nemocaller-01 \
+  --doc shelf/seeds/short/08-what-is-that-hum.txt --beats shelf/seeds/wire-beats-hum.txt \
+  --first a --lines 24 --n-predict 40 --temp 1.4 \
+  --models a=nemo=http://127.0.0.1:8080,b=gpt2=http://127.0.0.1:8083
+```
+
 **walk** (`cli/walk/`): seed → short fan → pick (`walk.py`), fork a room at a branch and cut it
 (`fork.py`), fan wide under a branch (`fan_under.py`), read a naming fan (`names.py`). Its README
 holds the procedure and what the first runs taught. All of them bypass the live loom and write the
@@ -281,7 +336,11 @@ file directly — don't have the room open in the page while one runs.
 the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
 folder with its collisions and its pruning, and a walked room answering to its bare name after
 it moves), `evatest.py`,
-`censustest.py`, `berserktest.py`, all against `tests/stub_llama.py`, a fake llama-server; scratch
+`censustest.py`, `wiretest.py` (the chain: the alternation, the whole document on the wire every
+turn, the newline seam, the empty-line retry and swap, the beats and the `--first` rule, the
+window stopping the chain), `berserktest.py`, all against `tests/stub_llama.py`, a fake
+llama-server — whose `serve()` takes `n_ctx`, `model_path` and `lines` (its own script of
+answers, in order, an empty string meaning it answered nothing) per server; scratch
 dirs via the env overrides, never the real shelf. One process, all four:
 
 ```bash

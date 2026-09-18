@@ -131,7 +131,11 @@
      room for the menu button alone, so a second corner button there would sit on its chips. */
   #fanjump{position:fixed; top:calc(16px + env(safe-area-inset-top));
     right:calc(68px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
-  #tools{position:fixed; right:calc(18px + env(safe-area-inset-right));
+  /* The room tree, one click away (2026-09-18): third corner button, its own popover. Dialogue
+     screen only, like the fan button — the other screens' bars keep room for ☰ alone. */
+  #treejump{position:fixed; top:calc(16px + env(safe-area-inset-top));
+    right:calc(118px + env(safe-area-inset-right)); z-index:30; background:var(--bg);}
+  #tools, #roomspop{position:fixed; right:calc(18px + env(safe-area-inset-right));
     top:calc(68px + env(safe-area-inset-top)); z-index:30;
     width:min(340px, calc(100vw - 36px));
     max-height:calc(100dvh - 90px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
@@ -152,12 +156,8 @@
      not be, or the shelf and the menu would be able to disagree about what is on it.
      Indentation is padding on the row and never a nested box, so a deep room can wrap its
      label instead of pushing the menu sideways. */
-  /* Folded away behind `rooms` (2026-09-18): a menu that opened on a wall of folders buried the
-     few buttons under it. Open, it is the same tree it always was. */
-  #shelftree{display:none; max-height:min(46vh, 300px); overflow-y:auto; scrollbar-width:thin;
-    margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px;}
-  #shelftree.on{display:block;}
-  #roomsbtn{display:block; margin-bottom:6px;}
+  /* The tree lives in its own popover behind the corner button (out of the menu, where a wall of
+     folders buried the few buttons under it). The popover scrolls, not the tree. */
   #shelftree .frow, #shelftree .rrow{display:flex; align-items:baseline; gap:10px;}
   #shelftree button{padding:3px 0; font-size:14px;}
   #shelftree .fold, #shelftree .roomlink{flex:1; text-align:left; min-width:0;
@@ -647,6 +647,22 @@
     display:grid; grid-template-columns:repeat(5, 300px); gap:18px; align-items:start;
     width:max-content; background:color-mix(in srgb, var(--sunk) 45%, transparent);}
   .cn-frame:empty{min-height:80px; min-width:300px;}
+  /* A pure chain — a wire room, where two models took turns and nothing ever forked — is not a
+     fan and must not be drawn as twenty-four framed grids of one card. It is a transcript, so
+     it is one column exactly a card wide, read top to bottom, and a folder of twenty of them
+     packs as twenty columns. No frame and no ground: there is no fan here to fence off. */
+  .cn-chain{display:flex; flex-direction:column; gap:10px; width:300px;}
+  /* A line-card's height is its content's: a line IS short, and a 185px box per line would put
+     four fifths of the column in empty panels. So it opts out of the uniform grid — which also
+     means it never clips and never opens, because there is nothing hidden to open. */
+  #canworld.uniform .cn-card.cn-line{height:auto;}
+  #canworld.uniform .cn-card.cn-line > .cn-face{position:relative; inset:auto; overflow:visible;}
+  /* A beat between two lines of a chain: our own line, posed, saying whose turn it is now.
+     Rose and a left rule, the same as the berserk beat row it is the same thing as — thinner,
+     because on a chain it is punctuation between two voices and not a heading over a fan. */
+  .cn-bline{background:var(--panel-soft); border:1px solid var(--line);
+    border-left:3px solid var(--hot); border-radius:8px; padding:5px 10px;
+    color:var(--hot); font-size:12px; line-height:1.45;}
   /* The one line on the canvas nobody's model wrote: the beat posed into the document before
      a berserk fan. Rose, the same colour posed wears in the dialogue, because that is exactly
      what it is. */
@@ -776,6 +792,15 @@
     border-color:var(--live); border-left-color:var(--live);
     box-shadow:inset 0 0 0 12px var(--live);}
   #canworld.far .cn-face > *{visibility:hidden;}
+  /* A line-card needs no rule of its own here and must not have one: its face is in the flow,
+     so hiding the ink leaves the box standing and the bar is as tall as the line was long — a
+     barcode of the transcript. Giving it a fixed far-zoom height would change the block's
+     height at the threshold, and the masonry was measured on the other side of it.
+     A beat is not a `.cn-face`, so it says the same thing here in its own words: the ink goes,
+     the box and the rose stay, and the turns are countable from across the folder. */
+  #canworld.far .cn-bline{background:var(--hot); border-color:transparent;
+    border-left-color:var(--hot);}
+  #canworld.far .cn-bline > *{visibility:hidden;}
   /* the clip fade is a pseudo, so visibility:hidden on children misses it: a panel-soft
      gradient painted over a heat brick would read as a smudge */
   #canworld.far .cn-face::after{display:none;}
@@ -797,6 +822,9 @@
   #canworld.marked .cn-card.cn-stack:not(.haskept):not(.hasgood){display:none;}
   #canworld.keptonly .cn-card:not(.cn-stack):not(.kept){display:none;}
   #canworld.keptonly .cn-card.cn-stack:not(.haskept){display:none;}
+  /* A filter asks to see the marked branches; a beat is neither a branch nor markable, so a
+     column of rose punctuation with nothing between it would be the only thing left standing. */
+  #canworld.marked .cn-bline, #canworld.keptonly .cn-bline{display:none;}
 
   @media (max-width:900px){
     /* same shape as the wide rule, and it has to restate the insets: this block overrides
@@ -840,6 +868,12 @@
   <button class="iconbtn" id="fanjump" type="button" aria-label="View alternatives" title="view alternatives" disabled>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20 5 6m7 14V4m0 16 7-14"/></svg>
   </button>
+  <button class="iconbtn" id="treejump" type="button" aria-label="Rooms" aria-expanded="false" aria-controls="roomspop" title="rooms">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6M8 10h8M8 15h8M8 20h6M6 5v15h2M6 10h2M6 15h2"/></svg>
+  </button>
+  <aside id="roomspop" aria-label="Rooms" hidden>
+    <div id="shelftree" role="tree" aria-label="Which room"></div>
+  </aside>
   <aside id="tools" aria-label="Sitting controls" hidden>
     <div class="shelfrow">
       <span id="here" title="the room that is open"></span>
@@ -849,8 +883,6 @@
       <button class="ghostbtn" id="treebtn" type="button" hidden title="berserk's walk of this room, as a tree">Tree</button>
       <span class="dot off" id="dot" title="llama-server" role="img" aria-label="Model unavailable"></span>
     </div>
-    <button class="ghostbtn" id="roomsbtn" type="button" aria-expanded="false" aria-controls="shelftree">Rooms</button>
-    <div id="shelftree" role="tree" aria-label="Which room"></div>
     <div class="toolrow">
       <button class="ghostbtn" id="newbtn" type="button" title="a new room: the chat-log header, your lines and the other side's">Basic</button>
       <button class="ghostbtn" id="newbarebtn" type="button" title="a new bare room: no header, no names, you write and it continues">Bare</button>
@@ -1160,7 +1192,16 @@ function sys(text, err){
   $('notice').textContent = text;
   $('notice').classList.toggle('err', !!err);
 }
+// One popover at a time: opening either corner panel shuts the other, and every place that
+// closes the menu (a room opened, a screen changed) closes the tree too.
+function rooms(open){
+  if(open) menu(false);
+  $('roomspop').hidden = !open;
+  $('treejump').setAttribute('aria-expanded', String(open));
+}
 function menu(open){
+  if(open) rooms(false);
+  else if(!$('roomspop').hidden) rooms(false);
   $('tools').hidden = !open;
   $('menubtn').setAttribute('aria-expanded', String(open));
   if(!open){
@@ -1173,7 +1214,7 @@ function menu(open){
 function showDialogue(){
   choosing = false;
   $('doc').hidden = false;
-  $('fanjump').hidden = false;
+  $('fanjump').hidden = $('treejump').hidden = false;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -1187,7 +1228,7 @@ function showChoices(from){
   choosing = true;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = true;
   $('fanpane').hidden = false;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -1239,7 +1280,7 @@ function showNote(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = false;
   $('artpane').hidden = true;
@@ -1412,7 +1453,7 @@ function showTree(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = false;
@@ -1604,7 +1645,7 @@ function showText(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -2154,6 +2195,28 @@ function canSubsOf(room, id){
 const canUnder = (room, id) =>
   canSubsOf(room, id).reduce((a, s) => a + canFanOf(room, s.at).length, 0);
 
+// A PURE CHAIN — a wire room (`eva/cli/wire.py`), where two models took turns on one line and
+// nothing ever forked. Returns the spine root→last as nodes, or null when the room is anything
+// else: a census (one fork of thirty) or a walk (a fork per step). It gets its own drawing
+// because twenty-four framed grids of one 185px card is a page of furniture with a transcript
+// hidden inside it, and what a wire room is is a transcript.
+function canChainOf(room){
+  const kids = {};
+  let n = 0;
+  for(const nid in room.nodes){
+    n++;
+    const p = room.nodes[nid].parent;
+    if(p == null) continue;
+    if(kids[p]) return null;             // a second child is a fork, and a fork is a fan
+    kids[p] = room.nodes[nid];
+  }
+  const out = [];
+  for(let x = kids[room.root]; x; x = kids[x.id]) out.push(x);
+  // Every node accounted for: a file with two roots would otherwise pass as the chain under one
+  // of them and quietly drop the other half of the room off the picture.
+  return out.length === n - 1 && out.length >= 2 ? out : null;
+}
+
 // root→current as a set of ids: the line this room actually walked. An arrow down it is the
 // accent, every other arrow is dim — on a berserk night that is the difference between the
 // walk and the thirty branches it refused.
@@ -2263,9 +2326,12 @@ function canModelMark(face, head){
   };
 }
 
-// One plain branch, one grid cell.
-function canSingle(room, b){
-  const card = mk(null, 'div', 'cn-card');
+// One plain branch, one grid cell — or, with `line` set, one line of a chain: the same card
+// with the two things a spine has no use for taken off it. Nothing is duplicated for the
+// chain, so the marks, the model tag, the furniture dimming and the filters are the same code
+// on both drawings and cannot drift apart.
+function canSingle(room, b, line){
+  const card = mk(null, 'div', 'cn-card' + (line ? ' cn-line' : ''));
   const face = mk(card, 'div', 'cn-face');
   const head = mk(face, 'div', 'cn-head');
   mk(head, 'span', '', 't' + canTemp(b));
@@ -2274,7 +2340,9 @@ function canSingle(room, b){
   // same way, and it is what lets anything outside the page — a driver, a shot rig — say
   // which node it just pressed keep on.
   card.dataset.node = b.id;
-  const under = canUnder(room, b.id);
+  // On a chain every line has exactly one child — the next line — so the `▾ n` mark would sit
+  // on all twenty-four of them saying nothing. It means "somebody fanned here", and nobody did.
+  const under = line ? 0 : canUnder(room, b.id);
   // A branch somebody fanned under. The mark is the join in words; the arrow to its own
   // frame below is the join in the picture.
   if(under) mk(head, 'span', 'cn-sub', '▾ ' + under);
@@ -2289,8 +2357,31 @@ function canSingle(room, b){
   paint();
   mark(b);
   mk(face, 'div', 'body', b.text);
-  mk(face, 'span', 'cn-clip', 'more');
+  // A line-card is its whole height, so there is nothing clipped to promise and nothing to open.
+  if(!line) mk(face, 'span', 'cn-clip', 'more');
   return card;
+}
+
+// One posed line on a chain — a wire's beat, saying whose turn it is now. Rose, like every
+// posed line on this page, and NOT a `.cn-card`: it takes no mark (marking our own line would
+// smuggle it into a harvest of the model's) and it never opens, so it is not one.
+function canBeatCard(b){
+  const card = mk(null, 'div', 'cn-bline');
+  mk(card, 'span', 'body', b.text.trim() || '(an empty line)');
+  return card;
+}
+
+// A chain as one column of line-cards: the seed above it as always, then every line in the
+// order it was written, beats among them. No stacks — there is nothing to cluster when each
+// line has one sibling and that sibling is the next line — and no frame, because there is no
+// fan here to fence off. It reads top to bottom as the transcript.
+function canGrowChain(room, block, chain){
+  const col = mk(block, 'div', 'cn-chain');
+  col._depth = 0;
+  col._chain = true;          // canLayout measures it instead of computing a grid's width
+  block._rows.push(col);
+  for(const b of chain)
+    col.appendChild(b.kind === 'human' ? canBeatCard(b) : canSingle(room, b, true));
 }
 
 // A whole look-alike cluster as one card, flipped in place. Two offset sheets behind the face
@@ -2479,9 +2570,14 @@ function canBuildBlock(room){
   // with no branches yet is the one case with nothing to grow, and it still gets its frame —
   // an empty box under a seed is a true statement about that room.
   const path = canPathOf(room);
-  const subs = canSubsOf(room, room.root);
-  if(!subs.length) canGrow(room, block, room.root, null, null, 0, path);
-  else for(const sub of subs) canGrow(room, block, sub.at, sub.beat, null, 0, path);
+  const chain = canChainOf(room);
+  if(chain){
+    canGrowChain(room, block, chain);
+  }else{
+    const subs = canSubsOf(room, room.root);
+    if(!subs.length) canGrow(room, block, room.root, null, null, 0, path);
+    else for(const sub of subs) canGrow(room, block, sub.at, sub.beat, null, 0, path);
+  }
   const b = {el: block, room, seedEl: seed, h2, stem: block.querySelector('.cn-stem'),
              farlabel: far, name: room.name};
   h2.addEventListener('click', () => canFlyTo(b));
@@ -2580,7 +2676,9 @@ function canMeasure(){
     for(const s of canStacks) if(i < s.group.length) canSetMember(s, i);
     for(const s of canStacks) if(i < s.group.length) s.heights[i] = s.card.offsetHeight;
   }
-  const singles = [...canWorld.querySelectorAll('.cn-card:not(.cn-stack)')];
+  // Line-cards are left out: they keep their content's height on purpose, so they can neither
+  // clip nor be measured against CARD_H, and asking would only mark every one of them `.clips`.
+  const singles = [...canWorld.querySelectorAll('.cn-card:not(.cn-stack):not(.cn-line)')];
   for(const c of singles) c._nat = c.offsetHeight;
   canWorld.style.setProperty('--cn-card-h', CN.CARD_H + 'px');
   canWorld.classList.add('uniform');
@@ -2601,7 +2699,10 @@ function canLayout(){
     let first = true, afterBeat = false, left = 0, right = CN.SEED_W;
     for(const row of b.el._rows){
       let w;
-      if(row._beat){
+      // A beat row and a chain column are both as wide as they are: no grid to count columns
+      // for. A chain is exactly one card wide, which is what lets a folder of twenty of them
+      // pack as twenty columns instead of twenty empty 1600px boxes.
+      if(row._beat || row._chain){
         w = row.offsetWidth;
       }else{
         // As many grid columns as the frame has cards, up to five: a seed whose thirty
@@ -2889,7 +2990,7 @@ function showCanvas(){
   choosing = false;
   menu(false);
   $('doc').hidden = true;
-  $('fanjump').hidden = true;
+  $('fanjump').hidden = $('treejump').hidden = true;
   $('fanpane').hidden = true;
   $('notepane').hidden = true;
   $('artpane').hidden = true;
@@ -3960,6 +4061,7 @@ async function loadShelf(){
 // the name inside the file is what the next save posts back.
 function openMove(path, isFolder){
   if(!path) return;
+  menu(true);      // the move sheet is in the menu; a folder's `move` is tapped in the tree
   moving = {path: path, folder: !!isFolder};
   $('renamebox').classList.remove('on');
   $('askbox').classList.remove('on');
@@ -4296,11 +4398,6 @@ $('askok').addEventListener('click', async () => {
   const act = asked; asked = null;
   if(act) await act();
 });
-$('roomsbtn').addEventListener('click', () => {
-  const on = !$('shelftree').classList.contains('on');
-  $('shelftree').classList.toggle('on', on);
-  $('roomsbtn').setAttribute('aria-expanded', String(on));
-});
 $('storebtn').addEventListener('click', () => {
   const on = !$('storewrap').classList.contains('on');
   $('storewrap').classList.toggle('on', on);
@@ -4339,6 +4436,7 @@ $('noteedit').addEventListener('click', editNote);
 $('notesave').addEventListener('click', saveNote);
 $('notecancel').addEventListener('click', cancelNote);
 $('menubtn').addEventListener('click', () => menu($('tools').hidden));
+$('treejump').addEventListener('click', () => rooms($('roomspop').hidden));
 document.addEventListener('click', e => {
   // composedPath, not e.target.closest: the path is fixed when the click is dispatched, and a
   // handler inside the menu may redraw before this one runs (a folder fold rebuilds the whole
@@ -4347,7 +4445,10 @@ document.addEventListener('click', e => {
   // unusable the morning after it shipped.
   const path = e.composedPath();
   const within = id => path.some(n => n.id === id);
-  if(!within('tools') && !within('menubtn')) menu(false);
+  // Only a menu that is open gets closed here: menu(false) also shuts the tree popover, and
+  // the click that just opened the tree would otherwise shut it on its way up.
+  if(!$('tools').hidden && !within('tools') && !within('menubtn')) menu(false);
+  if(!$('roomspop').hidden && !within('roomspop') && !within('treejump') && !within('tools')) rooms(false);
   if(!within('alts')) closeAlts();
 });
 // The popup is positioned against a word on the screen, so it has to go the moment that
@@ -4363,7 +4464,8 @@ if(document.fonts && document.fonts.ready) document.fonts.ready.then(drawArtLink
 document.addEventListener('keydown', e => {
   if(e.key !== 'Escape' || e.defaultPrevented || e.target.closest('.ed')) return;
   if($('alts')){ closeAlts(); return; }
-  if(!$('tools').hidden){ menu(false); $('menubtn').focus(); }
+  if(!$('roomspop').hidden){ rooms(false); $('treejump').focus(); }
+  else if(!$('tools').hidden){ menu(false); $('menubtn').focus(); }
   else if(choosing){ showDialogue(); stopAll(); }
 });
 $('samp').addEventListener('click', () => {
