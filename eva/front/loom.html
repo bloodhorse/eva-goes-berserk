@@ -371,6 +371,19 @@
   .blk .swipe{position:absolute; right:0; top:0; display:flex; align-items:center; gap:4px;
     font-size:13px; color:var(--ghost); opacity:0; pointer-events:none;}
   .blk:hover .swipe, .blk:focus-within .swipe{opacity:1; pointer-events:auto;}
+  /* The right margin as a column: the fork mark at the top, `tokens` at the bottom — the
+     bottom-right corner of a long line, beside a short one — both only while the line is
+     hovered, like edit and spin off on the left (2026-09-18: under the text it took a line of
+     every message). A block shorter than the two lets the column hang a little below it,
+     only while hovered. */
+  .blk .rim{position:absolute; right:0; top:0; bottom:0; width:var(--rim);
+    display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end;
+    pointer-events:none;}
+  .blk .rim .swipe{position:static;}
+  .blk .tokwrap{margin-top:auto; opacity:0; pointer-events:none; transition:opacity 120ms ease;}
+  .blk:hover .tokwrap, .blk:focus-within .tokwrap{opacity:1; pointer-events:auto;}
+  .blk .tokwrap .ghostbtn{font-size:13px; padding:3px 0; white-space:nowrap;}
+  .blk .tokwrap .ghostbtn.on{color:var(--hot);}
   .fork{background:none; border:0; padding:6px 2px; color:var(--ghost); font:inherit;
     white-space:nowrap; letter-spacing:.02em;}
   .fork:hover{color:var(--accent);}
@@ -456,8 +469,12 @@
        small grid — its text, the posed tag, then one row with edit on the left and the
        fork mark on the right, in the flow, where nothing can overlap. */
     #blocks{--gut:0px; --rim:0px;}
-    .blk{display:grid; grid-template-columns:1fr auto;
-      grid-template-areas:"body body" "foot foot" "gut swipe"; padding:0 0 14px;}
+    .blk{display:grid; grid-template-columns:1fr auto auto;
+      grid-template-areas:"body body body" "foot foot foot" "gut tok swipe"; padding:0 0 14px;}
+    /* the right-margin column dissolves into the phone row: tokens sits beside the fork mark */
+    .blk .rim{display:contents;}
+    .blk .tokwrap{grid-area:tok; opacity:1; pointer-events:auto; align-self:center;
+      padding-right:12px;}
     /* in the phone row the gutter's words sit side by side, not stacked */
     .blk .gut .ghostbtn{display:inline-block; width:auto; text-align:left;}
     .blk > .body, .blk > .ed{grid-area:body;}
@@ -494,7 +511,7 @@
      field smaller than that on focus — the room picker, rename, note name and sampler
      fields were all 14px. */
   @media (hover:none){
-    .blk .gut, .blk .swipe{opacity:1;}
+    .blk .gut, .blk .swipe, .blk .tokwrap{opacity:1; pointer-events:auto;}
     .blk .gut .ghostbtn{padding:10px 14px 10px 0;}
     .fork{padding:8px 12px; font-size:15px;}
     input, select, textarea{font-size:16px;}
@@ -3127,8 +3144,8 @@ function save(){
 // stays in the file — put it all on screen and the document stops being the thing you read.
 const num = x => String(Math.round(x * 1000) / 1000);
 function hasProbs(n){ return !!(n.meta && n.meta.probs && n.meta.probs.length); }
-// `doc` = the dialogue, which since 2026-09-18 carries neither temperature nor posed: bekh
-// reads the document as a document there. The file still holds all of it, and a
+// `doc` = the dialogue, which since 2026-09-18 carries neither temperature nor posed (bekh
+// reads the document as a document there) and whose tokens button lives in the right margin. The file still holds all of it, and a
 // card on the choose screen still says its temperature.
 function footLine(n, doc){
   const f = document.createElement('div');
@@ -3160,19 +3177,6 @@ function footLine(n, doc){
     p.className = 'posed';
     p.textContent = 'posed';
     f.appendChild(p);
-  }
-  // Only in the document, never on a card: the whole card is the pick target, and a line
-  // of clickable tokens inside it would be a fight over every click. The one way into the
-  // token view, and so into forking at a token — which is why it outlived temp and posed.
-  if(doc && n.kind === 'model' && hasProbs(n)){
-    const on = painted.has(n.id);
-    const b = ghostBtn('tokens', () => {
-      if(on) painted.delete(n.id); else painted.add(n.id);
-      closeAlts();
-      render();
-    });
-    b.classList.toggle('on', on);
-    f.appendChild(b);
   }
   return f.firstChild ? f : null;
 }
@@ -3476,8 +3480,27 @@ function renderDoc(){
     el.appendChild(body);
     const foot = footLine(n, true);
     if(foot) el.appendChild(foot);
+    const rim = document.createElement('div');
+    rim.className = 'rim';
     const sw = swipe(n);
-    if(sw) el.appendChild(sw);
+    if(sw) rim.appendChild(sw);
+    // The one way into the token view, and so into forking at a token. Only in the document,
+    // never on a card: the whole card is the pick target, and clickable tokens inside it would
+    // fight over every click.
+    if(n.kind === 'model' && hasProbs(n)){
+      const on = painted.has(n.id);
+      const wrap = document.createElement('div');
+      wrap.className = 'tokwrap';
+      const b = ghostBtn('tokens', () => {
+        if(on) painted.delete(n.id); else painted.add(n.id);
+        closeAlts();
+        render();
+      });
+      b.classList.toggle('on', on);
+      wrap.appendChild(b);
+      rim.appendChild(wrap);
+    }
+    if(rim.firstChild) el.appendChild(rim);
     blocksEl.appendChild(el);
   }
   blocksEl.scrollTop = blocksEl.scrollHeight;
