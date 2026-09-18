@@ -35,20 +35,24 @@ general, and every line of it was paid for:
 5. **No timers in that script.** Headless virtual time stops before a 1.2 s `setTimeout` fires
    (the log said "ready after 1 poll", then nothing). Poll every 50 ms for a real readiness
    condition — the data loaded *and* the DOM rendered — and apply the state in that same tick.
-6. **No async state.** A state that fetches (open a note) lands after the screenshot. Load it with
+6. **Virtual time doesn't wait for the network.** A real room carries ~1 MB of token
+   probabilities and headless takes the shot before the fetch lands — a blank page with the room
+   never opened, one try in three. Seed the mock with `meta.probs` stripped (the text and the fans
+   are identical), and re-shoot while the png is suspiciously small.
+7. **No async state.** A state that fetches (open a note) lands after the screenshot. Load it with
    a **synchronous XHR** in the injected helper instead.
-7. **Headless Helium often hangs on exit after writing the screenshot, and ignores SIGTERM.**
+8. **Headless Helium often hangs on exit after writing the screenshot, and ignores SIGTERM.**
    Poll for the png, then `kill -9` the pid. Never `pkill -f` (see the global CLAUDE.md).
-8. **`wait` on the shot pids only.** A bare `wait` also waits on the page server and the stub
+9. **`wait` on the shot pids only.** A bare `wait` also waits on the page server and the stub
    started in the background, which never exit — the loop froze after one batch.
-9. **Log, don't guess.** The injected script `console.log`s a `DBG` line — whether the state ran,
+10. **Log, don't guess.** The injected script `console.log`s a `DBG` line — whether the state ran,
    `documentElement.scrollWidth` vs `innerWidth` — and `--enable-logging=stderr` puts it in the
    browser's stderr. `scrollWidth == innerWidth` in every shot is the proof nothing scrolls
    sideways; a png alone can't show that.
-10. **Contact sheets, not twenty files:** `magick a.png b.png c.png -background '#000' -splice 8x0 +append sheet.png`
+11. **Contact sheets, not twenty files:** `magick a.png b.png c.png -background '#000' -splice 8x0 +append sheet.png`
     (plain append needs no fonts — `magick montage` died looking for one). Then `kkmosaic` the
     sheets into kitty for bekh.
-11. **Serve a scratch copy** of the app against a stub backend and a seeded mock (never the real
+12. **Serve a scratch copy** of the app against a stub backend and a seeded mock (never the real
     data dir), on its own port, and check the ports are free afterwards with
     `lsof -ti tcp:PORT -sTCP:LISTEN`.
 

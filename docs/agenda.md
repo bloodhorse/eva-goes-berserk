@@ -119,7 +119,10 @@ fan. Four families were put on the table, and bekh sorted them:
 ## what happened so far — observations, not laws
 
 - **The instruments.** The loom at `https://eva.x` (page, repl, census, walk scripts, berserk).
-  Rooms live in folders; the menu is a collapsible tree, newest experiment first, `move to…`.
+  Rooms live in folders, in a tree behind its own corner button, `move to…` in the menu. A `★`
+  on a card is the save: each fan's artifact follows its stars, and Continue stands an artifact
+  up as a new room. With the mac off, `eva.x` falls over to a copy on the mini that takes reading
+  and marks (`eva/mirror/`).
   **The canvas** (`#canvas=<folder>`, or `canvas` on a folder row): a whole experiment as one
   pan-and-zoom picture — seeds in masonry columns, each fan a grid of uniform cards, look-alikes
   collapsed into one stack you flip through with the shared opening dimmed, a cold heat ramp for
