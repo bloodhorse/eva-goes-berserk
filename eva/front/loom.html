@@ -3127,11 +3127,14 @@ function save(){
 // stays in the file — put it all on screen and the document stops being the thing you read.
 const num = x => String(Math.round(x * 1000) / 1000);
 function hasProbs(n){ return !!(n.meta && n.meta.probs && n.meta.probs.length); }
-function footLine(n, ops){
+// `doc` = the dialogue, which since 2026-09-18 carries neither temperature nor posed: bekh
+// reads the document as a document there. The file still holds all of it, and a
+// card on the choose screen still says its temperature.
+function footLine(n, doc){
   const f = document.createElement('div');
   f.className = 'foot';
   const t = n.meta && n.meta.params && n.meta.params.temperature;
-  if(n.kind === 'model' && typeof t === 'number'){
+  if(!doc && n.kind === 'model' && typeof t === 'number'){
     const s = document.createElement('span');
     s.textContent = 'temp ' + num(t);
     f.appendChild(s);
@@ -3152,15 +3155,16 @@ function footLine(n, ops){
     s.textContent = 'forked at ' + n.meta.fork.at_token;
     f.appendChild(s);
   }
-  if(n.posed){
+  if(!doc && n.posed){
     const p = document.createElement('span');
     p.className = 'posed';
     p.textContent = 'posed';
     f.appendChild(p);
   }
   // Only in the document, never on a card: the whole card is the pick target, and a line
-  // of clickable tokens inside it would be a fight over every click.
-  if(ops && n.kind === 'model' && hasProbs(n)){
+  // of clickable tokens inside it would be a fight over every click. The one way into the
+  // token view, and so into forking at a token — which is why it outlived temp and posed.
+  if(doc && n.kind === 'model' && hasProbs(n)){
     const on = painted.has(n.id);
     const b = ghostBtn('tokens', () => {
       if(on) painted.delete(n.id); else painted.add(n.id);
