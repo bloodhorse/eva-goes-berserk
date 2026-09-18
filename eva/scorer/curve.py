@@ -525,7 +525,7 @@ def main() -> None:
     perm = permutation_test(decks[best_name], best_track, cfg, n_perm=a.perm)
 
     # The other reader.
-    ledger = fable_ledger(F.ROOT / "docs" / "ledger-fable-three-models.md")
+    ledger = fable_ledger(F.ROOT / "docs" / "ledgers" / "three-models.md")
     fable_all = score_picks(any_deck, ledger, rooms)
     fable_clean = score_picks(any_deck, ledger, [r for r in rooms if r in FABLE_CLEAN])
 
