@@ -254,8 +254,7 @@ the room above, then the model lines alone (beats are scaffolding and never show
 newlines trimmed), the model's name in a narrow margin under `reveal`, the turns carried by a faint stripe per seat (`--seat-a` slate, `--seat-b` a frail magenta; by seat, never by model, so a blind read learns nothing) — and `☆`/`○` at the right
 edge on hover, shown for good once worn, through the same `canMarkBtns` → `/api/mark`,
 repainting the picture's card as well. The filter applies; a room that forked is left to the
-picture. The arrows scroll the page natively there, and its scroll is remembered per board
-across a room and back. `reload` re-reads the folder
+picture. The arrows scroll the page natively there, and its scroll is remembered per board in `sessionStorage`, across a room and back and across a reload. `reload` re-reads the folder
 or the board while a census is still writing and keeps the camera.
 
 All chrome is lowercase by one CSS rule; the document, anything typed and the export screen keep

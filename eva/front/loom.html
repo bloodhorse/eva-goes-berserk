@@ -3164,7 +3164,19 @@ canStage.addEventListener('gestureend', ev => ev.preventDefault());
 // ---- reading: the chains as text --------------------------------------------------------
 let canReading = false;
 let canReadWant = null;          // null until `read` is pressed; then his choice, for this tab
-const canReadAt = new Map();     // where the page was scrolled, per board/folder, for this tab
+// Where the page was scrolled, per board/folder, in sessionStorage like the camera: it has to
+// survive a reload — he reads a board for an hour, and a reload that threw him back to the
+// first room would be the page losing his place — but not outlive the tab.
+const canReadKey = () => canCamKey() && canCamKey() + '.read';
+const canReadAt = {
+  get(){ try{ return +sessionStorage.getItem(canReadKey()) || 0; }catch(e){ return 0; } },
+  set(v){ if(canReadKey()) try{ sessionStorage.setItem(canReadKey(), String(Math.round(v))); }catch(e){} },
+};
+let canReadT = 0;
+$('canread').addEventListener('scroll', () => {
+  clearTimeout(canReadT);
+  canReadT = setTimeout(() => { if(canReading) canReadAt.set($('canread').scrollTop); }, 200);
+});
 
 function canRepaintCard(id){
   const c = canWorld.querySelector('.cn-card[data-node="' + CSS.escape(id) + '"]');
@@ -3278,7 +3290,7 @@ async function canOpen(kind, name){
   if(canIs(kind, name) && canBlocks.length){
     showCanvas();
     if(!canRestoreCam()) canFit(false);
-    if(canReading) $('canread').scrollTop = canReadAt.get(canCamKey()) || 0;
+    if(canReading) $('canread').scrollTop = canReadAt.get() || 0;
     return;
   }
   await loadCanvas(kind, name, false);
@@ -3314,7 +3326,7 @@ async function loadCanvas(kind, name, keepCam){
   const chains = canRooms.filter(r => canChainOf(r)).length;
   $('canreadbtn').hidden = !chains;
   const want = canReadWant === null ? chains > 0 && chains === canRooms.length : canReadWant;
-  const top = keepCam ? $('canread').scrollTop : (canReadAt.get(canCamKey()) || 0);
+  const top = keepCam ? $('canread').scrollTop : (canReadAt.get() || 0);
   canSetReading(chains > 0 && want);
   if(canReading) $('canread').scrollTop = top;
 }
@@ -3342,7 +3354,7 @@ function canStep(by){
   const next = sibs[sibs.findIndex(b => b.name === canBoard) + by];
   if(next){
     canSaveCam();
-    if(canReading) canReadAt.set(canCamKey(), $('canread').scrollTop);
+    if(canReading) canReadAt.set($('canread').scrollTop);
     setHash('#board=' + encodeURIComponent(next.name));
   }
 }
@@ -3351,7 +3363,7 @@ function canStep(by){
 // address, so that back comes home to the picture with the camera where it was.
 function canOpenRoom(name){
   canSaveCam();
-  if(canReading) canReadAt.set(canCamKey(), $('canread').scrollTop);
+  if(canReading) canReadAt.set($('canread').scrollTop);
   setHash('#room=' + encodeURIComponent(name));
 }
 
