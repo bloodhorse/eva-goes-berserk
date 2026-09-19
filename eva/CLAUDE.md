@@ -251,7 +251,7 @@ wherever the canvas holds a chain, and a canvas of nothing but chains (every wir
 on it; once pressed either way, the choice holds for every board in the tab. One scrolling page
 in the reading column — each room's name with `→` into it, the seed only when it differs from
 the room above, then the model lines alone (beats are scaffolding and never shown; edge
-newlines trimmed), the model's name in a narrow margin under `reveal`, and `☆`/`○` at the right
+newlines trimmed), the model's name in a narrow margin under `reveal`, the turns carried by the shape — the seat that opened flush, the other stepped in, a faint stripe per seat (`--seat-a` cold, `--seat-b` warm; by seat, never by model, so a blind read learns nothing) — and `☆`/`○` at the right
 edge on hover, shown for good once worn, through the same `canMarkBtns` → `/api/mark`,
 repainting the picture's card as well. The filter applies; a room that forked is left to the
 picture. The arrows scroll the page natively there, and its scroll is remembered per board

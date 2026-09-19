@@ -35,6 +35,9 @@
     --bg:#232323; --ink:#d4e3fe; --ghost:#7d8a9c; --line:#2e3547;
     --panel:#2a2b31; --panel-soft:#272830; --sunk:#1e1e22;
     --accent:#f5c8fe; --on-accent:#232323;
+    /* the two seats of a transcript on the reading page: a stripe beside the line, never the
+       ink — muted and warm/cold so neither reads as a mark (ice) or as good (accent) */
+    --seat-a:#6f86a8; --seat-b:#a88a6f;
     --live:#c6f1fe;
     /* posed and errors: a state you have to be able to spot without reading */
     --hot:#eb6f92;
@@ -788,6 +791,15 @@
   #canread .ln.kept .body{color:var(--live);}
   #canread .ln.good .body{color:var(--accent);}
   #canread .sys{margin-left:62px;}
+  /* Who is talking, without names (2026-09-18): a transcript in one colour and one margin reads
+     as a paragraph. So the shape carries the turns — the seat that opened sits flush, the other
+     one steps in — and a faint stripe per seat says it again at the edge of the eye. By seat,
+     not by model: the room's first voice is `a`, so a blind read learns nothing from it. */
+  #canread .ln .body{border-left:3px solid transparent; padding-left:10px;}
+  #canread .ln.sa .body{border-left-color:color-mix(in srgb, var(--seat-a) 70%, transparent);}
+  #canread .ln.sb .body{border-left-color:color-mix(in srgb, var(--seat-b) 70%, transparent);
+    margin-left:2.5em;}
+  #canread .ln.turn{margin-top:5px;}
   .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
   /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
   .cn-sub{color:var(--live);}
@@ -3181,10 +3193,17 @@ function canReadDraw(){
     if(seed !== lastSeed){ mk(col, 'div', 'seed body', seed); lastSeed = seed; }
     const chain = canChainOf(room);
     if(!chain){ mk(col, 'div', 'sys', 'a fan, not a transcript — it reads in the picture'); continue; }
+    let first = null, prev = null;
     for(const b of chain){
       if(b.kind === 'human') continue;
+      // A line's seat is its model; one without a stamp keeps the seat of the line before.
+      const voice = b.model || prev || '';
+      if(first === null) first = voice;
+      const seat = voice === first ? 'sa' : 'sb';
+      const turn = prev !== null && voice !== prev;
+      prev = voice;
       if(canFilter && !canPasses(b)) continue;
-      const row = mk(col, 'div', 'ln');
+      const row = mk(col, 'div', 'ln ' + seat + (turn ? ' turn' : ''));
       const who = mk(row, 'span', 'who', reveal && b.model ? canShortModel(b.model) : '');
       who.title = reveal ? (b.model || '') : '';
       mk(row, 'span', 'body', b.text.replace(/^[\r\n]+|[\r\n]+$/g, ''));
