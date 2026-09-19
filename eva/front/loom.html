@@ -36,8 +36,8 @@
     --panel:#2a2b31; --panel-soft:#272830; --sunk:#1e1e22;
     --accent:#f5c8fe; --on-accent:#232323;
     /* the two seats of a transcript on the reading page: a stripe beside the line, never the
-       ink — muted and warm/cold so neither reads as a mark (ice) or as good (accent) */
-    --seat-a:#6f86a8; --seat-b:#a88a6f;
+       ink — a cold slate and the page's own magenta, faint enough not to read as a mark */
+    --seat-a:#6f86a8; --seat-b:#c77fd6;
     --live:#c6f1fe;
     /* posed and errors: a state you have to be able to spot without reading */
     --hot:#eb6f92;
@@ -791,14 +791,13 @@
   #canread .ln.kept .body{color:var(--live);}
   #canread .ln.good .body{color:var(--accent);}
   #canread .sys{margin-left:62px;}
-  /* Who is talking, without names (2026-09-18): a transcript in one colour and one margin reads
-     as a paragraph. So the shape carries the turns — the seat that opened sits flush, the other
-     one steps in — and a faint stripe per seat says it again at the edge of the eye. By seat,
-     not by model: the room's first voice is `a`, so a blind read learns nothing from it. */
+  /* Who is talking, without names (2026-09-18): a transcript in one colour reads as a
+     paragraph, so a faint stripe per seat carries the turns at the edge of the eye (an indent
+     for the second seat was tried and dropped the same night). By seat, not by model: the
+     room's first voice is `a`, so a blind read learns nothing from it. */
   #canread .ln .body{border-left:3px solid transparent; padding-left:10px;}
   #canread .ln.sa .body{border-left-color:color-mix(in srgb, var(--seat-a) 70%, transparent);}
-  #canread .ln.sb .body{border-left-color:color-mix(in srgb, var(--seat-b) 70%, transparent);
-    margin-left:2.5em;}
+  #canread .ln.sb .body{border-left-color:color-mix(in srgb, var(--seat-b) 45%, transparent);}
   #canread .ln.turn{margin-top:5px;}
   .cn-card.kept > .cn-face{border-color:var(--live); border-left-color:var(--live);}
   /* a branch somebody fanned under: the mark, and the arrow to its own frame below */
