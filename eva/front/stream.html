@@ -32,14 +32,14 @@
     --accent:#f5c8fe; --live:#c6f1fe; --hot:#eb6f92;
     /* The interpreter's underline: the accent at a quarter weight, so a marked phrase reads
        as lit rather than as a box drawn round it. */
-    --mark:#f5c8fe33;
+    --mark:#f5c8fe55;
   }
   @media (prefers-color-scheme: light){
     :root{
       --bg:#faf4ed; --ink:#575279; --ghost:#8f8aa3; --line:#dfdad9;
       --panel:#f2ebe3; --sunk:#fffaf3;
       --accent:#907aa9; --live:#56949f; --hot:#b4637a;
-      --mark:#907aa93d;
+      --mark:#907aa955;
     }
   }
   /* As in the loom: every colour below is a var() off those two blocks and nothing else, so
@@ -99,7 +99,11 @@
   /* The interpreter's underline, and its slips. Three states that have to be told apart at a
      glance and in both rooms: a lit background, red underlined text he added, red struck-through
      text he dropped. Never fixed — a slip is another prophecy — only shown. */
-  .hl{background:var(--mark); border-radius:2px;}
+  /* Background AND an underline in the full accent: the quarter-weight tint alone blends to
+     #4d444f on the #232323 ground, which a phone at evening brightness simply does not show
+     (bekh, 2026-09-19: "on a phone i'm not seeing the highlight"). The underline is what
+     survives a dim screen; take it out and the interpreter's marks vanish there again. */
+  .hl{background:var(--mark); border-radius:2px; box-shadow:inset 0 -2px 0 var(--accent);}
   .new{color:var(--hot); text-decoration:underline; text-decoration-thickness:1px;
     text-underline-offset:2px;}
   .gone{color:var(--hot); text-decoration:line-through; font-size:0.85em; opacity:.7;}
