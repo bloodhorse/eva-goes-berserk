@@ -169,7 +169,7 @@ STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
 # The writer's own two dials, restated so the server can tell a dream that is still running
 # from one that ended without keeping a second opinion about it. Change one and change the
 # other (eva/stream/remembering.py).
-STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "24"))
+STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
 STREAM_DREAM_GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
 STREAM_N = 10                             # pages per call when nobody says
 STREAM_N_MAX = 50

@@ -1119,13 +1119,13 @@ class Remembering(unittest.TestCase):
         self.addCleanup(setattr, remembering, "TURNS", was)
         a = self.scene("1000", "one.")
         self.assertEqual(remember(self.fake())[0], 0)
-        remembering.TURNS = 24
+        remembering.TURNS = 4
         b = self.scene("1005", "two.")
         self.assertEqual(remember(self.fake())[0], 0)
 
         d = call("/api/stream?n=5")[1]
         self.assertEqual(d["dream"]["turn"], 1)
-        self.assertEqual(d["dream"]["of"], 24)
+        self.assertEqual(d["dream"]["of"], 4)
         self.assertIn("two.", d["dream"]["text"])
         by = {p["room"]: p for p in d["pages"]}
         self.assertEqual(by[a]["dream_end"]["turns"], 1)   # the one-scene dream, where it ended

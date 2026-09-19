@@ -27,7 +27,7 @@ The two voices do not share a vocabulary and do not have to: the reader's own pr
 passage a dream, and its file is left alone.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_DREAM_TURNS (how many scenes a dream runs to,
-default 24 — about two hours), STREAM_DREAM_GAP (seconds of silence that end a dream,
+default 4 — about twenty minutes), STREAM_DREAM_GAP (seconds of silence that end a dream,
 default 1800), STREAM_DREAM_TIMEOUT, STREAM_DREAM_PERSONA, plus loom's LOOM_SITTINGS.
 """
 
@@ -56,7 +56,7 @@ PERSONA = os.environ.get("STREAM_DREAM_PERSONA", os.path.join(HERE, "remembering
 
 # How many scenes one dream runs to before he starts again. Two hours at a passage every five
 # minutes. bekh: after a couple of hours he starts again.
-TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "24"))
+TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
 # The other way a dream ends: a silence. Half an hour with no passage means the mac slept or
 # llama went away, and the sleeper woke — carrying that gap across as if it were one dream
 # would make an account of two evenings pretending to be one.

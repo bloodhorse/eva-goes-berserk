@@ -205,13 +205,13 @@ the code.
   a dream, and it is left alone.
 - **Which scene**: the newest unflagged passage above **his own** watermark, never a backlog.
   His watermark is kept apart from the reader's, so neither voice waits for the other.
-- **A dream ends** after `STREAM_DREAM_TURNS` scenes (24, about two hours) or when the silence
+- **A dream ends** after `STREAM_DREAM_TURNS` scenes (**4**, about twenty minutes — it shipped at 24 and bekh cut it the same evening, 2026-09-19: needling 24 scenes together is torture for a man, and a real dream has around four) or when the silence
   since its last version passes `STREAM_DREAM_GAP` (1800s — the mac slept, so he woke). Both
   are read off the versions themselves and there is no state file: a second place to keep
   "which dream are we in" is a second place for it to be wrong. The last version of a finished
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
-- **On the page**: the current version sits at the very top of the feed with a small `7 / 24`,
+- **On the page**: the current version sits at the very top of the feed with a small `3 / 4`,
   in a panel that is neither the dream text nor the reader's margin note. It is rewritten whole
   every few minutes, so the poll replaces it in place **only while he is at the top** and
   otherwise holds it until he scrolls back — a block quietly rewriting itself off-screen is one
@@ -227,7 +227,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-reme
 launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the worker does
 ```
 
-Env: `STREAM_DREAM_TURNS` (24), `STREAM_DREAM_GAP` (1800), `STREAM_DREAM_TIMEOUT`,
+Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_GAP` (1800), `STREAM_DREAM_TIMEOUT`,
 `STREAM_DREAM_PERSONA`. Log: `/tmp/eva-stream-remembering.log`.
 
 ## Counting what opus costs

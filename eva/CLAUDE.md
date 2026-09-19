@@ -396,8 +396,8 @@ its dream. It has no clock: the worker kickstarts it when a page lands.
 And a third voice, **the sleeper remembering** (`stream/remembering.py`, 2026-09-19): opus
 rewriting one index-card account of the dream so far every time a passage lands, told that the
 passages are **scenes of one dream** so it has to find connective tissue; every rewrite kept,
-a dream ending after 24 scenes or half an hour's silence. The page carries it at the top with
-its `7 / 24`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
+a dream ending after 4 scenes or half an hour's silence. The page carries it at the top with
+its `3 / 4`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
 which counts what they cost onto every ledger row.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
