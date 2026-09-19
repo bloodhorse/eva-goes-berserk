@@ -41,17 +41,16 @@ import argparse
 import json
 import os
 import re
-import subprocess
 import sys
-import tempfile
 import time
 
 HERE = os.path.dirname(os.path.realpath(__file__))              # eva/stream
 EVA = os.path.dirname(HERE)
-for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli")):
+for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
 import loom  # noqa: E402   the shelf, the stream rooms: nothing else here reads a room
+import opus  # noqa: E402   one call, one usage block, one place the budget is counted
 
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, "stream"))
 READINGS = os.path.join(STREAM, "readings")
@@ -68,17 +67,7 @@ EVERY = int(os.environ.get("STREAM_READ_EVERY", "1"))
 MEMORY = int(os.environ.get("STREAM_READ_MEMORY", "4"))
 TIMEOUT = int(os.environ.get("STREAM_READ_TIMEOUT", "300"))
 
-# berserk's invocation, copied on purpose rather than imported: a reader with tools is a reader
-# that will go and read the rest of the repo instead of the dream in front of it.
-# `--setting-sources project` is what keeps bekh's GLOBAL ~/.claude/CLAUDE.md out of the
-# reader's head (checked 2026-09-19: without it a headless call answers YES to "do you have a
-# persona file loaded" and names that file; with it, nothing is loaded and the subscription
-# login still works). That file is a knight, a horse, a swearing rule and a DBA's day job —
-# take this flag out and every dream is read by someone who was just told all of that. The
-# temp-dir cwd below only ever kept the PROJECT file out.
-CLAUDE = ["claude", "-p", "--model", "opus", "--output-format", "text",
-          "--tools", "", "--strict-mcp-config", "--setting-sources", "project"]
-MODEL = "opus"
+MODEL = opus.MODEL
 
 
 def log(msg: str) -> None:
@@ -200,28 +189,6 @@ def when(ts: float) -> str:
     return time.strftime("%Y-%m-%d %H:%M", time.localtime(ts or 0))
 
 
-def ask(prompt: str) -> str:
-    """One `claude -p` call, prompt on stdin. Raises ValueError on anything that is not a
-    clean answer — the caller turns that into a ledger row and exit 0.
-
-    CLAUDECODE and CLAUDE_CODE_ENTRYPOINT come out of the env because a claude started from
-    inside a claude session refuses to start, and this may be run by hand from one. The cwd is
-    a temp dir so this repo's CLAUDE.md is not auto-loaded in front of the dream.
-    """
-    env = {k: v for k, v in os.environ.items()
-           if k not in ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT")}
-    try:
-        r = subprocess.run(CLAUDE, input=prompt, capture_output=True, text=True,
-                           timeout=TIMEOUT, env=env, cwd=tempfile.gettempdir())
-    except FileNotFoundError:
-        raise ValueError("no `claude` on PATH")
-    except subprocess.TimeoutExpired:
-        raise ValueError(f"claude timed out after {TIMEOUT}s")
-    if r.returncode != 0:
-        raise ValueError(f"claude exited {r.returncode}: {(r.stderr or '')[-300:]}")
-    return r.stdout or ""
-
-
 # ---- reading the answer ----------------------------------------------------------------------
 # Tags and not json, because the answer is full of `<mark>` and a tag inside a json string is
 # an escaping question nobody needs to get right at 3am. Parsed leniently: a reading with no
@@ -327,7 +294,7 @@ def run_once() -> int:
     started = time.time()
     prompt = prompt_for(told, past, persona)
     try:
-        answer = ask(prompt)
+        answer, usage = opus.ask(prompt, TIMEOUT)
         reading, marked = parse(answer, told)
     except ValueError as exc:
         log(f"reader · {exc}")
@@ -347,12 +314,13 @@ def run_once() -> int:
            "marked": marked,
            "segments": segments,
            "model": MODEL,
-           "seconds": round(time.time() - started, 1)}
+           "seconds": round(time.time() - started, 1),
+           "usage": usage}
     path = write_reading(obj)
     ledger({"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
-            "model": MODEL, "seconds": obj["seconds"]})
+            "model": MODEL, "seconds": obj["seconds"], "usage": usage})
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
-        f"{len(marked)} marked up · {obj['seconds']}s")
+        f"{len(marked)} marked up · {obj['seconds']}s · " + opus.line(usage))
     return 0
 
 

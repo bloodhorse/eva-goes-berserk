@@ -23,6 +23,10 @@
      The look is a PLACEHOLDER — the loom's palette, a thin rule between passages, nothing
      else — and gets its own job later. Keep it cheap here.
 
+     Three voices on one page: the sleeper dreaming (the passages), the sleeper remembering
+     (the account at the top, and a finished dream where it ended), and the reader at the
+     bedside (the note beside each passage).
+
      ?all=1 shows the passages the filter flagged. ?raw=1 shows the shelf's own text instead
      of the interpreter's copy — untrimmed and uncoloured, for checking. -->
 <style>
@@ -84,6 +88,21 @@
   /* The second voice (eva/stream/interpreter.py): a few sentences about a stretch of two
      passages, hung off the newest of them. Quieter and smaller than the dream, with an accent
      rule down its side so it is never mistaken for the seed, which is also grey. */
+  /* The third voice: the sleeper remembering. A panel, not a margin note — it is not about
+     one passage, it is what the whole dream has been so far, and it has to be told apart at a
+     glance from both the dream text and the reader's note. */
+  .account{background:var(--panel); border-radius:10px; padding:14px 16px;
+    font-size:16px; line-height:1.7; color:var(--ink); white-space:pre-wrap;
+    overflow-wrap:anywhere;}
+  .account .turn{display:block; margin-top:10px; font-size:12px; color:var(--ghost);}
+  /* The same 17px as the feed, so its `em` measures the same and the panel's edges line up
+     with the text below it — at 14px a 34em block is 100px narrower and visibly off. */
+  #dreamnow{max-width:34em; margin:0 auto; font-size:17px;
+    padding:22px calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left));}
+  /* A dream that ENDED sits in the feed where it ended, above its last scene. */
+  .ended{margin:22px 0 4px;}
+  .ended .turn{color:var(--lit-b);}
+
   .reading{margin:0 0 18px; padding:2px 0 2px 14px; border-left:2px solid var(--line);
     color:var(--ghost); font-size:14.5px; line-height:1.55; white-space:pre-wrap;
     overflow-wrap:anywhere;}
@@ -128,6 +147,9 @@
       column-gap:32px; align-items:start;}
     .pass > *{grid-column:1;}
     .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
+    /* A finished dream is the whole width: it is not a note about the passage beside it. */
+    .pass > .ended{grid-column:1 / -1; grid-row:auto;}
+    #dreamnow{max-width:56em;}
   }
 </style>
 </head>
@@ -139,6 +161,7 @@
 </header>
 
 <main id="scroll">
+  <div id="dreamnow" hidden></div>
   <div id="feed"></div>
   <div id="sentinel"></div>
   <p id="foot">…</p>
@@ -150,7 +173,8 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), scroll: $('scroll'),
-            feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'), notice: $('notice')};
+            feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'), notice: $('notice'),
+            dreamnow: $('dreamnow')};
 
 const Q = new URLSearchParams(location.search);
 // Flagged passages, off by default: the flagged pile is for auditing the filter against his
@@ -168,6 +192,8 @@ let more = true;
 let busy = false;
 let pending = [];          // newest-first, held back while he is scrolled down
 let status = null;
+let dreamShown = null;     // what the account block is currently saying
+let dreamHeld = null;      // a newer account, waiting for him to be back at the top
 
 function api(q){
   return fetch('/api/stream?' + q + (ALL ? '&all=1' : ''), {cache: 'no-store'})
@@ -223,6 +249,35 @@ function when(ts){
   return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + hhmm(d);
 }
 
+// ---- the dream so far -------------------------------------------------------------------
+// The sleeper's account is not a passage: it is rewritten whole every few minutes, so
+// replacing the text under a reader's eyes is fine — but only when he is at the top looking at
+// it. Further down it waits, because a block silently rewriting itself off-screen is one
+// thing and a paragraph changing while it is being read is another.
+function account(d, ended){
+  const box = document.createElement('div');
+  box.className = 'account' + (ended ? ' ended' : '');
+  box.appendChild(document.createTextNode(d.text || ''));
+  const t = document.createElement('span');
+  t.className = 'turn';
+  t.textContent = ended ? `a dream, ${d.turns} scenes` : `${d.turn} / ${d.of}`;
+  box.appendChild(t);
+  return box;
+}
+
+function drawDream(d){
+  dreamShown = d;
+  while (el.dreamnow.firstChild) el.dreamnow.removeChild(el.dreamnow.firstChild);
+  el.dreamnow.hidden = !d;
+  if (d) el.dreamnow.appendChild(account(d, false));
+}
+
+function maybeDream(d){
+  if (!d){ dreamHeld = null; drawDream(null); return; }
+  if (!dreamShown || atTop()){ dreamHeld = null; drawDream(d); return; }
+  dreamHeld = d;
+}
+
 function drawStatus(s){
   if (s) status = s;
   s = status;
@@ -248,6 +303,11 @@ function build(p){
   const body = document.createElement('p');
   body.className = 'body';
   art.appendChild(body);
+
+  if (p.dream_end){
+    // Where it ended, above its last scene: the only place a finished dream means anything.
+    art.appendChild(account(p.dream_end, true));
+  }
 
   if (p.reading){
     const r = document.createElement('aside');
@@ -426,11 +486,18 @@ function fill(){
       append(d.pages || []);
       more = !!d.more;
       drawStatus(d.status);
+      maybeDream(d.dream);
       drawFoot();
     })
     .catch(() => { more = false; say("can't reach the shelf"); })
     .then(() => { busy = false; fill(); });
 }
+
+// An account held back while he read on is put up the moment he is back at the top — not on a
+// timer, and never while he is somewhere in the middle of the night.
+el.scroll.addEventListener('scroll', () => {
+  if (dreamHeld && atTop()){ const d = dreamHeld; dreamHeld = null; drawDream(d); }
+}, {passive: true});
 
 // The sentinel sits under the last passage; seeing it is what asks for more.
 new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) fill(); },
@@ -450,6 +517,7 @@ function showPending(){
 function poll(){
   api('n=5').then(d => {
     drawStatus(d.status);
+    maybeDream(d.dream);
     const fresh = (d.pages || []).filter(p => !rooms.has(p.room) &&
                                               !pending.some(q => q.room === p.room));
     if (!fresh.length) return;

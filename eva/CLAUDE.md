@@ -393,6 +393,12 @@ appends the plumbing. Its copy of a dream is stored verbatim and never corrected
 against the raw text — the words it marked are simply written in colour, magenta or cyan by
 lot. `/api/stream` carries the copy, the segments and the note; the page draws the note beside
 its dream. It has no clock: the worker kickstarts it when a page lands.
+And a third voice, **the sleeper remembering** (`stream/remembering.py`, 2026-09-19): opus
+rewriting one index-card account of the dream so far every time a passage lands, told that the
+passages are **scenes of one dream** so it has to find connective tissue; every rewrite kept,
+a dream ending after 24 scenes or half an hour's silence. The page carries it at the top with
+its `7 / 24`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
+which counts what they cost onto every ledger row.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests
@@ -438,9 +444,9 @@ While the mac is off, `eva.x` falls over to a copy on the mini that takes readin
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
-plus `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and a fifth written and
-**not yet loaded**, `com.bekh.eva-stream-interpreter` (a reading of every two passages; both
-plists live in `stream/`, bekh bootstraps them) — and
+plus `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the two voices it
+kickstarts, `com.bekh.eva-stream-interpreter` and `com.bekh.eva-stream-remembering`, neither of
+which has an interval of its own (all three plists live in `stream/`) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need

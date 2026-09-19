@@ -51,6 +51,8 @@ os.environ["STREAM_INTERVAL"] = "300"
 
 import interpreter  # noqa: E402
 import loom  # noqa: E402
+import opus  # noqa: E402
+import remembering  # noqa: E402
 import stream  # noqa: E402
 
 # Another test module in the same run may have imported loom first and pointed it at ITS
@@ -431,11 +433,37 @@ class Worker(unittest.TestCase):
             put_seed("k.txt", MARK + " and then\n")
             stream.KICK = True
             self.assertEqual(run("--once")[0], 0)
+            # both other voices, each tapped on its own
             self.assertEqual(seen, [["launchctl", "kickstart",
-                                     f"gui/{os.getuid()}/com.bekh.eva-stream-interpreter"]])
+                                     f"gui/{os.getuid()}/com.bekh.eva-stream-interpreter"],
+                                    ["launchctl", "kickstart",
+                                     f"gui/{os.getuid()}/com.bekh.eva-stream-remembering"]])
         finally:
             stream.subprocess.run = real
             stream.KICK = False
+
+    def test_one_voice_failing_to_start_does_not_stop_the_other(self):
+        put_seed("k.txt", MARK + " and then\n")
+        seen = []
+        real = stream.subprocess.run
+
+        def half(cmd, **kw):
+            seen.append(cmd[-1])
+            if "interpreter" in cmd[-1]:
+                raise OSError("launchctl went away")
+            return real([sys.executable, "-c", ""], **kw)
+
+        stream.subprocess.run = half
+        stream.KICK = True
+        try:
+            code, out = run("--once")
+        finally:
+            stream.subprocess.run = real
+            stream.KICK = False
+        self.assertEqual(code, 0, out)
+        self.assertEqual([j.rsplit("/", 1)[-1] for j in seen],
+                         ["com.bekh.eva-stream-interpreter", "com.bekh.eva-stream-remembering"])
+        self.assertIn("kick · com.bekh.eva-stream-interpreter", out)
 
     def test_a_kick_that_fails_costs_the_page_nothing(self):
         put_seed("k.txt", MARK + " and then\n")
@@ -602,21 +630,44 @@ class Routes(unittest.TestCase):
 # the right rooms.
 
 FAKE_CLAUDE = r'''#!/usr/bin/env python3
-import os, re, sys
+import io, json, os, re, sys
 prompt = sys.stdin.read()
 with open(os.environ["FAKE_CLAUDE_LOG"], "a", encoding="utf-8") as f:
     f.write(prompt + "\n=====\n")
 mode = os.environ.get("FAKE_MODE", "")
+
+USAGE = {"input_tokens": 12, "cache_read_input_tokens": 6642,
+         "cache_creation_input_tokens": 3, "output_tokens": 301}
+
+def answer(text, error=False):
+    # The cli's own --output-format json shape: one result event with the usage block on it.
+    json.dump({"type": "result", "subtype": "success", "is_error": error, "result": text,
+               "usage": USAGE, "total_cost_usd": 0.0021782}, sys.stdout)
+    raise SystemExit(0)
+
+if mode == "boom":
+    raise SystemExit(3)
+
+# The sleeper remembering asks a different question and takes a different tag.
+if "--- the new scene ---" in prompt:
+    if mode == "garbage":
+        answer("i don't remember any of it")
+    scene = re.search(r"\[scene\] (.*)\Z", prompt, re.S).group(1).strip()
+    held = re.search(r"--- what you remember of the dream so far ---\n\n(.*?)\n\n---",
+                     prompt, re.S).group(1).strip()
+    first = held.startswith("Nothing yet")
+    n = 1 if first else held.count(";") + 2
+    answer("<dream>I was in it again" + ("" if first else " and before that " + held.split(";")[0])
+           + "; then " + scene[:40] + " (" + str(n) + ")</dream>")
+
 dreams = [d.rstrip("\n") for d in
           re.findall(r"^\[dream\] (.*?)(?=\n\npassage |\Z)", prompt, re.S | re.M)]
 if mode == "garbage":
-    print("i could not read these, sorry")
-    raise SystemExit(0)
-if mode == "boom":
-    raise SystemExit(3)
-print("<reading>")
-print("the switch keeps answering a call nobody placed.")
-print("</reading>")
+    answer("i could not read these, sorry")
+out = io.StringIO()
+print("<reading>", file=out)
+print("the switch keeps answering a call nobody placed.", file=out)
+print("</reading>", file=out)
 for i, d in enumerate(dreams, 1):
     if mode == "script":
         body = "<script>alert(1)</script> " + d
@@ -632,7 +683,8 @@ for i, d in enumerate(dreams, 1):
         body = body.replace("line", "<mark>line</mark>", 1)
     else:
         body = d
-    print(f'<passage n="{i}">{body}</passage>')
+    print(f'<passage n="{i}">{body}</passage>', file=out)
+answer(out.getvalue())
 '''
 
 
@@ -649,8 +701,8 @@ def fake_claude(mode: str = "") -> dict:
     return {"dir": d, "bin": binp, "log": os.path.join(d, "prompts.txt"), "mode": mode}
 
 
-def interpret(fake: dict) -> tuple[int, str]:
-    """One interpreter run in-process, with the fake claude first on PATH."""
+def with_fake(fake: dict, fn):
+    """Run something with the fake claude first on PATH, and put the env back after."""
     was_path, was_mode = os.environ.get("PATH", ""), os.environ.get("FAKE_MODE")
     os.environ["PATH"] = fake["bin"] + os.pathsep + was_path
     os.environ["FAKE_CLAUDE_LOG"] = fake["log"]
@@ -658,7 +710,7 @@ def interpret(fake: dict) -> tuple[int, str]:
     out = io.StringIO()
     try:
         with redirect_stdout(out), redirect_stderr(out):
-            code = interpreter.main(["interpreter.py", "--once"])
+            code = fn()
     finally:
         os.environ["PATH"] = was_path
         if was_mode is None:
@@ -666,6 +718,23 @@ def interpret(fake: dict) -> tuple[int, str]:
         else:
             os.environ["FAKE_MODE"] = was_mode
     return code, out.getvalue()
+
+
+def interpret(fake: dict) -> tuple[int, str]:
+    return with_fake(fake, lambda: interpreter.main(["interpreter.py", "--once"]))
+
+
+def remember(fake: dict) -> tuple[int, str]:
+    return with_fake(fake, lambda: remembering.main(["remembering.py", "--once"]))
+
+
+def dream_versions() -> list[dict]:
+    out = []
+    for path in remembering.version_files():
+        with open(path, encoding="utf-8") as f:
+            out.append(json.load(f))
+    out.sort(key=lambda d: d.get("ts") or 0)
+    return out
 
 
 def readings_on_disk() -> list[dict]:
@@ -927,6 +996,166 @@ class Interpreter(unittest.TestCase):
         self.assertTrue(any(s["mark"] for s in segs))
         self.assertNotIn("<mark>", "".join(s["t"] for s in segs))
         self.assertEqual("".join(s["t"] for s in segs), "one two three")
+
+
+# ---- the sleeper remembering ----------------------------------------------------------------
+
+class Remembering(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_claude(mode)
+        self.fakes.append(f)
+        return f
+
+    def scene(self, hhmm: str, text: str, flag=None) -> str:
+        name = f"stream/2026-09-19/{hhmm}"
+        make_page(name, f"seed for {hhmm}\n", text, flag=flag)
+        return name
+
+    def test_the_first_scene_has_nothing_remembered_yet(self):
+        room = self.scene("1000", "a door in the corridor.")
+        f = self.fake()
+        code, out = remember(f)
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f["log"])
+        self.assertIn(remembering.NOTHING_YET, prompt)
+        self.assertIn("[scene] a door in the corridor.", prompt)
+        self.assertIn("[seed] seed for 1000", prompt)
+        with open(remembering.PERSONA, encoding="utf-8") as fh:
+            self.assertIn(fh.read().rstrip("\n"), prompt)   # bekh's file, verbatim
+
+        v = dream_versions()
+        self.assertEqual(len(v), 1)
+        self.assertEqual((v[0]["turn"], v[0]["of"], v[0]["room"]), (1, remembering.TURNS, room))
+        self.assertEqual(v[0]["night" if False else "dream"], v[0]["dream"])
+        self.assertTrue(v[0]["text"].startswith("I was in it again"))
+        row = [r for r in ledger_rows() if r.get("kind") == "dream"][-1]
+        self.assertEqual((row["turn"], row["room"]), (1, room))
+        self.assertEqual(row["usage"]["cache_read_input_tokens"], 6642)
+
+    def test_a_later_scene_carries_only_the_latest_version(self):
+        self.scene("1000", "a door in the corridor.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        first = dream_versions()[0]["text"]
+
+        # a note from the OTHER voice exists on the shelf and must not reach this one
+        self.assertEqual(interpret(self.fake())[0], 0)
+
+        self.scene("1005", "the door was a lift.")
+        f = self.fake()
+        self.assertEqual(remember(f)[0], 0)
+        prompt = read_text(f["log"])
+        self.assertIn(first, prompt)                       # what he remembers, verbatim
+        self.assertIn("[scene] the door was a lift.", prompt)
+        # exactly one scene is handed over: his account may quote the older one, the prompt
+        # never hands it to him again
+        self.assertEqual(prompt.count("[scene] "), 1)
+        self.assertEqual(prompt.count("[seed] "), 1)
+        self.assertNotIn("seed for 1000", prompt)
+        self.assertNotIn("the switch keeps answering", prompt)  # the reader's note, never
+        self.assertNotIn("<mark>", prompt)
+        v = dream_versions()
+        self.assertEqual([x["turn"] for x in v], [1, 2])
+        self.assertEqual(v[1]["dream"], v[0]["dream"])     # the same dream, rewritten
+        self.assertNotEqual(v[1]["text"], v[0]["text"])
+
+    def test_a_flagged_scene_is_never_told(self):
+        self.scene("1000", "a footer.", "copyright")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual(dream_versions(), [])
+        self.scene("1005", "a real one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual([v["room"] for v in dream_versions()], ["stream/2026-09-19/1005"])
+
+    def test_the_scene_cap_ends_a_dream_and_the_next_starts_fresh(self):
+        was = remembering.TURNS
+        remembering.TURNS = 2
+        self.addCleanup(setattr, remembering, "TURNS", was)
+        for i, hhmm in enumerate(("1000", "1005", "1010")):
+            self.scene(hhmm, f"scene {i}.")
+            self.assertEqual(remember(self.fake())[0], 0)
+        v = dream_versions()
+        self.assertEqual([x["turn"] for x in v], [1, 2, 1])
+        self.assertEqual(v[0]["dream"], v[1]["dream"])
+        self.assertNotEqual(v[2]["dream"], v[1]["dream"])
+        # the third starts from nothing, as a new dream must
+        self.assertTrue(dream_versions()[2]["text"].startswith("I was in it again;"))
+
+    def test_a_long_silence_starts_a_new_dream(self):
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        first = dream_versions()[0]
+        # `current` decides it off the versions and the clock, with no state file in between
+        self.assertIsNotNone(remembering.current([first], first["ts"] + 10))
+        self.assertIsNone(remembering.current([first], first["ts"] + remembering.GAP + 1))
+
+    def test_a_garbage_answer_is_a_ledger_row_and_exit_zero(self):
+        room = self.scene("1000", "one.")
+        code, out = remember(self.fake("garbage"))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(dream_versions(), [])
+        row = [r for r in ledger_rows() if r.get("kind") == "dream"][-1]
+        self.assertIn("no <dream>", row["error"])
+        self.assertEqual(row["room"], room)
+
+    def test_nothing_new_asks_nobody(self):
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        f = self.fake()
+        self.assertEqual(remember(f)[0], 0)
+        self.assertFalse(os.path.exists(f["log"]))
+
+    # ---- what the api does with it ---------------------------------------------------------
+    def test_the_api_carries_the_dream_now_and_a_finished_one_where_it_ended(self):
+        was = remembering.TURNS
+        remembering.TURNS = 1                    # every scene ends its dream: two finished ones
+        self.addCleanup(setattr, remembering, "TURNS", was)
+        a = self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        remembering.TURNS = 24
+        b = self.scene("1005", "two.")
+        self.assertEqual(remember(self.fake())[0], 0)
+
+        d = call("/api/stream?n=5")[1]
+        self.assertEqual(d["dream"]["turn"], 1)
+        self.assertEqual(d["dream"]["of"], 24)
+        self.assertIn("two.", d["dream"]["text"])
+        by = {p["room"]: p for p in d["pages"]}
+        self.assertEqual(by[a]["dream_end"]["turns"], 1)   # the one-scene dream, where it ended
+        self.assertIn("one.", by[a]["dream_end"]["text"])
+        self.assertIsNone(by[b]["dream_end"])              # the running one is not an ending
+
+    def test_usage_reaches_both_kinds_of_row(self):
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual(interpret(self.fake())[0], 0)
+        rows = {r["kind"]: r for r in ledger_rows() if r.get("kind") in ("dream", "reading")}
+        for kind in ("dream", "reading"):
+            u = rows[kind]["usage"]
+            self.assertEqual(u["input_tokens"], 12)
+            self.assertEqual(u["cache_read_input_tokens"], 6642)
+            self.assertEqual(u["output_tokens"], 301)
+            self.assertAlmostEqual(u["cost_usd"], 0.002178, places=6)
+
+    def test_the_counter_reads_the_cli_json_in_either_shape(self):
+        one = json.dumps({"type": "result", "result": "hi", "usage": {"input_tokens": 3},
+                          "total_cost_usd": 1.5})
+        many = json.dumps([{"type": "system"}, json.loads(one)])
+        for raw in (one, many):
+            d = opus.result_of(raw)
+            self.assertEqual(d["result"], "hi")
+            u = opus.usage_of(d)
+            self.assertEqual(u["input_tokens"], 3)
+            self.assertEqual(u["output_tokens"], 0)        # missing is 0, never absent
+            self.assertEqual(u["cost_usd"], 1.5)
+        self.assertEqual(opus.add({"input_tokens": 1}, {"input_tokens": 2})["input_tokens"], 3)
 
 
 if __name__ == "__main__":

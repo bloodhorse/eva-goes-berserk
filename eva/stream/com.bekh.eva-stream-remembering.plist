@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.bekh.eva-stream-remembering</string>
+    <!-- The third voice: the sleeper remembering the night. One run rewrites the account so
+         the newest dream belongs to it, then exits.
+
+         **No interval, on purpose** (bekh, 2026-09-19): it is started when a dream is
+         finished and at no other time — stream.py kickstarts this job after a page lands
+         (STREAM_KICK_INTERPRETER=1 in com.bekh.eva-stream.plist). Two independent 300s timers
+         used to land a note a whole tick after its dream.
+
+         Putting a StartInterval back breaks nothing; it only wakes this job to find nothing
+         new and exit. A lost kick costs one dream its place in the account, which the dry-run
+         law calls an acceptable loss — the next rewrite simply carries on from the version
+         before, with that dream never told.
+
+         By hand:
+             launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering
+             uv run --python 3.12 eva/stream/remembering.py --once
+
+         Needs `claude` logged in on this machine; it does NOT need llama or the loom. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/uv</string>
+        <string>run</string>
+        <string>--python</string>
+        <string>3.12</string>
+        <string>/Users/bekh/tower/forge/eva-goes-berserk/eva/stream/remembering.py</string>
+        <string>--once</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/bekh/tower/forge/eva-goes-berserk</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- ~/.local/bin is where `claude` lives and launchd's default PATH has not heard of
+             it; without this every run is a ledger row saying "no `claude` on PATH".
+             /opt/homebrew/bin is uv. Berserk's agent carries the same two for the same reason. -->
+        <key>PATH</key>
+        <string>/Users/bekh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <!-- claude reads the login keychain and ~/.claude through HOME; a launchd job without
+             one authenticates as nobody and exits non-zero. -->
+        <key>HOME</key>
+        <string>/Users/bekh</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/tmp/eva-stream-interpreter.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/eva-stream-interpreter.log</string>
+</dict>
+</plist>

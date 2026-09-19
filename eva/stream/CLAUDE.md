@@ -12,9 +12,12 @@ that ever touches a page is bekh's mark on it afterwards, which acts on the **ne
 seed and never on generation. Read the root `CLAUDE.md` for what we are hunting and `BRIEF.md`
 for why picking is not where the hunt is.
 
-`stream.py` writes, `interpreter.py` reads what was written and marks it up, `monitor.py`
-watches both, two plists are the clock, and the page is `../front/stream.html`, served by the
-loom at `/stream`.
+**Three voices on one page** (2026-09-19): the sleeper dreaming (`stream.py`, nemo), the
+sleeper remembering (`remembering.py`, opus rewriting the account of the dream so far), and the
+reader at the bedside (`interpreter.py`, opus noting and underlining). They do not read each
+other. `opus.py` is the one way the two opus voices talk to the cli and the one place their
+cost is counted; `monitor.py` watches; `../front/stream.html` is the page, served by the loom at
+`/stream`. Only the writer has a clock — it taps the other two when a passage lands.
 
 ## The calls, and what breaks if each one goes
 
@@ -112,19 +115,17 @@ seriously, is keen on reflections and symbols, is lucid and calm about the proce
 the game*, who writes a short note on a dream and **underlines**, inside it, what touched him.
 **A note for every generation** (2026-09-19).
 
-`interpreter.py` is that reader: Claude Opus through the cli, headless, one call per run, the
-same invocation `berserk.py` uses (`claude -p --model opus`, prompt on **stdin**, no tools,
-`cwd` in a temp dir, `CLAUDECODE` out of the env) plus `--setting-sources project`, which is
-what keeps bekh's global `~/.claude/CLAUDE.md` out of the head of somebody asked to read a
-dream. One-shot like the worker.
+`interpreter.py` is that reader: Claude Opus through the cli, headless, one call per run made
+through `opus.py`. One-shot like the worker.
 
-- **The writer taps the reader when a dream lands.** The interpreter's agent has **no interval
-  at all**: `stream.py` ends a successful page with `launchctl kickstart` on it
-  (`STREAM_KICK_INTERPRETER=1`, set in the worker's plist only). bekh, 2026-09-19 — it should
-  start when the dream is finished; two independent 300s timers put a note a whole tick behind
-  its dream. No `-k` and no lockfile: launchd will not start a second instance of a job that is
-  already running, so a kick during a reading is dropped, while `-k` would kill a note being
-  written mid-cli-call. A lost kick costs one dream its note — an acceptable loss by the
+- **The writer taps the other voices when a dream lands.** Neither has an interval at all:
+  `stream.py` ends a successful page with `launchctl kickstart` on both
+  (`STREAM_KICK_INTERPRETER=1`, set in the worker's plist only), each tapped on its own so a
+  reader that cannot start is no reason for the account to go untold. bekh, 2026-09-19 — they
+  should start when the dream is finished; two independent 300s timers put a note a whole tick
+  behind its dream. No `-k` and no lockfile: launchd will not start a second instance of a job
+  that is already running, so a kick during a call is dropped, while `-k` would kill a note
+  being written mid-cli-call. A lost kick costs one dream its note — an acceptable loss by the
   dry-run law, and the next kick reads the newest dream anyway.
 - **The persona is `interpreter.txt`, bekh's file.** The code reads it and never writes it.
   Everything appended after it — the output shape, the memory, the material — is plumbing he
@@ -161,7 +162,7 @@ dream. One-shot like the worker.
 
 Storage, all under the gitignored `shelf/stream/`:
 `readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
-model, seconds}`, and one `kind: "reading"` row per run on the shared `ledger.jsonl` (the
+model, seconds, usage}`, and one `kind: "reading"` row per run on the shared `ledger.jsonl` (the
 worker's rows are `kind: "page"`; rows written before either existed have no kind, so everything
 reading that file treats a missing kind as a page). Failures — no cli, a timeout, an
 unparseable answer — are a ledger row and exit 0, the worker's law. The monitor judges the
@@ -179,6 +180,72 @@ launchctl bootout gui/$(id -u)/com.bekh.eva-stream-interpreter
 It needs `claude` logged in on this machine, and nothing else — not llama, not the loom. Log:
 `/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (1), `STREAM_READ_MEMORY` (4),
 `STREAM_READ_TIMEOUT`, `STREAM_PERSONA`.
+
+## The sleeper remembering — the third voice
+
+bekh's idea: a second opus that writes a **through-line** through the passages. After the first
+one a couple of sentences; with each new one he **rewrites** the account so the new passage
+belongs to it — *three sentences, then three different ones, maybe one more* — and after a
+couple of hours he starts again. He is not an outside narrator but **the sleeper remembering**,
+first person, past tense; and what he is handed are not separate dreams but **scenes of one
+dream he is dreaming**, so that he has to find connective tissue instead of listing
+(2026-09-19). `remembering.py`, persona in `remembering.txt` — bekh's file, never rewritten by
+the code.
+
+- **Rewriting, not appending.** Each call hands over one version and one new scene and gets a
+  whole new version back, so the account stays index-card sized and older scenes fade as newer
+  ones arrive. An appender would grow a list, which is the opposite of remembering. **Every
+  version is kept**: the sequence of rewrites is itself the object — what survived four
+  rewrites is what the dream was about.
+- **His only memory is his own current text.** Persona, shape, the latest version (or a line
+  saying nothing is remembered yet and this is the first scene), one new scene labelled
+  `[seed]` / `[scene]`. He never sees the reader's notes or underlines — with them in front of
+  him the account would start answering the reader instead of remembering the dream. The two
+  voices do not share a vocabulary and do not have to: the reader's own file calls each passage
+  a dream, and it is left alone.
+- **Which scene**: the newest unflagged passage above **his own** watermark, never a backlog.
+  His watermark is kept apart from the reader's, so neither voice waits for the other.
+- **A dream ends** after `STREAM_DREAM_TURNS` scenes (24, about two hours) or when the silence
+  since its last version passes `STREAM_DREAM_GAP` (1800s — the mac slept, so he woke). Both
+  are read off the versions themselves and there is no state file: a second place to keep
+  "which dream are we in" is a second place for it to be wrong. The last version of a finished
+  dream is the finished piece. A dream's id carries two random bytes beside the clock, because
+  two dreams under one name would silently be one dream on the page and in every count.
+- **On the page**: the current version sits at the very top of the feed with a small `7 / 24`,
+  in a panel that is neither the dream text nor the reader's margin note. It is rewritten whole
+  every few minutes, so the poll replaces it in place **only while he is at the top** and
+  otherwise holds it until he scrolls back — a block quietly rewriting itself off-screen is one
+  thing, a paragraph changing under a reader's eyes is another. A finished dream appears in the
+  feed **where it ended**, above its last scene, at the full width of both columns.
+- `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), turn, of, room, text, model,
+  seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and exit 0, the worker's law.
+
+```bash
+uv run --python 3.12 eva/stream/remembering.py --once
+cp eva/stream/com.bekh.eva-stream-remembering.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-remembering.plist
+launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the worker does
+```
+
+Env: `STREAM_DREAM_TURNS` (24), `STREAM_DREAM_GAP` (1800), `STREAM_DREAM_TIMEOUT`,
+`STREAM_DREAM_PERSONA`. Log: `/tmp/eva-stream-remembering.log`.
+
+## Counting what opus costs
+
+`opus.py` is the one call both opus voices make: `claude -p --model opus` in
+`--output-format json`, prompt on **stdin**, `--tools ""` and `--strict-mcp-config` (a reader
+with tools goes and reads the repo instead of the dream), `--setting-sources project` (without
+it bekh's global `~/.claude/CLAUDE.md` is loaded into the head of somebody asked to read a
+dream), `cwd` in a temp dir, `CLAUDECODE` stripped so a run started from inside a claude session
+starts at all. It returns `(text, usage)` and every `reading` and `dream` ledger row carries
+that block: `input_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`,
+`output_tokens`, `cost_usd`.
+
+**Our prompt is not the cost.** Measured on a real run: `input_tokens` 2, `cache_read` 2178,
+`cache_creation` 1080–1736, `output` ~300, about **two cents a call** — the cli sends its own
+system prompt ahead of ours every time. That is the number that decides whether the design
+stays, which is why it is counted. It is counted and **not shown**: no dashboard block, no cli
+(bekh, 2026-09-19 — he wants something that counts, and reads the ledger when he asks).
 
 ## Plates — a testing ground, nothing scheduled
 
@@ -286,8 +353,13 @@ being the newest EVERY unflagged, the persona going out verbatim, the last four 
 prompt, a garbage answer and a dead cli as ledger rows with exit 0, segments coming from the
 `<mark>` tags alone, an altered copy stored and served exactly as typed, `<mark>` being the only
 tag, an old reading's `gone` segments still reaching the page, the api hanging the note on the
-head of its block, and the kick — no subprocess with the flag off, the exact argv with it on,
-and a kick that throws costing the page nothing.
+head of its block, and the kick — no subprocess with the flag off, both jobs' argv with it on, one
+voice failing to start not stopping the other, and a kick that throws costing the page nothing.
+For the sleeper: the first scene having nothing remembered yet, a later call carrying only the
+latest version and one scene and never a note of the reader's, a flagged scene never told, the
+scene cap ending a dream and the next starting fresh, a long silence ending one, a garbage
+answer as a row with exit 0, the api carrying the running dream and a finished one where it
+ended, usage on both kinds of row, and the cli's json read in either shape.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

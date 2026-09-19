@@ -19,9 +19,10 @@ came back empty — all of them write a row and leave quietly, because launchd's
 treats a non-zero exit as a reason to back off, and a stream that punishes itself for the
 five minutes the GPU was busy is a stream that stops.
 
-**The reader is tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that landed ends by
-`launchctl kickstart`ing `com.bekh.eva-stream-interpreter`, which has no interval of its own.
-Best-effort: a failure is one log line and nothing else.
+**The other two voices are tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that
+landed ends by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the
+bedside) and `com.bekh.eva-stream-remembering` (the sleeper remembering the night), neither of
+which has an interval of its own. Best-effort: a failure is one log line and nothing else.
 
 Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
 (shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, plus
@@ -77,11 +78,12 @@ TAIL_CHARS = 600
 # llama a document it has to truncate the front off in silence.
 SEED_MAX_CHARS = 12000
 
-# The reader (interpreter.py) has no clock of its own: it is a launchd job with no interval,
-# and this is what starts it. bekh, 2026-09-19 — it should start when the dream is finished,
-# not on a timer of its own, which used to land a note a whole tick late.
+# The two other voices have no clock of their own: both are launchd jobs with no interval, and
+# this is what starts them. bekh, 2026-09-19 — they should start when the dream is finished,
+# not on timers of their own, which used to land a note a whole tick late.
 KICK = os.environ.get("STREAM_KICK_INTERPRETER") == "1"
-KICK_JOB = "com.bekh.eva-stream-interpreter"
+KICK_JOBS = ("com.bekh.eva-stream-interpreter",      # the reader at the bedside
+             "com.bekh.eva-stream-remembering")      # the sleeper remembering the night
 KICK_TIMEOUT = 15
 
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
@@ -460,7 +462,10 @@ def write_page(rng: random.Random) -> int:
 
 
 def kick() -> None:
-    """Tap the reader, best-effort. Never anything but a log line if it fails.
+    """Tap the other two voices, best-effort. Never anything but a log line if one fails.
+
+    Each job is tapped on its own and a failure on one does not touch the other: they are two
+    unrelated voices, and a reader that cannot start is no reason for the night to go untold.
 
     **No `-k`.** launchd does not start a second instance of a job that is already running, so
     a kick that arrives while a reading is in flight is dropped and the two can never overlap —
@@ -473,13 +478,15 @@ def kick() -> None:
     """
     if not KICK:
         return
-    cmd = ["launchctl", "kickstart", f"gui/{os.getuid()}/{KICK_JOB}"]
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=KICK_TIMEOUT)
-        if r.returncode != 0:
-            log(f"kick · launchctl said {r.returncode}: {(r.stderr or '').strip()[:120]}")
-    except (OSError, subprocess.SubprocessError) as exc:
-        log(f"kick · {exc}")
+    for job in KICK_JOBS:
+        cmd = ["launchctl", "kickstart", f"gui/{os.getuid()}/{job}"]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=KICK_TIMEOUT)
+            if r.returncode != 0:
+                log(f"kick · {job} · launchctl said {r.returncode}: "
+                    f"{(r.stderr or '').strip()[:120]}")
+        except (OSError, subprocess.SubprocessError) as exc:
+            log(f"kick · {job} · {exc}")
 
 
 def main(argv: list[str]) -> int:

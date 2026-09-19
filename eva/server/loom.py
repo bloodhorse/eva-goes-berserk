@@ -42,7 +42,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                backwards, ?n=<k> how many, ?all=1 includes the ones the
                                filter flagged. Plus `status`, off the worker's heartbeat, and
                                where the interpreter has been: each page's `marked` copy and
-                               its `segments`, and the `reading` on the page that heads a block
+                               its `segments`, the `reading` on the page that heads a block,
+                               the `dream` the sleeper is remembering now, and `dream_end` on
+                               the passage a finished dream ended on
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -164,6 +166,11 @@ STREAM_PAGE = os.environ.get("LOOM_STREAM_PAGE", os.path.join(ROOT, "eva", "fron
 STREAM_DIR = os.environ.get("STREAM_DIR", os.path.join(SHELF, "stream"))
 STREAM_FOLDER = "stream"                  # where its rooms are filed under SITTINGS
 STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
+# The writer's own two dials, restated so the server can tell a dream that is still running
+# from one that ended without keeping a second opinion about it. Change one and change the
+# other (eva/stream/remembering.py).
+STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "24"))
+STREAM_DREAM_GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
 STREAM_N = 10                             # pages per call when nobody says
 STREAM_N_MAX = 50
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
@@ -1588,7 +1595,71 @@ def stream_readings() -> tuple[dict, dict]:
     return by_room, heads
 
 
-def stream_page(name: str, readings: tuple[dict, dict] | None = None) -> dict | None:
+# The third voice (eva/stream/remembering.py): the sleeper remembering. One small json per
+# rewrite, a dream's worth of them under a day — what he is handed are scenes of ONE dream, not
+# separate ones. Read here and never written, like the readings. The page wants two things off
+# them: the CURRENT dream's latest version, which sits at the top of the feed, and, on the
+# passage a finished dream ended on, that dream's last words.
+_DREAMS: dict[str, tuple[int, int, dict]] = {}
+
+
+def dream_files() -> list[str]:
+    out = []
+    for dirpath, dirnames, filenames in os.walk(os.path.join(STREAM_DIR, "dreams")):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for fname in filenames:
+            if fname.endswith(".json"):
+                out.append(os.path.join(dirpath, fname))
+    return out
+
+
+def stream_dreams() -> tuple[dict | None, dict]:
+    """(the dream now, {room: the dream that ended on it}).
+
+    A dream is over when its last version used up its scenes, or when the silence since it is
+    longer than the gap the writer uses — read here off the versions themselves, so the server
+    keeps no second opinion about which dream is running. The finished ones are hung off the
+    room of their last version, which is where the page draws them: at the place they ended.
+    """
+    rows, seen = [], set()
+    for path in dream_files():
+        try:
+            st = os.stat(path)
+            hit = _DREAMS.get(path)
+            if hit and hit[0] == st.st_mtime_ns and hit[1] == st.st_size:
+                d = hit[2]
+            else:
+                with open(path, encoding="utf-8") as f:
+                    d = json.load(f)
+                if not isinstance(d, dict) or not isinstance(d.get("text"), str):
+                    continue
+                _DREAMS[path] = (st.st_mtime_ns, st.st_size, d)
+        except (OSError, ValueError):
+            continue
+        seen.add(path)
+        rows.append(d)
+    for gone in set(_DREAMS) - seen:
+        _DREAMS.pop(gone, None)
+    rows.sort(key=lambda d: d.get("ts") or 0)
+
+    last_of: dict[str, dict] = {}
+    for d in rows:
+        if isinstance(d.get("dream"), str):
+            last_of[d["dream"]] = d
+    now, ended = None, {}
+    for dream, d in last_of.items():
+        over = ((d.get("turn") or 0) >= (d.get("of") or STREAM_DREAM_TURNS)
+                or (time.time() - (d.get("ts") or 0)) > STREAM_DREAM_GAP)
+        if not over and (now is None or (d.get("ts") or 0) > (now.get("ts") or 0)):
+            now = d
+        if over and isinstance(d.get("room"), str):
+            ended[d["room"]] = {"text": d["text"], "dream": dream,
+                                "turns": d.get("turn") or 0}
+    return now, ended
+
+
+def stream_page(name: str, readings: tuple[dict, dict] | None = None,
+                ended: dict | None = None) -> dict | None:
     """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
     the interpreter has been past — its copy of the dream and the reading it heads.
 
@@ -1626,7 +1697,10 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None) -> dict | 
             # dream. The page draws the segments; the string is the record.
             "marked": read.get("marked"),
             "segments": read.get("segments"),
-            "reading": heads.get(name)}
+            "reading": heads.get(name),
+            # A dream that ENDED on this passage: the page draws it as an inset in the place
+            # it ended, which is the only place it means anything.
+            "dream_end": (ended or {}).get(name)}
 
 
 def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> dict:
@@ -1642,16 +1716,24 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     # The readings are indexed ONCE for the whole batch: ten passages is ten lookups, not ten
     # walks of a folder that grows by a hundred and forty files a day.
     readings = stream_readings()
+    dream_now, ended = stream_dreams()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
             more = True
             break
-        page = stream_page(name, readings)
+        page = stream_page(name, readings, ended)
         if page is None or (page["flag"] and not flagged):
             continue
         pages.append(page)
-    return {"pages": pages, "more": more}
+    # The dream so far rides on the payload and not on a page: it is not about one passage, it
+    # is what the sleeper remembers of all of them, and the reader draws it above the newest.
+    out = {"pages": pages, "more": more, "dream": None}
+    if dream_now:
+        out["dream"] = {"text": dream_now["text"], "ts": dream_now.get("ts") or 0,
+                        "dream": dream_now.get("dream"), "turn": dream_now.get("turn") or 0,
+                        "of": dream_now.get("of") or STREAM_DREAM_TURNS}
+    return out
 
 
 def stream_status() -> dict:
