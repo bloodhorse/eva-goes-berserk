@@ -652,7 +652,9 @@ if mode == "boom":
 if "--- the new scene ---" in prompt:
     if mode == "garbage":
         answer("i don't remember any of it")
-    scene = re.search(r"\[scene\] (.*)\Z", prompt, re.S).group(1).strip()
+    m = re.search(r"\[scene\] (.*)\Z", prompt, re.S) or \
+        re.search(r"--- the new scene ---\n\n(.*)\Z", prompt, re.S)
+    scene = m.group(1).strip()
     held = re.search(r"--- what you remember of the dream so far ---\n\n(.*?)\n\n---",
                      prompt, re.S).group(1).strip()
     first = held.startswith("Nothing yet")
@@ -1026,8 +1028,7 @@ class Remembering(unittest.TestCase):
         self.assertEqual(code, 0, out)
         prompt = read_text(f["log"])
         self.assertIn(remembering.NOTHING_YET, prompt)
-        self.assertIn("[scene] a door in the corridor.", prompt)
-        self.assertIn("[seed] seed for 1000", prompt)
+        self.assertIn("a door in the corridor.", prompt)
         with open(remembering.PERSONA, encoding="utf-8") as fh:
             self.assertIn(fh.read().rstrip("\n"), prompt)   # bekh's file, verbatim
 
@@ -1039,6 +1040,37 @@ class Remembering(unittest.TestCase):
         row = [r for r in ledger_rows() if r.get("kind") == "dream"][-1]
         self.assertEqual((row["turn"], row["room"]), (1, room))
         self.assertEqual(row["usage"]["cache_read_input_tokens"], 6642)
+
+    def test_the_scene_goes_over_alone_with_its_ragged_edges(self):
+        """Seedless by default: the passage as nemo left it, ragged at both ends, and nothing
+        else — those edges are what the account makes its joints out of."""
+        ragged = "stopped just before"
+        self.scene("1000", ragged)
+        f = self.fake()
+        self.assertEqual(remember(f)[0], 0)
+        prompt = read_text(f["log"])
+        self.assertIn("--- the new scene ---\n\n" + ragged + "\n", prompt)
+        self.assertNotIn("[scene]", prompt)
+        self.assertNotIn("[seed]", prompt)
+        self.assertNotIn("seed for 1000", prompt)       # the seed text itself, nowhere
+        self.assertNotIn(remembering.SEEDED_NOTE, prompt)
+        with open(remembering.PERSONA, encoding="utf-8") as fh:
+            self.assertIn(fh.read().rstrip("\n"), prompt)   # bekh's file, verbatim
+
+    def test_the_seeds_switch_puts_the_old_material_back(self):
+        was = remembering.SEEDS
+        remembering.SEEDS = True
+        self.addCleanup(setattr, remembering, "SEEDS", was)
+        self.scene("1000", "a door in the corridor.")
+        f = self.fake()
+        self.assertEqual(remember(f)[0], 0)
+        prompt = read_text(f["log"])
+        self.assertIn("[seed] seed for 1000", prompt)
+        self.assertIn("[scene] a door in the corridor.", prompt)
+        # the line explaining the labels is the CODE's, never bekh's file
+        self.assertIn(remembering.SEEDED_NOTE, prompt)
+        with open(remembering.PERSONA, encoding="utf-8") as fh:
+            self.assertNotIn("[seed]", fh.read())
 
     def test_a_later_scene_carries_only_the_latest_version(self):
         self.scene("1000", "a door in the corridor.")
@@ -1053,11 +1085,11 @@ class Remembering(unittest.TestCase):
         self.assertEqual(remember(f)[0], 0)
         prompt = read_text(f["log"])
         self.assertIn(first, prompt)                       # what he remembers, verbatim
-        self.assertIn("[scene] the door was a lift.", prompt)
+        self.assertIn("--- the new scene ---\n\nthe door was a lift.", prompt)
         # exactly one scene is handed over: his account may quote the older one, the prompt
         # never hands it to him again
-        self.assertEqual(prompt.count("[scene] "), 1)
-        self.assertEqual(prompt.count("[seed] "), 1)
+        self.assertEqual(prompt.count("--- the new scene ---"), 1)
+        self.assertNotIn("the door was a lift.", first)   # the new scene is new
         self.assertNotIn("seed for 1000", prompt)
         self.assertNotIn("the switch keeps answering", prompt)  # the reader's note, never
         self.assertNotIn("<mark>", prompt)

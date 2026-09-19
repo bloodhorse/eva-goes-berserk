@@ -17,6 +17,10 @@ tissue instead of listing. With him the page has three voices: the sleeper dream
 words, and **never** the reader's notes or underlines, or the account would start answering
 the reader instead of remembering the dream.
 
+**He is handed the scene alone** (2026-09-19): no seed, and the passage's ragged first and last
+words left as they are, because consecutive ragged edges are what he makes the dream's joints
+out of. `STREAM_DREAM_SEEDS=1` puts the seed back.
+
 **Rewriting, not appending, is the whole thing.** Each call hands over one version and one new
 scene and gets a whole new version back, so the account stays index-card sized and the older
 scenes fade as newer ones arrive — an appender would just grow a list. Every version is kept on
@@ -28,7 +32,8 @@ passage a dream, and its file is left alone.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_DREAM_TURNS (how many scenes a dream runs to,
 default 4 — about twenty minutes), STREAM_DREAM_GAP (seconds of silence that end a dream,
-default 1800), STREAM_DREAM_TIMEOUT, STREAM_DREAM_PERSONA, plus loom's LOOM_SITTINGS.
+default 1800), STREAM_DREAM_SEEDS (1 = hand him the seed as well, off by default),
+STREAM_DREAM_TIMEOUT, STREAM_DREAM_PERSONA, plus loom's LOOM_SITTINGS.
 """
 
 from __future__ import annotations
@@ -62,6 +67,9 @@ TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
 # would make an account of two evenings pretending to be one.
 GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
 TIMEOUT = int(os.environ.get("STREAM_DREAM_TIMEOUT", "300"))
+# Off by default: he is handed the scene and nothing else. See prompt_for for why the ragged
+# edges are the point. `=1` puts the seed and the labels back, for going back in one env var.
+SEEDS = os.environ.get("STREAM_DREAM_SEEDS") == "1"
 
 DREAM_RE = re.compile(r"<dream>(.*?)</dream>", re.S | re.I)
 
@@ -162,20 +170,39 @@ def next_scene(past: list[dict]) -> dict | None:
 NOTHING_YET = "Nothing yet — this is the first scene of the dream."
 
 
+SEEDED_NOTE = ("A scene is given as the seed it grew from, marked [seed] — text that was "
+               "handed to you, not yours — and then the scene itself, marked [scene].")
+
+
 def prompt_for(page: dict, held: dict | None, persona: str) -> str:
     """Persona (bekh's file, verbatim), the shape, what he remembers, the new scene.
 
-    What is NOT here is the whole design: no reader's note, no underlines, no other scene, no
-    earlier version than the latest. His only memory is his own current text.
+    **Seedless by default** (bekh, 2026-09-19, after reading four scenes each way): the scene
+    goes over as nemo wrote it and nothing else — no seed, no `[scene]` label, and **its ragged
+    first and last words left exactly as they are**. A passage stops at 170 tokens mid-sentence
+    and starts mid-one too, and those ragged edges turn into the dream's JOINTS: *the car
+    stopped just before* followed by *killed.* came back as *stopped just before something was
+    killed*. Trim or tidy them and that is gone — the account goes back to a list of scenes with
+    nothing between them, which is exactly what this voice exists not to be.
+
+    `STREAM_DREAM_SEEDS=1` puts the old material back, labels and all, with one line of
+    plumbing explaining the labels — which lives here and not in bekh's persona file, because
+    with no seeds in the material there is nothing for his file to explain.
+
+    What is NOT here either way: no reader's note, no underlines, no other scene, no earlier
+    version than the latest. His only memory is his own current text.
     """
     remembered = (held or {}).get("text") or NOTHING_YET
-    return "\n\n".join([
-        persona.rstrip("\n"),
-        SHAPE.strip(),
-        "--- what you remember of the dream so far ---\n\n" + remembered.strip(),
-        "--- the new scene ---\n\n[seed] " + (page.get("seed") or "").strip()
-        + "\n\n[scene] " + (page.get("text") or ""),
-    ]) + "\n"
+    parts = [persona.rstrip("\n"), SHAPE.strip()]
+    if SEEDS:
+        parts.append(SEEDED_NOTE)
+    parts.append("--- what you remember of the dream so far ---\n\n" + remembered.strip())
+    if SEEDS:
+        parts.append("--- the new scene ---\n\n[seed] " + (page.get("seed") or "").strip()
+                     + "\n\n[scene] " + (page.get("text") or ""))
+    else:
+        parts.append("--- the new scene ---\n\n" + (page.get("text") or ""))
+    return "\n\n".join(parts) + "\n"
 
 
 def parse(answer: str) -> str:

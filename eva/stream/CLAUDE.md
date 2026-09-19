@@ -198,11 +198,25 @@ the code.
   version is kept**: the sequence of rewrites is itself the object — what survived four
   rewrites is what the dream was about.
 - **His only memory is his own current text.** Persona, shape, the latest version (or a line
-  saying nothing is remembered yet and this is the first scene), one new scene labelled
-  `[seed]` / `[scene]`. He never sees the reader's notes or underlines — with them in front of
-  him the account would start answering the reader instead of remembering the dream. The two
-  voices do not share a vocabulary and do not have to: the reader's own file calls each passage
-  a dream, and it is left alone.
+  saying nothing is remembered yet and this is the first scene), one new scene. He never sees
+  the reader's notes or underlines — with them in front of him the account would start
+  answering the reader instead of remembering the dream. The two voices do not share a
+  vocabulary and do not have to: the reader's own file calls each passage a dream, and it is
+  left alone.
+- **Seedless, and the ragged edges left alone** (bekh, 2026-09-19, having read four scenes each
+  way: he prefers it, and it is not nonsense). The scene goes over as nemo wrote it — no seed,
+  no `[scene]` label, and its ragged first and last words untouched. Those edges become the
+  dream's **joints**: *the car stopped just before* followed by *killed.* came back as *stopped
+  just before something was killed*. Tidy them and the account goes back to a list of scenes
+  with nothing between them, which is what this voice exists not to be.
+  `STREAM_DREAM_SEEDS=1` puts the old material back, labels and all, with one line of plumbing
+  explaining them — in the code, because with no seeds in the material bekh's file has nothing
+  to explain.
+- **A breath, not an index card.** His file asks for *a few sentences, fifty words or so*, and
+  for the older scenes to shrink to a clause or drop away. The index-card wording it replaced
+  did not hold: four rewrites went 150 → 200 words. Measured after the change, on four real
+  scenes: **73, 56, 59, 62** — the first is long and the rest sit near sixty, so fifty is the
+  aim and sixty is the truth.
 - **Which scene**: the newest unflagged passage above **his own** watermark, never a backlog.
   His watermark is kept apart from the reader's, so neither voice waits for the other.
 - **A dream ends** after `STREAM_DREAM_TURNS` scenes (**4**, about twenty minutes — it shipped at 24 and bekh cut it the same evening, 2026-09-19: needling 24 scenes together is torture for a man, and a real dream has around four) or when the silence
