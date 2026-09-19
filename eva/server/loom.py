@@ -40,7 +40,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /stream               -> eva/front/stream.html, the reader for the dream stream
   GET  /api/stream           -> the stream's pages, newest first: ?before=<room> pages
                                backwards, ?n=<k> how many, ?all=1 includes the ones the
-                               filter flagged. Plus `status`, off the worker's heartbeat
+                               filter flagged. Plus `status`, off the worker's heartbeat, and
+                               where the interpreter has been: each page's `marked` copy and
+                               its `segments`, and the `reading` on the page that heads a block
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -1530,8 +1532,65 @@ def stream_room_names() -> list[str]:
         return []
 
 
-def stream_page(name: str) -> dict | None:
-    """One page as the reader reads it: the seed, the page, the two marks, the flag.
+# The interpreter's readings (eva/stream/interpreter.py): one small json per reading, a block
+# of rooms with a few sentences about them and, per room, opus's own re-typed copy of the dream
+# with its underlines — already diffed against the raw text into render-ready segments. Read
+# here and never written, like berserk's ledger. Parsed files are cached on mtime because the
+# whole tree is walked per request; when a day of these is thousands of files, index it by day
+# instead of walking it all.
+_READINGS: dict[str, tuple[int, int, dict]] = {}
+
+
+def reading_files() -> list[str]:
+    out = []
+    for dirpath, dirnames, filenames in os.walk(os.path.join(STREAM_DIR, "readings")):
+        dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+        for fname in filenames:
+            if fname.endswith(".json"):
+                out.append(os.path.join(dirpath, fname))
+    return out
+
+
+def stream_readings() -> tuple[dict, dict]:
+    """(what each room's copy looks like, which room heads which reading).
+
+    `by_room[room]` is `{"marked", "segments"}` — opus's verbatim copy and the diff of it
+    against the dream. `heads[room]` is the reading itself, hung off `rooms[0]`, the newest
+    passage of its block, which is where the page draws it.
+    """
+    by_room, heads, seen = {}, {}, set()
+    for path in reading_files():
+        try:
+            st = os.stat(path)
+            hit = _READINGS.get(path)
+            if hit and hit[0] == st.st_mtime_ns and hit[1] == st.st_size:
+                d = hit[2]
+            else:
+                with open(path, encoding="utf-8") as f:
+                    d = json.load(f)
+                if not isinstance(d, dict):
+                    continue
+                _READINGS[path] = (st.st_mtime_ns, st.st_size, d)
+        except (OSError, ValueError):
+            continue
+        seen.add(path)
+        rooms = d.get("rooms") if isinstance(d.get("rooms"), list) else []
+        marked = d.get("marked") if isinstance(d.get("marked"), dict) else {}
+        segs = d.get("segments") if isinstance(d.get("segments"), dict) else {}
+        for room in rooms:
+            if isinstance(room, str):
+                by_room[room] = {"marked": marked.get(room),
+                                 "segments": segs.get(room)}
+        if rooms and isinstance(rooms[0], str) and isinstance(d.get("reading"), str):
+            heads[rooms[0]] = {"text": d["reading"], "ts": d.get("ts") or 0, "rooms": rooms}
+    for gone in set(_READINGS) - seen:
+        _READINGS.pop(gone, None)
+    return by_room, heads
+
+
+def stream_page(name: str, readings: tuple[dict, dict] | None = None) -> dict | None:
+    """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
+    the interpreter has been past — its copy of the dream and the reading it heads.
 
     None for a room that isn't one of the worker's — a hand-made room filed under `stream/`,
     or a file that stopped being json. The node id goes out because the reader marks through
@@ -1555,12 +1614,19 @@ def stream_page(name: str) -> dict | None:
     node = kids[0]
     meta = node.get("meta") or {}
     params = meta.get("params") if isinstance(meta.get("params"), dict) else {}
+    by_room, heads = readings if readings is not None else ({}, {})
+    read = by_room.get(name) or {}
     return {"room": name, "node": node.get("id"),
             "seed": root.get("text") or "", "text": node.get("text") or "",
             "ts": node.get("ts") or d.get("created") or 0,
             "kept": bool(node.get("kept")), "good": bool(node.get("good")),
             "flag": meta.get("flag") or None,
-            "temperature": params.get("temperature")}
+            "temperature": params.get("temperature"),
+            # The interpreter's copy, verbatim, and the same copy already diffed against the
+            # dream. The page draws the segments; the string is the record.
+            "marked": read.get("marked"),
+            "segments": read.get("segments"),
+            "reading": heads.get(name)}
 
 
 def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> dict:
@@ -1573,12 +1639,15 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     names = stream_room_names()
     if before:
         names = [x for x in names if x < before]
+    # The readings are indexed ONCE for the whole batch: ten passages is ten lookups, not ten
+    # walks of a folder that grows by a hundred and forty files a day.
+    readings = stream_readings()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
             more = True
             break
-        page = stream_page(name)
+        page = stream_page(name, readings)
         if page is None or (page["flag"] and not flagged):
             continue
         pages.append(page)

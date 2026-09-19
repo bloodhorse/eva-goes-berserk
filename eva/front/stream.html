@@ -30,12 +30,16 @@
     --bg:#232323; --ink:#d4e3fe; --ghost:#7d8a9c; --line:#2e3547;
     --panel:#2a2b31; --sunk:#1e1e22;
     --accent:#f5c8fe; --live:#c6f1fe; --hot:#eb6f92;
+    /* The interpreter's underline: the accent at a quarter weight, so a marked phrase reads
+       as lit rather than as a box drawn round it. */
+    --mark:#f5c8fe33;
   }
   @media (prefers-color-scheme: light){
     :root{
       --bg:#faf4ed; --ink:#575279; --ghost:#8f8aa3; --line:#dfdad9;
       --panel:#f2ebe3; --sunk:#fffaf3;
       --accent:#907aa9; --live:#56949f; --hot:#b4637a;
+      --mark:#907aa93d;
     }
   }
   /* As in the loom: every colour below is a var() off those two blocks and nothing else, so
@@ -66,7 +70,13 @@
   #state{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   /* The quiet hint. New passages are held back while he is scrolled down — text must never
      move under a reader's eyes — and this is the only thing that appears. */
-  #fresh{margin-left:auto; color:var(--accent); font-size:13px; padding:4px 0;}
+  #fresh{color:var(--accent); font-size:13px; padding:4px 0;}
+  /* The one switch on the page: the interpreter's copy with its underlines, or the raw dream.
+     Default on, remembered per browser. It doubles as the comparison — one tap and what is on
+     the shelf is back on screen. */
+  #marks{margin-left:auto; font-size:13px; padding:4px 6px; color:var(--ghost);
+    border:1px solid var(--line); border-radius:8px;}
+  #marks.on{color:var(--accent); border-color:var(--mark);}
 
   main{flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;}
   #feed{
@@ -77,6 +87,22 @@
     font-size:17px; line-height:1.65;
   }
   .pass{padding:22px 0 6px;}
+
+  /* The second voice (eva/stream/interpreter.py): a few sentences about a stretch of two
+     passages, hung off the newest of them. Quieter and smaller than the dream, with an accent
+     rule down its side so it is never mistaken for the seed, which is also grey. */
+  .reading{margin:0 0 18px; padding:2px 0 2px 14px; border-left:2px solid var(--mark);
+    color:var(--ghost); font-size:14.5px; line-height:1.55; white-space:pre-wrap;
+    overflow-wrap:anywhere;}
+  .reading .rwhen{display:block; margin-top:8px; font-size:12px; opacity:.75;}
+
+  /* The interpreter's underline, and its slips. Three states that have to be told apart at a
+     glance and in both rooms: a lit background, red underlined text he added, red struck-through
+     text he dropped. Never fixed — a slip is another prophecy — only shown. */
+  .hl{background:var(--mark); border-radius:2px;}
+  .new{color:var(--hot); text-decoration:underline; text-decoration-thickness:1px;
+    text-underline-offset:2px;}
+  .gone{color:var(--hot); text-decoration:line-through; font-size:0.85em; opacity:.7;}
   /* pre-wrap on both: a base model's document carries its own line breaks, `> > >` and stray
      indents, and reflowing them would be editing the evidence. */
   .seed, .body{white-space:pre-wrap; overflow-wrap:anywhere; margin:0;}
@@ -99,6 +125,18 @@
   #notice{position:fixed; left:0; right:0; top:0; z-index:20; text-align:center;
     padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
     background:var(--panel); color:var(--hot); font-size:13px;}
+
+  /* On a desk the reading moves out of the text and stands beside it, top-aligned with the
+     head of its block. Same DOM either way — the passage is a grid and the reading is simply
+     put in the second column — so the phone keeps it as an inset above the passage and nothing
+     is rendered twice. */
+  @media (min-width: 900px){
+    #feed{max-width:56em;}
+    .pass{display:grid; grid-template-columns:minmax(0, 34em) minmax(0, 18em);
+      column-gap:32px; align-items:start;}
+    .pass > *{grid-column:1;}
+    .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
+  }
 </style>
 </head>
 <body>
@@ -106,6 +144,7 @@
   <span id="dot"></span>
   <span id="state">…</span>
   <button id="fresh" hidden>new</button>
+  <button id="marks" class="on">marks</button>
 </header>
 
 <main id="scroll">
@@ -119,8 +158,9 @@
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
-const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), scroll: $('scroll'),
-            feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'), notice: $('notice')};
+const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), marks: $('marks'),
+            scroll: $('scroll'), feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'),
+            notice: $('notice')};
 
 const Q = new URLSearchParams(location.search);
 // Flagged passages, off by default: the flagged pile is for auditing the filter against his
@@ -137,6 +177,12 @@ let more = true;
 let busy = false;
 let pending = [];          // newest-first, held back while he is scrolled down
 let status = null;
+
+// The interpreter's copy or the raw dream. Default ON, remembered per browser — in a
+// try/catch because a private window, blocked site data or a thumbnail capture makes every
+// one of these throw, and a page that cannot remember a toggle still has to render.
+let MARKSON = true;
+try { MARKSON = localStorage.getItem('stream.marks') !== '0'; } catch (e) { /* no memory */ }
 
 function api(q){
   return fetch('/api/stream?' + q + (ALL ? '&all=1' : ''), {cache: 'no-store'})
@@ -157,15 +203,16 @@ function say(msg){
 const SENT_END = /[.!?…]["'”’»)\]]*/g;
 const KEEP_AT_LEAST = 0.6;   // trimming away more than ~40% says there was no sentence to end
 
-function trimRagged(text){
-  if (RAW) return text;
+// Where to cut, not what to cut: the same point serves the raw text and the interpreter's
+// segments, which are trimmed on the concatenation of everything he did not drop.
+function trimAt(text){
+  if (RAW) return text.length;
   let last = null, m;
   SENT_END.lastIndex = 0;
   while ((m = SENT_END.exec(text)) !== null) last = m;
-  if (!last) return text;                       // no sentence end at all: show it whole
+  if (!last) return text.length;                // no sentence end at all: show it whole
   const cut = last.index + last[0].length;
-  if (cut < text.length * KEEP_AT_LEAST) return text;
-  return text.slice(0, cut);
+  return cut < text.length * KEEP_AT_LEAST ? text.length : cut;
 }
 
 // ---- the clock ---------------------------------------------------------------------------
@@ -215,8 +262,22 @@ function build(p){
 
   const body = document.createElement('p');
   body.className = 'body';
-  body.textContent = trimRagged(p.text);
   art.appendChild(body);
+
+  if (p.reading){
+    const r = document.createElement('aside');
+    r.className = 'reading';
+    // textContent, like everything else here: what comes back from the cli is text, and a
+    // reading that could inject markup would be a reading that could rewrite the page.
+    r.appendChild(document.createTextNode(p.reading.text));
+    const rw = document.createElement('span');
+    rw.className = 'rwhen';
+    rw.textContent = when(p.reading.ts);
+    r.appendChild(rw);
+    // First child, so the phone reads it as an inset above the passage; the desktop grid
+    // moves the same node into the second column.
+    art.insertBefore(r, art.firstChild);
+  }
 
   if (p.flag){
     const f = document.createElement('p');
@@ -243,8 +304,49 @@ function build(p){
     good.classList.toggle('on', !!p.good);
     keep.classList.toggle('on', !!p.kept);
   };
+  art.render = () => drawBody(body, p);
   art.repaint();
+  art.render();
   return art;
+}
+
+// The dream, or the interpreter's copy of it. Segment by segment and always through
+// textContent — his copy is text that came back from a cli, and the only markup honoured in it
+// was read by the interpreter when it made these segments. Anything else he typed, `<script>`
+// included, arrives here as characters and leaves as characters.
+function drawBody(body, p){
+  while (body.firstChild) body.removeChild(body.firstChild);
+  const segs = (MARKSON && Array.isArray(p.segments) && p.segments.length) ? p.segments : null;
+  if (!segs){
+    const t = p.text || '';
+    body.appendChild(document.createTextNode(t.slice(0, trimAt(t))));
+    return;
+  }
+  // The ragged end is judged on what is actually read — everything he did not drop — and the
+  // struck-through words ride along wherever they fall inside that.
+  const plain = segs.filter(s => s.kind !== 'gone').map(s => s.t).join('');
+  const cut = trimAt(plain);
+  let at = 0;
+  for (const s of segs){
+    let t = s.t || '';
+    if (s.kind !== 'gone'){
+      if (at >= cut) break;
+      if (at + t.length > cut) t = t.slice(0, cut - at);
+      at += (s.t || '').length;
+    }
+    if (!t) continue;
+    const cls = [];
+    if (s.kind === 'new' || s.kind === 'gone') cls.push(s.kind);
+    if (s.mark) cls.push('hl');              // underlined AND his: both, on one span
+    if (!cls.length){
+      body.appendChild(document.createTextNode(t));
+    } else {
+      const span = document.createElement('span');
+      span.className = cls.join(' ');
+      span.textContent = t;
+      body.appendChild(span);
+    }
+  }
 }
 
 function stroke(which, p){
@@ -373,6 +475,18 @@ function poll(){
 }
 
 el.fresh.addEventListener('click', showPending);
+
+function drawMarksBtn(){ el.marks.classList.toggle('on', MARKSON); }
+
+el.marks.addEventListener('click', () => {
+  MARKSON = !MARKSON;
+  try { localStorage.setItem('stream.marks', MARKSON ? '1' : '0'); } catch (e) { /* no memory */ }
+  drawMarksBtn();
+  // Only the bodies change; the scroll, the marks and the readings stay where they are, so
+  // the toggle really is a comparison and not a reload.
+  for (const art of el.feed.querySelectorAll('.pass')) if (art.render) art.render();
+});
+drawMarksBtn();
 
 fill();
 setInterval(poll, POLL_MS);

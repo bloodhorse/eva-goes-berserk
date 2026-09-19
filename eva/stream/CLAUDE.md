@@ -12,8 +12,9 @@ that ever touches a page is bekh's mark on it afterwards, which acts on the **ne
 seed and never on generation. Read the root `CLAUDE.md` for what we are hunting and `BRIEF.md`
 for why picking is not where the hunt is.
 
-Four files: `stream.py` writes, `monitor.py` watches, `com.bekh.eva-stream.plist` is the clock,
-and the reader is `../front/stream.html` served by the loom at `/stream`.
+`stream.py` writes, `interpreter.py` reads what was written and marks it up, `monitor.py`
+watches both, two plists are the clock, and the page is `../front/stream.html`, served by the
+loom at `/stream`.
 
 ## The calls, and what breaks if each one goes
 
@@ -99,6 +100,70 @@ and the reader is `../front/stream.html` served by the loom at `/stream`.
 - **The mac serves it, and nothing else does.** There is no mirror fallback: when the mac is
   off there is no stream, by decision (bekh, 2026-09-19).
 
+## The interpreter — a second voice beside the stream
+
+The stream is verbose, so bekh wanted it **anchored by a reader**: somebody who takes the dreams
+seriously, is keen on reflections and symbols, is lucid and calm about the process and is *in
+the game*, who writes a short reading of each small stretch and **underlines**, inside the
+passages, what touched him. A reading every **two** passages for now — his words: to be more
+exposed to it while testing.
+
+`interpreter.py` is that reader: Claude Opus through the cli, headless, one call per run, the
+same invocation `berserk.py` uses (`claude -p --model opus`, prompt on **stdin**, no tools,
+`cwd` in a temp dir, `CLAUDECODE` out of the env so this repo's `CLAUDE.md` is not loaded in
+front of a dream). One-shot like the worker, its own agent on the same 300s clock, and most
+runs find fewer than two new passages and exit having done nothing.
+
+- **The persona is `interpreter.txt`, bekh's file.** The code reads it and never writes it.
+  Everything appended after it — the output shape, the memory, the material — is plumbing he
+  should not have to see in his prompt, which is the whole reason for the split.
+- **Tags, not json**: `<reading>…</reading>` then `<passage n="1">…</passage>` per passage,
+  because the answer is full of `<mark>` and a tag inside a json string is an escaping question
+  nobody needs to get right at 3am. Parsed leniently — a reading with no passages is still a
+  reading.
+- **The newest EVERY, never a backlog.** Each run takes the newest unflagged passages above the
+  watermark (the newest room any reading has covered) and only if there are `EVERY` of them.
+  If it was down for an hour, the twelve passages it missed stay unread: the stream is
+  disposable and a reading of an hour-old stretch is not what the page is for.
+- **Its memory is its own last four readings**, in the prompt, oldest first. Nothing else
+  carries from one call to the next.
+- **No checker, by decision (bekh, 2026-09-19).** Its copy of the dream is stored verbatim,
+  tags and all, and is never corrected — *a mistake in the copy is another prophecy*. The room
+  on the shelf is never written to by this process.
+- **His slips are shown, in red.** A word diff runs once at write time between the raw dream
+  and his copy with the tags stripped, and is stored as render-ready segments: `new` for words
+  that are his and not the machine's, `gone` for the machine's words he dropped, shown struck
+  through where they were dropped, his underlines riding on top of either. Words and not
+  characters — a character diff of prose is unreadable — and whitespace tokens all compare
+  equal, so reflowing a paragraph is not a slip. `new`/`gone` counts go on the ledger row, so a
+  month of them says how faithfully he re-types.
+- **The page renders every segment through `textContent`.** Only `<mark>` was ever read as a
+  tag, and that was done here; anything else he typed, `<script>` included, arrives as
+  characters and leaves as characters.
+- **The `marks` toggle is the comparison.** On by default, remembered in `localStorage` inside a
+  try/catch; off shows the raw dream exactly as the shelf holds it. Readings are always shown —
+  an inset above their block on a phone, a right-hand column top-aligned with the block's head
+  at ≥900px, the same node either way.
+
+Storage, all under the gitignored `shelf/stream/`:
+`readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
+model, seconds}`, and one `kind: "reading"` row per run on the shared `ledger.jsonl` (the
+worker's rows are `kind: "page"`; rows written before either existed have no kind, so everything
+reading that file treats a missing kind as a page). Failures — no cli, a timeout, an
+unparseable answer — are a ledger row and exit 0, the worker's law.
+
+```bash
+uv run --python 3.12 eva/stream/interpreter.py --once     # one reading, now, by hand
+cp eva/stream/com.bekh.eva-stream-interpreter.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-interpreter.plist
+launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-interpreter
+launchctl bootout gui/$(id -u)/com.bekh.eva-stream-interpreter
+```
+
+It needs `claude` logged in on this machine, and nothing else — not llama, not the loom. Log:
+`/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (2), `STREAM_READ_MEMORY` (4),
+`STREAM_READ_TIMEOUT`, `STREAM_PERSONA`.
+
 ## Nothing here is in git
 
 `shelf/sittings/stream/` and `shelf/stream/` are both gitignored. **Stream rooms are disposable
@@ -157,15 +222,21 @@ heat and length of the last forty, and the last eight runs one line each.
 
 ## Tests
 
-`../tests/streamtest.py`, against `stub_llama.py` and scratch dirs, never the real shelf. The
-worker half runs `stream.main` in-process; the api half is a real `loom.py` in a subprocess,
-as loomtest drives it. What it holds: the room shape and the flat `logprobs` with no `probs`
+`../tests/streamtest.py`, against `stub_llama.py`, a **fake `claude`** first on PATH (as
+berserktest does it) and scratch dirs, never the real shelf. The worker and interpreter halves
+run in-process; the api half is a real `loom.py` in a subprocess, as loomtest drives it. What it holds: the room shape and the flat `logprobs` with no `probs`
 anywhere; the lot between the two pots and `good` not being `kept`; an over-large seed never
 entering the pot; the trailing space gone from the room AND from the wire; every filter rule
 one line each plus a flagged page still landing; an unreachable llama as a ledger row and exit
 0; the tail cut to whole sentences; and on the routes — newest first, flagged hidden until
 `all=1`, `before` paging backwards, `n` capping the batch, the three status states, a mark
-through `/api/mark` showing up, and the star freezing a page as an artifact.
+through `/api/mark` showing up, and the star freezing a page as an artifact. For the
+interpreter: a short stretch never starting the cli at all, the block being the newest two
+unflagged, the persona going out verbatim, the last four readings in the prompt, a garbage
+answer and a dead cli as ledger rows with exit 0, an identical copy having nothing red in it, a
+slip kept and mapped (a word replaced, a word inserted inside an underline, a sentence dropped,
+an underline on a word he did not touch), whitespace he normalised not lighting up, `<mark>`
+being the only tag, and the api hanging the reading on the head of its block.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

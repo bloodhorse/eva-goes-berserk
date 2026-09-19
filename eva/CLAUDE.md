@@ -385,6 +385,14 @@ the rooms are disposable, and what survives is the artifact a star writes. The r
 lazy-loaded as he reads down, each passage carrying its own two strokes through the existing
 `/api/mark`; a passage's ragged end is trimmed to the last sentence in the DISPLAY only
 (`?raw=1` shows it as written). The look is a placeholder.
+
+Beside it, **the interpreter** (`stream/interpreter.py`, 2026-09-19): opus through the cli, on
+the same clock, writing a short **reading** of every two passages and **underlining** inside
+them what touched it — the persona is `stream/interpreter.txt`, bekh's file, and the code only
+appends the plumbing. Its copy of a dream is stored verbatim and never corrected; a word diff
+made at write time shows what it added or dropped in red. `/api/stream` carries the copy, the
+segments and the reading; the page draws the reading beside its block and the marks in the
+text, with a `marks` toggle that puts the raw dream back.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests
@@ -430,8 +438,9 @@ While the mac is off, `eva.x` falls over to a copy on the mini that takes readin
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
-plus a fourth written and **not yet loaded**, `com.bekh.eva-stream` (one page every 300s; the
-plist lives in `stream/`, bekh bootstraps it) — and
+plus `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and a fifth written and
+**not yet loaded**, `com.bekh.eva-stream-interpreter` (a reading of every two passages; both
+plists live in `stream/`, bekh bootstraps them) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need

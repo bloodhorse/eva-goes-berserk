@@ -98,8 +98,12 @@ def render(spin, now):
 
     hb = read_json(HEARTBEAT) or {}
     rows = read_ledger()
-    landed = [r for r in rows if r.get("room")]
-    failed = [r for r in rows if not r.get("room")]
+    # One ledger, two writers. A row with no `kind` is the worker's: every page written before
+    # the interpreter existed has none, so absent means "page" and always will.
+    pages = [r for r in rows if r.get("kind", "page") == "page"]
+    reads = [r for r in rows if r.get("kind") == "reading"]
+    landed = [r for r in pages if r.get("room")]
+    failed = [r for r in pages if not r.get("room")]
     flagged = [r for r in landed if r.get("flag")]
 
     out = [CLEAR]
@@ -142,6 +146,23 @@ def render(spin, now):
 
     out.append(f"  {LBLUE}{len(landed)} pages on the ledger · {len(flagged)} flagged · "
                f"{len(failed)} runs wrote nothing{R}")
+
+    # The second voice. Its own line and not mixed into the counts above: the interpreter can
+    # be dead for a day while the stream is perfectly healthy, and the reverse.
+    today = time.strftime("%Y-%m-%d", time.localtime(now))
+    ok = [r for r in reads if not r.get("error")]
+    mine = [r for r in ok if time.strftime("%Y-%m-%d", time.localtime(r.get("ts") or 0)) == today]
+    bad = [r for r in reads if r.get("error")]
+    if reads:
+        age = fmt_age(now - (ok[-1].get("ts") or now)) + " ago" if ok else "never"
+        words = sum(r.get("new") or 0 for r in ok), sum(r.get("gone") or 0 for r in ok)
+        out.append(f"  {MINT_LO}{len(mine)} readings today · last {age} · "
+                   f"+{words[0]}/-{words[1]} words re-typed{R}")
+        if bad:
+            out.append(f"  {PINK}last reading failure: {cut(bad[-1].get('error'), width - 28)}"
+                       f" ({fmt_age(now - (bad[-1].get('ts') or now))} ago){R}")
+    else:
+        out.append(f"  {LBLUE}no readings yet — the interpreter has not run here{R}")
     if landed:
         heats = [r.get("temperature") for r in landed[-40:] if r.get("temperature")]
         toks = [r.get("tokens") or 0 for r in landed[-40:]]

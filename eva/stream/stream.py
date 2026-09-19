@@ -125,9 +125,11 @@ def log(msg: str) -> None:
 
 
 def ledger(row: dict) -> None:
+    # `kind` since the interpreter writes to this same file (2026-09-19). Rows from before it
+    # existed have none, so everything that reads this treats a missing kind as a page.
     os.makedirs(STREAM, exist_ok=True)
     with open(LEDGER, "a", encoding="utf-8") as f:
-        f.write(json.dumps({"ts": time.time(), **row}, ensure_ascii=False) + "\n")
+        f.write(json.dumps({"ts": time.time(), "kind": "page", **row}, ensure_ascii=False) + "\n")
 
 
 def read_heartbeat() -> dict:

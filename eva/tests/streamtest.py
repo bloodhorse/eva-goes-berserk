@@ -49,6 +49,7 @@ os.environ["STREAM_DIR"] = STREAM_DIR
 os.environ["STREAM_SEEDS"] = SEEDS
 os.environ["STREAM_INTERVAL"] = "300"
 
+import interpreter  # noqa: E402
 import loom  # noqa: E402
 import stream  # noqa: E402
 
@@ -172,6 +173,11 @@ def on_disk(name: str) -> dict:
         d = json.load(f)
     assert loom.check(d) == "", loom.check(d)
     return d
+
+
+def read_text(path: str) -> str:
+    with open(path, encoding="utf-8") as f:
+        return f.read()
 
 
 def heartbeat() -> dict:
@@ -515,6 +521,305 @@ class Routes(unittest.TestCase):
                            "mark": "kept", "on": False})
         self.assertNotIn(after[0]["name"],
                          [a["name"] for a in call("/api/artifacts")[1]["artifacts"]])
+
+
+# ---- the interpreter ---------------------------------------------------------------------
+# A fake `claude` first on PATH, the way berserktest does it: a script that writes the prompt
+# it was handed to a file the moment it runs — so its ABSENCE is how a test proves the cli was
+# never started — and answers by FAKE_MODE. It reads the passages out of the prompt, because
+# what is under test is that the right passages went out and the answer came back attached to
+# the right rooms.
+
+FAKE_CLAUDE = r'''#!/usr/bin/env python3
+import os, re, sys
+prompt = sys.stdin.read()
+with open(os.environ["FAKE_CLAUDE_LOG"], "a", encoding="utf-8") as f:
+    f.write(prompt + "\n=====\n")
+mode = os.environ.get("FAKE_MODE", "")
+dreams = [d.rstrip("\n") for d in
+          re.findall(r"^\[dream\] (.*?)(?=\n\npassage |\Z)", prompt, re.S | re.M)]
+if mode == "garbage":
+    print("i could not read these, sorry")
+    raise SystemExit(0)
+if mode == "boom":
+    raise SystemExit(3)
+print("<reading>")
+print("the switch keeps answering a call nobody placed.")
+print("</reading>")
+for i, d in enumerate(dreams, 1):
+    if mode == "script":
+        body = "<script>alert(1)</script> " + d
+    elif mode == "unbalanced":
+        body = "<mark>one</mark></mark> two <mark>three"
+    elif mode == "altered":
+        # five different things for the diff to tell apart: a word replaced, a word inserted
+        # inside an underline, a sentence dropped, an underline on a word he did NOT touch,
+        # and whitespace he normalised
+        body = d.replace("switch", "SWITCH", 1).replace("\n\n", "\n")
+        body = body.replace("hums", "<mark>hums quietly</mark>", 1)
+        body = body.replace("The second sentence goes. ", "")
+        body = body.replace("line", "<mark>line</mark>", 1)
+    else:
+        body = d
+    print(f'<passage n="{i}">{body}</passage>')
+'''
+
+
+def fake_claude(mode: str = "") -> dict:
+    """A bin dir with the fake first on PATH, and the env that reaches it. Returns the paths
+    so a test can assert on the prompt — or on the log file not existing at all."""
+    d = tempfile.mkdtemp(prefix="stream-claude-")
+    binp = os.path.join(d, "bin")
+    os.makedirs(binp)
+    path = os.path.join(binp, "claude")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(FAKE_CLAUDE.replace("#!/usr/bin/env python3", "#!" + sys.executable))
+    os.chmod(path, 0o755)
+    return {"dir": d, "bin": binp, "log": os.path.join(d, "prompts.txt"), "mode": mode}
+
+
+def interpret(fake: dict) -> tuple[int, str]:
+    """One interpreter run in-process, with the fake claude first on PATH."""
+    was_path, was_mode = os.environ.get("PATH", ""), os.environ.get("FAKE_MODE")
+    os.environ["PATH"] = fake["bin"] + os.pathsep + was_path
+    os.environ["FAKE_CLAUDE_LOG"] = fake["log"]
+    os.environ["FAKE_MODE"] = fake["mode"]
+    out = io.StringIO()
+    try:
+        with redirect_stdout(out), redirect_stderr(out):
+            code = interpreter.main(["interpreter.py", "--once"])
+    finally:
+        os.environ["PATH"] = was_path
+        if was_mode is None:
+            os.environ.pop("FAKE_MODE", None)
+        else:
+            os.environ["FAKE_MODE"] = was_mode
+    return code, out.getvalue()
+
+
+def readings_on_disk() -> list[dict]:
+    out = []
+    for path in interpreter.reading_files():
+        with open(path, encoding="utf-8") as f:
+            out.append(json.load(f))
+    out.sort(key=lambda d: d.get("ts") or 0)
+    return out
+
+
+def put_reading(rooms: list[str], text: str, ts: float) -> None:
+    """A reading straight onto disk, for the memory test: writing six of them through the
+    interpreter would mean twelve passages and twelve fake calls."""
+    lt = time.localtime(ts)
+    day = os.path.join(STREAM_DIR, "readings", time.strftime("%Y-%m-%d", lt))
+    os.makedirs(day, exist_ok=True)
+    with open(os.path.join(day, f"{int(ts)}.json"), "w", encoding="utf-8") as f:
+        json.dump({"ts": ts, "rooms": rooms, "reading": text, "marked": {}, "segments": {},
+                   "model": "opus", "seconds": 1.0}, f)
+
+
+class Interpreter(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_claude(mode)
+        self.fakes.append(f)
+        return f
+
+    def pages(self, *specs) -> list[str]:
+        """Rooms oldest first; a spec is (hhmm, dream) or (hhmm, dream, flag)."""
+        out = []
+        for spec in specs:
+            hhmm, text = spec[0], spec[1]
+            flag = spec[2] if len(spec) > 2 else None
+            name = f"stream/2026-09-19/{hhmm}"
+            make_page(name, f"seed for {hhmm}\n", text, flag=flag)
+            out.append(name)
+        return out
+
+    def test_a_short_stretch_is_not_read_at_all(self):
+        self.pages(("1000", "only one passage so far."))
+        f = self.fake()
+        code, out = interpret(f)
+        self.assertEqual(code, 0, out)
+        # The fake writes its log the moment it runs, so its absence is the proof.
+        self.assertFalse(os.path.exists(f["log"]), "claude was started for one passage")
+        self.assertEqual(readings_on_disk(), [])
+        self.assertEqual(ledger_rows(), [])          # not even a row: this is the usual state
+
+    def test_the_block_is_the_newest_two_unflagged(self):
+        self.pages(("1000", "the oldest one."), ("1005", "a footer.", "copyright"),
+                   ("1010", "the switch hums. The second sentence goes."),
+                   ("1015", "the newest one."))
+        f = self.fake()
+        self.assertEqual(interpret(f)[0], 0)
+        got = readings_on_disk()
+        self.assertEqual(len(got), 1)
+        # newest first on the file, and the flagged one is not in it
+        self.assertEqual(got[0]["rooms"],
+                         ["stream/2026-09-19/1015", "stream/2026-09-19/1010"])
+        self.assertEqual(got[0]["reading"],
+                         "the switch keeps answering a call nobody placed.")
+        # the prompt read them oldest first, and the seeds went with them
+        prompt = read_text(f["log"])
+        self.assertLess(prompt.index("the switch hums"), prompt.index("the newest one."))
+        self.assertIn("[seed] seed for 1015", prompt)
+        self.assertNotIn("a footer.", prompt)
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertEqual(row["rooms"], got[0]["rooms"])
+        self.assertEqual(row["marked"], 2)
+
+        # and a second run has nothing above the watermark, so it asks nobody
+        f2 = self.fake()
+        self.assertEqual(interpret(f2)[0], 0)
+        self.assertFalse(os.path.exists(f2["log"]))
+
+    def test_the_persona_file_goes_out_verbatim(self):
+        self.pages(("1000", "one."), ("1005", "two."))
+        f = self.fake()
+        self.assertEqual(interpret(f)[0], 0)
+        with open(interpreter.PERSONA, encoding="utf-8") as fh:
+            persona = fh.read()
+        prompt = read_text(f["log"])
+        self.assertIn(persona.rstrip("\n"), prompt)
+        # the plumbing is appended after it and is not in bekh's file
+        self.assertNotIn("<reading>", persona)
+        self.assertIn("<passage n=\"1\">", prompt)
+
+    def test_it_is_shown_its_last_four_readings(self):
+        for i in range(6):
+            put_reading([f"stream/2026-09-18/{1000 + i}"], f"memory number {i}",
+                        time.time() - 10000 + i)
+        self.pages(("1100", "one."), ("1105", "two."))
+        f = self.fake()
+        self.assertEqual(interpret(f)[0], 0)
+        prompt = read_text(f["log"])
+        for i in (2, 3, 4, 5):
+            self.assertIn(f"memory number {i}", prompt)
+        for i in (0, 1):
+            self.assertNotIn(f"memory number {i}", prompt)
+
+    def test_an_unreadable_answer_is_a_ledger_row_and_exit_zero(self):
+        self.pages(("1000", "one."), ("1005", "two."))
+        code, out = interpret(self.fake("garbage"))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(readings_on_disk(), [])
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertIn("no <reading>", row["error"])
+        self.assertEqual(len(row["rooms"]), 2)
+
+    def test_a_cli_that_dies_is_a_ledger_row_too(self):
+        self.pages(("1000", "one."), ("1005", "two."))
+        self.assertEqual(interpret(self.fake("boom"))[0], 0)
+        self.assertIn("exited 3",
+                      [r for r in ledger_rows() if r.get("kind") == "reading"][-1]["error"])
+
+    # ---- his copy, kept as he typed it ----------------------------------------------------
+    def test_an_identical_copy_has_nothing_red_in_it(self):
+        self.pages(("1000", "one."), ("1005", "the line went quiet."))
+        self.assertEqual(interpret(self.fake())[0], 0)
+        got = readings_on_disk()[0]
+        segs = got["segments"]["stream/2026-09-19/1005"]
+        self.assertEqual({s["kind"] for s in segs}, {"same"})
+        self.assertEqual("".join(s["t"] for s in segs), "the line went quiet.")
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertEqual((row["new"], row["gone"]), (0, 0))
+
+    def test_a_slip_is_shown_and_never_corrected(self):
+        dream = "the switch hums.\n\nThe second sentence goes. the line stayed open."
+        self.pages(("1000", "one."), ("1005", dream))
+        self.assertEqual(interpret(self.fake("altered"))[0], 0)
+        got = readings_on_disk()[0]
+        room = "stream/2026-09-19/1005"
+        # his copy, verbatim, tags and all — the room on the shelf is untouched
+        self.assertIn("<mark>", got["marked"][room])
+        self.assertIn("SWITCH", got["marked"][room])
+        self.assertEqual(on_disk(room)["nodes"][
+            [k for k, v in on_disk(room)["nodes"].items() if v["kind"] == "model"][0]]["text"],
+            dream)
+
+        segs = got["segments"][room]
+        text = lambda kind: "".join(s["t"] for s in segs if s["kind"] == kind)
+        # a word replaced: the machine's struck through where it stood, his in red after it
+        self.assertIn("switch", text("gone"))
+        self.assertIn("SWITCH", text("new"))
+        gones = [i for i, s in enumerate(segs) if s["kind"] == "gone"]
+        news = [i for i, s in enumerate(segs) if s["kind"] == "new"]
+        self.assertLess(gones[0], news[0])
+        # a whole sentence dropped, its spaces struck through with it
+        self.assertIn("second sentence goes", text("gone"))
+        # a word he inserted INSIDE his own underline is both
+        self.assertTrue(any(s["mark"] and s["kind"] == "new" and "quietly" in s["t"]
+                            for s in segs), segs)
+        # and an underline on a word he did not touch is a plain highlight
+        self.assertTrue(any(s["mark"] and s["kind"] == "same" and "line" in s["t"]
+                            for s in segs), segs)
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertGreater(row["new"], 0)
+        self.assertGreater(row["gone"], 0)
+
+    def test_whitespace_he_normalised_is_not_a_slip(self):
+        segs, new, gone = interpreter.diff_segments("a  line\n\nand another",
+                                                    "a line\nand another")
+        self.assertEqual((new, gone), (0, 0))
+        self.assertEqual({s["kind"] for s in segs}, {"same"})
+        # and the whitespace SHOWN is his
+        self.assertEqual("".join(s["t"] for s in segs), "a line\nand another")
+
+    def test_only_mark_is_a_tag_and_a_stray_close_is_survivable(self):
+        segs, _, _ = interpreter.diff_segments(
+            "a <b>bold</b> claim", "a <b><mark>bold</mark></b></mark> claim")
+        whole = "".join(s["t"] for s in segs if s["kind"] != "gone")
+        self.assertIn("<b>", whole)                  # any other tag is characters, not markup
+        self.assertNotIn("<mark>", whole)
+        self.assertTrue(any(s["mark"] and "bold" in s["t"] for s in segs))
+
+    # ---- what the api does with all that --------------------------------------------------
+    def test_the_api_carries_the_copy_and_hangs_the_reading_on_the_head(self):
+        rooms = self.pages(("1000", "one."), ("1005", "two."))
+        self.assertEqual(interpret(self.fake())[0], 0)
+        d = call("/api/stream?n=5")[1]
+        by = {p["room"]: p for p in d["pages"]}
+        head, tail = rooms[1], rooms[0]              # newest is the head of the block
+        self.assertEqual(by[head]["reading"]["text"],
+                         "the switch keeps answering a call nobody placed.")
+        self.assertEqual(by[head]["reading"]["rooms"], [head, tail])
+        self.assertIsNone(by[tail]["reading"])       # one reading per block, on its head
+        for r in (head, tail):
+            self.assertTrue(by[r]["segments"])
+            self.assertEqual("".join(s["t"] for s in by[r]["segments"]), by[r]["text"])
+
+    def test_a_page_nobody_has_read_carries_nulls(self):
+        self.pages(("1000", "alone."))
+        p = call("/api/stream?n=1")[1]["pages"][0]
+        self.assertIsNone(p["marked"])
+        self.assertIsNone(p["segments"])
+        self.assertIsNone(p["reading"])
+
+    def test_a_script_tag_in_his_copy_reaches_the_page_as_text(self):
+        self.pages(("1000", "one."), ("1005", "the door."))
+        self.assertEqual(interpret(self.fake("script"))[0], 0)
+        p = [x for x in call("/api/stream?n=5")[1]["pages"]
+             if x["room"] == "stream/2026-09-19/1005"][0]
+        # It survives as characters in a segment — the page renders every segment with
+        # textContent, so this can only ever be read and never run.
+        self.assertIn("<script>", "".join(s["t"] for s in p["segments"]))
+        self.assertIn("<script>", p["marked"])
+
+    def test_unbalanced_marks_still_produce_segments(self):
+        self.pages(("1000", "one."), ("1005", "one two three"))
+        self.assertEqual(interpret(self.fake("unbalanced"))[0], 0)
+        p = [x for x in call("/api/stream?n=5")[1]["pages"]
+             if x["room"] == "stream/2026-09-19/1005"][0]
+        segs = p["segments"]
+        self.assertTrue(segs)
+        self.assertTrue(any(s["mark"] for s in segs))
+        self.assertNotIn("<mark>", "".join(s["t"] for s in segs))
 
 
 if __name__ == "__main__":
