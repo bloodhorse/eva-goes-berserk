@@ -51,10 +51,12 @@ import loom  # noqa: E402   rooms, names, llama: nothing else here knows how a s
 # What launchd is told, restated here for the status line: the page calls the stream asleep
 # when the last success is older than twice this. Change one and change the plist.
 INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
-# A page, not a novel: ~350 tokens is a phone screen and a half, which is what "he looks in
-# for a minute" means. Long enough for a genre to lock in (the register findings) and short
-# enough that the lock is the interesting part rather than the whole page.
-N_PREDICT = int(os.environ.get("STREAM_N_PREDICT", "350"))
+# A passage, not a page: ~170 tokens is about half a phone screen. It shipped at 350 and bekh
+# cut it after reading the first live ones (2026-09-19): they felt long to him, and what he
+# pictures is half a page, a separator, the next passage, on and on. A side effect, ours and
+# not his reason: a genre locks in over length, so a shorter passage spends less of itself on
+# furniture.
+N_PREDICT = int(os.environ.get("STREAM_N_PREDICT", "170"))
 # The hunting ground, not the baseline: 1.0 shows nemo's default and nothing else. min_p
 # 0.08 cuts the absurd tail first because this build applies temperature LAST, which is why
 # 2.5 is still a sentence here.

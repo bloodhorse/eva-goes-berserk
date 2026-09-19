@@ -1,7 +1,7 @@
 # stream — the machine dreaming with nobody there
 
-One short page every five minutes, written by nemo, picked by nobody. bekh opens his phone at a
-random moment, reads whatever is newest with nothing around it, marks it or doesn't, puts the
+One short passage every five minutes, written by nemo, picked by nobody. bekh opens his phone at
+a random moment, reads down from the newest into the night, marks what moved him, puts the
 phone down. That is the whole instrument, and it is the brief's mission taken literally: *a
 dream machine that runs on the mac perpetually and writes dreams on its own… he won't read
 everything; the point is knowing the machine is dreaming and looking in from time to time.*
@@ -52,7 +52,12 @@ and the reader is `../front/stream.html` served by the loom at `/stream`.
   document ending on a space makes the next token a numeral, measured 2026-09-16. A seed that
   ends on a newline means it.
 - **Temperature by lot in [1.8, 2.5]**, min_p 0.08, top_k 0, top_p 1.0, repeat_penalty 1.05,
-  repeat_last_n 512, n_predict 350, no stop strings — the wire rooms' sampler. 1.0 is nemo's
+  repeat_last_n 512, n_predict **170**, no stop strings — the wire rooms' sampler. 170 and not
+  the 350 it shipped with: bekh cut it on 2026-09-19 after reading the first live ones — they
+  felt long to him, and what he pictures is half a page, a separator, the next passage, on and
+  on. (A side effect, not his reason: a genre locks in over length, so a shorter passage spends
+  less of itself on furniture.) `N_PREDICT` in `stream.py` is the only place it is
+  written — the plist sets no override. 1.0 is nemo's
   default and shows nothing; this build applies temperature LAST, so min_p cuts the absurd tail
   before the heat flattens what survived, which is why 2.5 is still a sentence. Everything not
   named is eva's room default, DRY above all: base models loop, and a hot page with no brake on
@@ -73,9 +78,24 @@ and the reader is `../front/stream.html` served by the loom at `/stream`.
   and the status. Marks go through the **existing** `/api/mark` — a second mark route would be
   a second place the at-most-one rule lives.
 - **The reader is phone-first**, which is the one place this project's "the page is a desktop
-  page" law does not apply: that law is about the loom. One page of text, a one-line status,
-  two strokes, older/newer. No model name, no sampler, no seed name — a reader who can see the
-  temperature is reading an experiment and not a dream.
+  page" law does not apply: that law is about the loom. No model name, no sampler, no seed name
+  — a reader who can see the temperature is reading an experiment and not a dream.
+- **The reader is one continuous scroll, newest at the top.** Passage, thin rule, passage;
+  scrolling down goes back into the night and an IntersectionObserver near the bottom lazy-loads
+  the next batch through `?before=<room>&n=`, stopping for good when `more` is false. It was a
+  pager for a day — one passage, older/newer buttons — and that was wrong: a pager makes him
+  **ask** for each passage, and the point is that the machine is already dreaming and he is
+  looking in. Each passage shows the seed whole in the quiet tone, then the model's text, then
+  its own `○/●` `☆/★` and a quiet time at its foot. The status line stays pinned.
+- **Ragged ends are trimmed in the DISPLAY only.** A hard stop at 170 tokens lands mid-sentence
+  nine times in ten, so the page cuts the model's text back to the last `[.!?…]` plus whatever
+  closes over it — unless that would drop more than ~40% of it, or there is no sentence end at
+  all, in which case it is shown whole. In the page's js and never in the api, because the raw
+  text is the evidence of what nemo wrote: `?raw=1` is the same request with the trim off.
+- **New passages never move the text.** The 60s poll prepends in place when he is at the very
+  top; when he is scrolled down they are **held back** and only a quiet `new` appears in the
+  status line, which scrolls up and drops them in when tapped.
+- **The look is a placeholder.** The loom's palette, a thin rule, nothing else. Its own job.
 - **The mac serves it, and nothing else does.** There is no mirror fallback: when the mac is
   off there is no stream, by decision (bekh, 2026-09-19).
 

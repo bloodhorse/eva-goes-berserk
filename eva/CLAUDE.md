@@ -368,20 +368,24 @@ file directly — don't have the room open in the page while one runs.
 
 ## The stream
 
-**stream** (`stream/stream.py`, 2026-09-19): **one short page every five minutes, and nobody
-picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion`, a bare room at
-`stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the page, and that is the run — `--once`
-writes one page and exits, because the loop is launchd's `StartInterval` and not a sleep. A
-failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots on a
-fair coin: everything under `shelf/seeds/`, and the tails of pages bekh **starred**, which is
-the only place his hand is in the loop and it acts at the next page's input. Branches carry
+**stream** (`stream/stream.py`, 2026-09-19): **one short passage every five minutes, and nobody
+picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion` of 170 tokens, a bare room
+at `stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the passage, and that is the run — `--once`
+writes one and exits, because the loop is launchd's `StartInterval` and not a sleep. A
+failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots —
+everything under `shelf/seeds/`, and the tails of passages bekh **starred** — with a starred
+tail weighing what one seed weighs, capped at half the draws; that is the only place his hand is
+in the loop and it acts at the next passage's input. Branches carry
 `meta.logprobs`, a flat list of the chosen token's logprob per token and **not** llama's `probs`
 tables — 288 rooms a day of those would be a gigabyte a week. A regexp set flags web furniture
 as `meta.flag` without deleting anything; the reader hides those and `?all=1` shows them. Ledger
 and heartbeat in `shelf/stream/`, watched by `stream/monitor.py`, and **none of it is in git**:
 the rooms are disposable, and what survives is the artifact a star writes. The reader is
-`front/stream.html` at `/stream` — one page of text, phone-first, marks through the existing
-`/api/mark`. **`stream/CLAUDE.md`** is the doc and the runbook.
+`front/stream.html` at `/stream` — **one continuous scroll**, newest at the top, older
+lazy-loaded as he reads down, each passage carrying its own two strokes through the existing
+`/api/mark`; a passage's ragged end is trimmed to the last sentence in the DISPLAY only
+(`?raw=1` shows it as written). The look is a placeholder.
+**`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests
 

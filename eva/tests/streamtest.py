@@ -255,7 +255,9 @@ class Worker(unittest.TestCase):
         self.assertTrue(1.8 <= p["temperature"] <= 2.5, p["temperature"])
         self.assertEqual((p["min_p"], p["top_k"], p["top_p"]), (0.08, 0, 1.0))
         self.assertEqual((p["repeat_penalty"], p["repeat_last_n"]), (1.05, 512))
-        self.assertEqual(p["n_predict"], 350)
+        # half a phone screen, cut from 350 after bekh read the first live ones: a genre
+        # locks in over length, so what is worth reading is near the top
+        self.assertEqual(p["n_predict"], 170)
         self.assertEqual(p["stop"], [])
         self.assertEqual(p["n_probs"], 1)          # the minimum that buys a logprob at all
 

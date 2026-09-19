@@ -86,10 +86,11 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
-  - `stream/` — the dream stream: one short page every five minutes, seed and heat by lot,
+  - `stream/` — the dream stream: one short passage every five minutes, seed and heat by lot,
     nobody picking, launchd's `StartInterval` for a loop; `front/stream.html` at `/stream` is
-    the phone reading it. Its rooms and its ledger are **not in git** — what survives is the
-    artifact a star writes. **`eva/stream/CLAUDE.md`** is the doc and the runbook.
+    the phone reading it, one continuous scroll newest first. Its rooms and its ledger are
+    **not in git** — what survives is the artifact a star writes.
+    **`eva/stream/CLAUDE.md`** is the doc and the runbook.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
     env, never the real shelf:
 
