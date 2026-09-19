@@ -316,8 +316,9 @@ uv run --python 3.12 eva/stream/stream.py --once     # one page, now, by hand
 uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for a frame
 ```
 
-The agent — loaded on the mac since 2026-09-19 (`launchctl print gui/$(id -u)/com.bekh.eva-stream`
-says whether it still is):
+The agent. **Whether the stream is on is whether this job is loaded** (`launchctl print
+gui/$(id -u)/com.bekh.eva-stream` answers; bekh stops it for the night with the `bootout` line and
+starts it with the `bootstrap` line — the two opus voices have no clock and can stay loaded):
 
 ```bash
 cp eva/stream/com.bekh.eva-stream.plist ~/Library/LaunchAgents/

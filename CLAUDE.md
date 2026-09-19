@@ -171,6 +171,16 @@ GPT-2 XL, runs beside nemo for blind comparisons (`census.py --models`; Pythia 2
 and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 `ls shelf/artifacts/`; what berserk did: `shelf/berserk/ledger.jsonl`.
 
+**The dream stream** (2026-09-19) is the mission's machine, built in a day and stopped for the
+night by bekh: nemo writes a passage every five minutes by lot, an opus reader notes and colours
+every one, a second opus remembers four scenes at a time as one dream, all read at
+`https://eva.x/stream`. It is off until its writer is started again — one line, and the whole
+runbook, in `eva/stream/CLAUDE.md`:
+
+```bash
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
+```
+
 The first real reading happened on documents, not on a chat: witch rolls where the last entry is
 someone who asks a voice in the lines what it is and writes down everything it says. One branch
 broke its own document to tell the reader *"i can't make you believe any of this is real. i wish i
@@ -182,7 +192,7 @@ confession and one other branch kept out of forty, 9.6 bits. Keeping and saving 
 What's next is `BRIEF.md`'s agenda, in its order. Still wanted and not yet written: bekh's own
 seeds, a couple of sentences in his register, no prose from Claude, no web markers.
 
-Open, small: eva should show room titles, and treats any argument as a room name (`eva --help`
+Open, small: berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the
 sampler, or whether a second button should write the whole fan; the cyborgism crowd (janus,
 ampdot) is reachable only by a person — every channel is invite-only, ampdot's contacts are on

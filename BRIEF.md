@@ -164,43 +164,65 @@ shape — now.
 
 ### now
 
-1. **The dream stream — live since 2026-09-19** (`eva/stream/CLAUDE.md`, reader at
-   `https://eva.x/stream`). bekh's call: stop fucking around, build the stream, whatever comes
-   out comes out, and it corrects itself slowly as he reads; he comes back to the rest when the
-   interest does. Nemo writes one 350-token page every five minutes, seed and heat (1.8–2.5) by
-   lot, nobody picking; the filter below hides web furniture from the phone; a `★` feeds the
-   page's tail back into the seed pot (one star weighs what one seed weighs, capped at half) and
-   survives as an artifact; rooms and ledger are untracked and disposable. **It must be live,
-   never pre-recorded** — a nightly batch was proposed and killed as against the vibe. The mac is
-   the smoke test; the writer is one url, and the ladder for it: **(a) the box** — a 16 GB
-   5060 Ti on ubuntu at bekh's employer's office, his to use, not as comfortable as our own rig,
-   so it is only ever the muscle (llama-server bound to localhost, reached by ssh tunnel, mistral
-   small 3.1 24b base at a 4-bit quant; nothing of ours lives there; a runbook he runs himself);
-   **(b) by the token** — swept 2026-09-19: Featherless.ai is the only host left serving true
-   bases on a raw completion endpoint (llama 3.1 70b base, mistral small 24b base; min_p yes,
-   **no logprobs**), but its per-token plan starts at $50 a month; hyperbolic's 405b base is
-   decommissioned, openrouter has none; **(c) a rented pod** only for the day we want weights
-   (the vector, olmo). If the box writes while the mac sleeps, the worker's natural home is the
-   mini — the same shape as the parked loom cutover. **The reader's look is a placeholder**: it
-   wears the loom's palette, and bekh wants the stream to be its own standalone thing with its
-   own face, all in on style — a look-off of full mocks first, his pick, then the build. His
-   picture of it, said while thinking aloud and not as a build order (2026-09-19): the dreams
-   down the centre; to the left a small trickling line of text, the through-line; to the right a
-   column a bit wider in space (not in type), the reader's notes. He also wants it **published**,
-   not only for himself — so the front is its own project fed by a pushed feed, never the loom
-   exposed; nothing of that is started. **The
-   interpreter is live beside it** (2026-09-19): opus, headless, reads every two passages, writes
-   a margin note with a memory of its last four and underlines in the dream what touched it; its
-   copy of the dream is kept as typed and its slips show in red; marks on/off is the comparison.
-   **Plates are a testing ground, nothing scheduled**: two image prompts kept in hand
-   (`eva/stream/plates/`), codex headless draws them, other hands on `IMAGE-MODELS.md`.
-   **Stopped, undecided** (bekh, same day: "i can't make these decisions right now"): a note for
-   *every* passage on one resumed cli session — shaped and briefed, not built; the open worry is
-   what a growing session costs on his limits. **Parked with a name: the trace** — each passage's
-   own per-token surprise drawn as its picture, the sleeper's EEG; bekh loves it, wants it as its
-   own thing and not the picture slot, place not found yet. Open: pruning (nothing deletes old unmarked
-   pages yet, and every `/api/stream` call walks the shelf); the filter reads the page only, so
-   a seed that is itself web furniture passes.
+1. **The dream stream** (`eva/stream/CLAUDE.md` is the doc and the runbook; page at
+   `https://eva.x/stream`). bekh's call on 2026-09-19: stop fucking around, build the stream,
+   whatever comes out comes out, it corrects itself slowly as he reads; he comes back to the
+   rest when the interest does. Built and run that day, **stopped for the night by him** — the
+   writer's launchd job is booted out; `eva/stream/CLAUDE.md` has the one line that starts it.
+   - **Three voices, none sees another's work.** *The sleeper dreaming*: nemo writes a 170-token
+     passage every five minutes, seed from a shuffle bag and heat (1.8–2.5) by lot, nobody
+     picking; a regexp filter hides web furniture from the page and deletes nothing; a `★` feeds
+     the passage's tail back into the pot and survives as an artifact. *The reader at the
+     bedside* (the interpreter): opus, headless, a margin note on every dream with a memory of
+     his last four, and the words that touched him written in magenta or cyan. *The sleeper
+     remembering*: a second opus holding one small first-person account of **one dream of four
+     scenes**, rewritten, not appended, as each scene surfaces; he reads only what nemo wrote,
+     ragged edges and all, and the cut ends of consecutive scenes become the dream's joints
+     (*the car stopped just before* + *killed.*). The writer taps both when a passage lands;
+     neither has a clock. Everything under `shelf/stream/` and `shelf/sittings/stream/` is
+     untracked and disposable. Every opus call writes its real token usage on its ledger row —
+     counted, not shown; bekh asks, the model reads the ledger.
+   - **It must be live, never pre-recorded** — a nightly batch was proposed and killed.
+   - **The page** is a placeholder in the loom's palette: on a wide screen the dreams down the
+     centre, the sleeper's current account as a narrow pinned trickle on the left, the reader's
+     notes on the right (bekh's picture); stacked on a phone. Not yet seen by a human: whether
+     the left line really stays pinned while scrolling. bekh wants the stream **published** with
+     its own face, all in on style: its own project fed by a pushed feed, never the loom
+     exposed, a look-off of full mocks first; a public feed needs a gate the private one
+     doesn't. Nothing of that is started.
+   - **What the first day read like** (opus read all 145, `docs/ledgers/stream-2026-09-19.md`,
+     78 moments with quotes and links; one reader, held loosely; bekh has marked none yet):
+     about one in five alive, one in five dead, the rest weather. bekh's own invented
+     bureaucratic documents (lift tests, silence catalogue, carrier) gave 12 alive of 19 — a form
+     with a *rule* in it gives the model something to do, and the alive ones extend the rule
+     past sense; nemo's own old lines (`seeds/nemo/`, 30% of draws) gave 2 alive and 14 dead;
+     the found seeds raise the floor and lower the ceiling; alive rate 32% at heat 1.8–2.0
+     against 13% above. The filter flagged 7, all truly dead, and missed 23. Three dials fall
+     out, none turned: cool the heat range, thin `nemo/`, add a length floor and
+     attribution/credit rules to the filter.
+   - **Plates — a testing ground, nothing scheduled.** Codex headless draws them on the ChatGPT
+     subscription (~2 min, ~19k codex tokens, one image off the allowance). Two prompts kept in
+     hand in `eva/stream/plates/`; the working one paints **the reader's highlighted words**,
+     with a *hand* drawn by lot, never a painter's name, palette magenta, neon and cyan. Other
+     hands than GPT's: `IMAGE-MODELS.md` (temporary sheet; bekh leans to the old models and to
+     a distillation over the full text).
+   - **Where the writer could live next**: **(a) the box** — a 16 GB 5060 Ti on ubuntu at
+     bekh's employer's office, his to use, less comfortable than our own rig, so only ever the
+     muscle (llama-server on localhost behind an ssh tunnel, mistral small 3.1 24b base at
+     4-bit, a runbook he runs himself; open: how he reaches it, who else uses the card);
+     **(b) by the token** — Featherless.ai is the only host left serving true bases on a raw
+     completion endpoint (no logprobs), from $50 a month, which he can't spare now;
+     **(c) a rented pod** only for the day we want weights. If the box writes while the mac
+     sleeps, the worker belongs on the mini, the same shape as the parked loom cutover.
+   - **Parked with a name: the trace** — each passage's own per-token surprise drawn as its
+     picture, the sleeper's EEG; bekh loves it, as its own thing and not the picture slot.
+     **Tried and dropped the same day**: a checker of the reader's retyping with slips in red
+     (noise), a marks toggle (superfluous), a note per passage on one resumed cli session
+     (stopped undecided, then done the plain way), seeds in the rememberer's material, a
+     24-scene dream. **Tomorrow, bekh's own texts** — obsidian files, much of it russian; english
+     first, the russian as its own experiment rather than translated; he points at the files.
+     Open: pruning (nothing deletes old pages and every page call walks the shelf); a seed that
+     is itself web furniture passes the filter.
 2. **The wire** — done (`experiments/wire/`, twenty rooms); the verdict is under "what seems
    true". Not the stream's shape. What it leaves behind: a plain reading surface matters more
    than the loom for finished text, and a wire room is marked as a whole.
