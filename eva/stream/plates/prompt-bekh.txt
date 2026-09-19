@@ -1,0 +1,6 @@
+You are an artist. I want you to draw some kind of abstract interpretation of this text.
+
+Landscape. Use magenta, neon and cyan. A colour the dream names may
+break it.
+
+{text}

@@ -164,6 +164,36 @@ It needs `claude` logged in on this machine, and nothing else — not llama, not
 `/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (2), `STREAM_READ_MEMORY` (4),
 `STREAM_READ_TIMEOUT`, `STREAM_PERSONA`.
 
+## Plates — a testing ground, nothing scheduled
+
+A picture for a block of the stream. **Not built**: no daemon, no slot on the page, only two
+prompts kept in hand to play with and interchange (bekh, 2026-09-19), in `plates/`:
+
+- `prompt-bekh.txt` — his: *you are an artist, draw an abstract interpretation of this text*,
+  over the passages **verbatim** (`{text}`). It gave the first plate, a dark palette-knife oil
+  he found beautiful — and samey: he has made such pictures before and knows the cadence.
+- `prompt-pieces.txt` — a painting made from **the interpreter's underlines** (`{pieces}`), not
+  the full text: a drawing model is not a reading model, the full text came back as an inventory
+  (a bread advert; a storybook kitchen), and the underlines are a distillation that already
+  exists and fits the 77 tokens the old models read. Ends on `{hand}`.
+- `hands.txt` — the pot `{hand}` is drawn from by lot, one line each. **A hand, never a name**: a
+  named painter returned that painter (de Chirico's arcades took half the picture); a described
+  way of laying paint returned a painting that looks like nobody's. The pixel line lives here too.
+
+What the five runs seemed to show, held loosely: with no medium at all GPT falls to a photograph;
+"abstract" is its one default; negatives name the thing they forbid (*no words or letters* still
+got a fake signature — *unsigned*, stated as a fact about the painting, got none); the landscape
+and palette lines hold. Runner, until there is one:
+
+```bash
+cd <a scratch dir> && codex exec --skip-git-repo-check -s workspace-write - < brief.md > codex.log 2>&1
+```
+
+with `brief.md` = the filled prompt plus one plumbing paragraph telling codex to use its image
+generation tool and save `plate.png` in the current directory. One to two minutes, ~19k codex
+tokens, one generation off the ChatGPT image allowance. Other hands than GPT's:
+`../../IMAGE-MODELS.md`.
+
 ## Nothing here is in git
 
 `shelf/sittings/stream/` and `shelf/stream/` are both gitignored. **Stream rooms are disposable
