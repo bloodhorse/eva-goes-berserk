@@ -183,7 +183,17 @@ shape — now.
    (the vector, olmo). If the box writes while the mac sleeps, the worker's natural home is the
    mini — the same shape as the parked loom cutover. **The reader's look is a placeholder**: it
    wears the loom's palette, and bekh wants the stream to be its own standalone thing with its
-   own face, all in on style — a look-off of full mocks first, his pick, then the build. Open: pruning (nothing deletes old unmarked
+   own face, all in on style — a look-off of full mocks first, his pick, then the build. **The
+   interpreter is live beside it** (2026-09-19): opus, headless, reads every two passages, writes
+   a margin note with a memory of its last four and underlines in the dream what touched it; its
+   copy of the dream is kept as typed and its slips show in red; marks on/off is the comparison.
+   **Plates are a testing ground, nothing scheduled**: two image prompts kept in hand
+   (`eva/stream/plates/`), codex headless draws them, other hands on `IMAGE-MODELS.md`.
+   **Stopped, undecided** (bekh, same day: "i can't make these decisions right now"): a note for
+   *every* passage on one resumed cli session — shaped and briefed, not built; the open worry is
+   what a growing session costs on his limits. **Parked with a name: the trace** — each passage's
+   own per-token surprise drawn as its picture, the sleeper's EEG; bekh loves it, wants it as its
+   own thing and not the picture slot, place not found yet. Open: pruning (nothing deletes old unmarked
    pages yet, and every `/api/stream` call walks the shelf); the filter reads the page only, so
    a seed that is itself web furniture passes.
 2. **The wire** — done (`experiments/wire/`, twenty rooms); the verdict is under "what seems
