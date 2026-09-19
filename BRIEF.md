@@ -183,7 +183,12 @@ shape — now.
    (the vector, olmo). If the box writes while the mac sleeps, the worker's natural home is the
    mini — the same shape as the parked loom cutover. **The reader's look is a placeholder**: it
    wears the loom's palette, and bekh wants the stream to be its own standalone thing with its
-   own face, all in on style — a look-off of full mocks first, his pick, then the build. **The
+   own face, all in on style — a look-off of full mocks first, his pick, then the build. His
+   picture of it, said while thinking aloud and not as a build order (2026-09-19): the dreams
+   down the centre; to the left a small trickling line of text, the through-line; to the right a
+   column a bit wider in space (not in type), the reader's notes. He also wants it **published**,
+   not only for himself — so the front is its own project fed by a pushed feed, never the loom
+   exposed; nothing of that is started. **The
    interpreter is live beside it** (2026-09-19): opus, headless, reads every two passages, writes
    a margin note with a memory of its last four and underlines in the dream what touched it; its
    copy of the dream is kept as typed and its slips show in red; marks on/off is the comparison.
