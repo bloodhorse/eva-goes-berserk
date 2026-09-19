@@ -37,6 +37,11 @@ loom at `/stream`.
   tables, which are ~300 KB a room; 288 rooms a day of those would be a gigabyte a week. The
   flat list is still enough for the one thing anything here wants off them, the surprise curve.
   `n_probs: 1` is the minimum that makes llama answer with probabilities at all.
+- **Pot A is dealt from a shuffle bag** (`from_bag`, state in `shelf/stream/bag.json`): no seed
+  returns until every other has had its turn. A fresh draw every five minutes is the birthday
+  problem — on day one 62 pages had repeated 16 seeds while 32 of 78 were never touched, and
+  bekh saw it as the switchboards returning. A new seed on the shelf is slipped into the current
+  round; a lost bag file is a reshuffle.
 - **Seeds by lot, two pots, a weighted coin.** A starred tail weighs what one seed weighs,
   capped at half the draws: p(pot B) = min(0.5, |B| / (|A| + |B|)). A flat fair coin would let
   the *first* star seed 144 pages a day from the same 600 characters — stasis on day one; no

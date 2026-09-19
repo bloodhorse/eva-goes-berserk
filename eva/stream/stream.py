@@ -259,11 +259,52 @@ def pot_b() -> list[tuple[str, str]]:
     return out
 
 
+BAG = os.path.join(STREAM, "bag.json")
+
+
+def from_bag(pot: list[str], rng: random.Random) -> str:
+    """One seed out of a shuffle bag: no seed comes back until every other has had its turn.
+
+    Still a lot and still nobody's preference — only drawn WITHOUT replacement. A fresh
+    `rng.choice` every five minutes is the birthday problem: on the first day, 62 pages had
+    already repeated 16 seeds while 32 of the 78 were never touched, and bekh saw it as "the
+    switchboards returning" (2026-09-19). Take the bag out and that is what comes back.
+
+    The bag is a file because the worker is one process per page and remembers nothing. It
+    holds what is LEFT of the current shuffle plus everything it has ever been dealt from:
+    a seed that appears on the shelf mid-bag is slipped into the remaining stack at a random
+    depth instead of waiting out the whole round, and one that was deleted is simply skipped.
+    A lost or broken bag file is a reshuffle, never an error.
+    """
+    try:
+        with open(BAG, encoding="utf-8") as f:
+            d = json.load(f)
+        left, known = list(d.get("left") or []), set(d.get("known") or [])
+    except (OSError, ValueError, AttributeError):
+        left, known = [], set()
+    have = set(pot)
+    left = [x for x in left if x in have]
+    for x in pot:
+        if x not in known:
+            left.insert(rng.randrange(len(left) + 1), x)
+    if not left:
+        left = list(pot)
+        rng.shuffle(left)
+    path = left.pop(0)
+    os.makedirs(STREAM, exist_ok=True)
+    tmp = BAG + f".{os.getpid()}.part"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump({"left": left, "known": sorted(have)}, f)
+    os.replace(tmp, BAG)
+    return path
+
+
 def draw_seed(rng: random.Random) -> tuple[str, str] | None:
     """(identity, text) by lot, or None when there is nothing to draw.
 
     A starred tail weighs what one seed weighs, until the stars are half the draws and then
-    no more: p(pot B) = min(0.5, |B| / (|A| + |B|)), uniform inside the pot that won. NOT a
+    no more: p(pot B) = min(0.5, |B| / (|A| + |B|)); pot A is then dealt from a shuffle bag
+    (`from_bag`), pot B is uniform. NOT a
     flat fair coin — with a fair coin bekh's FIRST star would seed half of all pages, 144 a
     day grown from the same 600 characters, which is the stasis the cyborgism wiki warns of
     (many preferences pulling one way magnetize the stream) arriving on day one. And not
@@ -275,7 +316,7 @@ def draw_seed(rng: random.Random) -> tuple[str, str] | None:
     if b and rng.random() < p_b:
         ident, text = rng.choice(b)
     elif a:
-        path = rng.choice(a)
+        path = from_bag(a, rng)
         try:
             # newline="" so nothing python thinks about line endings reaches the model
             with open(path, encoding="utf-8", newline="") as f:

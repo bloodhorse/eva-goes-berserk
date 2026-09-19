@@ -210,6 +210,12 @@ class Rng:
     def uniform(self, lo, hi):
         return lo
 
+    def shuffle(self, seq):
+        pass                      # the bag keeps sorted order, so a test can name the next seed
+
+    def randrange(self, n):
+        return n - 1              # a seed that turns up mid-bag goes to the BACK of what is left
+
 
 # ---- the worker ---------------------------------------------------------------------------
 
@@ -311,6 +317,26 @@ class Worker(unittest.TestCase):
         # would drift the stream toward the merely nice.
         loom.set_mark(name, node["id"], "good", True)        # pops the star, at-most-one
         self.assertEqual(stream.pot_b(), [])
+
+    def test_the_bag_deals_every_seed_before_any_returns(self):
+        for n in ("a.txt", "b.txt", "c.txt"):
+            put_seed(n, MARK + " " + n + "\n")
+        first = [stream.draw_seed(Rng(0.9))[0] for _ in range(3)]
+        self.assertEqual(sorted(first), ["seeds/a.txt", "seeds/b.txt", "seeds/c.txt"])
+        # the round is over: the next three are a fresh deal of the same three
+        second = [stream.draw_seed(Rng(0.9))[0] for _ in range(3)]
+        self.assertEqual(sorted(second), sorted(first))
+        # a seed that appears mid-round is dealt within THIS round, not after a whole extra one
+        stream.draw_seed(Rng(0.9))
+        put_seed("d.txt", MARK + " d\n")
+        rest = [stream.draw_seed(Rng(0.9))[0] for _ in range(3)]
+        self.assertIn("seeds/d.txt", rest)
+        self.assertEqual(len(set(rest)), 3)
+        # a deleted seed is skipped, a broken bag file is a reshuffle and not an error
+        os.unlink(os.path.join(SEEDS, "a.txt"))
+        with open(stream.BAG, "w") as f:
+            f.write("{not json")
+        self.assertNotEqual(stream.draw_seed(Rng(0.9))[0], "seeds/a.txt")
 
     def test_a_seed_too_big_never_enters_the_pot(self):
         put_seed("small.txt", "a" * 100)

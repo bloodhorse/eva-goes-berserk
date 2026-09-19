@@ -234,6 +234,21 @@ shape — now.
 
 ### parked
 
+- **How do the seeds grow on their own and keep a base quality? — an open question of the
+  project, posed by bekh 2026-09-19 and parked the same day.** Picking a seed and rewriting its
+  last line by hand worked when experiments came in ones and twos; the stream draws 288 seeds a
+  day, so it is an engineering task now. His frame for the answer, in the spirit of the project:
+  **models are the source of the seeds and nothing else is** — models writing, choosing,
+  dreaming, cheating, merging. And his warning about the obvious move: "take as a seed what a
+  model wrote last time" is the lazy answer, not the answer. What is known going in: the pot is
+  78 files; the lot draws with replacement, so by 62 pages 16 were already repeats and 32 seeds
+  were untouched; eight seeds share the switchboard theme, so one page in ten is a wire page
+  whichever file is drawn — that is what he saw as "the switchboards returning". **The stopgap,
+  approved "for now"**: a shuffle bag (no seed returns until all have had a turn), which fixes
+  the repeats and not the size; and a harvest by script of found public-domain first-person
+  documents, seams cut by the script and not by him — which grows the pot but is not an answer
+  to the question, since his frame makes models the only source. Feeding back starred tails is
+  already in the machine.
 - **A control vector from his marks.** Marked minus unmarked cards of the same fans, read as
   nemo's hidden state, averaged: a direction the model is pushed along at generation, with a
   dial. No weights change, tens to hundreds of pairs suffice, llama.cpp ships the generator and
