@@ -387,12 +387,12 @@ lazy-loaded as he reads down, each passage carrying its own two strokes through 
 (`?raw=1` shows it as written). The look is a placeholder.
 
 Beside it, **the interpreter** (`stream/interpreter.py`, 2026-09-19): opus through the cli, on
-the same clock, writing a short **reading** of every two passages and **underlining** inside
+the same clock, writing a short **note** on every passage and **underlining** inside
 them what touched it — the persona is `stream/interpreter.txt`, bekh's file, and the code only
-appends the plumbing. Its copy of a dream is stored verbatim and never corrected; a word diff
-made at write time shows what it added or dropped in red. `/api/stream` carries the copy, the
-segments and the reading; the page draws the reading beside its block and the marks in the
-text, with a `marks` toggle that puts the raw dream back.
+appends the plumbing. Its copy of a dream is stored verbatim and never corrected, and nothing is compared
+against the raw text — the words it marked are simply written in colour, magenta or cyan by
+lot. `/api/stream` carries the copy, the segments and the note; the page draws the note beside
+its dream. It has no clock: the worker kickstarts it when a page lands.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests

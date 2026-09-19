@@ -38,6 +38,11 @@
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
         <key>LOOM_LLAMA</key>
         <string>http://127.0.0.1:8080</string>
+        <!-- A page that landed taps the reader: `launchctl kickstart` on
+             com.bekh.eva-stream-interpreter, which has no clock of its own. Best-effort — a
+             failed kick is one line in this log and the dream simply has no note. -->
+        <key>STREAM_KICK_INTERPRETER</key>
+        <string>1</string>
     </dict>
     <key>StartInterval</key>
     <integer>300</integer>

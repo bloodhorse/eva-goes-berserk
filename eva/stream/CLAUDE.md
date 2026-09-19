@@ -104,70 +104,85 @@ loom at `/stream`.
 
 The stream is verbose, so bekh wanted it **anchored by a reader**: somebody who takes the dreams
 seriously, is keen on reflections and symbols, is lucid and calm about the process and is *in
-the game*, who writes a short reading of each small stretch and **underlines**, inside the
-passages, what touched him. A reading every **two** passages for now — his words: to be more
-exposed to it while testing.
+the game*, who writes a short note on a dream and **underlines**, inside it, what touched him.
+**A note for every generation** (2026-09-19).
 
 `interpreter.py` is that reader: Claude Opus through the cli, headless, one call per run, the
 same invocation `berserk.py` uses (`claude -p --model opus`, prompt on **stdin**, no tools,
-`cwd` in a temp dir, `CLAUDECODE` out of the env so this repo's `CLAUDE.md` is not loaded in
-front of a dream). One-shot like the worker, its own agent on the same 300s clock, and most
-runs find fewer than two new passages and exit having done nothing.
+`cwd` in a temp dir, `CLAUDECODE` out of the env) plus `--setting-sources project`, which is
+what keeps bekh's global `~/.claude/CLAUDE.md` out of the head of somebody asked to read a
+dream. One-shot like the worker.
 
+- **The writer taps the reader when a dream lands.** The interpreter's agent has **no interval
+  at all**: `stream.py` ends a successful page with `launchctl kickstart` on it
+  (`STREAM_KICK_INTERPRETER=1`, set in the worker's plist only). bekh, 2026-09-19 — it should
+  start when the dream is finished; two independent 300s timers put a note a whole tick behind
+  its dream. No `-k` and no lockfile: launchd will not start a second instance of a job that is
+  already running, so a kick during a reading is dropped, while `-k` would kill a note being
+  written mid-cli-call. A lost kick costs one dream its note — an acceptable loss by the
+  dry-run law, and the next kick reads the newest dream anyway.
 - **The persona is `interpreter.txt`, bekh's file.** The code reads it and never writes it.
   Everything appended after it — the output shape, the memory, the material — is plumbing he
   should not have to see in his prompt, which is the whole reason for the split.
 - **Tags, not json**: `<reading>…</reading>` then `<passage n="1">…</passage>` per passage,
   because the answer is full of `<mark>` and a tag inside a json string is an escaping question
-  nobody needs to get right at 3am. Parsed leniently — a reading with no passages is still a
-  reading.
+  nobody needs to get right at 3am. Parsed leniently — a note with no passage is still a note.
 - **The newest EVERY, never a backlog.** Each run takes the newest unflagged passages above the
-  watermark (the newest room any reading has covered) and only if there are `EVERY` of them.
-  If it was down for an hour, the twelve passages it missed stay unread: the stream is
-  disposable and a reading of an hour-old stretch is not what the page is for.
-- **Its memory is its own last four readings**, in the prompt, oldest first. Nothing else
-  carries from one call to the next.
-- **No checker, by decision (bekh, 2026-09-19).** Its copy of the dream is stored verbatim,
-  tags and all, and is never corrected — *a mistake in the copy is another prophecy*. The room
-  on the shelf is never written to by this process.
-- **His slips are shown, in red.** A word diff runs once at write time between the raw dream
-  and his copy with the tags stripped, and is stored as render-ready segments: `new` for words
-  that are his and not the machine's, `gone` for the machine's words he dropped, shown struck
-  through where they were dropped, his underlines riding on top of either. Words and not
-  characters — a character diff of prose is unreadable — and whitespace tokens all compare
-  equal, so reflowing a paragraph is not a slip. `new`/`gone` counts go on the ledger row, so a
-  month of them says how faithfully he re-types.
-- **The page renders every segment through `textContent`.** Only `<mark>` was ever read as a
-  tag, and that was done here; anything else he typed, `<script>` included, arrives as
+  watermark (the newest room any note has covered) and only if there are `EVERY` of them —
+  **one**, since a note belongs to a generation. If it was down for an hour, the twelve
+  passages it missed stay unread: the stream is disposable, and a note on an hour-old dream is
+  not what the page is for. The block of several is still in the file format, and the readings
+  written before this cover two.
+- **Its memory is its own last four notes**, in the prompt, oldest first. Nothing else carries
+  from one call to the next.
+- **No checker and no comparison, by decision** (bekh, 2026-09-19, after living with it for an
+  hour). Its copy of the dream is stored verbatim, tags and all, and is never corrected — *a
+  mistake in the copy is another prophecy*; the room on the shelf is never written to. The word
+  diff that used to light every tiny difference in red is **gone**: it was noise. What is stored
+  beside the verbatim copy is the same string cut by his `<mark>` tags alone, `[{t, mark}]`.
+  Old reading files still carry a `kind` per segment; the page drops the `gone` ones and reads
+  everything else by `mark`, and nothing rewrites a file on the shelf.
+- **What he found valuable is simply written in colour** — a gentle magenta or a gentle cyan,
+  never a background, an underline or a box, which both read as decoration laid over the text
+  instead of as part of it. Which of the two inks a phrase gets is chance, made stable by a
+  small hash of the room and the run's place in it, so the 60s poll never repaints a phrase a
+  different colour. There is **no toggle**: it was superfluous. `?raw=1` still serves the
+  shelf's own text, untrimmed and uncoloured, for checking what the interpreter was handed.
+- **The page renders every segment through `textContent`.** Only `<mark>` is ever read as a
+  tag, and that is done here; anything else he typed, `<script>` included, arrives as
   characters and leaves as characters.
-- **The `marks` toggle is the comparison.** On by default, remembered in `localStorage` inside a
-  try/catch; off shows the raw dream exactly as the shelf holds it. Readings are always shown —
-  an inset above their block on a phone, a right-hand column top-aligned with the block's head
-  at ≥900px, the same node either way.
+- **A note is drawn beside its dream**: an inset above the passage on a phone, a right-hand
+  column top-aligned with the block's head at ≥900px, the same node either way.
 
 Storage, all under the gitignored `shelf/stream/`:
 `readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
 model, seconds}`, and one `kind: "reading"` row per run on the shared `ledger.jsonl` (the
 worker's rows are `kind: "page"`; rows written before either existed have no kind, so everything
 reading that file treats a missing kind as a page). Failures — no cli, a timeout, an
-unparseable answer — are a ledger row and exit 0, the worker's law.
+unparseable answer — are a ledger row and exit 0, the worker's law. The monitor judges the
+reader by whether the last page that landed has a row after it, since it has no heartbeat of
+its own to age.
 
 ```bash
-uv run --python 3.12 eva/stream/interpreter.py --once     # one reading, now, by hand
+uv run --python 3.12 eva/stream/interpreter.py --once     # one note, now, by hand
 cp eva/stream/com.bekh.eva-stream-interpreter.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-interpreter.plist
-launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-interpreter
+launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-interpreter   # what the worker does
 launchctl bootout gui/$(id -u)/com.bekh.eva-stream-interpreter
 ```
 
 It needs `claude` logged in on this machine, and nothing else — not llama, not the loom. Log:
-`/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (2), `STREAM_READ_MEMORY` (4),
+`/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (1), `STREAM_READ_MEMORY` (4),
 `STREAM_READ_TIMEOUT`, `STREAM_PERSONA`.
 
 ## Plates — a testing ground, nothing scheduled
 
 A picture for a block of the stream. **Not built**: no daemon, no slot on the page, only two
 prompts kept in hand to play with and interchange (bekh, 2026-09-19), in `plates/`:
+
+**The working one is `prompt-pieces.txt`** — bekh's pick after seeing one plate from each in the
+magenta-and-cyan palette; he went to his own first on intuition, then to this one. A cheap
+decision: both files stay, and switching is which one gets filled.
 
 - `prompt-bekh.txt` — his: *you are an artist, draw an abstract interpretation of this text*,
   over the passages **verbatim** (`{text}`). It gave the first plate, a dark palette-knife oil
@@ -261,12 +276,13 @@ one line each plus a flagged page still landing; an unreachable llama as a ledge
 0; the tail cut to whole sentences; and on the routes — newest first, flagged hidden until
 `all=1`, `before` paging backwards, `n` capping the batch, the three status states, a mark
 through `/api/mark` showing up, and the star freezing a page as an artifact. For the
-interpreter: a short stretch never starting the cli at all, the block being the newest two
-unflagged, the persona going out verbatim, the last four readings in the prompt, a garbage
-answer and a dead cli as ledger rows with exit 0, an identical copy having nothing red in it, a
-slip kept and mapped (a word replaced, a word inserted inside an underline, a sentence dropped,
-an underline on a word he did not touch), whitespace he normalised not lighting up, `<mark>`
-being the only tag, and the api hanging the reading on the head of its block.
+interpreter: one new passage being a note and nothing new starting the cli at all, the block
+being the newest EVERY unflagged, the persona going out verbatim, the last four notes in the
+prompt, a garbage answer and a dead cli as ledger rows with exit 0, segments coming from the
+`<mark>` tags alone, an altered copy stored and served exactly as typed, `<mark>` being the only
+tag, an old reading's `gone` segments still reaching the page, the api hanging the note on the
+head of its block, and the kick — no subprocess with the flag off, the exact argv with it on,
+and a kick that throws costing the page nothing.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

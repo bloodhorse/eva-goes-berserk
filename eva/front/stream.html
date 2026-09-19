@@ -23,23 +23,23 @@
      The look is a PLACEHOLDER — the loom's palette, a thin rule between passages, nothing
      else — and gets its own job later. Keep it cheap here.
 
-     ?all=1 shows the passages the filter flagged. ?raw=1 turns off the ragged-end trim, so
-     what is on the shelf can be read exactly as nemo left it. -->
+     ?all=1 shows the passages the filter flagged. ?raw=1 shows the shelf's own text instead
+     of the interpreter's copy — untrimmed and uncoloured, for checking. -->
 <style>
   :root{
     --bg:#232323; --ink:#d4e3fe; --ghost:#7d8a9c; --line:#2e3547;
     --panel:#2a2b31; --sunk:#1e1e22;
     --accent:#f5c8fe; --live:#c6f1fe; --hot:#eb6f92;
-    /* The interpreter's underline: the accent at a quarter weight, so a marked phrase reads
-       as lit rather than as a box drawn round it. */
-    --mark:#f5c8fe55;
+    /* The two inks the interpreter's words are written in — gentle, but read as colour and
+       not as decoration. Which one a phrase gets is chance, held steady per phrase. */
+    --lit-a:#f29bea; --lit-b:#7fe3f5;
   }
   @media (prefers-color-scheme: light){
     :root{
       --bg:#faf4ed; --ink:#575279; --ghost:#8f8aa3; --line:#dfdad9;
       --panel:#f2ebe3; --sunk:#fffaf3;
       --accent:#907aa9; --live:#56949f; --hot:#b4637a;
-      --mark:#907aa955;
+      --lit-a:#a8329a; --lit-b:#1f7f8f;
     }
   }
   /* As in the loom: every colour below is a var() off those two blocks and nothing else, so
@@ -70,14 +70,7 @@
   #state{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   /* The quiet hint. New passages are held back while he is scrolled down — text must never
      move under a reader's eyes — and this is the only thing that appears. */
-  #fresh{color:var(--accent); font-size:13px; padding:4px 0;}
-  /* The one switch on the page: the interpreter's copy with its underlines, or the raw dream.
-     Default on, remembered per browser. It doubles as the comparison — one tap and what is on
-     the shelf is back on screen. */
-  #marks{margin-left:auto; font-size:13px; padding:4px 6px; color:var(--ghost);
-    border:1px solid var(--line); border-radius:8px;}
-  #marks.on{color:var(--accent); border-color:var(--mark);}
-
+  #fresh{margin-left:auto; color:var(--accent); font-size:13px; padding:4px 0;}
   main{flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;}
   #feed{
     /* A reading measure, centred. 34em at 17px is ~62 characters, comfortable on a phone
@@ -91,22 +84,17 @@
   /* The second voice (eva/stream/interpreter.py): a few sentences about a stretch of two
      passages, hung off the newest of them. Quieter and smaller than the dream, with an accent
      rule down its side so it is never mistaken for the seed, which is also grey. */
-  .reading{margin:0 0 18px; padding:2px 0 2px 14px; border-left:2px solid var(--mark);
+  .reading{margin:0 0 18px; padding:2px 0 2px 14px; border-left:2px solid var(--line);
     color:var(--ghost); font-size:14.5px; line-height:1.55; white-space:pre-wrap;
     overflow-wrap:anywhere;}
   .reading .rwhen{display:block; margin-top:8px; font-size:12px; opacity:.75;}
 
-  /* The interpreter's underline, and its slips. Three states that have to be told apart at a
-     glance and in both rooms: a lit background, red underlined text he added, red struck-through
-     text he dropped. Never fixed — a slip is another prophecy — only shown. */
-  /* Background AND an underline in the full accent: the quarter-weight tint alone blends to
-     #4d444f on the #232323 ground, which a phone at evening brightness simply does not show
-     (bekh, 2026-09-19: "on a phone i'm not seeing the highlight"). The underline is what
-     survives a dim screen; take it out and the interpreter's marks vanish there again. */
-  .hl{background:var(--mark); border-radius:2px; box-shadow:inset 0 -2px 0 var(--accent);}
-  .new{color:var(--hot); text-decoration:underline; text-decoration-thickness:1px;
-    text-underline-offset:2px;}
-  .gone{color:var(--hot); text-decoration:line-through; font-size:0.85em; opacity:.7;}
+  /* What the interpreter found valuable is simply WRITTEN IN COLOUR (bekh, 2026-09-19): no
+     background, no underline, no box — the words themselves, in one of two gentle inks. An
+     underline and a tint were tried first and both read as decoration laid over the text
+     rather than as part of it. */
+  .lit-a{color:var(--lit-a);}
+  .lit-b{color:var(--lit-b);}
   /* pre-wrap on both: a base model's document carries its own line breaks, `> > >` and stray
      indents, and reflowing them would be editing the evidence. */
   .seed, .body{white-space:pre-wrap; overflow-wrap:anywhere; margin:0;}
@@ -148,7 +136,6 @@
   <span id="dot"></span>
   <span id="state">…</span>
   <button id="fresh" hidden>new</button>
-  <button id="marks" class="on">marks</button>
 </header>
 
 <main id="scroll">
@@ -162,15 +149,15 @@
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
-const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), marks: $('marks'),
-            scroll: $('scroll'), feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'),
-            notice: $('notice')};
+const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), scroll: $('scroll'),
+            feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'), notice: $('notice')};
 
 const Q = new URLSearchParams(location.search);
 // Flagged passages, off by default: the flagged pile is for auditing the filter against his
 // marks later, not for reading in bed.
 const ALL = Q.get('all') === '1';
-// The ragged-end trim off, so the shelf can be read exactly as nemo left it.
+// The shelf's own text: the raw dream, untrimmed and uncoloured, for checking what the
+// interpreter was handed. Everything else on this page is his copy of it.
 const RAW = Q.get('raw') === '1';
 const BATCH = 10;
 const POLL_MS = 60000;
@@ -181,12 +168,6 @@ let more = true;
 let busy = false;
 let pending = [];          // newest-first, held back while he is scrolled down
 let status = null;
-
-// The interpreter's copy or the raw dream. Default ON, remembered per browser — in a
-// try/catch because a private window, blocked site data or a thumbnail capture makes every
-// one of these throw, and a page that cannot remember a toggle still has to render.
-let MARKSON = true;
-try { MARKSON = localStorage.getItem('stream.marks') !== '0'; } catch (e) { /* no memory */ }
 
 function api(q){
   return fetch('/api/stream?' + q + (ALL ? '&all=1' : ''), {cache: 'no-store'})
@@ -320,37 +301,45 @@ function build(p){
 // included, arrives here as characters and leaves as characters.
 function drawBody(body, p){
   while (body.firstChild) body.removeChild(body.firstChild);
-  const segs = (MARKSON && Array.isArray(p.segments) && p.segments.length) ? p.segments : null;
-  if (!segs){
+  // Reading files written before 2026-09-19 carry a `kind` per segment from the retype check
+  // that is gone: `gone` was text the machine wrote and he did not, and there is nothing to
+  // show it against any more, so it is simply left out.
+  const segs = (!RAW && Array.isArray(p.segments) && p.segments.length)
+    ? p.segments.filter(s => s.kind !== 'gone') : null;
+  if (!segs || !segs.length){
     const t = p.text || '';
-    body.appendChild(document.createTextNode(t.slice(0, trimAt(t))));
+    body.appendChild(document.createTextNode(RAW ? t : t.slice(0, trimAt(t))));
     return;
   }
-  // The ragged end is judged on what is actually read — everything he did not drop — and the
-  // struck-through words ride along wherever they fall inside that.
-  const plain = segs.filter(s => s.kind !== 'gone').map(s => s.t).join('');
+  const plain = segs.map(s => s.t).join('');
   const cut = trimAt(plain);
   let at = 0;
-  for (const s of segs){
+  for (let i = 0; i < segs.length; i++){
+    const s = segs[i];
     let t = s.t || '';
-    if (s.kind !== 'gone'){
-      if (at >= cut) break;
-      if (at + t.length > cut) t = t.slice(0, cut - at);
-      at += (s.t || '').length;
-    }
+    if (at >= cut) break;
+    if (at + t.length > cut) t = t.slice(0, cut - at);
+    at += (s.t || '').length;
     if (!t) continue;
-    const cls = [];
-    if (s.kind === 'new' || s.kind === 'gone') cls.push(s.kind);
-    if (s.mark) cls.push('hl');              // underlined AND his: both, on one span
-    if (!cls.length){
+    if (!s.mark){
       body.appendChild(document.createTextNode(t));
-    } else {
-      const span = document.createElement('span');
-      span.className = cls.join(' ');
-      span.textContent = t;
-      body.appendChild(span);
+      continue;
     }
+    const span = document.createElement('span');
+    // Which ink is chance, but the SAME chance every render: a phrase that changed colour
+    // under the 60s poll would look like the page saying something it is not.
+    span.className = ink(p.room, i);
+    span.textContent = t;
+    body.appendChild(span);
   }
+}
+
+// A small stable hash of the room and the run's place in it. Nothing depends on it being a
+// good hash — only on it being the same one twice.
+function ink(room, i){
+  let h = i * 2654435761;
+  for (let k = 0; k < room.length; k++) h = (h * 31 + room.charCodeAt(k)) | 0;
+  return (h & 1) ? 'lit-a' : 'lit-b';
 }
 
 function stroke(which, p){
@@ -479,18 +468,6 @@ function poll(){
 }
 
 el.fresh.addEventListener('click', showPending);
-
-function drawMarksBtn(){ el.marks.classList.toggle('on', MARKSON); }
-
-el.marks.addEventListener('click', () => {
-  MARKSON = !MARKSON;
-  try { localStorage.setItem('stream.marks', MARKSON ? '1' : '0'); } catch (e) { /* no memory */ }
-  drawMarksBtn();
-  // Only the bodies change; the scroll, the marks and the readings stay where they are, so
-  // the toggle really is a comparison and not a reload.
-  for (const art of el.feed.querySelectorAll('.pass')) if (art.render) art.render();
-});
-drawMarksBtn();
 
 fill();
 setInterval(poll, POLL_MS);

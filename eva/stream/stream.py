@@ -19,7 +19,11 @@ came back empty — all of them write a row and leave quietly, because launchd's
 treats a non-zero exit as a reason to back off, and a stream that punishes itself for the
 five minutes the GPU was busy is a stream that stops.
 
-Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_SEEDS
+**The reader is tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that landed ends by
+`launchctl kickstart`ing `com.bekh.eva-stream-interpreter`, which has no interval of its own.
+Best-effort: a failure is one log line and nothing else.
+
+Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
 (shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, plus
 loom's own LOOM_SITTINGS and LOOM_LLAMA.
 """
@@ -32,6 +36,7 @@ import os
 import random
 import re
 import secrets
+import subprocess
 import sys
 import time
 
@@ -71,6 +76,13 @@ TAIL_CHARS = 600
 # over-count characters — the error is on the side of skipping a seed, never of handing
 # llama a document it has to truncate the front off in silence.
 SEED_MAX_CHARS = 12000
+
+# The reader (interpreter.py) has no clock of its own: it is a launchd job with no interval,
+# and this is what starts it. bekh, 2026-09-19 — it should start when the dream is finished,
+# not on a timer of its own, which used to land a note a whole tick late.
+KICK = os.environ.get("STREAM_KICK_INTERPRETER") == "1"
+KICK_JOB = "com.bekh.eva-stream-interpreter"
+KICK_TIMEOUT = 15
 
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, FOLDER))
@@ -400,7 +412,33 @@ def write_page(rng: random.Random) -> int:
     beat(True, name)
     log(f"{name} · {ident} · t{params['temperature']} · {d.get('tokens_predicted')} tok"
         + (f" · flagged {flag}" if flag else ""))
+    # Last, and only on a page that really landed: the reader is started by the dream being
+    # finished and by nothing else.
+    kick()
     return 0
+
+
+def kick() -> None:
+    """Tap the reader, best-effort. Never anything but a log line if it fails.
+
+    **No `-k`.** launchd does not start a second instance of a job that is already running, so
+    a kick that arrives while a reading is in flight is dropped and the two can never overlap —
+    which is also why there is no lockfile here. Add `-k` and that becomes the opposite: it
+    kills the running job first, so a note being written would be cut off mid-cli-call.
+
+    A failed kick costs one dream its note. That is the dry-run law's acceptable loss, and the
+    next dream's kick reads the newest one anyway — which is why nothing retries and why the
+    page is never told.
+    """
+    if not KICK:
+        return
+    cmd = ["launchctl", "kickstart", f"gui/{os.getuid()}/{KICK_JOB}"]
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=KICK_TIMEOUT)
+        if r.returncode != 0:
+            log(f"kick · launchctl said {r.returncode}: {(r.stderr or '').strip()[:120]}")
+    except (OSError, subprocess.SubprocessError) as exc:
+        log(f"kick · {exc}")
 
 
 def main(argv: list[str]) -> int:

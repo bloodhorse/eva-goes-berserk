@@ -149,20 +149,33 @@ def render(spin, now):
 
     # The second voice. Its own line and not mixed into the counts above: the interpreter can
     # be dead for a day while the stream is perfectly healthy, and the reverse.
+    #
+    # It has NO clock — stream.py kickstarts it when a dream lands — so a heartbeat age would
+    # say nothing about it. The question that does is whether the last page that landed has a
+    # row after it: a note, or a failure to write one.
     today = time.strftime("%Y-%m-%d", time.localtime(now))
     ok = [r for r in reads if not r.get("error")]
     mine = [r for r in ok if time.strftime("%Y-%m-%d", time.localtime(r.get("ts") or 0)) == today]
     bad = [r for r in reads if r.get("error")]
     if reads:
         age = fmt_age(now - (ok[-1].get("ts") or now)) + " ago" if ok else "never"
-        words = sum(r.get("new") or 0 for r in ok), sum(r.get("gone") or 0 for r in ok)
-        out.append(f"  {MINT_LO}{len(mine)} readings today · last {age} · "
-                   f"+{words[0]}/-{words[1]} words re-typed{R}")
+        marked = sum(r.get("marked") or 0 for r in mine)
+        out.append(f"  {MINT_LO}{len(mine)} notes today · last {age} · "
+                   f"{marked} passages marked up{R}")
+        page_ts = (landed[-1].get("ts") or 0) if landed else 0
+        read_ts = reads[-1].get("ts") or 0
+        if page_ts and read_ts < page_ts:
+            waited = now - page_ts
+            # A kick, a cli call and an opus answer are tens of seconds; under two minutes is
+            # the note still being written, not a reader that never woke up.
+            mark = LBLUE if waited < 120 else PINK
+            out.append(f"  {mark}the last dream has no note yet "
+                       f"({fmt_age(waited)} since it landed){R}")
         if bad:
-            out.append(f"  {PINK}last reading failure: {cut(bad[-1].get('error'), width - 28)}"
+            out.append(f"  {PINK}last note failure: {cut(bad[-1].get('error'), width - 26)}"
                        f" ({fmt_age(now - (bad[-1].get('ts') or now))} ago){R}")
     else:
-        out.append(f"  {LBLUE}no readings yet — the interpreter has not run here{R}")
+        out.append(f"  {LBLUE}no notes yet — the interpreter has not run here{R}")
     if landed:
         heats = [r.get("temperature") for r in landed[-40:] if r.get("temperature")]
         toks = [r.get("tokens") or 0 for r in landed[-40:]]

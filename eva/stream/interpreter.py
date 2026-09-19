@@ -25,14 +25,13 @@ word on the way, *that is another prophecy* and is kept, not corrected. The room
 is never written to by this process — not as a check, simply because the record is the record,
 and the page shows the raw dream the moment the marks are switched off.
 
-**His slips are shown, in red.** Not fixed: a word diff runs once here, at write time, between
-the raw dream and his copy with the tags stripped, and the result is stored as render-ready
-segments — what he added in red, what he dropped struck through where it was dropped, his
-underlines on top. Words and not characters, because a character diff of prose is unreadable;
-whitespace tokens compare equal to each other, so normalising a double space is not a slip.
+**And nothing is compared either** (bekh, 2026-09-19, after living with it for an hour): a word
+diff of his copy against the dream used to light every tiny difference in red, and it was noise.
+What is stored is his copy, verbatim, plus the same string cut into render-ready runs by his
+`<mark>` tags alone. The page writes the marked words in colour and that is the whole of it.
 
-Env: STREAM_DIR (default shelf/stream/), STREAM_READ_EVERY (how many passages a reading
-covers, default 2), STREAM_READ_MEMORY (how many of its own readings it is shown, default 4),
+Env: STREAM_DIR (default shelf/stream/), STREAM_READ_EVERY (how many passages a note
+covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is shown, default 4),
 STREAM_READ_TIMEOUT, STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
 """
 
@@ -59,10 +58,10 @@ READINGS = os.path.join(STREAM, "readings")
 LEDGER = os.path.join(STREAM, "ledger.jsonl")
 PERSONA = os.environ.get("STREAM_PERSONA", os.path.join(HERE, "interpreter.txt"))
 
-# How many passages one reading covers. Two while bekh is testing — he wants to be more
-# exposed to the reading than to the stream — and the dial is here because it is the one
-# number that decides how much of an opus bill a day of dreaming costs.
-EVERY = int(os.environ.get("STREAM_READ_EVERY", "2"))
+# How many passages one note covers. One, since 2026-09-19: bekh wants a note for every
+# generation. The dial is here because it is the one number that decides how much of an opus
+# bill a day of dreaming costs.
+EVERY = int(os.environ.get("STREAM_READ_EVERY", "1"))
 # How many of its OWN past readings it is shown. Its memory, and the only continuity there is:
 # nothing else carries from one call to the next. Four is what fits beside two passages
 # without the material drowning in it.
@@ -232,102 +231,40 @@ READING_RE = re.compile(r"<reading>(.*?)</reading>", re.S | re.I)
 PASSAGE_RE = re.compile(r"<passage[^>]*\bn\s*=\s*[\"']?(\d+)[\"']?[^>]*>(.*?)</passage>", re.S | re.I)
 
 
-# ---- his copy against the dream ---------------------------------------------------------------
-# The page shows his copy, so whatever he changed while re-typing is what bekh would read as the
-# dream. Rather than correct it — a slip is another prophecy — the difference is made visible:
-# `new` for words that are his and not the machine's, `gone` for the machine's words he dropped,
-# shown where they were dropped, and his `<mark>` underlines riding on top of either.
-#
-# WORDS, not characters: a character diff of prose is a rash of red inside words and unreadable.
-# Whitespace tokens all normalise to one space before the comparison, so reflowing a paragraph or
-# closing up a double space is not a slip — the whitespace SHOWN is still his.
+# ---- his copy, as he typed it -----------------------------------------------------------------
+# The page shows HIS copy of the dream and nothing is compared against the raw text (bekh,
+# 2026-09-19: the retype marks were too much noise). All that is read out of it is where he put
+# his underlines — `<mark>` is the only tag there is, and everything else he may have typed,
+# angle brackets and all, is characters and stays characters. A stray `</mark>` closes nothing
+# rather than throwing.
 
-TOKEN_RE = re.compile(r"\s+|\S+")
 MARK_TAG_RE = re.compile(r"</?mark>", re.I)
 
 
-def unmark(copy: str) -> tuple[str, list[bool]]:
-    """His copy with the `<mark>` tags taken out, plus a flag per remaining character saying
-    whether it stood inside a pair. Only `<mark>`/`</mark>` are read as tags — everything else
-    he may have typed, angle brackets and all, is text and stays text. A stray `</mark>` closes
-    nothing rather than throwing."""
-    out, flags, depth, i = [], [], 0, 0
+def segments_of(copy: str) -> list[dict]:
+    """His copy as render-ready runs: `[{t, mark}]`, adjacent runs of one state joined.
+
+    Nothing here knows about the dream on the shelf. The raw text is still one query string
+    away (`?raw=1`) and the room is never written to, which is the whole of the record-keeping
+    this needs.
+    """
+    segs: list[dict] = []
+    depth, i = 0, 0
+
+    def add(text: str, mark: bool) -> None:
+        if not text:
+            return
+        if segs and segs[-1]["mark"] == mark:
+            segs[-1]["t"] += text
+        else:
+            segs.append({"t": text, "mark": mark})
+
     for m in MARK_TAG_RE.finditer(copy):
-        chunk = copy[i:m.start()]
-        out.append(chunk)
-        flags.extend([depth > 0] * len(chunk))
+        add(copy[i:m.start()], depth > 0)
         depth = max(0, depth + (-1 if m.group(0)[1] == "/" else 1))
         i = m.end()
-    chunk = copy[i:]
-    out.append(chunk)
-    flags.extend([depth > 0] * len(chunk))
-    return "".join(out), flags
-
-
-def tokens_of(text: str, flags: list[bool] | None = None) -> list[tuple[str, bool]]:
-    """Word and whitespace tokens, each with whether any of it was underlined. A mark that
-    opens mid-word underlines the whole word: the token stays whole, which is what keeps the
-    diff from seeing `swi` and `tch` where the dream said `switch`."""
-    out = []
-    for m in TOKEN_RE.finditer(text):
-        out.append((m.group(0),
-                    bool(flags and any(flags[m.start():m.end()]))))
-    return out
-
-
-def _norm(tok: str) -> str:
-    return " " if tok.isspace() else tok
-
-
-def diff_segments(raw: str, copy: str) -> tuple[list[dict], int, int]:
-    """(segments, words he added, words he dropped). A segment is `{t, mark, kind}` with kind
-    one of same / new / gone, adjacent tokens of one kind and one mark run together."""
-    import difflib
-    plain, flags = unmark(copy)
-    a, b = tokens_of(raw), tokens_of(plain, flags)
-    sm = difflib.SequenceMatcher(a=[_norm(t) for t, _ in a], b=[_norm(t) for t, _ in b],
-                                 autojunk=False)
-    rows: list[tuple[str, bool, str]] = []
-    added = dropped = 0
-
-    def push(toks, kind, keep_mark):
-        nonlocal added, dropped
-        # A run that is nothing but whitespace is a break he added or dropped: invisible
-        # either way, and a struck-through space is a smudge. Inside a run that has words in
-        # it the spaces stay with their kind, or a dropped sentence would be struck through
-        # as one long word.
-        if kind in ("new", "gone") and all(t.strip() == "" for t, _ in toks):
-            if kind == "gone":
-                return
-            kind = "same"
-        for t, mk in toks:
-            if t.strip():
-                if kind == "new":
-                    added += 1
-                elif kind == "gone":
-                    dropped += 1
-            rows.append((t, mk if keep_mark else False, kind))
-
-    for op, i1, i2, j1, j2 in sm.get_opcodes():
-        if op == "equal":
-            push(b[j1:j2], "same", True)
-        elif op == "insert":
-            push(b[j1:j2], "new", True)
-        elif op == "delete":
-            push(a[i1:i2], "gone", False)
-        else:
-            # The machine's words first, then his: the strike-through stands where the
-            # replacement happened instead of after it.
-            push(a[i1:i2], "gone", False)
-            push(b[j1:j2], "new", True)
-
-    segs: list[dict] = []
-    for t, mk, kind in rows:
-        if segs and segs[-1]["mark"] == mk and segs[-1]["kind"] == kind:
-            segs[-1]["t"] += t
-        else:
-            segs.append({"t": t, "mark": mk, "kind": kind})
-    return segs, added, dropped
+    add(copy[i:], depth > 0)
+    return segs
 
 
 def parse(answer: str, told: list[dict]) -> tuple[str, dict]:
@@ -398,17 +335,9 @@ def run_once() -> int:
                 "seconds": round(time.time() - started, 1)})
         return 0
 
-    # The diff runs once, here, and never in the page or the server: it is a fact about two
-    # strings that will not change again, and the page should be drawing, not comparing.
-    segments, added, dropped = {}, 0, 0
-    for p in told:
-        copy = marked.get(p["room"])
-        if copy is None:
-            continue
-        segs, a, d = diff_segments(p.get("text") or "", copy)
-        segments[p["room"]] = segs
-        added += a
-        dropped += d
+    # Cut once, here, and never in the page or the server: the same string will not change
+    # again, and the page should be drawing, not parsing.
+    segments = {room: segments_of(copy) for room, copy in marked.items()}
 
     obj = {"ts": time.time(),
            # Newest first, so the head of the block — the passage the page hangs the reading
@@ -420,13 +349,10 @@ def run_once() -> int:
            "model": MODEL,
            "seconds": round(time.time() - started, 1)}
     path = write_reading(obj)
-    # `new`/`gone` on the row so a month of these says how faithfully he re-types, without
-    # anybody opening a reading file.
     ledger({"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
-            "new": added, "gone": dropped,
             "model": MODEL, "seconds": obj["seconds"]})
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
-        f"{len(marked)} marked up · +{added}/-{dropped} words · {obj['seconds']}s")
+        f"{len(marked)} marked up · {obj['seconds']}s")
     return 0
 
 

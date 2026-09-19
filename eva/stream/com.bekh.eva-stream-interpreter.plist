@@ -4,13 +4,22 @@
 <dict>
     <key>Label</key>
     <string>com.bekh.eva-stream-interpreter</string>
-    <!-- The second voice: a reading of every couple of passages, written by opus through the
-         cli. Same clock as the worker and the same shape — one run, at most one reading, exit.
-         Most runs find fewer than STREAM_READ_EVERY new passages and exit having done nothing,
-         which is cheap and is why this can share the worker's interval instead of guessing at
-         a slower one.
+    <!-- The second voice: a note on every dream, written by opus through the cli. One run,
+         at most one note, exit.
 
+         **No interval, on purpose** (bekh, 2026-09-19): the reader is started when a dream is
+         finished and at no other time — stream.py kickstarts this job after a page lands
+         (STREAM_KICK_INTERPRETER=1 in com.bekh.eva-stream.plist). Two independent 300s timers
+         used to land a note a whole tick after its dream.
+
+         Putting a StartInterval back breaks nothing; it only brings back the late-by-a-tick
+         note and wakes this job 288 times a day to find nothing new and exit. A lost kick
+         costs one dream its note, which the dry-run law calls an acceptable loss — and the
+         next kick reads the newest dream anyway.
+
+         By hand:
              launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-interpreter
+             uv run --python 3.12 eva/stream/interpreter.py --once
 
          Needs `claude` logged in on this machine; it does NOT need llama or the loom. -->
     <key>ProgramArguments</key>
@@ -36,8 +45,6 @@
         <key>HOME</key>
         <string>/Users/bekh</string>
     </dict>
-    <key>StartInterval</key>
-    <integer>300</integer>
     <key>RunAtLoad</key>
     <false/>
     <key>StandardOutPath</key>

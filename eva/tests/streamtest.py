@@ -384,6 +384,51 @@ class Worker(unittest.TestCase):
         self.assertIs(hb["ok"], False)
         self.assertIsNone(hb["last_ok"])           # nothing has ever landed here
 
+    def test_the_reader_is_tapped_only_when_a_page_landed(self):
+        """stream.py starts the interpreter when a dream is finished; the reader has no clock.
+        Never reach launchctl from a test — the flag is off unless a test turns it on."""
+        put_seed("k.txt", MARK + " and then\n")
+        seen = []
+        real = stream.subprocess.run
+
+        def watch(cmd, **kw):
+            seen.append(cmd)
+            return real([sys.executable, "-c", ""], **kw)
+
+        stream.subprocess.run = watch
+        try:
+            self.assertFalse(stream.KICK)            # unset in the tests, and it must stay so
+            self.assertEqual(run("--once")[0], 0)
+            self.assertEqual(seen, [], "a subprocess was spawned with the kick off")
+
+            wipe_stream()
+            put_seed("k.txt", MARK + " and then\n")
+            stream.KICK = True
+            self.assertEqual(run("--once")[0], 0)
+            self.assertEqual(seen, [["launchctl", "kickstart",
+                                     f"gui/{os.getuid()}/com.bekh.eva-stream-interpreter"]])
+        finally:
+            stream.subprocess.run = real
+            stream.KICK = False
+
+    def test_a_kick_that_fails_costs_the_page_nothing(self):
+        put_seed("k.txt", MARK + " and then\n")
+        real = stream.subprocess.run
+        stream.subprocess.run = lambda *a, **kw: (_ for _ in ()).throw(OSError("no launchctl"))
+        stream.KICK = True
+        try:
+            code, out = run("--once")
+        finally:
+            stream.subprocess.run = real
+            stream.KICK = False
+        self.assertEqual(code, 0, out)               # never an error exit
+        self.assertEqual(len(rooms()), 1)
+        row = ledger_rows()[-1]
+        self.assertEqual(row["kind"], "page")
+        self.assertNotIn("error", row)               # never a ledger failure row
+        self.assertIs(heartbeat()["ok"], True)       # never a heartbeat change
+        self.assertIn("kick ·", out)                 # one log line, and that is all
+
     def test_no_seed_at_all_is_a_ledger_line_too(self):
         code, out = run("--once")                  # wipe_stream left the seeds folder empty
         self.assertEqual(code, 0, out)
@@ -621,6 +666,13 @@ class Interpreter(unittest.TestCase):
     def setUp(self):
         wipe_stream()
         self.fakes = []
+        self.every = interpreter.EVERY
+
+    def block_of(self, n: int) -> None:
+        """A note covers one passage by default; the file format still holds a block of
+        several, and the old readings on the shelf are blocks of two."""
+        interpreter.EVERY = n
+        self.addCleanup(setattr, interpreter, "EVERY", self.every)
 
     def tearDown(self):
         for f in self.fakes:
@@ -642,17 +694,38 @@ class Interpreter(unittest.TestCase):
             out.append(name)
         return out
 
-    def test_a_short_stretch_is_not_read_at_all(self):
-        self.pages(("1000", "only one passage so far."))
+    def test_one_new_passage_is_a_note(self):
+        """The default since 2026-09-19: a note for every generation."""
+        self.assertEqual(interpreter.EVERY, 1)
+        rooms = self.pages(("1000", "the switch hums."))
+        f = self.fake()
+        code, out = interpret(f)
+        self.assertEqual(code, 0, out)
+        got = readings_on_disk()
+        self.assertEqual([d["rooms"] for d in got], [rooms])
+
+    def test_nothing_new_is_read_by_nobody(self):
+        self.pages(("1000", "one."))
+        self.assertEqual(interpret(self.fake())[0], 0)      # covers it
         f = self.fake()
         code, out = interpret(f)
         self.assertEqual(code, 0, out)
         # The fake writes its log the moment it runs, so its absence is the proof.
+        self.assertFalse(os.path.exists(f["log"]), "claude was started with nothing new")
+        self.assertEqual(len(readings_on_disk()), 1)
+
+    def test_a_short_stretch_is_not_read_at_all(self):
+        self.block_of(2)
+        self.pages(("1000", "only one passage so far."))
+        f = self.fake()
+        code, out = interpret(f)
+        self.assertEqual(code, 0, out)
         self.assertFalse(os.path.exists(f["log"]), "claude was started for one passage")
         self.assertEqual(readings_on_disk(), [])
         self.assertEqual(ledger_rows(), [])          # not even a row: this is the usual state
 
     def test_the_block_is_the_newest_two_unflagged(self):
+        self.block_of(2)
         self.pages(("1000", "the oldest one."), ("1005", "a footer.", "copyright"),
                    ("1010", "the switch hums. The second sentence goes."),
                    ("1015", "the newest one."))
@@ -680,6 +753,7 @@ class Interpreter(unittest.TestCase):
         self.assertFalse(os.path.exists(f2["log"]))
 
     def test_the_persona_file_goes_out_verbatim(self):
+        self.block_of(2)
         self.pages(("1000", "one."), ("1005", "two."))
         f = self.fake()
         self.assertEqual(interpret(f)[0], 0)
@@ -692,6 +766,7 @@ class Interpreter(unittest.TestCase):
         self.assertIn("<passage n=\"1\">", prompt)
 
     def test_it_is_shown_its_last_four_readings(self):
+        self.block_of(2)
         for i in range(6):
             put_reading([f"stream/2026-09-18/{1000 + i}"], f"memory number {i}",
                         time.time() - 10000 + i)
@@ -705,6 +780,7 @@ class Interpreter(unittest.TestCase):
             self.assertNotIn(f"memory number {i}", prompt)
 
     def test_an_unreadable_answer_is_a_ledger_row_and_exit_zero(self):
+        self.block_of(2)
         self.pages(("1000", "one."), ("1005", "two."))
         code, out = interpret(self.fake("garbage"))
         self.assertEqual(code, 0, out)
@@ -714,73 +790,55 @@ class Interpreter(unittest.TestCase):
         self.assertEqual(len(row["rooms"]), 2)
 
     def test_a_cli_that_dies_is_a_ledger_row_too(self):
+        self.block_of(2)
         self.pages(("1000", "one."), ("1005", "two."))
         self.assertEqual(interpret(self.fake("boom"))[0], 0)
         self.assertIn("exited 3",
                       [r for r in ledger_rows() if r.get("kind") == "reading"][-1]["error"])
 
     # ---- his copy, kept as he typed it ----------------------------------------------------
-    def test_an_identical_copy_has_nothing_red_in_it(self):
-        self.pages(("1000", "one."), ("1005", "the line went quiet."))
-        self.assertEqual(interpret(self.fake())[0], 0)
-        got = readings_on_disk()[0]
-        segs = got["segments"]["stream/2026-09-19/1005"]
-        self.assertEqual({s["kind"] for s in segs}, {"same"})
-        self.assertEqual("".join(s["t"] for s in segs), "the line went quiet.")
-        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
-        self.assertEqual((row["new"], row["gone"]), (0, 0))
+    def test_segments_come_from_the_mark_tags_and_nothing_else(self):
+        segs = interpreter.segments_of("plain <mark>lit</mark> plain again")
+        self.assertEqual([(x["t"], x["mark"]) for x in segs],
+                         [("plain ", False), ("lit", True), (" plain again", False)])
+        # runs of one state join, so the page draws one span and not one per word
+        self.assertEqual(interpreter.segments_of("<mark>a</mark><mark>b</mark>"),
+                         [{"t": "ab", "mark": True}])
+        # and nothing here has ever heard of the dream it is a copy of
+        self.assertEqual(interpreter.segments_of("no tags"), [{"t": "no tags", "mark": False}])
 
-    def test_a_slip_is_shown_and_never_corrected(self):
+    def test_an_altered_copy_is_stored_and_served_exactly_as_typed(self):
         dream = "the switch hums.\n\nThe second sentence goes. the line stayed open."
-        self.pages(("1000", "one."), ("1005", dream))
+        self.pages(("1005", dream))
         self.assertEqual(interpret(self.fake("altered"))[0], 0)
         got = readings_on_disk()[0]
         room = "stream/2026-09-19/1005"
-        # his copy, verbatim, tags and all — the room on the shelf is untouched
+        # his copy, verbatim, tags and all
         self.assertIn("<mark>", got["marked"][room])
         self.assertIn("SWITCH", got["marked"][room])
-        self.assertEqual(on_disk(room)["nodes"][
-            [k for k, v in on_disk(room)["nodes"].items() if v["kind"] == "model"][0]]["text"],
-            dream)
-
+        # the room on the shelf is untouched — the record is still the record
+        node = [v for v in on_disk(room)["nodes"].values() if v["kind"] == "model"][0]
+        self.assertEqual(node["text"], dream)
         segs = got["segments"][room]
-        text = lambda kind: "".join(s["t"] for s in segs if s["kind"] == kind)
-        # a word replaced: the machine's struck through where it stood, his in red after it
-        self.assertIn("switch", text("gone"))
-        self.assertIn("SWITCH", text("new"))
-        gones = [i for i, s in enumerate(segs) if s["kind"] == "gone"]
-        news = [i for i, s in enumerate(segs) if s["kind"] == "new"]
-        self.assertLess(gones[0], news[0])
-        # a whole sentence dropped, its spaces struck through with it
-        self.assertIn("second sentence goes", text("gone"))
-        # a word he inserted INSIDE his own underline is both
-        self.assertTrue(any(s["mark"] and s["kind"] == "new" and "quietly" in s["t"]
-                            for s in segs), segs)
-        # and an underline on a word he did not touch is a plain highlight
-        self.assertTrue(any(s["mark"] and s["kind"] == "same" and "line" in s["t"]
-                            for s in segs), segs)
+        # nothing is compared against the dream any more: no kinds, no red, just his text
+        self.assertEqual({k for x in segs for k in x}, {"t", "mark"})
+        self.assertEqual("".join(x["t"] for x in segs),
+                         got["marked"][room].replace("<mark>", "").replace("</mark>", ""))
+        self.assertTrue(any(x["mark"] for x in segs))
         row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
-        self.assertGreater(row["new"], 0)
-        self.assertGreater(row["gone"], 0)
-
-    def test_whitespace_he_normalised_is_not_a_slip(self):
-        segs, new, gone = interpreter.diff_segments("a  line\n\nand another",
-                                                    "a line\nand another")
-        self.assertEqual((new, gone), (0, 0))
-        self.assertEqual({s["kind"] for s in segs}, {"same"})
-        # and the whitespace SHOWN is his
-        self.assertEqual("".join(s["t"] for s in segs), "a line\nand another")
+        self.assertNotIn("new", row)
+        self.assertNotIn("gone", row)
 
     def test_only_mark_is_a_tag_and_a_stray_close_is_survivable(self):
-        segs, _, _ = interpreter.diff_segments(
-            "a <b>bold</b> claim", "a <b><mark>bold</mark></b></mark> claim")
-        whole = "".join(s["t"] for s in segs if s["kind"] != "gone")
+        segs = interpreter.segments_of("a <b><mark>bold</mark></b></mark> claim")
+        whole = "".join(x["t"] for x in segs)
         self.assertIn("<b>", whole)                  # any other tag is characters, not markup
         self.assertNotIn("<mark>", whole)
-        self.assertTrue(any(s["mark"] and "bold" in s["t"] for s in segs))
+        self.assertTrue(any(x["mark"] and "bold" in x["t"] for x in segs))
 
     # ---- what the api does with all that --------------------------------------------------
     def test_the_api_carries_the_copy_and_hangs_the_reading_on_the_head(self):
+        self.block_of(2)
         rooms = self.pages(("1000", "one."), ("1005", "two."))
         self.assertEqual(interpret(self.fake())[0], 0)
         d = call("/api/stream?n=5")[1]
@@ -802,6 +860,7 @@ class Interpreter(unittest.TestCase):
         self.assertIsNone(p["reading"])
 
     def test_a_script_tag_in_his_copy_reaches_the_page_as_text(self):
+        self.block_of(2)
         self.pages(("1000", "one."), ("1005", "the door."))
         self.assertEqual(interpret(self.fake("script"))[0], 0)
         p = [x for x in call("/api/stream?n=5")[1]["pages"]
@@ -811,7 +870,28 @@ class Interpreter(unittest.TestCase):
         self.assertIn("<script>", "".join(s["t"] for s in p["segments"]))
         self.assertIn("<script>", p["marked"])
 
+    def test_an_old_readings_gone_segments_still_reach_the_page(self):
+        """Reading files written before 2026-09-19 carry a `kind` per segment from the retype
+        check. They are served as they are — the page drops the `gone` ones, which is where
+        that decision belongs; nothing rewrites a file on the shelf."""
+        room = self.pages(("1000", "the line stayed open."))[0]
+        day = os.path.join(STREAM_DIR, "readings", "2026-09-18")
+        os.makedirs(day, exist_ok=True)
+        with open(os.path.join(day, "2300.json"), "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time() - 3600, "rooms": [room], "reading": "an old note",
+                       "marked": {room: "the line <mark>stayed</mark> shut."},
+                       "segments": {room: [{"t": "the line ", "mark": False, "kind": "same"},
+                                           {"t": "stayed", "mark": True, "kind": "same"},
+                                           {"t": " open.", "mark": False, "kind": "gone"},
+                                           {"t": " shut.", "mark": False, "kind": "new"}]},
+                       "model": "opus", "seconds": 1.0}, f)
+        p = [x for x in call("/api/stream?n=5")[1]["pages"] if x["room"] == room][0]
+        self.assertEqual(p["reading"]["text"], "an old note")
+        kept = [x for x in p["segments"] if x.get("kind") != "gone"]
+        self.assertEqual("".join(x["t"] for x in kept), "the line stayed shut.")
+
     def test_unbalanced_marks_still_produce_segments(self):
+        self.block_of(2)
         self.pages(("1000", "one."), ("1005", "one two three"))
         self.assertEqual(interpret(self.fake("unbalanced"))[0], 0)
         p = [x for x in call("/api/stream?n=5")[1]["pages"]
@@ -820,6 +900,7 @@ class Interpreter(unittest.TestCase):
         self.assertTrue(segs)
         self.assertTrue(any(s["mark"] for s in segs))
         self.assertNotIn("<mark>", "".join(s["t"] for s in segs))
+        self.assertEqual("".join(s["t"] for s in segs), "one two three")
 
 
 if __name__ == "__main__":

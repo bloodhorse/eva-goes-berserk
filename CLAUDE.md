@@ -89,8 +89,9 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `stream/` — the dream stream: one short passage every five minutes, seed and heat by lot,
     nobody picking, launchd's `StartInterval` for a loop; `front/stream.html` at `/stream` is
     the phone reading it, one continuous scroll newest first. Beside it `interpreter.py`, a
-    second voice: opus writes a short reading of every two passages and underlines inside them
-    what touched it, its copy kept verbatim and its slips shown in red, never corrected. Its
+    second voice: opus writes a short note on every passage and underlines inside it what
+    touched it — those words are written in colour — its copy kept verbatim, never corrected,
+    and it is started by the worker when a dream lands. Its
     rooms, readings and ledger are **not in git** — what survives is the artifact a star
     writes. **`eva/stream/CLAUDE.md`** is the doc and the runbook.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
