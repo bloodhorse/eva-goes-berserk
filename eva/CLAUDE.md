@@ -1,8 +1,9 @@
 # eva — the loom
 
-The instrument, in four stances over one file format: `front/loom.html` (the page), `server/loom.py`
-(the store and the proxy), `cli/` (the repl, the census, the walk scripts) and `berserk/` (the
-daemon — its own `CLAUDE.md`). Everything imports `server/loom.py`; nothing else knows how a
+The instrument, in five stances over one file format: `front/loom.html` (the page), `server/loom.py`
+(the store and the proxy), `cli/` (the repl, the census, the walk scripts), `berserk/` (the
+daemon — its own `CLAUDE.md`) and `stream/` (the dream stream — its own `CLAUDE.md`).
+Everything imports `server/loom.py`; nothing else knows how a
 sitting is written. The rooms, the artifacts and the seeds live on `../shelf/`; `loom.SHELF` is
 the one place that path is spelled. Read the root `CLAUDE.md` first for what this is for.
 
@@ -11,11 +12,13 @@ the one place that path is spelled. Read the root `CLAUDE.md` first for what thi
 `server/loom.py`, stdlib, is a file store and a proxy, nothing else: the page owns the tree and
 posts the whole sitting after every move; the server writes it atomically to
 `shelf/sittings/<name>.json` and forwards one branch at a time to llama-server's `/completion`.
-Route list at the top of the file. The one route that reads something it never wrote is
-`/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room. Env: `LOOM_HOST`,
+Route list at the top of the file. Two routes read something the server never wrote:
+`/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room — and `/api/stream`,
+which reads the stream worker's heartbeat (`STREAM_DIR`) alongside the rooms under
+`sittings/stream/`; `/stream` serves `front/stream.html` beside it. Env: `LOOM_HOST`,
 `LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
-`LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` that the tests and the mobile rig set —
-production leaves them alone.
+`LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` / `LOOM_STREAM_PAGE` /
+`STREAM_DIR` that the tests and the rigs set — production leaves them alone.
 
 **A room's name IS its path** under `sittings/`, without the `.json`:
 `experiments/basin/smoke-01` is one file two folders deep, and that string is also the `name`
@@ -363,6 +366,23 @@ uv run --python 3.12 eva/cli/wire.py --name experiments/wire/hum-beats-nemocalle
 holds the procedure and what the first runs taught. All of them bypass the live loom and write the
 file directly — don't have the room open in the page while one runs.
 
+## The stream
+
+**stream** (`stream/stream.py`, 2026-09-19): **one short page every five minutes, and nobody
+picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion`, a bare room at
+`stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the page, and that is the run — `--once`
+writes one page and exits, because the loop is launchd's `StartInterval` and not a sleep. A
+failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots on a
+fair coin: everything under `shelf/seeds/`, and the tails of pages bekh **starred**, which is
+the only place his hand is in the loop and it acts at the next page's input. Branches carry
+`meta.logprobs`, a flat list of the chosen token's logprob per token and **not** llama's `probs`
+tables — 288 rooms a day of those would be a gigabyte a week. A regexp set flags web furniture
+as `meta.flag` without deleting anything; the reader hides those and `?all=1` shows them. Ledger
+and heartbeat in `shelf/stream/`, watched by `stream/monitor.py`, and **none of it is in git**:
+the rooms are disposable, and what survives is the artifact a star writes. The reader is
+`front/stream.html` at `/stream` — one page of text, phone-first, marks through the existing
+`/api/mark`. **`stream/CLAUDE.md`** is the doc and the runbook.
+
 ## Tests
 
 `tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Canvas` and
@@ -405,7 +425,9 @@ While the mac is off, `eva.x` falls over to a copy on the mini that takes readin
 
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
-and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) — and
+and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
+plus a fourth written and **not yet loaded**, `com.bekh.eva-stream` (one page every 300s; the
+plist lives in `stream/`, bekh bootstraps it) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need

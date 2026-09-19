@@ -37,6 +37,10 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
   GET  /api/canvas?name=     -> one board as the canvas reads it — the same payload as
                                /api/folder, built from the rooms the board lists, plus
                                `board` and `title`; rooms that are gone are skipped
+  GET  /stream               -> eva/front/stream.html, the reader for the dream stream
+  GET  /api/stream           -> the stream's pages, newest first: ?before=<room> pages
+                               backwards, ?n=<k> how many, ?all=1 includes the ones the
+                               filter flagged. Plus `status`, off the worker's heartbeat
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -81,7 +85,8 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
 LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_CANVASES, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
-LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh).
+LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh),
+LOOM_STREAM_PAGE, STREAM_DIR and STREAM_INTERVAL (the dream stream — eva/stream/).
 """
 
 from __future__ import annotations
@@ -148,6 +153,17 @@ LEDGER = os.environ.get("LOOM_LEDGER", os.path.join(SHELF, "berserk", "ledger.js
 # apart from where its rooms are filed, so one room can sit on three boards and a folder can
 # be cut into four. Written by hand or by a script, never by this server: read only here.
 CANVASES = os.environ.get("LOOM_CANVASES", os.path.join(SHELF, "canvases"))
+# The dream stream (eva/stream/): its rooms are ordinary rooms under sittings/stream/, so
+# everything above already reads them — what is new here is a second PAGE with nothing on it
+# but the newest one, and the worker's heartbeat, which is the only thing on disk that can
+# say whether the machine is still dreaming. Read here and never written: the loom is the
+# reader of that record, exactly as it is of berserk's ledger.
+STREAM_PAGE = os.environ.get("LOOM_STREAM_PAGE", os.path.join(ROOT, "eva", "front", "stream.html"))
+STREAM_DIR = os.environ.get("STREAM_DIR", os.path.join(SHELF, "stream"))
+STREAM_FOLDER = "stream"                  # where its rooms are filed under SITTINGS
+STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
+STREAM_N = 10                             # pages per call when nobody says
+STREAM_N_MAX = 50
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -1497,6 +1513,98 @@ def berserk_room(sitting: dict, rows: list[dict]) -> dict:
     return {"sitting": sitting, "rows": out, "text": berserk_text(sitting)}
 
 
+# ---- the dream stream ---------------------------------------------------------------------
+# One page every five minutes, written by nobody's hand (eva/stream/). Its rooms are ordinary
+# rooms — `stream/<YYYY-MM-DD>/<HHMM>`, a bare root and one model node — so the loom, the
+# canvas and the marks already work on them. This section exists for the one thing they do not
+# do: hand a PHONE the newest page and nothing else, and say whether the machine is awake.
+#
+# The order is the NAME's order and not the file's mtime: the names are timestamps, so paging
+# backwards costs one directory walk and no json at all until a page is actually wanted.
+
+def stream_room_names() -> list[str]:
+    """Every stream room, newest first."""
+    try:
+        return sorted(folder_rooms(STREAM_FOLDER), reverse=True)
+    except ValueError:
+        return []
+
+
+def stream_page(name: str) -> dict | None:
+    """One page as the reader reads it: the seed, the page, the two marks, the flag.
+
+    None for a room that isn't one of the worker's — a hand-made room filed under `stream/`,
+    or a file that stopped being json. The node id goes out because the reader marks through
+    `/api/mark`, which takes a room and a node and knows nothing about streams.
+    """
+    try:
+        with open(sitting_path(name), encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return None
+    nodes = d.get("nodes")
+    if not isinstance(nodes, dict):
+        return None
+    root = nodes.get(d.get("root"))
+    kids = sorted((n for n in nodes.values()
+                   if isinstance(n, dict) and n.get("kind") == "model"
+                   and n.get("parent") == d.get("root")),
+                  key=lambda n: n.get("ts") or 0)
+    if not isinstance(root, dict) or not kids:
+        return None
+    node = kids[0]
+    meta = node.get("meta") or {}
+    params = meta.get("params") if isinstance(meta.get("params"), dict) else {}
+    return {"room": name, "node": node.get("id"),
+            "seed": root.get("text") or "", "text": node.get("text") or "",
+            "ts": node.get("ts") or d.get("created") or 0,
+            "kept": bool(node.get("kept")), "good": bool(node.get("good")),
+            "flag": meta.get("flag") or None,
+            "temperature": params.get("temperature")}
+
+
+def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> dict:
+    """`n` pages, newest first, older than `before`. `{"pages", "more"}`.
+
+    `more` is whether there is anything further back, so the reader can grey its own button
+    instead of asking again and finding out. Flagged pages are skipped unless asked for:
+    the filter is a column on the card, and this is the one place it acts like a filter.
+    """
+    names = stream_room_names()
+    if before:
+        names = [x for x in names if x < before]
+    pages, more = [], False
+    for name in names:
+        if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
+            more = True
+            break
+        page = stream_page(name)
+        if page is None or (page["flag"] and not flagged):
+            continue
+        pages.append(page)
+    return {"pages": pages, "more": more}
+
+
+def stream_status() -> dict:
+    """Is the machine dreaming? `{"state", "since", "room", "interval"}`.
+
+    Off the worker's heartbeat and nothing else — not off the newest room, which would call a
+    stream alive for as long as its last page sat on the shelf. Younger than two intervals is
+    `dreaming`; one missed run is a busy GPU, two is something to look at.
+    """
+    try:
+        with open(os.path.join(STREAM_DIR, "heartbeat.json"), encoding="utf-8") as f:
+            hb = json.load(f)
+    except (OSError, ValueError):
+        hb = {}
+    if not isinstance(hb, dict):
+        hb = {}
+    since = hb.get("last_ok") if isinstance(hb.get("last_ok"), (int, float)) else None
+    awake = since is not None and (time.time() - since) < 2 * STREAM_INTERVAL
+    return {"state": "dreaming" if awake else "asleep", "since": since,
+            "room": hb.get("room"), "interval": STREAM_INTERVAL}
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -1576,6 +1684,31 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(200, f.read(), "image/png", "public, max-age=31536000, immutable")
             except OSError:
                 self._json(404, {"error": "the icons have not been generated"})
+            return
+
+        # The stream's own page, at its own address. A second file and not a screen inside
+        # loom.html on purpose: the loom is a desk instrument and this is one page of text on
+        # a phone, and the two share a palette and nothing else.
+        if u.path in ("/stream", "/stream.html"):
+            try:
+                with open(STREAM_PAGE, "rb") as f:
+                    self._send(200, f.read(), "text/html; charset=utf-8")
+            except OSError:
+                self._json(404, {"error": f"no page at {STREAM_PAGE}"})
+            return
+
+        if u.path == "/api/stream":
+            q = parse_qs(u.query)
+            before = (q.get("before", [""])[0] or "").strip()
+            if before and not name_ok(before):
+                self._json(400, {"error": "bad name"})
+                return
+            try:
+                n = int(q.get("n", [""])[0] or STREAM_N)
+            except ValueError:
+                n = STREAM_N
+            out = stream_pages(before, n, (q.get("all", ["0"])[0] or "0") not in ("0", ""))
+            self._json(200, dict(out, status=stream_status()))
             return
 
         if u.path == "/api/health":

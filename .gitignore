@@ -9,6 +9,12 @@ shelf/artifacts/.trash/
 shelf/berserk/heartbeat
 shelf/berserk/state.json
 shelf/berserk/pages/
+# The dream stream is disposable by decision (bekh, 2026-09-19): 288 pages a day written by
+# nobody, of which almost all are read once or not at all. What survives is what he STARS —
+# a keep syncs an artifact under shelf/artifacts/, which is tracked and pushed. The rooms,
+# the ledger and the heartbeat are all running state and none of them is in git.
+shelf/sittings/stream/
+shelf/stream/
 # Embedding vectors, rebuilt from the rooms by eva/scorer/features.py in a few minutes.
 # Hundreds of MB of floats that say nothing a reader could read.
 shelf/scorer/cache/

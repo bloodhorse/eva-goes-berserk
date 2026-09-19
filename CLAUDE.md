@@ -86,6 +86,10 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
+  - `stream/` — the dream stream: one short page every five minutes, seed and heat by lot,
+    nobody picking, launchd's `StartInterval` for a loop; `front/stream.html` at `/stream` is
+    the phone reading it. Its rooms and its ledger are **not in git** — what survives is the
+    artifact a star writes. **`eva/stream/CLAUDE.md`** is the doc and the runbook.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
     env, never the real shelf:
 
@@ -105,7 +109,9 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   wherever they are filed, written by hand or script, opened from the page's menu at
   `#board=<name>`. `storage/`, saved notes from the page, tracked, empty — whether it stays is a separate
   talk. `berserk/`, the daemon's ledger (tracked), its heartbeat, state and html pages (not),
-  the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`.
+  the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`. `stream/`, the dream
+  stream's ledger and heartbeat — **untracked**, as are its rooms under `sittings/stream/`:
+  a page every five minutes is disposable, and what survives is the artifact a star writes.
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases
   exist and are clean, how the cyborgism crowd prompted base gpt, llama-server completion facts.
   `anthology-weird.md` (70 pieces) and `anthology-fun.md` (33): verbatim, with provenance

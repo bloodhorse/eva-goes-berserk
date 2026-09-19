@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" media="(prefers-color-scheme:dark)" content="#232323">
+<meta name="theme-color" media="(prefers-color-scheme:light)" content="#faf4ed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="stream">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<title>stream</title>
+<!-- One page of text and nothing else. This is the phone screen the whole machine is for:
+     bekh picks it up at a random moment, reads whatever nemo wrote last, marks it or does
+     not, and puts it down. Everything that makes the loom a lab bench — the fans, the
+     picker, the canvas, the sampler drawer — is deliberately absent, because a reader who
+     can see the temperature is reading an experiment and not a dream.
+
+     Phone FIRST, unlike loom.html: the root CLAUDE.md's "the page is a desktop page" law is
+     about the loom. This one is held in one hand.
+
+     The palette is loom.html's, token for token, so the two look like one house. -->
+<style>
+  :root{
+    --bg:#232323; --ink:#d4e3fe; --ghost:#7d8a9c; --line:#2e3547;
+    --panel:#2a2b31; --sunk:#1e1e22;
+    --accent:#f5c8fe; --live:#c6f1fe; --hot:#eb6f92;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#faf4ed; --ink:#575279; --ghost:#8f8aa3; --line:#dfdad9;
+      --panel:#f2ebe3; --sunk:#fffaf3;
+      --accent:#907aa9; --live:#56949f; --hot:#b4637a;
+    }
+  }
+  /* As in the loom: every colour below is a var() off those two blocks and nothing else, so
+     the light room costs no second copy of any rule. Break that and Dawn needs patching by
+     hand at the bottom of the file, where a media query silently loses on specificity. */
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%; margin:0; overscroll-behavior:none;}
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display:flex; flex-direction:column; height:100dvh; overflow:hidden;
+  }
+  [hidden]{display:none !important;}
+  button{font:inherit; cursor:pointer; background:none; border:0; color:inherit;}
+  button:disabled{opacity:.25; cursor:default;}
+  button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
+
+  /* The one line of chrome at the top. Small and grey: it answers "is it dreaming" and then
+     gets out of the way of the text, which is the only thing on this screen that matters. */
+  header{
+    flex:0 0 auto; display:flex; align-items:center; gap:10px;
+    padding:calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+            10px calc(16px + env(safe-area-inset-left));
+    color:var(--ghost); font-size:13px; border-bottom:1px solid var(--line);
+  }
+  #dot{width:8px; height:8px; border-radius:50%; background:var(--ghost); flex:0 0 auto;}
+  #dot.on{background:var(--live);}
+  #state{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  /* The quiet hint: a new page landed while he was reading. It never moves the text — being
+     yanked mid-sentence by a timer is the one thing a reading page must not do. */
+  #fresh{margin-left:auto; color:var(--accent); font-size:13px; padding:4px 0;}
+
+  main{flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;}
+  article{
+    /* A reading measure, centred. 34em at 17px is ~62 characters, which is the width a
+       paragraph is comfortable at on a phone AND on a desk. */
+    max-width:34em; margin:0 auto;
+    padding:22px calc(18px + env(safe-area-inset-right)) 40px calc(18px + env(safe-area-inset-left));
+    font-size:17px; line-height:1.65;
+  }
+  /* pre-wrap on both: a base model's document is full of its own line breaks, `> > >` and
+     stray indents, and reflowing them would be editing the evidence. */
+  #seed, #page{white-space:pre-wrap; overflow-wrap:anywhere;}
+  /* The seed is quieter because it is not the dream — it is what the dream was standing on.
+     Colour alone, not size: shrinking it would make the seam between the two a visible
+     joint, and the page reads best when the model's first word simply brightens. */
+  #seed{color:var(--ghost); margin:0 0 .2em;}
+  #page{margin:0;}
+  #filtered{margin:18px 0 0; color:var(--hot); font-size:13px;}
+  #empty{color:var(--ghost); padding:40px 0; text-align:center;}
+
+  footer{
+    flex:0 0 auto; display:flex; align-items:center; gap:4px;
+    border-top:1px solid var(--line); background:var(--bg);
+    padding:8px calc(10px + env(safe-area-inset-right))
+            calc(8px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));
+  }
+  /* 44px tap targets, because this is a thumb and not a mouse. */
+  .stroke, .nav{min-width:44px; height:44px; display:inline-grid; place-items:center;
+    color:var(--ghost); font-size:19px;}
+  .nav{font-size:15px; padding:0 12px;}
+  .stroke:hover, .nav:hover{color:var(--ink);}
+  /* The two marks wear the loom's colours: keep is ice, good is the accent. */
+  #keep.on{color:var(--live);}
+  #good.on{color:var(--accent);}
+  .spring{margin-left:auto;}
+  #notice{position:fixed; left:0; right:0; top:0; z-index:20; text-align:center;
+    padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
+    background:var(--panel); color:var(--hot); font-size:13px;}
+</style>
+</head>
+<body>
+<header>
+  <span id="dot"></span>
+  <span id="state">…</span>
+  <button id="fresh" hidden>new page</button>
+</header>
+
+<main id="scroll">
+  <article>
+    <p id="seed"></p>
+    <p id="page"></p>
+    <p id="filtered" hidden></p>
+    <p id="empty" hidden>nothing on the shelf yet</p>
+  </article>
+</main>
+
+<footer>
+  <button id="good" class="stroke" title="good">○</button>
+  <button id="keep" class="stroke" title="keep">☆</button>
+  <span class="spring"></span>
+  <button id="older" class="nav">‹ older</button>
+  <button id="newer" class="nav">newer ›</button>
+</footer>
+
+<div id="notice" hidden></div>
+
+<script>
+'use strict';
+// Every element by id once: the page is small enough that a lookup table beats a query per
+// repaint, and a typo'd id fails here instead of silently doing nothing on a tap.
+const $ = id => document.getElementById(id);
+const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), scroll: $('scroll'),
+            seed: $('seed'), page: $('page'), filtered: $('filtered'), empty: $('empty'),
+            good: $('good'), keep: $('keep'), older: $('older'), newer: $('newer'),
+            notice: $('notice')};
+
+// ?all=1 shows the pages the filter flagged, each with the rule that caught it. Off by
+// default and not a toggle in the chrome: the flagged pile is for auditing the filter
+// against his marks, not for reading in bed.
+const ALL = new URLSearchParams(location.search).get('all') === '1';
+const BATCH = 10;          // pages per fetch; a page is a couple of KB
+const POLL_MS = 60000;
+
+let pages = [];            // newest first, as the api hands them over
+let at = 0;                // which one is on screen
+let more = false;          // is there anything older than what we hold
+let busy = false;
+let status = null;         // the last status object, so the clock can be re-rendered for free
+
+function api(q){
+  return fetch('/api/stream?' + q + (ALL ? '&all=1' : ''), {cache: 'no-store'})
+    .then(r => r.json());
+}
+
+function say(msg){
+  el.notice.textContent = msg;
+  el.notice.hidden = false;
+  setTimeout(() => { el.notice.hidden = true; }, 3000);
+}
+
+function ago(sec){
+  if (sec < 90) return 'just now';
+  if (sec < 5400) return Math.round(sec / 60) + ' min ago';
+  if (sec < 172800) return Math.round(sec / 3600) + ' h ago';
+  return Math.round(sec / 86400) + ' days ago';
+}
+
+function clock(ts){
+  const d = new Date(ts * 1000);
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+
+function drawStatus(s){
+  if (s) status = s;
+  s = status;
+  if (!s) return;
+  const dreaming = s.state === 'dreaming';
+  el.dot.classList.toggle('on', dreaming);
+  if (dreaming) el.state.textContent = 'dreaming · ' + ago(Date.now() / 1000 - s.since);
+  else if (s.since) el.state.textContent = 'asleep since ' + clock(s.since);
+  else el.state.textContent = 'asleep';
+}
+
+function draw(){
+  const p = pages[at];
+  el.empty.hidden = !!p;
+  if (!p){
+    el.seed.textContent = el.page.textContent = '';
+    el.filtered.hidden = true;
+    el.good.disabled = el.keep.disabled = el.older.disabled = el.newer.disabled = true;
+    return;
+  }
+  el.seed.textContent = p.seed;
+  el.page.textContent = p.text;
+  el.filtered.hidden = !p.flag;
+  el.filtered.textContent = p.flag ? 'filtered: ' + p.flag : '';
+  el.good.textContent = p.good ? '●' : '○';
+  el.keep.textContent = p.kept ? '★' : '☆';
+  el.good.classList.toggle('on', !!p.good);
+  el.keep.classList.toggle('on', !!p.kept);
+  el.good.disabled = el.keep.disabled = false;
+  el.newer.disabled = at === 0;
+  el.older.disabled = at >= pages.length - 1 && !more;
+  // A new page starts at its own beginning, never where the last one was scrolled to.
+  el.scroll.scrollTop = 0;
+  if (at === 0) el.fresh.hidden = true;
+}
+
+function load(){
+  return api('n=' + BATCH).then(d => {
+    pages = d.pages || [];
+    more = !!d.more;
+    at = 0;
+    drawStatus(d.status);
+    draw();
+  }).catch(() => say("can't reach the shelf"));
+}
+
+function older(){
+  if (at < pages.length - 1){ at++; draw(); return; }
+  if (!more || busy || !pages.length) return;
+  busy = true;
+  api('n=' + BATCH + '&before=' + encodeURIComponent(pages[pages.length - 1].room))
+    .then(d => {
+      pages = pages.concat(d.pages || []);
+      more = !!d.more;
+      if (at < pages.length - 1) at++;
+      draw();
+    })
+    .catch(() => say("can't reach the shelf"))
+    .then(() => { busy = false; });
+}
+
+function newer(){ if (at > 0){ at--; draw(); } }
+
+// The poll never moves the text. It fetches the newest few, splices in whatever is not
+// already held, keeps `at` pointing at the same page, and lights the hint — a reader
+// mid-paragraph at 3am should find out there is more, not be shown it.
+function poll(){
+  api('n=5').then(d => {
+    drawStatus(d.status);
+    const have = new Set(pages.map(p => p.room));
+    const fresh = (d.pages || []).filter(p => !have.has(p.room));
+    if (!fresh.length) return;
+    // `at` moves with the page he is on, so the words under his eyes do not change; the
+    // hint is the only thing that appears, and one tap on it goes to the newest.
+    pages = fresh.concat(pages);
+    at += fresh.length;
+    const waiting = at;
+    el.fresh.textContent = waiting === 1 ? 'new page' : waiting + ' new pages';
+    el.fresh.hidden = false;
+    el.newer.disabled = false;
+  }).catch(() => {});
+}
+
+function mark(which){
+  const p = pages[at];
+  if (!p) return;
+  const on = !(which === 'kept' ? p.kept : p.good);
+  fetch('/api/mark', {method: 'POST', headers: {'Content-Type': 'application/json'},
+                      body: JSON.stringify({room: p.room, node: p.node, mark: which, on: on})})
+    .then(r => r.json().then(d => ({ok: r.ok, d: d})))
+    .then(r => {
+      if (!r.ok){ say(r.d.error || 'the mark did not land'); return; }
+      // Repaint from the ANSWER and never from what was asked: a branch wears at most one
+      // mark, so turning the star on pops the circle, and the server is where that rule
+      // lives. A page that painted its own guess would show both for a while.
+      p.kept = !!r.d.kept;
+      p.good = !!r.d.good;
+      draw();
+    })
+    .catch(() => say('the mark did not land'));
+}
+
+el.good.addEventListener('click', () => mark('good'));
+el.keep.addEventListener('click', () => mark('kept'));
+el.older.addEventListener('click', older);
+el.newer.addEventListener('click', newer);
+el.fresh.addEventListener('click', () => { at = 0; draw(); });
+
+addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft'){ older(); e.preventDefault(); }
+  else if (e.key === 'ArrowRight'){ newer(); e.preventDefault(); }
+});
+
+// Swipe, the cheap version: one finger, mostly horizontal, more than a thumb's wobble.
+// Dragging to the right goes back in time, which is what every "back" gesture on the phone
+// already means.
+let sx = 0, sy = 0, swiping = false;
+addEventListener('touchstart', e => {
+  if (e.touches.length !== 1){ swiping = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiping = true;
+}, {passive: true});
+addEventListener('touchend', e => {
+  if (!swiping) return;
+  swiping = false;
+  const t = e.changedTouches[0];
+  const dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  if (dx > 0) older(); else newer();
+}, {passive: true});
+
+load();
+setInterval(poll, POLL_MS);
+// "3 min ago" goes stale on a phone left on a table; re-render it every 30s off the numbers
+// already held, with no request behind it.
+setInterval(() => drawStatus(null), 30000);
+</script>
+</body>
+</html>

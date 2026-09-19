@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.bekh.eva-stream</string>
+    <!-- One page every five minutes, forever. StartInterval and NOT a loop inside stream.py:
+         launchd already knows how to restart a thing on a clock across a closed lid, a lost
+         GPU and a reboot, and a python process that slept for five minutes would have to
+         learn all of it again. One run = one page = one exit.
+
+         RunAtLoad is false so bootstrapping this at the desk does not fire a page the same
+         second; the first one lands 300s later. To dream one page right now:
+
+             launchctl kickstart gui/$(id -u)/com.bekh.eva-stream
+
+         Needs com.bekh.eva-llama up (nemo on 127.0.0.1:8080). The loom agent is NOT needed
+         to write pages — stream.py writes the room itself — only to read them at eva.x.
+
+         A plist edit needs bootout + bootstrap; kickstart restarts from launchd's cached
+         copy, which is how the loom once died on a stale path. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/uv</string>
+        <string>run</string>
+        <string>--python</string>
+        <string>3.12</string>
+        <string>/Users/bekh/tower/forge/eva-goes-berserk/eva/stream/stream.py</string>
+        <string>--once</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/bekh/tower/forge/eva-goes-berserk</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- /opt/homebrew/bin is uv. Nothing here shells out to claude, so unlike berserk's
+             agent this needs no ~/.local/bin and no HOME. -->
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>LOOM_LLAMA</key>
+        <string>http://127.0.0.1:8080</string>
+    </dict>
+    <key>StartInterval</key>
+    <integer>300</integer>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/tmp/eva-stream.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/eva-stream.log</string>
+</dict>
+</plist>
