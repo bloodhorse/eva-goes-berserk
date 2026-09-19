@@ -138,7 +138,11 @@ Observations from a few hundred cards; read every one as "so far".
   its own merit, and we had focused on the choosing. A fan buys breadth at one spot; the wire buys
   length and the exchange. Beats are what make it an exchange — without *the switch says* /
   *i say* the two voices fuse into one poem; with them the far end becomes a character and starts
-  saying what it is, at the cost of the calm.
+  saying what it is, at the cost of the calm. **And then bekh read all twenty (2026-09-19):**
+  the first couple were cool, the pile is samey and shallow next to the fans — more consistent
+  in quality, but with forty tokens a turn nobody on the line gets a paragraph to run with an
+  idea, so there is no room for a crazy coherent thing. The wire holds a frame; the fans had
+  the peaks. A page wants one mind going for a page.
 
 ## bekh's canon
 
@@ -160,11 +164,30 @@ shape — now.
 
 ### now
 
-1. **The wire** — two models on one line, alternating, a line at a time, no fan, no picker
-   (`experiments/wire/`, twenty rooms: hum plain and beats, nemo first and GPT-2 first; the
-   stance is in `eva/CLAUDE.md`). Run 2026-09-18 in a parallel session. **Result: bekh's report
-   goes here.**
-2. **Elimination as a column, not a knife.** Finding good cards can be posed as removing lame
+1. **The dream stream — live since 2026-09-19** (`eva/stream/CLAUDE.md`, reader at
+   `https://eva.x/stream`). bekh's call: stop fucking around, build the stream, whatever comes
+   out comes out, and it corrects itself slowly as he reads; he comes back to the rest when the
+   interest does. Nemo writes one 350-token page every five minutes, seed and heat (1.8–2.5) by
+   lot, nobody picking; the filter below hides web furniture from the phone; a `★` feeds the
+   page's tail back into the seed pot (one star weighs what one seed weighs, capped at half) and
+   survives as an artifact; rooms and ledger are untracked and disposable. **It must be live,
+   never pre-recorded** — a nightly batch was proposed and killed as against the vibe. The mac is
+   the smoke test; the writer is one url, and the ladder for it: **(a) the box** — a 16 GB
+   5060 Ti on ubuntu at bekh's employer's office, his to use, not as comfortable as our own rig,
+   so it is only ever the muscle (llama-server bound to localhost, reached by ssh tunnel, mistral
+   small 3.1 24b base at a 4-bit quant; nothing of ours lives there; a runbook he runs himself);
+   **(b) by the token** — swept 2026-09-19: Featherless.ai is the only host left serving true
+   bases on a raw completion endpoint (llama 3.1 70b base, mistral small 24b base; min_p yes,
+   **no logprobs**), but its per-token plan starts at $50 a month; hyperbolic's 405b base is
+   decommissioned, openrouter has none; **(c) a rented pod** only for the day we want weights
+   (the vector, olmo). If the box writes while the mac sleeps, the worker's natural home is the
+   mini — the same shape as the parked loom cutover. Open: pruning (nothing deletes old unmarked
+   pages yet, and every `/api/stream` call walks the shelf); the filter reads the page only, so
+   a seed that is itself web furniture passes.
+2. **The wire** — done (`experiments/wire/`, twenty rooms); the verdict is under "what seems
+   true". Not the stream's shape. What it leaves behind: a plain reading surface matters more
+   than the loom for finished text, and a wire room is marked as a whole.
+3. **Elimination as a column, not a knife.** Finding good cards can be posed as removing lame
    ones: a regexp flags footers, author's notes, web furniture, templates. The flag is a column
    on the card, never a deletion — those cards can still be cool. On the canvas a fan shows the
    unflagged cards, and the flagged ones sit in a collapsed section under it that expands for a
@@ -173,7 +196,7 @@ shape — now.
    negatives and keep the better curve — removing easy negatives sharpens the lesson, the near
    misses are what teach taste. Unattended, the machine drops flagged cards before the phone;
    they stay on the shelf.
-3. **The scorer on bekh's marks — a side road that lives beside the work.** A vector per card
+4. **The scorer on bekh's marks — a side road that lives beside the work.** A vector per card
    (a small embedding model, or nemo's last hidden state — race them), a tiny scorer on top,
    trained on 100/200/300 marks, always tested on rooms it never saw. First curve:
    `docs/scorer/`. Rising → alive; flat at 300 → shelve without grief. Nobody labels for its
@@ -182,19 +205,19 @@ shape — now.
    picks his; an instructed reader (his taste in a portrait plus five rooms of marks) as one
    more contestant, never a gatekeeper — bekh's bet is 80. Friends' marks carry a reader's
    name, blind to each other; pooled marks make an average taste, which is not the point.
-4. **The portal-device experiment** — a small introduction, then immediately something weird
+5. **The portal-device experiment** — a small introduction, then immediately something weird
    speaking through a device; does the hum room's quality hold? First data point unread:
    `experiments/portal/01-fainter-than-air`, bekh's own four lines, thirty cards nemo and GPT-2.
-5. **Fan under the hum room's best cards**, seed plus card as the room: `442ab836` (blood) and
+6. **Fan under the hum room's best cards**, seed plus card as the room: `442ab836` (blood) and
    `4aec75fc` (*the humming is happening to me*) first.
-6. **Real channel seeds**: a telegraph operator's diary, a switchboard memoir, a lighthouse log,
+7. **Real channel seeds**: a telegraph operator's diary, a switchboard memoir, a lighthouse log,
    a ham's logbook, a signalman's statement to an inquest — public domain, cut by script with
    provenance (as `shelf/seeds/first-person/cut.py`), short, seam past bekh.
-7. **Nemo against GPT-2 XL**, fifteen cards each, blind, on the rooms from here.
-8. **Generating levers untried**: a seed with one strange thing already in it (the only fan with
+8. **Nemo against GPT-2 XL**, fifteen cards each, blind, on the rooms from here.
+9. **Generating levers untried**: a seed with one strange thing already in it (the only fan with
    three keeps in twenty grew under the projector line); heat as a shape — very hot for the
    first tokens, cool after; contrastive decoding; one berserk cycle with `--brakes off`.
-9. **bekh's own lyrics and poems as seeds**, and fortune telling (parked below): his words in the
+10. **bekh's own lyrics and poems as seeds**, and fortune telling (parked below): his words in the
    input, which is where the hand is allowed.
 
 ### parked

@@ -100,7 +100,8 @@ uv run --python 3.12 eva/stream/stream.py --once     # one page, now, by hand
 uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for a frame
 ```
 
-The agent — **not loaded yet; bekh loads it after review**:
+The agent — loaded on the mac since 2026-09-19 (`launchctl print gui/$(id -u)/com.bekh.eva-stream`
+says whether it still is):
 
 ```bash
 cp eva/stream/com.bekh.eva-stream.plist ~/Library/LaunchAgents/
