@@ -181,7 +181,9 @@ shape — now.
    **no logprobs**), but its per-token plan starts at $50 a month; hyperbolic's 405b base is
    decommissioned, openrouter has none; **(c) a rented pod** only for the day we want weights
    (the vector, olmo). If the box writes while the mac sleeps, the worker's natural home is the
-   mini — the same shape as the parked loom cutover. Open: pruning (nothing deletes old unmarked
+   mini — the same shape as the parked loom cutover. **The reader's look is a placeholder**: it
+   wears the loom's palette, and bekh wants the stream to be its own standalone thing with its
+   own face, all in on style — a look-off of full mocks first, his pick, then the build. Open: pruning (nothing deletes old unmarked
    pages yet, and every `/api/stream` call walks the shelf); the filter reads the page only, so
    a seed that is itself web furniture passes.
 2. **The wire** — done (`experiments/wire/`, twenty rooms); the verdict is under "what seems
