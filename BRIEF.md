@@ -276,6 +276,19 @@ shape — now.
   documents, seams cut by the script and not by him — which grows the pot but is not an answer
   to the question, since his frame makes models the only source. Feeding back starred tails is
   already in the machine.
+  **The first real lead, parked by bekh 2026-09-20 with no energy to entertain it yet:** he
+  read opus's ledger of the stream's first day (`docs/ledgers/stream-2026-09-19.md`, 78 moments)
+  and loved about 80% of it — and said he could take 80% of those quotes as seeds, *and that's
+  how we grow*. So the pipeline is a reader, not a leftover: **an opus pass with its own prompt
+  that captures the great pieces of what the stream generated and cuts them into seeds** — a
+  model choosing, which is inside his frame, and not the lazy answer, because it is selected.
+  The open part, in his words: *we gotta find something to let opus know what separates those
+  80% of the good ones from the 20% of all-right ones.* What is on the table for that: the
+  ledger is already a list of 78 candidates, so his yes/no on each is the cheapest calibration
+  set this project has ever had, and the contrast between the two piles can go into the pass's
+  prompt as examples rather than as a definition (the brief still refuses one). Also on
+  record: opus chose these with no portrait of his taste at all, and his bet on the scorer's
+  scoreboard was that an instructed reader reaches 80.
 - **A control vector from his marks.** Marked minus unmarked cards of the same fans, read as
   nemo's hidden state, averaged: a direction the model is pushed along at generation, with a
   dial. No weights change, tens to hundreds of pairs suffice, llama.cpp ships the generator and
