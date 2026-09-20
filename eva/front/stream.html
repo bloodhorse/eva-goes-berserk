@@ -85,6 +85,31 @@
   }
   .pass{padding:22px 0 6px;}
 
+  /* The painting sits BEHIND the dream's words (bekh's picture, 2026-09-20) — not beside them,
+     not under them, behind them, dimmed so it does not fight the text. The block is seed +
+     dream + its foot; the reader's note and a finished account are siblings and stay clear of
+     it.
+
+     Two layers: a wash over the plate. The alphas are measured, not guessed — body ink
+     #d4e3fe on a 0.92 wash of #232323 reads 9.9:1 over these plates and 7.6:1 over the
+     brightest cell in one, against 12.1:1 on the bare page. The light room cannot do as well
+     and does not pretend to: its own ink on its own ground is only 6.66:1, and a 0.93 wash
+     holds 6.2:1, which is the page's ceiling and not a compromise made here. */
+  .block{border-radius:12px;}
+  /* **The dream decides the box and the picture fills it** (bekh, 2026-09-20): `cover`,
+     centred, the ratio never touched — a short dream shows a cropped band of its painting and
+     a long one a zoomed, side-cropped one. A plate must never make a passage taller or move a
+     word, so there is no min-height and the 16/18px the wash needs for legibility is taken
+     back by an equal negative margin: the block's margin box is exactly its unplated box, and
+     the picture reaches 18px past the text into the gutter instead of pushing the text in.
+     Same padding on every plated passage. */
+  .block.plated{padding:16px 18px; margin:-16px -18px;
+    background-repeat:no-repeat, no-repeat;
+    background-size:cover, cover; background-position:center, center;
+    transition:box-shadow .35s ease;}
+  .block.plated > .seed{color:var(--seed-plated);}   /* the seed lifts a little off a picture */
+  .block.plated.peek{box-shadow:0 0 0 1px var(--line);}
+
   /* The second voice (eva/stream/interpreter.py): a few sentences about a stretch of two
      passages, hung off the newest of them. Quieter and smaller than the dream, with an accent
      rule down its side so it is never mistaken for the seed, which is also grey. */
@@ -122,6 +147,29 @@
      rather than as part of it. */
   .lit-a{color:var(--lit-a);}
   .lit-b{color:var(--lit-b);}
+
+  /* The peek: the wash lifts and the painting is itself for as long as it is held. Hover on a
+     desk, press-and-hold on a phone. The gradient is two stops of one colour rather than a
+     flat film, so the top of a block is a shade heavier where the seed sits. */
+  :root{
+    /* Eased on 2026-09-20 after the first look: at .955/.90 the contrast number was superb and
+       the picture was GONE — bekh's word for the plate is dimmed, not erased. .74/.62 keeps the
+       painting legible as a painting behind the words; measured contrast drops with it, and the
+       peek is still there for seeing it properly. If text ever gets hard to read over a bright
+       plate, raise these, don't add a text shadow. */
+    --wash-a:rgba(35,35,35,.74); --wash-b:rgba(35,35,35,.62);
+    --peek-a:rgba(35,35,35,.36); --peek-b:rgba(35,35,35,.24);
+    --seed-plated:#9fb0c6;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --wash-a:rgba(250,244,237,.80); --wash-b:rgba(250,244,237,.70);
+      --peek-a:rgba(250,244,237,.42); --peek-b:rgba(250,244,237,.30);
+      --seed-plated:#6f6a8c;
+    }
+  }
+  .block.plated{background-image:linear-gradient(var(--wash-a), var(--wash-b)), var(--plate);}
+  .block.plated.peek{background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate);}
   /* pre-wrap on both: a base model's document carries its own line breaks, `> > >` and stray
      indents, and reflowing them would be editing the evidence. */
   .seed, .body{white-space:pre-wrap; overflow-wrap:anywhere; margin:0;}
@@ -155,6 +203,9 @@
       column-gap:32px; align-items:start;}
     .pass > *{grid-column:1;}
     .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
+    /* Hover is the desk's peek; a phone has none and uses the hold below. */
+    @media (hover: hover){ .block.plated:hover{
+      background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate); } }
     /* A finished dream is the whole width: it is not a note about the passage beside it. */
     .pass > .ended{grid-column:1 / -1; grid-row:auto;}
     #dreamnow{max-width:56em;}
@@ -347,18 +398,27 @@ function build(p){
   art.className = 'pass';
   art.dataset.room = p.room;
 
+  // The dream's own block: seed, text, flag, foot. It exists so the plate has something to be
+  // behind — the reader's note and a finished account are siblings of it and stay off the
+  // picture. Without a plate it is a plain div and the page reads exactly as it did.
+  const block = document.createElement('div');
+  block.className = 'block';
+  art.appendChild(block);
+
   const seed = document.createElement('p');
   seed.className = 'seed';
   seed.textContent = p.seed;                    // whole, and quiet: bekh's call for now
-  art.appendChild(seed);
+  block.appendChild(seed);
 
   const body = document.createElement('p');
   body.className = 'body';
-  art.appendChild(body);
+  block.appendChild(body);
+  if (p.plate){ block.dataset.plate = p.plate; plates.observe(block); }
 
   if (p.dream_end){
-    // Where it ended, above its last scene: the only place a finished dream means anything.
-    art.appendChild(account(p.dream_end, true));
+    // Where it ended, ABOVE its last scene: the only place a finished dream means anything.
+    // Before the block and not after it, or it reads as a comment on the scene below.
+    art.insertBefore(account(p.dream_end, true), block);
   }
 
   if (p.reading){
@@ -380,7 +440,7 @@ function build(p){
     const f = document.createElement('p');
     f.className = 'flag';
     f.textContent = 'filtered: ' + p.flag;
-    art.appendChild(f);
+    block.appendChild(f);
   }
 
   const foot = document.createElement('div');
@@ -392,7 +452,7 @@ function build(p){
   t.className = 'when';
   t.textContent = when(p.ts);
   foot.appendChild(t);
-  art.appendChild(foot);
+  block.appendChild(foot);
 
   // Each passage repaints only itself, off the answer to its own mark.
   art.repaint = () => {
@@ -407,6 +467,66 @@ function build(p){
   return art;
 }
 
+// ---- the plate ---------------------------------------------------------------------------
+// A quarter of a megabyte per dream, and most of the feed is below the fold, so a plate is
+// only fetched when its block comes near the viewport. It is loaded through an Image() first so
+// nothing is ever painted half-arrived. Nothing about the picture touches the layout: the box
+// is the dream's and `cover` crops the painting into it.
+const plates = new IntersectionObserver(es => {
+  for (const e of es){
+    if (!e.isIntersecting) continue;
+    const block = e.target;
+    plates.unobserve(block);
+    const url = block.dataset.plate;
+    const img = new Image();
+    img.onload = () => {
+      block.style.setProperty('--plate', `url("${url}")`);
+      block.classList.add('plated');
+    };
+    img.src = url;
+  }
+}, {root: el.scroll, rootMargin: '800px'});
+
+// Some older copies carry the prompt's own `[seed] … [dream]` labels, because the reader typed the
+// material back whole. His slips are kept by decision, but our plumbing leaking into a dream is
+// not a slip of his: keep only what follows the last `[dream]` label. interpreter.py does the
+// same at parse time now; this is for the reading files already on the shelf.
+function afterDreamLabel(segs){
+  const LABEL = '[dream]';
+  for (let i = segs.length - 1; i >= 0; i--){
+    const at = (segs[i].t || '').lastIndexOf(LABEL);
+    if (at < 0) continue;
+    const rest = segs[i].t.slice(at + LABEL.length).replace(/^[ \t]/, '');
+    return [Object.assign({}, segs[i], {t: rest})].concat(segs.slice(i + 1)).filter(x => x.t);
+  }
+  return segs;
+}
+
+// Press and hold lifts the wash on a phone; a desk gets it on hover, in CSS. The hold starts
+// only for a touch and dies on the first real move, so it never fights a text selection, and a
+// press that begins on a mark button is not a peek at all.
+let holding = null;
+function peekOff(){
+  if (!holding) return;
+  clearTimeout(holding.timer);
+  holding.block.classList.remove('peek');
+  holding = null;
+}
+addEventListener('pointerdown', e => {
+  if (e.pointerType !== 'touch') return;
+  const block = e.target.closest && e.target.closest('.block.plated');
+  if (!block || (e.target.closest && e.target.closest('.stroke'))) return;
+  peekOff();
+  holding = {block: block, x: e.clientX, y: e.clientY,
+             timer: setTimeout(() => block.classList.add('peek'), 350)};
+}, {passive: true});
+addEventListener('pointermove', e => {
+  if (holding && Math.hypot(e.clientX - holding.x, e.clientY - holding.y) > 10) peekOff();
+}, {passive: true});
+for (const ev of ['pointerup', 'pointercancel', 'scroll']) {
+  addEventListener(ev, peekOff, {passive: true, capture: true});
+}
+
 // The dream, or the interpreter's copy of it. Segment by segment and always through
 // textContent — his copy is text that came back from a cli, and the only markup honoured in it
 // was read by the interpreter when it made these segments. Anything else he typed, `<script>`
@@ -417,7 +537,7 @@ function drawBody(body, p){
   // that is gone: `gone` was text the machine wrote and he did not, and there is nothing to
   // show it against any more, so it is simply left out.
   const segs = (!RAW && Array.isArray(p.segments) && p.segments.length)
-    ? p.segments.filter(s => s.kind !== 'gone') : null;
+    ? afterDreamLabel(p.segments.filter(s => s.kind !== 'gone')) : null;
   if (!segs || !segs.length){
     const t = p.text || '';
     body.appendChild(document.createTextNode(RAW ? t : t.slice(0, trimAt(t))));

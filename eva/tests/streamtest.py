@@ -50,6 +50,7 @@ os.environ["STREAM_SEEDS"] = SEEDS
 os.environ["STREAM_INTERVAL"] = "300"
 
 import interpreter  # noqa: E402
+import plate  # noqa: E402
 import loom  # noqa: E402
 import opus  # noqa: E402
 import remembering  # noqa: E402
@@ -62,6 +63,9 @@ if loom.SITTINGS != SHELF:
     SHELF = loom.SITTINGS
 loom.STREAM_DIR = STREAM_DIR
 loom.ARTIFACTS = ARTS
+plate.STREAM = STREAM_DIR
+plate.PLATES = os.path.join(STREAM_DIR, "plates")
+plate.LEDGER = os.path.join(STREAM_DIR, "ledger.jsonl")
 
 STUB = None            # the ordinary one: a random line per call
 STUB_DIRTY = None      # answers a licence footer, so the filter has something to catch
@@ -144,7 +148,7 @@ def tearDownModule() -> None:
 
 
 def wipe_stream() -> None:
-    """The stream's rooms, ledger and heartbeat, gone — so a test's pot B, its page count and
+    """The stream's rooms, ledger, heartbeat, readings, dreams and plates, gone — so a test's pot B, its page count and
     its status are its own and not the last test's leftovers."""
     shutil.rmtree(os.path.join(SHELF, "stream"), ignore_errors=True)
     shutil.rmtree(STREAM_DIR, ignore_errors=True)
@@ -1188,6 +1192,169 @@ class Remembering(unittest.TestCase):
             self.assertEqual(u["output_tokens"], 0)        # missing is 0, never absent
             self.assertEqual(u["cost_usd"], 1.5)
         self.assertEqual(opus.add({"input_tokens": 1}, {"input_tokens": 2})["input_tokens"], 3)
+
+
+# ---- plates ----------------------------------------------------------------------------------
+# A stub `codex` first on PATH that writes a tiny png where the real one would put a painting.
+# No generation is ever spent from a test: every plate costs one off bekh's allowance.
+
+FAKE_CODEX = r'''#!/usr/bin/env python3
+import base64, os, sys
+brief = sys.stdin.read()
+with open(os.environ["FAKE_CODEX_LOG"], "w", encoding="utf-8") as f:
+    f.write(brief)
+if os.environ.get("FAKE_CODEX_MODE") == "nothing":
+    print("i drew nothing"); raise SystemExit(0)
+if os.environ.get("FAKE_CODEX_MODE") == "boom":
+    raise SystemExit(4)
+# a 2x2 png, enough for sips to convert
+png = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z4AKmBhQwagAuwAAAAD//wMAAsMBaKPxN"
+    "5EAAAAASUVORK5CYII=")
+with open(os.path.join(os.getcwd(), "plate.png"), "wb") as f:
+    f.write(png)
+print("saved plate.png")
+print("tokens used: 19123")
+'''
+
+
+def fake_codex(mode: str = "") -> dict:
+    d = tempfile.mkdtemp(prefix="stream-codex-")
+    binp = os.path.join(d, "bin")
+    os.makedirs(binp)
+    path = os.path.join(binp, "codex")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(FAKE_CODEX.replace("#!/usr/bin/env python3", "#!" + sys.executable))
+    os.chmod(path, 0o755)
+    return {"dir": d, "bin": binp, "log": os.path.join(d, "brief.txt"), "mode": mode}
+
+
+def make_plate(fake: dict, *args) -> tuple[int, str]:
+    was_path = os.environ.get("PATH", "")
+    os.environ["PATH"] = fake["bin"] + os.pathsep + was_path
+    os.environ["FAKE_CODEX_LOG"] = fake["log"]
+    os.environ["FAKE_CODEX_MODE"] = fake["mode"]
+    out = io.StringIO()
+    try:
+        with redirect_stdout(out), redirect_stderr(out):
+            code = plate.main(["plate.py", *args])
+    finally:
+        os.environ["PATH"] = was_path
+        os.environ.pop("FAKE_CODEX_MODE", None)
+    return code, out.getvalue()
+
+
+class Plates(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_codex(mode)
+        self.fakes.append(f)
+        return f
+
+    def reading_for(self, room: str, segments: list) -> None:
+        day = os.path.join(STREAM_DIR, "readings", "2026-09-19")
+        os.makedirs(day, exist_ok=True)
+        with open(os.path.join(day, "0100.json"), "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time(), "rooms": [room], "reading": "a note",
+                       "marked": {room: "x"}, "segments": {room: segments},
+                       "model": "opus", "seconds": 1.0}, f)
+
+    def test_the_pieces_are_the_underlines_in_order(self):
+        room = "stream/2026-09-19/1000"
+        make_page(room, "seed\n", "the switch hums under the floor and nobody answers")
+        self.reading_for(room, [{"t": "the ", "mark": False},
+                                {"t": "switch", "mark": True},
+                                {"t": " hums", "mark": True},      # adjacent runs are one piece
+                                {"t": " under the floor and ", "mark": False},
+                                {"t": "nobody answers", "mark": True}])
+        self.assertEqual(plate.pieces_for(room), ["switch hums", "nobody answers"])
+
+        f = self.fake()
+        code, out = make_plate(f, "--room", room, "--hand", "A test hand.")
+        self.assertEqual(code, 0, out)
+        brief = read_text(f["log"])
+        self.assertIn("switch hums\nnobody answers", brief)     # one per line, in order
+        self.assertIn("A test hand.", brief)
+        self.assertIn("plate.png", brief)                       # the plumbing, appended here
+        with open(os.path.join(plate.PROMPTS, "prompt-pieces.txt"), encoding="utf-8") as fh:
+            self.assertNotIn("plate.png", fh.read())            # and never in bekh's file
+
+        jpg, png, meta = plate.plate_paths(room)
+        for path in (jpg, png, meta):
+            self.assertTrue(os.path.isfile(path), path)
+        d = json.load(open(meta, encoding="utf-8"))
+        self.assertEqual((d["prompt"], d["pieces"], d["fell_back"]),
+                         ("pieces", ["switch hums", "nobody answers"], False))
+        row = [r for r in ledger_rows() if r.get("kind") == "plate"][-1]
+        self.assertEqual((row["room"], row["pieces"]), (room, 2))
+
+    def test_no_underlines_falls_back_to_the_whole_text(self):
+        room = "stream/2026-09-19/1005"
+        make_page(room, "seed\n", "THE WHOLE DREAM TEXT")
+        f = self.fake()
+        code, out = make_plate(f, "--room", room, "--hand", "A test hand.")
+        self.assertEqual(code, 0, out)
+        self.assertIn("falling back", out)
+        self.assertIn("THE WHOLE DREAM TEXT", read_text(f["log"]))
+        d = json.load(open(plate.plate_paths(room)[2], encoding="utf-8"))
+        self.assertEqual((d["prompt"], d["fell_back"]), ("bekh", True))
+
+    def test_from_files_an_existing_png_without_asking_codex(self):
+        room = "stream/2026-09-19/1010"
+        make_page(room, "seed\n", "a dream.")
+        src = os.path.join(BOX, "given.png")
+        import base64
+        with open(src, "wb") as f:
+            f.write(base64.b64decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z4AKmBhQwagAuwAAAAD//"
+                "wMAAsMBaKPxN5EAAAAASUVORK5CYII="))
+        f = self.fake()
+        code, out = make_plate(f, "--room", room, "--prompt", "bekh", "--from", src)
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(f["log"]), "codex was started for a --from")
+        d = json.load(open(plate.plate_paths(room)[2], encoding="utf-8"))
+        self.assertEqual(d["source_png"], src)
+        self.assertEqual(d["seconds"], 0.0)
+
+    def test_a_hand_tool_fails_loudly(self):
+        room = "stream/2026-09-19/1015"
+        make_page(room, "seed\n", "a dream.")
+        code, out = make_plate(self.fake("nothing"), "--room", room)
+        self.assertEqual(code, 1)                       # non-zero: this is not a daemon
+        self.assertIn("no plate.png", out)
+        self.assertFalse(os.path.exists(plate.plate_paths(room)[0]))
+        self.assertEqual(make_plate(self.fake("boom"), "--room", room)[0], 1)
+        # and a room nobody dreamt
+        self.assertEqual(make_plate(self.fake(), "--room", "stream/2026-09-19/9999")[0], 1)
+        self.assertEqual(make_plate(self.fake(), "--room", "../escape")[0], 2)
+
+    def test_the_api_and_the_route_carry_the_plate(self):
+        plated = "stream/2026-09-19/1020"
+        bare = "stream/2026-09-19/1025"
+        make_page(plated, "seed\n", "a plated dream.")
+        make_page(bare, "seed\n", "a bare dream.")
+        self.assertEqual(make_plate(self.fake(), "--room", plated, "--hand", "h")[0], 0)
+
+        by = {p["room"]: p for p in call("/api/stream?n=5")[1]["pages"]}
+        self.assertIsNone(by[bare]["plate"])
+        url = by[plated]["plate"]
+        self.assertTrue(url.startswith("/stream/plate/2026-09-19/1020.jpg?v="), url)
+
+        code, body = call(url)
+        self.assertEqual(code, 200)
+        self.assertTrue(len(body) > 0)
+        # the one route that hands back a file: it only ever builds a path from a room name
+        self.assertEqual(call("/stream/plate/2026-09-19/9999.jpg")[0], 404)
+        self.assertEqual(call("/stream/plate/../../etc/passwd.jpg")[0], 404)
+        self.assertEqual(call("/stream/plate/.trash/1020.jpg")[0], 404)
+        self.assertEqual(call("/stream/plate/2026-09-19/a/b.jpg")[0], 404)
 
 
 if __name__ == "__main__":

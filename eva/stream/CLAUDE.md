@@ -261,39 +261,71 @@ system prompt ahead of ours every time. That is the number that decides whether 
 stays, which is why it is counted. It is counted and **not shown**: no dashboard block, no cli
 (bekh, 2026-09-19 — he wants something that counts, and reads the ledger when he asks).
 
-## Plates — a testing ground, nothing scheduled
+## Plates — a painting behind the dream
 
-A picture for a block of the stream. **Not built**: no daemon, no slot on the page, only two
-prompts kept in hand to play with and interchange (bekh, 2026-09-19), in `plates/`:
+**bekh's picture, the way he has always seen it (2026-09-20): the dream's text; the reader's
+note to its right; and the painting made for that dream BEHIND the dream's text**, dimmed so it
+does not fight the words. Not somewhere else on the page — behind it. This is not the final
+look, it is the mechanic the front will use.
 
-**The working one is `prompt-pieces.txt`** — bekh's pick after seeing one plate from each in the
-magenta-and-cyan palette; he went to his own first on intuition, then to this one. A cheap
-decision: both files stay, and switching is which one gets filled.
-
-- `prompt-bekh.txt` — his: *you are an artist, draw an abstract interpretation of this text*,
-  over the passages **verbatim** (`{text}`). It gave the first plate, a dark palette-knife oil
-  he found beautiful — and samey: he has made such pictures before and knows the cadence.
-- `prompt-pieces.txt` — a painting made from **the interpreter's underlines** (`{pieces}`), not
-  the full text: a drawing model is not a reading model, the full text came back as an inventory
-  (a bread advert; a storybook kitchen), and the underlines are a distillation that already
-  exists and fits the 77 tokens the old models read. Ends on `{hand}`.
-- `hands.txt` — the pot `{hand}` is drawn from by lot, one line each. **A hand, never a name**: a
-  named painter returned that painter (de Chirico's arcades took half the picture); a described
-  way of laying paint returned a painting that looks like nobody's. The pixel line lives here too.
-
-What the five runs seemed to show, held loosely: with no medium at all GPT falls to a photograph;
-"abstract" is its one default; negatives name the thing they forbid (*no words or letters* still
-got a fake signature — *unsigned*, stated as a fact about the painting, got none); the landscape
-and palette lines hold. Runner, until there is one:
+**Still nothing scheduled.** `plate.py` is a hand tool: no launchd job, no kick, no clock. Every
+plate costs one generation off bekh's ChatGPT allowance and about a minute, so it is run on
+purpose, one room at a time, and a failure is a message and a non-zero exit — the opposite of
+every other stance here, deliberately.
 
 ```bash
-cd <a scratch dir> && codex exec --skip-git-repo-check -s workspace-write - < brief.md > codex.log 2>&1
+uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1647
+uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1437 --prompt bekh --from a.png
 ```
 
-with `brief.md` = the filled prompt plus one plumbing paragraph telling codex to use its image
-generation tool and save `plate.png` in the current directory. One to two minutes, ~19k codex
-tokens, one generation off the ChatGPT image allowance. Other hands than GPT's:
-`../../IMAGE-MODELS.md`.
+- **The prompt files are bekh's**, filled and never rewritten: `plates/prompt-pieces.txt` (the
+  default) and `plates/prompt-bekh.txt`, with `{hand}` drawn by lot from `plates/hands.txt`
+  unless `--hand` says otherwise. The paragraph telling codex to use its image tool and save
+  `plate.png` is appended **after** the file by the code — the file he reads is the prompt, and
+  nothing about saving a png belongs in it.
+- **Pieces, not the whole dream.** `{pieces}` is what the interpreter underlined in that room,
+  one per line in order, adjacent marked runs joined, off the newest reading covering it. A
+  drawing model is not a reading model: the full text came back as an inventory. With no
+  reading, or nothing marked, it falls back to `bekh` over the dream verbatim and says so on
+  stdout and in the json.
+- **`--from`** files a png that already exists without calling codex — which is how the two
+  plates drawn by hand on 2026-09-19, before this existed, are on the shelf.
+- **Storage** (gitignored, with everything else in `shelf/stream/`):
+  `plates/<YYYY-MM-DD>/<HHMM>.jpg` — the served copy, longest side 1400 at quality 82 via
+  `sips`, because codex hands back a ~3 MB png and the page loads one of these per passage —
+  the original `.png` beside it, and `.json` with `{ts, room, prompt, hand, pieces, seconds,
+  source_png}`. One plate per room; a re-run replaces it. Ledger rows `kind: "plate"`.
+- **Served as a file**: `GET /stream/plate/<date>/<HHMM>.jpg`, the path built only from a name
+  `name_ok` has passed, cached hard because each `/api/stream` page carries
+  `plate: "<url>?v=<mtime>"` and a re-drawn plate is a new url.
+- **The wash is measured, not guessed.** The plate is the block's background under a two-stop
+  gradient of the page's own ground. Dark: 0.90–0.955, which leaves body ink at **9.9:1** over
+  these plates and **7.6:1** over the brightest cell in one (12.1:1 on the bare page). Light:
+  0.915–0.955 → **6.2:1**, against a light palette whose own ceiling is 6.66:1 — that room
+  cannot do better and does not pretend to. A picture bright enough to break the dark figure
+  would have to be near white; none of these is (mean luminance 0.21).
+- **The peek**: hover on a desk, press-and-hold on a phone, and the wash lifts to ~0.3 for as
+  long as it is held. The hold starts only for a touch pointer, dies on the first real move and
+  never begins on a mark button, so it does not fight text selection or the strokes.
+- **The dream decides the box and the picture fills it** (bekh, 2026-09-20). `cover`, centred,
+  the aspect ratio never touched: a short dream shows a cropped band of its painting, a long one
+  a zoomed, side-cropped one. A plate **never makes a passage taller or moves a word** — no
+  min-height anywhere — and the 16px/18px the wash needs for legibility is taken straight back
+  by an equal negative margin, so a plated block's margin box is exactly its unplated box and
+  the picture reaches 18px past the text into the gutter instead of pushing the text inward.
+  The same padding on every plated passage.
+- **Lazy**: a plate is a quarter of a megabyte and most of the feed is below the fold, so the
+  background is set only when its block comes within 800px of the viewport, loaded through an
+  `Image()` first so nothing is ever painted half-arrived.
+- A passage with no plate renders exactly as it did before any of this.
+
+What the runs have shown, held loosely: with no medium at all GPT falls to a photograph;
+"abstract" is its one default; negatives name the thing they forbid (*no words or letters* still
+got a fake signature — *unsigned*, stated as a fact about the painting, got none); the landscape
+and palette lines hold; **a hand, never a name** — a named painter returned that painter (de
+Chirico's arcades took half the picture), a described way of laying paint returned a painting
+that looks like nobody's. Five plates are on the shelf, 60–72s and ~19k codex tokens each.
+Other hands than GPT's: `../../IMAGE-MODELS.md`.
 
 ## Nothing here is in git
 

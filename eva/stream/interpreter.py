@@ -245,6 +245,10 @@ def parse(answer: str, told: list[dict]) -> tuple[str, dict]:
         if not (0 <= i < len(told)):
             continue
         text = body.strip("\n")
+        # He sometimes types the material back whole, labels and all. His slips are kept by
+        # decision; our `[seed] … [dream]` plumbing turning up inside a dream is not one of his.
+        if "[dream]" in text:
+            text = text.rsplit("[dream]", 1)[1].lstrip(" \t").strip("\n")
         if text.strip():
             marked[told[i]["room"]] = text
     return m.group(1).strip(), marked

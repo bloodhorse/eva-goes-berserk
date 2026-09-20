@@ -399,6 +399,9 @@ passages are **scenes of one dream** so it has to find connective tissue; every 
 a dream ending after 4 scenes or half an hour's silence. The page carries it at the top with
 its `3 / 4`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
 which counts what they cost onto every ledger row.
+And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through
+codex, served as a file and set as the background of the dream's own block — behind the words,
+under a measured wash, lifting on a hover or a press-and-hold.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests

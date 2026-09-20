@@ -38,6 +38,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                /api/folder, built from the rooms the board lists, plus
                                `board` and `title`; rooms that are gone are skipped
   GET  /stream               -> eva/front/stream.html, the reader for the dream stream
+  GET  /stream/plate/<date>/<HHMM>.jpg -> the painting made for that dream, if there is one
   GET  /api/stream           -> the stream's pages, newest first: ?before=<room> pages
                                backwards, ?n=<k> how many, ?all=1 includes the ones the
                                filter flagged. Plus `status`, off the worker's heartbeat, and
@@ -1658,6 +1659,33 @@ def stream_dreams() -> tuple[dict | None, dict]:
     return now, ended
 
 
+# A plate is one painting per room, made by hand with eva/stream/plate.py. Served as a file
+# and never read into a payload: it is a quarter of a megabyte, and the page puts it behind the
+# passage's text as a background image.
+def plate_path(room: str) -> str | None:
+    """The jpg for this room, or None. The path is built from a name `name_ok` has passed and
+    from nothing else — this is the one route here that hands back a file off the disk."""
+    parts = room.split("/")
+    if len(parts) != 3 or not name_ok(room):
+        return None
+    path = os.path.join(STREAM_DIR, "plates", parts[1], parts[2] + ".jpg")
+    return path if os.path.isfile(path) else None
+
+
+def plate_url(room: str) -> str | None:
+    """`/stream/plate/<date>/<HHMM>.jpg?v=<mtime>`. The stamp is what lets the file be cached
+    hard and still change: a re-run replaces the plate under the same name."""
+    path = plate_path(room)
+    if not path:
+        return None
+    parts = room.split("/")
+    try:
+        v = int(os.path.getmtime(path))
+    except OSError:
+        v = 0
+    return f"/stream/plate/{parts[1]}/{parts[2]}.jpg?v={v}"
+
+
 def stream_page(name: str, readings: tuple[dict, dict] | None = None,
                 ended: dict | None = None) -> dict | None:
     """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
@@ -1700,7 +1728,9 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None,
             "reading": heads.get(name),
             # A dream that ENDED on this passage: the page draws it as an inset in the place
             # it ended, which is the only place it means anything.
-            "dream_end": (ended or {}).get(name)}
+            "dream_end": (ended or {}).get(name),
+            # The painting for this dream, if one was made by hand. A url, not the bytes.
+            "plate": plate_url(name)}
 
 
 def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> dict:
@@ -1846,6 +1876,25 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(200, f.read(), "text/html; charset=utf-8")
             except OSError:
                 self._json(404, {"error": f"no page at {STREAM_PAGE}"})
+            return
+
+        # The one route that serves a file out of the shelf. The name is rebuilt from the url
+        # and put through `name_ok` before it becomes a path, so `..` and dot segments are as
+        # unaddressable here as they are everywhere else.
+        if u.path.startswith("/stream/plate/") and u.path.endswith(".jpg"):
+            rest = u.path[len("/stream/plate/"):-len(".jpg")]
+            path = plate_path("stream/" + rest) if rest.count("/") == 1 else None
+            if path is None:
+                self._json(404, {"error": "no plate there"})
+                return
+            try:
+                with open(path, "rb") as f:
+                    # Hard cache: the url carries the file's mtime, so a re-drawn plate is a
+                    # different url and nothing has to be revalidated.
+                    self._send(200, f.read(), "image/jpeg",
+                               "public, max-age=31536000, immutable")
+            except OSError:
+                self._json(404, {"error": "no plate there"})
             return
 
         if u.path == "/api/stream":
