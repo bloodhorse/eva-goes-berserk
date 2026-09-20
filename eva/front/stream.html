@@ -189,6 +189,22 @@
   #sentinel{height:1px;}
   #foot{color:var(--ghost); font-size:13px; text-align:center;
     padding:24px 0 calc(28px + env(safe-area-inset-bottom));}
+  /* The wash tuner (?tune=1). A tool for choosing four numbers by eye and reading them out —
+     not part of the look. What it picks gets baked into the stylesheet above by hand, and this
+     can then stay as a hidden tool. */
+  #tuner{position:fixed; z-index:30; right:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    width:210px; padding:10px 12px 12px; border:1px solid var(--line); border-radius:10px;
+    background:var(--panel); color:var(--ghost); font-size:12px; line-height:1.45;
+    touch-action:none; -webkit-user-select:none; user-select:none;}
+  #tuner label{display:block; font-size:11px; margin:6px 0 0;}
+  #tuner input[type=range]{width:100%; margin:2px 0 0; accent-color:var(--accent);}
+  #tuner .nums{margin-top:8px; font-variant-numeric:tabular-nums; color:var(--ink);}
+  #tuner .cost{color:var(--ghost);}
+  #tuner button{margin-top:8px; font-size:11px; padding:3px 8px; color:var(--ghost);
+    border:1px solid var(--line); border-radius:7px;}
+  #tuner button:hover{color:var(--ink);}
+
   #notice{position:fixed; left:0; right:0; top:0; z-index:20; text-align:center;
     padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
     background:var(--panel); color:var(--hot); font-size:13px;}
@@ -256,6 +272,18 @@
 </main>
 
 <div id="notice" hidden></div>
+
+<div id="tuner" hidden>
+  <label>wash <span id="t-wash"></span></label>
+  <input id="s-wash" type="range" min="0" max="100" step="1">
+  <label>fade <span id="t-fade"></span></label>
+  <input id="s-fade" type="range" min="0" max="30" step="1">
+  <label>peek <span id="t-peek"></span></label>
+  <input id="s-peek" type="range" min="0" max="60" step="1">
+  <div class="nums" id="t-nums"></div>
+  <div class="cost" id="t-cost"></div>
+  <button id="t-reset">reset</button>
+</div>
 
 <script>
 'use strict';
@@ -513,7 +541,7 @@ function peekOff(){
   holding = null;
 }
 addEventListener('pointerdown', e => {
-  if (e.pointerType !== 'touch') return;
+  if (e.pointerType !== 'touch' || tuning) return;
   const block = e.target.closest && e.target.closest('.block.plated');
   if (!block || (e.target.closest && e.target.closest('.stroke'))) return;
   peekOff();
@@ -708,6 +736,111 @@ function poll(){
 }
 
 el.fresh.addEventListener('click', showPending);
+
+// ---- the wash tuner -----------------------------------------------------------------------
+// Four numbers chosen by eye (?tune=1). It writes the same custom properties the stylesheet
+// uses, on :root, so nothing about how a plate is painted has a second implementation — and
+// what it lands on is copied into the stylesheet by hand afterwards.
+const DARK = {rgb: '35,35,35', wash: .68, fade: .12, peek: .30, ink: [0xd4, 0xe3, 0xfe]};
+const LIGHT = {rgb: '250,244,237', wash: .75, fade: .10, peek: .36, ink: [0x57, 0x52, 0x79]};
+const lightRoom = matchMedia('(prefers-color-scheme: light)');
+
+function room(){ return lightRoom.matches ? LIGHT : DARK; }
+function washKey(){ return 'stream.wash.' + (lightRoom.matches ? 'light' : 'dark'); }
+
+function storedWash(){
+  try {
+    const raw = localStorage.getItem(washKey());
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* no memory here, and the defaults are fine */ }
+  return null;
+}
+
+function clamp01(x){ return Math.max(0, Math.min(1, x)); }
+
+function applyWash(v){
+  const r = room().rgb;
+  const set = (n, a) => document.documentElement.style.setProperty(n, `rgba(${r},${a})`);
+  const a = clamp01(v.wash + v.fade / 2), b = clamp01(v.wash - v.fade / 2);
+  set('--wash-a', a.toFixed(3));
+  set('--wash-b', b.toFixed(3));
+  set('--peek-a', clamp01(v.peek + v.fade / 2).toFixed(3));
+  set('--peek-b', clamp01(v.peek - v.fade / 2).toFixed(3));
+  return [a, b];
+}
+
+// WCAG, so a number he picks comes with its cost visible: the body ink against this wash laid
+// over pure black and over pure white — the two worst plates there could ever be.
+function lin(c){ c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+function lum(rgb){ return 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2]); }
+function ratio(a, b){ return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); }
+
+function washCost(alpha){
+  const r = room(), ground = lum(r.rgb.split(',').map(Number)), ink = lum(r.ink);
+  const over = p => ratio(ink, alpha * ground + (1 - alpha) * p);
+  return [over(0), over(1)];
+}
+
+function drawTuner(v, alphas){
+  $('t-wash').textContent = v.wash.toFixed(2);
+  $('t-fade').textContent = v.fade.toFixed(2);
+  $('t-peek').textContent = v.peek.toFixed(2);
+  $('t-nums').textContent =
+    `wash ${v.wash.toFixed(2)} · ${alphas[0].toFixed(2)} → ${alphas[1].toFixed(2)}`;
+  // The weaker of the two stops is the one the text has to survive.
+  const c = washCost(Math.min(alphas[0], alphas[1]));
+  $('t-cost').textContent = `over black ${c[0].toFixed(1)}:1 · over white ${c[1].toFixed(1)}:1`;
+}
+
+let tuning = false;     // a drag on the panel must never become a press-and-hold peek
+
+function tuner(){
+  const d = room();
+  const v = Object.assign({wash: d.wash, fade: d.fade, peek: d.peek}, storedWash() || {});
+  const alphas = applyWash(v);
+  const panel = $('tuner');
+  if (new URLSearchParams(location.search).get('tune') !== '1'){ panel.hidden = true; return; }
+
+  panel.hidden = false;
+  const s = {wash: $('s-wash'), fade: $('s-fade'), peek: $('s-peek')};
+  const put = () => {
+    s.wash.value = Math.round(v.wash * 100);
+    s.fade.value = Math.round(v.fade * 100);
+    s.peek.value = Math.round(v.peek * 100);
+  };
+  put();
+  drawTuner(v, alphas);
+  if (panel.dataset.wired) return;          // a theme flip re-reads the numbers, not the wiring
+  panel.dataset.wired = '1';
+
+  const save = () => {
+    try { localStorage.setItem(washKey(), JSON.stringify(v)); } catch (e) { /* no memory */ }
+  };
+  for (const name of ['wash', 'fade', 'peek']){
+    s[name].addEventListener('input', () => {
+      v[name] = Number(s[name].value) / 100;
+      drawTuner(v, applyWash(v));
+      save();
+    });
+  }
+  // The panel is a tool, not the page: a touch on it never scrolls the feed, never selects a
+  // word, and never counts as the hold that lifts a plate.
+  panel.addEventListener('pointerdown', e => { tuning = true; e.stopPropagation(); });
+  for (const ev of ['pointerup', 'pointercancel'])
+    addEventListener(ev, () => { tuning = false; }, {passive: true});
+
+  $('t-reset').addEventListener('click', () => {
+    try { localStorage.removeItem(washKey()); } catch (e) { /* no memory */ }
+    const back = room();
+    v.wash = back.wash; v.fade = back.fade; v.peek = back.peek;
+    put();
+    drawTuner(v, applyWash(v));
+  });
+}
+
+// The stored wash applies whether or not the tuner is on screen, and follows a theme flip.
+lightRoom.addEventListener('change', tuner);
+tuner();
 
 fill();
 setInterval(poll, POLL_MS);

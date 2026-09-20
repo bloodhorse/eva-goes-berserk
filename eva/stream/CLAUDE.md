@@ -314,6 +314,13 @@ uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1437 --prompt 
   by an equal negative margin, so a plated block's margin box is exactly its unplated box and
   the picture reaches 18px past the text into the gutter instead of pushing the text inward.
   The same padding on every plated passage.
+- **The wash is tuned by eye, at `https://eva.x/stream?tune=1`** — a panel of three sliders
+  (wash, fade between the gradient's two stops, peek) that writes the same `--wash-a/-b` and
+  `--peek-a/-b` the stylesheet uses, prints the two alphas to read out and the contrast they
+  cost over a black and a white plate, and remembers per theme in `localStorage` (the stored
+  numbers apply without `?tune=1`; `reset` clears them). It is a tool and not the look: what it
+  lands on gets **baked into the stylesheet by hand**, and the tuner then stays as a hidden
+  tool for the next time.
 - **Lazy**: a plate is a quarter of a megabyte and most of the feed is below the fold, so the
   background is set only when its block comes within 800px of the viewport, loaded through an
   `Image()` first so nothing is ever painted half-arrived.
