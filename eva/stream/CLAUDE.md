@@ -139,8 +139,17 @@ through `opus.py`. One-shot like the worker.
   passages it missed stay unread: the stream is disposable, and a note on an hour-old dream is
   not what the page is for. The block of several is still in the file format, and the readings
   written before this cover two.
-- **Its memory is its own last four notes**, in the prompt, oldest first. Nothing else carries
-  from one call to the next.
+- **He reads each dream fresh, and sees only the dream** (2026-09-21). His memory of his own
+  last four notes is OFF (`STREAM_READ_MEMORY`, default 0): shown his own notes he stopped
+  remembering the dreams and copied his own format — one note opened *"Last time it…"*, the next
+  call had that note in front of it, and from 16:42 on the first day **81 of 97 notes open with
+  those two words** and end on *plainly*. A genre lock, nemo's disease, built by us; bekh saw
+  it as four dreams summarized the same way. If a memory ever returns it has to be something he
+  cannot imitate — a bare list of recurring images, never his own sentences; turning the number
+  back up brings the formula back within the hour. And the seed is out of his sight
+  (`STREAM_READ_SEEDS=1` restores it), as it is for the sleeper: with it labelled in front of him
+  he narrated the plumbing — *"now it is handed Gogol's madman"* — instead of reading the dream.
+  The persona file lost its two sentences about seeds and about remembering for the same reason.
 - **No checker and no comparison, by decision** (bekh, 2026-09-19, after living with it for an
   hour). Its copy of the dream is stored verbatim, tags and all, and is never corrected — *a
   mistake in the copy is another prophecy*; the room on the shelf is never written to. The word

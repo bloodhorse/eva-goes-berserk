@@ -174,8 +174,11 @@ shape — now.
      passage every five minutes, seed from a shuffle bag and heat (1.8–2.5) by lot, nobody
      picking; a regexp filter hides web furniture from the page and deletes nothing; a `★` feeds
      the passage's tail back into the pot and survives as an artifact. *The reader at the
-     bedside* (the interpreter): opus, headless, a margin note on every dream with a memory of
-     his last four, and **two marks and no more** written as coloured words — magenta for what
+     bedside* (the interpreter): opus, headless, a margin note on every dream, reading each one
+     fresh and seeing only what nemo wrote (his memory of his own last four notes was turned
+     off on 2026-09-21: he copied their format instead of remembering, and 81 of the first
+     day's 97 notes open with the words *Last time* — bekh saw four dreams summarized the same
+     way; with the seed in sight he also narrated the plumbing), and **two marks and no more** written as coloured words — magenta for what
      touched him most, cyan for what felt most mysterious (the meanings are the model's pick
      standing in; bekh asked only for one of each colour). *The sleeper remembering*: a second
      opus holding one small first-person account of **one dream of four scenes**, rewritten

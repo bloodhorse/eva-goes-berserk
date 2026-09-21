@@ -31,7 +31,8 @@ What is stored is his copy, verbatim, plus the same string cut into render-ready
 `<mark>` tags alone. The page writes the marked words in colour and that is the whole of it.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_READ_EVERY (how many passages a note
-covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is shown, default 4),
+covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is shown, default 0 — see prompt_for),
+STREAM_READ_SEEDS (1 = show him the labelled seed again),
 STREAM_READ_TIMEOUT, STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
 """
 
@@ -64,7 +65,11 @@ EVERY = int(os.environ.get("STREAM_READ_EVERY", "1"))
 # How many of its OWN past readings it is shown. Its memory, and the only continuity there is:
 # nothing else carries from one call to the next. Four is what fits beside two passages
 # without the material drowning in it.
-MEMORY = int(os.environ.get("STREAM_READ_MEMORY", "4"))
+MEMORY = int(os.environ.get("STREAM_READ_MEMORY", "0"))
+# Whether he is shown the seed each dream grew from. Off since 2026-09-21, like the sleeper's:
+# with the seed in sight he narrated the plumbing ("now it is handed Gogol's madman…") instead
+# of reading the dream. `STREAM_READ_SEEDS=1` puts the labelled seed back.
+SEEDS = os.environ.get("STREAM_READ_SEEDS") == "1"
 TIMEOUT = int(os.environ.get("STREAM_READ_TIMEOUT", "300"))
 
 MODEL = opus.MODEL
@@ -169,18 +174,33 @@ def prompt_for(told: list[dict], past: list[dict], persona: str) -> str:
     numbers follow it, which is the only thing that ties an answer back to a room.
     """
     parts = [persona.rstrip("\n"), SHAPE.strip()]
+    # His memory is OFF by default (2026-09-21). Shown his own last four notes, he stopped
+    # remembering the dreams and started copying his own format: one note opened "Last time
+    # it…", the next call had that note in front of it, and from 16:42 on the first day 81 of
+    # 97 notes open with those two words and end on "plainly" — a genre lock, the same disease
+    # nemo has, built by us. bekh saw it as four dreams summarized the same way. If a memory
+    # comes back it must be something he cannot imitate (a bare list of recurring images, not
+    # his own sentences); turning this number up again brings the formula back within an hour.
     mem = past[-MEMORY:] if MEMORY > 0 else []
     if mem:
-        lines = ["--- your earlier readings, oldest first ---"]
+        lines = ["--- your own earlier readings, oldest first; you remember them ---"]
         for d in mem:
             lines.append(f"({when(d.get('ts') or 0)})")
             lines.append((d.get("reading") or "").strip())
         parts.append("\n\n".join(lines))
     lines = ["--- the latest stretch ---"]
+    if SEEDS:
+        lines.append("(each passage grew from a seed, text the machine was handed and not its "
+                     "own, marked [seed]; the dream is what comes after, marked [dream])")
     for i, p in enumerate(told, 1):
-        lines.append(f"passage {i}")
-        lines.append("[seed] " + (p.get("seed") or "").strip())
-        lines.append("[dream] " + (p.get("text") or ""))
+        if len(told) > 1 or SEEDS:
+            lines.append(f"passage {i}")
+        if SEEDS:
+            lines.append("[seed] " + (p.get("seed") or "").strip())
+            lines.append("[dream] " + (p.get("text") or ""))
+        else:
+            # The dream exactly as nemo wrote it, ragged first and last words included.
+            lines.append(p.get("text") or "")
     parts.append("\n\n".join(lines))
     return "\n\n".join(parts) + "\n"
 

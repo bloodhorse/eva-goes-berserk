@@ -666,8 +666,16 @@ if "--- the new scene ---" in prompt:
     answer("<dream>I was in it again" + ("" if first else " and before that " + held.split(";")[0])
            + "; then " + scene[:40] + " (" + str(n) + ")</dream>")
 
-dreams = [d.rstrip("\n") for d in
-          re.findall(r"^\[dream\] (.*?)(?=\n\npassage |\Z)", prompt, re.S | re.M)]
+# The material since 2026-09-21: the dream alone under the header, no seed and no labels; a
+# block of several is cut by "passage N" lines; with STREAM_READ_SEEDS=1 the old labels return.
+_m = re.search(r"--- the latest stretch ---\n\n(.*)\Z", prompt, re.S)
+dreams = []
+for _part in re.split(r"(?m)^passage \d+\n\n", _m.group(1) if _m else ""):
+    if not _part.strip() or _part.startswith("(each passage grew"):
+        continue
+    if "[dream] " in _part:
+        _part = _part.split("[dream] ", 1)[1]
+    dreams.append(_part.rstrip("\n"))
 if mode == "garbage":
     answer("i could not read these, sorry")
 out = io.StringIO()
@@ -839,10 +847,11 @@ class Interpreter(unittest.TestCase):
                          ["stream/2026-09-19/1015", "stream/2026-09-19/1010"])
         self.assertEqual(got[0]["reading"],
                          "the switch keeps answering a call nobody placed.")
-        # the prompt read them oldest first, and the seeds went with them
+        # the prompt read them oldest first, and the seeds stayed out of his sight
         prompt = read_text(f["log"])
         self.assertLess(prompt.index("the switch hums"), prompt.index("the newest one."))
-        self.assertIn("[seed] seed for 1015", prompt)
+        self.assertNotIn("seed for 1015", prompt)
+        self.assertNotIn("[dream]", prompt)
         self.assertNotIn("a footer.", prompt)
         row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
         self.assertEqual(row["rooms"], got[0]["rooms"])
@@ -866,16 +875,26 @@ class Interpreter(unittest.TestCase):
         self.assertNotIn("<reading>", persona)
         self.assertIn("<passage n=\"1\">", prompt)
 
-    def test_it_is_shown_its_last_four_readings(self):
+    def test_no_memory_by_default_and_the_last_four_when_it_is_turned_on(self):
         self.block_of(2)
         for i in range(6):
             put_reading([f"stream/2026-09-18/{1000 + i}"], f"memory number {i}",
                         time.time() - 10000 + i)
+        # Off by default: shown his own notes he copied their format, 81 of 97 opening
+        # "Last time…" on the first day. Not one of them may reach the prompt.
+        self.pages(("1050", "zero."), ("1055", "half."))
+        f0 = self.fake()
+        self.assertEqual(interpret(f0)[0], 0)
+        self.assertNotIn("memory number", read_text(f0["log"]))
+
+        was = interpreter.MEMORY
+        interpreter.MEMORY = 4
+        self.addCleanup(setattr, interpreter, "MEMORY", was)
         self.pages(("1100", "one."), ("1105", "two."))
         f = self.fake()
         self.assertEqual(interpret(f)[0], 0)
         prompt = read_text(f["log"])
-        for i in (2, 3, 4, 5):
+        for i in (3, 4, 5):
             self.assertIn(f"memory number {i}", prompt)
         for i in (0, 1):
             self.assertNotIn(f"memory number {i}", prompt)
