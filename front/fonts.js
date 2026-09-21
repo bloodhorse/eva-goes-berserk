@@ -26,7 +26,8 @@ const FONTS = {
   caslon:      { family: '"Libre Caslon Text", serif', size: 17, lead: 1.8, track: '.01em', google: 'Libre+Caslon+Text' },
   didot:       { family: 'Didot, "Bodoni 72", serif', size: 20, lead: 1.6, track: '.02em' },
   hoefler:     { family: '"Hoefler Text", serif', size: 19, lead: 1.65, track: '.01em' },
-  newsreader:  { family: 'Newsreader, serif', size: 18, lead: 1.7, track: '0', google: 'Newsreader:opsz,wght@6..72,400' },
+  // bekh's pick — 20px (was 18): lines come down from ~95 characters toward a comfortable measure
+  newsreader:  { family: 'Newsreader, serif', size: 20, lead: 1.65, track: '0', google: 'Newsreader:opsz,wght@6..72,400' },
   // elegant / old print
   cormorant:   { family: '"Cormorant Garamond", serif', size: 21, lead: 1.55, track: '.01em', weight: 500, google: 'Cormorant+Garamond:wght@400;500;600' },
   fell:        { family: '"IM Fell English", serif', size: 19, lead: 1.6, track: '.01em', google: 'IM+Fell+English' },
@@ -45,3 +46,7 @@ const FONTS = {
   dotgothic:   { family: 'DotGothic16, monospace', size: 17, lead: 1.8, track: '.04em', google: 'DotGothic16' },
   majormono:   { family: '"Major Mono Display", monospace', size: 15, lead: 1.9, track: '.05em', google: 'Major+Mono+Display' },
 };
+
+// the short leash: what the font button and f / F cycle through. everything above stays
+// reachable with ?font=<name>
+const SHORTLIST = ['newsreader', 'majormono'];

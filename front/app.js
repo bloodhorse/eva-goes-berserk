@@ -393,10 +393,11 @@ function setFont(name) {
   document.body.classList.toggle('rough', !!f.rough);
   $('#fontbtn').textContent = 'font: ' + name;
   store('font', name);
-  tell(`font: ${name}   ${f.size}px   [f / shift-f]`);
+  tell(`font: ${name}   ${f.size}px   [f / shift-f · shortlist]`);
 }
 $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
-function step(d) { const i = FONT_NAMES.indexOf(FONT); setFont(FONT_NAMES[(i + d + FONT_NAMES.length) % FONT_NAMES.length]); }
+// the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
+function step(d) { const L = SHORTLIST, i = L.indexOf(FONT); setFont(L[i < 0 ? 0 : (i + d + L.length) % L.length]); }
 
 // the focused plate's wash, tuned by eye: w lighter, W darker (also - and =). 0 = the bare painting
 let WA = params.has('wa') ? +params.get('wa') : +(store('wa') || .72);
