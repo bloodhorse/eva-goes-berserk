@@ -55,6 +55,8 @@
   @keyframes grain { 25% { background-position: 37px 91px; } 50% { background-position: 170px 13px; } 75% { background-position: 88px 200px; } }
   /* signal and dots draw the murk on the canvas; the sharp picture waits underneath */
   body.m-frost .plate canvas { display: none; }
+  /* bloom: the dots glow and smear into each other a little, like phosphor on an old tube */
+  body.m-bloom .plate canvas { filter: blur(1.6px) saturate(1.25) brightness(1.1); }
 
   #label { position: fixed; left: 1.2em; bottom: 1em; z-index: 3; font: 11px "Courier New", monospace; letter-spacing: .3em;
            color: var(--lit-b); transition: opacity 1s; opacity: 0; pointer-events: none; }
@@ -71,7 +73,7 @@
 // a snapshot of the real stream (sketch/data/stream.js, git-ignored). newest first there;
 // we read down, oldest first
 const $ = s => document.querySelector(s);
-const MATS = ['signal', 'dots', 'frost'];
+const MATS = ['signal', 'dots', 'frost', 'fogdots', 'bloom', 'quiet'];
 const params = new URLSearchParams(location.search);
 let MAT = MATS.includes(params.get('mat')) ? params.get('mat') : 'frost';
 
@@ -145,9 +147,20 @@ function focusRow() {
 // ---- the canvas materials. step 0 = fully murky, STEPS = locked / resolved (canvas hidden) ----
 const STEPS = 6;
 // house colours the dots are allowed to use: nearest colour per pixel, ordered dither between them
+// quiet: the same hues pulled down and toward each other, so neighbouring dots don't fight in brightness
+const hexes = a => a.map(h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)));
+const QUIET_PAL = hexes(['#1b1a20', '#262c3c', '#3a3155', '#6e4a72', '#3f6b78', '#7c8499']);
 const DOT_PAL = ['#1e1e22', '#2e3547', '#5b4a86', '#f29bea', '#7fe3f5', '#d4e3fe']
   .map(h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)));
 const B4 = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+// the dot family: cell = dot size in px, fog = how hard the painting is fogged before dithering
+// (bloom is the plain dots with a css glow on top)
+const DOTS = {
+  dots:    { cell: 4, pal: DOT_PAL,   fog: 0 },
+  fogdots: { cell: 4, pal: DOT_PAL,   fog: 12 },
+  bloom:   { cell: 4, pal: DOT_PAL,   fog: 0 },
+  quiet:   { cell: 6, pal: QUIET_PAL, fog: 0 },
+};
 
 function cover(ctx, img, w, h) {
   const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
@@ -168,23 +181,34 @@ function paint(r) {
     r.cv.width = Math.max(1, Math.round(W / bw)); r.cv.height = Math.max(1, Math.round(H / bh));
     const c = r.cv.getContext('2d'); c.imageSmoothingEnabled = true;
     cover(c, r.img, r.cv.width, r.cv.height);
-  } else if (MAT === 'dots') {
+  } else if (DOTS[MAT]) {
+    const cfg = DOTS[MAT];
     // coarse house-palette dither over the sharp picture; resolving = dots drop away by the same
     // bayer order they'd fill in with, so the painting shows through a thinning screen
-    const S = 4, w = Math.ceil(W / S), h = Math.ceil(H / S);
+    const S = cfg.cell, w = Math.ceil(W / S), h = Math.ceil(H / S), PAL = cfg.pal;
     if (!r.dither || r.dither.width !== w || r.dither.height !== h) {
       const c = document.createElement('canvas'); c.width = w; c.height = h;
-      const x = c.getContext('2d', { willReadFrequently: true }); cover(x, r.img, w, h);
+      const x = c.getContext('2d', { willReadFrequently: true });
+      if (cfg.fog) {
+        // fog first: shrink hard and stretch back smooth — the brush strokes are gone before the
+        // dither ever sees them, so it patterns calm colour fields instead of crawling over detail.
+        // (down/up-scaling, not ctx.filter, because safari's canvas blur support is shaky)
+        const t = document.createElement('canvas'); t.width = Math.max(2, w / cfg.fog | 0); t.height = Math.max(2, h / cfg.fog | 0);
+        const tx = t.getContext('2d'); cover(tx, r.img, t.width, t.height);
+        const m = document.createElement('canvas'); m.width = Math.max(2, w / 3 | 0); m.height = Math.max(2, h / 3 | 0);
+        const mx = m.getContext('2d'); mx.imageSmoothingQuality = 'high'; mx.drawImage(t, 0, 0, m.width, m.height);
+        x.imageSmoothingQuality = 'high'; x.drawImage(m, 0, 0, w, h);
+      } else cover(x, r.img, w, h);
       const id = x.getImageData(0, 0, w, h), d = id.data;
       for (let y = 0; y < h; y++) for (let xx = 0; xx < w; xx++) {
         const i = (y * w + xx) * 4, o = (B4[(y & 3) * 4 + (xx & 3)] / 16 - .5) * 64;
         let bi = 0, bd = Infinity;
-        for (let j = 0; j < DOT_PAL.length; j++) {
-          const q = DOT_PAL[j], dr = d[i] + o - q[0], dg = d[i+1] + o - q[1], db = d[i+2] + o - q[2];
+        for (let j = 0; j < PAL.length; j++) {
+          const q = PAL[j], dr = d[i] + o - q[0], dg = d[i+1] + o - q[1], db = d[i+2] + o - q[2];
           const dist = dr * dr * .3 + dg * dg * .59 + db * db * .11;
           if (dist < bd) { bd = dist; bi = j; }
         }
-        const q = DOT_PAL[bi]; d[i] = q[0]; d[i+1] = q[1]; d[i+2] = q[2]; d[i+3] = 255;
+        const q = PAL[bi]; d[i] = q[0]; d[i+1] = q[1]; d[i+2] = q[2]; d[i+3] = 255;
       }
       r.dither = id;
     }
@@ -211,8 +235,8 @@ function loop(now) {
 function setMat(m) {
   MAT = m;
   document.body.className = 'm-' + m;
-  for (const r of rows) if (r.plate) { r.step = r.target; paint(r); }
-  const l = $('#label'); l.textContent = `material: ${m}   [1-3]`; l.style.opacity = 1;
+  for (const r of rows) if (r.plate) { r.step = r.target; r.dither = null; paint(r); }
+  const l = $('#label'); l.textContent = `material: ${m}   [1-6]`; l.style.opacity = 1;
   clearTimeout(l.t); l.t = setTimeout(() => l.style.opacity = 0, 1800);
 }
 addEventListener('keydown', e => { const i = +e.key - 1; if (MATS[i]) setMat(MATS[i]); });
