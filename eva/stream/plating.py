@@ -174,9 +174,21 @@ def next_room() -> str | None:
         out.append(name)
     for name in reversed(out):                             # oldest of the eligible ones
         page = loom.stream_page(name)
-        if page is not None and not page.get("flag"):
-            return name
+        if page is None or page.get("flag"):
+            continue
+        # A stub is a dream like any other — the reader notes it and the sleeper has to fit it
+        # into the story, and a lone full stop once gave the best sentence of its hour (bekh,
+        # 2026-09-21: "full stop is kinda awesome… it was great not having [a minimum]"). The
+        # painter is the one voice that skips it: a picture of fifteen words or fewer is the one
+        # expensive thing here, about two thirds of a point of the codex week.
+        if len((page.get("text") or "").split()) < MIN_WORDS:
+            continue
+        return name
     return None
+
+
+# Dreams shorter than this many words get no plate (and everything else). 0 = paint them too.
+MIN_WORDS = int(os.environ.get("STREAM_PLATE_MIN_WORDS", "15"))
 
 
 def run_once() -> int:

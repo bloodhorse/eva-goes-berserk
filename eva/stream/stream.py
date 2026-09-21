@@ -127,23 +127,12 @@ FILTERS: list[tuple[str, re.Pattern]] = [
 ]
 
 
-# Under this many words a passage is a stub, not a dream: nemo sometimes ends the document on
-# the spot — a lone full stop (2026-09-21 16:13), "— a friend." — and the page then shows an
-# empty band with a note about nothing. 15 and not more, because short can be whole: one of the
-# first day's best was a two-sentence regulation about a hat in a lift. Flagged like everything
-# else, never dropped; and since the reader, the sleeper and the painter all skip a flagged
-# passage, a stub no longer costs two opus calls and a picture. 0 turns it off.
-MIN_WORDS = int(os.environ.get("STREAM_MIN_WORDS", "15"))
-
-
 def flag_of(text: str) -> str | None:
     """Which rule this page tripped, or None. First match wins — a footer that is also a url
     is one flag, because the column says "it went to the web", not how many ways."""
     for name, rx in FILTERS:
         if rx.search(text or ""):
             return name
-    if MIN_WORDS and len((text or "").split()) < MIN_WORDS:
-        return "too short"
     return None
 
 
