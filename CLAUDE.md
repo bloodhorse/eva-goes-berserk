@@ -21,6 +21,6 @@ Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for
 
 ## Where we stand (rewrite this in place)
 
-- Chosen: glass at 8px for unfocused plates, dots one click away; focus follows reading; trickle sticky per dream at 60% of its column; reader's marks and names as on eva; seed behind a button; double-click for the full painting; nothing moves on its own.
-- Open, in this order: **tune the passage font** (picked: `newsreader`) → **settle the wash darkness** for that font (`w`/`W`) → check the sticky trickle live on long dreams.
+- Chosen: newsreader for the passage (labels in spaced Courier); glass at 8px for unfocused plates, dots one click away; focus follows reading; trickle sticky per dream at 60% of its column; reader's marks and names as on eva; seed behind a button; double-click for the full painting; nothing moves on its own.
+- Open, in this order: **bekh's size for newsreader** (now 19px; `,`/`.` live, then bake it in) → **settle the wash darkness** for it (`w`/`W`, then bake the number in) → check the sticky trickle live on long dreams → name the rest of the font shortlist ("some others").
 - Agreed ideas, not built: text arriving live with the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words — each must pass the reading rule.

@@ -22,4 +22,5 @@
 - In sketches, load data as a `<script>`, not `fetch` (a fetch loses the race).
 - Probing state: `--dump-dom` with an injected `window.onerror` + a `setTimeout` that writes findings into `document.title`.
 - A timed-out run leaves Helium helpers alive: kill them by numeric PID, never `pkill -f`.
+- Font specimens: loop over the names in `front/fonts.js` (`grep -oE '^  [a-z_0-9]+:'`), one `?only=<room>&font=<name>` shot each into `shots/fonts/NN_name.png`; about one in seven stalls — retry those by name. (zsh doesn't word-split `$VAR` in a `for`: use a `while read` over a file.)
 - Save to `shots/` (git-ignored), tag `claude`, and **open the folder in Finder for bekh — not kitty** (paintings look bad in the kitty mosaic).

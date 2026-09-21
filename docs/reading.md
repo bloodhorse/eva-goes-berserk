@@ -6,10 +6,12 @@ It's all about reading. Everything visual is judged by one test: does it help or
 
 bekh's rule: no rolling scanlines, breathing dots, crawling grain, blinking words — fauux can afford constant motion, a page for reading can't. Motion only answers the reader (focus changes on scroll, new passages arriving, the lightbox). Scanlines are out entirely, even still ones. The fauux motion tricks stay in the lab unless tied to a reader's action.
 
-## The font — in progress
+## The font
 
-The font is the centre of attention. Target: the sharp, hard balance — stylish, carries the atmosphere, yet effortless to read.
+The passage font is the centre of attention. Target: the sharp, hard balance — stylish, carries the atmosphere, yet effortless to read. Only the passage is in a reading face; every label (names, numbers, seed, timestamps, trickle, reading) wears the same spaced Courier.
 
-Candidates in `front/fonts.js`, each with its own tuned size/leading/tracking so none loses to bad settings: **iowan** (current default), **lain** (Times New Roman, smoothing off, wide tracking — fauux's trick: the style is the treatment), **courier** (the first sketch's spaced typewriter), charter, baskerville, garamond (Google), plex mono (Google), vt323 (Google, the wild card). Round two (21 more, as diverse as possible: lain variants, sharper serifs, elegant/old print, sans, monos, oddballs) — specimens: one passage per font, `shots/fonts/NN_name.png`, made with `?only=<room>&font=<name>`. **Picked from round two: `newsreader`** (the default since 2026-09-21, now 20px); **shortlist** (`SHORTLIST` in `fonts.js`, what `f` cycles): newsreader, majormono (the all-caps one bekh likes) — add names as they come — next: tune its size/weight/spacing, then the wash for it. First round verdict (bekh): only **lain** came close — "still not there". The trickle and reading keep spaced Courier for now; only the passage font is being chosen.
+- **Chosen: `newsreader` at 19px** (2026-09-21). 18 ran ~95-character lines; 20 was too big (bekh). Fine-tuning is live: `,` / `.` nudge the size, then the number bekh lands on gets baked into `fonts.js`.
+- **Shortlist** (`SHORTLIST` in `fonts.js`, what the font button and `f` cycle): newsreader, **majormono** (the all-caps one bekh likes). bekh mentioned "some others" — add them by name.
+- **Everything tried stays** in `fonts.js` (29 faces, each with its own tuned size/leading/tracking), reachable by `?font=`. Round one: only `lain` (Times, smoothing off, wide) came close. Round two went as wide as possible — lain variants, sharp serifs, old print, sans, monos, typewriters, dot-matrix. Specimens: `shots/fonts/NN_name.png`, one passage per font over one painting (`?only=<room>&font=<name>`, see `lab.md`).
 
 Coupling with the wash: colour alone doesn't buy readability over a painting (a pink font at white's brightness reads the same; a darker one needs *more* wash). Weight and size do. So: pick the font first, then tune the wash for it by eye.
