@@ -86,6 +86,14 @@ KICK_JOBS = ("com.bekh.eva-stream-interpreter",      # the reader at the bedside
              "com.bekh.eva-stream-remembering")      # the sleeper remembering the night
 KICK_TIMEOUT = 15
 
+# How much of a drawn seed nemo is actually handed: its TAIL, about this many words. bekh,
+# 2026-09-21: the seeds had got out of hand — a pot median of 109 words, the classics at 650,
+# a sliver of dream under a wall of grey — and his example of a good one was two sentences,
+# about 35 words, ending mid-clause. Trimmed here and not on the shelf, so the files stay whole
+# and this is one number to turn; and trimmed rather than folded on the page, because a fold
+# conceals what the machine saw and the page's grey text should BE what it saw. 0 = whole seed.
+SEED_WORDS = int(os.environ.get("STREAM_SEED_WORDS", "45"))
+
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, FOLDER))
 SEEDS = os.environ.get("STREAM_SEEDS", os.path.join(loom.SHELF, "seeds"))
@@ -229,6 +237,28 @@ def sentences_tail(text: str, chars: int = TAIL_CHARS) -> str:
     return tail.strip() or text[-chars:].strip()
 
 
+def seed_tail(text: str, words: int) -> str:
+    """The last `words` words of a seed, moved FORWARD to a sentence start, the end untouched.
+
+    The end is never touched because the seam is the seed: where it stops decides the first
+    word of the dream, and every seed on the shelf was cut there on purpose. Only the front
+    moves — to the next sentence start inside the tail when there is one that still leaves a
+    dozen words, so the passage does not open on the back half of somebody's clause. Works on
+    character offsets, not on a split-and-join, so a seed's own line breaks (verse, a log's
+    entries) survive exactly as they are.
+    """
+    if words <= 0:
+        return text
+    spans = [m.start() for m in re.finditer(r"\S+", text)]
+    if len(spans) <= words:
+        return text
+    cut = spans[len(spans) - words]
+    m = re.search(SENT_END + r"\s+", text[cut:])
+    if m and len(text[cut + m.end():].split()) >= 12:
+        cut += m.end()
+    return text[cut:]
+
+
 def pot_b() -> list[tuple[str, str]]:
     """The tails of stream pages bekh starred, as (identity, text).
 
@@ -335,7 +365,7 @@ def draw_seed(rng: random.Random) -> tuple[str, str] | None:
     # The trailing-space trap, measured 2026-09-16: a document ending on a space makes the
     # next token a NUMERAL, every time. Spaces and tabs only, and only at the very end —
     # newlines are the document's own shape and a seed that ends on one means it.
-    return ident, re.sub(r"[ \t]+\Z", "", text)
+    return ident, re.sub(r"[ \t]+\Z", "", seed_tail(text, SEED_WORDS))
 
 
 # ---- the page ---------------------------------------------------------------------------

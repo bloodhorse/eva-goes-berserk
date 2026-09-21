@@ -189,6 +189,11 @@ shape — now.
      when a passage lands; neither has a clock. Everything under `shelf/stream/` and
      `shelf/sittings/stream/` is untracked and disposable. Every opus call writes its real token
      usage on its ledger row — counted, not shown; bekh asks, the model reads the ledger.
+   - **Being tried for half a day (2026-09-21): nemo is handed only the last ~45 words of a
+     seed**, the seam untouched — bekh found the seeds out of hand (median 109 words, the
+     classics 650) and his example of a good one is two sentences. Trimmed in the writer, files
+     whole; not folded on the page, which he called concealment. Watch whether the rule-documents
+     survive it: short alone never made a seed good (`seeds/nemo/` is short and was the worst).
    - **It must be live, never pre-recorded** — a nightly batch was proposed and killed.
    - **The page**, a placeholder in the loom's palette, on a wide screen: the dreams down the
      centre, the reader's notes on the right, and on the left **the story so far** — the

@@ -57,6 +57,17 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
   means "i wouldn't keep it", and feeding it back would drift the stream toward the merely nice.
   Empty pot B = pot A. The seed's identity (`seeds/short/x.txt` or `tail:<room>`) is on the node
   and on the ledger row.
+- **Nemo is handed the TAIL of a seed, about 45 words** (`seed_tail`, `STREAM_SEED_WORDS`; 0 =
+  the whole seed). bekh, 2026-09-21: the seeds had got out of hand — a pot median of 109 words,
+  the classics at 650, a sliver of dream under a wall of grey; his example of a good one was two
+  sentences, about 35 words, ending mid-clause. The front moves forward to a sentence start; **the
+  end is never touched**, because the seam is the seed. Trimmed in the writer and not on the
+  shelf, so the files stay whole and it is one number; and trimmed rather than folded on the
+  page, because he found a fold a concealment — the grey text is exactly what the machine saw.
+  **An experiment: half a day, then look.** What to watch: by length alone `seeds/nemo/` was
+  already there and it was the worst folder (2 alive, 14 dead of 43), while his invented
+  rule-documents, the best (12 of 19), run double that — a rule needs room to be stated before
+  nemo can bend it, and a 45-word tail may cut the rule off.
 - **Trailing spaces and tabs are stripped from the very end of a seed, newlines are not.** A
   document ending on a space makes the next token a numeral, measured 2026-09-16. A seed that
   ends on a newline means it.

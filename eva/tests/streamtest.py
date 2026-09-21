@@ -344,6 +344,28 @@ class Worker(unittest.TestCase):
             f.write("{not json")
         self.assertNotEqual(stream.draw_seed(Rng(0.9))[0], "seeds/a.txt")
 
+    def test_a_long_seed_is_handed_over_as_its_tail_and_its_end_is_never_touched(self):
+        long = ("The first sentence is far away and must go. " * 12
+                + "Here the tail begins, a whole sentence. And the rule was that the hat stayed"
+                + " on the upper sack until the doors had")
+        self.assertEqual(stream.seed_tail("short seed, left alone", 45), "short seed, left alone")
+        tail = stream.seed_tail(long, 20)
+        self.assertTrue(long.endswith(tail))                 # the seam is the original's
+        self.assertTrue(tail.endswith("until the doors had"))
+        self.assertLessEqual(len(tail.split()), 20)
+        self.assertTrue(tail.startswith("And the rule"))     # moved forward to a sentence start
+        self.assertEqual(stream.seed_tail(long, 0), long)    # 0 turns it off
+        verse = "one line\n" * 30 + "the last line\nand the seam"
+        self.assertIn("\n", stream.seed_tail(verse, 8))      # line breaks survive
+
+        put_seed("long.txt", MARK + " " + long)
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        d = on_disk(rooms()[0])
+        root = d["nodes"][d["root"]]["text"]
+        self.assertLessEqual(len(root.split()), 45)          # what is stored is what nemo saw
+        self.assertTrue(root.endswith("until the doors had"))
+
     def test_a_seed_too_big_never_enters_the_pot(self):
         put_seed("small.txt", "a" * 100)
         put_seed("huge.txt", "b" * (stream.SEED_MAX_CHARS + 1))
