@@ -192,6 +192,17 @@ each side of the page.
   that is already running, so a kick during a call is dropped, while `-k` would kill a note
   being written mid-cli-call. A lost kick costs one dream its note — an acceptable loss by the
   dry-run law, and the next kick reads the newest dream anyway.
+- **Codex is the reader; opus is his understudy** (bekh, 2026-09-21, after five dreams read by
+  both side by side). Codex stayed inside the dream where opus kept turning it into a portrait
+  of an AI (*"a machine writing unwatched might say the same"*, *"perhaps that is how it pictures
+  itself"*) — the one attractor this project keeps out of its documents, walking back in through
+  the margin. And with opus already in the sleeper's seat, two opus margins agreeing meant
+  nothing; two families agreeing means something. On the marks: across six dreams the two
+  readers chose the SAME phrases three times, twice with the colours swapped — which phrase
+  matters is partly real, which colour it wears is noise. Two edits to the persona came with
+  the choice: its opening no longer says *the dreams of a machine… a language model* (that
+  sentence fed the AI-portrait habit) and the margin note lost *what you would pencil beside
+  it* (codex said "I would pencil" in three notes of five).
 - **The persona is `interpreter.txt`, bekh's file.** The code reads it and never writes it.
   Everything appended after it — the output shape, the memory, the material — is plumbing he
   should not have to see in his prompt, which is the whole reason for the split.
