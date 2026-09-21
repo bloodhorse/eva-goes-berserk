@@ -252,11 +252,22 @@ each side of the page.
   characters and leaves as characters.
 - **A note is drawn beside its dream**: an inset above the passage on a phone, a right-hand
   column top-aligned with the block's head at ≥900px, the same node either way.
+- **Every dream gets a name, and the names are a MENU** (bekh, 2026-09-22): the page has very
+  little separation between dreams and he does not read them all, so he chooses by name. The
+  last paragraph of `interpreter.txt` is his — the reader finishes *"a dream about …"* with
+  what stayed with it (*stayed*, not *touched*: touched is already one of the two marks) and
+  writes **only the part after those words**, because the page says that half once, in how it
+  is laid out. The plumbing is ours: a `<name>` tag on the shape, a lenient parser, and one
+  cleaning — the prefix off if it was written anyway, quotes off, a trailing full stop off,
+  wrapped lines joined, 120 characters and then an ellipsis. Stored as `names: {room: name}`,
+  a dict so a block of several still names each one. **A missing name is never a failed note**;
+  the dream simply shows its number. Both families do it and `reread.py` writes it too.
 
 Storage, all under the gitignored `shelf/stream/`:
 `readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
-model, seconds, usage}` — `model` being `opus` or `codex:<model id>` and `usage` that family's
-own counters — and one `kind: "reading"` row per run on the shared `ledger.jsonl`, carrying
+names, model, seconds, usage}` — `model` being `opus` or `codex:<model id>` and `usage` that
+family's own counters — and one `kind: "reading"` row per run on the shared `ledger.jsonl`,
+carrying the newest dream's `name` so the ledger reads as a table of contents, and carrying
 `fell_back` when the codex seat could not take it (the
 worker's rows are `kind: "page"`; rows written before either existed have no kind, so everything
 reading that file treats a missing kind as a page). Failures — no cli, a timeout, an
@@ -283,6 +294,38 @@ and nothing else: not llama, not the loom. Log: `/tmp/eva-stream-interpreter.log
 # one note by hand, from the other family, without touching the real shelf
 STREAM_READER=codex LOOM_SITTINGS=/tmp/scratch/sittings STREAM_DIR=/tmp/scratch/stream \
   uv run --python 3.12 eva/stream/interpreter.py --once
+```
+
+### Naming the back catalogue
+
+The ~150 dreams dreamt before names existed get names too, and **from opus** — bekh,
+2026-09-22: *i have basically infinite tokens for this… leave codex alone.* The reader's seat
+is codex's and codex's five-hour window is the scarce thing here; a hundred and fifty names is
+exactly the job for the other family's tokens.
+
+`naming.py` is that hand tool, and the one thing it must never do is **write a note**. Those
+dreams already have one, and a reading file is the whole reading — the note, the verbatim copy
+and the marks. The newest note for a room is the one the page shows, so a naming pass that
+wrote reading files would quietly put an empty copy over every marked one on the shelf. So:
+
+- **The prompt is names only**, and its middle is bekh's own naming paragraph read out of
+  `interpreter.txt` **at run time** — one source for what a name is, never a second copy that
+  drifts; if he edits that paragraph the tool follows him on the next run, and if it is not
+  there the tool stops and says so. One framing line, his paragraph, a `<name>` shape, the
+  dream alone. No seed, like every other voice here. The tag or nothing: taking a bare answer
+  would file *"i would rather not name it"* as the name of a dream.
+- **Its own store**: `names/<YYYY-MM-DD>.json` = `{room: name}`, by the ROOM's date so a run at
+  three in the morning files yesterday's dreams under yesterday, rewritten atomically after
+  **every single name** — a run of a hundred killed at ninety keeps ninety.
+- **On the page a note's own name wins**, then this store, then nothing. A dream the reader
+  named today is never answered for by an older pass.
+- Flagged dreams are skipped, a failed call is a line and the next room, and every name is a
+  `kind: "name"` row on the ledger with its usage, counted like everything else.
+
+```bash
+uv run --python 3.12 eva/stream/naming.py --unnamed --limit 5     # oldest first
+uv run --python 3.12 eva/stream/naming.py --unnamed --day 2026-09-19
+uv run --python 3.12 eva/stream/naming.py --room stream/2026-09-21/1711
 ```
 
 ## The sleeper remembering — the third voice
@@ -368,16 +411,43 @@ the code.
   sat where dreams sit, and appeared above the scenes they told), the `1 / 4 · told` wording,
   the separate "current" trickle and the top-of-feed panel — the phone now shows each pack's
   story as an inset at the pack's head.
+- **A story has a name, and every dream has a psalm's number** (bekh, 2026-09-22). His last
+  paragraph in `remembering.txt` asks the sleeper for *what you would call it if someone asked
+  you about it over breakfast*; the title is rewritten with the account, so the **latest
+  version's title is the story's name** — a dream of four scenes is often not the dream its
+  first scene looked like, and that is the point rather than a wobble. And the address:
+  **`12:3` is the third scene of the twelfth story.** A chapter is one story, a verse is a
+  scene's `turn` inside it.
+  - **Chapters count up forever and never reset**, and the number is **stored** on every
+    version when the story starts — never counted at read time. Forgetting is coming
+    (`BRIEF.md`, parked): old files will be pruned, and an address computed from what is left
+    would shift under him, so the twelfth story would become the fourth and every number he
+    remembers would be a lie. A pruned story's number is simply never handed out again.
+  - **`remembering.py --number`** is the one-off backfill for the stories written before this:
+    stories in the order of their first version, only ever ADDING the field, idempotent, and
+    it prints what it did. Run once on 2026-09-22: **11 stories, 38 versions numbered**.
+  - A version with no chapter (nothing else is left like that now) gives its room no verse, and
+    the page shows the name alone.
 - **The ideal, still NOT built**: whatever dream you are looking at, its note to the right and
   *the part of the story that corresponds to it* on the left. He thinks it may be unobtainable.
   The idea on the table: keep rewriting the whole account every time, but write it **in parts,
   one per scene**, so a later scene can still change an earlier part — the rewriting is the
   point and must never become an append.
-- `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), turn, of, room, text, model,
-  seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and exit 0, the worker's law.
+- **On the page the names are the menu.** A dream is headed by `12:3 · <its name>` at the very
+  top of its block, above the grey seed: the number in the ghost tone, the name in the body ink
+  at 14px. No name and there is only the number; neither and nothing is drawn, exactly as
+  before. The story's name heads its account on the left with its chapter, **a size bigger**
+  (16px — his words: the block header is a bit bigger), and on a phone it heads the pack's
+  inset. Both through `textContent`, like everything else here. A rewrite that only renames the
+  story still swaps under the soft fade — the title is part of what is compared, or a new name
+  would sit unwritten above the old account until the next scene.
+- `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), chapter, turn, of, room,
+  text, title, model, seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and
+  exit 0, the worker's law.
 
 ```bash
 uv run --python 3.12 eva/stream/remembering.py --once
+uv run --python 3.12 eva/stream/remembering.py --number   # chapters for the old stories; idempotent
 cp eva/stream/com.bekh.eva-stream-remembering.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-remembering.plist
 launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the worker does
@@ -626,7 +696,15 @@ the same prompt going out — persona verbatim, no seed, no memory — the readi
 read-only sandbox, a held limit and a dead or unreadable codex each falling back to opus with
 the reason on the row, both families down still being a row and exit 0, the default staying
 opus with codex never started, and a `STREAM_READER` nobody has heard of refused loudly.
-For the sleeper: the first scene having nothing remembered yet, a later call carrying only the
+For the names (bekh's menu): the prefix, the quotes and the full stop cleaned off and a wrapped
+name joined into one line, a note with no name still being a note, both families naming it, the
+sleeper's title rewritten with the account and the latest winning, chapters counting up and
+surviving a pruned story, the verse being the turn, the backfill numbering in order and doing
+nothing the second time, and the api carrying `name`, `verse`, `title` and `chapter`. For the
+back-catalogue namer: bekh's paragraph going out verbatim with the dream and no seed and no
+note shape, a named room skipped without a call, a day to a file with the ROOM's date, a run cut
+short keeping what it did, a flagged dream never named, and **every reading file byte-identical
+after a pass**. For the sleeper: the first scene having nothing remembered yet, a later call carrying only the
 latest version and one scene and never a note of the reader's, a flagged scene never told, the
 scene cap ending a dream and the next starting fresh, a long silence ending one, a garbage
 answer as a row with exit 0, the api carrying the running dream and a finished one where it

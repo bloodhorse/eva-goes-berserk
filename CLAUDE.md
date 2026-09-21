@@ -95,7 +95,11 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
     reader's seat is switchable (`STREAM_READER=codex`, set in its plist) and GPT sits in it
     through `codex.py` — same persona, same shape, its own door, a countermand of codex's work
     doctrine in `stream/reader-seat/AGENTS.md`, and opus writing that one note whenever codex
-    is over the shared limit or cannot answer. `plate.py` paints a picture for one dream through
+    is over the shared limit or cannot answer. **The names are a menu** (2026-09-22): the
+    reader names every dream, the sleeper names every four-scene story, and each dream carries
+    a psalm's number — `12:3` is the third scene of the twelfth story, stored when the story
+    starts so pruning can never shift an address. `naming.py` names the back catalogue with
+    opus, in its own store, touching no note. `plate.py` paints a picture for one dream through
     codex, by hand, from the prompts in `plates/`, and `plating.py` does it for every dream
     while the stream runs — one per run, and never over a ceiling on bekh's codex limit. `front/stream.html` at `/stream` is the page:
     the dreams down the centre, the story so far on the left, the notes on the right, a plate

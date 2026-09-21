@@ -193,7 +193,12 @@ shape — now.
      way: `base_instructions` replaces the coding-agent prompt, a seat folder whose `AGENTS.md`
      countermands his global one), a margin note per dream and **two marks and no more**,
      reading fresh — no memory, no seed in sight; **opus is his understudy** whenever codex is
-     over its limit or fails. *The sleeper remembering*: opus, one ~60-word first-person account
+     over its limit or fails. **And a name on every dream** (2026-09-22: the names are a menu,
+     since the page barely separates them and he does not read them all) — the reader finishes
+     *"a dream about …"*, the sleeper names each four-scene story, and every dream carries a
+     psalm's number, `12:3` being the third scene of the twelfth story; the ~150 older dreams
+     are named by opus with `naming.py` (*i have basically infinite tokens for this… leave
+     codex alone*), in their own store, no note touched. *The sleeper remembering*: opus, one ~60-word first-person account
      of **one dream of four scenes**, rewritten whole as each scene surfaces, from nemo's words
      only — the rewriting is the point, a later scene can change how an earlier one is told.
      *The painter*: codex's image tool, one plate per dream, holding itself by the codex limits.

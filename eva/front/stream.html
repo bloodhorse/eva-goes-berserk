@@ -185,6 +185,20 @@
   }
   .pass.plated{background-image:linear-gradient(var(--wash-a), var(--wash-b)), var(--plate);}
   .pass.plated.peek{background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate);}
+  /* **The names are a menu** (bekh, 2026-09-22): the page has very little separation between
+     dreams and he does not read them all, so every dream is headed by its name and its psalm
+     number — `12:3 · a monster of the sea in the flat`. The number is in the ghost tone and
+     the name in the body ink at a small size: the name is what is chosen from, the number is
+     how it is found again. No name and there is only the number; neither, and nothing is
+     drawn and the block reads exactly as it did before any of this. */
+  .title{margin:0 0 8px; font-size:14px; line-height:1.4; color:var(--ink);
+    overflow-wrap:anywhere;}
+  .title .verse{color:var(--ghost); font-variant-numeric:tabular-nums;}
+  /* The story's name is a size bigger than a dream's (his words: the block header is a bit
+     bigger) — it heads a pack of four, and a header that reads smaller than what it heads is
+     the wrong way round. */
+  .story .title{font-size:16px; margin-bottom:10px;}
+
   /* pre-wrap on both: a base model's document carries its own line breaks, `> > >` and stray
      indents, and reflowing them would be editing the evidence. */
   .seed, .body{white-space:pre-wrap; overflow-wrap:anywhere; margin:0;}
@@ -397,6 +411,23 @@ function when(ts){
 // replacing the text under a reader's eyes is fine — but only when he is at the top looking at
 // it. Further down it waits, because a block silently rewriting itself off-screen is one
 // thing and a paragraph changing while it is being read is another.
+// The name of a dream or of a story, with its number: `12:3 · a monster of the sea in the
+// flat`, or the number alone when nothing named it. Null when there is neither, and then the
+// caller appends nothing at all. textContent throughout, like everything else on this page.
+function titleLine(name, number){
+  if (!name && !number) return null;
+  const h = document.createElement('p');
+  h.className = 'title';
+  if (number){
+    const n = document.createElement('span');
+    n.className = 'verse';
+    n.textContent = name ? number + ' · ' : number;
+    h.appendChild(n);
+  }
+  if (name) h.appendChild(document.createTextNode(name));
+  return h;
+}
+
 function account(story){
   const box = document.createElement('div');
   box.className = 'account';
@@ -435,6 +466,11 @@ function newPack(story){
 function putStory(box, story){
   while (box.firstChild) box.removeChild(box.firstChild);
   box.dataset.text = story.text || '';
+  box.dataset.title = story.title || '';
+  // The story's own name above its account, a size bigger than a dream's, with the chapter —
+  // `12` for the twelfth story, the number its scenes carry as `12:1…12:4`.
+  const head = titleLine(story.title, story.chapter ? String(story.chapter) : '');
+  if (head) box.appendChild(head);
   box.appendChild(account(story));
 }
 
@@ -448,7 +484,10 @@ function updateStory(story){
   const pack = packFor(story && story.dream);
   if (!pack) return;
   const box = pack.querySelector('.story');
-  if (!box || box.dataset.text === (story.text || '')) return;
+  // A rewrite that only renamed the dream is still a rewrite: the title is part of what is
+  // compared, or a new name would sit unwritten above the old account until the next scene.
+  if (!box || (box.dataset.text === (story.text || '')
+               && box.dataset.title === (story.title || ''))) return;
   box.classList.add('fading');
   setTimeout(() => {
     putStory(box, story);
@@ -483,6 +522,11 @@ function build(p){
   const block = document.createElement('div');
   block.className = 'block';
   art.appendChild(block);
+
+  // The name at the very top of the block, above the grey seed: it is the first thing read and
+  // the thing a dream is chosen by.
+  const head = titleLine(p.name, p.verse);
+  if (head) block.appendChild(head);
 
   const seed = document.createElement('p');
   seed.className = 'seed';

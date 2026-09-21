@@ -89,7 +89,7 @@ def main(argv: list[str]) -> int:
         try:
             answer, usage = codex.ask(interpreter.prompt_for([page], [], persona),
                                       interpreter.CODEX_TIMEOUT)
-            reading, marked = interpreter.parse(answer, [page])
+            reading, marked, names = interpreter.parse(answer, [page])
         except ValueError as exc:
             say(f"{name} · skipped · {exc}")
             continue
@@ -99,17 +99,17 @@ def main(argv: list[str]) -> int:
             dropped += n
         model = "codex:" + codex.MODEL
         obj = {"ts": time.time(), "rooms": [name], "reading": reading, "marked": marked,
-               "segments": segments, "model": model,
+               "segments": segments, "names": names, "model": model,
                "seconds": round(time.time() - started, 1), "usage": usage,
                # so a pile of notes read later can tell a second reading from a first
                "reread": True}
         path = interpreter.write_reading(obj)
         interpreter.ledger({"rooms": [name], "marked": len(marked), "chars": len(reading),
-                            "dropped": dropped, "model": model, "seconds": obj["seconds"],
-                            "usage": usage, "reread": True})
+                            "dropped": dropped, "name": names.get(name), "model": model,
+                            "seconds": obj["seconds"], "usage": usage, "reread": True})
         done += 1
-        say(f"{name} · {os.path.relpath(path, interpreter.STREAM)} · {obj['seconds']}s · "
-            + codex.line(usage))
+        say(f"{name} · {os.path.relpath(path, interpreter.STREAM)} · "
+            f"“{names.get(name) or '—'}” · {obj['seconds']}s · " + codex.line(usage))
     say(f"{done} of {len(rooms)} re-read")
     return 0
 

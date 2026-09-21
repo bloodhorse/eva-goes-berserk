@@ -44,7 +44,10 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                filter flagged. Plus `status`, off the worker's heartbeat, and
                                where the interpreter has been: each page's `marked` copy and
                                its `segments`, the `reading` on the page that heads a block,
-                               and the `story` of the pack of dreams each page belongs to
+                               and the `story` of the pack of dreams each page belongs to.
+                               Each page also carries its `name` (the reader's, else the
+                               naming store's) and its `verse`, `"12:3"` — the third scene of
+                               the twelfth story; a story carries its `title` and `chapter`
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -1594,15 +1597,59 @@ def stream_readings() -> tuple[dict, dict]:
         rooms = d.get("rooms") if isinstance(d.get("rooms"), list) else []
         marked = d.get("marked") if isinstance(d.get("marked"), dict) else {}
         segs = d.get("segments") if isinstance(d.get("segments"), dict) else {}
+        names = d.get("names") if isinstance(d.get("names"), dict) else {}
         for room in rooms:
             if isinstance(room, str):
                 by_room[room] = {"marked": marked.get(room),
-                                 "segments": segs.get(room)}
+                                 "segments": segs.get(room),
+                                 # **The name is the menu** (bekh, 2026-09-22). Written by the
+                                 # reader with its note; readings from before it existed simply
+                                 # have none, and the naming store below covers those.
+                                 "name": names.get(room) or None}
         if rooms and isinstance(rooms[0], str) and isinstance(d.get("reading"), str):
             heads[rooms[0]] = {"text": d["reading"], "ts": d.get("ts") or 0, "rooms": rooms}
     for gone in set(_READINGS) - seen:
         _READINGS.pop(gone, None)
     return by_room, heads
+
+
+# The names of the back catalogue (eva/stream/naming.py): `names/<YYYY-MM-DD>.json` = {room:
+# name}, one file per day. Its own store and not a field on a reading, because the ~150 dreams
+# dreamt before names existed already HAVE notes, and a naming pass that wrote reading files
+# would replace every marked copy on the page with an empty one. Cached on mtime like the
+# readings; a note's own name always wins over this.
+_NAMES: dict[str, tuple[int, int, dict]] = {}
+
+
+def stream_names() -> dict:
+    """{room: name} across every day's file."""
+    out, seen = {}, set()
+    root = os.path.join(STREAM_DIR, "names")
+    try:
+        files = [os.path.join(root, f) for f in os.listdir(root) if f.endswith(".json")]
+    except OSError:
+        files = []
+    for path in files:
+        try:
+            st = os.stat(path)
+            hit = _NAMES.get(path)
+            if hit and hit[0] == st.st_mtime_ns and hit[1] == st.st_size:
+                d = hit[2]
+            else:
+                with open(path, encoding="utf-8") as f:
+                    d = json.load(f)
+                if not isinstance(d, dict):
+                    continue
+                _NAMES[path] = (st.st_mtime_ns, st.st_size, d)
+        except (OSError, ValueError):
+            continue
+        seen.add(path)
+        for room, name in d.items():
+            if isinstance(room, str) and isinstance(name, str) and name:
+                out[room] = name
+    for gone in set(_NAMES) - seen:
+        _NAMES.pop(gone, None)
+    return out
 
 
 # The third voice (eva/stream/remembering.py): the sleeper remembering. One small json per
@@ -1622,8 +1669,8 @@ def dream_files() -> list[str]:
     return out
 
 
-def stream_stories() -> tuple[dict, str | None]:
-    """({room: the story that room belongs to}, the id of the live one).
+def stream_stories() -> tuple[dict, str | None, dict]:
+    """({room: the story that room belongs to}, the id of the live one, {room: "12:3"}).
 
     **A story belongs to a pack of dreams** (bekh, 2026-09-21). There is no current-versus-
     finished distinction to make here: a pack is four dreams, the newest pack may not be full
@@ -1632,6 +1679,12 @@ def stream_stories() -> tuple[dict, str | None]:
 
     `live` is the one state left: the newest dream overall, while it is inside its gap and
     under its scene cap. Only a live pack shows a count.
+
+    **Chapter and verse** (bekh, 2026-09-22): a story is a chapter, a scene is a verse, and
+    `12:3` is the third scene of the twelfth story. Both numbers are READ, never counted here —
+    the chapter is stamped on the version when the story starts and the verse is that version's
+    own `turn`. A version written before the numbering has no chapter and its room has no
+    verse; `remembering.py --number` is the backfill.
     """
     rows, seen = [], set()
     for path in dream_files():
@@ -1657,10 +1710,14 @@ def stream_stories() -> tuple[dict, str | None]:
 
     latest: dict[str, dict] = {}          # dream id -> its newest version
     members: dict[str, list[str]] = {}    # dream id -> every room it covers
+    first: dict[str, dict] = {}           # room -> the version that brought it in
     for d in rows:
         latest[d["dream"]] = d
         if isinstance(d.get("room"), str):
             members.setdefault(d["dream"], []).append(d["room"])
+            # The FIRST version covering a room is the one whose turn is that room's verse: a
+            # rewrite of the same scene under a new name would otherwise renumber it.
+            first.setdefault(d["room"], d)
 
     live = None
     if rows:
@@ -1670,14 +1727,22 @@ def stream_stories() -> tuple[dict, str | None]:
         if not over:
             live = last["dream"]
 
-    by_room = {}
+    by_room, verses = {}, {}
     for dream, rooms in members.items():
         d = latest[dream]
+        chapter = d.get("chapter") if isinstance(d.get("chapter"), int) else None
         story = {"dream": dream, "text": d["text"], "turn": d.get("turn") or 0,
-                 "of": d.get("of") or STREAM_DREAM_TURNS, "live": dream == live}
+                 "of": d.get("of") or STREAM_DREAM_TURNS, "live": dream == live,
+                 # The name the sleeper gave it, off the LATEST version — a story renamed as it
+                 # was rewritten is a story that turned out to be about something else.
+                 "title": d.get("title") or None,
+                 "chapter": chapter}
         for room in rooms:
             by_room[room] = story
-    return by_room, live
+            turn = (first.get(room) or {}).get("turn")
+            if chapter and isinstance(turn, int):
+                verses[room] = f"{chapter}:{turn}"
+    return by_room, live, verses
 
 
 # A plate is one painting per room, made by hand with eva/stream/plate.py. Served as a file
@@ -1708,7 +1773,8 @@ def plate_url(room: str) -> str | None:
 
 
 def stream_page(name: str, readings: tuple[dict, dict] | None = None,
-                stories: dict | None = None) -> dict | None:
+                stories: dict | None = None, verses: dict | None = None,
+                names: dict | None = None) -> dict | None:
     """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
     the interpreter has been past — its copy of the dream and the reading it heads.
 
@@ -1747,6 +1813,11 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None,
             "marked": read.get("marked"),
             "segments": read.get("segments"),
             "reading": heads.get(name),
+            # **The menu** (bekh, 2026-09-22): the dream's name, and its psalm number. The
+            # note's own name first, then the back-catalogue store, then nothing — a dream the
+            # reader named today should not be answered for by an older naming pass.
+            "name": read.get("name") or (names or {}).get(name),
+            "verse": (verses or {}).get(name),
             # The account for the PACK this dream belongs to. Every room of a pack carries
             # the same object; the page groups on `story.dream` and draws it once, beside them.
             "story": (stories or {}).get(name),
@@ -1767,13 +1838,14 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     # The readings are indexed ONCE for the whole batch: ten passages is ten lookups, not ten
     # walks of a folder that grows by a hundred and forty files a day.
     readings = stream_readings()
-    stories, _live = stream_stories()
+    stories, _live, verses = stream_stories()
+    named = stream_names()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
             more = True
             break
-        page = stream_page(name, readings, stories)
+        page = stream_page(name, readings, stories, verses, named)
         if page is None or (page["flag"] and not flagged):
             continue
         pages.append(page)

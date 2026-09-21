@@ -51,6 +51,7 @@ os.environ["STREAM_INTERVAL"] = "300"
 
 import codex  # noqa: E402
 import interpreter  # noqa: E402
+import naming  # noqa: E402
 import plate  # noqa: E402
 import plating  # noqa: E402
 import loom  # noqa: E402
@@ -694,8 +695,18 @@ if "--- the new scene ---" in prompt:
                      prompt, re.S).group(1).strip()
     first = held.startswith("Nothing yet")
     n = 1 if first else held.count(";") + 2
+    # The sleeper names the dream too since 2026-09-22, and renames it as he rewrites it — the
+    # latest version's title is the story's name, so it carries the turn.
+    title = "" if mode == "noname" else f"<title>the night of {n}.</title>"
     answer("<dream>I was in it again" + ("" if first else " and before that " + held.split(";")[0])
-           + "; then " + scene[:40] + " (" + str(n) + ")</dream>")
+           + "; then " + scene[:40] + " (" + str(n) + ")</dream>" + title)
+
+# The back-catalogue namer (naming.py) asks for a name and nothing else, over one dream.
+if "--- the dream ---" in prompt:
+    d = prompt.split("--- the dream ---", 1)[1].strip()
+    if mode == "noname":
+        answer("i would rather not name it")
+    answer('<name>A dream about ' + d[:24].strip() + '.</name>')
 
 # The material since 2026-09-21: the dream alone under the header, no seed and no labels; a
 # block of several is cut by "passage N" lines; with STREAM_READ_SEEDS=1 the old labels return.
@@ -729,6 +740,10 @@ for i, d in enumerate(dreams, 1):
     else:
         body = d
     print(f'<passage n="{i}">{body}</passage>', file=out)
+# The name, last, as bekh's paragraph asks for it — with the prefix he told it NOT to write and
+# a full stop, because that is what a voice does anyway and the cleaning is what catches it.
+if mode != "noname" and dreams:
+    print(f'<name>A dream about {dreams[-1][:24].strip()}.</name>', file=out)
 answer(out.getvalue())
 '''
 
@@ -1104,6 +1119,8 @@ else:
     print("</reading>", file=out)
     for i, d in enumerate(dreams, 1):
         print('<passage n="%d">%s</passage>' % (i, d), file=out)
+    print('<name>a dream about %s</name>' % (dreams[-1][:20].strip() if dreams else "nothing"),
+          file=out)
     text = out.getvalue()
 event({"type": "thread.started", "thread_id": "t1"})
 event({"type": "item.completed", "item": {"type": "agent_message", "text": text}})
@@ -1285,6 +1302,279 @@ class CodexReader(unittest.TestCase):
         self.assertEqual(usage["tokens"], 13)          # no total given: in + out
         with self.assertRaises(ValueError):
             codex.parse('{"type": "error", "message": "it fell over"}')
+
+
+# ---- names, chapters and verses --------------------------------------------------------------
+# bekh, 2026-09-22: the page has very little separation between dreams and he does not read them
+# all, so the names are a MENU — every dream named by the reader, every story named by the
+# sleeper, and every dream carrying a psalm's number, `12:3` for the third scene of the twelfth
+# story.
+
+class Names(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        put_usage()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_claude(mode)
+        self.fakes.append(f)
+        return f
+
+    def codex_fake(self, mode: str = "") -> dict:
+        f = fake_reader(mode)
+        self.fakes.append(f)
+        return f
+
+    def page(self, hhmm: str = "1000", text: str = "the switch hums under the floor") -> str:
+        name = f"stream/2026-09-19/{hhmm}"
+        make_page(name, f"seed for {hhmm}\n", text)
+        return name
+
+    # ---- what a name is, once it has been cleaned ---------------------------------------------
+    def test_the_prefix_and_the_full_stop_come_off(self):
+        """His paragraph says to write only what comes after "a dream about" — and a voice
+        writes it anyway. The page says that half once, in how it is laid out."""
+        for raw, want in (("A dream about a monster of the sea.", "a monster of the sea"),
+                          ("  dream about: the brass head  ", "the brass head"),
+                          ('"the widows’ names"', "the widows’ names"),
+                          ("a line\nthat wrapped", "a line that wrapped"),
+                          ("", "")):
+            self.assertEqual(interpreter.clean_name(raw), want)
+        long = interpreter.clean_name("x " * 200)
+        self.assertLessEqual(len(long), interpreter.NAME_MAX + 1)
+        self.assertTrue(long.endswith("…"))
+
+    def test_the_reader_names_the_dream(self):
+        room = self.page()
+        f = self.fake()
+        code, out = interpret(f)
+        self.assertEqual(code, 0, out)
+        d = readings_on_disk()[0]
+        self.assertEqual(d["names"], {room: "the switch hums under th"})
+        # bekh's own paragraph went out, verbatim and last
+        prompt = read_text(f["log"])
+        with open(interpreter.PERSONA, encoding="utf-8") as fh:
+            self.assertIn("Last, name the dream.", fh.read())
+        self.assertIn("<name>", prompt)             # the plumbing's shape, not his file
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertEqual(row["name"], "the switch hums under th")
+
+    def test_a_note_with_no_name_is_still_a_note(self):
+        room = self.page()
+        self.assertEqual(interpret(self.fake("noname"))[0], 0)
+        d = readings_on_disk()[0]
+        self.assertEqual(d["names"], {})
+        self.assertEqual(d["rooms"], [room])        # the note landed anyway
+        self.assertTrue(d["reading"])
+
+    def test_the_codex_seat_names_it_too(self):
+        room = self.page()
+        f = self.codex_fake()
+        code, out = interpret_as("codex", f)
+        self.assertEqual(code, 0, out)
+        d = readings_on_disk()[0]
+        self.assertEqual(d["names"], {room: "the switch hums unde"})
+        self.assertEqual(d["model"], "codex:" + codex.MODEL)
+
+    # ---- the story's name, and its chapter -----------------------------------------------------
+    def test_the_sleeper_names_the_story_and_the_latest_wins(self):
+        self.scene("1000", "a door in the corridor.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.scene("1005", "and then the stairs.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        v = dream_versions()
+        self.assertEqual(v[0]["title"], "the night of 1")
+        # renamed as it was rewritten, which is the point: a dream of four scenes is not the
+        # dream its first scene looked like
+        self.assertNotEqual(v[1]["title"], v[0]["title"])
+        # one story, one chapter, and the verse is the turn
+        self.assertEqual([x["chapter"] for x in v], [1, 1])
+        self.assertEqual([x["turn"] for x in v], [1, 2])
+        # and the api shows the LATEST title for the whole pack
+        got = {p["room"]: p for p in call("/api/stream?n=5")[1]["pages"]}
+        self.assertEqual(got["stream/2026-09-19/1000"]["story"]["title"], v[1]["title"])
+        self.assertEqual(got["stream/2026-09-19/1000"]["verse"], "1:1")
+        self.assertEqual(got["stream/2026-09-19/1005"]["verse"], "1:2")
+
+    def test_a_story_with_no_title_is_still_a_story(self):
+        self.scene("1000", "a door.")
+        self.assertEqual(remember(self.fake("noname"))[0], 0)
+        self.assertEqual(dream_versions()[0]["title"], "")
+        self.assertTrue(dream_versions()[0]["text"])
+
+    def test_chapters_count_up_and_never_reset(self):
+        """A chapter is handed out once, when a story starts, and stored on every version of
+        it. Never a count of what is on the shelf: pruning is coming, and an address that
+        shifted under him would make every number he remembers a lie."""
+        was = remembering.TURNS
+        remembering.TURNS = 1                     # one scene a story, so three stories are quick
+        self.addCleanup(setattr, remembering, "TURNS", was)
+        for i, hhmm in enumerate(("1000", "1005", "1010")):
+            self.scene(hhmm, f"scene {i}.")
+            self.assertEqual(remember(self.fake())[0], 0)
+        v = dream_versions()
+        self.assertEqual([x["chapter"] for x in v], [1, 2, 3])
+        self.assertEqual(len({x["dream"] for x in v}), 3)
+
+        # and the oldest story is pruned away: the next one is still 4
+        os.unlink(remembering.version_files()[0])
+        self.scene("1015", "scene 3.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual(dream_versions()[-1]["chapter"], 4)
+
+    def test_the_backfill_numbers_old_stories_in_order_and_is_idempotent(self):
+        """`--number`, the one-off for the stories written before the numbering."""
+        for i, hhmm in enumerate(("1000", "1005", "1010")):
+            self.scene(hhmm, f"scene {i}.")
+            self.assertEqual(remember(self.fake())[0], 0)
+        # strip the chapters back off, as the shelf's own files have them
+        for path in remembering.version_files():
+            with open(path, encoding="utf-8") as fh:
+                d = json.load(fh)
+            d.pop("chapter", None)
+            with open(path, "w", encoding="utf-8") as fh:
+                json.dump(d, fh)
+        out = io.StringIO()
+        with redirect_stdout(out):
+            self.assertEqual(remembering.main(["remembering.py", "--number"]), 0)
+        self.assertIn("versions numbered", out.getvalue())
+        first = [(x["dream"], x["chapter"]) for x in dream_versions()]
+        self.assertEqual(sorted({c for _d, c in first}), [1])   # one story of three scenes
+        # again, and nothing changes
+        out2 = io.StringIO()
+        with redirect_stdout(out2):
+            self.assertEqual(remembering.main(["remembering.py", "--number"]), 0)
+        self.assertEqual([(x["dream"], x["chapter"]) for x in dream_versions()], first)
+        self.assertIn("0 versions numbered", out2.getvalue())
+
+    def scene(self, hhmm: str, text: str) -> str:
+        name = f"stream/2026-09-19/{hhmm}"
+        make_page(name, f"seed for {hhmm}\n", text)
+        return name
+
+    # ---- the api ------------------------------------------------------------------------------
+    def test_the_api_carries_the_name_the_verse_and_the_story(self):
+        room = self.page("1100", "the switch hums under the floor")
+        self.assertEqual(interpret(self.fake())[0], 0)
+        self.assertEqual(remember(self.fake())[0], 0)
+        p = [x for x in call("/api/stream?n=5")[1]["pages"] if x["room"] == room][0]
+        self.assertEqual(p["name"], "the switch hums under th")
+        self.assertEqual(p["verse"], "1:1")            # first scene of the first story
+        self.assertEqual(p["story"]["chapter"], 1)
+        self.assertEqual(p["story"]["title"], "the night of 1")
+
+    def test_a_dream_nobody_named_carries_nulls(self):
+        room = self.page("1200", "nobody read this one")
+        p = [x for x in call("/api/stream?n=5")[1]["pages"] if x["room"] == room][0]
+        self.assertIsNone(p["name"])
+        self.assertIsNone(p["verse"])
+
+
+# ---- naming the back catalogue -----------------------------------------------------------------
+# bekh, 2026-09-22: *i have basically infinite tokens for this… leave codex alone.* The ~150
+# dreams dreamt before names existed are named by opus, in their own small store, and no note
+# on the shelf is touched — a reading file is the whole reading, and the newest one for a room
+# is what the page shows.
+
+def name_them(fake: dict, *args) -> tuple[int, str]:
+    return with_fake(fake, lambda: naming.main(["naming.py", *args]))
+
+
+class Naming(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_claude(mode)
+        self.fakes.append(f)
+        return f
+
+    def page(self, hhmm: str, text: str, day: str = "2026-09-19", flag=None) -> str:
+        name = f"stream/{day}/{hhmm}"
+        make_page(name, f"seed for {hhmm}\n", text, flag=flag)
+        return name
+
+    def store(self, day: str) -> dict:
+        path = os.path.join(STREAM_DIR, "names", day + ".json")
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+
+    def test_the_prompt_is_bekhs_paragraph_and_the_dream_alone(self):
+        room = self.page("1000", "a monster of the sea in the flat")
+        f = self.fake()
+        code, out = name_them(f, "--unnamed")
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f["log"])
+        with open(interpreter.PERSONA, encoding="utf-8") as fh:
+            para = [p for p in fh.read().split("\n\n")
+                    if p.strip().startswith("Last, name the dream.")][0].strip()
+        self.assertIn(para, prompt)                     # verbatim, out of his own file
+        self.assertIn("a monster of the sea in the flat", prompt)
+        self.assertNotIn("seed for 1000", prompt)       # no seed, like every other voice
+        self.assertNotIn("<reading>", prompt)           # names only: never a note
+        self.assertEqual(self.store("2026-09-19"), {room: "a monster of the sea in"})
+        row = [r for r in ledger_rows() if r.get("kind") == "name"][-1]
+        self.assertEqual((row["rooms"], row["model"]), ([room], "opus"))
+        self.assertTrue(row["usage"]["cache_read_input_tokens"])
+
+    def test_it_never_touches_a_reading(self):
+        """The dreams it names already have notes. A naming pass that wrote reading files
+        would put an empty copy over every marked one on the page."""
+        room = self.page("1005", "the switch hums")
+        self.assertEqual(interpret(self.fake())[0], 0)
+        before = {p: (os.path.getmtime(p), read_text(p))
+                  for p in interpreter.reading_files()}
+        # the reader already named it, so --unnamed passes it by and asks nobody
+        f = self.fake()
+        self.assertEqual(name_them(f, "--unnamed")[0], 0)
+        self.assertFalse(os.path.exists(f["log"]), "opus was asked about a named dream")
+        # and naming it by hand still writes no reading file
+        self.assertEqual(name_them(self.fake(), "--room", room)[0], 0)
+        after = {p: (os.path.getmtime(p), read_text(p))
+                 for p in interpreter.reading_files()}
+        self.assertEqual(after, before)
+        # the note's own name still wins on the page
+        p = [x for x in call("/api/stream?n=5")[1]["pages"] if x["room"] == room][0]
+        self.assertEqual(p["name"], "the switch hums")
+
+    def test_the_store_answers_a_dream_whose_note_has_no_name(self):
+        room = self.page("1010", "an older dream from the first day")
+        put_reading([room], "a note from before names existed", time.time() - 100)
+        self.assertEqual(name_them(self.fake(), "--unnamed")[0], 0)
+        p = [x for x in call("/api/stream?n=5")[1]["pages"] if x["room"] == room][0]
+        self.assertEqual(p["name"], "an older dream from the")
+        self.assertEqual(p["reading"]["text"], "a note from before names existed")
+
+    def test_a_day_to_a_file_and_a_killed_run_keeps_what_it_did(self):
+        a = self.page("2300", "the first night", day="2026-09-18")
+        b = self.page("0100", "the second night", day="2026-09-19")
+        self.assertEqual(name_them(self.fake(), "--unnamed", "--limit", "1")[0], 0)
+        # oldest first, one only — and filed under the ROOM's date, not today's
+        self.assertEqual(list(self.store("2026-09-18")), [a])
+        self.assertFalse(os.path.exists(os.path.join(STREAM_DIR, "names", "2026-09-19.json")))
+        # the next run picks up where it stopped and leaves the first name alone
+        self.assertEqual(name_them(self.fake(), "--unnamed")[0], 0)
+        self.assertEqual(list(self.store("2026-09-18")), [a])
+        self.assertEqual(list(self.store("2026-09-19")), [b])
+
+    def test_a_flagged_dream_and_an_unreadable_answer_cost_nothing(self):
+        self.page("1015", "a licence footer", flag="copyright")
+        good = self.page("1020", "a dream worth naming")
+        self.assertEqual(name_them(self.fake("noname"), "--unnamed")[0], 0)
+        self.assertFalse(os.path.exists(os.path.join(STREAM_DIR, "names", "2026-09-19.json")))
+        code, out = name_them(self.fake(), "--unnamed")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(list(self.store("2026-09-19")), [good])     # the flagged one, never
 
 
 # ---- the sleeper remembering ----------------------------------------------------------------

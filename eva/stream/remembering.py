@@ -30,6 +30,13 @@ is what the dream was about.
 The two voices do not share a vocabulary and do not have to: the reader's own prompt calls each
 passage a dream, and its file is left alone.
 
+**A story has a name and an address** (bekh, 2026-09-22). He named it: every four-scene story
+gets a name of the sleeper's own — *what you would call it if someone asked you about it over
+breakfast* — and every dream gets a psalm's number, `12:3` being the third scene of the twelfth
+story. The chapter is taken when a story starts, stored on every version of it and never
+computed from what is on the shelf, because forgetting will one day prune the shelf and an
+address must not shift under him. `--number` backfills the stories written before this.
+
 Env: STREAM_DIR (default shelf/stream/), STREAM_DREAM_TURNS (how many scenes a dream runs to,
 default 4 — about twenty minutes), STREAM_DREAM_GAP (seconds of silence that end a dream,
 default 1800), STREAM_DREAM_SEEDS (1 = hand him the seed as well, off by default),
@@ -51,6 +58,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import interpreter  # noqa: E402   only for `clean_name`: one rule for both names, not two
 import loom  # noqa: E402
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
 
@@ -72,6 +80,7 @@ TIMEOUT = int(os.environ.get("STREAM_DREAM_TIMEOUT", "300"))
 SEEDS = os.environ.get("STREAM_DREAM_SEEDS") == "1"
 
 DREAM_RE = re.compile(r"<dream>(.*?)</dream>", re.S | re.I)
+TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S | re.I)
 
 SHAPE = """
 Answer with the whole account, rewritten, and nothing else — no preamble, no code fences:
@@ -79,6 +88,9 @@ Answer with the whole account, rewritten, and nothing else — no preamble, no c
 <dream>
 what you remember of the dream, now that this scene is part of it
 </dream>
+<title>
+what you would call this dream
+</title>
 """
 
 
@@ -205,11 +217,18 @@ def prompt_for(page: dict, held: dict | None, persona: str) -> str:
     return "\n\n".join(parts) + "\n"
 
 
-def parse(answer: str) -> str:
+def parse(answer: str) -> tuple[str, str]:
+    """(the account, its name). Raises ValueError when there is no account — and only then:
+    the name is how a story is chosen off the page, not what it is."""
     m = DREAM_RE.search(answer)
     if not m or not m.group(1).strip():
         raise ValueError("no <dream> in the answer")
-    return m.group(1).strip()
+    t = TITLE_RE.search(answer)
+    # **The title may change with every rewrite, and that is the point** (bekh, 2026-09-22): a
+    # dream of four scenes is not the dream its first scene looked like. The latest version's
+    # title is the story's name; the older ones stay on the shelf with their own.
+    title = interpreter.clean_name(t.group(1)) if t else ""
+    return m.group(1).strip(), title
 
 
 # ---- writing it down -------------------------------------------------------------------------
@@ -233,6 +252,26 @@ def write_version(obj: dict) -> str:
         json.dump(obj, f, ensure_ascii=False, indent=1)
     os.replace(tmp, path)
     return path
+
+
+# ---- chapter and verse -------------------------------------------------------------------------
+# **Every dream gets a psalm's address** (bekh, 2026-09-22): `12:3` is the third scene of the
+# twelfth story. A chapter is one story of the sleeper's, a verse is a scene's place in it.
+#
+# **Chapters count up forever and never reset**, and the number is STORED on every version and
+# never computed at read time. Forgetting is coming (BRIEF.md, parked): old files will be pruned
+# one day, and an address computed by counting what is left would shift under him — the twelfth
+# story would become the fourth and every number he remembers would be a lie.
+
+def next_chapter(past: list[dict]) -> int:
+    """One more than the highest chapter anybody has ever been given. Not a count of stories:
+    pruning must never hand out a number twice."""
+    top = 0
+    for d in past:
+        c = d.get("chapter")
+        if isinstance(c, int) and c > top:
+            top = c
+    return top + 1
 
 
 def dream_id(when_ts: float) -> str:
@@ -263,7 +302,7 @@ def run_once() -> int:
     prompt = prompt_for(page, held, persona)
     try:
         answer, usage = opus.ask(prompt, TIMEOUT)
-        text = parse(answer)
+        text, title = parse(answer)
     except ValueError as exc:
         log(f"sleeper · {exc}")
         ledger({"room": page["room"], "error": str(exc),
@@ -273,20 +312,74 @@ def run_once() -> int:
     now = time.time()
     obj = {"ts": now,
            "dream": held.get("dream") if held else dream_id(now),
+           # The chapter is taken once, when the story STARTS, and then carried by every
+           # version of it — a story that has begun keeps its address however it is rewritten.
+           "chapter": (held.get("chapter") if held else None) or next_chapter(past),
            "turn": ((held.get("turn") or 0) + 1) if held else 1,
            "of": TURNS,
            "room": page["room"],
            "text": text,
+           # What he would call it over breakfast. Rewritten with the account, so the newest
+           # version's title is the story's name.
+           "title": title,
            "model": opus.MODEL,
            "seconds": round(now - started, 1),
            "usage": usage}
     path = write_version(obj)
-    ledger({"room": obj["room"], "dream": obj["dream"], "turn": obj["turn"], "of": obj["of"],
+    ledger({"room": obj["room"], "dream": obj["dream"], "chapter": obj["chapter"],
+            "turn": obj["turn"], "of": obj["of"], "title": title,
             "chars": len(text), "model": obj["model"], "seconds": obj["seconds"],
             "usage": usage})
-    log(f"dream · {os.path.relpath(path, STREAM)} · {obj['dream']} · "
-        f"turn {obj['turn']}/{obj['of']} · {len(text)} chars · {obj['seconds']}s · "
-        + opus.line(usage))
+    log(f"dream · {os.path.relpath(path, STREAM)} · {obj['chapter']}:{obj['turn']} · "
+        f"“{title or '—'}” · {len(text)} chars · {obj['seconds']}s · " + opus.line(usage))
+    return 0
+
+
+# ---- the backfill ------------------------------------------------------------------------------
+
+def number(quiet: bool = False) -> int:
+    """Give every story already on the shelf a chapter, oldest first. Idempotent by design.
+
+    A hand flag and not a migration that runs at start-up: this is one pass over ~11 stories
+    written before the numbering existed, and a numbering that ran by itself would be a second
+    place chapters are handed out. It only ADDS the field — a story that has one keeps it, and
+    the next new story starts above the highest number here.
+    """
+    past = versions()
+    order: list[str] = []
+    for d in past:                                   # versions() is sorted by ts
+        if d["dream"] not in order:
+            order.append(d["dream"])
+    taken = {d["dream"]: d["chapter"] for d in past
+             if isinstance(d.get("chapter"), int)}
+    at = max(taken.values()) if taken else 0
+    chapters = dict(taken)
+    for dream in order:
+        if dream not in chapters:
+            at += 1
+            chapters[dream] = at
+    written, already = 0, 0
+    for path in version_files():
+        try:
+            with open(path, encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(d, dict) or not isinstance(d.get("dream"), str):
+            continue
+        if isinstance(d.get("chapter"), int):
+            already += 1
+            continue
+        d["chapter"] = chapters[d["dream"]]
+        tmp = f"{path}.{os.getpid()}.part"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, path)
+        written += 1
+        if not quiet:
+            print(f"{os.path.relpath(path, STREAM)} · chapter {d['chapter']} · {d['dream']}")
+    if not quiet:
+        print(f"{len(order)} stories · {written} versions numbered · {already} already had one")
     return 0
 
 
@@ -296,7 +389,12 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--once", action="store_true",
                     help="rewrite the dream once and exit — the only mode; stream.py taps "
                          "this job when a passage lands and it has no clock of its own")
-    ap.parse_args(argv[1:])
+    ap.add_argument("--number", action="store_true",
+                    help="give every story on the shelf a chapter, oldest first, and exit. "
+                         "A one-off for the stories written before the numbering; idempotent")
+    a = ap.parse_args(argv[1:])
+    if a.number:
+        return number()
     if TURNS < 1:
         print("STREAM_DREAM_TURNS is at least 1", file=sys.stderr)
         return 2

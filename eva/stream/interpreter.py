@@ -189,6 +189,9 @@ the dream text of passage 1, typed back with your two tags in it
 <passage n="2">
 …and so on, one per passage
 </passage>
+<name>
+what comes after "a dream about"
+</name>
 """
 
 
@@ -243,6 +246,29 @@ def when(ts: float) -> str:
 
 READING_RE = re.compile(r"<reading>(.*?)</reading>", re.S | re.I)
 PASSAGE_RE = re.compile(r"<passage[^>]*\bn\s*=\s*[\"']?(\d+)[\"']?[^>]*>(.*?)</passage>", re.S | re.I)
+NAME_RE = re.compile(r"<name(?:[^>]*\bn\s*=\s*[\"']?(\d+)[\"']?)?[^>]*>(.*?)</name>", re.S | re.I)
+
+# **Every dream gets a name, and the name is a menu** (bekh, 2026-09-22): the page has very
+# little separation between dreams and he does not read them all, so he picks by name. His
+# prompt asks the reader to finish *"a dream about …"* and to write only the part that comes
+# after it — the page says the first part, once, in how it is laid out. So anything the reader
+# says anyway gets cut here: it would be a name that reads *a dream about a dream about*.
+NAME_PREFIX_RE = re.compile(r"^\s*(?:a\s+)?dream\s+about\s*[:,]?\s*", re.I)
+NAME_MAX = 200
+
+
+def clean_name(raw: str) -> str:
+    """One line, ready to print, or "". Never raises: a missing or silly name costs the note
+    nothing, and a note without a name is a dream that is simply harder to choose."""
+    name = NAME_PREFIX_RE.sub("", (raw or "").strip())
+    name = " ".join(name.split())                     # a name that wrapped in the answer is one line
+    name = name.strip("\"'“”‘’`*").strip()
+    name = name.rstrip(".").strip()                   # a full stop at the end of a title is noise
+    if len(name) > NAME_MAX:
+        # Cut at a word, not mid-syllable; an over-long name is the reader explaining instead
+        # of naming, and what is lost past 120 characters was never going to be read in a list.
+        name = name[:NAME_MAX].rsplit(" ", 1)[0].rstrip(",;:—-") + "…"
+    return name
 
 
 # ---- his copy, as he typed it -----------------------------------------------------------------
@@ -313,11 +339,26 @@ def segments_of(copy: str) -> tuple[list[dict], int]:
     return segs, dropped
 
 
-def parse(answer: str, told: list[dict]) -> tuple[str, dict]:
-    """(the reading, {room: the marked copy}). Raises ValueError when there is no reading."""
+def parse(answer: str, told: list[dict]) -> tuple[str, dict, dict]:
+    """(the reading, {room: the marked copy}, {room: the dream's name}).
+
+    Raises ValueError when there is no reading — and only then. A name is a convenience for
+    choosing what to read; a missing one is a name-less dream and never a failed note.
+    """
     m = READING_RE.search(answer)
     if not m or not m.group(1).strip():
         raise ValueError("no <reading> in the answer")
+    names, loose = {}, 0
+    for num, body in NAME_RE.findall(answer):
+        # A block of one is the rule, so the usual answer is one bare <name>. A numbered one
+        # names that passage; unnumbered ones are taken in order, which is the same thing when
+        # there is one of each.
+        i = (int(num) - 1) if num else loose
+        if not num:
+            loose += 1
+        name = clean_name(body)
+        if name and 0 <= i < len(told):
+            names[told[i]["room"]] = name
     marked = {}
     for num, body in PASSAGE_RE.findall(answer):
         i = int(num) - 1
@@ -330,7 +371,7 @@ def parse(answer: str, told: list[dict]) -> tuple[str, dict]:
             text = text.rsplit("[dream]", 1)[1].lstrip(" \t").strip("\n")
         if text.strip():
             marked[told[i]["room"]] = text
-    return m.group(1).strip(), marked
+    return m.group(1).strip(), marked, names
 
 
 # ---- writing it down ---------------------------------------------------------------------------
@@ -359,10 +400,11 @@ def write_reading(obj: dict) -> str:
     return path
 
 
-def read(prompt: str, told: list[dict]) -> tuple[str, dict, str, dict, str]:
+def read(prompt: str, told: list[dict]) -> tuple[str, dict, dict, str, dict, str]:
     """Ask the seat's family, and fall back to opus for this one note if it cannot answer.
 
-    `(the reading, the marked copies, who wrote it, its usage block, why it fell back)`.
+    `(the reading, the marked copies, the names, who wrote it, its usage block, why it fell
+    back)`.
     Raises ValueError only when opus fails too — which is the old behaviour: a ledger row and
     exit 0.
 
@@ -377,8 +419,8 @@ def read(prompt: str, told: list[dict]) -> tuple[str, dict, str, dict, str]:
         if not why:
             try:
                 answer, usage = codex.ask(prompt, CODEX_TIMEOUT)
-                reading, marked = parse(answer, told)
-                return reading, marked, "codex:" + codex.MODEL, usage, ""
+                reading, marked, names = parse(answer, told)
+                return reading, marked, names, "codex:" + codex.MODEL, usage, ""
             except ValueError as exc:
                 why = f"codex · {exc}"
         log(f"falling back to opus · {why}")
@@ -406,7 +448,7 @@ def run_once() -> int:
     started = time.time()
     prompt = prompt_for(told, past, persona)
     try:
-        reading, marked, model, usage, fell_back = read(prompt, told)
+        reading, marked, names, model, usage, fell_back = read(prompt, told)
     except ValueError as exc:
         log(f"reader · {exc}")
         ledger({"rooms": [p["room"] for p in reversed(told)], "error": str(exc),
@@ -427,6 +469,10 @@ def run_once() -> int:
            "reading": reading,
            "marked": marked,
            "segments": segments,
+           # **The name is the menu** (bekh, 2026-09-22). A dict keyed by room, so a block of
+           # several passages still names each of them; an empty one is a nameless dream and
+           # the page simply shows its number.
+           "names": names,
            # Who wrote this note: `opus`, or `codex:<model id>`. The page never shows it, and
            # a pile of notes read blind later is worth nothing without it.
            "model": model,
@@ -436,13 +482,16 @@ def run_once() -> int:
     row = {"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
            # Two marks is the rule; how often he reaches for a third is worth knowing.
            "dropped": dropped,
+           # The newest dream's name on the row, so the ledger reads as a table of contents.
+           "name": names.get(obj["rooms"][0]),
            "model": model, "seconds": obj["seconds"], "usage": usage}
     if fell_back:
         row["fell_back"] = fell_back
     ledger(row)
     counted = codex.line(usage) if model.startswith("codex:") else opus.line(usage)
+    named = names.get(obj["rooms"][0]) or "—"
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
-        f"{len(marked)} marked up · {model} · {obj['seconds']}s · " + counted)
+        f"{len(marked)} marked up · “{named}” · {model} · {obj['seconds']}s · " + counted)
     return 0
 
 
