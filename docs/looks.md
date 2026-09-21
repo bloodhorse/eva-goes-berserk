@@ -24,9 +24,9 @@ Judgments made on one page flip on another (wash, width, density all change them
 
 ## Wash (readability over the focused plate)
 
-- **even** (default): the whole focused row darkened (`--wa` 0.72 top → ×0.83 bottom). bekh finds the focused plate too dark.
-- **hug** (`w`): the row barely washed; a feathered dark pad sits only behind each block of words. First look: the plate comes through near full strength and the pad doesn't read as a shape. bekh was skeptical on paper — judge live.
-- Wash strength can't be settled before the font (weight and size buy brightness; colour doesn't — see `reading.md`).
+One even wash over the focused row, its darkness tuned by eye: `w` lighter, `W` darker (`?wa=`), remembered. bekh's best moments were at a light wash, the painting nearly clear — the heavy default (0.72) may be guarding against a ghost: most plates are dark and read fine lightly washed; only the occasional bright plate needs more. Idea, not built: a wash that **reads the picture** (brightness behind the text column → only as much wash as that plate needs).
+
+Rejected: **hug** — darkness only behind the blocks of words, painting open elsewhere. bekh: "looks just too lame". Wash strength still waits on the font (see `reading.md`).
 
 ## Neural filters (parked)
 

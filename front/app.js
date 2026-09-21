@@ -360,19 +360,17 @@ function setFont(name) {
 $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 function step(d) { const i = FONT_NAMES.indexOf(FONT); setFont(FONT_NAMES[(i + d + FONT_NAMES.length) % FONT_NAMES.length]); }
 
-let HUG = params.has('wash') ? params.get('wash') === 'hug' : store('wash') === 'hug';
+// the focused plate's wash, tuned by eye: w lighter, W darker (also - and =). 0 = the bare painting
 let WA = params.has('wa') ? +params.get('wa') : +(store('wa') || .72);
 function setWash() {
-  document.body.classList.toggle('hug', HUG);
   document.body.style.setProperty('--wa', WA.toFixed(2));
-  store('wash', HUG ? 'hug' : 'even'); store('wa', WA.toFixed(2));
-  tell(`wash: ${HUG ? 'hug' : 'even'}   ${WA.toFixed(2)}   [w, - =]`);
+  store('wa', WA.toFixed(2));
+  tell(`wash ${WA.toFixed(2)}   [w lighter · W darker]`);
 }
 function tell(msg) { const l = $('#label'); l.textContent = msg; l.style.opacity = 1; clearTimeout(l.t); l.t = setTimeout(() => l.style.opacity = 0, 1800); }
 addEventListener('keydown', e => {
   if (e.key === 'f') step(1); else if (e.key === 'F') step(-1);
-  else if (e.key === 'w') { HUG = !HUG; setWash(); }
-  else if (e.key === '-' || e.key === '=') { WA = Math.max(0, Math.min(.95, WA + (e.key === '=' ? .04 : -.04))); setWash(); }
+  else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }
 });
 
 

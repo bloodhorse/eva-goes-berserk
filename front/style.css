@@ -75,15 +75,8 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
    darker on the focused row, where the painting is sharp behind the words */
 .plate .wash { position: absolute; inset: 0; transition: background .8s; background: linear-gradient(rgba(35,35,35,.5), rgba(35,35,35,.42)); }
 .row.focus .plate .wash { background: linear-gradient(rgba(35,35,35,calc(var(--wa) * 1)), rgba(35,35,35,calc(var(--wa) * .83))); }
+/* --wa: how dark the focused plate is washed behind the words — tuned by eye with w / W */
 body { --wa: .72; }
-/* hug (w key): on the focused row the even wash lifts and the darkness sits only behind the words —
-   a feathered pad under each block of text, the painting open everywhere else */
-body.hug .row.focus .plate .wash { background: rgba(35,35,35,.18); }
-.trickle::before, .row > .text::before, .row > .reading::before {
-  content: ''; position: absolute; inset: -22px -28px; z-index: -1; border-radius: 40px;
-  background: rgba(35,35,35,var(--wa)); filter: blur(22px); opacity: 0; transition: opacity .8s; pointer-events: none; }
-body.hug .pack:has(.row.focus.plated) .trickle:not(:empty)::before, body.hug .row.focus.plated > .text::before,
-body.hug .row.focus.plated > .reading:not(:empty)::before { opacity: 1; }
 .plate .grain { position: absolute; inset: 0; mix-blend-mode: overlay; opacity: 0; transition: opacity .8s; pointer-events: none; }
 .plate .sheen { position: absolute; inset: 0; display: none; pointer-events: none; transition: opacity .8s;
   background: linear-gradient(180deg, rgba(255,255,255,.09) 0, rgba(255,255,255,.02) 22%, rgba(255,255,255,0) 60%, rgba(0,0,0,.12) 100%);

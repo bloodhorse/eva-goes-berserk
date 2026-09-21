@@ -33,5 +33,5 @@ The dream-stream front as its own project, reading eva live. Merging it into eva
 | look | glass·dots switch; keys 1–7 | `?look=` |
 | glass blur | `[` `]` | `?gb=` |
 | font | font button (shift = back); `f` / `F` | `?font=` |
-| wash | `w` even↔hug; `-` `=` darkness | `?wash=hug&wa=0.72` |
+| wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | screenshots | — | `?tail=N` (newest N, no scrolling) |
