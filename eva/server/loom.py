@@ -1568,7 +1568,7 @@ def stream_readings() -> tuple[dict, dict]:
     against the dream. `heads[room]` is the reading itself, hung off `rooms[0]`, the newest
     passage of its block, which is where the page draws it.
     """
-    by_room, heads, seen = {}, {}, set()
+    by_room, heads, seen, loaded = {}, {}, set(), []
     for path in reading_files():
         try:
             st = os.stat(path)
@@ -1584,6 +1584,13 @@ def stream_readings() -> tuple[dict, dict]:
         except (OSError, ValueError):
             continue
         seen.add(path)
+        loaded.append(d)
+    # A dream can have more than one note — the seat changed family on 2026-09-21 and
+    # `reread.py` exists — and the NEWEST by its own `ts` is the one the page shows. Sorted
+    # here and not trusted to file order: the walk hands files over in whatever order the disk
+    # likes, so "the later file replaces the earlier" was luck, and three of five re-read
+    # dreams kept their old note on the page until this was written.
+    for d in sorted(loaded, key=lambda d: d.get("ts") or 0):
         rooms = d.get("rooms") if isinstance(d.get("rooms"), list) else []
         marked = d.get("marked") if isinstance(d.get("marked"), dict) else {}
         segs = d.get("segments") if isinstance(d.get("segments"), dict) else {}
