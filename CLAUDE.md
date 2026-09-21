@@ -176,9 +176,11 @@ and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 **The dream stream** (2026-09-19) is the mission's machine: nemo writes a passage every five
 minutes by lot, an opus reader notes every one and marks two things in it, a second opus
 remembers four scenes at a time as one dream, and a picture can be painted behind any dream by
-hand — all read at `https://eva.x/stream`. bekh stopped it after its first night and it has
-stayed off; the page and the plates work on the dreams already on the shelf. One line starts
-the writer again, and the whole runbook is in `eva/stream/CLAUDE.md`:
+hand — all read at `https://eva.x/stream`. Whether it is running is whether its writer's job is
+loaded (`launchctl print gui/$(id -u)/com.bekh.eva-stream`); it needs nemo up
+(`com.bekh.eva-llama`, which was found stopped on 2026-09-21 and had to be kickstarted). One
+line starts the writer, `bootout` in its place stops it, and the whole runbook is in
+`eva/stream/CLAUDE.md`:
 
 ```bash
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist

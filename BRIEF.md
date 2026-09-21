@@ -189,11 +189,22 @@ shape — now.
      when a passage lands; neither has a clock. Everything under `shelf/stream/` and
      `shelf/sittings/stream/` is untracked and disposable. Every opus call writes its real token
      usage on its ledger row — counted, not shown; bekh asks, the model reads the ledger.
-   - **Being tried for half a day (2026-09-21): nemo is handed only the last ~45 words of a
-     seed**, the seam untouched — bekh found the seeds out of hand (median 109 words, the
-     classics 650) and his example of a good one is two sentences. Trimmed in the writer, files
-     whole; not folded on the page, which he called concealment. Watch whether the rule-documents
-     survive it: short alone never made a seed good (`seeds/nemo/` is short and was the worst).
+   - **Running since 2026-09-21 15:26 as a half-day experiment, three changes at once.** (1)
+     Nemo is handed only the last ~45 words of a seed, the seam untouched — bekh found the
+     seeds out of hand (median 109 words, the classics 650); trimmed in the writer, files
+     whole; not folded on the page, which he called concealment. (2) The reader reads each dream
+     fresh, no memory, no seed in sight. (3) **A new pot of 68**: `seeds/kept/`, twenty seeds cut
+     from the stream's own first day — the quotes of opus's ledger from its start up to the
+     measurement documents, which bekh did not love, each as a window reaching UP from the quote
+     (his cut: opus ended them right and started them too short) and handed over whole — plus
+     the found documents, the classics, `short/`, `witch-names/`, the brass head and the dark
+     floors. Parked in `seeds/.off/`, nothing deleted: `nemo/` and `basin/` (the two worst
+     folders), the measurement documents, and everything about wires, because he said no more
+     switches (six wire seeds of the ledger are parked in `seeds/kept/.off/` for the same
+     reason). What to watch: whether nemo's own lines work as seeds now that they carry a
+     situation (they were the worst folder when they didn't); whether the kept seeds, many over
+     100 words by his own rule, feel too long; whether the reader's notes stay free of formula.
+     It is the first hand-run of the seed idea parked below.
    - **It must be live, never pre-recorded** — a nightly batch was proposed and killed.
    - **The page**, a placeholder in the loom's palette, on a wide screen: the dreams down the
      centre, the reader's notes on the right, and on the left **the story of the pack** — one
