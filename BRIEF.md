@@ -291,6 +291,23 @@ shape — now.
 
 ### parked
 
+- **Forgetting — bekh, 2026-09-21, parked the moment he said it.** In reality you forget most
+  of your dreams and some stay with you. So pruning is not housekeeping, it is the nature of
+  the thing: never a paged archive, a live stream that relentlessly forgets, with some dreams
+  staying. Beside it **a lore book / black book of the world being built** — its characters,
+  events, structures — kept in some form; he does not know yet how it would be used. And the
+  pruned tail does not just vanish: either it becomes **unreadable signal, corrupted data, lost
+  dreams**, or **nemo compresses it into an incomprehensible narrative out of those dreams**.
+  What the model put on the table, none of it decided: forgetting by degrees, using what already
+  exists (the whole dream for a day; then only its traces, the reader's two marked phrases and
+  its pack's story; then only what reached the book; a `★` means this one stays whole); the
+  book rewritten and never appended, so it forgets too and only what recurs remains, and it is
+  the memory the reader should have had instead of his own notes; corruption as the look and
+  nemo as the mechanism — nemo cannot summarize but it can continue a document made of the
+  residue of forgotten dreams, which would make forgetting the place seeds come from (see the
+  seeds question below). Cautions: real forgetting is real deletion, so the page forgets first
+  and the files stay until he says otherwise; and a book that feeds the dreams that feed the
+  book is a loop, and loops here have locked twice in one week.
 - **How do the seeds grow on their own and keep a base quality? — an open question of the
   project, posed by bekh 2026-09-19 and parked the same day.** Picking a seed and rewriting its
   last line by hand worked when experiments came in ones and twos; the stream draws 288 seeds a
