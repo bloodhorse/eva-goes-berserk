@@ -13,7 +13,7 @@ const FIRST_LOAD = 48;       // passages on open; eva's own page takes a day, we
 const POLL_MS = 60000;       // same pace as eva's page; a passage lands every ~5 min anyway
 
 const rooms = new Map();     // room -> row state; a poll never renders a passage twice
-const tolds = new Map();     // dream -> its told element, which grows as the story does
+const trickles = new Map();  // dream -> its trickle (the dream so far), which grows as the story does
 let lastDream = null, waiting = 0, status = null;
 
 const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -30,16 +30,16 @@ const grainURL = (() => {
 // ---- rendering -------------------------------------------------------------------------
 function buildRow(p) {
   const row = document.createElement('section'); row.className = 'row';
-  const told = document.createElement('div'); told.className = 'told';
+  const trickle = document.createElement('div'); trickle.className = 'trickle';
   const dream = p.story && p.story.dream;
-  // the told column speaks once per dream, beside its first passage
-  if (dream && dream !== lastDream && !tolds.has(dream)) { told.textContent = p.story.text; tolds.set(dream, told); }
+  // the trickle runs once per dream, starting beside its first passage
+  if (dream && dream !== lastDream && !trickles.has(dream)) { trickle.textContent = p.story.text; trickles.set(dream, trickle); }
   lastDream = dream;
   const text = document.createElement('div'); text.className = 'text';
   text.innerHTML = String(p.text || '').trim().split(/\n\s*\n/).map(t => `<p>${esc(t).replace(/\n/g, '<br>')}</p>`).join('')
     + `<span class="when">${when(p.ts)}</span>`;
   const reading = document.createElement('div'); reading.className = 'reading';
-  row.append(told, text, reading);
+  row.append(trickle, text, reading);
   const r = { row, reading, plateUrl: null, step: 0, target: 0 };
   setReading(r, p.reading);
   if (p.plate) setPlate(r, p.plate);
@@ -82,14 +82,14 @@ function render(pages) {
   return fresh.length;
 }
 
-// update what already exists: late paintings, late readings, the told text growing
+// update what already exists: late paintings, late readings, the trickle growing
 function sync(pages) {
   const seen = new Set();
   for (const p of pages) {
     const r = rooms.get(p.room);
     if (r) { if (p.plate) setPlate(r, p.plate); setReading(r, p.reading); }
     const dream = p.story && p.story.dream;
-    if (dream && !seen.has(dream) && tolds.has(dream)) { tolds.get(dream).textContent = p.story.text; seen.add(dream); }
+    if (dream && !seen.has(dream) && trickles.has(dream)) { trickles.get(dream).textContent = p.story.text; seen.add(dream); }
   }
 }
 
