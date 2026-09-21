@@ -1,0 +1,82 @@
+/* bekh's house palette, from the live stream page: violet ground, pink and cyan light */
+:root {
+  --bg: #232323; --ink: #d4e3fe; --ghost: #7d8a9c; --line: #2e3547;
+  --accent: #f5c8fe; --live: #c6f1fe; --lit-a: #f29bea; --lit-b: #7fe3f5;
+  --gb: 8px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body { cursor: crosshair; }
+
+/* scanlines over the paintings, under the words */
+#glassrows {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.28) 0 1px, transparent 1px 3px);
+  animation: roll 120ms steps(3) infinite;
+}
+@keyframes roll { to { background-position: 0 3px; } }
+
+#status {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 3; padding: 10px 18px;
+  font: 12px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost);
+  background: linear-gradient(rgba(35,35,35,.92), rgba(35,35,35,0));
+}
+#status .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: .8em; background: var(--ghost); }
+#status.dreaming .dot { background: var(--live); animation: breathe 2.4s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: .25; } }
+
+/* room above and below so the first and the newest passage can both reach the reading line */
+#feed { padding: 40vh 0 50vh; }
+
+.row {
+  position: relative; display: grid; column-gap: 28px; align-items: start;
+  grid-template-columns: minmax(180px, 1fr) minmax(0, 600px) minmax(180px, 1fr);
+  padding: 56px 32px;
+}
+.row > .told, .row > .text, .row > .reading { position: relative; z-index: 2; }
+.told { font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); max-width: 280px; justify-self: end; }
+.text { font: 18px/1.7 "Iowan Old Style", Palatino, Georgia, serif; }
+.text p + p { margin-top: .9em; }
+.reading { font: 13px/1.7 "Courier New", monospace; letter-spacing: .06em; color: var(--ghost);
+           border-left: 1px solid var(--line); padding-left: 1.2em; max-width: 290px; }
+.when { display: block; margin-top: 1em; font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--lit-b); opacity: .7; }
+
+/* phones: one column, the voices stacked */
+@media (max-width: 820px) {
+  .row { grid-template-columns: 1fr; row-gap: 18px; padding: 40px 18px; }
+  .told { justify-self: start; max-width: none; }
+  .reading { max-width: none; }
+}
+
+/* the painting sits behind the whole row */
+.plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.plate img, .plate canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate img { object-fit: cover; }
+/* fill, not cover: murk canvases are deliberately the wrong shape and get stretched */
+.plate canvas { image-rendering: pixelated; object-fit: fill; }
+/* the wash keeps words readable: lighter on murky rows (they don't fight the text),
+   darker on the focused row, where the painting is sharp behind the words */
+.plate .wash { position: absolute; inset: 0; transition: background .8s; background: linear-gradient(rgba(35,35,35,.5), rgba(35,35,35,.42)); }
+.row.focus .plate .wash { background: linear-gradient(rgba(35,35,35,.72), rgba(35,35,35,.6)); }
+.plate .grain { position: absolute; inset: 0; mix-blend-mode: overlay; opacity: 0; transition: opacity .8s; pointer-events: none; }
+.plate .sheen { position: absolute; inset: 0; display: none; pointer-events: none; transition: opacity .8s;
+  background: linear-gradient(180deg, rgba(255,255,255,.09) 0, rgba(255,255,255,.02) 22%, rgba(255,255,255,0) 60%, rgba(0,0,0,.12) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.45); }
+body.sheen .plate .sheen { display: block; }
+body.sheen .row.focus .plate .sheen { opacity: 0; }
+
+/* frost works on the painting itself, not on a canvas */
+body.k-frost .plate canvas { display: none; }
+body.k-frost .plate img { filter: blur(26px) saturate(1.15) brightness(.85); transform: scale(1.12); transition: filter .9s ease, transform .9s ease; }
+body.k-frost .row.focus .plate img { filter: none; transform: none; }
+body.k-frost .plate .grain { opacity: .55; animation: grain .5s steps(4) infinite; }
+body.k-frost .row.focus .plate .grain { opacity: .12; }
+@keyframes grain { 25% { background-position: 37px 91px; } 50% { background-position: 170px 13px; } 75% { background-position: 88px 200px; } }
+
+#fresh {
+  position: fixed; right: 18px; bottom: 18px; z-index: 3; cursor: pointer;
+  font: 12px "Courier New", monospace; letter-spacing: .25em; color: var(--accent);
+  background: rgba(35,35,35,.85); border: 1px solid var(--line); padding: 6px 12px;
+}
+#label { position: fixed; left: 18px; bottom: 18px; z-index: 3; font: 11px "Courier New", monospace; letter-spacing: .3em;
+         color: var(--lit-b); transition: opacity 1s; opacity: 0; pointer-events: none; }
