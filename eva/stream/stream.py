@@ -19,10 +19,11 @@ came back empty — all of them write a row and leave quietly, because launchd's
 treats a non-zero exit as a reason to back off, and a stream that punishes itself for the
 five minutes the GPU was busy is a stream that stops.
 
-**The other two voices are tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that
-landed ends by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the
-bedside) and `com.bekh.eva-stream-remembering` (the sleeper remembering the night), neither of
-which has an interval of its own. Best-effort: a failure is one log line and nothing else.
+**The other jobs are tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that landed ends
+by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the bedside),
+`com.bekh.eva-stream-remembering` (the sleeper remembering the night) and
+`com.bekh.eva-stream-plating` (the painter), none of which has an interval of its own.
+Best-effort: a failure is one log line and nothing else.
 
 Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
 (shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, plus
@@ -83,7 +84,8 @@ SEED_MAX_CHARS = 12000
 # not on timers of their own, which used to land a note a whole tick late.
 KICK = os.environ.get("STREAM_KICK_INTERPRETER") == "1"
 KICK_JOBS = ("com.bekh.eva-stream-interpreter",      # the reader at the bedside
-             "com.bekh.eva-stream-remembering")      # the sleeper remembering the night
+             "com.bekh.eva-stream-remembering",      # the sleeper remembering the night
+             "com.bekh.eva-stream-plating")          # the painter, with a hand on the limit
 KICK_TIMEOUT = 15
 
 # How much of a drawn seed nemo is actually handed: its TAIL, about this many words. bekh,

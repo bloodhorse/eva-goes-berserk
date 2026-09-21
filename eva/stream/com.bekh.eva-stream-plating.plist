@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.bekh.eva-stream-plating</string>
+    <!-- A picture for every dream while the stream runs (bekh, 2026-09-21: "draw a picture
+         to every dream that's going right now… and keep your hand on the limit of codex").
+         One run paints at most one plate and exits.
+
+         **No interval, on purpose**: it is started when a dream lands and at no other time —
+         stream.py kickstarts this job after a page lands. A run is 60–90s and a dream lands
+         every 300s, and launchd will not start a second instance of a job that is already
+         running, so nothing here needs a lock.
+
+         **To stop the painting without stopping the stream**, bootout THIS job alone:
+
+             launchctl bootout gui/$(id -u)/com.bekh.eva-stream-plating
+
+         It refuses to paint on its own when bekh's codex week is over 50%, the session over
+         80%, or when it cannot read the usage cache at all — see plating.py.
+
+         By hand:
+             launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-plating
+             uv run --python 3.12 eva/stream/plating.py --once
+
+         Needs `codex` logged in on this machine (brew, /opt/homebrew/bin); it does NOT need
+         llama, the loom or `claude`. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/uv</string>
+        <string>run</string>
+        <string>--python</string>
+        <string>3.12</string>
+        <string>/Users/bekh/tower/forge/eva-goes-berserk/eva/stream/plating.py</string>
+        <string>--once</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/bekh/tower/forge/eva-goes-berserk</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- /opt/homebrew/bin is where both `uv` and `codex` live (brew), and launchd's
+             default PATH has not heard of it: without this every run is "no `codex` on PATH".
+             ~/.local/bin rides along harmlessly and keeps the four agents' PATH identical. -->
+        <key>PATH</key>
+        <string>/Users/bekh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <!-- codex reads its ChatGPT login out of ~/.codex through HOME; a launchd job without
+             one is logged in as nobody and every run fails. -->
+        <key>HOME</key>
+        <string>/Users/bekh</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/tmp/eva-stream-interpreter.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/eva-stream-interpreter.log</string>
+</dict>
+</plist>
