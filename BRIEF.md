@@ -203,7 +203,7 @@ shape — now.
      headlines; the length turned out to be the whole style guide), always lowercase, the sleeper
      names each four-scene story, and every dream carries a
      psalm's number, `12:3` being the third scene of the twelfth story; all 177 older dreams were named by opus with `naming.py` (*i have basically infinite tokens for this… leave
-     codex alone*), in their own store, no note touched. *The sleeper remembering*: opus, one ~60-word first-person account
+     codex alone*), in their own store, no note touched. *The sleeper remembering*: opus, one short first-person account (asked for thirty words since 2026-09-21; he runs a quarter over)
      of **one dream of four scenes**, rewritten whole as each scene surfaces, from nemo's words
      only — the rewriting is the point, a later scene can change how an earlier one is told.
      *The painter*: codex's image tool, one plate per dream, holding itself by the codex limits.

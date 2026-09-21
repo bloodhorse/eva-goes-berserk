@@ -375,11 +375,14 @@ the code.
   `STREAM_DREAM_SEEDS=1` puts the old material back, labels and all, with one line of plumbing
   explaining them — in the code, because with no seeds in the material bekh's file has nothing
   to explain.
-- **A breath, not an index card.** His file asks for *a few sentences, fifty words or so*, and
+- **A breath, not an index card.** His file asks for *a few sentences, thirty words or so*, and
   for the older scenes to shrink to a clause or drop away. The index-card wording it replaced
-  did not hold: four rewrites went 150 → 200 words. Measured after the change, on four real
-  scenes: **73, 56, 59, 62** — the first is long and the rest sit near sixty, so fifty is the
-  aim and sixty is the truth.
+  did not hold: four rewrites went 150 → 200 words. He runs about a quarter over whatever number
+  he is given: at *fifty words or so* the run of 2026-09-21 measured a median of 62–64 words for
+  scenes one to three and 72 at scene four (max 89 — the older scenes do not shrink as asked).
+  bekh found that too much and cut the number to thirty the same day, number only, nothing else
+  in the file touched; what thirty really gives is not measured yet —
+  `shelf/stream/dreams/<date>/*.json`, `text` by `turn`.
 - **Which scene**: the newest unflagged passage above **his own** watermark, never a backlog.
   His watermark is kept apart from the reader's, so neither voice waits for the other.
 - **A dream ends** after `STREAM_DREAM_TURNS` scenes (**4**, about twenty minutes — it shipped at 24 and bekh cut it the same evening, 2026-09-19: needling 24 scenes together is torture for a man, and a real dream has around four) or when the silence
