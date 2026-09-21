@@ -87,8 +87,14 @@ no name yet; it is bekh's to find.
   me", "discuss first" mean talk, even when the same message ends in "let's do it" — and once
   he has said go, do it without asking again; both errors cost him. *Build what he asked, not
   the better thing you thought of*: he asked for five existing notes on the page and got a
-  second run queued instead. *When he gives one clean idea, don't stack five of yours on it* —
-  hold them, he'll ask. *Look at the live page yourself*: four layout bugs passed the builder's
+  second run queued instead. *Spill your ideas, all of them, lame ones included* — his words: he would take the model
+  spilling them and him rejecting them every time over a model hesitant to bring up its
+  thoughts; models lean toward holding back from the get-go, so the only push here is toward
+  more. What went wrong once was not having ideas but serving them fused: he gave one clean
+  idea and got it back woven into five of the model's, in chat and then in this file, so he
+  could no longer see his own. Keep the seams visible — his idea said back clean first, then
+  yours, labelled as yours, so he can knock them down one at a time; and in the docs his words
+  and the model's proposals are never blended. *Look at the live page yourself*: four layout bugs passed the builder's
   tests and measurements and died on one screenshot. *Measure before quoting a cost* — a plate
   was quoted at a quarter point and cost nearly three times that. *Background agents die when
   the session restarts*: check they are alive instead of waiting for a report. *He sometimes
