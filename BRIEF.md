@@ -253,10 +253,12 @@ shape — now.
      standing inside*. A 15-word minimum was added that hour and taken out again because of it —
      a stub is a dream; only the painter skips anything under 15 words. The first day's reading
      (opus read all 145; bekh loved about 80% of its picks) is `docs/ledgers/stream-2026-09-19.md`.
-   - **Plates.** Two prompts take turns (his *abstract interpretation* over the whole dream; a
-     painting from the reader's marked words with a *hand* by lot, never a painter's name),
-     palette magenta, neon, cyan; words in a picture are allowed; the pixel hand is out. After
-     thirty-odd plates, almost no dud, so nothing changes until we know why. **The cost is the
+   - **Plates.** Every plate is made by his prompt, *abstract interpretation* over the whole
+     dream. The second prompt — a painting from only the reader's two marked phrases, with a
+     *hand* by lot — is **parked** since 2026-09-21: the marks say what touched the reader, not
+     what the dream is about, and the bread dream he loved came back a high-heeled shoe on a
+     seashore (the story is in the stream doc; `--prompt pieces` still runs by name). Palette
+     magenta, neon, cyan; words in a picture are allowed; the pixel hand is out. **The cost is the
      limit**: a plate is ~0.65 points of the codex week and the FIVE-HOUR window is the real
      ceiling (22 plates in 90 minutes tripped it at 80% with the week at 19%), about twenty
      plates a window; a note is ~18k codex tokens and draws on the same window. The painter's

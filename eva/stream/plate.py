@@ -200,8 +200,15 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="plate.py", description=__doc__.splitlines()[0],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--room", required=True, help="stream/<YYYY-MM-DD>/<HHMM>")
-    ap.add_argument("--prompt", choices=("alternate", "pieces", "bekh"), default="alternate",
-                    help="alternate = whichever of the two the newest plate did NOT use")
+    # bekh, 2026-09-21: every plate is made from the whole dream. `pieces` is parked, not gone —
+    # it hands the painter only the reader's two marked phrases, and the reader marks what
+    # touched it, never what the dream is about: the bread dream's pieces were a heel and a
+    # feeling, and it came back a high-heeled shoe on a seashore. `pieces` and `alternate` still
+    # run when asked for by name.
+    ap.add_argument("--prompt", choices=("alternate", "pieces", "bekh"), default="bekh",
+                    help="bekh = the whole dream (the default); pieces = only the reader's "
+                         "marked phrases (parked); alternate = whichever the newest plate did "
+                         "NOT use")
     ap.add_argument("--hand", default="", help="a line from plates/hands.txt; by lot if absent")
     ap.add_argument("--from", dest="src", default="",
                     help="file an existing png instead of drawing one (no codex call)")

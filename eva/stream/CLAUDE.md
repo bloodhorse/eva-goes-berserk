@@ -499,12 +499,21 @@ note to its right; and the painting made for that dream BEHIND the dream's text*
 does not fight the words. Not somewhere else on the page — behind it. This is not the final
 look, it is the mechanic the front will use.
 
-**Where the prompts stand after fourteen plates (2026-09-20/21), in bekh's terms: almost no dud,
-so nothing gets changed until we understand why it works.** Both prompts stay and **take
-turns** — `plate.py`'s default `--prompt alternate` reads the newest plate on the shelf and uses
-the other one. His prompt over the whole dream gave five of five good to very good, looser and
-more painted; the coloured-words prompt gave the single strangest one (a face in a door panel
-for *something a house might answer*) and two genre backdrops. **Words in a picture are
+**Where the prompts stand (2026-09-21, after 43 plates — 20 his, 23 pieces): every plate is made
+from the whole dream, by his prompt; `pieces` is parked, not deleted.** `plate.py`'s default is
+`--prompt bekh`, which is what the automatic painter gets too; `--prompt pieces` and
+`--prompt alternate` (whichever the newest plate did not use — the default until that evening)
+still run when asked for by name. What parked it: the pieces prompt hands the painter **only**
+the reader's two marked phrases — no text, no note, no name — and the reader is asked what
+touched it and what felt strange, never what the dream is about. The bread dream (`1721`, one
+he loved) was marked *The heel made a little mark* and *the dreams were better than the real
+thing*; the painter, told `Landscape.` on top of that, returned a high-heeled shoe on a seashore
+at sunset, and the word *bread* had never reached it. It works when a marked phrase carries its
+own object (the widows' names; a face in a door panel for *something a house might answer*, the
+single strangest plate) and fails when the mark is a feeling and the object sits elsewhere. He
+finds the idea interesting; on the table if it comes back: one line of what the dream is about
+(its name) beside the pieces. His prompt over the whole dream gave five of five good to very
+good in the first batch, looser and more painted. **Words in a picture are
 allowed**: one plate lettered the dream's own lines onto the canvas (the widows' names) and it
 was one of his favourites — another dimension, where it fits; rare; nothing in either prompt
 pushes for or against it, and no lettering clause goes back in. **The 16-bit pixel hand is

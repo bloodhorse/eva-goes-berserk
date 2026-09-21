@@ -1874,7 +1874,8 @@ class Plates(unittest.TestCase):
         self.assertEqual(plate.pieces_for(room), ["switch hums", "nobody answers"])
 
         f = self.fake()
-        code, out = make_plate(f, "--room", room, "--hand", "A test hand.")
+        code, out = make_plate(f, "--room", room, "--prompt", "pieces",
+                               "--hand", "A test hand.")
         self.assertEqual(code, 0, out)
         brief = read_text(f["log"])
         self.assertIn("switch hums\nnobody answers", brief)     # one per line, in order
@@ -1899,7 +1900,8 @@ class Plates(unittest.TestCase):
         room = "stream/2026-09-19/1005"
         make_page(room, "seed\n", "THE WHOLE DREAM TEXT")
         f = self.fake()
-        code, out = make_plate(f, "--room", room, "--hand", "A test hand.")
+        code, out = make_plate(f, "--room", room, "--prompt", "pieces",
+                               "--hand", "A test hand.")
         self.assertEqual(code, 0, out)
         self.assertIn("falling back", out)
         self.assertIn("THE WHOLE DREAM TEXT", read_text(f["log"]))
