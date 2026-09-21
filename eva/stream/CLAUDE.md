@@ -262,7 +262,7 @@ the code.
   dream column capped at 600px, a side of the same width — so the dream sits on the page's axis
   at any window, and a plate, being the passage's own background, crosses all three. The sides
   never go under 200px, so in a small window the dream column gives way. The story is 130px in
-  13px type, laid hard against the dream's left edge (it was 150, then 105/12 for an hour; he
+  13px type, centred in the left track's own free space (it was 150, then 105/12 for an hour; he
   asked for a little more room and a little bigger, still a trickle).
 - **The left column is a counterpart to the dreams, not a status box** — bekh, 2026-09-21:
   *"a counterpiece to the dream as much as the summarization, which is always there"*. The
