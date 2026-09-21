@@ -249,29 +249,32 @@
      Pixels and not `em` for the tracks: `main` is 14px and `#feed` is 17px, so one `em` means
      two widths and a track sized in one cannot hold a grid sized in the other. */
   @media (min-width: 900px){
-    #feed{display:grid; grid-template-columns:105px minmax(0, 1fr); column-gap:28px;
-      max-width:1240px; margin:0 auto; padding-left:22px; padding-right:22px;
-      position:relative;}
-    #trickle{display:block; position:absolute; top:0; left:22px; z-index:2;
-      width:105px; padding:22px 0 0; margin:0;}
-    #trickle .account{font-size:12px; line-height:1.55;}
-    #feed > .pass{grid-column:2;}
-    .pass{display:grid; grid-template-columns:minmax(0, 1fr) minmax(200px, 290px);
-      column-gap:28px; align-items:start;}
-    .pass > *{grid-column:1;}
-    .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
-    /* A plated dream takes the whole band and lays the same three tracks inside it, so the
-       note stays where it was and the picture reaches the story's column. */
-    #feed > .pass.plated{grid-column:1 / -1;
-      grid-template-columns:105px minmax(0, 1fr) minmax(200px, 290px); column-gap:28px;}
-    #feed > .pass.plated > *{grid-column:2;}
-    #feed > .pass.plated > .reading{grid-column:3; grid-row:1 / -1;}
+    /* The DREAM is the centre of the page, exactly (bekh, 2026-09-21: centre it, a bit
+       narrower, more comfortable to read): every passage is the same three tracks — a side
+       track, a dream column capped at 600px, a side track of the same width — so the dream
+       sits on the page's axis whatever the window is, and a plate, being the passage's own
+       background, crosses all three without any help. The sides never go under 200px (a note
+       needs that much), so in a small window it is the dream column that gives way. */
+    #feed{display:block; max-width:1240px; margin:0 auto; padding-left:22px; padding-right:22px;
+      position:relative; --side:max(200px, calc((100% - 44px - 56px - 600px) / 2));}
+    .pass{display:grid; column-gap:28px; align-items:start;
+      grid-template-columns:minmax(200px, 1fr) minmax(0, 600px) minmax(200px, 1fr);}
+    .pass > *{grid-column:2;}
+    .pass > .reading{grid-column:3; grid-row:1 / -1; align-self:start; margin:0; max-width:290px;}
+    /* The story is laid OVER the left track, hard against the dream's left edge, out of the
+       flow: it starts at the top beside the newest dream, runs its own length over whatever
+       bands pass behind it, adds no height and scrolls with the page. 130px and 13px type
+       (he asked for a little more room and a little bigger than the 105/12 it had for an
+       hour, still a trickle). `--side` is the side track's width, restated from the grid
+       above because an absolutely placed box cannot ask the grid where a track ends. */
+    #trickle{display:block; position:absolute; top:0; z-index:2; width:130px;
+      left:calc(22px + var(--side) - 130px); padding:22px 0 0; margin:0;}
+    #trickle .account{font-size:13px; line-height:1.55;}
     /* Hover is the desk's peek; a phone has none and uses the hold below. */
     @media (hover: hover){ .pass.plated:hover{
       background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate); } }
-    /* A finished dream belongs to the centre: it is an account, not a thing spanning the
-       reader's column. */
-    .pass > .ended{grid-column:1; grid-row:auto;}
+    /* A finished dream belongs to the centre: it is an account, not a note. */
+    .pass > .ended{grid-column:2; grid-row:auto;}
     /* With a column of its own, the panel on top would be the same words twice. */
     #dreamnow{display:none;}
   }
