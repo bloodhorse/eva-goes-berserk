@@ -7,7 +7,7 @@ The premise: everything in a dream is made by LLMs or other neural networks — 
 ## The real stream (what the page must serve)
 
 - A passage lands roughly every 5 minutes; a story is 4 passages ("turn n of 4").
-- Three voices, three columns: **trickle** (bekh's word — the story so far, grows each turn; a long thin stream, half the old width) · **text** (the passage) · **reading** (an interpretation of the passage).
+- Three voices, three columns: **trickle** (bekh's word — the story so far, grows each turn; a long thin stream: half the width of its column, centred in it) · **text** (the passage) · **reading** (an interpretation of the passage).
 - Each passage should get a picture ("plate"): currently palette-knife oil paintings in bekh's house palette.
 - API the sketch snapshots from: `https://eva.x/api/stream?n=16&all=1` → `{pages[{room, text, ts, reading{text,ts}, story{dream,text,turn,of}, plate}], status{state,interval}}`, newest first.
 - **House palette is bekh's** (used across his projects): violet ground, pink, cyan as highlight. From the live page: `#232323` bg, `#d4e3fe` ink, `#f29bea`/`#f5c8fe` pink, `#7fe3f5`/`#c6f1fe` cyan, `#2e3547` line.
