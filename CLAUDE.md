@@ -1,6 +1,6 @@
 # dream engine (dreamst)
 
-The look-and-feel lab for bekh's dream stream (`https://eva.x/stream`, on the mini): many streams of text in parallel columns with pictures living underneath them. CRT / wired / lain-adjacent atmosphere, but its own thing. Everything we find here is meant to flow back into the real stream page; this repo holds sketches, not the product.
+The look-and-feel lab for bekh's dream stream (`https://eva.x/stream`, on the mini): many streams of text in parallel columns with pictures living underneath them. CRT / wired / lain-adjacent atmosphere, but its own thing. It holds the front for that stream as its own project (`front/`, reading eva live) plus the lab it grew out of (`sketch/`); merging the front into eva's page comes later.
 
 The premise: everything in a dream is made by LLMs or other neural networks — the text, and the pictures (ChatGPT via codex, one per passage; codex budget is the limit on how many get painted). For now the filtering is hand-written; the question of doing it with small neural networks is parked until we have references and taste to judge against (see "Neural filters" below).
 
@@ -55,6 +55,6 @@ Serving: pages that read pixels **must be served over http** (`cd sketch && ../.
 
 Screenshots: headless Helium; load data as a `<script>`, not `fetch` (a fetch loses the race with the screenshot), and don't rely on auto-scroll (use `?skip=`). Save shots to `shots/` (git-ignored) and **open the folder in Finder for bekh — not kitty** (paintings look bad in the kitty mosaic).
 
-Next (bekh's side track): the font. It is the centre of attention — it must carry the atmosphere yet be effortless to read, because the whole thing is reading. Candidates bekh liked: fauux's (plain Times, smoothing off, very wide spacing) and the first sketch's spaced Courier New. Plan: a font key in `stream.html` cycling tuned candidates over the real passages.
+Next (bekh's side track): the font. It is the centre of attention — it must carry the atmosphere yet be effortless to read, because the whole thing is reading. Candidates bekh liked: fauux's (plain Times, smoothing off, very wide spacing) and the first sketch's spaced Courier New. Plan: a font key in `front/` cycling tuned candidates over the live passages — each font shelved as a preset, like the looks.
 
 Ideas agreed but not built: text arriving live at the bottom with the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words.
