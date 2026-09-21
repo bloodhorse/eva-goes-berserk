@@ -377,7 +377,9 @@ addEventListener('keydown', e => { if (e.key === 'Escape') { closeBox(); closeSe
 // ---- font picker + wash knobs ------------------------------------------------------------
 const store = (k, v) => { try { v === undefined ? v = localStorage.getItem(k) : localStorage.setItem(k, v); } catch {} return v; };
 const FONT_NAMES = Object.keys(FONTS);
-let FONT = FONTS[params.get('font')] ? params.get('font') : FONTS[store('font')] ? store('font') : FONT_NAMES[0];
+// newsreader: bekh's pick from round two (2026-09-21). the picker order stays as the specimens were numbered
+const DEFAULT_FONT = 'newsreader';
+let FONT = FONTS[params.get('font')] ? params.get('font') : FONTS[store('font')] ? store('font') : DEFAULT_FONT;
 const loadedGoogle = new Set();
 function setFont(name) {
   FONT = name; const f = FONTS[name], st = document.body.style;

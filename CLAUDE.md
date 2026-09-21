@@ -22,5 +22,5 @@ Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for
 ## Where we stand (rewrite this in place)
 
 - Chosen: glass at 8px for unfocused plates, dots one click away; focus follows reading; trickle sticky per dream at 60% of its column; reader's marks as on eva; double-click for the full painting; nothing moves on its own.
-- Open, in this order: **pick the passage font** (first round: only `lain` came close, not there yet) → **settle the wash** for that font (even vs hug, darkness) → check the sticky trickle live on long dreams.
+- Open, in this order: **tune the passage font** (picked: `newsreader`) → **settle the wash** for that font (even vs hug, darkness) → check the sticky trickle live on long dreams.
 - Agreed ideas, not built: text arriving live with the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words — each must pass the reading rule.
