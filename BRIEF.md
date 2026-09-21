@@ -97,7 +97,11 @@ no name yet; it is bekh's to find.
   was quoted at a quarter point and cost nearly three times that. *Background agents die when
   the session restarts*: check they are alive instead of waiting for a report. *He sometimes
   sends a message meant for another session*; if it makes no sense here, say so and don't
-  answer it. *He dictates*: Ranpod is RunPod, Baxter was vector, "slippers" was the sleeper's.
+  answer it. *Stop means stop*: when he says it, touch nothing and say what is running and what was left
+  half-done. *When he asks what something is, answer the question* — he asked what A and B were
+  and got a file rewritten and five more runs. *Show him the words, not a table of results*: a
+  prompt under discussion is quoted whole, every time. *He dictates*: Ranpod is RunPod, Baxter
+  was vector, "slippers" was the sleeper's, "have the length" was halve it.
 - **The page is a desktop page; the phone is a smoke test** (root `CLAUDE.md`).
 - **The end-of-day brief.** When the day's work is done and the docs are in order, you
   tell bekh in one short message what the main results were and how we got to each, by subject,
@@ -195,9 +199,10 @@ shape — now.
      reading fresh — no memory, no seed in sight; **opus is his understudy** whenever codex is
      over its limit or fails. **And a name on every dream** (2026-09-22: the names are a menu,
      since the page barely separates them and he does not read them all) — the reader finishes
-     *"a dream about …"*, the sleeper names each four-scene story, and every dream carries a
-     psalm's number, `12:3` being the third scene of the twelfth story; the ~150 older dreams
-     are named by opus with `naming.py` (*i have basically infinite tokens for this… leave
+     *"a dream about …"* **in one to four words** (a longer, "descriptive" wording gave news
+     headlines; the length turned out to be the whole style guide), always lowercase, the sleeper
+     names each four-scene story, and every dream carries a
+     psalm's number, `12:3` being the third scene of the twelfth story; all 177 older dreams were named by opus with `naming.py` (*i have basically infinite tokens for this… leave
      codex alone*), in their own store, no note touched. *The sleeper remembering*: opus, one ~60-word first-person account
      of **one dream of four scenes**, rewritten whole as each scene surfaces, from nemo's words
      only — the rewriting is the point, a later scene can change how an earlier one is told.
@@ -224,7 +229,8 @@ shape — now.
      dream's whole band under a wash, `cover`, never distorted, the dream deciding the box; marks
      are faint tints. **His ideal, not built**: a part of the story beside every single dream —
      the idea on the table is the whole account rewritten each time but written in parts, one
-     per scene. Not yet seen by a human: the sticky story while scrolling, `earlier` in Safari.
+     per scene. Not yet seen by a human: the sticky story while scrolling, `earlier` in Safari, the names
+     and numbers on the live page.
      The wash numbers are still my guess (`?tune=1` is the slider).
    - **Seeds — the pot is 48 and it is his.** On 2026-09-21 he cut twenty seeds from the stream's
      own first day: the quotes of opus's ledger from its start up to the measurement documents
