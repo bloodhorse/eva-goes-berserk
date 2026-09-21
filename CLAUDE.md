@@ -37,6 +37,8 @@ Style lives in the glass in front of the picture, not in the picture: the painti
 
 **Chosen murk (2026-09-21): `glass` at blur 8px** — the painting dithered to the house palette (4px dots), a little bloom, then a clean pane over it: 8px blur, saturate 1.35, a faint sheen (light top edge, dark bottom line), no grain. It keeps the palette-shaped colour of the dots while the dots themselves melt; calm and readable. Rejected on the way, all still on keys in `sketch/stream.html`: frost (grain fog), signal (lost-sync bars), dots (too noisy — dithers the brush-stroke detail), fogdots (blur-then-dither: calm but kills the ornament bekh loves), bloom (sexy but just as noisy), quiet (muted palette — dumbing the colours defeats the point).
 
+**Tried looks are shelved, never deleted** (design rule for the real page): judgments made on this mock depend on the page around them (wash, column width, density) and may flip on the finished page. So every treatment we tried lives in the real page as a named preset — one small table of name + dials (blur, dot size, palette, grain) — behind a hidden switch (`?look=<name>` or a key). Reconsidering a look must cost one url, not a re-implementation.
+
 ## Neural filters (parked)
 
 Researched 2026-09-21: NCA, autoencoders, style transfer, pixelization, learned halftoning, deepdream/cyclegan. bekh's verdict: mostly sucky. The one novel result was TAESD latent corruption (channel-shifted ghost doubles), but it would make every picture look the same. Revisit only with real references in hand. A tiny CPPN seeded from the dream text was floated as a second, abstract picture per dream — not as a replacement for the ChatGPT picture, which holds the meaning.
