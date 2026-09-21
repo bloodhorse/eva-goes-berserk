@@ -387,8 +387,8 @@ lazy-loaded as he reads down, each passage carrying its own two strokes through 
 (`?raw=1` shows it as written). The look is a placeholder.
 
 Beside it, **the interpreter** (`stream/interpreter.py`, 2026-09-19): opus through the cli, on
-the same clock, writing a short **note** on every passage and **underlining** inside
-them what touched it — the persona is `stream/interpreter.txt`, bekh's file, and the code only
+the same clock, writing a short **note** on every passage and marking **two things** inside
+it — magenta for what touched it, cyan for what felt most mysterious — the persona is `stream/interpreter.txt`, bekh's file, and the code only
 appends the plumbing. Its copy of a dream is stored verbatim and never corrected, and nothing is compared
 against the raw text — the words it marked are simply written in colour, magenta or cyan by
 lot. `/api/stream` carries the copy, the segments and the note; the page draws the note beside

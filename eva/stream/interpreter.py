@@ -154,7 +154,7 @@ Answer in exactly this shape and nothing else — no preamble, no code fences:
 your reading of this stretch
 </reading>
 <passage n="1">
-the dream text of passage 1, typed back with your <mark>…</mark> tags in it
+the dream text of passage 1, typed back with your two tags in it
 </passage>
 <passage n="2">
 …and so on, one per passage
@@ -201,24 +201,41 @@ PASSAGE_RE = re.compile(r"<passage[^>]*\bn\s*=\s*[\"']?(\d+)[\"']?[^>]*>(.*?)</p
 # ---- his copy, as he typed it -----------------------------------------------------------------
 # The page shows HIS copy of the dream and nothing is compared against the raw text (bekh,
 # 2026-09-19: the retype marks were too much noise). All that is read out of it is where he put
-# his underlines — `<mark>` is the only tag there is, and everything else he may have typed,
-# angle brackets and all, is characters and stays characters. A stray `</mark>` closes nothing
-# rather than throwing.
+# his two marks; everything else he may have typed, angle brackets and all, is characters and
+# stays characters, and a stray closing tag closes nothing rather than throwing.
+#
+# **Two marks and no more** (bekh, 2026-09-21), and now they MEAN the two things his own prompt
+# already asks for: `touched` is what impressed and touched him most, `strange` is what felt
+# most mysterious and meaningful. The page gives them the magenta and the cyan it already had,
+# so a colour stops being a coin toss and starts being a reading.
+MARKS = ("touched", "strange")
+MARK_TAG_RE = re.compile(r"</?(touched|strange|mark)>", re.I)
 
-MARK_TAG_RE = re.compile(r"</?mark>", re.I)
 
+def segments_of(copy: str) -> tuple[list[dict], int]:
+    """(his copy as render-ready runs, how many marks were dropped).
 
-def segments_of(copy: str) -> list[dict]:
-    """His copy as render-ready runs: `[{t, mark}]`, adjacent runs of one state joined.
+    A run is `{t, mark}` with `mark` one of `"touched"`, `"strange"`, `True` (a legacy
+    `<mark>`) or `False`. Adjacent runs of one state join.
 
-    Nothing here knows about the dream on the shelf. The raw text is still one query string
-    away (`?raw=1`) and the room is never written to, which is the whole of the record-keeping
-    this needs.
+    **The first of each kind wins.** If he marks two things touched, the second becomes plain
+    text and is counted — the rule is his and enforcing it here is cheaper than a second rule
+    in the page, which would then have to agree with this one forever.
     """
     segs: list[dict] = []
-    depth, i = 0, 0
+    open_kinds: list[str] = []
+    used: set[str] = set()
+    dropped, i = 0, 0
 
-    def add(text: str, mark: bool) -> None:
+    def state():
+        # The innermost open tag that is still allowed to paint. Nesting is not a thing he is
+        # asked for, but an answer is text and may do anything.
+        for kind in reversed(open_kinds):
+            if kind is not None:
+                return True if kind == "mark" else kind
+        return False
+
+    def add(text: str, mark) -> None:
         if not text:
             return
         if segs and segs[-1]["mark"] == mark:
@@ -227,11 +244,26 @@ def segments_of(copy: str) -> list[dict]:
             segs.append({"t": text, "mark": mark})
 
     for m in MARK_TAG_RE.finditer(copy):
-        add(copy[i:m.start()], depth > 0)
-        depth = max(0, depth + (-1 if m.group(0)[1] == "/" else 1))
+        add(copy[i:m.start()], state())
+        kind = m.group(1).lower()
+        if m.group(0)[1] == "/":
+            for at in range(len(open_kinds) - 1, -1, -1):
+                if open_kinds[at] in (kind, None) and (open_kinds[at] == kind or kind == "mark"):
+                    open_kinds.pop(at)
+                    break
+            else:
+                if open_kinds:
+                    open_kinds.pop()
+        else:
+            if kind in MARKS and kind in used:
+                dropped += 1
+                open_kinds.append(None)      # opened, and painting nothing
+            else:
+                used.add(kind)
+                open_kinds.append(kind)
         i = m.end()
-    add(copy[i:], depth > 0)
-    return segs
+    add(copy[i:], state())
+    return segs, dropped
 
 
 def parse(answer: str, told: list[dict]) -> tuple[str, dict]:
@@ -308,7 +340,10 @@ def run_once() -> int:
 
     # Cut once, here, and never in the page or the server: the same string will not change
     # again, and the page should be drawing, not parsing.
-    segments = {room: segments_of(copy) for room, copy in marked.items()}
+    segments, dropped = {}, 0
+    for room, copy in marked.items():
+        segments[room], n = segments_of(copy)
+        dropped += n
 
     obj = {"ts": time.time(),
            # Newest first, so the head of the block — the passage the page hangs the reading
@@ -322,6 +357,8 @@ def run_once() -> int:
            "usage": usage}
     path = write_reading(obj)
     ledger({"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
+            # Two marks is the rule; how often he reaches for a third is worth knowing.
+            "dropped": dropped,
             "model": MODEL, "seconds": obj["seconds"], "usage": usage})
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
         f"{len(marked)} marked up · {obj['seconds']}s · " + opus.line(usage))

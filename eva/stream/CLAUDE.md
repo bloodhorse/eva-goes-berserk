@@ -148,14 +148,22 @@ through `opus.py`. One-shot like the worker.
   beside the verbatim copy is the same string cut by his `<mark>` tags alone, `[{t, mark}]`.
   Old reading files still carry a `kind` per segment; the page drops the `gone` ones and reads
   everything else by `mark`, and nothing rewrites a file on the shelf.
-- **What he found valuable is simply written in colour** — a gentle magenta or a gentle cyan,
-  never a background, an underline or a box, which both read as decoration laid over the text
-  instead of as part of it. Which of the two inks a phrase gets is chance, made stable by a
-  small hash of the room and the run's place in it, so the 60s poll never repaints a phrase a
-  different colour. There is **no toggle**: it was superfluous. `?raw=1` still serves the
-  shelf's own text, untrimmed and uncoloured, for checking what the interpreter was handed.
-- **The page renders every segment through `textContent`.** Only `<mark>` is ever read as a
-  tag, and that is done here; anything else he typed, `<script>` included, arrives as
+- **Two marks and no more, and the colours mean them** (bekh, 2026-09-21). His own prompt
+  already asked for two things, so they are two tags now: `<touched>` — what impressed and
+  touched him most — is the **magenta**, `<strange>` — what felt most mysterious and meaningful
+  — is the **cyan**. A colour is a reading instead of a coin toss. The **first of each kind
+  wins**: a second `<touched>` becomes plain text and is counted on the ledger row (`dropped`),
+  because enforcing that where the copy is cut is cheaper than a second rule in the page that
+  would have to agree with this one forever. Legacy `<mark>` still parses, and a legacy reading
+  is brought under the same rule as it is drawn — first run magenta, second cyan, the rest plain
+  — so the whole feed shows two marks however old the reading is, and nothing on the shelf is
+  rewritten.
+- **Written in colour and nothing else** — never a background, an underline or a box, which
+  both read as decoration laid over the text instead of as part of it. There is **no toggle**:
+  it was superfluous. `?raw=1` still serves the shelf's own text, untrimmed and uncoloured, for
+  checking what the interpreter was handed.
+- **The page renders every segment through `textContent`.** Only the two marks (and the legacy
+  `<mark>`) are ever read as tags, and that is done here; anything else he typed, `<script>` included, arrives as
   characters and leaves as characters.
 - **A note is drawn beside its dream**: an inset above the passage on a phone, a right-hand
   column top-aligned with the block's head at ≥900px, the same node either way.
@@ -225,12 +233,28 @@ the code.
   "which dream are we in" is a second place for it to be wrong. The last version of a finished
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
-- **On the page**: the current version sits at the very top of the feed with a small `3 / 4`,
-  in a panel that is neither the dream text nor the reader's margin note. It is rewritten whole
-  every few minutes, so the poll replaces it in place **only while he is at the top** and
-  otherwise holds it until he scrolls back — a block quietly rewriting itself off-screen is one
-  thing, a paragraph changing under a reader's eyes is another. A finished dream appears in the
-  feed **where it ended**, above its last scene, at the full width of both columns.
+- **On the page, three voices in three columns** (bekh's picture): the dreams down the centre,
+  the sleeper's account on the **left** at about half the notes' width, the reader's notes on
+  the right, from 1180px. The feed is the grid and not `main`, because a plated dream's band has
+  to cross all three tracks and can only do that as an item of the grid the account is in.
+- **The left column is a counterpart to the dreams, not a status box** — bekh, 2026-09-21:
+  *"a counterpiece to the dream as much as the summarization, which is always there"*. The
+  account **starts at the top beside the newest dream and reads downward for its own length**,
+  flowing with the page and scrolling away. It is not sticky; it was, for two days, and that was
+  a misreading of him.
+- **It is never blank.** With nothing live — the stream off, or the dream ended by the gap or
+  the scene cap — it shows the last account there is, with its count and a quiet word beside it:
+  `1 / 4 · told`. That is what `live` on the api's `dream` is for; the server falls back to the
+  newest version overall rather than handing back null.
+- **His ideal, recorded as NOT built**: whatever dream you are looking at, its note to the right
+  and *the part of the story that corresponds to it* on the left. He thinks it may be
+  unobtainable. The idea on the table: keep rewriting the whole account every time, but write it
+  **in parts, one per scene**, so a later scene can still change an earlier part — the rewriting
+  is the point and must never become an append.
+- A live rewrite still swaps under a soft fade. A finished dream keeps its inset in the feed
+  **where it ended**, above its last scene, in the centre column — **except** the one standing
+  in the left column, or the same words are on screen twice. Two columns and the phone keep the
+  panel at the top of the feed, never blank there either.
 - `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), turn, of, room, text, model,
   seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and exit 0, the worker's law.
 
@@ -312,7 +336,7 @@ uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1437 --prompt 
 - **Served as a file**: `GET /stream/plate/<date>/<HHMM>.jpg`, the path built only from a name
   `name_ok` has passed, cached hard because each `/api/stream` page carries
   `plate: "<url>?v=<mtime>"` and a re-drawn plate is a new url.
-- **The wash is measured, not guessed.** The plate is the block's background under a two-stop
+- **The wash is measured, not guessed.** The plate is the band's background under a two-stop
   gradient of the page's own ground. Dark: 0.90–0.955, which leaves body ink at **9.9:1** over
   these plates and **7.6:1** over the brightest cell in one (12.1:1 on the bare page). Light:
   0.915–0.955 → **6.2:1**, against a light palette whose own ceiling is 6.66:1 — that room
@@ -321,13 +345,19 @@ uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1437 --prompt 
 - **The peek**: hover on a desk, press-and-hold on a phone, and the wash lifts to ~0.3 for as
   long as it is held. The hold starts only for a touch pointer, dies on the first real move and
   never begins on a mark button, so it does not fight text selection or the strokes.
+- **The plate is the band of the WHOLE dream** (bekh, 2026-09-21: *"pic should stay on the whole
+  space pertaining to the dream — left to right — trickle, dream, summary"*). It is the
+  article's background and never the inner block's: at three columns that is the account's
+  column, the dream and the note; at two, dream and note; on a phone the dream with its note
+  inset. The account lies over whatever band it passes — every background paints before every
+  line of text — and reads on the same wash. Rounded on the band's outer edges.
 - **The dream decides the box and the picture fills it** (bekh, 2026-09-20). `cover`, centred,
   the aspect ratio never touched: a short dream shows a cropped band of its painting, a long one
   a zoomed, side-cropped one. A plate **never makes a passage taller or moves a word** — no
   min-height anywhere — and the 16px/18px the wash needs for legibility is taken straight back
-  by an equal negative margin, so a plated block's margin box is exactly its unplated box and
-  the picture reaches 18px past the text into the gutter instead of pushing the text inward.
-  The same padding on every plated passage.
+  by an equal negative margin sideways, while the vertical padding stays the passage's own — so
+  a plated passage's box is exactly its unplated box and the picture bleeds into the gutters
+  instead of pushing the text inward. The same padding on every plated passage.
 - **The wash is tuned by eye, at `https://eva.x/stream?tune=1`** — a panel of three sliders
   (wash, fade between the gradient's two stops, peek) that writes the same `--wash-a/-b` and
   `--peek-a/-b` the stylesheet uses, prints the two alphas to read out and the contrast they

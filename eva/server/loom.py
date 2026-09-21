@@ -1614,8 +1614,12 @@ def dream_files() -> list[str]:
     return out
 
 
-def stream_dreams() -> tuple[dict | None, dict]:
-    """(the dream now, {room: the dream that ended on it}).
+def stream_dreams() -> tuple[dict | None, dict | None, dict]:
+    """(the dream now, the newest version there is, {room: the dream that ended on it}).
+
+    The newest version is handed over because **the left column is never blank** (bekh,
+    2026-09-21): the sleeper's account is a counterpart to the dreams, always there, so with
+    nothing live the page shows the last one told rather than an empty track.
 
     A dream is over when its last version used up its scenes, or when the silence since it is
     longer than the gap the writer uses — read here off the versions themselves, so the server
@@ -1656,7 +1660,7 @@ def stream_dreams() -> tuple[dict | None, dict]:
         if over and isinstance(d.get("room"), str):
             ended[d["room"]] = {"text": d["text"], "dream": dream,
                                 "turns": d.get("turn") or 0}
-    return now, ended
+    return now, (rows[-1] if rows else None), ended
 
 
 # A plate is one painting per room, made by hand with eva/stream/plate.py. Served as a file
@@ -1746,7 +1750,7 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     # The readings are indexed ONCE for the whole batch: ten passages is ten lookups, not ten
     # walks of a folder that grows by a hundred and forty files a day.
     readings = stream_readings()
-    dream_now, ended = stream_dreams()
+    dream_now, newest, ended = stream_dreams()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
@@ -1757,12 +1761,16 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
             continue
         pages.append(page)
     # The dream so far rides on the payload and not on a page: it is not about one passage, it
-    # is what the sleeper remembers of all of them, and the reader draws it above the newest.
+    # is what the sleeper remembers of all of them, and the reader draws it down the left.
+    # `live` is the difference between a dream still being told and the last one there was —
+    # the page shows both, and only says a word about it when it is over.
     out = {"pages": pages, "more": more, "dream": None}
-    if dream_now:
-        out["dream"] = {"text": dream_now["text"], "ts": dream_now.get("ts") or 0,
-                        "dream": dream_now.get("dream"), "turn": dream_now.get("turn") or 0,
-                        "of": dream_now.get("of") or STREAM_DREAM_TURNS}
+    d = dream_now or newest
+    if d:
+        out["dream"] = {"text": d["text"], "ts": d.get("ts") or 0,
+                        "dream": d.get("dream"), "turn": d.get("turn") or 0,
+                        "of": d.get("of") or STREAM_DREAM_TURNS,
+                        "live": bool(dream_now)}
     return out
 
 

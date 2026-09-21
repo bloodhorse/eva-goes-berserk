@@ -898,15 +898,34 @@ class Interpreter(unittest.TestCase):
                       [r for r in ledger_rows() if r.get("kind") == "reading"][-1]["error"])
 
     # ---- his copy, kept as he typed it ----------------------------------------------------
-    def test_segments_come_from_the_mark_tags_and_nothing_else(self):
-        segs = interpreter.segments_of("plain <mark>lit</mark> plain again")
+    def test_two_marks_and_what_they_mean(self):
+        """Since 2026-09-21 he marks two things and the colours mean them: touched and
+        strange. Legacy `<mark>` still reads, because nothing on the shelf is rewritten."""
+        segs, dropped = interpreter.segments_of(
+            "a <touched>one</touched> b <strange>two</strange> c")
         self.assertEqual([(x["t"], x["mark"]) for x in segs],
-                         [("plain ", False), ("lit", True), (" plain again", False)])
+                         [("a ", False), ("one", "touched"), (" b ", False),
+                          ("two", "strange"), (" c", False)])
+        self.assertEqual(dropped, 0)
+        self.assertEqual(interpreter.segments_of("a <mark>legacy</mark> b")[0][1],
+                         {"t": "legacy", "mark": True})
+        self.assertEqual(interpreter.segments_of("no tags"),
+                         ([{"t": "no tags", "mark": False}], 0))
         # runs of one state join, so the page draws one span and not one per word
-        self.assertEqual(interpreter.segments_of("<mark>a</mark><mark>b</mark>"),
+        self.assertEqual(interpreter.segments_of("<mark>a</mark><mark>b</mark>")[0],
                          [{"t": "ab", "mark": True}])
-        # and nothing here has ever heard of the dream it is a copy of
-        self.assertEqual(interpreter.segments_of("no tags"), [{"t": "no tags", "mark": False}])
+
+    def test_the_first_of_each_kind_wins_and_the_rest_go_plain(self):
+        segs, dropped = interpreter.segments_of(
+            "<touched>one</touched> x <touched>two</touched> y <strange>s</strange>")
+        self.assertEqual(dropped, 1)
+        self.assertEqual([(x["t"], x["mark"]) for x in segs],
+                         [("one", "touched"), (" x two y ", False), ("s", "strange")])
+        # the text is never lost, only the paint
+        self.assertIn("two", "".join(x["t"] for x in segs))
+        # and an unclosed tag paints to the end rather than throwing
+        self.assertEqual(interpreter.segments_of("a <touched>unclosed b")[0][-1],
+                         {"t": "unclosed b", "mark": "touched"})
 
     def test_an_altered_copy_is_stored_and_served_exactly_as_typed(self):
         dream = "the switch hums.\n\nThe second sentence goes. the line stayed open."
@@ -923,18 +942,19 @@ class Interpreter(unittest.TestCase):
         segs = got["segments"][room]
         # nothing is compared against the dream any more: no kinds, no red, just his text
         self.assertEqual({k for x in segs for k in x}, {"t", "mark"})
+        import re as _re
         self.assertEqual("".join(x["t"] for x in segs),
-                         got["marked"][room].replace("<mark>", "").replace("</mark>", ""))
+                         _re.sub(r"</?(touched|strange|mark)>", "", got["marked"][room]))
         self.assertTrue(any(x["mark"] for x in segs))
         row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
         self.assertNotIn("new", row)
         self.assertNotIn("gone", row)
 
     def test_only_mark_is_a_tag_and_a_stray_close_is_survivable(self):
-        segs = interpreter.segments_of("a <b><mark>bold</mark></b></mark> claim")
+        segs, _ = interpreter.segments_of("a <b><touched>bold</touched></b></touched> claim")
         whole = "".join(x["t"] for x in segs)
         self.assertIn("<b>", whole)                  # any other tag is characters, not markup
-        self.assertNotIn("<mark>", whole)
+        self.assertNotIn("<touched>", whole)
         self.assertTrue(any(x["mark"] and "bold" in x["t"] for x in segs))
 
     # ---- what the api does with all that --------------------------------------------------
@@ -1149,6 +1169,29 @@ class Remembering(unittest.TestCase):
         self.assertFalse(os.path.exists(f["log"]))
 
     # ---- what the api does with it ---------------------------------------------------------
+    def test_the_account_is_never_blank(self):
+        """With nothing live the api still hands over the newest version there is, flagged
+        `live: false` — the left column is a voice, not a status box, and a voice does not go
+        blank because the machine is off."""
+        was = remembering.GAP
+        remembering.GAP = 1
+        self.addCleanup(setattr, remembering, "GAP", was)
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        d = call("/api/stream?n=5")[1]["dream"]
+        self.assertIs(d["live"], True)
+        self.assertEqual(d["turn"], 1)
+
+        # nothing live: the same account comes back, and says it is over
+        v = dream_versions()[0]
+        path = [p for p in remembering.version_files()][0]
+        v["ts"] = time.time() - 99999
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        d = call("/api/stream?n=5")[1]["dream"]
+        self.assertIs(d["live"], False)
+        self.assertEqual(d["text"], v["text"])
+
     def test_the_api_carries_the_dream_now_and_a_finished_one_where_it_ended(self):
         was = remembering.TURNS
         remembering.TURNS = 1                    # every scene ends its dream: two finished ones

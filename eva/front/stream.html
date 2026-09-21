@@ -103,12 +103,21 @@
      back by an equal negative margin: the block's margin box is exactly its unplated box, and
      the picture reaches 18px past the text into the gutter instead of pushing the text in.
      Same padding on every plated passage. */
-  .block.plated{padding:16px 18px; margin:-16px -18px;
+  /* **The picture is the band of the WHOLE dream** (bekh, 2026-09-21: "pic should stay on the
+     whole space pertaining to the dream — left to right — trickle, dream, summary"). So it is
+     the ARTICLE's background at every width — the account's column, the dream and the note at
+     three columns; dream and note at two; the dream and its note inset on a phone — and never
+     the inner block's, or a wash would be laid twice over the middle.
+
+     The box is still the dream's: the vertical padding is the passage's own, so a plate adds
+     no height and moves no word, and the 18px the wash needs sideways is given straight back
+     by a negative margin, which also lets the band bleed into the gutters. */
+  .pass.plated{padding:22px 18px 6px; margin:0 -18px; border-radius:12px;
     background-repeat:no-repeat, no-repeat;
     background-size:cover, cover; background-position:center, center;
     transition:box-shadow .35s ease;}
-  .block.plated > .seed{color:var(--seed-plated);}   /* the seed lifts a little off a picture */
-  .block.plated.peek{box-shadow:0 0 0 1px var(--line);}
+  .pass.plated .seed{color:var(--seed-plated);}   /* the seed lifts a little off a picture */
+  .pass.plated.peek{box-shadow:0 0 0 1px var(--line);}
 
   /* The second voice (eva/stream/interpreter.py): a few sentences about a stretch of two
      passages, hung off the newest of them. Quieter and smaller than the dream, with an accent
@@ -127,9 +136,11 @@
   /* A dream that ENDED sits in the feed where it ended, above its last scene. */
   .ended{margin:22px 0 4px;}
   .ended .turn{color:var(--lit-b);}
-  /* The left column at three columns: the current account and nothing else, sticky beside the
-     reader the whole way down. A trickle — half the notes' width, the quietest thing on the
-     page — and no panel round it, because a box that size reads as a button. */
+  /* The left column at three columns: the account, starting at the top beside the newest dream
+     and reading downward for its own length (bekh, 2026-09-21 — it is a counterpart to the
+     dreams the way the notes are, not a status box, so it flows with the page and is never
+     sticky and never blank). Half the notes' width, the quietest thing on the page, and no
+     panel round it, because a box that size reads as a button. */
   #trickle{display:none;}
   #trickle .account{background:none; padding:0; font-size:14px; line-height:1.6;
     color:var(--ghost); transition:opacity .4s ease;}
@@ -168,8 +179,8 @@
       --seed-plated:#6f6a8c;
     }
   }
-  .block.plated{background-image:linear-gradient(var(--wash-a), var(--wash-b)), var(--plate);}
-  .block.plated.peek{background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate);}
+  .pass.plated{background-image:linear-gradient(var(--wash-a), var(--wash-b)), var(--plate);}
+  .pass.plated.peek{background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate);}
   /* pre-wrap on both: a base model's document carries its own line breaks, `> > >` and stray
      indents, and reflowing them would be editing the evidence. */
   .seed, .body{white-space:pre-wrap; overflow-wrap:anywhere; margin:0;}
@@ -220,7 +231,7 @@
     .pass > *{grid-column:1;}
     .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
     /* Hover is the desk's peek; a phone has none and uses the hold below. */
-    @media (hover: hover){ .block.plated:hover{
+    @media (hover: hover){ .pass.plated:hover{
       background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate); } }
     /* A finished dream is the whole width: it is not a note about the passage beside it. */
     .pass > .ended{grid-column:1 / -1; grid-row:auto;}
@@ -238,14 +249,39 @@
   /* Pixels and not `em` in this block: `main` is 14px and `#feed` is 17px, so one `em` means
      two different widths and a track sized in the outer one cannot hold a grid sized in the
      inner one — the notes column silently overflowed its column before this was px. */
+  /* Three voices, three columns (bekh's picture, 2026-09-19): the dreams down the centre, the
+     sleeper's account on the LEFT at about half the notes' width, the reader's notes on the
+     right. 1180px is where all three fit without the centre losing its measure — below it the
+     two-column layout above still stands, with the account panel on top.
+
+     The FEED is the grid, not `main`, because a plated dream's band has to cross all three
+     tracks (2026-09-21) and it can only do that as an item of the same grid the account is in.
+     The account spans every row from the top and is `align-self:start`, so it starts beside
+     the newest dream and flows down its own length — it is not sticky, and a band it passes
+     lies behind it (every background paints before every line of text).
+
+     Pixels and not `em`: `main` is 14px and `#feed` is 17px, so one `em` means two different
+     widths and a track sized in the outer one cannot hold a grid sized in the inner one. */
   @media (min-width: 1180px){
-    main{display:grid; grid-template-columns:minmax(0, 150px) minmax(0, 880px);
-      column-gap:36px; justify-content:center; align-items:start;}
-    #trickle{display:block; position:sticky; top:22px; grid-column:1;
-      padding:22px 0 0 calc(18px + env(safe-area-inset-left));}
-    #feed, #sentinel, #foot{grid-column:2;}
-    #feed{max-width:none; margin:0; padding-left:0;}
-    /* 306px of notes, the trickle half of it, and the rest is the dream's measure. */
+    #feed{display:grid; grid-template-columns:150px 880px; column-gap:36px;
+      justify-content:center; max-width:none; margin:0; padding-left:0; padding-right:0;
+      position:relative;}
+    /* OUT of the grid's flow, on purpose. As a grid item in the left track it collided with a
+       plated dream, whose band spans that track too: a grid never lets two auto-placed items
+       share a cell, so the newest dream was pushed down to start BELOW the story instead of
+       beside it (seen 2026-09-21). Absolutely placed over the left track it starts at the
+       top beside the newest dream, runs its own length over whatever bands pass behind it,
+       adds no height to anything and scrolls with the page. The left offset is the track's:
+       the grid is centred, so it is half of what is left of the width after 150+36+880. */
+    #trickle{display:block; position:absolute; top:0; z-index:2;
+      left:calc((100% - 1066px) / 2); width:150px; padding:22px 0 0; margin:0;}
+    #feed > .pass{grid-column:2;}
+    /* A plated dream takes the whole band and lays its own three tracks inside it, so the
+       note stays where it was and the picture reaches the account's column. */
+    #feed > .pass.plated{grid-column:1 / -1;
+      grid-template-columns:150px minmax(0, 1fr) 306px; column-gap:36px;}
+    #feed > .pass.plated > *{grid-column:2;}
+    #feed > .pass.plated > .reading{grid-column:3; grid-row:1 / -1;}
     .pass{grid-template-columns:minmax(0, 1fr) 306px;}
     /* A finished dream belongs to the centre: it is an account, not a thing spanning the
        reader's column. */
@@ -264,9 +300,10 @@
 </header>
 
 <main id="scroll">
-  <div id="trickle"></div>
   <div id="dreamnow" hidden></div>
-  <div id="feed"></div>
+  <!-- The account lives INSIDE the feed so it can share its grid: the left track, from the top,
+       flowing down its own length beside the dreams. -->
+  <div id="feed"><div id="trickle"></div></div>
   <div id="sentinel"></div>
   <p id="foot">…</p>
 </main>
@@ -376,7 +413,10 @@ function account(d, ended){
   box.appendChild(document.createTextNode(d.text || ''));
   const t = document.createElement('span');
   t.className = 'turn';
-  t.textContent = ended ? `a dream, ${d.turns} scenes` : `${d.turn} / ${d.of}`;
+  // Never blank: with nothing live this is the last account there is, and the one word says
+  // so rather than leaving an empty column where a voice should be.
+  t.textContent = ended ? `a dream, ${d.turns} scenes`
+                        : `${d.turn} / ${d.of}` + (d.live === false ? ' · told' : '');
   box.appendChild(t);
   return box;
 }
@@ -441,11 +481,12 @@ function build(p){
   const body = document.createElement('p');
   body.className = 'body';
   block.appendChild(body);
-  if (p.plate){ block.dataset.plate = p.plate; plates.observe(block); }
+  if (p.plate){ art.dataset.plate = p.plate; plates.observe(art); }
 
-  if (p.dream_end){
-    // Where it ended, ABOVE its last scene: the only place a finished dream means anything.
-    // Before the block and not after it, or it reads as a comment on the scene below.
+  // Where it ended, ABOVE its last scene: the only place a finished dream means anything.
+  // Before the block and not after it, or it reads as a comment on the scene below — and never
+  // the one already standing in the left column, or the same words are on screen twice.
+  if (p.dream_end && !(dreamShown && dreamShown.dream === p.dream_end.dream)){
     art.insertBefore(account(p.dream_end, true), block);
   }
 
@@ -503,13 +544,13 @@ function build(p){
 const plates = new IntersectionObserver(es => {
   for (const e of es){
     if (!e.isIntersecting) continue;
-    const block = e.target;
-    plates.unobserve(block);
-    const url = block.dataset.plate;
+    const band = e.target;
+    plates.unobserve(band);
+    const url = band.dataset.plate;
     const img = new Image();
     img.onload = () => {
-      block.style.setProperty('--plate', `url("${url}")`);
-      block.classList.add('plated');
+      band.style.setProperty('--plate', `url("${url}")`);
+      band.classList.add('plated');
     };
     img.src = url;
   }
@@ -542,11 +583,11 @@ function peekOff(){
 }
 addEventListener('pointerdown', e => {
   if (e.pointerType !== 'touch' || tuning) return;
-  const block = e.target.closest && e.target.closest('.block.plated');
-  if (!block || (e.target.closest && e.target.closest('.stroke'))) return;
+  const band = e.target.closest && e.target.closest('.pass.plated');
+  if (!band || (e.target.closest && e.target.closest('.stroke'))) return;
   peekOff();
-  holding = {block: block, x: e.clientX, y: e.clientY,
-             timer: setTimeout(() => block.classList.add('peek'), 350)};
+  holding = {block: band, x: e.clientX, y: e.clientY,
+             timer: setTimeout(() => band.classList.add('peek'), 350)};
 }, {passive: true});
 addEventListener('pointermove', e => {
   if (holding && Math.hypot(e.clientX - holding.x, e.clientY - holding.y) > 10) peekOff();
@@ -565,7 +606,7 @@ function drawBody(body, p){
   // that is gone: `gone` was text the machine wrote and he did not, and there is nothing to
   // show it against any more, so it is simply left out.
   const segs = (!RAW && Array.isArray(p.segments) && p.segments.length)
-    ? afterDreamLabel(p.segments.filter(s => s.kind !== 'gone')) : null;
+    ? twoMarks(afterDreamLabel(p.segments.filter(s => s.kind !== 'gone'))) : null;
   if (!segs || !segs.length){
     const t = p.text || '';
     body.appendChild(document.createTextNode(RAW ? t : t.slice(0, trimAt(t))));
@@ -586,20 +627,30 @@ function drawBody(body, p){
       continue;
     }
     const span = document.createElement('span');
-    // Which ink is chance, but the SAME chance every render: a phrase that changed colour
-    // under the 60s poll would look like the page saying something it is not.
-    span.className = ink(p.room, i);
+    span.className = s.mark === 'strange' ? 'lit-b' : 'lit-a';
     span.textContent = t;
     body.appendChild(span);
   }
 }
 
-// A small stable hash of the room and the run's place in it. Nothing depends on it being a
-// good hash — only on it being the same one twice.
-function ink(room, i){
-  let h = i * 2654435761;
-  for (let k = 0; k < room.length; k++) h = (h * 31 + room.charCodeAt(k)) | 0;
-  return (h & 1) ? 'lit-a' : 'lit-b';
+// **Two marks, and the colours mean them** (bekh, 2026-09-21): magenta is what touched the
+// reader most, cyan what felt most mysterious and meaningful — the two things his own prompt
+// asks for. A colour is a reading now, not a coin toss.
+//
+// Readings written before that carry `mark: true` and no kind, and often more than two runs.
+// They are brought under the same rule here rather than rewritten on the shelf: the first
+// marked run becomes the magenta one, the second the cyan one, and the rest are plain text —
+// so the whole feed follows the two-only rule however old the reading is.
+function twoMarks(segs){
+  if (!segs.some(s => s.mark === true)) return segs;      // already the new shape
+  let seen = 0;
+  return segs.map(s => {
+    if (s.mark !== true) return s;
+    seen += 1;
+    if (seen === 1) return Object.assign({}, s, {mark: 'touched'});
+    if (seen === 2) return Object.assign({}, s, {mark: 'strange'});
+    return Object.assign({}, s, {mark: false});
+  });
 }
 
 function stroke(which, p){
@@ -633,11 +684,13 @@ function rule(){
   return hr;
 }
 
+function firstPass(){ return el.feed.querySelector('.pass'); }
+
 function append(pages){
   for (const p of pages){
     if (rooms.has(p.room)) continue;
     rooms.add(p.room);
-    if (el.feed.firstChild) el.feed.appendChild(rule());
+    if (firstPass()) el.feed.appendChild(rule());
     el.feed.appendChild(build(p));
     oldest = p.room;
   }
@@ -649,9 +702,12 @@ function prepend(pages){
     if (rooms.has(p.room)) continue;
     rooms.add(p.room);
     const art = build(p);
-    if (el.feed.firstChild){
-      el.feed.insertBefore(rule(), el.feed.firstChild);
-      el.feed.insertBefore(art, el.feed.firstChild);
+    const at = firstPass();
+    if (at){
+      // Above the newest passage and always after #trickle, which is the feed's own first
+      // child and not a passage: article first, then a rule between it and what was newest.
+      el.feed.insertBefore(art, at);
+      el.feed.insertBefore(rule(), at);
     } else {
       el.feed.appendChild(art);
       oldest = p.room;
@@ -660,8 +716,8 @@ function prepend(pages){
 }
 
 function drawFoot(){
-  el.foot.textContent = more ? '…' : (el.feed.firstChild ? 'the shelf ends here'
-                                                         : 'nothing on the shelf yet');
+  el.foot.textContent = more ? '…' : (firstPass() ? 'the shelf ends here'
+                                                  : 'nothing on the shelf yet');
 }
 
 // ---- loading ---------------------------------------------------------------------------
@@ -683,10 +739,14 @@ function fill(){
   busy = true;
   api('n=' + BATCH + (oldest ? '&before=' + encodeURIComponent(oldest) : ''))
     .then(d => {
+      // The story first, the passages second: `build()` leaves out the in-feed copy of whichever
+      // dream the left line is showing, and on the first load it can only know that if the
+      // story was drawn before the passages. The other way round the same account stood twice
+      // at the top of the page (seen 2026-09-21).
+      maybeDream(d.dream);
       append(d.pages || []);
       more = !!d.more;
       drawStatus(d.status);
-      maybeDream(d.dream);
       drawFoot();
     })
     .catch(() => { more = false; say("can't reach the shelf"); })
