@@ -254,14 +254,30 @@ each side of the page.
   column top-aligned with the block's head at ≥900px, the same node either way.
 - **Every dream gets a name, and the names are a MENU** (bekh, 2026-09-22): the page has very
   little separation between dreams and he does not read them all, so he chooses by name. The
-  last paragraph of `interpreter.txt` is his — the reader finishes *"a dream about …"* with
-  what stayed with it (*stayed*, not *touched*: touched is already one of the two marks) and
-  writes **only the part after those words**, because the page says that half once, in how it
-  is laid out. The plumbing is ours: a `<name>` tag on the shape, a lenient parser, and one
+  last paragraph of `interpreter.txt` is his — the reader finishes *"a dream about …"* **in one
+  to four words** and writes only the part after those words, because the page says that half
+  once, in how it is laid out. **The length is the whole style guide.** The first wording asked
+  for a name that said the dream *fully enough that someone could tell from the name alone what
+  is inside*, and 173 dreams came back as news items — *a sea monster crawling the bedroom
+  walls that no longer eats me, though i beg it to take me back* — a register he hates (*man
+  goes crazy in alabama*). "A few words" gave captions with a verb in them; with no form at all
+  (*give it a name*) the reader writes Book Titles In Capitals. At one to four words there is
+  room only for the thing itself — *bread that wasn't bread*, *the singing bones*, *her last
+  mark*, *hats in the elevator* — and no word about style was ever needed. His cut each time;
+  "be descriptive" was weighed and refused as the road back to headlines. What read weak in
+  the 177: about fifteen abstractions that could be anyone's dream (*being watched*, *going
+  home*) and a few that flatten the turn (*bread and reconciliation* for a dream with no
+  reconciliation in it). **A name with a famous proper noun in it — *holmes*, *carmilla* — is a
+  flag that nemo was reciting**, not dreaming: the namer sees only the dream, so the noun is in
+  what nemo wrote. The plumbing is ours: a `<name>` tag on the shape, a lenient parser, and one
   cleaning — the prefix off if it was written anyway, quotes off, a trailing full stop off,
-  wrapped lines joined, 120 characters and then an ellipsis. Stored as `names: {room: name}`,
-  a dict so a block of several still names each one. **A missing name is never a failed note**;
-  the dream simply shows its number. Both families do it and `reread.py` writes it too.
+  wrapped lines joined, **lowercased always** (the page is lowercase and a name is part of the
+  page; done in the cleaner and not asked for in the prompt, so it holds whoever wrote it).
+  Known and unfixed: the cleaner strips a closing quote mark from a name that ends in one.
+  Stored as `names: {room: name}`. **A missing name is never a failed note**; the dream simply
+  shows its number. Both families do it and `reread.py` writes it too. The back catalogue was
+  named by opus on 2026-09-22 (`naming.py`, 177 dreams); the long first-wording names are kept
+  in `shelf/stream/names-backup-news-style/`.
 
 Storage, all under the gitignored `shelf/stream/`:
 `readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
