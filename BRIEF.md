@@ -221,7 +221,12 @@ shape — now.
      shown his own last four notes, locked into a formula (81 of 97 notes opening *Last time*);
      with no memory, 0 of 29.
    - **The page** (a placeholder skin; the real front is a separate project bekh runs in another
-     session, to be **published**, fed by a pushed feed, never the loom exposed): it runs the
+     session, to be **published**, fed by a pushed feed, never the loom exposed — **as
+     `dreamshit.net`**, his call 2026-09-21: Miéville's word for what the slake-moths put out
+     after feeding on sleeping minds, and his own punk move of wrapping a thing he loves in
+     shit; unregistered when checked that evening, his to buy; *slop* is banned from anything
+     near this project, it is the haters' word; nemo's own marked lines are the pool for the
+     sentence on the door, *where all the missing things go* first among them): it runs the
      normal way, oldest at the top, one honest load of the last day, the viewer put at the
      bottom, `earlier` on request. The dream column is the exact centre; dreams that share a
      story are a **pack** with the story on the left, riding the top of the screen while its pack
