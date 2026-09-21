@@ -48,9 +48,11 @@ body { cursor: crosshair; }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
 /* names (eva's convention): the passage's at the top of its text, the dream's heading its trickle,
    a size bigger — a header shouldn't read smaller than what it heads */
-.title { margin: 0 0 .5em; font: 15px/1.4 var(--tf, serif); letter-spacing: .02em; color: var(--ink); }
-.title .verse { font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); font-variant-numeric: tabular-nums; }
-.trickle .title { font-size: 17px; margin-bottom: .8em; }
+/* names wear the label face — the same spaced Courier as the number and the seed button (bekh);
+   the name in ink, the number in grey */
+.title { margin: 0 0 .6em; font: 13px/1.5 "Courier New", monospace; letter-spacing: .15em; color: var(--ink); }
+.title .verse { font-size: 11px; letter-spacing: .2em; color: var(--ghost); font-variant-numeric: tabular-nums; }
+.trickle .title { font-size: 14px; margin-bottom: .8em; }
 /* the seed: a quiet button above the passage, the seed in a box floating over it */
 .seedbtn { display: block; margin: 0 0 .9em; padding: 0; background: none; border: 0; cursor: pointer;
   font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
