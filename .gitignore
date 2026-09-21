@@ -1,3 +1,5 @@
 .venv/
 .DS_Store
 sketch/pic/
+sketch/data/
+shots/
