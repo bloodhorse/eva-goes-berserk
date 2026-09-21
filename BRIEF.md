@@ -193,12 +193,14 @@ shape — now.
      Nemo is handed only the last ~45 words of a seed, the seam untouched — bekh found the
      seeds out of hand (median 109 words, the classics 650); trimmed in the writer, files
      whole; not folded on the page, which he called concealment. (2) The reader reads each dream
-     fresh, no memory, no seed in sight. (3) **A new pot of 68**: `seeds/kept/`, twenty seeds cut
+     fresh, no memory, no seed in sight. (3) **A new pot**: `seeds/kept/`, twenty seeds cut
      from the stream's own first day — the quotes of opus's ledger from its start up to the
      measurement documents, which bekh did not love, each as a window reaching UP from the quote
      (his cut: opus ended them right and started them too short) and handed over whole — plus
-     the found documents, the classics, `short/`, `witch-names/`, the brass head and the dark
-     floors. Parked in `seeds/.off/`, nothing deleted: `nemo/` and `basin/` (the two worst
+     the classics, `short/`, `witch-names/`, the brass head and the dark floors — 48 since
+     bekh cut the found documents twenty minutes in (*they suck*: competent expedition prose that
+     never embarrasses and never ignites, and one of them flattened a story that was going
+     somewhere at scene three). Parked in `seeds/.off/`, nothing deleted: `nemo/` and `basin/` (the two worst
      folders), the measurement documents, and everything about wires, because he said no more
      switches (six wire seeds of the ledger are parked in `seeds/kept/.off/` for the same
      reason). What to watch: whether nemo's own lines work as seeds now that they carry a
