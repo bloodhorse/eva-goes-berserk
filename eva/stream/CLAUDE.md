@@ -258,9 +258,12 @@ the code.
   width, from 900px, fluid**. There was a second desktop layout between 900 and 1180px that put
   the story in a box on top of the feed; his window at his zoom is about 1000px, so the box was
   all he ever saw, and zoomed out the story vanished (2026-09-21: *"it's gotta go on the
-  left"*). The story on top is the phone's answer only. The left track is 105px — he asked for
-  30% off the 150 it had — in 12px type, so it stays a trickle at 900. The feed is the grid and
-  not `main`, because a plated dream's band has to cross all three tracks.
+  left"*). The story on top is the phone's answer only. **The dream is the exact centre of the page**: every passage is three tracks — a side, a
+  dream column capped at 600px, a side of the same width — so the dream sits on the page's axis
+  at any window, and a plate, being the passage's own background, crosses all three. The sides
+  never go under 200px, so in a small window the dream column gives way. The story is 130px in
+  13px type, laid hard against the dream's left edge (it was 150, then 105/12 for an hour; he
+  asked for a little more room and a little bigger, still a trickle).
 - **The left column is a counterpart to the dreams, not a status box** — bekh, 2026-09-21:
   *"a counterpiece to the dream as much as the summarization, which is always there"*. The
   account **starts at the top beside the newest dream and reads downward for its own length**,
