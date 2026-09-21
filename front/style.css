@@ -22,6 +22,12 @@ body { cursor: crosshair; }
   background: linear-gradient(rgba(35,35,35,.92), rgba(35,35,35,0));
 }
 #status .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: .8em; background: var(--ghost); }
+/* the tumbler: glass ↔ dots in one click, top right */
+#flip { float: right; }
+#flip button { font: inherit; letter-spacing: inherit; color: var(--ghost); background: none; border: 0; cursor: pointer; padding: 0 .3em; }
+#flip button + button::before { content: '·'; margin-right: .6em; color: var(--line); }
+#flip button.on { color: var(--lit-a); }
+#flip button:hover { color: var(--ink); }
 #status.dreaming .dot { background: var(--live); animation: breathe 2.4s ease-in-out infinite; }
 @keyframes breathe { 50% { opacity: .25; } }
 

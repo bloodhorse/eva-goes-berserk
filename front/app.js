@@ -5,7 +5,9 @@
 const $ = s => document.querySelector(s);
 const params = new URLSearchParams(location.search);
 const LOOK_NAMES = Object.keys(LOOKS);
-let LOOK = LOOKS[params.get('look')] ? params.get('look') : LOOK_NAMES[0];
+// which look: ?look= wins, then the one the tumbler last left, then the first in looks.js
+const saved = (() => { try { return localStorage.getItem('look'); } catch { return null; } })();
+let LOOK = LOOKS[params.get('look')] ? params.get('look') : LOOKS[saved] ? saved : LOOK_NAMES[0];
 let GB = params.has('gb') ? +params.get('gb') : 8;
 const FIRST_LOAD = 48;       // passages on open; eva's own page takes a day, we keep it lighter for now
 const POLL_MS = 60000;       // same pace as eva's page; a passage lands every ~5 min anyway
@@ -190,6 +192,8 @@ function setLook(name) {
   document.body.className = 'k-' + look.kind + (look.sheen ? ' sheen' : '');
   document.body.style.setProperty('--gb', GB + 'px');
   for (const r of rooms.values()) if (r.plate) { r.cv.style.filter = look.css || ''; r.dither = null; r.step = r.target; paint(r); }
+  for (const b of document.querySelectorAll('#flip button')) b.classList.toggle('on', b.dataset.look === name);
+  try { localStorage.setItem('look', name); } catch {}
   const l = $('#label');
   l.textContent = `look: ${name}   [1-${LOOK_NAMES.length}]` + (/--gb/.test(look.css || '') ? `   blur ${GB}px  [ ]` : '');
   l.style.opacity = 1; clearTimeout(l.t); l.t = setTimeout(() => l.style.opacity = 0, 1800);
@@ -225,6 +229,7 @@ function poll() {
   }).catch(() => trouble("can't reach eva"));
 }
 $('#fresh').onclick = () => toNewest(true);
+for (const b of document.querySelectorAll('#flip button')) b.onclick = () => setLook(b.dataset.look);
 
 setLook(LOOK);
 // ?tail=N: only the newest N passages, no scrolling — for headless screenshots, which come out
