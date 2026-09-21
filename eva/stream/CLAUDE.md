@@ -348,10 +348,41 @@ out of the pot** (his call: it gave adventure-game backdrops). Noticed and left 
 indoors escape it. A hand is recorded only for a prompt that has a `{hand}` slot. Nine plates
 cost about two points of the codex week by his `cu`, roughly a minute each.
 
-**Still nothing scheduled.** `plate.py` is a hand tool: no launchd job, no kick, no clock. Every
-plate costs one generation off bekh's ChatGPT allowance and about a minute, so it is run on
-purpose, one room at a time, and a failure is a message and a non-zero exit — the opposite of
-every other stance here, deliberately.
+**Two ways a plate is made.** `plate.py` by hand, one room at a time — a failure there is a
+message and a non-zero exit, the opposite of every other stance here, deliberately. And
+`plating.py`, **one plate per dream while the stream runs** (bekh, 2026-09-21: *draw a picture
+to every dream that's going right now… and keep your hand on the limit of codex*), a fourth job
+the writer taps when a dream lands, with no clock of its own.
+
+- **One plate per run, at most.** A run is 60–90s and a dream lands every 300s, and launchd will
+  not start a second instance of a job already running — so there is no lock and no queue here:
+  whatever is unpainted when the next dream lands is picked up then.
+- **Which dream**: the OLDEST unflagged room with no plate, at least `STREAM_PLATE_SETTLE` (90s)
+  old — so the reader's note has landed and the `pieces` prompt has words to work from — and no
+  older than `STREAM_PLATE_WINDOW` (6h), so a job that was off for a day does not wake up and
+  paint three hundred pictures. Oldest first, because a picture arriving for a dream he read an
+  hour ago is still the picture for it. The clock is read off the room's NAME, which is a
+  timestamp, so the window costs no file reads.
+- **The guard, which is the point of it.** Before painting it reads the same usage cache bekh's
+  `cu` shows (`~/.cache/claude-usage/codex.json`) and refuses when `week.utilization >= 50`
+  (`STREAM_PLATE_WEEK_MAX`), `session.utilization >= 80` (`STREAM_PLATE_SESSION_MAX`), or when
+  the cache is missing, unreadable or over 30 minutes stale. **No numbers is not a green light**
+  — the failure that matters is an unattended painter eating a week of his limit at three in the
+  morning. Nine plates measured about two points of the week, so a plate per dream is roughly
+  **65–70 points of a week per day**: affordable for a half-day experiment, not a way of life.
+- A held run writes ONE ledger row `kind: "plating"` with `held`, `week` and `session`, and only
+  when the reason or the numbers' tens digit has changed — otherwise 288 identical rows a day
+  would bury the ones that mean something. It resumes by itself when the numbers drop. A painted
+  run's row carries the numbers it saw.
+- It calls `plate.py`'s own entry point and duplicates none of its logic: the prompts, the
+  alternation, the hand, the conversion and the `kind: "plate"` row all live there.
+
+```bash
+cp eva/stream/com.bekh.eva-stream-plating.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-plating.plist
+launchctl bootout gui/$(id -u)/com.bekh.eva-stream-plating   # stop painting, stream keeps running
+uv run --python 3.12 eva/stream/plating.py --once            # one by hand
+```
 
 ```bash
 uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1647
@@ -435,6 +466,24 @@ to `shelf/artifacts/.trash/`, as everywhere else. That behaviour is the loom's a
 changed for the stream.
 
 ## Running it
+
+**Starting and stopping the stream means nemo too** (bekh, 2026-09-21: *when we decide to stop
+the stream, we gracefully finish nemo as well*). Nemo wires about 10 GB of a 16 GB mac and has no
+job once the writer is off. Its launchd job restarts a crash and lets a clean exit stay exited,
+so a SIGTERM is the graceful stop and the job stays loaded for the next start:
+
+```bash
+# stop: the writer first, then nemo
+launchctl bootout gui/$(id -u)/com.bekh.eva-stream
+launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-llama
+# start: nemo first, wait for it, then the writer
+launchctl kickstart gui/$(id -u)/com.bekh.eva-llama
+until curl -sf http://127.0.0.1:8080/health >/dev/null; do sleep 2; done
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
+```
+
+If the loom is being used for fans at the same time, nemo stays up — it is the loom's model too.
+
 
 ```bash
 uv run --python 3.12 eva/stream/stream.py --once     # one page, now, by hand

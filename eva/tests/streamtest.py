@@ -51,6 +51,7 @@ os.environ["STREAM_INTERVAL"] = "300"
 
 import interpreter  # noqa: E402
 import plate  # noqa: E402
+import plating  # noqa: E402
 import loom  # noqa: E402
 import opus  # noqa: E402
 import remembering  # noqa: E402
@@ -66,6 +67,7 @@ loom.ARTIFACTS = ARTS
 plate.STREAM = STREAM_DIR
 plate.PLATES = os.path.join(STREAM_DIR, "plates")
 plate.LEDGER = os.path.join(STREAM_DIR, "ledger.jsonl")
+plating.USAGE = os.path.join(BOX, "codex.json")
 
 STUB = None            # the ordinary one: a random line per call
 STUB_DIRTY = None      # answers a licence footer, so the filter has something to catch
@@ -466,11 +468,9 @@ class Worker(unittest.TestCase):
             put_seed("k.txt", MARK + " and then\n")
             stream.KICK = True
             self.assertEqual(run("--once")[0], 0)
-            # both other voices, each tapped on its own
-            self.assertEqual(seen, [["launchctl", "kickstart",
-                                     f"gui/{os.getuid()}/com.bekh.eva-stream-interpreter"],
-                                    ["launchctl", "kickstart",
-                                     f"gui/{os.getuid()}/com.bekh.eva-stream-remembering"]])
+            # every other job, each tapped on its own
+            self.assertEqual(seen, [["launchctl", "kickstart", f"gui/{os.getuid()}/{job}"]
+                                    for job in stream.KICK_JOBS])
         finally:
             stream.subprocess.run = real
             stream.KICK = False
@@ -494,8 +494,7 @@ class Worker(unittest.TestCase):
             stream.subprocess.run = real
             stream.KICK = False
         self.assertEqual(code, 0, out)
-        self.assertEqual([j.rsplit("/", 1)[-1] for j in seen],
-                         ["com.bekh.eva-stream-interpreter", "com.bekh.eva-stream-remembering"])
+        self.assertEqual([j.rsplit("/", 1)[-1] for j in seen], list(stream.KICK_JOBS))
         self.assertIn("kick · com.bekh.eva-stream-interpreter", out)
 
     def test_a_kick_that_fails_costs_the_page_nothing(self):
@@ -1444,6 +1443,183 @@ class Plates(unittest.TestCase):
         self.assertEqual(call("/stream/plate/../../etc/passwd.jpg")[0], 404)
         self.assertEqual(call("/stream/plate/.trash/1020.jpg")[0], 404)
         self.assertEqual(call("/stream/plate/2026-09-19/a/b.jpg")[0], 404)
+
+
+# ---- plating: one plate a dream, with a hand on the limit --------------------------------------
+
+def put_usage(week=6, session=0, age=0.0, broken=False, missing=False):
+    """The cache `cu` keeps, as this rig needs it. `age` in seconds backdates the mtime, which
+    is what the staleness check reads."""
+    if missing:
+        try:
+            os.unlink(plating.USAGE)
+        except FileNotFoundError:
+            pass
+        return
+    with open(plating.USAGE, "w", encoding="utf-8") as f:
+        if broken:
+            f.write("{not json")
+        else:
+            json.dump({"plan": "team", "fetched_at": time.time(),
+                       "session": {"utilization": session, "window_minutes": 300},
+                       "week": {"utilization": week, "window_minutes": 10080}}, f)
+    if age:
+        at = time.time() - age
+        os.utime(plating.USAGE, (at, at))
+
+
+def run_plating(fake: dict) -> tuple[int, str]:
+    was_path = os.environ.get("PATH", "")
+    os.environ["PATH"] = fake["bin"] + os.pathsep + was_path
+    os.environ["FAKE_CODEX_LOG"] = fake["log"]
+    os.environ["FAKE_CODEX_MODE"] = fake["mode"]
+    out = io.StringIO()
+    try:
+        with redirect_stdout(out), redirect_stderr(out):
+            code = plating.main(["plating.py", "--once"])
+    finally:
+        os.environ["PATH"] = was_path
+        os.environ.pop("FAKE_CODEX_MODE", None)
+    return code, out.getvalue()
+
+
+class Plating(unittest.TestCase):
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+        put_usage()
+        # The fixture dreams are a few words long; the painter's skip-the-stubs rule would pass
+        # over every one of them. Off for the class, on in the one test that is about it.
+        was = plating.MIN_WORDS
+        plating.MIN_WORDS = 0
+        self.addCleanup(setattr, plating, "MIN_WORDS", was)
+
+    def test_a_stub_gets_no_plate_and_nothing_else_is_taken_from_it(self):
+        plating.MIN_WORDS = 15
+        stub = self.room(40)
+        f = self.fake()
+        self.assertEqual(run_plating(f)[0], 0)
+        self.assertFalse(os.path.isfile(plate.plate_paths(stub)[0]))
+        # the stub is still an ordinary unflagged dream: the page and the other voices see it
+        self.assertIsNone(loom.stream_page(stub)["flag"])
+        # The rooms' names carry their own clock, so the tests stamp names from real offsets.
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_codex(mode)
+        self.fakes.append(f)
+        return f
+
+    def at(self, minutes_ago: float) -> str:
+        """A room name that IS a timestamp that many minutes ago — plating reads the clock off
+        the name, so a fixture has to be named honestly."""
+        lt = time.localtime(time.time() - minutes_ago * 60)
+        return time.strftime("%Y-%m-%d/%H%M", lt)
+
+    def room(self, minutes_ago: float, flag=None) -> str:
+        stamp = self.at(minutes_ago)
+        name = "stream/" + stamp
+        make_page(name, "seed\n", "a dream from %s." % stamp, flag=flag)
+        return name
+
+    def test_it_paints_the_oldest_dream_that_wants_one(self):
+        old = self.room(60)
+        mid = self.room(30)
+        self.room(0.5)                      # too young: the reader has not been past it
+        f = self.fake()
+        code, out = run_plating(f)
+        self.assertEqual(code, 0, out)
+        self.assertTrue(os.path.isfile(plate.plate_paths(old)[0]), "the oldest one first")
+        self.assertFalse(os.path.isfile(plate.plate_paths(mid)[0]), "one plate per run")
+
+        # the next run takes the next oldest, and the young one is still left alone
+        self.assertEqual(run_plating(self.fake())[0], 0)
+        self.assertTrue(os.path.isfile(plate.plate_paths(mid)[0]))
+        rows = [r for r in ledger_rows() if r.get("kind") == "plating"]
+        self.assertEqual([r["room"] for r in rows], [old, mid])
+        self.assertTrue(all(r["painted"] for r in rows))
+        self.assertEqual(rows[0]["week"], 6)
+
+    def test_what_it_leaves_alone(self):
+        self.room(30, flag="copyright")     # flagged
+        self.room(0.2)                      # younger than the settle
+        self.room(60 * 9)                   # older than the window
+        done = self.room(45)                # already plated
+        self.assertEqual(run_plating(self.fake())[0], 0)
+        self.assertTrue(os.path.isfile(plate.plate_paths(done)[0]))
+        f = self.fake()
+        self.assertEqual(run_plating(f)[0], 0)
+        self.assertFalse(os.path.exists(f["log"]), "codex was started with nothing to paint")
+
+    def test_it_holds_over_the_ceilings(self):
+        self.room(30)
+        for week, session, why in ((50, 0, "week at 50%"), (91, 0, "week at 91%"),
+                                   (6, 80, "session at 80%")):
+            wipe_stream()
+            self.room(30)
+            put_usage(week=week, session=session)
+            f = self.fake()
+            code, out = run_plating(f)
+            self.assertEqual(code, 0, out)
+            self.assertFalse(os.path.exists(f["log"]), "codex was started while holding")
+            row = [r for r in ledger_rows() if r.get("kind") == "plating"][-1]
+            self.assertEqual(row["held"], why)
+            self.assertIn("holding", out)
+
+    def test_no_numbers_is_not_a_green_light(self):
+        for kw, why in (({"missing": True}, "no usage cache"),
+                        ({"broken": True}, "usage cache unreadable"),
+                        ({"age": 3600}, "stale")):
+            wipe_stream()
+            self.room(30)
+            put_usage(**kw)
+            f = self.fake()
+            self.assertEqual(run_plating(f)[0], 0)
+            self.assertFalse(os.path.exists(f["log"]))
+            self.assertIn(why, [r for r in ledger_rows() if r.get("kind") == "plating"][-1]["held"])
+
+    def test_a_hold_is_one_row_and_it_resumes_by_itself(self):
+        room = self.room(30)
+        put_usage(week=72)
+        for _ in range(4):
+            self.assertEqual(run_plating(self.fake())[0], 0)
+        held = [r for r in ledger_rows() if r.get("held")]
+        self.assertEqual(len(held), 1, "288 identical rows a day is what this avoids")
+
+        put_usage(week=64)                  # a different tens digit: worth one more row
+        self.assertEqual(run_plating(self.fake())[0], 0)
+        self.assertEqual(len([r for r in ledger_rows() if r.get("held")]), 2)
+
+        put_usage(week=6)                   # and it starts again with nobody touching it
+        self.assertEqual(run_plating(self.fake())[0], 0)
+        self.assertTrue(os.path.isfile(plate.plate_paths(room)[0]))
+
+    def test_the_writer_taps_all_three(self):
+        put_seed("k.txt", MARK + " and then\n")
+        seen = []
+        real = stream.subprocess.run
+
+        def watch(cmd, **kw):
+            seen.append(cmd[-1].rsplit("/", 1)[-1])
+            if "remembering" in cmd[-1]:
+                raise OSError("launchctl went away")     # one failing stops nothing
+            return real([sys.executable, "-c", ""], **kw)
+
+        stream.subprocess.run = watch
+        stream.KICK = True
+        try:
+            code, out = run("--once")
+        finally:
+            stream.subprocess.run = real
+            stream.KICK = False
+        self.assertEqual(code, 0, out)
+        self.assertEqual(seen, ["com.bekh.eva-stream-interpreter",
+                                "com.bekh.eva-stream-remembering",
+                                "com.bekh.eva-stream-plating"])
+        self.assertIn("kick · com.bekh.eva-stream-remembering", out)
 
 
 if __name__ == "__main__":

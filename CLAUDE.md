@@ -92,7 +92,8 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
     who notes every dream and marks two things in it, and `remembering.py`, the sleeper
     rewriting one small account of the dream the passages are scenes of; `opus.py` is their one
     door to the cli and counts their tokens. `plate.py` paints a picture for one dream through
-    codex, by hand, from the prompts in `plates/`. `front/stream.html` at `/stream` is the page:
+    codex, by hand, from the prompts in `plates/`, and `plating.py` does it for every dream
+    while the stream runs — one per run, and never over a ceiling on bekh's codex limit. `front/stream.html` at `/stream` is the page:
     the dreams down the centre, the story so far on the left, the notes on the right, a plate
     behind its dream's whole band. Its rooms, readings, dreams, plates and ledger are **not in
     git** — what survives is the artifact a star writes. **`eva/stream/CLAUDE.md`** is the doc
@@ -178,9 +179,9 @@ minutes by lot, an opus reader notes every one and marks two things in it, a sec
 remembers four scenes at a time as one dream, and a picture can be painted behind any dream by
 hand — all read at `https://eva.x/stream`. Whether it is running is whether its writer's job is
 loaded (`launchctl print gui/$(id -u)/com.bekh.eva-stream`); it needs nemo up
-(`com.bekh.eva-llama`, which was found stopped on 2026-09-21 and had to be kickstarted). One
-line starts the writer, `bootout` in its place stops it, and the whole runbook is in
-`eva/stream/CLAUDE.md`:
+(`com.bekh.eva-llama`), and **stopping the stream stops nemo gracefully as well** — it wires
+~10 GB and has no job with the writer off; the stop and start sequences are in
+`eva/stream/CLAUDE.md`. The writer's own line:
 
 ```bash
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
