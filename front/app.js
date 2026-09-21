@@ -204,7 +204,9 @@ function trouble(msg) { const el = $('#status'); el.className = ''; el.querySele
 const lastRow = () => lastRowEl;
 function toNewest(smooth) {
   const r = lastRow(); if (!r) return;
-  scrollTo({ top: r.offsetTop + r.offsetHeight / 2 - innerHeight / 2, behavior: smooth ? 'smooth' : 'auto' });
+  // page coordinates, not offsetTop: rows sit inside packs, so offsetTop is measured from the pack
+  const b = r.getBoundingClientRect();
+  scrollTo({ top: scrollY + b.top + b.height / 2 - innerHeight / 2, behavior: smooth ? 'smooth' : 'auto' });
 }
 let focused = null;
 function focusRow() {
