@@ -37,12 +37,12 @@ body { cursor: crosshair; }
 }
 .row > .text, .row > .reading { position: relative; z-index: 2; }
 /* a pack = one dream's passages. its rail lies over the rows' first column (placed by app.js);
-   the trickle inside is sticky, so it travels with you through its own dream only */
+   the trickle sits at the top of it, at the dream's start — not sticky (bekh: riding along was a mistake) */
 .pack { position: relative; }
 .rail { position: absolute; top: 0; bottom: 0; z-index: 2; padding: 56px 0; pointer-events: none; }
 /* the trickle (bekh's word): the dream so far, a long thin stream down the left — 60% of its
    column, centred in it, so it runs long beside its passages instead of sitting as a block */
-.trickle { position: sticky; top: 48px; width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); pointer-events: auto; }
+.trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); pointer-events: auto; }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }

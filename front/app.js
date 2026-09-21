@@ -167,9 +167,9 @@ function setTrickle(el, story) {
   el.appendChild(document.createTextNode(story.text || ''));
 }
 
-// one pack per dream: its passages, plus a rail down the left column holding the trickle.
-// the trickle is sticky inside the rail, so it rides along through its own dream's passages
-// and hands over to the next dream's trickle at the boundary
+// one pack per dream: its passages, plus a rail down the left column holding the trickle,
+// pinned at the dream's start. (it used to be sticky and ride along; bekh: now that trickles run
+// long, a moving one was a mistake — four passages is short enough to scroll back to it)
 function newPack(p) {
   const dream = p.story && p.story.dream || null;
   const el = document.createElement('div'); el.className = 'pack';
@@ -200,15 +200,6 @@ function placeRails() {
     const rail = pack.querySelector('.rail');
     rail.style.left = slot.offsetLeft + 'px'; rail.style.width = slot.offsetWidth + 'px';
   }
-  stickTrickles();
-}
-// a trickle that fits sticks under the status bar; a taller one scrolls until its END meets the
-// bottom of the screen and sticks there — read top to bottom as you scroll, nothing ever cut off
-function stickTrickles() {
-  for (const t of trickles.values()) {
-    const h = t.offsetHeight;
-    t.style.top = Math.min(48, innerHeight - h - 24) + 'px';
-  }
 }
 addEventListener('resize', placeRails);
 addEventListener('load', placeRails);
@@ -222,7 +213,6 @@ function sync(pages) {
     const dream = p.story && p.story.dream;
     if (dream && !seen.has(dream) && trickles.has(dream)) { setTrickle(trickles.get(dream), p.story); seen.add(dream); }
   }
-  stickTrickles();
 }
 
 function ago(t) {

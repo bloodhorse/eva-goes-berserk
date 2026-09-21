@@ -13,7 +13,7 @@ Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for
 ## Docs — open what the task needs
 
 - `docs/stream.md` — the source: passage/dream shape, the API, eva's text rules (marks, trimming), the house palette.
-- `docs/front.md` — the project: where it runs, deploy and rollback, files, packs and the sticky trickle, focus, every knob.
+- `docs/front.md` — the project: where it runs, deploy and rollback, files, packs and the trickle, focus, every knob.
 - `docs/looks.md` — pictures: style-in-the-glass principle, the look presets with verdicts, the wash, parked neural filters.
 - `docs/reading.md` — type and calm: the no-motion rule, the font search, why wash and font are coupled.
 - `docs/fauux.md` — the reference we studied: how it's made, its mechanics as primitives, what survived.
@@ -21,6 +21,6 @@ Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for
 
 ## Where we stand (rewrite this in place)
 
-- Chosen: newsreader for the passage (labels in spaced Courier); glass at 8px for unfocused plates, dots one click away; focus follows reading; trickle sticky per dream at 60% of its column; reader's marks and names as on eva; seed behind a button; double-click for the full painting; nothing moves on its own.
-- Open, in this order: **bekh's size for newsreader** (now 19px; `,`/`.` live, then bake it in) → **settle the wash darkness** for it (`w`/`W`, then bake the number in) → check the sticky trickle live on long dreams → name the rest of the font shortlist ("some others").
+- Chosen: newsreader for the passage (labels in spaced Courier); glass at 8px for unfocused plates, dots one click away; focus follows reading; trickle pinned at its dream's start, 60% of its column; quiet voices in `#aab5c7`; a quiet `pic` next to `seed` opens the painting; reader's marks and names as on eva; seed behind a button; double-click for the full painting; nothing moves on its own.
+- Open, in this order: **bekh's size for newsreader** (now 19px; `,`/`.` live, then bake it in) → **settle the wash darkness** for it (`w`/`W`, then bake the number in) → name the rest of the font shortlist ("some others").
 - Agreed ideas, not built: text arriving live with the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words — each must pass the reading rule.
