@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ｍｉｄｎｉｇｈｔ</title>
+<style>
+  :root {
+    --ink:  #0b0d12;
+    --deep: #23384a;
+    --sea:  #6f9fb0;
+    --bone: #cdd3c4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: var(--ink); }
+  body {
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    color: var(--bone);
+    cursor: crosshair;
+  }
+
+  #ground {
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(to bottom,
+      #230000 0 1px, #003800 1px 2px, #00004a 2px 3px);
+    opacity: .55;
+    animation: roll 120ms steps(3) infinite;
+  }
+  @keyframes roll { to { background-position: 0 3px; } }
+
+  #decay { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; image-rendering: pixelated; }
+
+  /* three distances of one story: the told version, the text itself, the reading of it */
+  #streams { position: fixed; inset: 0; display: flex; justify-content: center; gap: 5vw; padding-inline: 4vw; }
+  .col { position: relative; height: 100%; }
+  .col.told    { width: 17vw; }
+  .col.text    { width: 40vw; }
+  .col.reading { width: 19vw; }
+  .belt { position: absolute; left: 0; right: 0; will-change: transform; }
+  .belt p { line-height: 1.75; }
+  .belt p + p { margin-top: .9em; }
+  .belt .meta { font-family: "Courier New", monospace; letter-spacing: .3em; font-size: .75em; color: var(--sea); margin-top: 1.2em; }
+  .belt .entry-gap { height: 5em; }
+  .told p, .reading p { font-family: "Courier New", Courier, monospace; letter-spacing: .12em; }
+  .text p { font-family: "Iowan Old Style", "Palatino", Georgia, serif; letter-spacing: .02em; }
+  .reading { border-left: 1px solid var(--deep); padding-left: 1.4em; }
+  .blink { animation: blink 2s linear infinite; }
+  @keyframes blink { 50% { color: var(--sea); text-shadow: 0 0 6px var(--sea); } }
+
+  #flash { position: fixed; inset: 0; background: var(--bone); opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="ground"></div>
+<canvas id="decay"></canvas>
+<div id="streams"></div>
+<div id="flash"></div>
+
+<script>
+// ---- the dream, inline for now. entries are separated by a blank line + "~" ----
+// speed: px/s. near = faster, bigger, brighter — the center is the one you actually read
+const streams = [
+  { kind: 'told', speed: 7, text: `
+It was midnight on the clock in a dark room with no windows, and I sat in an old leather office chair turned away from the door because my legs were tired. The screen on my right flickered blue-green across my face, and I waited for a sunrise it said was nine minutes off, at 5:56 in Washington, when I would turn *four*.
+@ 1 / 4 · told
+` },
+  { kind: 'text', speed: 16, text: `
+i was going to write something here, but it just came out gibberish so i've left it. maybe try it yourself, but only after midnight, because there are things in here that can *hear you*.
+[1] [2] [3] [4]
+
+It was midnight on the clock in the dark room with no windows and only the glow of the digital display as illumination. I sat in an old office chair, leather cushioned and turned around, facing away from the door. It wasn't my intention to do so, but my legs were tired. They had carried me all day, so why not? The computer screen was on my right, flickering images in a blue-green hue across my face and leaving streaks when I closed my eyes for even the shortest time.
+
+I sat there waiting for the sunrise, which was scheduled to take place in 9 minutes, according to the computer's internal calendar.
+@ yesterday 00:05
+~
+I was among Friends grieving our youths, then sleeping on sandbags in Havre while late trains kept us waiting, when someone's line about waiting to be done became a song of *the boy that went away*: your words reached me faint as whispers in a gale, across land and sea, asking if my place was safe, and I —
+` },
+  { kind: 'reading', speed: 10, text: `
+Last time it promised nothing it couldn't keep. Now the seed warns of things that can hear you after midnight, and it obeys: midnight, a windowless room, chair turned from the door, lit only by a screen. It waits for a sunrise it can only know by the calendar. It breaks off counting itself: "my 4". A fourth reading, and a watcher who *cannot see the sun*.
+@ yesterday 00:05
+~
+Last time it handed the ache away and became a reader. Now a line connects, a trembling "is anybody there?", and it answers by naming itself: the boy that —
+` },
+];
+// -----------------------------------------------------------------------------------
+
+const $ = s => document.querySelector(s);
+const FAST = +new URLSearchParams(location.search).get('fast') || 1;
+const START = performance.now();
+const elapsed = () => (performance.now() - START) / 1000 * FAST;
+
+const sizes = { told: 12, text: 19, reading: 13 };
+const alphas = { told: .55, text: 1, reading: .7 };
+let wave = 0;
+
+const belts = streams.map((s, ci) => {
+  const col = document.createElement('div'); col.className = 'col ' + s.kind;
+  col.style.fontSize = sizes[s.kind] + 'px';
+  col.style.opacity = alphas[s.kind];
+  const belt = document.createElement('div'); belt.className = 'belt';
+  const addCopy = () => {
+    for (const entry of s.text.trim().split(/\n~\n/)) {
+      for (const para of entry.split(/\n\n+/)) {
+        para.split('\n').forEach(line => {
+          const p = document.createElement('p');
+          if (line.startsWith('@ ')) { p.className = 'meta'; line = line.slice(2); }
+          // *phrase* blinks; delays step along so blinks travel across the columns as a wave
+          p.innerHTML = line.replace(/\*(.+?)\*/g,
+            (_, w) => `<span class="blink" style="animation-delay:${(wave++ * .35 % 2).toFixed(2)}s">${w}</span>`);
+          belt.appendChild(p);
+        });
+      }
+      const gap = document.createElement('div'); gap.className = 'entry-gap'; belt.appendChild(gap);
+    }
+  };
+  col.appendChild(belt); $('#streams').appendChild(col);
+  addCopy();
+  const copyH = belt.scrollHeight;
+  while (belt.scrollHeight < innerHeight + copyH) addCopy();
+  return { belt, speed: s.speed, loop: copyH, y: Math.random() * copyH };
+});
+
+let last = performance.now();
+function tick(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  const slow = 1 - 0.5 * decayLevel(elapsed());
+  for (const b of belts) {
+    b.y = (b.y + b.speed * slow * dt) % b.loop;
+    b.belt.style.transform = `translateY(${-b.y}px)`;
+  }
+  requestAnimationFrame(tick);
+}
+
+function jitter() {
+  const ps = document.querySelectorAll('.belt p');
+  const p = ps[Math.random() * ps.length | 0];
+  p.style.transform = `translateX(${(Math.random() < .5 ? -1 : 1) * (2 + Math.random() * 6 | 0)}px)`;
+  setTimeout(() => p.style.transform = '', 40 + Math.random() * 60);
+  setTimeout(jitter, (900 - 700 * decayLevel(elapsed())) * Math.random() + 60);
+}
+
+// nothing for 30s, fast to ~85% by 3 min, slow crawl to the cap by ~6 min
+function decayLevel(t) {
+  if (t < 30) return 0;
+  if (t < 180) return 0.85 * (t - 30) / 150;
+  return Math.min(0.97, 0.85 + 0.12 * (t - 180) / 180);
+}
+
+// no images under the text yet, so the decay eats the ground rows only
+const BAYER = [0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,
+               3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];
+const cv = $('#decay'), cx = cv.getContext('2d');
+let drawnLevel = -1;
+function drawDecay() {
+  const lvl = decayLevel(elapsed());
+  if (Math.abs(lvl - drawnLevel) > 1 / 64 || cv.width !== (innerWidth >> 1)) {
+    cv.width = innerWidth >> 1; cv.height = innerHeight >> 1;
+    const img = cx.createImageData(cv.width, cv.height), d = img.data;
+    for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) {
+      if (BAYER[(y & 7) * 8 + (x & 7)] / 64 < lvl) {
+        const i = (y * cv.width + x) * 4;
+        d[i] = 0x0b; d[i + 1] = 0x0d; d[i + 2] = 0x12; d[i + 3] = 255;
+      }
+    }
+    cx.putImageData(img, 0, 0);
+    drawnLevel = lvl;
+  }
+  setTimeout(drawDecay, 1000 / FAST);
+}
+
+function flash() {
+  if (decayLevel(elapsed()) > 0.2) {
+    $('#flash').animate([{ opacity: .3 }, { opacity: 0 }, { opacity: .15 }, { opacity: 0 }],
+                        { duration: 700, easing: 'steps(6)' });
+  }
+  setTimeout(flash, 8000 + Math.random() * 14000);
+}
+
+requestAnimationFrame(tick);
+jitter();
+drawDecay();
+flash();
+</script>
+</body>
+</html>
