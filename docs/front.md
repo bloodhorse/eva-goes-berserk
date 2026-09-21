@@ -23,6 +23,7 @@ The dream-stream front as its own project, reading eva live. Merging it into eva
 - Loads the newest 48 passages, lands on the newest at the reading line, polls `n=5` every 60s. New passages append at the bottom: followed if you're on the newest, otherwise counted on a "new" button. Late plates and readings attach in place; the trickle updates as its story grows.
 - **Packs:** one per dream. Rows are 3-column grids (`slot | text | reading`); the pack's **rail** lies over the slot column (measured in js) and holds the dream's **trickle**, `position: sticky`, 60% of the column, centred. It rides along through its own dream only and hands over at the boundary. A trickle taller than the screen scrolls until its end meets the bottom edge, then sticks (top = `min(48, vh − h − 24)`).
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
+- **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
 - **Double-click** a painted dream outside its words → the plate full screen, uncropped. Click / double-click / esc closes.
 - Phones (<820px): one column, trickle static above its passages.
 

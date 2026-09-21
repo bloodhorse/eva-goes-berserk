@@ -17,7 +17,7 @@ The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on th
 `GET /api/stream?n=N[&before=<room>][&all=1]` → newest first:
 
 ```json
-{ "pages": [ { "room": "stream/2026-09-21/1558", "text": "…", "ts": 1789981106.3,
+{ "pages": [ { "room": "stream/2026-09-21/1558", "text": "…", "seed": "…", "ts": 1789981106.3,
                "segments": [ { "t": "…", "mark": "touched" | "strange" | true | false } ],
                "reading": { "text": "…", "ts": 1789981200.1 },
                "story": { "dream": "2026-09-21-1547-57af", "text": "…", "turn": 3, "of": 4, "live": true },
@@ -27,6 +27,8 @@ The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on th
 ```
 
 eva's own page loads `n=300` and polls `n=5` every 60s.
+
+`seed` = the found fragment of old text the passage grew from. eva shows it in grey above the passage ("what the dream stood on"); the front hides it behind a button.
 
 ## Text rules (ported from eva's page — keep them identical)
 

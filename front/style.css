@@ -46,6 +46,14 @@ body { cursor: crosshair; }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
+/* the seed: a quiet button above the passage, the seed in a box floating over it */
+.seedbtn { display: block; margin: 0 0 .9em; padding: 0; background: none; border: 0; cursor: pointer;
+  font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
+.seedbtn:hover { color: var(--ink); }
+.seedbox { position: absolute; left: -18px; right: -18px; top: 2.2em; z-index: 5; max-height: 55vh; overflow: auto;
+  padding: 16px 18px; background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  font: 14px/1.7 "Courier New", monospace; letter-spacing: .03em; color: var(--ghost); white-space: pre-wrap; cursor: text; }
+.seedbox[hidden] { display: none; }
 /* the passage keeps its own line breaks; a blank line is a paragraph */
 .text .body { white-space: pre-wrap; }
 /* the reader's marks, blended into the ink like on eva: magenta touched, cyan strange */

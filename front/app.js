@@ -93,6 +93,16 @@ function buildRow(p) {
   const text = document.createElement('div'); text.className = 'text';
   const body = document.createElement('div'); body.className = 'body';
   drawBody(body, p);
+  // the seed (the found text the dream grew from) stays out of the way: a small button above
+  // the passage, opening a floating box over it (bekh: without the seed the page is right)
+  if (p.seed && String(p.seed).trim()) {
+    const btn = document.createElement('button'); btn.className = 'seedbtn'; btn.textContent = 'seed';
+    const box = document.createElement('div'); box.className = 'seedbox'; box.hidden = true;
+    box.textContent = String(p.seed).trim();
+    btn.onclick = e => { e.stopPropagation(); const open = box.hidden; closeSeeds(); box.hidden = !open; };
+    box.onclick = e => e.stopPropagation();
+    text.append(btn, box);
+  }
   const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
@@ -337,8 +347,10 @@ $('#feed').addEventListener('dblclick', e => {
   $('#lightbox img').src = r.img.src; $('#lightbox').hidden = false;
 });
 const closeBox = () => { $('#lightbox').hidden = true; };
+function closeSeeds() { for (const b of document.querySelectorAll('.seedbox')) b.hidden = true; }
+addEventListener('click', closeSeeds);
 $('#lightbox').addEventListener('click', closeBox);
-addEventListener('keydown', e => { if (e.key === 'Escape') closeBox(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') { closeBox(); closeSeeds(); } });
 
 // ---- font picker + wash knobs ------------------------------------------------------------
 const store = (k, v) => { try { v === undefined ? v = localStorage.getItem(k) : localStorage.setItem(k, v); } catch {} return v; };
