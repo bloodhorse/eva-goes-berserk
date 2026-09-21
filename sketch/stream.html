@@ -59,7 +59,7 @@
   body.m-bloom .plate canvas { filter: blur(1.6px) saturate(1.25) brightness(1.1); }
   /* glass: the bloomed dots behind a clean pane — a light blur (tunable with [ ]) and a sheen:
      brighter at the top edge, a crisp light line along it, a dark line at the bottom. no grain */
-  body { --gb: 4px; }
+  body { --gb: 8px; }
   body.m-glass .plate canvas { filter: blur(var(--gb)) saturate(1.35) brightness(1.12); }
   .plate .sheen { position: absolute; inset: 0; display: none; pointer-events: none; transition: opacity .8s;
     background: linear-gradient(180deg, rgba(255,255,255,.09) 0, rgba(255,255,255,.02) 22%, rgba(255,255,255,0) 60%, rgba(0,0,0,.12) 100%);
@@ -84,7 +84,7 @@
 const $ = s => document.querySelector(s);
 const MATS = ['signal', 'dots', 'frost', 'fogdots', 'bloom', 'quiet', 'glass'];
 const params = new URLSearchParams(location.search);
-let MAT = MATS.includes(params.get('mat')) ? params.get('mat') : 'frost';
+let MAT = MATS.includes(params.get('mat')) ? params.get('mat') : 'glass';
 
 const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const when = ts => new Date(ts * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).toLowerCase();
@@ -250,7 +250,7 @@ function setMat(m) {
   const l = $('#label'); l.textContent = `material: ${m}   [1-7]` + (m === 'glass' ? `   blur ${GB}px  [ ]` : ''); l.style.opacity = 1;
   clearTimeout(l.t); l.t = setTimeout(() => l.style.opacity = 0, 1800);
 }
-let GB = +params.get('gb') || 4;
+let GB = params.has('gb') ? +params.get('gb') : 8;   // 8 = bekh's pick
 document.body.style.setProperty('--gb', GB + 'px');
 addEventListener('keydown', e => {
   const i = +e.key - 1; if (MATS[i]) return setMat(MATS[i]);

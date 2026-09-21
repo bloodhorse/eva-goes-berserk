@@ -33,10 +33,9 @@ Style lives in the glass in front of the picture, not in the picture: the painti
 
 **Sameness is the main risk** (bekh): tens of pictures from the same model under one strong treatment turn into wallpaper. Variety has to be designed in — treatment that reads the picture, per-dream dials, a mix of treatments in the stream. Keep the search loose; nothing about the style is settled.
 
-**Focus follows reading** (agreed): the passage under the middle of the screen is clear; the others go murky. Works on phones (no hover). Three murk materials under test in `sketch/stream.html`:
-- **frost** — heavy blur with grain pushed through it; a fogged window, not Apple glass. bekh's favourite going in.
-- **signal** — the picture as wide horizontal bars (lost sync); focus locks it in step by step.
-- **dots** — coarse house-palette dither; focus thins the dots away to reveal the painting.
+**Focus follows reading** (agreed): the passage under the middle of the screen is clear (the sharp painting, washed dark behind the words); the others go murky. Works on phones (no hover).
+
+**Chosen murk (2026-09-21): `glass` at blur 8px** — the painting dithered to the house palette (4px dots), a little bloom, then a clean pane over it: 8px blur, saturate 1.35, a faint sheen (light top edge, dark bottom line), no grain. It keeps the palette-shaped colour of the dots while the dots themselves melt; calm and readable. Rejected on the way, all still on keys in `sketch/stream.html`: frost (grain fog), signal (lost-sync bars), dots (too noisy — dithers the brush-stroke detail), fogdots (blur-then-dither: calm but kills the ornament bekh loves), bloom (sexy but just as noisy), quiet (muted palette — dumbing the colours defeats the point).
 
 ## Neural filters (parked)
 
@@ -44,7 +43,7 @@ Researched 2026-09-21: NCA, autoencoders, style transfer, pixelization, learned 
 
 ## State
 
-- `sketch/stream.html` — **current work.** The real stream (snapshot) with the three murk materials: keys 1–3 or `?mat=signal|dots|frost`; `?skip=N` starts N passages in (no auto-scroll). Snapshot lives in `sketch/data/` (git-ignored; refresh with the curl above → `stream.json`, then regenerate `stream.js` as `window.STREAM = <json>;` and download plates to `data/plate/`).
+- `sketch/stream.html` — **current work.** The real stream (snapshot) with the murk materials: keys 1–7 or `?mat=` (signal, dots, frost, fogdots, bloom, quiet, glass — default glass); `[ ]` or `?gb=` tunes the glass blur; `?skip=N` starts N passages in (no auto-scroll). Snapshot lives in `sketch/data/` (git-ignored; refresh with the curl above → `stream.json`, then regenerate `stream.js` as `window.STREAM = <json>;` and download plates to `data/plate/`).
 - `sketch/three.html` — blind-phase sketch: three auto-scrolling columns at parallax speeds, one test picture, five hand filters on keys 1–5 (glass / lain / onebit / rgb / map).
 - `sketch/index.html` — the first sketch (four columns over procedural moon/water/pylon placeholders).
 - `tools/crush.py`, `tools/placeholders.py` — palette crush + dither, and the placeholder generator. Via uv (`.venv`).
@@ -52,5 +51,7 @@ Researched 2026-09-21: NCA, autoencoders, style transfer, pixelization, learned 
 Serving: pages that read pixels **must be served over http** (`cd sketch && ../.venv/bin/python -m http.server 8765`); under `file://` the canvas is tainted and pictures vanish silently.
 
 Screenshots: headless Helium; load data as a `<script>`, not `fetch` (a fetch loses the race with the screenshot), and don't rely on auto-scroll (use `?skip=`). Save shots to `shots/` (git-ignored) and **open the folder in Finder for bekh — not kitty** (paintings look bad in the kitty mosaic).
+
+Next (bekh's side track): the font. It is the centre of attention — it must carry the atmosphere yet be effortless to read, because the whole thing is reading. Candidates bekh liked: fauux's (plain Times, smoothing off, very wide spacing) and the first sketch's spaced Courier New. Plan: a font key in `stream.html` cycling tuned candidates over the real passages.
 
 Ideas agreed but not built: text arriving live at the bottom with the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words.
