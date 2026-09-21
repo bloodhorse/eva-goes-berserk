@@ -19,7 +19,13 @@ Reference site: fauux.neocities.org ("wired sound for wired people"). We studied
 
 ## Baked vs live
 
-Baked: only the art — palette crush, ordered dither, cut-out transparency (`tools/crush.py`). Live: anything that depends on time (streams, jitter, decay, flicker), because live effects can respond to decay and gifs can't.
+Live: anything that depends on time (streams, jitter, decay, flicker), because live effects can respond to decay and gifs can't. `tools/crush.py` (palette crush + ordered dither) exists but is no longer the plan for dream pictures — see below.
+
+## Pictures: style in the glass, not in the photo
+
+Dream pictures are what the dream *is*; crushing them destroys them (the reference crushed only because Neocities gave it 10MB). So the picture stays whole and the house style lives in front of it: palette light (a `color`-blend tint, one strength knob per picture), dimmed under the text columns and clearer in the gutters, scanlines on top. Dither means time only: a picture fills in through dots as it arrives and dissolves as the stream forgets it; seams between dreams are dither bands. The tint can't rescue every picture — choosing pictures that already belong is part of the style.
+
+Because columns move at different speeds, a dream has no single height on screen; a picture anchors to the center (text) column and rides with it. Two layouts under test: full-width band per dream, and small frames beside the text (bekh's collage idea: a ladder of small pictures placed near, not equal to, their dream).
 
 ## The dream file (planned, not built)
 
@@ -28,6 +34,8 @@ Header (palette, sound, decay, next) + stream blocks separated by `---`, each wi
 ## State
 
 - `sketch/index.html` — one hand-coded page, no dream file yet. It exists to answer one question: does text streaming over images feel good, or turn into unreadable soup? Open it directly in a browser; `?fast=20` speeds up decay 20x for testing.
+- `sketch/three.html` — the real shape: three columns of one story at three distances (told / text / reading), real text copied from bekh's screen. Pictures: `?mode=frame` for the collage frame, default is the band; `?tint=0..1`. Test picture is `sketch/pic/test.jpg` (macOS Sonoma wallpaper, git-ignored, stress test for a loud picture).
+- Blind phase: we're deliberately building from the visual medium only — the generator behind the text is not explained to the page's builder. Text arrives as screenshots/pastes. Agreed next: text arriving live at the bottom, the tail forgotten (no archive), clickable depth (a side column comes forward), decay that eats words.
 - `tools/crush.py` — image → palette + bayer dither + transparency. Run via uv (`.venv`).
 - Images and text in the sketch are placeholders. Open questions: where real images come from, where stream text comes from, where the page will live (local vs the mini).
 

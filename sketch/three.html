@@ -29,6 +29,18 @@
   }
   @keyframes roll { to { background-position: 0 3px; } }
 
+  /* pictures: never crushed. the house style lives in the glass in front of them:
+     palette light (tint), dimming under the columns, scanlines. dither only means arriving / leaving */
+  #pics { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+  .pic { position: absolute; left: 0; top: 0; isolation: isolate; will-change: transform; }
+  .pic canvas { display: block; width: 100%; height: 100%; filter: brightness(.62) contrast(1.05); }
+  #shade { position: fixed; inset: 0; pointer-events: none; }
+  #glass {
+    position: fixed; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,.38) 0 1px, transparent 1px 3px);
+    animation: roll 120ms steps(3) infinite;
+  }
+
   #decay { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; image-rendering: pixelated; }
 
   /* three distances of one story: the told version, the text itself, the reading of it */
@@ -53,6 +65,9 @@
 </head>
 <body>
 <div id="ground"></div>
+<div id="pics"></div>
+<div id="shade"></div>
+<div id="glass"></div>
 <canvas id="decay"></canvas>
 <div id="streams"></div>
 <div id="flash"></div>
@@ -65,7 +80,7 @@ const streams = [
 It was midnight on the clock in a dark room with no windows, and I sat in an old leather office chair turned away from the door because my legs were tired. The screen on my right flickered blue-green across my face, and I waited for a sunrise it said was nine minutes off, at 5:56 in Washington, when I would turn *four*.
 @ 1 / 4 · told
 ` },
-  { kind: 'text', speed: 16, text: `
+  { kind: 'text', speed: 16, pics: ['pic/test.jpg'], text: `
 i was going to write something here, but it just came out gibberish so i've left it. maybe try it yourself, but only after midnight, because there are things in here that can *hear you*.
 [1] [2] [3] [4]
 
@@ -99,8 +114,10 @@ const belts = streams.map((s, ci) => {
   col.style.fontSize = sizes[s.kind] + 'px';
   col.style.opacity = alphas[s.kind];
   const belt = document.createElement('div'); belt.className = 'belt';
+  const anchors = [];
   const addCopy = () => {
-    for (const entry of s.text.trim().split(/\n~\n/)) {
+    s.text.trim().split(/\n~\n/).forEach((entry, ei) => {
+      const firstIdx = belt.children.length;
       for (const para of entry.split(/\n\n+/)) {
         para.split('\n').forEach(line => {
           const p = document.createElement('p');
@@ -111,15 +128,111 @@ const belts = streams.map((s, ci) => {
           belt.appendChild(p);
         });
       }
+      // an entry with a picture remembers where its text starts and ends, so the picture can ride with it
+      if (s.pics && s.pics[ei]) anchors.push({ first: belt.children[firstIdx], last: belt.lastElementChild, src: s.pics[ei] });
       const gap = document.createElement('div'); gap.className = 'entry-gap'; belt.appendChild(gap);
-    }
+    });
   };
   col.appendChild(belt); $('#streams').appendChild(col);
   addCopy();
   const copyH = belt.scrollHeight;
   while (belt.scrollHeight < innerHeight + copyH) addCopy();
-  return { belt, speed: s.speed, loop: copyH, y: Math.random() * copyH };
+  return { belt, col, speed: s.speed, loop: copyH, y: Math.random() * copyH, anchors };
 });
+
+// ---- pictures -------------------------------------------------------------------
+// ?mode=frame → a small photo-frame beside the text (the collage idea); default: a full-width band
+// ?tint=0..1 → how strongly the palette light colors the picture
+const params = new URLSearchParams(location.search);
+const MODE = params.get('mode') || 'band';
+const TINT = params.has('tint') ? +params.get('tint') : .6;
+const LEVELS = 24;
+const pics = [];
+const textBelt = belts.find(b => b.anchors.length);
+for (const a of (textBelt ? textBelt.anchors : [])) {
+  const top = a.first.offsetTop, h = a.last.offsetTop + a.last.offsetHeight - top;
+  let w, ph, x, off;
+  if (MODE === 'frame') {
+    // tucked toward the reading column, starting a bit below where the entry begins
+    w = Math.round(innerWidth * .27); ph = Math.round(w * 9 / 16);
+    x = Math.round(belts[2].col.getBoundingClientRect().left - w * .35); off = Math.round(h * .2);
+  } else {
+    w = innerWidth; ph = Math.round(h + 160); x = 0; off = -80;
+  }
+  const el = document.createElement('div'); el.className = 'pic';
+  el.style.width = w + 'px'; el.style.height = ph + 'px';
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = ph;
+  el.append(cv); $('#pics').appendChild(el);
+  const img = new Image(); img.src = a.src;
+  pics.push({ el, cv, img, x, top: top + off, h: ph, level: -1, masks: [], edge: null, band: MODE !== 'frame' });
+}
+
+// edge profile: 0 at the picture's border rising to 1 inside. the band only frays top and bottom
+// (the seam with the next dream); the frame frays on all sides so it sits in the page, not on it
+function edgeFor(p) {
+  const { width: w, height: h } = p.cv, e = new Float32Array(w * h), seam = p.band ? 90 : 26;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const d = p.band ? Math.min(y, h - 1 - y) : Math.min(x, y, w - 1 - x, h - 1 - y);
+    e[y * w + x] = Math.min(1, d / seam);
+  }
+  return e;
+}
+// one mask per life level, built lazily: pixel shows when bayer < life * edge. same dither as the decay
+function maskFor(p, lvl) {
+  if (p.masks[lvl]) return p.masks[lvl];
+  p.edge ||= edgeFor(p);
+  const { width: w, height: h } = p.cv, life = lvl / LEVELS;
+  const m = document.createElement('canvas'); m.width = w; m.height = h;
+  const mc = m.getContext('2d'), id = mc.createImageData(w, h), d = id.data;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    if (BAYER[(y & 7) * 8 + (x & 7)] / 64 < life * p.edge[y * w + x]) d[(y * w + x) * 4 + 3] = 255;
+  }
+  mc.putImageData(id, 0, 0);
+  return p.masks[lvl] = m;
+}
+function drawPic(p, lvl) {
+  const c = p.cv.getContext('2d'), { width: w, height: h } = p.cv;
+  c.globalCompositeOperation = 'source-over';
+  c.clearRect(0, 0, w, h);
+  if (lvl === 0 || !p.img.complete || !p.img.naturalWidth) return;
+  // cover-crop: fill the box, cut what doesn't fit, never stretch
+  const s = Math.max(w / p.img.naturalWidth, h / p.img.naturalHeight);
+  const iw = p.img.naturalWidth * s, ih = p.img.naturalHeight * s;
+  c.drawImage(p.img, (w - iw) / 2, (h - ih) / 2, iw, ih);
+  // palette light: hue from the palette, light and detail from the picture — a photo lit by a monitor.
+  // done inside the canvas so the dither mask below cuts the tint too (a css overlay paints a hard box)
+  c.globalCompositeOperation = 'color';
+  c.globalAlpha = TINT;
+  c.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--sea');
+  c.fillRect(0, 0, w, h);
+  c.globalAlpha = 1;
+  c.globalCompositeOperation = 'destination-in';
+  c.drawImage(maskFor(p, lvl), 0, 0);
+}
+// life from position: fills in through the dots as it rises from the bottom,
+// dissolves as it reaches the top — the stream forgetting its tail
+function updatePics() {
+  const band = innerHeight * .3;
+  for (const p of pics) {
+    const y = p.top - textBelt.y;
+    const arrive = (innerHeight - y) / band, leave = (y + p.h) / band;
+    const lvl = Math.round(Math.max(0, Math.min(1, arrive, leave)) * LEVELS);
+    p.el.style.transform = `translate(${p.x}px, ${y}px)`;
+    if (lvl !== p.level) { drawPic(p, lvl); p.level = lvl; }
+  }
+}
+for (const p of pics) p.img.onload = () => { p.level = -1; };
+
+// darker under the columns, clear in the gutters: pictures breathe between the text, not under it
+{
+  const stops = [];
+  for (const b of belts) {
+    const r = b.col.getBoundingClientRect(), l = r.left / innerWidth * 100, rr = r.right / innerWidth * 100;
+    stops.push(`transparent ${l - 2}%`, `rgba(11,13,18,.55) ${l + 1}%`, `rgba(11,13,18,.55) ${rr - 1}%`, `transparent ${rr + 2}%`);
+  }
+  $('#shade').style.background = `linear-gradient(to right, ${stops.join(', ')})`;
+}
+// ---------------------------------------------------------------------------------
 
 let last = performance.now();
 function tick(now) {
@@ -129,6 +242,7 @@ function tick(now) {
     b.y = (b.y + b.speed * slow * dt) % b.loop;
     b.belt.style.transform = `translateY(${-b.y}px)`;
   }
+  updatePics();
   requestAnimationFrame(tick);
 }
 
