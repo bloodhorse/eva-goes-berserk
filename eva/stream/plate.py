@@ -171,11 +171,37 @@ def plate_paths(room: str) -> tuple[str, str, str]:
     return base + ".jpg", base + ".png", base + ".json"
 
 
+def prompt_text(which: str) -> str:
+    try:
+        with open(os.path.join(PROMPTS, f"prompt-{which}.txt"), encoding="utf-8") as f:
+            return f.read()
+    except OSError:
+        return ""
+
+
+def newest_prompt() -> str:
+    """Which prompt the newest plate on the shelf was made with, or "" when there is none."""
+    best, which = 0.0, ""
+    for dirpath, _dirs, files in os.walk(os.path.join(STREAM, "plates")):
+        for name in files:
+            if not name.endswith(".json"):
+                continue
+            try:
+                with open(os.path.join(dirpath, name), encoding="utf-8") as f:
+                    d = json.load(f)
+            except (OSError, ValueError):
+                continue
+            if isinstance(d, dict) and (d.get("ts") or 0) > best:
+                best, which = d.get("ts") or 0, d.get("prompt") or ""
+    return which
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="plate.py", description=__doc__.splitlines()[0],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--room", required=True, help="stream/<YYYY-MM-DD>/<HHMM>")
-    ap.add_argument("--prompt", choices=("pieces", "bekh"), default="pieces")
+    ap.add_argument("--prompt", choices=("alternate", "pieces", "bekh"), default="alternate",
+                    help="alternate = whichever of the two the newest plate did NOT use")
     ap.add_argument("--hand", default="", help="a line from plates/hands.txt; by lot if absent")
     ap.add_argument("--from", dest="src", default="",
                     help="file an existing png instead of drawing one (no codex call)")
@@ -193,13 +219,21 @@ def main(argv: list[str]) -> int:
         return 1
 
     which, pieces = a.prompt, pieces_for(a.room)
+    if which == "alternate":
+        # bekh, 2026-09-20, after fourteen plates with almost no duds: both prompts stay and
+        # they take turns — he won't pick a winner until we understand why both work. The turn
+        # is read off the newest plate on the shelf, so a batch and a single hand run agree.
+        which = "bekh" if newest_prompt() == "pieces" else "pieces"
     fell_back = False
     if which == "pieces" and not pieces:
         # Said out loud and written into the json: a plate made from the whole text is a
         # different experiment from one made from the underlines, and the file has to say which.
         which, fell_back = "bekh", True
         log(f"no underlined pieces for {a.room} — falling back to the `bekh` prompt")
-    hand = a.hand or random.choice(hands())
+    # A hand is only drawn for a prompt that has a slot for one. `prompt-bekh.txt` has none, and
+    # the first batch recorded a hand on five plates that never saw it — a record that lies is
+    # worse than no record, because the hands are exactly what gets compared later.
+    hand = (a.hand or random.choice(hands())) if "{hand}" in prompt_text(which) else ""
 
     jpg, png, meta = plate_paths(a.room)
     os.makedirs(os.path.dirname(jpg), exist_ok=True)
@@ -211,7 +245,7 @@ def main(argv: list[str]) -> int:
         shutil.copy2(a.src, png)
     else:
         brief = brief_for(page, which, hand, pieces)
-        print(f"plate · {a.room} · prompt {which} · {len(pieces)} pieces · hand: {hand}",
+        print(f"plate · {a.room} · prompt {which} · {len(pieces)} pieces · hand: {hand or '—'}",
               flush=True)
         try:
             made, tail, seconds = draw(brief)

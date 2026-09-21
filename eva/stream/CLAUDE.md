@@ -268,6 +268,20 @@ note to its right; and the painting made for that dream BEHIND the dream's text*
 does not fight the words. Not somewhere else on the page — behind it. This is not the final
 look, it is the mechanic the front will use.
 
+**Where the prompts stand after fourteen plates (2026-09-20/21), in bekh's terms: almost no dud,
+so nothing gets changed until we understand why it works.** Both prompts stay and **take
+turns** — `plate.py`'s default `--prompt alternate` reads the newest plate on the shelf and uses
+the other one. His prompt over the whole dream gave five of five good to very good, looser and
+more painted; the coloured-words prompt gave the single strangest one (a face in a door panel
+for *something a house might answer*) and two genre backdrops. **Words in a picture are
+allowed**: one plate lettered the dream's own lines onto the canvas (the widows' names) and it
+was one of his favourites — another dimension, where it fits; rare; nothing in either prompt
+pushes for or against it, and no lettering clause goes back in. **The 16-bit pixel hand is
+out of the pot** (his call: it gave adventure-game backdrops). Noticed and left alone:
+"landscape, magenta, neon, cyan" pulls most plates to a disc over water at sunset; the ones set
+indoors escape it. A hand is recorded only for a prompt that has a `{hand}` slot. Nine plates
+cost about two points of the codex week by his `cu`, roughly a minute each.
+
 **Still nothing scheduled.** `plate.py` is a hand tool: no launchd job, no kick, no clock. Every
 plate costs one generation off bekh's ChatGPT allowance and about a minute, so it is run on
 purpose, one room at a time, and a failure is a message and a non-zero exit — the opposite of
