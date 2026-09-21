@@ -300,9 +300,15 @@ shape — now.
   built from these dreams** — its characters, events, structures — **and the book never
   forgets**: the stream is a mind and lives by losing things, the book is a world and is worth
   something only because nothing in it is lost. He wants it kept because it could one day
-  become a real thing — a narrative, a game, a 3d model, he doesn't know what. How it gets
-  filled is open; what he saw was himself telling the model what he remembered and the model
-  writing it down (the model's reading of his words, not yet confirmed by him). The model also
+  become a real thing — a narrative, a game, a 3d model, he doesn't know what. **How it gets
+  filled, confirmed by him:** he reads from time to time; when something catches his eye and he
+  wants it kept, he tells the model — *this one was cool, let's build it as an artifact* — and
+  the two write it down almost together. No pipeline and no mark feeds the book, because, his
+  line, **liking something and wanting to remember it are different things**: a `●` is "that
+  was nice", a `★` keeps a piece of text, and a book entry is a third thing — a figure, a
+  place, an event of that world, in their own words. **And the loss is accepted**: most dreams
+  will be dropped unread and some of them will have been great; *that's life, that's a live
+  thing, shit gets forgotten and dead* — part of the project is letting go. The model also
   proposed forgetting by degrees, a star meaning "this one stays", corruption as a look and nemo
   continuing the residue as a source of seeds — he did not take any of it up, and it is not
   part of the idea. One caution that stands regardless: real forgetting is real deletion, so
