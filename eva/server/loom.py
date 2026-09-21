@@ -44,8 +44,7 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                filter flagged. Plus `status`, off the worker's heartbeat, and
                                where the interpreter has been: each page's `marked` copy and
                                its `segments`, the `reading` on the page that heads a block,
-                               the `dream` the sleeper is remembering now, and `dream_end` on
-                               the passage a finished dream ended on
+                               and the `story` of the pack of dreams each page belongs to
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -173,7 +172,10 @@ STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
 STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
 STREAM_DREAM_GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
 STREAM_N = 10                             # pages per call when nobody says
-STREAM_N_MAX = 50
+# A day is 288 passages at one every five minutes, and the page loads a day in one call now
+# (bekh, 2026-09-21: load it honestly and stand the viewer at the bottom) — so the cap has to
+# clear a day, or the honest bottom would be the middle of yesterday.
+STREAM_N_MAX = 400
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -1598,9 +1600,8 @@ def stream_readings() -> tuple[dict, dict]:
 
 # The third voice (eva/stream/remembering.py): the sleeper remembering. One small json per
 # rewrite, a dream's worth of them under a day — what he is handed are scenes of ONE dream, not
-# separate ones. Read here and never written, like the readings. The page wants two things off
-# them: the CURRENT dream's latest version, which sits at the top of the feed, and, on the
-# passage a finished dream ended on, that dream's last words.
+# separate ones. Read here and never written, like the readings. What the page wants off them is
+# one thing: which pack of dreams a room belongs to, and that pack's latest account.
 _DREAMS: dict[str, tuple[int, int, dict]] = {}
 
 
@@ -1614,17 +1615,16 @@ def dream_files() -> list[str]:
     return out
 
 
-def stream_dreams() -> tuple[dict | None, dict | None, dict]:
-    """(the dream now, the newest version there is, {room: the dream that ended on it}).
+def stream_stories() -> tuple[dict, str | None]:
+    """({room: the story that room belongs to}, the id of the live one).
 
-    The newest version is handed over because **the left column is never blank** (bekh,
-    2026-09-21): the sleeper's account is a counterpart to the dreams, always there, so with
-    nothing live the page shows the last one told rather than an empty track.
+    **A story belongs to a pack of dreams** (bekh, 2026-09-21). There is no current-versus-
+    finished distinction to make here: a pack is four dreams, the newest pack may not be full
+    yet, and that is the whole of it. So every room a dream's versions ever covered carries
+    that dream's LATEST account, and the page groups the rooms that share one into a pack.
 
-    A dream is over when its last version used up its scenes, or when the silence since it is
-    longer than the gap the writer uses — read here off the versions themselves, so the server
-    keeps no second opinion about which dream is running. The finished ones are hung off the
-    room of their last version, which is where the page draws them: at the place they ended.
+    `live` is the one state left: the newest dream overall, while it is inside its gap and
+    under its scene cap. Only a live pack shows a count.
     """
     rows, seen = [], set()
     for path in dream_files():
@@ -1642,25 +1642,35 @@ def stream_dreams() -> tuple[dict | None, dict | None, dict]:
         except (OSError, ValueError):
             continue
         seen.add(path)
-        rows.append(d)
+        if isinstance(d.get("dream"), str):
+            rows.append(d)
     for gone in set(_DREAMS) - seen:
         _DREAMS.pop(gone, None)
     rows.sort(key=lambda d: d.get("ts") or 0)
 
-    last_of: dict[str, dict] = {}
+    latest: dict[str, dict] = {}          # dream id -> its newest version
+    members: dict[str, list[str]] = {}    # dream id -> every room it covers
     for d in rows:
-        if isinstance(d.get("dream"), str):
-            last_of[d["dream"]] = d
-    now, ended = None, {}
-    for dream, d in last_of.items():
-        over = ((d.get("turn") or 0) >= (d.get("of") or STREAM_DREAM_TURNS)
-                or (time.time() - (d.get("ts") or 0)) > STREAM_DREAM_GAP)
-        if not over and (now is None or (d.get("ts") or 0) > (now.get("ts") or 0)):
-            now = d
-        if over and isinstance(d.get("room"), str):
-            ended[d["room"]] = {"text": d["text"], "dream": dream,
-                                "turns": d.get("turn") or 0}
-    return now, (rows[-1] if rows else None), ended
+        latest[d["dream"]] = d
+        if isinstance(d.get("room"), str):
+            members.setdefault(d["dream"], []).append(d["room"])
+
+    live = None
+    if rows:
+        last = latest[rows[-1]["dream"]]
+        over = ((last.get("turn") or 0) >= (last.get("of") or STREAM_DREAM_TURNS)
+                or (time.time() - (last.get("ts") or 0)) > STREAM_DREAM_GAP)
+        if not over:
+            live = last["dream"]
+
+    by_room = {}
+    for dream, rooms in members.items():
+        d = latest[dream]
+        story = {"dream": dream, "text": d["text"], "turn": d.get("turn") or 0,
+                 "of": d.get("of") or STREAM_DREAM_TURNS, "live": dream == live}
+        for room in rooms:
+            by_room[room] = story
+    return by_room, live
 
 
 # A plate is one painting per room, made by hand with eva/stream/plate.py. Served as a file
@@ -1691,7 +1701,7 @@ def plate_url(room: str) -> str | None:
 
 
 def stream_page(name: str, readings: tuple[dict, dict] | None = None,
-                ended: dict | None = None) -> dict | None:
+                stories: dict | None = None) -> dict | None:
     """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
     the interpreter has been past — its copy of the dream and the reading it heads.
 
@@ -1730,9 +1740,9 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None,
             "marked": read.get("marked"),
             "segments": read.get("segments"),
             "reading": heads.get(name),
-            # A dream that ENDED on this passage: the page draws it as an inset in the place
-            # it ended, which is the only place it means anything.
-            "dream_end": (ended or {}).get(name),
+            # The account for the PACK this dream belongs to. Every room of a pack carries
+            # the same object; the page groups on `story.dream` and draws it once, beside them.
+            "story": (stories or {}).get(name),
             # The painting for this dream, if one was made by hand. A url, not the bytes.
             "plate": plate_url(name)}
 
@@ -1750,28 +1760,19 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     # The readings are indexed ONCE for the whole batch: ten passages is ten lookups, not ten
     # walks of a folder that grows by a hundred and forty files a day.
     readings = stream_readings()
-    dream_now, newest, ended = stream_dreams()
+    stories, _live = stream_stories()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
             more = True
             break
-        page = stream_page(name, readings, ended)
+        page = stream_page(name, readings, stories)
         if page is None or (page["flag"] and not flagged):
             continue
         pages.append(page)
-    # The dream so far rides on the payload and not on a page: it is not about one passage, it
-    # is what the sleeper remembers of all of them, and the reader draws it down the left.
-    # `live` is the difference between a dream still being told and the last one there was —
-    # the page shows both, and only says a word about it when it is over.
-    out = {"pages": pages, "more": more, "dream": None}
-    d = dream_now or newest
-    if d:
-        out["dream"] = {"text": d["text"], "ts": d.get("ts") or 0,
-                        "dream": d.get("dream"), "turn": d.get("turn") or 0,
-                        "of": d.get("of") or STREAM_DREAM_TURNS,
-                        "live": bool(dream_now)}
-    return out
+    # No top-level `dream` any more: every page carries the story of its own pack, and the
+    # phone draws that pack's story as an inset at its head. One field, one rule, one place.
+    return {"pages": pages, "more": more}
 
 
 def stream_status() -> dict:

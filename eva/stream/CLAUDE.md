@@ -253,39 +253,50 @@ the code.
   "which dream are we in" is a second place for it to be wrong. The last version of a finished
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
-- **On the page, three voices in three columns** (bekh's picture): the dreams down the centre,
-  the sleeper's story on the **left**, the reader's notes on the right — **on every desktop
-  width, from 900px, fluid**. There was a second desktop layout between 900 and 1180px that put
-  the story in a box on top of the feed; his window at his zoom is about 1000px, so the box was
-  all he ever saw, and zoomed out the story vanished (2026-09-21: *"it's gotta go on the
-  left"*). The story on top is the phone's answer only. **The dream is the exact centre of the page**: every passage is three tracks — a side, a
-  dream column capped at 600px, a side of the same width — so the dream sits on the page's axis
-  at any window, and a plate, being the passage's own background, crosses all three. The sides
-  never go under 200px, so in a small window the dream column gives way. The story is 130px in
-  13px type, centred in the left track's own free space (it was 150, then 105/12 for an hour; he
-  asked for a little more room and a little bigger, still a trickle).
-- **The left column is a counterpart to the dreams, not a status box** — bekh, 2026-09-21:
-  *"a counterpiece to the dream as much as the summarization, which is always there"*. The
-  account **starts at the top beside the newest dream and reads downward for its own length**,
-  flowing with the page and scrolling away. It is not sticky; it was, for two days, and that was
-  a misreading of him. It is laid **over** the left track, out of the grid's flow: as a grid
-  item it collided with a plated dream, whose band spans that track too, and the grid pushed
-  the newest dream down to start below the story instead of beside it.
-- **It is never blank.** With nothing live — the stream off, or the dream ended by the gap or
-  the scene cap — it shows the last account there is, with its count and a quiet word beside it:
-  `1 / 4 · told`. That is what `live` on the api's `dream` is for; the server falls back to the
-  newest version overall rather than handing back null.
-- **His ideal, recorded as NOT built**: whatever dream you are looking at, its note to the right
-  and *the part of the story that corresponds to it* on the left. He thinks it may be
-  unobtainable. The idea on the table: keep rewriting the whole account every time, but write it
-  **in parts, one per scene**, so a later scene can still change an earlier part — the rewriting
-  is the point and must never become an append.
-- A live rewrite still swaps under a soft fade. A finished dream keeps its inset in the feed
-  **where it ended**, above its last scene, in the centre column — **except** the one standing
-  in the left column, or the same words are on screen twice. The page draws the story before
-  the passages for exactly that: the other way round, the first load cannot know which dream
-  the left column holds and shows it twice. Two columns and the phone keep the
-  panel at the top of the feed, never blank there either.
+- **A story belongs to a pack of dreams** (bekh, 2026-09-21). Two designs had been stacked —
+  "the left shows the current story, finished ones are parked in the centre" (the model's) and
+  "the story lives on the left" (his) — and he dissolved the split: *the thing that's on the
+  left is almost always a finished story, unless it's the last 3 not 4 dreams.* There is no
+  current-versus-finished to draw. One rule: **every pack of dreams that share a story has that
+  story to its left, beside them; as you scroll through the pack the story rolls with you,
+  staying near the top of the screen; when you reach the next pack it is replaced by that
+  pack's story.**
+- **The rolling needs no script.** A `.pack` is one grid cell with the story and the passages
+  both placed in it (`grid-area: 1 / 1`, which is what lets grid items overlap), the story
+  `position: sticky` a little under the pinned header. The browser keeps it at the top while
+  the pack is on screen and takes it away with the pack — measured: a story rests at 53px
+  mid-pack, is pushed up out of frame as its pack's bottom edge passes, and the next pack's
+  story rides in from below at the boundary. It adds no height and lies over a plated band,
+  which spans all three tracks. A pack shorter than its story grows to it — rare, accepted.
+- **The feed runs in the normal direction** (bekh, 2026-09-21): **oldest at the top, newest at
+  the bottom, and the viewer put at the honest bottom when the page loads.** It ran newest-first
+  for two days — his call on day one, right for a bare feed of dreams — and the stories changed
+  the answer: a pack's scenes came out last-to-first, so the account beside them told the night
+  backwards, and a sticky story would have ridden the screen while scrolling INTO the past.
+  Turned round, 1→4 reads downward and sticking to the top while reading down is what sticky is
+  for.
+- **Loaded honestly, in one go**: a day's worth (300, over `STREAM_N_MAX`, which had to clear a
+  day) on load, rendered whole, then the scroller put at the bottom and put there again on
+  `load` in case the fonts land late. The sentinel, the IntersectionObserver slicer and the
+  "the shelf ends here" line are gone. The past is asked for: a quiet `earlier` at the top of
+  the feed fetches the previous day's worth and inserts it above, keeping the reader where he
+  is by measuring the topmost element's offset before and putting it back after — Safari has no
+  dependable scroll anchoring, so it is done by hand. A pack continued across that boundary
+  merges into the pack already on top instead of opening a second one with the same id.
+- **New dreams arrive below.** The 60s poll appends at the bottom; standing at the bottom the
+  page follows down, anywhere else the dream lands silently and only the quiet `new` hint
+  appears, which scrolls to the bottom when tapped. A live rewrite of a pack's story still swaps
+  in place under the soft fade. A count `3 / 4` shows only while a pack is live and not full;
+  a complete or ended pack is simply a story.
+- **Gone with the split**: the `.ended` boxes in the dreams' column (they looked like a dream,
+  sat where dreams sit, and appeared above the scenes they told), the `1 / 4 · told` wording,
+  the separate "current" trickle and the top-of-feed panel — the phone now shows each pack's
+  story as an inset at the pack's head.
+- **The ideal, still NOT built**: whatever dream you are looking at, its note to the right and
+  *the part of the story that corresponds to it* on the left. He thinks it may be unobtainable.
+  The idea on the table: keep rewriting the whole account every time, but write it **in parts,
+  one per scene**, so a later scene can still change an earlier part — the rewriting is the
+  point and must never become an append.
 - `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), turn, of, room, text, model,
   seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and exit 0, the worker's law.
 

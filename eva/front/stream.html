@@ -76,6 +76,11 @@
      move under a reader's eyes — and this is the only thing that appears. */
   #fresh{margin-left:auto; color:var(--accent); font-size:13px; padding:4px 0;}
   main{flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;}
+  /* Where a sticky story comes to rest. A SMALL gap and not the header's height: the sticky
+     runs inside `main`, whose scrollport already begins below the pinned header, so borrowing
+     the header's height here rests the story a header lower than it should be (measured
+     2026-09-21 — stuck at 82px instead of 53px). */
+  :root{--head:12px;}
   #feed{
     /* A reading measure, centred. 34em at 17px is ~62 characters, comfortable on a phone
        and on a desk both. */
@@ -129,23 +134,17 @@
     font-size:16px; line-height:1.7; color:var(--ink); white-space:pre-wrap;
     overflow-wrap:anywhere;}
   .account .turn{display:block; margin-top:10px; font-size:12px; color:var(--ghost);}
-  /* The same 17px as the feed, so its `em` measures the same and the panel's edges line up
-     with the text below it — at 14px a 34em block is 100px narrower and visibly off. */
-  #dreamnow{max-width:34em; margin:0 auto; font-size:17px;
-    padding:22px calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left));}
-  /* A dream that ENDED sits in the feed where it ended, above its last scene. */
-  .ended{margin:22px 0 4px;}
-  .ended .turn{color:var(--lit-b);}
-  /* The left column at three columns: the account, starting at the top beside the newest dream
-     and reading downward for its own length (bekh, 2026-09-21 — it is a counterpart to the
-     dreams the way the notes are, not a status box, so it flows with the page and is never
-     sticky and never blank). Half the notes' width, the quietest thing on the page, and no
-     panel round it, because a box that size reads as a button. */
-  #trickle{display:none;}
-  #trickle .account{background:none; padding:0; font-size:14px; line-height:1.6;
-    color:var(--ghost); transition:opacity .4s ease;}
-  #trickle .account .turn{color:var(--ghost); opacity:.7;}
-  #trickle.fading .account{opacity:0;}
+
+  /* **A story belongs to a pack of dreams** (bekh, 2026-09-21). Four dreams share one story;
+     the newest pack may not be full yet, and that is the only difference between a "current"
+     and a "finished" one — the split was the model's idea and he dissolved it. So: consecutive
+     passages with the same story id are one `.pack`, and the story stands beside them and
+     rolls with them, leaving when the pack does.
+
+     On a phone the same story is an inset at the head of its pack, in the account style. */
+  .story{margin:22px 0 0;}
+  .story .account{transition:opacity .4s ease;}
+  .story.fading .account{opacity:0;}
 
   .reading{margin:0 0 18px; padding:2px 0 2px 14px; border-left:2px solid var(--line);
     color:var(--ghost); font-size:14.5px; line-height:1.55; white-space:pre-wrap;
@@ -202,9 +201,12 @@
   .stroke.good.on{color:var(--accent);}
   .when{margin-left:auto; font-size:12px;}
   .sep{border:0; border-top:1px solid var(--line); margin:0;}
-  #sentinel{height:1px;}
-  #foot{color:var(--ghost); font-size:13px; text-align:center;
-    padding:24px 0 calc(28px + env(safe-area-inset-bottom));}
+  /* The way back. The feed runs forward now — oldest at the top, newest at the bottom, the
+     viewer put at the honest bottom on load — so the past is not something you fall into by
+     scrolling; it is asked for, once, at the top. */
+  #earlier{display:block; width:100%; color:var(--ghost); font-size:13px; text-align:center;
+    padding:22px 0 8px;}
+  #earlier:hover{color:var(--ink);}
   /* The wash tuner (?tune=1). A tool for choosing four numbers by eye and reading them out —
      not part of the look. What it picks gets baked into the stylesheet above by hand, and this
      can then stay as a hidden tool. */
@@ -261,23 +263,29 @@
       grid-template-columns:minmax(200px, 1fr) minmax(0, 600px) minmax(200px, 1fr);}
     .pass > *{grid-column:2;}
     .pass > .reading{grid-column:3; grid-row:1 / -1; align-self:start; margin:0; max-width:290px;}
-    /* The story is laid OVER the left track, CENTRED in that track's own free space (bekh,
-       2026-09-21 — not against the dream's edge, which is where it sat for ten minutes), out
-       of the flow: it starts at the top beside the newest dream, runs its own length over whatever
-       bands pass behind it, adds no height and scrolls with the page. 130px and 13px type
-       (he asked for a little more room and a little bigger than the 105/12 it had for an
-       hour, still a trickle). `--side` is the side track's width, restated from the grid
-       above because an absolutely placed box cannot ask the grid where a track ends. */
-    #trickle{display:block; position:absolute; top:0; z-index:2; width:130px;
-      left:calc(22px + (var(--side) - 130px) / 2); padding:22px 0 0; margin:0;}
-    #trickle .account{font-size:13px; line-height:1.55;}
+    /* **The story rolls with its pack.** A pack is ONE grid cell with two things placed into
+       it — the story and the passages — so they overlap: explicit `grid-area: 1 / 1` on both is
+       what lets grid items share a cell. The story is `position: sticky` under the pinned
+       header, so the browser keeps it near the top of the screen while the pack is on screen
+       and takes it away with the pack. No scroll listener anywhere: the pack's own box is the
+       track the sticky runs in, and that is the whole mechanic.
+
+       It adds no height (it is in the same cell as the passages, `align-self:start`), and it
+       sits above a plated band (`z-index`), which spans all three tracks. A pack shorter than
+       its story grows to the story — rare and acceptable.
+
+       `--side` is the side track's width, restated from the grid because a box that is not a
+       grid item of `.pass` cannot ask that grid where a track ends. */
+    .pack{display:grid; grid-template-columns:1fr;}
+    .pack > *{grid-area:1 / 1;}
+    .pack > .story{align-self:start; position:sticky; top:var(--head); z-index:2;
+      width:130px; margin:0 0 0 calc((var(--side) - 130px) / 2);}
+    .story .account{background:none; padding:0; font-size:13px; line-height:1.55;
+      color:var(--ghost);}
+    .story .account .turn{color:var(--ghost); opacity:.7;}
     /* Hover is the desk's peek; a phone has none and uses the hold below. */
     @media (hover: hover){ .pass.plated:hover{
       background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate); } }
-    /* A finished dream belongs to the centre: it is an account, not a note. */
-    .pass > .ended{grid-column:2; grid-row:auto;}
-    /* With a column of its own, the panel on top would be the same words twice. */
-    #dreamnow{display:none;}
   }
 </style>
 </head>
@@ -289,12 +297,8 @@
 </header>
 
 <main id="scroll">
-  <div id="dreamnow" hidden></div>
-  <!-- The account lives INSIDE the feed so it can share its grid: the left track, from the top,
-       flowing down its own length beside the dreams. -->
-  <div id="feed"><div id="trickle"></div></div>
-  <div id="sentinel"></div>
-  <p id="foot">…</p>
+  <button id="earlier" hidden>earlier</button>
+  <div id="feed"></div>
 </main>
 
 <div id="notice" hidden></div>
@@ -315,8 +319,8 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const el = {dot: $('dot'), state: $('state'), fresh: $('fresh'), scroll: $('scroll'),
-            feed: $('feed'), sentinel: $('sentinel'), foot: $('foot'), notice: $('notice'),
-            dreamnow: $('dreamnow'), trickle: $('trickle')};
+            feed: $('feed'), earlier: $('earlier'), notice: $('notice'),
+            };
 
 const Q = new URLSearchParams(location.search);
 // Flagged passages, off by default: the flagged pile is for auditing the filter against his
@@ -325,17 +329,14 @@ const ALL = Q.get('all') === '1';
 // The shelf's own text: the raw dream, untrimmed and uncoloured, for checking what the
 // interpreter was handed. Everything else on this page is his copy of it.
 const RAW = Q.get('raw') === '1';
-const BATCH = 10;
 const POLL_MS = 60000;
 
-let rooms = new Set();     // every passage rendered OR waiting, so a poll never doubles one
-let oldest = '';           // the bottom of the feed, for ?before=
-let more = true;
+let rooms = new Set();     // every passage rendered, so a poll never doubles one
+let oldest = '';           // the TOP of the feed now, for ?before=
+let more = true;           // is there anything older than what is rendered
 let busy = false;
-let pending = [];          // newest-first, held back while he is scrolled down
+let waiting = 0;           // dreams appended below him while he was reading further up
 let status = null;
-let dreamShown = null;     // what the account block is currently saying
-let dreamHeld = null;      // a newer account, waiting for him to be back at the top
 
 function api(q){
   return fetch('/api/stream?' + q + (ALL ? '&all=1' : ''), {cache: 'no-store'})
@@ -396,46 +397,67 @@ function when(ts){
 // replacing the text under a reader's eyes is fine — but only when he is at the top looking at
 // it. Further down it waits, because a block silently rewriting itself off-screen is one
 // thing and a paragraph changing while it is being read is another.
-function account(d, ended){
+function account(story){
   const box = document.createElement('div');
-  box.className = 'account' + (ended ? ' ended' : '');
-  box.appendChild(document.createTextNode(d.text || ''));
-  const t = document.createElement('span');
-  t.className = 'turn';
-  // Never blank: with nothing live this is the last account there is, and the one word says
-  // so rather than leaving an empty column where a voice should be.
-  t.textContent = ended ? `a dream, ${d.turns} scenes`
-                        : `${d.turn} / ${d.of}` + (d.live === false ? ' · told' : '');
-  box.appendChild(t);
+  box.className = 'account';
+  box.appendChild(document.createTextNode(story.text || ''));
+  // A count only while the pack is live and not yet full. A complete pack, or one the gap
+  // ended, is simply a story — there is nothing left to count up to.
+  if (story.live && (story.turn || 0) < (story.of || 0)){
+    const t = document.createElement('span');
+    t.className = 'turn';
+    t.textContent = `${story.turn} / ${story.of}`;
+    box.appendChild(t);
+  }
   return box;
 }
 
-// NOT `fill` — that name is the feed's lazy loader further down, and a second declaration of
-// it silently replaces the first: the whole page stopped loading until this was renamed.
-function putAccount(box, d){
-  while (box.firstChild) box.removeChild(box.firstChild);
-  if (d) box.appendChild(account(d, false));
+// ---- packs -----------------------------------------------------------------------------------
+// A story belongs to a pack of dreams (bekh, 2026-09-21): consecutive passages sharing a story
+// id are one <section class="pack">, the story is one element inside it, and the browser's own
+// sticky keeps it near the top while the pack is on screen and takes it away with the pack.
+// Passages from before the sleeper existed have no story and are not wrapped.
+
+function newPack(story){
+  const sec = document.createElement('section');
+  sec.className = 'pack';
+  sec.dataset.dream = story.dream;
+  const box = document.createElement('div');
+  box.className = 'story';
+  sec.appendChild(box);
+  const passes = document.createElement('div');
+  passes.className = 'passes';
+  sec.appendChild(passes);
+  putStory(box, story);
+  return sec;
 }
 
-function drawDream(d){
-  const first = !dreamShown;
-  dreamShown = d;
-  el.dreamnow.hidden = !d;
-  putAccount(el.dreamnow, d);
-  if (first || !d){ putAccount(el.trickle, d); return; }
-  // A rewrite is a swap and not an arrival: the words change under a soft fade so the eye is
-  // told something moved, without the column jumping or the page scrolling.
-  el.trickle.classList.add('fading');
+function putStory(box, story){
+  while (box.firstChild) box.removeChild(box.firstChild);
+  box.dataset.text = story.text || '';
+  box.appendChild(account(story));
+}
+
+function packFor(id){
+  return id ? el.feed.querySelector(`.pack[data-dream="${CSS.escape(id)}"]`) : null;
+}
+
+// A rewrite is a swap and not an arrival: the words change under a soft fade, with nothing
+// moving and nothing scrolling.
+function updateStory(story){
+  const pack = packFor(story && story.dream);
+  if (!pack) return;
+  const box = pack.querySelector('.story');
+  if (!box || box.dataset.text === (story.text || '')) return;
+  box.classList.add('fading');
   setTimeout(() => {
-    putAccount(el.trickle, d);
-    el.trickle.classList.remove('fading');
+    putStory(box, story);
+    box.classList.remove('fading');
   }, 400);
 }
 
-function maybeDream(d){
-  if (!d){ dreamHeld = null; drawDream(null); return; }
-  if (!dreamShown || atTop()){ dreamHeld = null; drawDream(d); return; }
-  dreamHeld = d;
+function syncStories(pages){
+  for (const p of pages) if (p.story) updateStory(p.story);
 }
 
 function drawStatus(s){
@@ -471,13 +493,6 @@ function build(p){
   body.className = 'body';
   block.appendChild(body);
   if (p.plate){ art.dataset.plate = p.plate; plates.observe(art); }
-
-  // Where it ended, ABOVE its last scene: the only place a finished dream means anything.
-  // Before the block and not after it, or it reads as a comment on the scene below — and never
-  // the one already standing in the left column, or the same words are on screen twice.
-  if (p.dream_end && !(dreamShown && dreamShown.dream === p.dream_end.dream)){
-    art.insertBefore(account(p.dream_end, true), block);
-  }
 
   if (p.reading){
     const r = document.createElement('aside');
@@ -673,118 +688,152 @@ function rule(){
   return hr;
 }
 
-function firstPass(){ return el.feed.querySelector('.pass'); }
+function passesOf(pack){ return pack.querySelector('.passes'); }
 
-function append(pages){
-  for (const p of pages){
-    if (rooms.has(p.room)) continue;
-    rooms.add(p.room);
-    if (firstPass()) el.feed.appendChild(rule());
-    el.feed.appendChild(build(p));
-    oldest = p.room;
-  }
-}
+// **The feed runs in the normal direction** (bekh, 2026-09-21): oldest at the top, newest at
+// the bottom, and the viewer put at the honest bottom when the page loads. It ran backwards for
+// two days because a bare feed of dreams reads fine that way — the stories changed the answer:
+// a pack's scenes came out last-to-first, so the story beside them told the night in the
+// opposite order, and a sticky story would have ridden the screen while scrolling INTO the
+// past. Turned round, 1→4 reads downward, the account beside it reads the same way, and
+// sticking to the top while reading DOWN is what sticky is for.
+//
+// The api still answers newest-first; the page reverses each batch. One place, one reversal.
 
-function prepend(pages){
-  // Newest first in the array, so they go in bottom-up and land in order at the top.
-  for (const p of pages.slice().reverse()){
-    if (rooms.has(p.room)) continue;
-    rooms.add(p.room);
-    const art = build(p);
-    const at = firstPass();
-    if (at){
-      // Above the newest passage and always after #trickle, which is the feed's own first
-      // child and not a passage: article first, then a rule between it and what was newest.
-      el.feed.insertBefore(art, at);
-      el.feed.insertBefore(rule(), at);
+function addBottom(p){
+  const art = build(p);
+  const id = p.story ? p.story.dream : null;
+  const last = el.feed.lastElementChild;
+  if (id && last && last.classList.contains('pack') && last.dataset.dream === id){
+    const box = passesOf(last);
+    if (box.firstChild) box.appendChild(rule());
+    box.appendChild(art);
+  } else {
+    if (el.feed.firstChild) el.feed.appendChild(rule());
+    if (id){
+      const pack = newPack(p.story);
+      passesOf(pack).appendChild(art);
+      el.feed.appendChild(pack);
     } else {
       el.feed.appendChild(art);
-      oldest = p.room;
     }
   }
 }
 
-function drawFoot(){
-  el.foot.textContent = more ? '…' : (firstPass() ? 'the shelf ends here'
-                                                  : 'nothing on the shelf yet');
+// Each call puts its passage above everything, so a batch walked newest→oldest lands in order.
+// A pack continued across the `earlier` boundary merges into the one already on top instead of
+// opening a second section with the same id — two stories for one pack is the bug this round
+// exists to avoid.
+function addTop(p){
+  const art = build(p);
+  const id = p.story ? p.story.dream : null;
+  const first = el.feed.firstElementChild;
+  if (id && first && first.classList.contains('pack') && first.dataset.dream === id){
+    const box = passesOf(first);
+    if (box.firstChild) box.insertBefore(rule(), box.firstChild);
+    box.insertBefore(art, box.firstChild);
+    return;
+  }
+  if (first) el.feed.insertBefore(rule(), first);
+  if (id){
+    const pack = newPack(p.story);
+    passesOf(pack).appendChild(art);
+    el.feed.insertBefore(pack, el.feed.firstChild);
+  } else {
+    el.feed.insertBefore(art, el.feed.firstChild);
+  }
 }
 
-// ---- loading ---------------------------------------------------------------------------
-// One function for the first batch and every older one: down the scroll is back in time, and
-// the first load is just the case where `oldest` is still empty. It calls itself until the
-// sentinel is out of view, because an IntersectionObserver fires on a CHANGE — a sentinel that
-// is already visible after a short batch would never fire again and the feed would stop dead.
-// `more` false is the only thing that ends it, and the api can only say that after handing
-// over every room it has.
-const REACH = 600;             // px below the fold at which the next batch is fetched
-
-function inReach(){
-  const r = el.sentinel.getBoundingClientRect(), s = el.scroll.getBoundingClientRect();
-  return r.top < s.bottom + REACH;
+// `pages` is newest-first, as the api hands it over.
+function render(pages, where){
+  const taken = pages.filter(p => !rooms.has(p.room));
+  for (const p of taken) rooms.add(p.room);
+  if (where === 'bottom') for (const p of taken.slice().reverse()) addBottom(p);
+  else for (const p of taken) addTop(p);
+  const first = el.feed.querySelector('.pass');
+  if (first) oldest = first.dataset.room;
+  return taken.length;
 }
 
-function fill(){
-  if (busy || !more || !inReach()) return;
+// A day's worth in one go (bekh: "load the page honestly and just put the viewer onto the
+// honest bottom"). 300 covers a full day at a passage every five minutes. There is no sentinel
+// and no scroll-triggered slice any more: nothing arrives while he is reading but a new dream.
+const DAY = 300;
+
+function toBottom(){ el.scroll.scrollTop = el.scroll.scrollHeight; }
+
+function load(){
   busy = true;
-  api('n=' + BATCH + (oldest ? '&before=' + encodeURIComponent(oldest) : ''))
+  return api('n=' + DAY)
     .then(d => {
-      // The story first, the passages second: `build()` leaves out the in-feed copy of whichever
-      // dream the left line is showing, and on the first load it can only know that if the
-      // story was drawn before the passages. The other way round the same account stood twice
-      // at the top of the page (seen 2026-09-21).
-      maybeDream(d.dream);
-      append(d.pages || []);
+      render(d.pages || [], 'bottom');
       more = !!d.more;
+      el.earlier.hidden = !more;
       drawStatus(d.status);
-      drawFoot();
+      syncStories(d.pages || []);
+      toBottom();
+      // Once more when the fonts have landed: a late reflow moves the bottom under him, and
+      // the bottom is where he is meant to be standing. Plates are backgrounds and add no
+      // height, so nothing else can shift it.
+      addEventListener('load', toBottom, {once: true});
     })
     .catch(() => { more = false; say("can't reach the shelf"); })
-    .then(() => { busy = false; fill(); });
+    .then(() => { busy = false; });
 }
 
-// An account held back while he read on is put up the moment he is back at the top — not on a
-// timer, and never while he is somewhere in the middle of the night.
-el.scroll.addEventListener('scroll', () => {
-  if (dreamHeld && atTop()){ const d = dreamHeld; dreamHeld = null; drawDream(d); }
-}, {passive: true});
+// The past, by request only, and it must not move what he is looking at. Safari has no
+// dependable scroll anchoring, so the topmost rendered element's offset is measured before and
+// put back after, by hand — which is the only way this holds.
+function earlier(){
+  if (busy || !more || !oldest) return;
+  busy = true;
+  el.earlier.textContent = 'earlier…';
+  const anchor = el.feed.firstElementChild;
+  const before = anchor ? anchor.getBoundingClientRect().top : 0;
+  api('n=' + DAY + '&before=' + encodeURIComponent(oldest))
+    .then(d => {
+      const n = render(d.pages || [], 'top');
+      more = !!d.more;
+      el.earlier.hidden = !more;
+      if (anchor && n) el.scroll.scrollTop += (anchor.getBoundingClientRect().top - before);
+    })
+    .catch(() => say("can't reach the shelf"))
+    .then(() => { busy = false; el.earlier.textContent = 'earlier'; });
+}
 
-// The sentinel sits under the last passage; seeing it is what asks for more.
-new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) fill(); },
-                         {root: el.scroll, rootMargin: REACH + 'px'}).observe(el.sentinel);
+el.earlier.addEventListener('click', earlier);
 
 // ---- new passages, without moving the text ------------------------------------------------
-function atTop(){ return el.scroll.scrollTop < 8; }
-
-function showPending(){
-  const fresh = pending;
-  pending = [];
-  el.fresh.hidden = true;
-  prepend(fresh);
-  el.scroll.scrollTop = 0;
+function atBottom(){
+  const m = el.scroll;
+  return m.scrollHeight - m.scrollTop - m.clientHeight < 8;
 }
 
+function showWaiting(){
+  waiting = 0;
+  el.fresh.hidden = true;
+  toBottom();
+}
+
+// Mirrored, now that the feed runs forward: a new dream is appended BELOW. Standing at the
+// bottom, the page follows it down; anywhere else it lands silently and only the quiet hint
+// appears, because the one thing this page must never do is move the words he is reading.
 function poll(){
   api('n=5').then(d => {
     drawStatus(d.status);
-    maybeDream(d.dream);
-    const fresh = (d.pages || []).filter(p => !rooms.has(p.room) &&
-                                              !pending.some(q => q.room === p.room));
+    syncStories(d.pages || []);
+    const fresh = (d.pages || []).filter(p => !rooms.has(p.room));
     if (!fresh.length) return;
-    if (atTop()){
-      // He is looking at the top of the stream: the new one simply arrives above.
-      prepend(fresh);
-      el.scroll.scrollTop = 0;
-      return;
-    }
-    // He is reading somewhere down the night. Hold them: prepending here would push every
-    // word he is looking at down the screen.
-    pending = fresh.concat(pending);
-    el.fresh.textContent = pending.length === 1 ? 'new' : pending.length + ' new';
+    const wasAtBottom = atBottom();
+    render(fresh, 'bottom');
+    if (wasAtBottom){ toBottom(); return; }
+    waiting += fresh.length;
+    el.fresh.textContent = waiting === 1 ? 'new' : waiting + ' new';
     el.fresh.hidden = false;
   }).catch(() => {});
 }
 
-el.fresh.addEventListener('click', showPending);
+el.fresh.addEventListener('click', showWaiting);
 
 // ---- the wash tuner -----------------------------------------------------------------------
 // Four numbers chosen by eye (?tune=1). It writes the same custom properties the stylesheet
@@ -891,7 +940,7 @@ function tuner(){
 lightRoom.addEventListener('change', tuner);
 tuner();
 
-fill();
+load();
 setInterval(poll, POLL_MS);
 // "3 min ago" goes stale on a phone left on a table; re-render it off the numbers already
 // held, with no request behind it.

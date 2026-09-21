@@ -1210,47 +1210,45 @@ class Remembering(unittest.TestCase):
         self.assertFalse(os.path.exists(f["log"]))
 
     # ---- what the api does with it ---------------------------------------------------------
-    def test_the_account_is_never_blank(self):
-        """With nothing live the api still hands over the newest version there is, flagged
-        `live: false` — the left column is a voice, not a status box, and a voice does not go
-        blank because the machine is off."""
-        was = remembering.GAP
-        remembering.GAP = 1
-        self.addCleanup(setattr, remembering, "GAP", was)
-        self.scene("1000", "one.")
-        self.assertEqual(remember(self.fake())[0], 0)
-        d = call("/api/stream?n=5")[1]["dream"]
-        self.assertIs(d["live"], True)
-        self.assertEqual(d["turn"], 1)
-
-        # nothing live: the same account comes back, and says it is over
-        v = dream_versions()[0]
-        path = [p for p in remembering.version_files()][0]
-        v["ts"] = time.time() - 99999
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(v, f)
-        d = call("/api/stream?n=5")[1]["dream"]
-        self.assertIs(d["live"], False)
-        self.assertEqual(d["text"], v["text"])
-
-    def test_the_api_carries_the_dream_now_and_a_finished_one_where_it_ended(self):
-        was = remembering.TURNS
-        remembering.TURNS = 1                    # every scene ends its dream: two finished ones
-        self.addCleanup(setattr, remembering, "TURNS", was)
+    def test_every_room_of_a_pack_carries_its_story(self):
+        """A story belongs to a pack of dreams: every room a dream's versions covered gets that
+        dream's LATEST account, and rooms outside any dream get nothing."""
         a = self.scene("1000", "one.")
         self.assertEqual(remember(self.fake())[0], 0)
-        remembering.TURNS = 4
         b = self.scene("1005", "two.")
         self.assertEqual(remember(self.fake())[0], 0)
+        make_page("stream/2026-09-19/0900", "seed\n", "a dream nobody remembered.")
 
-        d = call("/api/stream?n=5")[1]
-        self.assertEqual(d["dream"]["turn"], 1)
-        self.assertEqual(d["dream"]["of"], 4)
-        self.assertIn("two.", d["dream"]["text"])
-        by = {p["room"]: p for p in d["pages"]}
-        self.assertEqual(by[a]["dream_end"]["turns"], 1)   # the one-scene dream, where it ended
-        self.assertIn("one.", by[a]["dream_end"]["text"])
-        self.assertIsNone(by[b]["dream_end"])              # the running one is not an ending
+        by = {p["room"]: p for p in call("/api/stream?n=9")[1]["pages"]}
+        latest = dream_versions()[-1]
+        for room in (a, b):
+            self.assertEqual(by[room]["story"]["dream"], latest["dream"])
+            self.assertEqual(by[room]["story"]["text"], latest["text"])   # the LATEST, both
+            self.assertEqual(by[room]["story"]["turn"], 2)
+        self.assertIsNone(by["stream/2026-09-19/0900"]["story"])
+        # the top-level dream field and the in-feed dream_end are gone
+        self.assertNotIn("dream", call("/api/stream?n=1")[1])
+        self.assertNotIn("dream_end", by[a])
+
+    def test_live_is_the_newest_pack_inside_its_gap_and_cap(self):
+        room = self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertIs(call("/api/stream?n=3")[1]["pages"][0]["story"]["live"], True)
+
+        # older than the gap: the pack is still shown, it is simply not live any more
+        v, path = dream_versions()[0], remembering.version_files()[0]
+        v["ts"] = time.time() - remembering.GAP - 10
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        p = call("/api/stream?n=3")[1]["pages"][0]
+        self.assertIs(p["story"]["live"], False)
+        self.assertEqual(p["story"]["text"], v["text"])
+
+        # and a pack that used up its scenes is not live either
+        v["ts"], v["turn"] = time.time(), v["of"]
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        self.assertIs(call("/api/stream?n=3")[1]["pages"][0]["story"]["live"], False)
 
     def test_usage_reaches_both_kinds_of_row(self):
         self.scene("1000", "one.")

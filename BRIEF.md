@@ -196,33 +196,26 @@ shape — now.
      survive it: short alone never made a seed good (`seeds/nemo/` is short and was the worst).
    - **It must be live, never pre-recorded** — a nightly batch was proposed and killed.
    - **The page**, a placeholder in the loom's palette, on a wide screen: the dreams down the
-     centre, the reader's notes on the right, and on the left **the story so far** — the
-     sleeper's account, starting at the top beside the newest dream, reading down its own length,
-     never blank (with the stream off it shows the last story told). bekh's word for it: a
-     *counterpiece to the dream as much as the summarization, which is always there*. **His
-     ideal, recorded as not built** and maybe unobtainable: whatever dream you look at, its note
-     on the right and *the part of the story that corresponds to it* on the left, the story one
-     continuous flow through all the dreams. Appending a stretch per dream was proposed and
-     refused by him (a collage, not a coherent dream); what is on the table is the whole account
-     rewritten every time but written in parts, one per scene, so a later scene can still change
-     an earlier part. Unsolved with it: a story reads oldest to newest and the feed runs newest
-     first. bekh wants the stream **published** with its own face, all in on style: its own
-     project fed by a pushed feed, never the loom exposed, a look-off of full mocks first; a
-     public feed needs a gate the private one doesn't. Nothing of that is started.
-   - **Plates — a painting behind the dream, made by hand, nothing scheduled.** bekh's picture
-     of it: the plate lies behind its dream's **whole band**, story to note, dimmed and never
-     erased, scaled to cover and cropped, never distorted, the dream deciding the box; hover or
-     hold lifts the wash; `?tune=1` is a slider panel for the wash, and **its numbers are still
-     the model's guess — bekh has not picked his**. `eva/stream/plate.py` makes one through codex
-     headless on the ChatGPT subscription: about a minute, and nine plates cost about two points
-     of the codex week by his `cu`. Two prompts **take turns**: his (*draw an abstract
-     interpretation*, over the whole dream) and a painting made from the reader's marked words
-     with a *hand* drawn by lot, never a painter's name; palette magenta, neon and cyan. After
-     fourteen plates, almost no dud, so **nothing changes until we understand why it works**:
-     words in a picture are allowed (the plate that lettered the widows' names was a favourite
-     of his), the 16-bit pixel hand is out. Noticed, left alone: most plates fall to a disc over
-     water at sunset; the ones set indoors escape it. Other hands than GPT's: `IMAGE-MODELS.md`
-     (a temporary sheet; he leans to the old models and to a distillation over the full text).
+     centre, the reader's notes on the right, and on the left **the story of the pack** — one
+     rule since 2026-09-21: *every pack of dreams that share a story has that story to its
+     left, beside them; as you scroll through the pack the story rolls with you, staying near
+     the top of the screen; when you reach the next pack it is replaced by that pack's story.*
+     He dissolved the current-versus-finished split the model had drawn: the left is almost
+     always a finished story, unless it is the last three of four dreams. His word for it: a
+     *counterpiece to the dream as much as the summarization, which is always there*. The feed
+     **runs in the normal direction** — oldest at the top, newest at the bottom, the viewer put
+     at the honest bottom on load, a day fetched in one go, the past asked for by an `earlier`
+     line at the top. It ran newest-first for two days (his call, right for a bare feed of
+     dreams) and the stories changed the answer: a pack's scenes came out backwards and the
+     account beside them told the night in reverse. **His ideal, recorded as not built** and
+     maybe unobtainable: whatever dream you look at, its note on the right and *the part of the
+     story that corresponds to it* on the left, the story one continuous flow through all the
+     dreams. Appending a stretch per dream was proposed and refused by him (a collage, not a
+     coherent dream); what is on the table is the whole account rewritten every time but
+     written in parts, one per scene, so a later scene can still change an earlier part.
+     bekh wants the stream **published** with its own face, all in on style: its own project
+     fed by a pushed feed, never the loom exposed, a look-off of full mocks first; a public
+     feed needs a gate the private one doesn't. Nothing of that is started.
    - **What the first day read like** (opus read all 145, `docs/ledgers/stream-2026-09-19.md`,
      78 moments with quotes and links; bekh read it and loved about 80%, and has marked no stream
      page yet): about one in five alive, one in five dead, the rest weather. His own invented
