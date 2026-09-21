@@ -17,16 +17,18 @@ The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on th
 `GET /api/stream?n=N[&before=<room>][&all=1]` → newest first:
 
 ```json
-{ "pages": [ { "room": "stream/2026-09-21/1558", "text": "…", "seed": "…", "ts": 1789981106.3,
+{ "pages": [ { "room": "stream/2026-09-21/1558", "text": "…", "seed": "…", "name": "the body man", "verse": "10:4", "ts": 1789981106.3,
                "segments": [ { "t": "…", "mark": "touched" | "strange" | true | false } ],
                "reading": { "text": "…", "ts": 1789981200.1 },
-               "story": { "dream": "2026-09-21-1547-57af", "text": "…", "turn": 3, "of": 4, "live": true },
+               "story": { "dream": "2026-09-21-1547-57af", "text": "…", "title": null, "chapter": 10, "turn": 3, "of": 4, "live": true },
                "plate": "/stream/plate/2026-09-21/1552.jpg?v=…" } ],
   "more": true,
   "status": { "state": "dreaming", "since": 1789981106.3, "room": "…", "interval": 300 } }
 ```
 
 eva's own page loads `n=300` and polls `n=5` every 60s.
+
+**Names** (eva's convention, mirrored by the front): each passage has a `name` and a `verse` (`chapter:turn`), shown at the top of its text as `10:4 · the body man` — number grey, name ink; the name is the first thing read and what a dream is chosen by. Each dream has a `chapter` and a `title` (still null as of 2026-09-21), shown heading its trickle, a size bigger.
 
 `seed` = the found fragment of old text the passage grew from. eva shows it in grey above the passage ("what the dream stood on"); the front hides it behind a button.
 

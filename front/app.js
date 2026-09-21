@@ -93,6 +93,9 @@ function buildRow(p) {
   const text = document.createElement('div'); text.className = 'text';
   const body = document.createElement('div'); body.className = 'body';
   drawBody(body, p);
+  // the name first — it's the first thing read and the thing a dream is chosen by (eva's order)
+  const head = titleLine(p.name, p.verse);
+  if (head) text.append(head);
   // the seed (the found text the dream grew from) stays out of the way: a small button above
   // the passage, opening a floating box over it (bekh: without the seed the page is right)
   if (p.seed && String(p.seed).trim()) {
@@ -139,6 +142,25 @@ function setPlate(r, url) {
 }
 
 // pages come newest first; the feed reads down, oldest first
+// eva's title line: 'verse · name' (a passage: '10:4 · the body man'; a dream: '10 · its title').
+// the number is grey, the name is ink; either may be missing
+function titleLine(name, number) {
+  if (!name && !number) return null;
+  const h = document.createElement('p'); h.className = 'title';
+  if (number) { const n = document.createElement('span'); n.className = 'verse'; n.textContent = name ? number + ' · ' : number; h.appendChild(n); }
+  if (name) h.appendChild(document.createTextNode(name));
+  return h;
+}
+// the trickle: the dream's own header (chapter · title), then the dream so far
+function setTrickle(el, story) {
+  if (el.dataset.text === (story.text || '') && el.dataset.title === (story.title || '') && el.dataset.ch === String(story.chapter || '')) return;
+  el.dataset.text = story.text || ''; el.dataset.title = story.title || ''; el.dataset.ch = String(story.chapter || '');
+  el.textContent = '';
+  const head = titleLine(story.title, story.chapter ? String(story.chapter) : '');
+  if (head) el.appendChild(head);
+  el.appendChild(document.createTextNode(story.text || ''));
+}
+
 // one pack per dream: its passages, plus a rail down the left column holding the trickle.
 // the trickle is sticky inside the rail, so it rides along through its own dream's passages
 // and hands over to the next dream's trickle at the boundary
@@ -147,7 +169,7 @@ function newPack(p) {
   const el = document.createElement('div'); el.className = 'pack';
   const rail = document.createElement('div'); rail.className = 'rail';
   const trickle = document.createElement('div'); trickle.className = 'trickle';
-  if (dream) { trickle.textContent = p.story.text; trickles.set(dream, trickle); }
+  if (dream) { setTrickle(trickle, p.story); trickles.set(dream, trickle); }
   rail.appendChild(trickle); el.appendChild(rail);
   $('#feed').appendChild(el);
   return { el, rail, trickle, dream };
@@ -192,7 +214,7 @@ function sync(pages) {
     const r = rooms.get(p.room);
     if (r) { if (p.plate) setPlate(r, p.plate); setReading(r, p.reading); }
     const dream = p.story && p.story.dream;
-    if (dream && !seen.has(dream) && trickles.has(dream)) { trickles.get(dream).textContent = p.story.text; seen.add(dream); }
+    if (dream && !seen.has(dream) && trickles.has(dream)) { setTrickle(trickles.get(dream), p.story); seen.add(dream); }
   }
   stickTrickles();
 }

@@ -46,6 +46,11 @@ body { cursor: crosshair; }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
+/* names (eva's convention): the passage's at the top of its text, the dream's heading its trickle,
+   a size bigger — a header shouldn't read smaller than what it heads */
+.title { margin: 0 0 .5em; font: 15px/1.4 var(--tf, serif); letter-spacing: .02em; color: var(--ink); }
+.title .verse { font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); font-variant-numeric: tabular-nums; }
+.trickle .title { font-size: 17px; margin-bottom: .8em; }
 /* the seed: a quiet button above the passage, the seed in a box floating over it */
 .seedbtn { display: block; margin: 0 0 .9em; padding: 0; background: none; border: 0; cursor: pointer;
   font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
