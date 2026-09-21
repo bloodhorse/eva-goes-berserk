@@ -291,23 +291,22 @@ shape — now.
 
 ### parked
 
-- **Forgetting — bekh, 2026-09-21, parked the moment he said it.** In reality you forget most
-  of your dreams and some stay with you. So pruning is not housekeeping, it is the nature of
-  the thing: never a paged archive, a live stream that relentlessly forgets, with some dreams
-  staying. Beside it **a lore book / black book of the world being built** — its characters,
-  events, structures — kept in some form; he does not know yet how it would be used. And the
-  pruned tail does not just vanish: either it becomes **unreadable signal, corrupted data, lost
-  dreams**, or **nemo compresses it into an incomprehensible narrative out of those dreams**.
-  What the model put on the table, none of it decided: forgetting by degrees, using what already
-  exists (the whole dream for a day; then only its traces, the reader's two marked phrases and
-  its pack's story; then only what reached the book; a `★` means this one stays whole); the
-  book rewritten and never appended, so it forgets too and only what recurs remains, and it is
-  the memory the reader should have had instead of his own notes; corruption as the look and
-  nemo as the mechanism — nemo cannot summarize but it can continue a document made of the
-  residue of forgotten dreams, which would make forgetting the place seeds come from (see the
-  seeds question below). Cautions: real forgetting is real deletion, so the page forgets first
-  and the files stay until he says otherwise; and a book that feeds the dreams that feed the
-  book is a loop, and loops here have locked twice in one week.
+- **Forgetting, and the book — bekh, 2026-09-21, parked.** In reality you forget most of your
+  dreams and some stay with you. So pruning is not housekeeping, it is the nature of the thing:
+  never a paged archive, a live stream that relentlessly forgets, with some dreams staying. The
+  pruned tail does not just vanish: either it becomes unreadable signal, corrupted data, lost
+  dreams, or nemo compresses it into an incomprehensible narrative out of those dreams — he
+  does not know which, or how. **Beside the stream, a lore book / black book of the world being
+  built from these dreams** — its characters, events, structures — **and the book never
+  forgets**: the stream is a mind and lives by losing things, the book is a world and is worth
+  something only because nothing in it is lost. He wants it kept because it could one day
+  become a real thing — a narrative, a game, a 3d model, he doesn't know what. How it gets
+  filled is open; what he saw was himself telling the model what he remembered and the model
+  writing it down (the model's reading of his words, not yet confirmed by him). The model also
+  proposed forgetting by degrees, a star meaning "this one stays", corruption as a look and nemo
+  continuing the residue as a source of seeds — he did not take any of it up, and it is not
+  part of the idea. One caution that stands regardless: real forgetting is real deletion, so
+  nothing is deleted for good without his word.
 - **How do the seeds grow on their own and keep a base quality? — an open question of the
   project, posed by bekh 2026-09-19 and parked the same day.** Picking a seed and rewriting its
   last line by hand worked when experiments came in ones and twos; the stream draws 288 seeds a
