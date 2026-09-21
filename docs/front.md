@@ -25,7 +25,7 @@ The dream-stream front as its own project, reading eva live. Merging it into eva
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
-- **Double-click** a painted dream outside its words → the plate full screen, uncropped. Click / double-click / esc closes.
+- **pic**: a quiet word next to `seed` (it appears once the plate has landed) → the plate full screen, uncropped. Double-clicking a painted dream outside its words does the same. Click / double-click / esc closes.
 - Phones (<820px): one column, trickle static above its passages.
 
 ## Knobs (all remembered per browser in localStorage; url params win)
