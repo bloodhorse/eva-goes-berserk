@@ -1,0 +1,112 @@
+{
+ "name": "04a259fb78bc",
+ "title": "experiments/wire/hum-plain-nemofirst-01 · 19 sep",
+ "created": 1789784988.985333,
+ "source": {
+  "room": "experiments/wire/hum-plain-nemofirst-01",
+  "title": null,
+  "node": "b74170fb"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 40,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "b74170fb",
+   "lead": "",
+   "took": {
+    "id": "0e0bd9ea",
+    "at": 1,
+    "text": "but I can hear it from here, like an electric storm\n",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 40,
+     "tps": 10.6,
+     "params": {
+      "n_predict": 40,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "model": "nemo",
+     "turn": 1
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 1,
+    "others": []
+   },
+   "bits": 0.0
+  }
+ ],
+ "blocks": [
+  {
+   "id": "b74170fb",
+   "kind": "root",
+   "text": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+   "posed": false
+  },
+  {
+   "id": "0e0bd9ea",
+   "kind": "model",
+   "text": "but I can hear it from here, like an electric storm\n",
+   "posed": false
+  }
+ ],
+ "bits": 0.0,
+ "by": "star"
+}

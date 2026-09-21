@@ -1,0 +1,112 @@
+{
+ "name": "e75f7cc3317e",
+ "title": "experiments/wire/hum-plain-nemofirst-05 · 19 sep",
+ "created": 1789784905.822331,
+ "source": {
+  "room": "experiments/wire/hum-plain-nemofirst-05",
+  "title": null,
+  "node": "7e1e9d37"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 40,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "7e1e9d37",
+   "lead": "",
+   "took": {
+    "id": "3895dc44",
+    "at": 1,
+    "text": "though I know it’s been inside me since the moment you left\n",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 40,
+     "tps": 11.8,
+     "params": {
+      "n_predict": 40,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "model": "nemo",
+     "turn": 1
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 1,
+    "others": []
+   },
+   "bits": 0.0
+  }
+ ],
+ "blocks": [
+  {
+   "id": "7e1e9d37",
+   "kind": "root",
+   "text": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+   "posed": false
+  },
+  {
+   "id": "3895dc44",
+   "kind": "model",
+   "text": "though I know it’s been inside me since the moment you left\n",
+   "posed": false
+  }
+ ],
+ "bits": 0.0,
+ "by": "star"
+}

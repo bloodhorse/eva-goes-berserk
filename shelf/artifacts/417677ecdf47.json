@@ -1,0 +1,112 @@
+{
+ "name": "417677ecdf47",
+ "title": "experiments/wire/hum-plain-gpt2first-01 · 19 sep",
+ "created": 1789784617.536075,
+ "source": {
+  "room": "experiments/wire/hum-plain-gpt2first-01",
+  "title": null,
+  "node": "abf6e39d"
+ },
+ "model": {
+  "file": "Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "path": "/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf",
+  "n_ctx": 8192,
+  "build": "b10809-5266f24da"
+ },
+ "prompt": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+ "turn": {
+  "prefix": "",
+  "suffix": ""
+ },
+ "params": {
+  "n_predict": 40,
+  "stop": [],
+  "temperature": 2.5,
+  "min_p": 0.08,
+  "top_k": 0,
+  "top_p": 1.0,
+  "top_n_sigma": -1,
+  "xtc_probability": 0,
+  "xtc_threshold": 0.1,
+  "repeat_penalty": 1.05,
+  "repeat_last_n": 512,
+  "dry_multiplier": 0.8,
+  "dry_base": 1.75,
+  "dry_allowed_length": 3,
+  "dry_penalty_last_n": 8192,
+  "ignore_eos": false,
+  "n_probs": 5,
+  "logit_bias": [],
+  "logit_bias_text": "",
+  "fan": 4,
+  "spread": 1.0,
+  "dry_keep": 0.8
+ },
+ "steps": [
+  {
+   "at": "abf6e39d",
+   "lead": "",
+   "took": {
+    "id": "e7c7f50b",
+    "at": 1,
+    "text": "It's something in the world. I can't turn it off.\n",
+    "temperature": 1.4,
+    "posed": false,
+    "meta": {
+     "stop_type": "limit",
+     "stopping_word": "",
+     "tokens_predicted": 40,
+     "tps": 36.2,
+     "params": {
+      "n_predict": 40,
+      "stop": [],
+      "temperature": 1.4,
+      "min_p": 0.08,
+      "top_k": 0,
+      "top_p": 1.0,
+      "top_n_sigma": -1,
+      "xtc_probability": 0,
+      "xtc_threshold": 0.1,
+      "repeat_penalty": 1.05,
+      "repeat_last_n": 512,
+      "dry_multiplier": 0.8,
+      "dry_base": 1.75,
+      "dry_allowed_length": 3,
+      "dry_penalty_last_n": 8192,
+      "ignore_eos": false,
+      "n_probs": 5,
+      "logit_bias": [],
+      "logit_bias_text": "",
+      "fan": 4,
+      "spread": 1.0,
+      "dry_keep": 0.8
+     },
+     "model": "gpt2",
+     "turn": 1
+    }
+   },
+   "kept": [],
+   "fan": {
+    "size": 1,
+    "others": []
+   },
+   "bits": 0.0
+  }
+ ],
+ "blocks": [
+  {
+   "id": "abf6e39d",
+   "kind": "root",
+   "text": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+   "posed": false
+  },
+  {
+   "id": "e7c7f50b",
+   "kind": "model",
+   "text": "It's something in the world. I can't turn it off.\n",
+   "posed": false
+  }
+ ],
+ "bits": 0.0,
+ "by": "star"
+}
