@@ -215,8 +215,10 @@ def prompt_for(told: list[dict], past: list[dict], persona: str) -> str:
         parts.append("\n\n".join(lines))
     lines = ["--- the latest stretch ---"]
     if SEEDS:
-        lines.append("(each passage grew from a seed, text the machine was handed and not its "
-                     "own, marked [seed]; the dream is what comes after, marked [dream])")
+        # No "machine" here either (bekh, 2026-09-21): the word is out of everything a voice is
+        # shown, because it is what made the reader see an AI's self-portrait in every dream.
+        lines.append("(each passage grew from a seed, text that was handed over and is not the "
+                     "dreamer's own, marked [seed]; the dream is what comes after, marked [dream])")
     for i, p in enumerate(told, 1):
         if len(told) > 1 or SEEDS:
             lines.append(f"passage {i}")
