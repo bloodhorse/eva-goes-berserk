@@ -8,13 +8,12 @@
 html, body { background: var(--bg); color: var(--ink); }
 body { cursor: crosshair; }
 
-/* scanlines over the paintings, under the words */
+/* scanlines over the paintings, under the words — still, as a texture.
+   rule (bekh): this is for reading, so nothing moves on its own; motion only answers the reader */
 #glassrows {
   position: fixed; inset: 0; pointer-events: none; z-index: 1;
   background: repeating-linear-gradient(to bottom, rgba(0,0,0,.28) 0 1px, transparent 1px 3px);
-  animation: roll 120ms steps(3) infinite;
 }
-@keyframes roll { to { background-position: 0 3px; } }
 
 #status {
   position: fixed; top: 0; left: 0; right: 0; z-index: 3; padding: 10px 18px;
@@ -28,8 +27,7 @@ body { cursor: crosshair; }
 #flip button + button::before { content: '·'; margin-right: .6em; color: var(--line); }
 #flip button.on { color: var(--lit-a); }
 #flip button:hover { color: var(--ink); }
-#status.dreaming .dot { background: var(--live); animation: breathe 2.4s ease-in-out infinite; }
-@keyframes breathe { 50% { opacity: .25; } }
+#status.dreaming .dot { background: var(--live); }
 
 /* room above and below so the first and the newest passage can both reach the reading line */
 #feed { padding: 40vh 0 50vh; }
@@ -75,9 +73,8 @@ body.sheen .row.focus .plate .sheen { opacity: 0; }
 body.k-frost .plate canvas { display: none; }
 body.k-frost .plate img { filter: blur(26px) saturate(1.15) brightness(.85); transform: scale(1.12); transition: filter .9s ease, transform .9s ease; }
 body.k-frost .row.focus .plate img { filter: none; transform: none; }
-body.k-frost .plate .grain { opacity: .55; animation: grain .5s steps(4) infinite; }
+body.k-frost .plate .grain { opacity: .55; }
 body.k-frost .row.focus .plate .grain { opacity: .12; }
-@keyframes grain { 25% { background-position: 37px 91px; } 50% { background-position: 170px 13px; } 75% { background-position: 88px 200px; } }
 
 #fresh {
   position: fixed; right: 18px; bottom: 18px; z-index: 3; cursor: pointer;

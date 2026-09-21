@@ -16,6 +16,8 @@ The premise: everything in a dream is made by LLMs or other neural networks — 
 
 Reference site: fauux.neocities.org. We studied its mechanics, not its details. **Steal techniques, never their art, gifs or text.** Nothing from their site lives in this repo.
 
+**Reading rule (bekh): nothing moves on its own.** No rolling scanlines, breathing dots, crawling grain, blinking words — fauux can afford constant motion, a page for reading can't. Motion only answers the reader (focus changes on scroll, new passages arriving). Texture may stay if it's still. The fauux primitives below that are motion (fake signal, staggered rhythm, jitter) are for the lab, not the front, unless tied to a reader's action.
+
 ## Primitives we took from the reference
 
 - **Layering with transparency.** Stacked layers; empty pixels let the layer below through. Depth without 3D.
