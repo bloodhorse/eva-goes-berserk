@@ -394,11 +394,15 @@ setWash();
 // ?tail=N: only the newest N passages, no scrolling — for headless screenshots, which come out
 // blank whenever the page scrolls itself
 const TAIL = +params.get('tail') || 0;
-api('n=' + (TAIL || FIRST_LOAD)).then(d => {
+// ?only=<room>: that one passage alone (focused) — for specimen screenshots; waits for the font
+const ONLY = params.get('only');
+const fontReady = () => ONLY ? Promise.race([document.fonts.load(`${FONTS[FONT].size}px ${FONTS[FONT].family}`), new Promise(r => setTimeout(r, 3000))]) : Promise.resolve();
+api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)).then(d => {
+  if (ONLY) { d.pages = (d.pages || []).filter(p => p.room === ONLY); $('#feed').style.padding = '40px 0 0'; }
   render(d.pages || []);
   sync(d.pages || []);
   drawStatus(d.status);
-  if (TAIL) { $('#feed').style.padding = '40px 0 0'; return; }
+  if (TAIL || ONLY) { if (TAIL) $('#feed').style.padding = '40px 0 0'; return; }
   toNewest(false);
   // fonts landing late reflow the page; stand on the newest passage again once they have
   addEventListener('load', () => toNewest(false), { once: true });
