@@ -283,7 +283,7 @@ function paint(r) {
 function setLook(name) {
   LOOK = name;
   const look = LOOKS[name];
-  // only our own classes: font (rough) and wash (hug) live on body too
+  // only our own classes: the font's (rough) lives on body too
   for (const c of [...document.body.classList]) if (c.startsWith('k-')) document.body.classList.remove(c);
   document.body.classList.add('k-' + look.kind);
   document.body.classList.toggle('sheen', !!look.sheen);
