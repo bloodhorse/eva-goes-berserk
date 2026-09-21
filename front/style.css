@@ -1,6 +1,6 @@
 /* bekh's house palette, from the live stream page: violet ground, pink and cyan light */
 :root {
-  --bg: #232323; --ink: #d4e3fe; --ghost: #929eb2; --line: #2e3547;
+  --bg: #232323; --ink: #d4e3fe; --ghost: #aab5c7; --line: #2e3547;
   --accent: #f5c8fe; --live: #c6f1fe; --lit-a: #f29bea; --lit-b: #7fe3f5;
   --gb: 8px;
 }
