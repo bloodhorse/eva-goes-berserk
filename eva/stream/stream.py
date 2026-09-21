@@ -365,7 +365,12 @@ def draw_seed(rng: random.Random) -> tuple[str, str] | None:
     # The trailing-space trap, measured 2026-09-16: a document ending on a space makes the
     # next token a NUMERAL, every time. Spaces and tabs only, and only at the very end —
     # newlines are the document's own shape and a seed that ends on one means it.
-    return ident, re.sub(r"[ \t]+\Z", "", seed_tail(text, SEED_WORDS))
+    # Seeds under `seeds/kept/` are handed over WHOLE: they were cut by hand as windows (bekh,
+    # 2026-09-21 — the quote plus its lead-in above), and the tail trim would take exactly that
+    # lead-in back off, and on the longer quotes cut into the quote itself.
+    if not ident.startswith("seeds/kept/"):
+        text = seed_tail(text, SEED_WORDS)
+    return ident, re.sub(r"[ \t]+\Z", "", text)
 
 
 # ---- the page ---------------------------------------------------------------------------

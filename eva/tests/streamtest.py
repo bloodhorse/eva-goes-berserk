@@ -358,6 +358,13 @@ class Worker(unittest.TestCase):
         verse = "one line\n" * 30 + "the last line\nand the seam"
         self.assertIn("\n", stream.seed_tail(verse, 8))      # line breaks survive
 
+        # a hand-cut seed under kept/ is never trimmed
+        os.makedirs(os.path.join(SEEDS, "kept"), exist_ok=True)
+        put_seed(os.path.join("kept", "k.txt"), MARK + " " + long)
+        self.assertEqual(stream.draw_seed(Rng(0.9))[1], MARK + " " + long)
+        shutil.rmtree(os.path.join(SEEDS, "kept"))
+        shutil.rmtree(STREAM_DIR, ignore_errors=True)      # the bag remembers kept/k.txt
+
         put_seed("long.txt", MARK + " " + long)
         code, out = run("--once")
         self.assertEqual(code, 0, out)
