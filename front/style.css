@@ -8,12 +8,8 @@
 html, body { background: var(--bg); color: var(--ink); }
 body { cursor: crosshair; }
 
-/* scanlines over the paintings, under the words — still, as a texture.
-   rule (bekh): this is for reading, so nothing moves on its own; motion only answers the reader */
-#glassrows {
-  position: fixed; inset: 0; pointer-events: none; z-index: 1;
-  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.28) 0 1px, transparent 1px 3px);
-}
+/* rule (bekh): this is for reading, so nothing moves on its own; motion only answers the reader.
+   scanlines are gone entirely (2026-09-21) — even still, they were noise over the words */
 
 #status {
   position: fixed; top: 0; left: 0; right: 0; z-index: 3; padding: 10px 18px;
