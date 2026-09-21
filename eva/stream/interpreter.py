@@ -264,6 +264,10 @@ def clean_name(raw: str) -> str:
     name = " ".join(name.split())                     # a name that wrapped in the answer is one line
     name = name.strip("\"'“”‘’`*").strip()
     name = name.rstrip(".").strip()                   # a full stop at the end of a title is noise
+    # Lowercase, always (bekh, 2026-09-22): the page is lowercase and a name is part of the
+    # page. Done here and not asked for in the prompt, so it holds whoever wrote the name and
+    # however they felt about capitals that day — "Sandy Hook" and "I" included, by decision.
+    name = name.lower()
     if len(name) > NAME_MAX:
         # Cut at a word, not mid-syllable; an over-long name is the reader explaining instead
         # of naming, and what is lost past 120 characters was never going to be read in a list.
