@@ -174,7 +174,10 @@ shape — now.
      passage every five minutes, seed from a shuffle bag and heat (1.8–2.5) by lot, nobody
      picking; a regexp filter hides web furniture from the page and deletes nothing; a `★` feeds
      the passage's tail back into the pot and survives as an artifact. *The reader at the
-     bedside* (the interpreter): opus, headless, a margin note on every dream, reading each one
+     bedside* (the interpreter): headless, a margin note on every dream — **codex in production
+     since 2026-09-21**, because bekh wanted *codex for the summarization of the dreams, so
+     they are two different families*, with opus writing any note codex is held on or fails
+     (`STREAM_READER`, same persona and shape either way) — reading each one
      fresh and seeing only what nemo wrote (his memory of his own last four notes was turned
      off on 2026-09-21: he copied their format instead of remembering, and 81 of the first
      day's 97 notes open with the words *Last time* — bekh saw four dreams summarized the same

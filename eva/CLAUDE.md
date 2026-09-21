@@ -386,7 +386,9 @@ lazy-loaded as he reads down, each passage carrying its own two strokes through 
 `/api/mark`; a passage's ragged end is trimmed to the last sentence in the DISPLAY only
 (`?raw=1` shows it as written). The look is a placeholder.
 
-Beside it, **the interpreter** (`stream/interpreter.py`, 2026-09-19): opus through the cli, on
+Beside it, **the interpreter** (`stream/interpreter.py`, 2026-09-19): a cli seat that is opus
+in code and **codex in production** (`STREAM_READER`, 2026-09-21 — two different families, one
+on each side of the page; `stream/codex.py` is its door and opus covers any note it misses), on
 the same clock, writing a short **note** on every passage and marking **two things** inside
 it — magenta for what touched it, cyan for what felt most mysterious — the persona is `stream/interpreter.txt`, bekh's file, and the code only
 appends the plumbing. Its copy of a dream is stored verbatim and never corrected, and nothing is compared

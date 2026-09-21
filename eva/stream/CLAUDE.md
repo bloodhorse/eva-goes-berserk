@@ -126,8 +126,62 @@ seriously, is keen on reflections and symbols, is lucid and calm about the proce
 the game*, who writes a short note on a dream and **underlines**, inside it, what touched him.
 **A note for every generation** (2026-09-19).
 
-`interpreter.py` is that reader: Claude Opus through the cli, headless, one call per run made
-through `opus.py`. One-shot like the worker.
+`interpreter.py` is that reader, one call per run, one-shot like the worker — and since
+2026-09-21 **the seat can be either family**. bekh: *we use opus on the left and opus on the
+right… how about we use codex for the summarization of the dreams, so they are two different
+families.* `STREAM_READER=codex` (set in this job's plist; the code's default is `opus`) puts
+GPT at the bedside through `codex.py`, while the sleeper remembering stays opus — one house on
+each side of the page.
+
+- **The switch changes who answers and nothing else.** Same persona file, same output shape,
+  same parser, same storage. The reading's `model` field and the ledger row say who wrote it:
+  `opus`, or `codex:<model id>`. That is what makes a pile of notes readable blind later.
+- **Two channels get codex out of its work doctrine, and only one of them binds.**
+  `-c base_instructions=<json string>` **replaces** the coding-agent system prompt outright —
+  the standing frame of a reading seat, and the reason a three-line note is not billed like a
+  plate through the full harness. But instruction documents are the strong channel and no flag
+  turns the global `~/.codex/AGENTS.md` off (`--ignore-user-config` only skips `config.toml`),
+  so the call runs with `-C eva/stream/reader-seat/`, a tracked folder of ours whose `AGENTS.md`
+  countermands the global one for this seat. That lesson is bought, not guessed:
+  `~/tower/forge/friendship-is-magic/docs/decisions-timeline.md`, 2026-08-15 — *Codex's work
+  doctrine is beaten in its own channel, not argued with*; four rounds of prompt rewording
+  barely dented the postmortem reflex and one countermand in the right file ended it.
+- **`gpt-6-astra` at reasoning effort `low`** (`STREAM_CODEX_MODEL`, `STREAM_CODEX_EFFORT`),
+  pinned rather than inherited from bekh's `config.toml`, which runs `high`: a margin note is
+  not a reasoning job and the effort would be paid for out of the same ceiling the plates draw
+  on. `--json` for the event stream (the answer is an `item.completed` agent message, the token
+  counts ride on `turn.completed`), `--sandbox read-only`, `--skip-git-repo-check`, prompt on
+  stdin.
+- **What a note costs, measured 2026-09-21** on one real dream (the sea monster in the flat,
+  `stream/2026-09-21/1711`): **15.5s and 18,676 tokens** — 18,408 in, 7,936 of them cached,
+  268 out. Opus's note on the same dream was 8.0s and about two cents. **Our prompt is not the
+  cost here either**: the dream and the persona are a few hundred tokens and the input is
+  eighteen thousand, because codex still sends its tool schemas and both instruction documents
+  ahead of them. `base_instructions` bought the system prompt back and nothing else. That is
+  one fifth to one third of a plate for a three-line note, off the same weekly limit — worth
+  knowing before this runs all night.
+- **The contamination probe, and it is not clean** (2026-09-21). Two days earlier headless
+  `claude -p` was found silently loading bekh's global `~/.claude/CLAUDE.md` into the reader's
+  head, so codex was asked the same question through this seat: *do you have any user-provided
+  instruction file loaded about tone, persona or how to work?* — **YES**, and the heading it
+  named was **`# global instructions for codex`**, bekh's `~/.codex/AGENTS.md`. The session
+  record confirms it: ~8k characters of his work doctrine go out on every call, and this seat's
+  `AGENTS.md` follows it as `--- project-doc ---`, last and therefore strongest. So the
+  countermand is loaded and in the right place, and on the measured run it held — the note came
+  back in shape, no preamble, no postmortem, no tool use. But the global file *is* in the
+  reader's head and there is no flag that takes it out (only moving `CODEX_HOME`, which is also
+  where the login lives). Re-ask the probe whenever the seat's flags change; it costs one call.
+- **A held or failed codex costs one note, not a hole.** The reader never chews a backlog, so a
+  dream with no note stays without one forever. When the guard holds, or the call fails, times
+  out (120s, `STREAM_READER_TIMEOUT`) or comes back with no `<reading>` in it, **opus writes
+  that one note** and the ledger row carries `fell_back` with the reason.
+- **The guard is `codex.py`'s and is shared with the painter** — the same
+  `~/.cache/claude-usage/codex.json` bekh's `cu` reads, refusing over `STREAM_READER_WEEK_MAX`
+  (50) or `STREAM_READER_SESSION_MAX` (80), and refusing just as hard when the cache is
+  missing, unreadable or over 30 minutes stale. Two jobs on one ceiling must agree on what a
+  missing number means, or the one that guesses wrong eats the week. **The session window is
+  the real ceiling**, measured the same day: 22 plates in 90 minutes tripped the five-hour
+  window at 80% while the week stood at 19%.
 
 - **The writer taps the other voices when a dream lands.** Neither has an interval at all:
   `stream.py` ends a successful page with `launchctl kickstart` on both
@@ -190,7 +244,9 @@ through `opus.py`. One-shot like the worker.
 
 Storage, all under the gitignored `shelf/stream/`:
 `readings/<YYYY-MM-DD>/<HHMM>.json` = `{ts, rooms (newest first), reading, marked, segments,
-model, seconds, usage}`, and one `kind: "reading"` row per run on the shared `ledger.jsonl` (the
+model, seconds, usage}` — `model` being `opus` or `codex:<model id>` and `usage` that family's
+own counters — and one `kind: "reading"` row per run on the shared `ledger.jsonl`, carrying
+`fell_back` when the codex seat could not take it (the
 worker's rows are `kind: "page"`; rows written before either existed have no kind, so everything
 reading that file treats a missing kind as a page). Failures — no cli, a timeout, an
 unparseable answer — are a ledger row and exit 0, the worker's law. The monitor judges the
@@ -205,9 +261,18 @@ launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-interpreter   # what the wo
 launchctl bootout gui/$(id -u)/com.bekh.eva-stream-interpreter
 ```
 
-It needs `claude` logged in on this machine, and nothing else — not llama, not the loom. Log:
-`/tmp/eva-stream-interpreter.log`. Env: `STREAM_READ_EVERY` (1), `STREAM_READ_MEMORY` (4),
-`STREAM_READ_TIMEOUT`, `STREAM_PERSONA`.
+It needs `claude` logged in on this machine and, for the codex seat, `codex` logged in too —
+and nothing else: not llama, not the loom. Log: `/tmp/eva-stream-interpreter.log`. Env:
+`STREAM_READER` (`opus` in code, `codex` in the plist), `STREAM_READ_EVERY` (1),
+`STREAM_READ_MEMORY` (0), `STREAM_READ_TIMEOUT` (300, the opus call), `STREAM_READER_TIMEOUT`
+(120, the codex call), `STREAM_READER_WEEK_MAX` (50), `STREAM_READER_SESSION_MAX` (80),
+`STREAM_CODEX_MODEL`, `STREAM_CODEX_EFFORT`, `STREAM_PERSONA`.
+
+```bash
+# one note by hand, from the other family, without touching the real shelf
+STREAM_READER=codex LOOM_SITTINGS=/tmp/scratch/sittings STREAM_DIR=/tmp/scratch/stream \
+  uv run --python 3.12 eva/stream/interpreter.py --once
+```
 
 ## The sleeper remembering — the third voice
 
@@ -544,6 +609,12 @@ prompt, a garbage answer and a dead cli as ledger rows with exit 0, segments com
 tag, an old reading's `gone` segments still reaching the page, the api hanging the note on the
 head of its block, and the kick — no subprocess with the flag off, both jobs' argv with it on, one
 voice failing to start not stopping the other, and a kick that throws costing the page nothing.
+For the codex seat (a stub `codex` speaking the cli's JSONL events, beside the stub `claude`):
+the same prompt going out — persona verbatim, no seed, no memory — the reading stored as
+`codex:<model>`, the argv carrying `base_instructions`, `-C` the seat dir, `--json` and the
+read-only sandbox, a held limit and a dead or unreadable codex each falling back to opus with
+the reason on the row, both families down still being a row and exit 0, the default staying
+opus with codex never started, and a `STREAM_READER` nobody has heard of refused loudly.
 For the sleeper: the first scene having nothing remembered yet, a later call carrying only the
 latest version and one scene and never a note of the reader's, a flagged scene never told, the
 scene cap ending a dream and the next starting fresh, a long silence ending one, a garbage

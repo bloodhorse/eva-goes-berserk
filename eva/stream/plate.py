@@ -268,11 +268,29 @@ def main(argv: list[str]) -> int:
             "seconds": seconds, "bytes": os.path.getsize(jpg)})
     print(f"plate · {os.path.relpath(jpg, STREAM)} · "
           f"{os.path.getsize(jpg) // 1024} KB · {seconds}s", flush=True)
-    if tail:
-        last = [ln for ln in tail.splitlines() if "tokens used" in ln]
-        if last:
-            print("codex " + last[-1].strip(), flush=True)
+    used = tokens_used(tail)
+    if used:
+        print(f"codex tokens used: {used}", flush=True)
     return 0
+
+
+def tokens_used(tail: str) -> str:
+    """The token count out of codex's plain log, or "".
+
+    The number is on the line AFTER the words — the cli prints a `tokens used` label and its
+    value on the next line — which is why this used to print a bare label and no number at all.
+    A same-line shape is still read, because an older cli and the tests' stub both write it
+    that way and a count that silently disappears is worse than one that is ugly.
+    """
+    lines = tail.splitlines()
+    out = ""
+    for i, ln in enumerate(lines):
+        if "tokens used" not in ln.lower():
+            continue
+        rest = ln[ln.lower().index("tokens used") + len("tokens used"):].strip(" \t:·-")
+        nxt = lines[i + 1].strip() if i + 1 < len(lines) else ""
+        out = rest or nxt
+    return out
 
 
 if __name__ == "__main__":

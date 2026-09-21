@@ -49,6 +49,7 @@ os.environ["STREAM_DIR"] = STREAM_DIR
 os.environ["STREAM_SEEDS"] = SEEDS
 os.environ["STREAM_INTERVAL"] = "300"
 
+import codex  # noqa: E402
 import interpreter  # noqa: E402
 import plate  # noqa: E402
 import plating  # noqa: E402
@@ -67,7 +68,9 @@ loom.ARTIFACTS = ARTS
 plate.STREAM = STREAM_DIR
 plate.PLATES = os.path.join(STREAM_DIR, "plates")
 plate.LEDGER = os.path.join(STREAM_DIR, "ledger.jsonl")
-plating.USAGE = os.path.join(BOX, "codex.json")
+# The limit the painter and the codex reader both read. One scratch copy, in codex.py, since
+# that is where the guard lives.
+codex.USAGE = os.path.join(BOX, "codex.json")
 
 STUB = None            # the ordinary one: a random line per call
 STUB_DIRTY = None      # answers a licence footer, so the filter has something to catch
@@ -1071,6 +1074,219 @@ class Interpreter(unittest.TestCase):
         self.assertEqual("".join(s["t"] for s in segs), "one two three")
 
 
+# ---- the reader's other family ---------------------------------------------------------------
+# A stub `codex` beside the stub `claude`, speaking the cli's JSONL event stream: a
+# `thread.started`, one `item.completed` carrying the agent message, one `turn.completed`
+# carrying the token counts. It writes its own ARGV as well as the prompt, because half of
+# what this seat is made of is flags — base_instructions, the seat dir, the sandbox.
+
+FAKE_CODEX_READER = r'''#!/usr/bin/env python3
+import io, json, os, re, sys
+prompt = sys.stdin.read()
+with open(os.environ["FAKE_CODEX_LOG"], "w", encoding="utf-8") as f:
+    f.write("\n".join(sys.argv[1:]) + "\n=====\n" + prompt)
+mode = os.environ.get("FAKE_CODEX_MODE", "")
+if mode == "boom":
+    raise SystemExit(4)
+
+def event(d):
+    json.dump(d, sys.stdout); sys.stdout.write("\n")
+
+_m = re.search(r"--- the latest stretch ---\n\n(.*)\Z", prompt, re.S)
+dreams = [p.rstrip("\n") for p in re.split(r"(?m)^passage \d+\n\n", _m.group(1) if _m else "")
+          if p.strip()]
+if mode == "garbage":
+    text = "I had a look but there is nothing here I can read."
+else:
+    out = io.StringIO()
+    print("<reading>", file=out)
+    print("gpt read it and pencilled this in the margin.", file=out)
+    print("</reading>", file=out)
+    for i, d in enumerate(dreams, 1):
+        print('<passage n="%d">%s</passage>' % (i, d), file=out)
+    text = out.getvalue()
+event({"type": "thread.started", "thread_id": "t1"})
+event({"type": "item.completed", "item": {"type": "agent_message", "text": text}})
+event({"type": "turn.completed",
+       "usage": {"input_tokens": 2100, "cached_input_tokens": 1800,
+                 "cache_write_input_tokens": 0, "output_tokens": 180,
+                 "reasoning_output_tokens": 0, "total_tokens": 2280}})
+'''
+
+
+def fake_reader(codex_mode: str = "", claude_mode: str = "") -> dict:
+    """One bin dir holding BOTH stubs, since a fallback run starts one and then the other."""
+    d = tempfile.mkdtemp(prefix="stream-reader-")
+    binp = os.path.join(d, "bin")
+    os.makedirs(binp)
+    for name, body in (("codex", FAKE_CODEX_READER), ("claude", FAKE_CLAUDE)):
+        path = os.path.join(binp, name)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(body.replace("#!/usr/bin/env python3", "#!" + sys.executable))
+        os.chmod(path, 0o755)
+    return {"dir": d, "bin": binp, "log": os.path.join(d, "prompts.txt"),
+            "codex_log": os.path.join(d, "codex.txt"), "mode": claude_mode,
+            "codex_mode": codex_mode}
+
+
+def interpret_as(reader: str, fake: dict) -> tuple[int, str]:
+    was_reader, was_codex_mode = interpreter.READER, os.environ.get("FAKE_CODEX_MODE")
+    interpreter.READER = reader
+    os.environ["FAKE_CODEX_LOG"] = fake["codex_log"]
+    os.environ["FAKE_CODEX_MODE"] = fake["codex_mode"]
+    try:
+        return with_fake(fake, lambda: interpreter.main(["interpreter.py", "--once"]))
+    finally:
+        interpreter.READER = was_reader
+        if was_codex_mode is None:
+            os.environ.pop("FAKE_CODEX_MODE", None)
+        else:
+            os.environ["FAKE_CODEX_MODE"] = was_codex_mode
+
+
+class CodexReader(unittest.TestCase):
+    """bekh, 2026-09-21: *we use opus on the left and opus on the right… how about we use
+    codex for the summarization of the dreams, so they are two different families.* The switch
+    changes who answers and nothing else — same prompt, same parser, same storage."""
+
+    def setUp(self):
+        wipe_stream()
+        put_usage()
+        self.fakes = []
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, codex_mode: str = "", claude_mode: str = "") -> dict:
+        f = fake_reader(codex_mode, claude_mode)
+        self.fakes.append(f)
+        return f
+
+    def page(self, hhmm: str = "1000", text: str = "the switch hums.") -> str:
+        name = f"stream/2026-09-19/{hhmm}"
+        make_page(name, f"seed for {hhmm}\n", text)
+        return name
+
+    def test_codex_is_sent_the_same_prompt_and_writes_the_note(self):
+        room = self.page()
+        f = self.fake()
+        code, out = interpret_as("codex", f)
+        self.assertEqual(code, 0, out)
+        got = readings_on_disk()
+        self.assertEqual([d["rooms"] for d in got], [[room]])
+        self.assertEqual(got[0]["model"], "codex:" + codex.MODEL)
+        self.assertEqual(got[0]["reading"], "gpt read it and pencilled this in the margin.")
+        self.assertEqual(got[0]["usage"]["tokens"], 2280)
+        self.assertFalse(os.path.exists(f["log"]), "opus was started as well")
+
+        argv, prompt = read_text(f["codex_log"]).split("\n=====\n", 1)
+        # bekh's persona file goes out verbatim, exactly as it does to opus, and the plumbing
+        # that is not his is appended after it — same prompt, different family.
+        with open(interpreter.PERSONA, encoding="utf-8") as fh:
+            self.assertIn(fh.read().rstrip("\n"), prompt)
+        self.assertIn('<passage n="1">', prompt)
+        self.assertIn("the switch hums.", prompt)
+        self.assertNotIn("seed for 1000", prompt)          # no seed
+        self.assertNotIn("your own earlier readings", prompt)   # no memory
+
+        # and the flags that make this a reading seat instead of a coding agent
+        self.assertIn("base_instructions=", argv)
+        self.assertIn(codex.SEAT, argv.splitlines())
+        self.assertIn("-C", argv.splitlines())
+        self.assertIn("--json", argv.splitlines())
+        self.assertIn("read-only", argv.splitlines())
+        self.assertIn(codex.MODEL, argv.splitlines())
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertEqual(row["model"], "codex:" + codex.MODEL)
+        self.assertNotIn("fell_back", row)
+
+    def test_the_seat_carries_a_countermand_of_the_global_instructions(self):
+        """The strong channel. No flag turns ~/.codex/AGENTS.md off, so the seat's own file
+        has to be there and has to say the work doctrine is off."""
+        with open(os.path.join(codex.SEAT, "AGENTS.md"), encoding="utf-8") as f:
+            said = f.read().lower()
+        for word in ("no tools", "countermand", "prompt"):
+            self.assertIn(word, said)
+
+    def test_a_held_codex_falls_back_to_opus_and_the_row_says_why(self):
+        room = self.page()
+        put_usage(week=6, session=88)              # the session window is the one that trips
+        f = self.fake()
+        code, out = interpret_as("codex", f)
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(f["codex_log"]), "codex was started while held")
+        got = readings_on_disk()
+        self.assertEqual([d["model"] for d in got], ["opus"])
+        self.assertEqual(got[0]["rooms"], [room])
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertIn("session at 88%", row["fell_back"])
+
+    def test_no_numbers_holds_codex_too(self):
+        self.page()
+        put_usage(missing=True)
+        self.assertEqual(interpret_as("codex", self.fake())[0], 0)
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertIn("no usage cache", row["fell_back"])
+        self.assertEqual(row["model"], "opus")
+
+    def test_codex_garbage_is_opuss_note(self):
+        """A note belongs to a dream and nothing later fills the hole, so an answer with no
+        <reading> in it costs one fallback, not one missing note."""
+        self.page()
+        f = self.fake(codex_mode="garbage")
+        code, out = interpret_as("codex", f)
+        self.assertEqual(code, 0, out)
+        self.assertTrue(os.path.exists(f["codex_log"]), "codex was never asked")
+        got = readings_on_disk()
+        self.assertEqual([d["model"] for d in got], ["opus"])
+        self.assertIn("no <reading>",
+                      [r for r in ledger_rows() if r.get("kind") == "reading"][-1]["fell_back"])
+
+    def test_a_dead_codex_is_opuss_note_too(self):
+        self.page()
+        self.assertEqual(interpret_as("codex", self.fake(codex_mode="boom"))[0], 0)
+        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
+        self.assertEqual(row["model"], "opus")
+        self.assertIn("exited 4", row["fell_back"])
+
+    def test_both_families_down_is_a_ledger_row_and_exit_zero(self):
+        self.page()
+        code, out = interpret_as("codex", self.fake(codex_mode="boom", claude_mode="boom"))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(readings_on_disk(), [])
+        self.assertIn("exited 3",
+                      [r for r in ledger_rows() if r.get("kind") == "reading"][-1]["error"])
+
+    def test_the_default_is_opus_and_codex_is_never_started(self):
+        self.assertEqual(interpreter.READER, "opus")
+        self.page()
+        f = self.fake()
+        self.assertEqual(interpret_as("opus", f)[0], 0)
+        self.assertFalse(os.path.exists(f["codex_log"]), "codex was started by an opus seat")
+        self.assertEqual([d["model"] for d in readings_on_disk()], ["opus"])
+
+    def test_a_reader_nobody_has_heard_of_is_refused_loudly(self):
+        self.page()
+        code, out = interpret_as("gpt2", self.fake())
+        self.assertEqual(code, 2)
+        self.assertIn("STREAM_READER", out)
+
+    def test_the_event_stream_is_read_leniently(self):
+        text, usage = codex.parse(
+            'not json at all\n'
+            '{"type": "thread.started", "thread_id": "t"}\n'
+            '{"type": "error", "message": "Reconnecting... 2/5"}\n'
+            '{"type": "item.completed", "item": {"type": "agent_message", "text": "a note"}}\n'
+            '{"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 3}}\n')
+        # A mid-stream error it recovered from is not a failure: fim.py lost whole answers to
+        # treating the first one as fatal.
+        self.assertEqual(text, "a note")
+        self.assertEqual(usage["tokens"], 13)          # no total given: in + out
+        with self.assertRaises(ValueError):
+            codex.parse('{"type": "error", "message": "it fell over"}')
+
+
 # ---- the sleeper remembering ----------------------------------------------------------------
 
 class Remembering(unittest.TestCase):
@@ -1302,7 +1518,10 @@ png = base64.b64decode(
 with open(os.path.join(os.getcwd(), "plate.png"), "wb") as f:
     f.write(png)
 print("saved plate.png")
-print("tokens used: 19123")
+# The cli's own shape: the label, and the number on the NEXT line. plate.py used to grep for
+# the label alone and print a row with no number in it.
+print("tokens used")
+print("19123")
 '''
 
 
@@ -1382,6 +1601,9 @@ class Plates(unittest.TestCase):
                          ("pieces", ["switch hums", "nobody answers"], False))
         row = [r for r in ledger_rows() if r.get("kind") == "plate"][-1]
         self.assertEqual((row["room"], row["pieces"]), (room, 2))
+        # the count is on the line after the label, and it used to be dropped on the floor
+        self.assertIn("codex tokens used: 19123", out)
+        self.assertEqual(plate.tokens_used("tokens used: 42"), "42")    # the older shape
 
     def test_no_underlines_falls_back_to_the_whole_text(self):
         room = "stream/2026-09-19/1005"
@@ -1452,11 +1674,11 @@ def put_usage(week=6, session=0, age=0.0, broken=False, missing=False):
     is what the staleness check reads."""
     if missing:
         try:
-            os.unlink(plating.USAGE)
+            os.unlink(codex.USAGE)
         except FileNotFoundError:
             pass
         return
-    with open(plating.USAGE, "w", encoding="utf-8") as f:
+    with open(codex.USAGE, "w", encoding="utf-8") as f:
         if broken:
             f.write("{not json")
         else:
@@ -1465,7 +1687,7 @@ def put_usage(week=6, session=0, age=0.0, broken=False, missing=False):
                        "week": {"utilization": week, "window_minutes": 10080}}, f)
     if age:
         at = time.time() - age
-        os.utime(plating.USAGE, (at, at))
+        os.utime(codex.USAGE, (at, at))
 
 
 def run_plating(fake: dict) -> tuple[int, str]:

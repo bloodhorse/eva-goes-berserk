@@ -30,10 +30,20 @@ diff of his copy against the dream used to light every tiny difference in red, a
 What is stored is his copy, verbatim, plus the same string cut into render-ready runs by his
 `<mark>` tags alone. The page writes the marked words in colour and that is the whole of it.
 
-Env: STREAM_DIR (default shelf/stream/), STREAM_READ_EVERY (how many passages a note
-covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is shown, default 0 — see prompt_for),
-STREAM_READ_SEEDS (1 = show him the labelled seed again),
-STREAM_READ_TIMEOUT, STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
+**Two families, on purpose** (bekh, 2026-09-21: *we use opus on the left and opus on the
+right… how about we use codex for the summarization of the dreams, so they are two different
+families*). `STREAM_READER=codex` puts GPT in this seat through `codex.py`; the sleeper
+remembering stays opus either way. Everything else is held identical so a note can be read
+against a note: the same persona file, the same shape, the same parser, the same storage. Only
+the `model` field says who wrote it. When codex is over its limit, or fails, or answers
+something with no `<reading>` in it, **opus writes that one note** — every dream gets one — and
+the ledger row says why.
+
+Env: STREAM_DIR (default shelf/stream/), STREAM_READER (opus | codex), STREAM_READ_EVERY (how
+many passages a note covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is
+shown, default 0 — see prompt_for), STREAM_READ_SEEDS (1 = show him the labelled seed again),
+STREAM_READ_TIMEOUT, STREAM_READER_TIMEOUT (the codex call, 120s), STREAM_READER_WEEK_MAX (50),
+STREAM_READER_SESSION_MAX (80), STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
 """
 
 from __future__ import annotations
@@ -50,6 +60,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import codex  # noqa: E402   the other family's door, and the one place its limit is read
 import loom  # noqa: E402   the shelf, the stream rooms: nothing else here reads a room
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
 
@@ -73,6 +84,20 @@ SEEDS = os.environ.get("STREAM_READ_SEEDS") == "1"
 TIMEOUT = int(os.environ.get("STREAM_READ_TIMEOUT", "300"))
 
 MODEL = opus.MODEL
+
+# Which family sits at the bedside. `opus` in code, `codex` in the plist (bekh, 2026-09-21):
+# the default stays opus so a hand run, a test and a fresh clone behave the way this file has
+# always behaved, and production says what it wants out loud.
+READER = (os.environ.get("STREAM_READER") or "opus").strip().lower()
+# The codex call's own clock. Two minutes, not the opus five: this is a short note at low
+# reasoning effort, and a codex that is thinking for longer than that is stuck — every second
+# spent waiting is a second the next dream's note is late.
+CODEX_TIMEOUT = int(os.environ.get("STREAM_READER_TIMEOUT", "120"))
+# The reader's own thresholds on the shared codex ceiling, kept apart from the painter's
+# (STREAM_PLATE_*) because the two spend very differently: a plate is minutes and ~19k tokens,
+# a note is seconds. The session window is the one that actually trips.
+WEEK_MAX = float(os.environ.get("STREAM_READER_WEEK_MAX", "50"))
+SESSION_MAX = float(os.environ.get("STREAM_READER_SESSION_MAX", "80"))
 
 
 def log(msg: str) -> None:
@@ -332,6 +357,35 @@ def write_reading(obj: dict) -> str:
     return path
 
 
+def read(prompt: str, told: list[dict]) -> tuple[str, dict, str, dict, str]:
+    """Ask the seat's family, and fall back to opus for this one note if it cannot answer.
+
+    `(the reading, the marked copies, who wrote it, its usage block, why it fell back)`.
+    Raises ValueError only when opus fails too — which is the old behaviour: a ledger row and
+    exit 0.
+
+    **The fallback is per-note, not per-session.** A dream with no note is a hole in the page
+    that nothing later fills in (the reader never chews a backlog), so a codex that is held, a
+    codex that times out and a codex that answers a paragraph of apology all cost the same
+    thing: one note written by the other family, and one line on the ledger saying so.
+    """
+    if READER == "codex":
+        held = codex.held_for(*codex.usage(), WEEK_MAX, SESSION_MAX)
+        why = f"codex held · {held}" if held else ""
+        if not why:
+            try:
+                answer, usage = codex.ask(prompt, CODEX_TIMEOUT)
+                reading, marked = parse(answer, told)
+                return reading, marked, "codex:" + codex.MODEL, usage, ""
+            except ValueError as exc:
+                why = f"codex · {exc}"
+        log(f"falling back to opus · {why}")
+        answer, usage = opus.ask(prompt, TIMEOUT)
+        return (*parse(answer, told), MODEL, usage, why)
+    answer, usage = opus.ask(prompt, TIMEOUT)
+    return (*parse(answer, told), MODEL, usage, "")
+
+
 def run_once() -> int:
     try:
         with open(PERSONA, encoding="utf-8") as f:
@@ -350,8 +404,7 @@ def run_once() -> int:
     started = time.time()
     prompt = prompt_for(told, past, persona)
     try:
-        answer, usage = opus.ask(prompt, TIMEOUT)
-        reading, marked = parse(answer, told)
+        reading, marked, model, usage, fell_back = read(prompt, told)
     except ValueError as exc:
         log(f"reader · {exc}")
         ledger({"rooms": [p["room"] for p in reversed(told)], "error": str(exc),
@@ -372,16 +425,22 @@ def run_once() -> int:
            "reading": reading,
            "marked": marked,
            "segments": segments,
-           "model": MODEL,
+           # Who wrote this note: `opus`, or `codex:<model id>`. The page never shows it, and
+           # a pile of notes read blind later is worth nothing without it.
+           "model": model,
            "seconds": round(time.time() - started, 1),
            "usage": usage}
     path = write_reading(obj)
-    ledger({"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
-            # Two marks is the rule; how often he reaches for a third is worth knowing.
-            "dropped": dropped,
-            "model": MODEL, "seconds": obj["seconds"], "usage": usage})
+    row = {"rooms": obj["rooms"], "marked": len(marked), "chars": len(reading),
+           # Two marks is the rule; how often he reaches for a third is worth knowing.
+           "dropped": dropped,
+           "model": model, "seconds": obj["seconds"], "usage": usage}
+    if fell_back:
+        row["fell_back"] = fell_back
+    ledger(row)
+    counted = codex.line(usage) if model.startswith("codex:") else opus.line(usage)
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
-        f"{len(marked)} marked up · {obj['seconds']}s · " + opus.line(usage))
+        f"{len(marked)} marked up · {model} · {obj['seconds']}s · " + counted)
     return 0
 
 
@@ -394,6 +453,11 @@ def main(argv: list[str]) -> int:
     ap.parse_args(argv[1:])
     if EVERY < 1:
         print("STREAM_READ_EVERY is at least 1", file=sys.stderr)
+        return 2
+    if READER not in ("opus", "codex"):
+        # Loud, like EVERY: a typo in the plist would otherwise be a silent demotion back to
+        # opus, and the whole point of the switch is knowing which family wrote a note.
+        print(f"STREAM_READER is opus or codex, not {READER!r}", file=sys.stderr)
         return 2
     return run_once()
 

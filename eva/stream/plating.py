@@ -19,11 +19,16 @@ life. So this reads the same usage cache his `cu` command shows and refuses to p
 ceiling, and refuses just as hard when it cannot see the numbers at all. No numbers is not a
 green light; it is the one state where an unattended painter could eat a week.
 
+**The guard itself lives in `codex.py`** since 2026-09-21, when the reader gained a codex seat:
+two jobs drawing on one weekly ceiling have to agree on what the ceiling is and on what a
+missing number means, or the one that guesses wrong is the one that eats the week. What stays
+here is only this job's thresholds and its one-row-per-state ledger rule.
+
 Env: STREAM_PLATE_SETTLE (90s — how old a dream must be before it is painted, so the reader's
 note has landed and the `pieces` prompt has words to work from), STREAM_PLATE_WINDOW (6h — how
 far back it will reach, so a job that was off for a day does not wake up and paint three hundred
 pictures), STREAM_PLATE_WEEK_MAX (50), STREAM_PLATE_SESSION_MAX (80), STREAM_CODEX_USAGE (the
-cache path), plus everything `plate.py` reads.
+cache path, read in `codex.py`), plus everything `plate.py` reads.
 """
 
 from __future__ import annotations
@@ -39,6 +44,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import codex  # noqa: E402   the limit: one reading of it for every job that spends it
 import loom  # noqa: E402
 import plate  # noqa: E402   the painting itself, its prompts, its files: all of it is there
 
@@ -46,12 +52,6 @@ SETTLE = int(os.environ.get("STREAM_PLATE_SETTLE", "90"))
 WINDOW = int(os.environ.get("STREAM_PLATE_WINDOW", str(6 * 3600)))
 WEEK_MAX = int(os.environ.get("STREAM_PLATE_WEEK_MAX", "50"))
 SESSION_MAX = int(os.environ.get("STREAM_PLATE_SESSION_MAX", "80"))
-# The cache the `cu` command reads, refreshed by its own daemon every few minutes. Read here and
-# never written: this process is a consumer of that number, not a second source of it.
-USAGE = os.environ.get("STREAM_CODEX_USAGE",
-                       os.path.expanduser("~/.cache/claude-usage/codex.json"))
-# Past this the cache is not a reading of anything. Six of its refresh intervals.
-USAGE_STALE = 1800
 
 
 def log(msg: str) -> None:
@@ -84,41 +84,6 @@ def rows() -> list[dict]:
 
 
 # ---- the guard --------------------------------------------------------------------------------
-
-def usage() -> tuple[dict | None, str]:
-    """(the numbers, why they cannot be used). One of the two is always empty."""
-    try:
-        st = os.stat(USAGE)
-    except OSError:
-        return None, "no usage cache"
-    if time.time() - st.st_mtime > USAGE_STALE:
-        return None, f"usage cache {int((time.time() - st.st_mtime) // 60)} min stale"
-    try:
-        with open(USAGE, encoding="utf-8") as f:
-            d = json.load(f)
-    except (OSError, ValueError):
-        return None, "usage cache unreadable"
-    if not isinstance(d, dict):
-        return None, "usage cache is not an object"
-    out = {}
-    for k in ("week", "session"):
-        v = (d.get(k) or {}).get("utilization") if isinstance(d.get(k), dict) else None
-        if not isinstance(v, (int, float)):
-            return None, f"usage cache has no {k} utilization"
-        out[k] = float(v)
-    return out, ""
-
-
-def held_for(u: dict | None, why: str) -> str:
-    """Why this run must not paint, or "" to go ahead."""
-    if u is None:
-        return why
-    if u["week"] >= WEEK_MAX:
-        return f"week at {u['week']:g}%"
-    if u["session"] >= SESSION_MAX:
-        return f"session at {u['session']:g}%"
-    return ""
-
 
 def say_held(why: str, u: dict | None) -> None:
     """One row per *state*, not one per run. At a dream every five minutes an unchanged hold
@@ -192,8 +157,8 @@ MIN_WORDS = int(os.environ.get("STREAM_PLATE_MIN_WORDS", "15"))
 
 
 def run_once() -> int:
-    u, why = usage()
-    held = held_for(u, why)
+    u, why = codex.usage()
+    held = codex.held_for(u, why, WEEK_MAX, SESSION_MAX)
     if held:
         say_held(held, u)
         log(f"holding · {held}")
