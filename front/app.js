@@ -388,12 +388,14 @@ function setFont(name) {
     const l = document.createElement('link'); l.rel = 'stylesheet';
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
-  st.setProperty('--tf', f.family); st.setProperty('--ts', f.size + 'px'); st.setProperty('--tlead', f.lead);
+  // , and . nudge the size live, remembered per font — found by eye, then baked into fonts.js
+  const size = +(store('fsize:' + name) || f.size);
+  st.setProperty('--tf', f.family); st.setProperty('--ts', size + 'px'); st.setProperty('--tlead', f.lead);
   st.setProperty('--ttrack', f.track); st.setProperty('--tw', f.weight || 400);
   document.body.classList.toggle('rough', !!f.rough);
   $('#fontbtn').textContent = 'font: ' + name;
   store('font', name);
-  tell(`font: ${name}   ${f.size}px   [f / shift-f · shortlist]`);
+  tell(`font: ${name}   ${size}px   [f / shift-f · shortlist · , smaller · . bigger]`);
 }
 $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 // the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
@@ -409,6 +411,11 @@ function setWash() {
 function tell(msg) { const l = $('#label'); l.textContent = msg; l.style.opacity = 1; clearTimeout(l.t); l.t = setTimeout(() => l.style.opacity = 0, 1800); }
 addEventListener('keydown', e => {
   if (e.key === 'f') step(1); else if (e.key === 'F') step(-1);
+  else if (e.key === ',' || e.key === '.') {
+    const cur = +(store('fsize:' + FONT) || FONTS[FONT].size);
+    store('fsize:' + FONT, Math.max(12, Math.min(30, cur + (e.key === '.' ? .5 : -.5))));
+    setFont(FONT);
+  }
   else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }
 });
 

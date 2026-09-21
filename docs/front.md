@@ -33,6 +33,7 @@ The dream-stream front as its own project, reading eva live. Merging it into eva
 |---|---|---|
 | look | glass·dots switch; keys 1–7 | `?look=` |
 | glass blur | `[` `]` | `?gb=` |
-| font | font button (shift = back); `f` / `F` | `?font=` |
+| font | font button / `f` `F` walk the shortlist | `?font=` (any) |
+| passage size | `,` smaller · `.` bigger (per font) | — |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | screenshots | — | `?tail=N` (newest N, no scrolling) |
