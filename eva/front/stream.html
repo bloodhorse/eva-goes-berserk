@@ -156,8 +156,13 @@
      background, no underline, no box — the words themselves, in one of two gentle inks. An
      underline and a tint were tried first and both read as decoration laid over the text
      rather than as part of it. */
-  .lit-a{color:var(--lit-a);}
-  .lit-b{color:var(--lit-b);}
+  /* Half way to the body ink, not the full colour (bekh, 2026-09-21): he wants the two marks as
+     ghostly tints in the text, not as highlighter. Mixed toward --ink and not toward white so it
+     holds in the light theme too, where "closer to the text" means darker. --lit-mix is the one
+     number to turn: 100% is the full colour, 0% is no mark at all. */
+  :root{--lit-mix:50%;}
+  .lit-a{color:color-mix(in srgb, var(--lit-a) var(--lit-mix), var(--ink));}
+  .lit-b{color:color-mix(in srgb, var(--lit-b) var(--lit-mix), var(--ink));}
 
   /* The peek: the wash lifts and the painting is itself for as long as it is held. Hover on a
      desk, press-and-hold on a phone. The gradient is two stops of one colour rather than a
