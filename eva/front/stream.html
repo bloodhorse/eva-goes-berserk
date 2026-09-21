@@ -229,70 +229,50 @@
      head of its block. Same DOM either way — the passage is a grid and the reading is simply
      put in the second column — so the phone keeps it as an inset above the passage and nothing
      is rendered twice. */
+  /* Three voices, three columns, on every desktop width (bekh's picture): the dreams down the
+     centre, the sleeper's story so far on the LEFT, the reader's notes on the right.
+
+     From 900px, fluid, and ONE desktop layout. There used to be a second one between 900 and
+     1180px that put the story in a box ON TOP of the feed; bekh's window at his zoom is about
+     1000px wide, so that box was all he ever saw, and zoomed out the story was gone altogether
+     (2026-09-21: "it's gotta go on the left"). The story on top is the PHONE's answer and
+     nothing else's. The left track is 105px — he asked for it 30% narrower than the 150 it
+     had — with type small enough that it stays a trickle at 900.
+
+     The FEED is the grid, because a plated dream's band has to cross all three tracks. The
+     story is laid OVER the left track, out of the grid's flow: as a grid item it collided with
+     a plated dream, whose band spans that track too — a grid never lets two auto-placed items
+     share a cell — and the newest dream was pushed down to start BELOW the story instead of
+     beside it. Absolutely placed it starts at the top beside the newest dream, runs its own
+     length over whatever bands pass behind it, adds no height and scrolls with the page.
+
+     Pixels and not `em` for the tracks: `main` is 14px and `#feed` is 17px, so one `em` means
+     two widths and a track sized in one cannot hold a grid sized in the other. */
   @media (min-width: 900px){
-    #feed{max-width:56em;}
-    .pass{display:grid; grid-template-columns:minmax(0, 34em) minmax(0, 18em);
-      column-gap:32px; align-items:start;}
+    #feed{display:grid; grid-template-columns:105px minmax(0, 1fr); column-gap:28px;
+      max-width:1240px; margin:0 auto; padding-left:22px; padding-right:22px;
+      position:relative;}
+    #trickle{display:block; position:absolute; top:0; left:22px; z-index:2;
+      width:105px; padding:22px 0 0; margin:0;}
+    #trickle .account{font-size:12px; line-height:1.55;}
+    #feed > .pass{grid-column:2;}
+    .pass{display:grid; grid-template-columns:minmax(0, 1fr) minmax(200px, 290px);
+      column-gap:28px; align-items:start;}
     .pass > *{grid-column:1;}
     .pass > .reading{grid-column:2; grid-row:1 / -1; align-self:start; margin:0;}
+    /* A plated dream takes the whole band and lays the same three tracks inside it, so the
+       note stays where it was and the picture reaches the story's column. */
+    #feed > .pass.plated{grid-column:1 / -1;
+      grid-template-columns:105px minmax(0, 1fr) minmax(200px, 290px); column-gap:28px;}
+    #feed > .pass.plated > *{grid-column:2;}
+    #feed > .pass.plated > .reading{grid-column:3; grid-row:1 / -1;}
     /* Hover is the desk's peek; a phone has none and uses the hold below. */
     @media (hover: hover){ .pass.plated:hover{
       background-image:linear-gradient(var(--peek-a), var(--peek-b)), var(--plate); } }
-    /* A finished dream is the whole width: it is not a note about the passage beside it. */
-    .pass > .ended{grid-column:1 / -1; grid-row:auto;}
-    #dreamnow{max-width:56em;}
-  }
-
-  /* Three voices, three columns (bekh's picture, 2026-09-19): the dreams down the centre, the
-     sleeper's through-line trickling on the LEFT at about half the notes' width, the reader's
-     notes on the right. 1100px is where all three fit without the centre losing its measure —
-     below it the two-column layout above still stands, with the account panel on top.
-
-     The left column is a column of the SCROLLER, not of the feed, so it can be sticky: the
-     account is one small block that stays beside him the whole way down, because it is the
-     state of the dream and not a thing that happened at a point in the feed. */
-  /* Pixels and not `em` in this block: `main` is 14px and `#feed` is 17px, so one `em` means
-     two different widths and a track sized in the outer one cannot hold a grid sized in the
-     inner one — the notes column silently overflowed its column before this was px. */
-  /* Three voices, three columns (bekh's picture, 2026-09-19): the dreams down the centre, the
-     sleeper's account on the LEFT at about half the notes' width, the reader's notes on the
-     right. 1180px is where all three fit without the centre losing its measure — below it the
-     two-column layout above still stands, with the account panel on top.
-
-     The FEED is the grid, not `main`, because a plated dream's band has to cross all three
-     tracks (2026-09-21) and it can only do that as an item of the same grid the account is in.
-     The account spans every row from the top and is `align-self:start`, so it starts beside
-     the newest dream and flows down its own length — it is not sticky, and a band it passes
-     lies behind it (every background paints before every line of text).
-
-     Pixels and not `em`: `main` is 14px and `#feed` is 17px, so one `em` means two different
-     widths and a track sized in the outer one cannot hold a grid sized in the inner one. */
-  @media (min-width: 1180px){
-    #feed{display:grid; grid-template-columns:150px 880px; column-gap:36px;
-      justify-content:center; max-width:none; margin:0; padding-left:0; padding-right:0;
-      position:relative;}
-    /* OUT of the grid's flow, on purpose. As a grid item in the left track it collided with a
-       plated dream, whose band spans that track too: a grid never lets two auto-placed items
-       share a cell, so the newest dream was pushed down to start BELOW the story instead of
-       beside it (seen 2026-09-21). Absolutely placed over the left track it starts at the
-       top beside the newest dream, runs its own length over whatever bands pass behind it,
-       adds no height to anything and scrolls with the page. The left offset is the track's:
-       the grid is centred, so it is half of what is left of the width after 150+36+880. */
-    #trickle{display:block; position:absolute; top:0; z-index:2;
-      left:calc((100% - 1066px) / 2); width:150px; padding:22px 0 0; margin:0;}
-    #feed > .pass{grid-column:2;}
-    /* A plated dream takes the whole band and lays its own three tracks inside it, so the
-       note stays where it was and the picture reaches the account's column. */
-    #feed > .pass.plated{grid-column:1 / -1;
-      grid-template-columns:150px minmax(0, 1fr) 306px; column-gap:36px;}
-    #feed > .pass.plated > *{grid-column:2;}
-    #feed > .pass.plated > .reading{grid-column:3; grid-row:1 / -1;}
-    .pass{grid-template-columns:minmax(0, 1fr) 306px;}
     /* A finished dream belongs to the centre: it is an account, not a thing spanning the
        reader's column. */
     .pass > .ended{grid-column:1; grid-row:auto;}
-    /* The panel at the top of the feed is the phone's answer and the two-column one's. With a
-       column of its own it would be the same words twice on one screen. */
+    /* With a column of its own, the panel on top would be the same words twice. */
     #dreamnow{display:none;}
   }
 </style>

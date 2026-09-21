@@ -254,9 +254,13 @@ the code.
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
 - **On the page, three voices in three columns** (bekh's picture): the dreams down the centre,
-  the sleeper's account on the **left** at about half the notes' width, the reader's notes on
-  the right, from 1180px. The feed is the grid and not `main`, because a plated dream's band has
-  to cross all three tracks and can only do that as an item of the grid the account is in.
+  the sleeper's story on the **left**, the reader's notes on the right — **on every desktop
+  width, from 900px, fluid**. There was a second desktop layout between 900 and 1180px that put
+  the story in a box on top of the feed; his window at his zoom is about 1000px, so the box was
+  all he ever saw, and zoomed out the story vanished (2026-09-21: *"it's gotta go on the
+  left"*). The story on top is the phone's answer only. The left track is 105px — he asked for
+  30% off the 150 it had — in 12px type, so it stays a trickle at 900. The feed is the grid and
+  not `main`, because a plated dream's band has to cross all three tracks.
 - **The left column is a counterpart to the dreams, not a status box** — bekh, 2026-09-21:
   *"a counterpiece to the dream as much as the summarization, which is always there"*. The
   account **starts at the top beside the newest dream and reads downward for its own length**,
