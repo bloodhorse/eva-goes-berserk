@@ -13,6 +13,8 @@
 
 ## Screenshots (headless Helium)
 
+**After every deploy, screenshot the live page and look at it.** A probe that checks attributes can pass while the page is broken (2026-09-21: the lightbox's `display:flex` beat its `hidden` attribute and covered dreamshit.x in black; the probe said `hidden=true`).
+
 `/Applications/Helium.app/Contents/MacOS/Helium --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1400 --virtual-time-budget=5000 --screenshot=<png> <url>`
 
 - Use `--virtual-time-budget`, not `--timeout` (with `--timeout` the page's own fetches never run).

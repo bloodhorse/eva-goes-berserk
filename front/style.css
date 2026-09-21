@@ -99,6 +99,8 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
 /* double-click a dream outside its words: the painting alone, whole, full screen.
    click, double-click or esc closes */
 #lightbox { position: fixed; inset: 0; z-index: 10; background: rgba(18,18,20,.97); display: flex; align-items: center; justify-content: center; cursor: zoom-out; }
+/* display:flex above beats the hidden attribute — without this the dark overlay covers the page forever */
+#lightbox[hidden] { display: none; }
 #lightbox img { max-width: 100vw; max-height: 100vh; object-fit: contain; }
 .row.plated { cursor: zoom-in; }
 .row.plated .text, .row.plated .reading { cursor: text; }
