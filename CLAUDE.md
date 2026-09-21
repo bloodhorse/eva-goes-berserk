@@ -86,15 +86,17 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
-  - `stream/` — the dream stream: one short passage every five minutes, seed and heat by lot,
-    nobody picking, launchd's `StartInterval` for a loop; `front/stream.html` at `/stream` is
-    the phone reading it, one continuous scroll newest first. Beside it `interpreter.py`, a
-    second voice: opus writes a short note on every passage and underlines inside it what
-    touched it — those words are written in colour — its copy kept verbatim, never corrected,
-    and it is started by the worker when a dream lands; and `remembering.py`, a third
-    voice that rewrites one index-card account of the dream the passages are scenes of. Its
-    rooms, readings and ledger are **not in git** — what survives is the artifact a star
-    writes. **`eva/stream/CLAUDE.md`** is the doc and the runbook.
+  - `stream/` — the dream stream: `stream.py`, nemo writing one short passage every five
+    minutes, seed and heat by lot, nobody picking, launchd's `StartInterval` for a loop; and
+    beside it two opus voices the writer taps when a passage lands — `interpreter.py`, a reader
+    who notes every dream and marks two things in it, and `remembering.py`, the sleeper
+    rewriting one small account of the dream the passages are scenes of; `opus.py` is their one
+    door to the cli and counts their tokens. `plate.py` paints a picture for one dream through
+    codex, by hand, from the prompts in `plates/`. `front/stream.html` at `/stream` is the page:
+    the dreams down the centre, the story so far on the left, the notes on the right, a plate
+    behind its dream's whole band. Its rooms, readings, dreams, plates and ledger are **not in
+    git** — what survives is the artifact a star writes. **`eva/stream/CLAUDE.md`** is the doc
+    and the runbook.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
     env, never the real shelf:
 
@@ -171,11 +173,12 @@ GPT-2 XL, runs beside nemo for blind comparisons (`census.py --models`; Pythia 2
 and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 `ls shelf/artifacts/`; what berserk did: `shelf/berserk/ledger.jsonl`.
 
-**The dream stream** (2026-09-19) is the mission's machine, built in a day and stopped for the
-night by bekh: nemo writes a passage every five minutes by lot, an opus reader notes and colours
-every one, a second opus remembers four scenes at a time as one dream, all read at
-`https://eva.x/stream`. It is off until its writer is started again — one line, and the whole
-runbook, in `eva/stream/CLAUDE.md`:
+**The dream stream** (2026-09-19) is the mission's machine: nemo writes a passage every five
+minutes by lot, an opus reader notes every one and marks two things in it, a second opus
+remembers four scenes at a time as one dream, and a picture can be painted behind any dream by
+hand — all read at `https://eva.x/stream`. bekh stopped it after its first night and it has
+stayed off; the page and the plates work on the dreams already on the shelf. One line starts
+the writer again, and the whole runbook is in `eva/stream/CLAUDE.md`:
 
 ```bash
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
@@ -192,7 +195,7 @@ confession and one other branch kept out of forty, 9.6 bits. Keeping and saving 
 What's next is `BRIEF.md`'s agenda, in its order. Still wanted and not yet written: bekh's own
 seeds, a couple of sentences in his register, no prose from Claude, no web markers.
 
-Open, small: berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
+Open, small: the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the
 sampler, or whether a second button should write the whole fan; the cyborgism crowd (janus,
 ampdot) is reachable only by a person — every channel is invite-only, ampdot's contacts are on

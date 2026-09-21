@@ -241,7 +241,9 @@ the code.
   *"a counterpiece to the dream as much as the summarization, which is always there"*. The
   account **starts at the top beside the newest dream and reads downward for its own length**,
   flowing with the page and scrolling away. It is not sticky; it was, for two days, and that was
-  a misreading of him.
+  a misreading of him. It is laid **over** the left track, out of the grid's flow: as a grid
+  item it collided with a plated dream, whose band spans that track too, and the grid pushed
+  the newest dream down to start below the story instead of beside it.
 - **It is never blank.** With nothing live — the stream off, or the dream ended by the gap or
   the scene cap — it shows the last account there is, with its count and a quiet word beside it:
   `1 / 4 · told`. That is what `live` on the api's `dream` is for; the server falls back to the
@@ -253,7 +255,9 @@ the code.
   is the point and must never become an append.
 - A live rewrite still swaps under a soft fade. A finished dream keeps its inset in the feed
   **where it ended**, above its last scene, in the centre column — **except** the one standing
-  in the left column, or the same words are on screen twice. Two columns and the phone keep the
+  in the left column, or the same words are on screen twice. The page draws the story before
+  the passages for exactly that: the other way round, the first load cannot know which dream
+  the left column holds and shows it twice. Two columns and the phone keep the
   panel at the top of the feed, never blank there either.
 - `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), turn, of, room, text, model,
   seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and exit 0, the worker's law.
