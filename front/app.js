@@ -96,21 +96,26 @@ function buildRow(p) {
   // the name first — it's the first thing read and the thing a dream is chosen by (eva's order)
   const head = titleLine(p.name, p.verse);
   if (head) text.append(head);
-  // the seed (the found text the dream grew from) stays out of the way: a small button above
-  // the passage, opening a floating box over it (bekh: without the seed the page is right)
+  // quiet words above the passage: seed and pic. the seed (the found text the dream grew from)
+  // opens in a floating box over it (bekh: without the seed the page is right); pic opens the
+  // painting full screen, and only shows once the painting has arrived (plates land late)
+  const btns = document.createElement('div'); btns.className = 'btns';
   if (p.seed && String(p.seed).trim()) {
-    const btn = document.createElement('button'); btn.className = 'seedbtn'; btn.textContent = 'seed';
+    const btn = document.createElement('button'); btn.textContent = 'seed';
     const box = document.createElement('div'); box.className = 'seedbox'; box.hidden = true;
     box.textContent = String(p.seed).trim();
     btn.onclick = e => { e.stopPropagation(); const open = box.hidden; closeSeeds(); box.hidden = !open; };
     box.onclick = e => e.stopPropagation();
-    text.append(btn, box);
-  }
+    btns.append(btn); text.append(btns, box);
+  } else text.append(btns);
+  const pic = document.createElement('button'); pic.textContent = 'pic'; pic.hidden = true;
+  btns.append(pic);
   const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
   row.append(slot, text, reading);
-  const r = { row, reading, plateUrl: null, step: 0, target: 0 };
+  const r = { row, reading, pic, plateUrl: null, step: 0, target: 0 };
+  pic.onclick = e => { e.stopPropagation(); openPlate(r); };
   setReading(r, p.reading);
   if (p.plate) setPlate(r, p.plate);
   return r;
@@ -139,6 +144,7 @@ function setPlate(r, url) {
     cv.style.filter = LOOKS[LOOK].css || '';
   }
   r.img.src = url;
+  r.pic.hidden = false;
 }
 
 // pages come newest first; the feed reads down, oldest first
@@ -364,10 +370,11 @@ for (const b of document.querySelectorAll('#flip button[data-look]')) b.onclick 
 $('#feed').addEventListener('dblclick', e => {
   if (e.target.closest('.text, .reading, .trickle, button')) return;
   const row = e.target.closest('.row.plated'); if (!row) return;
-  const r = [...rooms.values()].find(x => x.row === row); if (!r || !r.img.src) return;
+  const r = [...rooms.values()].find(x => x.row === row); if (!r) return;
   getSelection().removeAllRanges();
-  $('#lightbox img').src = r.img.src; $('#lightbox').hidden = false;
+  openPlate(r);
 });
+function openPlate(r) { if (!r.img || !r.img.src) return; $('#lightbox img').src = r.img.src; $('#lightbox').hidden = false; }
 const closeBox = () => { $('#lightbox').hidden = true; };
 function closeSeeds() { for (const b of document.querySelectorAll('.seedbox')) b.hidden = true; }
 addEventListener('click', closeSeeds);

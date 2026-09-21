@@ -53,10 +53,14 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
 .title { margin: 0 0 .6em; font: 13px/1.5 "Courier New", monospace; letter-spacing: .15em; color: var(--ink); }
 .title .verse { font-size: 11px; letter-spacing: .2em; color: var(--ghost); font-variant-numeric: tabular-nums; }
 .trickle .title { font-size: 14px; margin-bottom: .8em; }
-/* the seed: a quiet button above the passage, the seed in a box floating over it */
-.seedbtn { display: block; margin: 0 0 .9em; padding: 0; background: none; border: 0; cursor: pointer;
+/* seed · pic: quiet words above the passage; the seed opens in a box floating over it, pic opens
+   the painting full screen. no display on the buttons themselves — it would beat their hidden
+   attribute (the lightbox bug) */
+.btns { display: flex; gap: 1.6em; margin: 0 0 .9em; }
+.btns:not(:has(button:not([hidden]))) { display: none; }
+.btns button { padding: 0; background: none; border: 0; cursor: pointer;
   font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
-.seedbtn:hover { color: var(--ink); }
+.btns button:hover { color: var(--ink); }
 .seedbox { position: absolute; left: -18px; right: -18px; top: 2.2em; z-index: 5; max-height: 55vh; overflow: auto;
   padding: 16px 18px; background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   font: 14px/1.7 "Courier New", monospace; letter-spacing: .03em; color: var(--ghost); white-space: pre-wrap; cursor: text; }
