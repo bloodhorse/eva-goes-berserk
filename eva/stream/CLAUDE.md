@@ -500,20 +500,26 @@ does not fight the words. Not somewhere else on the page — behind it. This is 
 look, it is the mechanic the front will use.
 
 **Where the prompts stand (2026-09-21, after 43 plates — 20 his, 23 pieces): every plate is made
-from the whole dream, by his prompt; `pieces` is parked, not deleted.** `plate.py`'s default is
-`--prompt bekh`, which is what the automatic painter gets too; `--prompt pieces` and
-`--prompt alternate` (whichever the newest plate did not use — the default until that evening)
-still run when asked for by name. What parked it: the pieces prompt hands the painter **only**
-the reader's two marked phrases — no text, no note, no name — and the reader is asked what
-touched it and what felt strange, never what the dream is about. The bread dream (`1721`, one
-he loved) was marked *The heel made a little mark* and *the dreams were better than the real
-thing*; the painter, told `Landscape.` on top of that, returned a high-heeled shoe on a seashore
-at sunset, and the word *bread* had never reached it. It works when a marked phrase carries its
-own object (the widows' names; a face in a door panel for *something a house might answer*, the
-single strangest plate) and fails when the mark is a feeling and the object sits elsewhere. He
-finds the idea interesting; on the table if it comes back: one line of what the dream is about
-(its name) beside the pieces. His prompt over the whole dream gave five of five good to very
-good in the first batch, looser and more painted. **Words in a picture are
+from the whole dream, and two prompts take turns** — `plate.py`'s default `--prompt alternate`
+reads the newest plate on the shelf and uses the other one, which is what the automatic painter
+gets too. `bekh` is his *abstract interpretation* line; `attic` (`plates/prompt-attic.txt`) is
+the unsigned attic painting with a `{hand}` by lot — *paint what it leaves behind… the things in
+it can be partial, out of scale, in the wrong place*. Each file's own slot decides what the
+painter is shown (`{text}` the dream verbatim, `{pieces}` the marked phrases). **`pieces` is
+parked, not deleted**, and runs only when asked for by name. It is where `attic` came from: the
+same prompt, but handing the painter **only** the reader's two marked phrases — no text, no
+note, no name — and the reader is asked what touched it and what felt strange, never what the
+dream is about. The bread dream (`1721`, one he loved) was marked *The heel made a little mark*
+and *the dreams were better than the real thing*; the painter, told `Landscape.` on top of that,
+returned a high-heeled shoe on a seashore at sunset, and the word *bread* had never reached it.
+Repainted from the whole text it came back a torn loaf, crumbs, a heel print and a broom's
+sweep. bekh liked many of the pieces plates (the widows' names; a face in a door panel for
+*something a house might answer*, the single strangest one), and the bet behind `attic` is that
+the paint-first wording and the hand made them, not the starvation. Untested, shipped on his
+word without a side-by-side. **The thing to watch**: pieces was built because a full text once
+came back as an inventory, and the repainted bread plate is already close to one — every noun
+present. If he finds it interesting again: one line of what the dream is about (its name)
+beside the pieces. **Words in a picture are
 allowed**: one plate lettered the dream's own lines onto the canvas (the widows' names) and it
 was one of his favourites — another dimension, where it fits; rare; nothing in either prompt
 pushes for or against it, and no lettering clause goes back in. **The 16-bit pixel hand is
@@ -563,8 +569,9 @@ uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1647
 uv run --python 3.12 eva/stream/plate.py --room stream/2026-09-19/1437 --prompt bekh --from a.png
 ```
 
-- **The prompt files are bekh's**, filled and never rewritten: `plates/prompt-pieces.txt` (the
-  default) and `plates/prompt-bekh.txt`, with `{hand}` drawn by lot from `plates/hands.txt`
+- **The prompt files are bekh's**, filled and never rewritten: `plates/prompt-bekh.txt` and
+  `plates/prompt-attic.txt` (the two that take turns) and `plates/prompt-pieces.txt` (parked),
+  with `{hand}` drawn by lot from `plates/hands.txt`
   unless `--hand` says otherwise. The paragraph telling codex to use its image tool and save
   `plate.png` is appended **after** the file by the code — the file he reads is the prompt, and
   nothing about saving a png belongs in it.

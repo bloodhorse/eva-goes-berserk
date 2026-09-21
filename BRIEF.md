@@ -253,11 +253,13 @@ shape — now.
      standing inside*. A 15-word minimum was added that hour and taken out again because of it —
      a stub is a dream; only the painter skips anything under 15 words. The first day's reading
      (opus read all 145; bekh loved about 80% of its picks) is `docs/ledgers/stream-2026-09-19.md`.
-   - **Plates.** Every plate is made by his prompt, *abstract interpretation* over the whole
-     dream. The second prompt — a painting from only the reader's two marked phrases, with a
-     *hand* by lot — is **parked** since 2026-09-21: the marks say what touched the reader, not
-     what the dream is about, and the bread dream he loved came back a high-heeled shoe on a
-     seashore (the story is in the stream doc; `--prompt pieces` still runs by name). Palette
+   - **Plates.** Two prompts take turns, both handed the whole dream: his *abstract
+     interpretation*, and `attic` — an unsigned attic painting with a *hand* by lot (shipped
+     2026-09-21 on his word, no side-by-side yet; watch for plates that illustrate every noun).
+     The attic's ancestor, `pieces` — the same painting from only the reader's two marked
+     phrases — is **parked**: the marks say what touched the reader, not what the dream is
+     about, and the bread dream he loved came back a high-heeled shoe on a seashore (the story
+     is in the stream doc; `--prompt pieces` still runs by name). Palette
      magenta, neon, cyan; words in a picture are allowed; the pixel hand is out. **The cost is the
      limit**: a plate is ~0.65 points of the codex week and the FIVE-HOUR window is the real
      ceiling (22 plates in 90 minutes tripped it at 80% with the week at 19%), about twenty

@@ -11,15 +11,18 @@ room at a time, and a failure is a message and a non-zero exit rather than a led
 shrug. That is the opposite of every other stance here and it is deliberate.
 
 The picture is drawn by GPT through `codex exec`, which is the only image generator on this mac
-with a hand worth using (`~/.claude/docs/codex.md`). The prompt is `plates/prompt-pieces.txt` or
-`plates/prompt-bekh.txt` — bekh's files, filled here and never rewritten — plus one paragraph of
-delivery plumbing appended after them, which is his rule everywhere: the file he reads is the
-prompt, and nothing about saving a png belongs in it.
+with a hand worth using (`~/.claude/docs/codex.md`). The prompt is one of the files in `plates/`
+— `prompt-bekh.txt`, `prompt-attic.txt`, `prompt-pieces.txt`, bekh's files, filled here and never
+rewritten — plus one paragraph of delivery plumbing appended after them, which is his rule
+everywhere: the file he reads is the prompt, and nothing about saving a png belongs in it.
 
-**Pieces, not the whole dream.** The default prompt is built from what the interpreter
-underlined in that room: a drawing model is not a reading model, and the full text came back as
-an inventory. With no reading, or nothing marked, it falls back to `bekh` over the dream
-verbatim and says so.
+**The whole dream, two prompts taking turns** (bekh, 2026-09-21). `bekh` is his *abstract
+interpretation* line; `attic` is the unsigned attic painting with a hand by lot. Both are handed
+the dream verbatim. `pieces` is where `attic` came from and is parked: it hands the painter only
+what the interpreter underlined, and the interpreter underlines what touched it, never what the
+dream is about — the bread dream's pieces were a heel and a feeling, and it came back a
+high-heeled shoe on a seashore. It was built because a full text once came back as an inventory;
+watch for that. Asked for by name with nothing marked, it falls back to `bekh` and says so.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_PLATE_TIMEOUT (600), CODEX (the cli's name, for
 the tests' stub).
@@ -115,10 +118,9 @@ def hands() -> list[str]:
 def brief_for(page: dict, which: str, hand: str, pieces: list[str]) -> str:
     with open(os.path.join(PROMPTS, f"prompt-{which}.txt"), encoding="utf-8") as f:
         body = f.read()
-    if which == "pieces":
-        body = body.replace("{pieces}", "\n".join(pieces))
-    else:
-        body = body.replace("{text}", page.get("text") or "")
+    # Whichever slot the file has is filled: the file decides what the painter is shown.
+    body = body.replace("{pieces}", "\n".join(pieces))
+    body = body.replace("{text}", page.get("text") or "")
     body = body.replace("{hand}", hand)
     return body.rstrip("\n") + PLUMBING
 
@@ -200,15 +202,11 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="plate.py", description=__doc__.splitlines()[0],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--room", required=True, help="stream/<YYYY-MM-DD>/<HHMM>")
-    # bekh, 2026-09-21: every plate is made from the whole dream. `pieces` is parked, not gone —
-    # it hands the painter only the reader's two marked phrases, and the reader marks what
-    # touched it, never what the dream is about: the bread dream's pieces were a heel and a
-    # feeling, and it came back a high-heeled shoe on a seashore. `pieces` and `alternate` still
-    # run when asked for by name.
-    ap.add_argument("--prompt", choices=("alternate", "pieces", "bekh"), default="bekh",
-                    help="bekh = the whole dream (the default); pieces = only the reader's "
-                         "marked phrases (parked); alternate = whichever the newest plate did "
-                         "NOT use")
+    ap.add_argument("--prompt", choices=("alternate", "bekh", "attic", "pieces"),
+                    default="alternate",
+                    help="alternate = bekh or attic, whichever the newest plate did NOT use "
+                         "(the default); both get the whole dream. pieces = only the reader's "
+                         "marked phrases (parked)")
     ap.add_argument("--hand", default="", help="a line from plates/hands.txt; by lot if absent")
     ap.add_argument("--from", dest="src", default="",
                     help="file an existing png instead of drawing one (no codex call)")
@@ -227,10 +225,11 @@ def main(argv: list[str]) -> int:
 
     which, pieces = a.prompt, pieces_for(a.room)
     if which == "alternate":
-        # bekh, 2026-09-20, after fourteen plates with almost no duds: both prompts stay and
-        # they take turns — he won't pick a winner until we understand why both work. The turn
-        # is read off the newest plate on the shelf, so a batch and a single hand run agree.
-        which = "bekh" if newest_prompt() == "pieces" else "pieces"
+        # Two prompts take turns and he won't pick a winner until we understand why both work
+        # (bekh, 2026-09-20; since 2026-09-21 the second is `attic`, not `pieces`). The turn is
+        # read off the newest plate on the shelf, so a batch and a single hand run agree. A
+        # newest plate made with `pieces` counts as the attic's turn taken: it is its ancestor.
+        which = "bekh" if newest_prompt() in ("attic", "pieces") else "attic"
     fell_back = False
     if which == "pieces" and not pieces:
         # Said out loud and written into the json: a plate made from the whole text is a

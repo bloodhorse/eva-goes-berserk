@@ -1908,6 +1908,26 @@ class Plates(unittest.TestCase):
         d = json.load(open(plate.plate_paths(room)[2], encoding="utf-8"))
         self.assertEqual((d["prompt"], d["fell_back"]), ("bekh", True))
 
+    def test_the_default_takes_turns_between_the_two_whole_dream_prompts(self):
+        # Marks on the room on purpose: neither prompt may see them, only the dream verbatim.
+        seen = []
+        for hhmm in ("1006", "1007", "1008"):
+            room = f"stream/2026-09-19/{hhmm}"
+            make_page(room, "seed\n", f"THE WHOLE DREAM {hhmm}")
+            f = self.fake()
+            code, out = make_plate(f, "--room", room, "--hand", "A test hand.")
+            self.assertEqual(code, 0, out)
+            brief = read_text(f["log"])
+            self.assertIn(f"THE WHOLE DREAM {hhmm}", brief)
+            self.assertNotIn("{text}", brief)
+            d = json.load(open(plate.plate_paths(room)[2], encoding="utf-8"))
+            seen.append(d["prompt"])
+            # the hand belongs to the attic's file alone; his has no slot for one
+            self.assertEqual("A test hand." in brief, d["prompt"] == "attic")
+        self.assertEqual(sorted(set(seen)), ["attic", "bekh"])
+        self.assertNotEqual(seen[0], seen[1])
+        self.assertNotEqual(seen[1], seen[2])
+
     def test_from_files_an_existing_png_without_asking_codex(self):
         room = "stream/2026-09-19/1010"
         make_page(room, "seed\n", "a dream.")
