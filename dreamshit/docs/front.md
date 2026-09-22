@@ -1,6 +1,6 @@
 # front — the project (`front/`)
 
-The dream-stream front as its own project, reading eva live. Merging it into eva's own page comes later, on our terms — so: plain html/css/js, no build step, merge = copy-paste, not a port.
+The dream-stream front, reading eva live. Plain html/css/js, no build step: whatever sits in `front/` is the site.
 
 ## Where it runs
 
@@ -8,7 +8,7 @@ The dream-stream front as its own project, reading eva live. Merging it into eva
 - **Deploy:** `front/deploy.sh` (rsyncs the page files, prints the status code). New page file → add it to the rsync list.
 - **Caddy rollback** (backup made when dreamshit.x was added):
   `ssh bek@miniarch 'sudo cp /etc/caddy/Caddyfile.bak-pre-dreamshit /etc/caddy/Caddyfile && sudo systemctl reload caddy'`
-- **Local:** `.venv/bin/python front/serve.py` → `http://127.0.0.1:8766/`. Serves the folder and forwards the same two paths to eva.x server-side, verifying eva against `front/eva-root.crt` (the mini's public Caddy root).
+- **Local:** `uv run --python 3.12 front/serve.py` (from `dreamshit/`; stdlib only) → `http://127.0.0.1:8766/`. Serves the folder and forwards the same two paths to eva.x server-side, verifying eva against `front/eva-root.crt` (the mini's public Caddy root).
 
 ## Files
 

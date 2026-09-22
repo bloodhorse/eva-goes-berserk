@@ -8,8 +8,8 @@ a cross-origin picture taints the canvas and the look silently shows nothing).
 eva.x is signed by the mini's own Caddy CA; eva-root.crt (public, pulled from the mini)
 lets us verify it properly instead of switching TLS checks off.
 
-run (from the repo root, via the project's uv venv):
-  .venv/bin/python front/serve.py        →  http://127.0.0.1:8766/
+run (from dreamshit/, stdlib only):
+  uv run --python 3.12 front/serve.py        →  http://127.0.0.1:8766/
 stdlib only, no packages.
 """
 import http.server

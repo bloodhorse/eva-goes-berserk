@@ -1,16 +1,10 @@
 # the stream — what the front serves
 
-The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on the mac, a read-only mirror on the mini). The front never writes to it.
+The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on the mac, a read-only mirror on the mini). The front never writes to it. **How it's made lives once, in `../eva/stream/CLAUDE.md`** — the writer (top), the interpreter ("The interpreter"), the sleeper who retells the story ("The sleeper remembering"), the plates ("Plates"); the root `CLAUDE.md` map says how the names and numbers work. This file keeps only the front's side: what arrives, and how it must be shown.
 
-## Shape
+## Shape, as the front uses it
 
-- A **passage** lands roughly every 5 minutes. A **dream** (story) is 4 passages ("turn n of 4").
-- Three voices per passage, three columns:
-  - **trickle** (bekh's word) — the dream so far, retold; grows each turn. One per dream, not per passage.
-  - **text** — the passage itself.
-  - **reading** — an interpreter's reading of the passage.
-- Each passage should get a **plate** (picture), painted by ChatGPT via codex, usually minutes after its text. Codex budget limits how many get painted, so many passages have none yet.
-- Pictures today: palette-knife oil paintings in bekh's house palette.
+A **passage** every ~5 minutes; a **dream** (story) is 4 of them. Three voices, three columns: the **trickle** (bekh's word — the sleeper's retelling of the story so far, one per dream, growing each turn) on the left, the **text** in the centre, the **reading** (the interpreter's note) on the right. A **plate** (painting) arrives minutes after its text, or never — the painter runs under a codex budget.
 
 ## API
 

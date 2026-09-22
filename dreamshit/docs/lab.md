@@ -5,11 +5,11 @@
 - `index.html` — first sketch: four auto-scrolling columns over procedural moon/water/pylon placeholders, live decay (`?fast=20`).
 - `three.html` — blind phase: three parallax columns with bekh's pasted text, one test picture (`sketch/pic/test.jpg`, macOS Sonoma wallpaper, git-ignored), five hand filters on keys 1–5.
 - `stream.html` — a snapshot of the real stream with the looks on keys 1–7 (`?mat=`, `?gb=`, `?skip=N`). Snapshot in `sketch/data/` (git-ignored): `stream.json` from the API, `stream.js` = `window.STREAM = <json>;`, plates in `data/plate/`.
-- Pages that read pixels must be served over http: `cd sketch && ../.venv/bin/python -m http.server 8765` (under `file://` the canvas is tainted and pictures vanish silently).
+- Pages that read pixels must be served over http: `cd sketch && uv run --python 3.12 -m http.server 8765` (under `file://` the canvas is tainted and pictures vanish silently).
 
 ## Tools
 
-- `tools/crush.py` — image → palette + bayer dither + transparency. `tools/placeholders.py` — the procedural placeholder images. Python only via uv: `.venv/bin/python`.
+- `tools/crush.py` — image → palette + bayer dither + transparency. `tools/placeholders.py` — the procedural placeholder images. Python only via uv, no venv: `uv run --python 3.12 --with pillow --with numpy tools/crush.py …`.
 
 ## Screenshots (headless Helium)
 

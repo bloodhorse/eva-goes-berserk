@@ -1,8 +1,8 @@
-# dream engine (dreamst)
+# dreamshit — the dream stream's published face
 
 The front for bekh's dream stream. In eva, a machine dreams out loud: every ~5 minutes a new passage of a four-part dream, with a retelling of the dream so far (the **trickle**), an interpreter's **reading**, and a painting per passage. This project is how that stream is *read*: three voices in three columns, paintings living behind the words, a CRT / wired / lain-adjacent atmosphere that is its own thing, and above all effortless reading. Everything in a dream is made by neural networks (LLMs write, ChatGPT paints via codex); our job is the room it's read in.
 
-It lives as its own project (`front/`, live at `https://dreamshit.x`), reading eva without touching it. Merging into eva's own page comes later.
+It lives in eva-goes-berserk as `dreamshit/`, beside `eva/`, `shelf/` and `docs/` — not the instrument (`eva/` is the lab bench) and not text for us, but the published face, named after the door: `dreamshit.net`, bekh's domain (the public deploy is still to be designed; today it runs at `https://dreamshit.x` on the tailnet). It reads eva's stream and never writes to it. Moved in from its own repo `~/tower/forge/dreamst` on 2026-09-22 by `git subtree`, history kept. A session here doesn't need the root `BRIEF.md`; the root `CLAUDE.md` map is worth having — the front should know what a room, a mark and a plate are. eva's own `/stream` page stays as the placeholder until this front does everything it does.
 
 ## How we work here
 
@@ -12,7 +12,7 @@ Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for
 
 ## Docs — open what the task needs
 
-- `docs/stream.md` — the source: passage/dream shape, the API, eva's text rules (marks, trimming), the house palette.
+- `docs/stream.md` — the source as the front sees it: the API shape, the display rules (marks, trimming), the house palette; pointers into eva for the producer side.
 - `docs/front.md` — the project: where it runs, deploy and rollback, files, packs and the trickle, focus, every knob.
 - `docs/looks.md` — pictures: style-in-the-glass principle, the look presets with verdicts, the wash, parked neural filters.
 - `docs/reading.md` — type and calm: the no-motion rule, the font search, why wash and font are coupled.

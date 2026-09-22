@@ -68,8 +68,8 @@ cost guard, rent the pipe not the card).
 
 ## Where things are
 
-Three folders at the root: `eva/` is code, `shelf/` is text the code reads and writes, `docs/` is
-text for us. Each part of `eva/` that needs its own doc has one next to it; this file is the map.
+Four folders at the root: `eva/` is code, `shelf/` is text the code reads and writes, `docs/` is
+text for us, `dreamshit/` is the published face. Each part of `eva/` that needs its own doc has one next to it; this file is the map.
 
 - **`eva/`** — the instrument, one code tree in four stances. **`eva/CLAUDE.md`** is the doc: the
   page, the server, the repl, tests, screenshots, the launchd agents, the model on the mac.
@@ -137,6 +137,8 @@ text for us. Each part of `eva/` that needs its own doc has one next to it; this
   models. `brief-storyloom.md`: the brief handed to an outside model to work the loom blind;
   `storyloom-20260916/` is what came back. `harvest/`: the two scripts that built the anthologies
   (provenance, not an instrument).
+- **`dreamshit/`** — the dream stream's published face (`dreamshit.net`; today `https://dreamshit.x`): the
+  front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
   seat, the ten-model wire, why a base model is the next question.
 
