@@ -53,17 +53,30 @@ const FONTS = {
 // looks: tried ones stay, never deleted, because a verdict on one page can flip on another.
 // Only the passage wears it — labels, names, trickle, reading and seed keep the house palette.
 // The key is what `tell()` says on hover, so it reads as a name, not a hex.
+// the passage inks, read against the room (2026-09-22, my pick on bekh's ask): the ground is
+// neutral charcoal #232323, the plates are magenta / neon / cyan washed to about a quarter,
+// the chrome is blue-white and steel. so an ink belongs here when it is light (every one of
+// these clears 9:1 on the charcoal), cold or screen-lit, and near a colour the room already
+// has. ordered cold → warm. the loud ones (phosphor, amber, ember) vibrate on a magenta plate
+// and want more wash (W); the whispers (ash, ghost) put the passage at the notes' level.
 const INKS = {
+  'white':     '#ffffff',   // the reference, harsh on charcoal
+  'salt':      '#eef1f6',   // colder and brighter than ink, same cast
   'ink':       '#d4e3fe',   // the default — eva's own ink
-  'white':     '#ffffff',
-  'pink':      '#f29bea',
-  'pale pink': '#f5c8fe',
-  'cyan':      '#7fe3f5',
-  'pale cyan': '#c6f1fe',
-  'ghost':     '#7d8a9c',
-  'paper':     '#e8dcc8',   // a warm off-white
-  'bone':      '#d9d4c7',
-  'ember':     '#f0a070',
+  'ash':       '#b4bcc8',   // a whisper: quieter than ink, louder than the notes
+  'ghost':     '#aab5c7',   // the side voices' own colour — the passage as quiet as they are
+  'moth':      '#d9cdf0',   // ink pulled toward the accent; native on the violet plates
+  'pale pink': '#f5c8fe',   // the accent
+  'pink':      '#f29bea',   // the reader's magenta
+  'rose':      '#e8b4c8',   // dusky, between pink and paper
+  'pale cyan': '#c6f1fe',   // the live dot
+  'cyan':      '#7fe3f5',   // the reader's cyan
+  'mint':      '#c4ecd8',   // cold green, a tv on standby
+  'phosphor':  '#b8f0b0',   // the green crt phosphor, lain's register
+  'amber':     '#f2c777',   // the amber terminal phosphor, the warmest screen light
+  'paper':     '#e8dcc8',   // a warm off-white, a book page
+  'bone':      '#d9d4c7',   // paper gone grey
+  'ember':     '#f0a070',   // the hot one
 };
 const DEFAULT_INK = INKS.ink;
 
