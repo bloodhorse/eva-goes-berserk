@@ -42,8 +42,14 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
   per binary search per dream. Re-measured whenever a row can have moved: a resize, a scene
   landing, a reading landing late, `,` `.` `t` `T`, the webfont arriving. The thread is lifted
   out of the row's flow (`position: absolute`) on purpose: in the flow it would grow the row it
-  hangs from, which would grow the pack it is being measured against. Verdict pending; the shots
-  are `shots/stretch/`.
+  hangs from, which would grow the pack it is being measured against. **`?align=dreams` is the
+  same mode with the drip lined up to the scenes** (`even`, the default, is the drip above): the
+  seams are kept instead of joined, part n hangs in passage n's own slot as in parts mode, one
+  width for the whole pack (the widest word in the *whole* telling, or the parts would step in
+  and out down the dream) and dial 1 skipped — each part goes straight to one word a line and
+  gets its own leading, so it lands on the bottom of its own scene; a part with more words than
+  the tightest leading holds runs on into the next. A telling with no seam has nothing to line
+  up and is `even` either way. Verdict pending; the shots are `shots/stretch/`.
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
@@ -61,4 +67,5 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 | passage weight | `t` thinner · `T` thicker, steps of 50 (per font; moves only on a variable face — newsreader loads 200–800) | `?fw=300` |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | trickle mode | `g` toggles parts ↔ stretch | `?trickle=parts\|stretch` |
+| stretch's drip | — (an experiment, no key) | `?align=even\|dreams` |
 | screenshots | — | `?tail=N` (newest N, no scrolling) · `?only=<room>` (one passage, waits for its font) |

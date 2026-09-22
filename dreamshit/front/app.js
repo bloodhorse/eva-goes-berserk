@@ -192,17 +192,20 @@ const verseTurn = v => { const m = /:(\d+)\s*$/.exec(v || ''); return m ? +m[1] 
 // neither is an error: a missing part leaves that row bare, a surplus one is appended to the
 // last passage's, and a telling with no mark at all sits whole beside the first passage — which
 // is what the page did before the seams existed, so nothing changes for the older dreams.
-// stretch — bekh's fallback (2026-09-22): the seams are ignored, the whole telling stands as one
-// thread beside the first passage and is narrowed until it reaches the bottom of the last one.
+// stretch — bekh's fallback (2026-09-22): the telling is stretched to reach the end of its dream.
+// `align=even` joins the seams up and drips one thread down the whole pack; `align=dreams` keeps
+// them and hangs each part from its own scene, one column wide, each part paced to its own row.
+// A telling with no seam in it has nothing to line up, so it is even either way.
 function drawPack(pack, story) {
   if (!pack.slots.length) return;
   const stretch = TRICKLE === 'stretch' && innerWidth > PHONE;   // one column has no room for it
   const parts = story ? partsOf(story) : [];
   const last = pack.slots.length - 1;
+  pack.aligned = stretch && ALIGN === 'dreams' && parts.length > 1;
   pack.el.classList.toggle('stretch', stretch);
   pack.slots.forEach((s, i) => {
     let text;
-    if (stretch) text = i ? '' : parts.join(' ');
+    if (stretch && !pack.aligned) text = i ? '' : parts.join(' ');
     else {
       const n = parts.length > 1 ? s.turn : (i === 0 ? 1 : 0);
       text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
@@ -271,27 +274,68 @@ function fit(text, avail, full) {
   }
   return { w: floor, lh: +lo.toFixed(2), one: true };
 }
-// every stretched pack at once, reads first and writes after: a width written to one thread
-// dirties the layout, so interleaving would cost a full reflow per pack instead of one.
-function fitAll() {
-  const room = [];
-  for (const pack of packs.values()) {
-    if (!pack.slots.length || !pack.el.classList.contains('stretch')) continue;
-    const flow = flowOf(pack.slots[0].el), trickle = pack.slots[0].el;
-    if (!flow || !flow.textContent) continue;
-    const bottom = pack.slots[pack.slots.length - 1].row.getBoundingClientRect().bottom;
-    room.push({ flow, avail: bottom - flow.getBoundingClientRect().top, full: trickle.clientWidth });
-  }
-  for (const r of room) {
-    if (r.full <= 0) continue;
-    const { w, lh, one } = fit(r.flow.textContent, r.avail, r.full);
-    r.flow.style.width = w + 'px';
-    r.flow.style.lineHeight = lh === LEAD ? '' : lh;
-    r.flow.style.wordSpacing = one ? ONE_WORD : '';
-  }
+// align=dreams: one straight column down the whole pack, so the width is the widest word in the
+// WHOLE telling, not each part's own — parts would otherwise step in and out as the dream goes.
+function widestWord(texts, full) {
+  probe.style.lineHeight = ''; probe.style.wordSpacing = '';
+  probe.style.width = '4ch';
+  let w = probe.offsetWidth;
+  for (const t of texts) { probe.textContent = t; probe.style.width = 'min-content'; w = Math.max(w, probe.offsetWidth); }
+  return Math.min(full, w);
 }
+// ...and then each part gets its own leading, so it lands on the bottom of its own scene. Dial 1
+// is skipped here: a part is a dozen words and a per-row fit needs them one to a line anyway.
+// More words than the tightest leading can hold and the part simply runs on into the next scene.
+function fitLead(text, avail, w) {
+  probe.textContent = text;
+  probe.style.width = w + 'px';
+  probe.style.wordSpacing = ONE_WORD;
+  const tall = lh => { probe.style.lineHeight = lh; return probe.offsetHeight; };
+  if (tall(LEAD_MIN) > avail) return LEAD_MIN;
+  if (tall(LEAD_MAX) <= avail) return LEAD_MAX;
+  let lo = LEAD_MIN, hi = LEAD_MAX;                     // lo always fits, hi never does
+  for (let i = 0; i < 12 && hi - lo > .02; i++) {
+    const mid = (lo + hi) / 2;
+    if (tall(mid) <= avail) lo = mid; else hi = mid;
+  }
+  return +lo.toFixed(2);
+}
+const dress = (flow, w, lh, one) => {
+  flow.style.width = w + 'px';
+  flow.style.lineHeight = lh === LEAD ? '' : lh;
+  flow.style.wordSpacing = one ? ONE_WORD : '';
+};
 // back to the column's own width, leading and word gap
 const bare = flow => { flow.style.width = flow.style.lineHeight = flow.style.wordSpacing = ''; };
+// every stretched pack at once, and all the geometry read before any of it is probed: a width
+// written to one thread dirties the layout, so interleaving would cost a reflow per dream.
+function fitAll() {
+  const jobs = [];
+  for (const pack of packs.values()) {
+    if (!pack.slots.length || !pack.el.classList.contains('stretch')) continue;
+    const full = pack.slots[0].el.clientWidth;
+    if (full <= 0) continue;
+    const last = pack.slots[pack.slots.length - 1].row;
+    const lines = [];
+    for (const s of pack.slots) {
+      const flow = flowOf(s.el);
+      if (!flow || !flow.textContent) continue;
+      // even reaches for the end of the dream, dreams for the end of the scene it hangs from
+      const bottom = (pack.aligned ? s.row : last).getBoundingClientRect().bottom;
+      lines.push({ flow, avail: bottom - flow.getBoundingClientRect().top });
+    }
+    if (lines.length) jobs.push({ aligned: pack.aligned, full, lines });
+  }
+  for (const j of jobs) {
+    if (!j.aligned) {
+      const { w, lh, one } = fit(j.lines[0].flow.textContent, j.lines[0].avail, j.full);
+      dress(j.lines[0].flow, w, lh, one);
+      continue;
+    }
+    const w = widestWord(j.lines.map(l => l.flow.textContent), j.full);
+    for (const l of j.lines) dress(l.flow, w, fitLead(l.flow.textContent, l.avail, w), true);
+  }
+}
 // anything that moves a row moves the bottom the thread is reaching for: a resize, a new scene,
 // a reading landing late, the passage font changing size or weight, the webfont arriving.
 let refitting = 0;
@@ -594,6 +638,12 @@ const TRICKLE_MODES = ['parts', 'stretch'];
 let TRICKLE = TRICKLE_MODES.includes(params.get('trickle')) ? params.get('trickle')
   : TRICKLE_MODES.includes(store('trickle')) ? store('trickle') : 'parts';
 store('trickle', TRICKLE);   // the url wins once and then sticks, like look and font
+// stretch's own sub-knob: does the drip run evenly down the whole dream, or does each part of
+// the telling line up with the scene it belongs to? No key — it is an experiment, not a dial.
+const ALIGNS = ['even', 'dreams'];
+const ALIGN = ALIGNS.includes(params.get('align')) ? params.get('align')
+  : ALIGNS.includes(store('align')) ? store('align') : 'even';
+store('align', ALIGN);
 function setTrickleMode(m) {
   TRICKLE = m; store('trickle', m);
   for (const pack of packs.values()) drawPack(pack, pack.story);
