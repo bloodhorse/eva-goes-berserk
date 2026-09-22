@@ -25,19 +25,25 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 - **Packs:** one per dream. Rows are 3-column grids (`slot | text | reading`), and **the trickle is cut into parts, one beside each passage** (bekh, 2026-09-22): the sleeper marks his seams with `|`, `story.parts` is the telling split there, and part n goes into passage n's own `slot` cell, top-aligned with it, 60% of the column, centred. The dream's header (`chapter · title`) sits once, above part 1. There is no rail and nothing is measured — the grid places it. Mismatches are not errors: fewer parts than passages leaves the later rows bare, a surplus is appended to the last passage's part, and one part (no marks at all — every dream on the shelf from before this) sits whole beside the first passage, which is what the page did before. A scene landing rewrites the whole telling, so **every part of that pack is redrawn**, on the event refetch and on the slow poll alike. `?tail` / `?only` follow the same rule.
 - **The trickle has two modes**, `?trickle=` / key `g`. **`parts`** is the default, above.
   **`stretch`** is bekh's fallback idea (2026-09-22): the seams are ignored, the whole telling
-  stands as *one* thread in the first passage's slot, and its column is made **as narrow as it
-  needs to be to reach the bottom of the dream's last passage** — the column's full 60% beside a
-  single scene, a thread of two or three words a line beside four. The header (`chapter · title`)
-  stays above it at the normal width. The width is measured, not guessed: an offscreen twin of
-  the column is handed a width and asked how tall it comes out, ~10 of those in a binary search
-  per dream, between a floor of one word per line (the telling's widest word, never under 4
-  characters, so the thread can't spill into the passage) and the column's full width. A telling
-  too short to reach the bottom even at the floor stays at the floor; one too long for the full
-  width keeps the full width and runs past the bottom — nothing is clipped. Re-measured whenever
-  a row can have moved: a resize, a scene landing, a reading landing late, `,` `.` `t` `T`, the
-  webfont arriving. The thread is lifted out of the row's flow (`position: absolute`) on purpose:
-  in the flow it would grow the row it hangs from, which would grow the pack it is being measured
-  against. Verdict pending; the shots are `shots/stretch/`.
+  stands as *one* thread in the first passage's slot, stretched to **reach the bottom of the
+  dream's last passage**. The header (`chapter · title`) stays above it at the normal width.
+  **Three dials, each moving only when the one before it ran out: narrow the column, then one
+  word to a line, then open the leading.** So a 45-word telling beside four scenes becomes a
+  column of single words paced down the whole dream, while the same telling beside one scene is
+  just the full-width block it always was. The floor of dial 1 is the telling's widest word
+  (`min-content`), never under 4 characters, so the thread can't spill sideways into the
+  passage; dial 2 is a `word-spacing` wider than any column, which turns every space into a
+  break; dial 3 searches the leading (on the words alone, so the header keeps its own) and goes
+  below 1.7 as well as up to 14 — breaking every space can overshoot a room that normal wrapping
+  fell short of, and the one-word-a-line is not given back to save a line. A telling too long for
+  even the full width keeps the full width and runs past the bottom; nothing is clipped. It is
+  all measured, never guessed: an offscreen twin of the column, wearing whichever dials the real
+  thread will wear, is handed a width or a leading and asked how tall it comes out, ~10 of those
+  per binary search per dream. Re-measured whenever a row can have moved: a resize, a scene
+  landing, a reading landing late, `,` `.` `t` `T`, the webfont arriving. The thread is lifted
+  out of the row's flow (`position: absolute`) on purpose: in the flow it would grow the row it
+  hangs from, which would grow the pack it is being measured against. Verdict pending; the shots
+  are `shots/stretch/`.
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.

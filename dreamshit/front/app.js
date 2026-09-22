@@ -208,40 +208,68 @@ function drawPack(pack, story) {
       text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
     }
     setTrickle(s.el, story, text, i === 0);
-    if (!stretch) flowOf(s.el).style.width = '';   // back to the column's own width
+    if (!stretch) bare(flowOf(s.el));
     // on a phone an empty cell would still cost a row gap above its passage
     s.el.parentNode.classList.toggle('has', !!(text || (i === 0 && story && story.title)));
   });
   if (stretch) refit();
 }
 
-// ---- stretch: the thread narrowed to reach the end of its dream ---------------------------
+// ---- stretch: the thread stretched to reach the end of its dream ---------------------------
 // bekh (2026-09-22): "as narrow as it needs to be to reach the end of the existing story" —
 // widest beside a single scene, a thread beside four. Nothing in the text says how wide that is,
 // so it is measured, not guessed: an offscreen twin of the column is handed a width and asked
-// how tall it comes out, ~10 times per pack in a binary search. The twin is offscreen on purpose
+// how tall it comes out, ~10 times per dream in a binary search. The twin is offscreen on purpose
 // — probing the real column would dirty the page's layout on every step of every search.
+//
+// THREE DIALS, IN ORDER (bekh, 2026-09-22, once the real tellings showed up): narrow it, then
+// one word to a line, then spread the lines. A real telling is 40–60 words, and 50 words one to
+// a line reach about one passage — no width on earth gets them to the bottom of a four-scene
+// dream. So each dial only moves when the one before it ran out: the width stops at the widest
+// word, every space becomes a line break, and last the LEADING opens until the final word lands
+// on the bottom — a word, a gap, a word, running the whole height of the dream. The leading and
+// the word gap are set on the words alone, never on the trickle, so the header keeps its own.
 const PHONE = 820;           // the one-column breakpoint in style.css
+const LEAD = 1.7;            // .trickle's own leading in style.css
+const LEAD_MIN = .9, LEAD_MAX = 14;   // how close and how far apart the drops ever go
+const ONE_WORD = '100vw';    // a word gap wider than any column: every space becomes a break
 const probe = (() => {
   const t = document.createElement('div'); t.className = 'trickle probe';
   const f = document.createElement('div'); f.className = 'flow';
   t.appendChild(f); document.body.appendChild(t); return f;
 })();
-// the floor is bekh's "one word in a line": min-content is the widest unbreakable word, so the
-// thread never spills sideways into the passage. 4 characters is the floor's own floor.
-function fitWidth(text, avail, full) {
+// the floor is the telling's widest word (min-content), never under 4 characters — narrower than
+// that and the words hang out of the column and into the passage. Measuring is the whole trick,
+// so the probe wears every dial the real thread will wear before it is asked for a height.
+function fit(text, avail, full) {
   probe.textContent = text;
-  const at = w => { probe.style.width = w; return probe.offsetHeight; };
+  probe.style.lineHeight = ''; probe.style.wordSpacing = '';
+  const at = w => { probe.style.width = w + 'px'; return probe.offsetHeight; };
   probe.style.width = '4ch'; const ch4 = probe.offsetWidth;
   probe.style.width = 'min-content'; const floor = Math.min(full, Math.max(ch4, probe.offsetWidth));
-  if (at(floor + 'px') <= avail) return floor;   // a short telling: as narrow as it goes
-  if (at(full + 'px') > avail) return full;      // a long one: full width, and let it run past
-  let lo = floor, hi = full;                     // lo never fits, hi always does
-  for (let i = 0; i < 10 && hi - lo > 2; i++) {
-    const mid = (lo + hi) >> 1;
-    if (at(mid + 'px') <= avail) hi = mid; else lo = mid;
+  // dial 1: the width
+  if (at(full) > avail) return { w: full, lh: LEAD, one: false };   // too long for any width
+  if (at(floor) > avail) {                              // it fits somewhere between the two
+    let lo = floor, hi = full;                          // lo never fits, hi always does
+    for (let i = 0; i < 10 && hi - lo > 2; i++) {
+      const mid = (lo + hi) >> 1;
+      if (at(mid) <= avail) hi = mid; else lo = mid;
+    }
+    return { w: hi, lh: LEAD, one: false };
   }
-  return hi;
+  // dial 2: at the floor short words still pair up ("for the", "jay to"), so force the break
+  probe.style.wordSpacing = ONE_WORD;
+  // dial 3: the leading that lands the last word on the bottom. It searches downward as well as
+  // up: breaking every space can overshoot a room that normal wrapping fell short of, and a
+  // telling that has been put one word to a line is not given that back to save a line.
+  const tall = lh => { probe.style.lineHeight = lh; return probe.offsetHeight; };
+  if (tall(LEAD_MAX) <= avail) return { w: floor, lh: LEAD_MAX, one: true };
+  let lo = LEAD_MIN, hi = LEAD_MAX;                     // lo always fits, hi never does
+  for (let i = 0; i < 12 && hi - lo > .02; i++) {
+    const mid = (lo + hi) / 2;
+    if (tall(mid) <= avail) lo = mid; else hi = mid;
+  }
+  return { w: floor, lh: +lo.toFixed(2), one: true };
 }
 // every stretched pack at once, reads first and writes after: a width written to one thread
 // dirties the layout, so interleaving would cost a full reflow per pack instead of one.
@@ -254,8 +282,16 @@ function fitAll() {
     const bottom = pack.slots[pack.slots.length - 1].row.getBoundingClientRect().bottom;
     room.push({ flow, avail: bottom - flow.getBoundingClientRect().top, full: trickle.clientWidth });
   }
-  for (const r of room) if (r.full > 0) r.flow.style.width = fitWidth(r.flow.textContent, r.avail, r.full) + 'px';
+  for (const r of room) {
+    if (r.full <= 0) continue;
+    const { w, lh, one } = fit(r.flow.textContent, r.avail, r.full);
+    r.flow.style.width = w + 'px';
+    r.flow.style.lineHeight = lh === LEAD ? '' : lh;
+    r.flow.style.wordSpacing = one ? ONE_WORD : '';
+  }
 }
+// back to the column's own width, leading and word gap
+const bare = flow => { flow.style.width = flow.style.lineHeight = flow.style.wordSpacing = ''; };
 // anything that moves a row moves the bottom the thread is reaching for: a resize, a new scene,
 // a reading landing late, the passage font changing size or weight, the webfont arriving.
 let refitting = 0;
