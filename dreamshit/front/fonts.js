@@ -48,6 +48,7 @@ const FONTS = {
   majormono:   { family: '"Major Mono Display", monospace', size: 15, lead: 1.9, track: '.05em', google: 'Major+Mono+Display' },
 };
 
-// the short leash: what the font button and f / F cycle through. everything above stays
-// reachable with ?font=<name>
-const SHORTLIST = ['newsreader', 'majormono'];
+// what the font button and f / F cycle through: the whole show, every face ever tried, in the
+// order above (bekh, 2026-09-22: put them all on the site so he can shuffle them over real
+// dreams). the two he had kept — newsreader, majormono — open the walk; the leash is gone.
+const SHORTLIST = ['newsreader', 'majormono', ...Object.keys(FONTS).filter(n => n !== 'newsreader' && n !== 'majormono')];
