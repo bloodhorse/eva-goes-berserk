@@ -44,6 +44,7 @@ eva's own page loads `n=300` and still polls `n=5` every 60s; this front listens
 - **Marks:** the reader marks at most two runs per passage. **Magenta (`touched`)** = what touched it most; **cyan (`strange`)** = what felt most mysterious and meaningful. Blended into the ink at 30% (`--lit-mix`). Old readings with `mark: true` → first run magenta, second cyan, the rest plain.
 - **Trim:** display ends at the last sentence end (`. ! ? …` plus closing quotes), unless that would cut more than ~40%. The shelf keeps everything; this is display only.
 - **`[dream]` label:** anything before the last `[dream]` in the segments is dropped.
+- **Lowercase on display** (bekh, 2026-09-22): every voice is shown lowercase by one CSS rule (`text-transform`); the shelf keeps its capitals — a starred passage becomes a seed, and a capital there is text nemo sees.
 - Everything goes through `textContent` — the text came back from a cli; none of it may become markup.
 
 ## Palette (bekh's house palette, used across his projects)

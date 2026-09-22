@@ -43,6 +43,10 @@ body { cursor: default; }
 .rail { position: absolute; top: 0; bottom: 0; z-index: 2; padding: 56px 0; pointer-events: none; }
 /* the trickle (bekh's word): the dream so far, a long thin stream down the left — 60% of its
    column, centred in it, so it runs long beside its passages instead of sitting as a block */
+/* the lowercaser (bekh, 2026-09-22): whatever a model wrote is shown lowercase — passage,
+   trickle, reading, names, seed. display only; the shelf keeps its capitals, because a starred
+   passage becomes a seed and a capital in a seed is text nemo sees */
+.text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
 .trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); pointer-events: auto; }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
