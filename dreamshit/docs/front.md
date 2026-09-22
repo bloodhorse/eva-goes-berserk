@@ -49,7 +49,13 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
   and out down the dream) and dial 1 skipped — each part goes straight to one word a line and
   gets its own leading, so it lands on the bottom of its own scene; a part with more words than
   the tightest leading holds runs on into the next. A telling with no seam has nothing to line
-  up and is `even` either way. Verdict pending; the shots are `shots/stretch/`.
+  up and is `even` either way. **`?align=band` is `dreams` with the pace reined in**: the even
+  leading for the whole telling is worked out first, and every part's own leading is clamped to
+  within `?band=` of it (0.4 by default, remembered; 0 pins every part to the even pace). A part
+  that can't reach its scene's bottom inside the band stops early with air under it; one that
+  can't fit runs past into the next scene, and nothing clips it — the later row's own words are
+  simply drawn over it, since they come later in the page. Verdict pending; the shots are
+  `shots/stretch/`.
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
@@ -67,5 +73,6 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 | passage weight | `t` thinner · `T` thicker, steps of 50 (per font; moves only on a variable face — newsreader loads 200–800) | `?fw=300` |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | trickle mode | `g` toggles parts ↔ stretch | `?trickle=parts\|stretch` |
-| stretch's drip | — (an experiment, no key) | `?align=even\|dreams` |
+| stretch's drip | — (an experiment, no key) | `?align=even\|dreams\|band` |
+| the band's width | — | `?band=0.4` (align=band only) |
 | screenshots | — | `?tail=N` (newest N, no scrolling) · `?only=<room>` (one passage, waits for its font) |

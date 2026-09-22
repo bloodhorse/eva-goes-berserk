@@ -194,18 +194,19 @@ const verseTurn = v => { const m = /:(\d+)\s*$/.exec(v || ''); return m ? +m[1] 
 // is what the page did before the seams existed, so nothing changes for the older dreams.
 // stretch — bekh's fallback (2026-09-22): the telling is stretched to reach the end of its dream.
 // `align=even` joins the seams up and drips one thread down the whole pack; `align=dreams` keeps
-// them and hangs each part from its own scene, one column wide, each part paced to its own row.
-// A telling with no seam in it has nothing to line up, so it is even either way.
+// them and hangs each part from its own scene, paced to its own row; `align=band` is dreams with
+// every part's pace held within a band of the even one, so the drip keeps something of one
+// rhythm. A telling with no seam in it has nothing to line up, so it is even whatever is asked.
 function drawPack(pack, story) {
   if (!pack.slots.length) return;
   const stretch = TRICKLE === 'stretch' && innerWidth > PHONE;   // one column has no room for it
   const parts = story ? partsOf(story) : [];
   const last = pack.slots.length - 1;
-  pack.aligned = stretch && ALIGN === 'dreams' && parts.length > 1;
+  pack.align = stretch && ALIGN !== 'even' && parts.length > 1 ? ALIGN : 'even';
   pack.el.classList.toggle('stretch', stretch);
   pack.slots.forEach((s, i) => {
     let text;
-    if (stretch && !pack.aligned) text = i ? '' : parts.join(' ');
+    if (stretch && pack.align === 'even') text = i ? '' : parts.join(' ');
     else {
       const n = parts.length > 1 ? s.turn : (i === 0 ? 1 : 0);
       text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
@@ -315,25 +316,35 @@ function fitAll() {
     if (!pack.slots.length || !pack.el.classList.contains('stretch')) continue;
     const full = pack.slots[0].el.clientWidth;
     if (full <= 0) continue;
-    const last = pack.slots[pack.slots.length - 1].row;
+    const foot = pack.slots[pack.slots.length - 1].row.getBoundingClientRect().bottom;
     const lines = [];
     for (const s of pack.slots) {
       const flow = flowOf(s.el);
       if (!flow || !flow.textContent) continue;
-      // even reaches for the end of the dream, dreams for the end of the scene it hangs from
-      const bottom = (pack.aligned ? s.row : last).getBoundingClientRect().bottom;
-      lines.push({ flow, avail: bottom - flow.getBoundingClientRect().top });
+      // a part reaches for the end of its own scene; the even thread for the end of the dream
+      const top = flow.getBoundingClientRect().top;
+      lines.push({ flow, avail: s.row.getBoundingClientRect().bottom - top, top });
     }
-    if (lines.length) jobs.push({ aligned: pack.aligned, full, lines });
+    if (lines.length) jobs.push({ align: pack.align, full, lines, deep: foot - lines[0].top });
   }
   for (const j of jobs) {
-    if (!j.aligned) {
-      const { w, lh, one } = fit(j.lines[0].flow.textContent, j.lines[0].avail, j.full);
+    const texts = j.lines.map(l => l.flow.textContent);
+    if (j.align === 'even') {
+      const { w, lh, one } = fit(texts[0], j.deep, j.full);
       dress(j.lines[0].flow, w, lh, one);
       continue;
     }
-    const w = widestWord(j.lines.map(l => l.flow.textContent), j.full);
-    for (const l of j.lines) dress(l.flow, w, fitLead(l.flow.textContent, l.avail, w), true);
+    const w = widestWord(texts, j.full);
+    // band: the rate the whole telling would run at if it ignored the seams, and nothing is
+    // allowed further than BAND from it. A part that can't reach its scene's bottom inside the
+    // band stops early with air under it; one that can't fit runs on into the next scene.
+    const even = j.align === 'band' ? fit(texts.join(' '), j.deep, j.full).lh : 0;
+    const lo = even && Math.max(LEAD_MIN, even * (1 - BAND));
+    const hi = even && Math.min(LEAD_MAX, even * (1 + BAND));
+    for (const l of j.lines) {
+      const lh = fitLead(l.flow.textContent, l.avail, w);
+      dress(l.flow, w, even ? +Math.min(hi, Math.max(lo, lh)).toFixed(2) : lh, true);
+    }
   }
 }
 // anything that moves a row moves the bottom the thread is reaching for: a resize, a new scene,
@@ -640,10 +651,20 @@ let TRICKLE = TRICKLE_MODES.includes(params.get('trickle')) ? params.get('trickl
 store('trickle', TRICKLE);   // the url wins once and then sticks, like look and font
 // stretch's own sub-knob: does the drip run evenly down the whole dream, or does each part of
 // the telling line up with the scene it belongs to? No key — it is an experiment, not a dial.
-const ALIGNS = ['even', 'dreams'];
+const ALIGNS = ['even', 'dreams', 'band'];
 const ALIGN = ALIGNS.includes(params.get('align')) ? params.get('align')
   : ALIGNS.includes(store('align')) ? store('align') : 'even';
 store('align', ALIGN);
+// how far from the even drip's pace a part may go in align=band. 0 would be the even pace held
+// everywhere (and most parts ending early); 1 lets a part run at twice or at nothing.
+// (0 is a real setting — the even pace held everywhere — so a MISSING value has to be told from
+// a zero one, which `+null` is not: it is 0, and the band silently collapsed to nothing.)
+const BAND = (() => {
+  const raw = params.has('band') ? params.get('band') : store('band');
+  const v = raw === null || raw === '' ? NaN : +raw;
+  return v >= 0 && v <= 5 ? v : .4;
+})();
+store('band', BAND);
 function setTrickleMode(m) {
   TRICKLE = m; store('trickle', m);
   for (const pack of packs.values()) drawPack(pack, pack.story);
