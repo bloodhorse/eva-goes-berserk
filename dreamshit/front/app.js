@@ -643,18 +643,22 @@ $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 // the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
 function step(d) { const L = SHORTLIST, i = L.indexOf(FONT); setFont(L[i < 0 ? 0 : (i + d + L.length) % L.length]); }
 
-// how the telling stands beside its dream: `parts` (the default — cut at the sleeper's seams,
-// part n beside passage n) or `stretch` (bekh's fallback — one thread, narrowed to the bottom).
+// how the telling stands beside its dream. **stretch is what the site does** (bekh's verdict,
+// 2026-09-22: "unfortunately actually the best stylistically") — one thread paced down the whole
+// dream; `parts` (cut at the sleeper's seams, part n beside passage n) stays as a dev option.
+// Only an explicit choice is remembered, url or `g`: a default written into localStorage on every
+// load freezes each browser on whatever the default was the day it first opened the page, which
+// is exactly what happened to `parts` in the hour it was the default — hence the key's new name.
 const TRICKLE_MODES = ['parts', 'stretch'];
 let TRICKLE = TRICKLE_MODES.includes(params.get('trickle')) ? params.get('trickle')
-  : TRICKLE_MODES.includes(store('trickle')) ? store('trickle') : 'parts';
-store('trickle', TRICKLE);   // the url wins once and then sticks, like look and font
+  : TRICKLE_MODES.includes(store('drip')) ? store('drip') : 'stretch';
+if (params.has('trickle')) store('drip', TRICKLE);
 // stretch's own sub-knob: does the drip run evenly down the whole dream, or does each part of
 // the telling line up with the scene it belongs to? No key — it is an experiment, not a dial.
 const ALIGNS = ['even', 'dreams', 'band'];
 const ALIGN = ALIGNS.includes(params.get('align')) ? params.get('align')
   : ALIGNS.includes(store('align')) ? store('align') : 'even';
-store('align', ALIGN);
+if (params.has('align')) store('align', ALIGN);
 // how far from the even drip's pace a part may go in align=band. 0 would be the even pace held
 // everywhere (and most parts ending early); 1 lets a part run at twice or at nothing.
 // (0 is a real setting — the even pace held everywhere — so a MISSING value has to be told from
@@ -664,9 +668,9 @@ const BAND = (() => {
   const v = raw === null || raw === '' ? NaN : +raw;
   return v >= 0 && v <= 5 ? v : .4;
 })();
-store('band', BAND);
+if (params.has('band')) store('band', BAND);
 function setTrickleMode(m) {
-  TRICKLE = m; store('trickle', m);
+  TRICKLE = m; store('drip', m);
   for (const pack of packs.values()) drawPack(pack, pack.story);
   tell(`trickle: ${m}   [g]`);
 }
