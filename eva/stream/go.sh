@@ -11,16 +11,15 @@
 #
 # The painter's cap: its launchd job holds under STREAM_PLATE_WEEK_MAX (20 in its plist, a guard
 # against an unattended painter eating a week). A run that asks for pictures needs headroom, so
-# the cap is raised for the run — the week's current number plus what the run costs (about 0.7
-# points a plate) plus a little — and put back when the run ends, however it ends. Never above
-# $CEILING: past that the run refuses instead of painting.
+# for the run the cap becomes $CAP — bekh's own number for the week (43 on 2026-09-22: "my real
+# expected usage"), not a formula — and goes back when the run ends, however it ends. A week
+# already past it refuses to run.
 set -u
 cd "$(dirname "$0")/../.." || exit 1
 U=$(id -u)
 PL=~/Library/LaunchAgents/com.bekh.eva-stream-plating.plist
 LOG=${EVA_GO_LOG:-/tmp/eva-go.log}
-CEILING=${EVA_GO_CEILING:-60}
-POINTS_PER_PLATE=0.7
+CAP=${EVA_GO_CAP:-43}
 SETTLE=100   # STREAM_PLATE_SETTLE (90) and a breath: the reader's note must land before a plate
 
 say() { printf '%s %s\n' "$(date +%T)" "$*" | tee -a "$LOG"; }
@@ -47,19 +46,17 @@ case "${1:-}" in
   stop)   # from another terminal, or after a lost one: the same as ctrl-c would do
     say "== stopped by hand"; writer_off; cap_restore; exit 0 ;;
   ''|*[!0-9]*)
-    echo "usage: eva go N   (N dreams = N passages, N pictures; ctrl-c stops it clean)   |   eva go stop"; exit 2 ;;
+    echo "usage: eva go N [CAP]   (N dreams = N passages, N pictures; CAP = the painter's week cap for the run, $CAP; ctrl-c stops it clean)   |   eva go stop"; exit 2 ;;
 esac
-N=$1
+N=$1; CAP=${2:-$CAP}
 if launchctl print gui/$U/com.bekh.eva-stream >/dev/null 2>&1; then echo "the writer is already on — eva go stop first"; exit 1; fi
 week=$(week_now); [ -n "$week" ] || { echo "no codex usage cache (~/.cache/claude-usage/codex.json) — run cu first"; exit 1; }
-need=$(python3 -c "import math;print(math.ceil($N*$POINTS_PER_PLATE)+2)")
-CAP=$((week + need))
-if [ "$CAP" -gt "$CEILING" ]; then echo "$N dreams ≈ $need points on a week at $week% — past the $CEILING% ceiling, not running"; exit 1; fi
+if [ "$week" -ge "$CAP" ]; then echo "codex week at $week%, the cap is $CAP% — nothing would get painted, not running"; exit 1; fi
 
 # ---- the run --------------------------------------------------------------------------------
 DAY=$(date +%F); STAMP=$(date +%H%M)
 : > "$LOG"
-say "== eva go: $N dreams, ~$((N * 5)) min; codex week $week% → cap $CAP% for the run. ctrl-c stops it clean."
+say "== eva go: $N dreams, ~$((N * 5)) min; codex week $week%, painter cap $CAP% for the run. ctrl-c stops it clean."
 cap_get > "$PL.cap-was"
 cap_set "$CAP"
 trap 'echo; say "== interrupted"; writer_off; cap_restore; exit 1' INT TERM
@@ -92,7 +89,7 @@ for i in $(seq 1 $((N + 2))); do
   [ "$left" -eq 0 ] && break
   say "unpainted: $left — painting"
   while plating_busy; do sleep 10; done
-  out=$(uv run --python 3.12 eva/stream/plating.py --once 2>&1 | tail -1)
+  out=$(STREAM_PLATE_WEEK_MAX=$CAP uv run --python 3.12 eva/stream/plating.py --once 2>&1 | tail -1)
   say "  $out"
   echo "$out" | grep -qi held && break
   sleep 15

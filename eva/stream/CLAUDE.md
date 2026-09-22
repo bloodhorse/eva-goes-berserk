@@ -688,9 +688,10 @@ If the loom is being used for fans at the same time, nemo stays up — it is the
 run is sized in dreams). N dreams — N passages, each with its note, its retelling and its
 plate — then the writer off and nemo off, by the lines above. **Foreground on purpose**: it
 stays in the terminal and ctrl-c ends it clean (writer off, nemo off, the painter's cap put
-back); `eva go stop` does the same from another terminal. The painter's cap is raised for the
-run (the codex week now plus ~0.7 points a plate plus a little, never past 60%, else it
-refuses) and restored however the run ends; the last dreams, bare when the writer stops, are
+back); `eva go stop` does the same from another terminal. The painter's cap for the run is
+bekh's own number for the week — 43, `eva go 5 50` for another — not a formula (his call the
+same day: a computed cap is arbitrary); a week already past it refuses; restored however the
+run ends; the last dreams, bare when the writer stops, are
 painted by hand at the end. Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`.
 
 
