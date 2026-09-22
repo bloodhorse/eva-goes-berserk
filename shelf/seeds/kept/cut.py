@@ -56,12 +56,19 @@ for part in ("## " + text).split("\n## ")[0:]:
         for q in re.findall(r"(?m)^> (.+(?:\n> .+)*)", body):
             out.append((title, room, re.sub(r"(?m)^> ", "", q)))
 
+# Pulled 2026-09-22 after an audit: both went on as plain literature every time they were
+# drawn. Their files sit in .off/; skipped here so a rerun doesn't put them back in the pot,
+# and still counted so the rest keep their numbers.
+OUT = {"13-2304.txt", "26-1744.txt"}
+
 made = 0
 for i, (title, room, quote) in enumerate(out, 1):
     w = window(room_text(room), quote)
     if w is None:
         print("NOT FOUND", room, norm(quote)[:60], file=sys.stderr); continue
     name = f"{i:02d}-{room.rsplit(chr(47), 1)[1]}.txt"
+    if name in OUT:
+        continue
     with open(os.path.join(HERE, name), "w", encoding="utf-8", newline="") as f:
         f.write(w.rstrip(" \t"))
     made += 1
