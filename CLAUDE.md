@@ -137,7 +137,7 @@ text for us, `dreamshit/` is the published face. Each part of `eva/` that needs 
   models. `brief-storyloom.md`: the brief handed to an outside model to work the loom blind;
   `storyloom-20260916/` is what came back. `harvest/`: the two scripts that built the anthologies
   (provenance, not an instrument).
-- **`dreamshit/`** — the dream stream's published face (`dreamshit.net`; today `https://dreamshit.x`): the
+- **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
   seat, the ten-model wire, why a base model is the next question.
