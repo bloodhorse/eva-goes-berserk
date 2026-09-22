@@ -56,7 +56,7 @@ const FONTS = {
 // the passage inks, read against the room (2026-09-22, my pick on bekh's ask): the ground is
 // neutral charcoal #232323, the plates are magenta / neon / cyan washed to about a quarter,
 // the chrome is blue-white and steel. so an ink belongs here when it is light (every one of
-// these clears 9:1 on the charcoal), cold or screen-lit, and near a colour the room already
+// these clears 7.5:1 on the charcoal, measured), cold or screen-lit, and near a colour the room already
 // has. ordered cold → warm. the loud ones (phosphor, amber, ember) vibrate on a magenta plate
 // and want more wash (W); the whispers (ash, ghost) put the passage at the notes' level.
 const INKS = {
