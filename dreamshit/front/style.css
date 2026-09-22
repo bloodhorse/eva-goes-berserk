@@ -36,18 +36,18 @@ body { cursor: default; }
   grid-template-columns: minmax(180px, 1fr) minmax(0, 600px) minmax(180px, 1fr);
   padding: 56px 32px;
 }
-.row > .text, .row > .reading { position: relative; z-index: 2; }
-/* a pack = one dream's passages. its rail lies over the rows' first column (placed by app.js);
-   the trickle sits at the top of it, at the dream's start — not sticky (bekh: riding along was a mistake) */
+.row > .slot, .row > .text, .row > .reading { position: relative; z-index: 2; }
+/* a pack = one dream's passages. the telling is one continuous narrative cut at the seams the
+   sleeper marks, and part n lives in passage n's own first cell — so what is on a dream's left
+   is the piece of the story that dream is (bekh, 2026-09-22). no rail, nothing measured. */
 .pack { position: relative; }
-.rail { position: absolute; top: 0; bottom: 0; z-index: 2; padding: 56px 0; pointer-events: none; }
-/* the trickle (bekh's word): the dream so far, a long thin stream down the left — 60% of its
-   column, centred in it, so it runs long beside its passages instead of sitting as a block */
+/* the trickle (bekh's word): the dream so far — 60% of its column, centred in it, so it runs
+   long beside its passage instead of sitting as a block */
 /* the lowercaser (bekh, 2026-09-22): whatever a model wrote is shown lowercase — passage,
    trickle, reading, names, seed. display only; the shelf keeps its capitals, because a starred
    passage becomes a seed and a capital in a seed is text nemo sees */
 .text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
-.trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); pointer-events: auto; }
+.trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
@@ -80,12 +80,13 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
            border-left: 1px solid var(--line); padding-left: 1.2em; max-width: 290px; }
 .when { display: block; margin-top: 1em; font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--lit-b); opacity: .7; }
 
-/* phones: one column, the voices stacked */
+/* phones: one column, the voices stacked — each part of the telling above its own passage
+   (the header above the first). a part-less passage hides its cell, or the row gap would
+   leave a hole where the sleeper put no seam. */
 @media (max-width: 820px) {
   .row { grid-template-columns: 1fr; row-gap: 18px; padding: 40px 18px; }
-  .rail { position: static; width: auto !important; padding: 40px 18px 0; }
-  .trickle { position: static; width: auto; }
-  .slot { display: none; }
+  .trickle { width: auto; }
+  .slot:not(.has) { display: none; }
   .reading { max-width: none; }
 }
 

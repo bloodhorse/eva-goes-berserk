@@ -14,7 +14,7 @@ const SLOW_MS = 300000;      // the fallback poll, used only while the events ha
 const RETRY_MS = 5000;       // how long before we open the event stream again after a refusal
 
 const rooms = new Map();     // room -> row state; a poll never renders a passage twice
-const trickles = new Map();  // dream -> its trickle (the dream so far), which grows as the story does
+const packs = new Map();     // dream -> its pack (its rows, and the telling cut across them)
 let lastPack = null, lastRowEl = null, waiting = 0, status = null;
 
 const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -89,8 +89,11 @@ function drawBody(body, p) {
 // ---- rendering -------------------------------------------------------------------------
 function buildRow(p) {
   const row = document.createElement('section'); row.className = 'row';
-  // an empty first cell keeps the grid; the dream's trickle lives in its pack's rail, over this column
+  // the first cell holds this passage's part of the telling — the trickle is cut at its seams
+  // and each part sits beside its own scene (drawPack). an empty one keeps the grid standing.
   const slot = document.createElement('div'); slot.className = 'slot';
+  const trickle = document.createElement('div'); trickle.className = 'trickle';
+  slot.appendChild(trickle);
   const text = document.createElement('div'); text.className = 'text';
   const body = document.createElement('div'); body.className = 'body';
   drawBody(body, p);
@@ -115,7 +118,7 @@ function buildRow(p) {
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
   row.append(slot, text, reading);
-  const r = { row, reading, pic, plateUrl: null, step: 0, target: 0 };
+  const r = { row, slot, trickle, reading, pic, plateUrl: null, step: 0, target: 0 };
   pic.onclick = e => { e.stopPropagation(); openPlate(r); };
   setReading(r, p.reading);
   if (p.plate) setPlate(r, p.plate);
@@ -158,61 +161,89 @@ function titleLine(name, number) {
   if (name) h.appendChild(document.createTextNode(name));
   return h;
 }
-// the trickle: the dream's own header (chapter · title), then the dream so far
-function setTrickle(el, story) {
-  if (el.dataset.text === (story.text || '') && el.dataset.title === (story.title || '') && el.dataset.ch === String(story.chapter || '')) return;
-  el.dataset.text = story.text || ''; el.dataset.title = story.title || ''; el.dataset.ch = String(story.chapter || '');
+// one part of the telling, in a passage's own left cell: the dream's header (chapter · title)
+// above the first one, then the words. re-rendered only when something changed, so a refetch
+// doesn't repaint the column under the reader.
+function setTrickle(el, story, text, head) {
+  const title = head ? (story && story.title || '') : '';
+  const ch = head && story && story.chapter ? String(story.chapter) : '';
+  if (el.dataset.text === text && el.dataset.title === title && el.dataset.ch === ch) return;
+  el.dataset.text = text; el.dataset.title = title; el.dataset.ch = ch;
   el.textContent = '';
-  const head = titleLine(story.title, story.chapter ? String(story.chapter) : '');
-  if (head) el.appendChild(head);
-  el.appendChild(document.createTextNode(story.text || ''));
+  const h = head ? titleLine(story && story.title, ch) : null;
+  if (h) el.appendChild(h);
+  el.appendChild(document.createTextNode(text));
 }
 
-// one pack per dream: its passages, plus a rail down the left column holding the trickle,
-// pinned at the dream's start. (it used to be sticky and ride along; bekh: now that trickles run
-// long, a moving one was a mistake — four passages is short enough to scroll back to it)
+// the telling is ONE continuous narrative with a `|` where each later scene comes in (bekh,
+// 2026-09-22 — eva/stream/remembering.py). the page cuts it there and puts part n beside
+// passage n, so the part that belongs to a dream is always on its left. `parts` comes from the
+// api; we split `text` ourselves by the same rule when it doesn't (an older mirror).
+const partsOf = story => Array.isArray(story.parts) && story.parts.length
+  ? story.parts : String(story.text || '').split('|').map(s => s.trim());
+// a passage's scene number is its verse (`12:3` → 3); without one, its place in the pack
+const verseTurn = v => { const m = /:(\d+)\s*$/.exec(v || ''); return m ? +m[1] : 0; };
+
+// the sleeper can come back with fewer marks than scenes, or more, and neither is an error:
+// a missing part leaves that row bare, a surplus one is appended to the last passage's, and a
+// telling with no mark at all sits whole beside the first passage — which is what the page did
+// before the seams existed, so nothing changes for the older dreams on the shelf.
+function drawPack(pack, story) {
+  if (!pack.slots.length) return;
+  const parts = story ? partsOf(story) : [];
+  const last = pack.slots.length - 1;
+  pack.slots.forEach((s, i) => {
+    const n = parts.length > 1 ? s.turn : (i === 0 ? 1 : 0);
+    const text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
+    setTrickle(s.el, story, text, i === 0);
+    // on a phone an empty cell would still cost a row gap above its passage
+    s.el.parentNode.classList.toggle('has', !!(text || (i === 0 && story && story.title)));
+  });
+}
+
+// one pack per dream: its passages, and the telling running down their left cells
 function newPack(p) {
   const dream = p.story && p.story.dream || null;
   const el = document.createElement('div'); el.className = 'pack';
-  const rail = document.createElement('div'); rail.className = 'rail';
-  const trickle = document.createElement('div'); trickle.className = 'trickle';
-  if (dream) { setTrickle(trickle, p.story); trickles.set(dream, trickle); }
-  rail.appendChild(trickle); el.appendChild(rail);
   $('#feed').appendChild(el);
-  return { el, rail, trickle, dream };
+  const pack = { el, dream, slots: [], story: p.story || null };
+  if (dream) packs.set(dream, pack);
+  return pack;
 }
 function render(pages) {
   const fresh = pages.slice().reverse().filter(p => !rooms.has(p.room));
+  const touched = new Set();
   for (const p of fresh) {
     const dream = p.story && p.story.dream || null;
     if (!lastPack || !dream || lastPack.dream !== dream) lastPack = newPack(p);
     const r = buildRow(p);
     rooms.set(p.room, r);
     lastPack.el.appendChild(r.row);
+    lastPack.slots.push({ turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle });
+    if (p.story) lastPack.story = p.story;
+    touched.add(lastPack);
     lastRowEl = r.row;
   }
-  if (fresh.length) placeRails();
+  // a new scene means the whole telling was rewritten: every part of that pack is redrawn
+  for (const pack of touched) drawPack(pack, pack.story);
   return fresh.length;
 }
-// the rail sits exactly over the rows' first column; measured, because the grid decides it
-function placeRails() {
-  for (const pack of document.querySelectorAll('.pack')) {
-    const slot = pack.querySelector('.slot'); if (!slot) continue;
-    const rail = pack.querySelector('.rail');
-    rail.style.left = slot.offsetLeft + 'px'; rail.style.width = slot.offsetWidth + 'px';
-  }
-}
-addEventListener('resize', placeRails);
-addEventListener('load', placeRails);
 
-// update what already exists: late paintings, late readings, the trickle growing
+// update what already exists: late paintings, late readings, the telling rewritten. the story
+// is rewritten WHOLE every time a scene lands — part 1 can change when scene 3 arrives — so a
+// pack is always redrawn entire, never appended to.
 function sync(pages) {
   const seen = new Set();
   for (const p of pages) {
     const r = rooms.get(p.room);
     if (r) { if (p.plate) setPlate(r, p.plate); setReading(r, p.reading); }
     const dream = p.story && p.story.dream;
-    if (dream && !seen.has(dream) && trickles.has(dream)) { setTrickle(trickles.get(dream), p.story); seen.add(dream); }
+    if (dream && !seen.has(dream) && packs.has(dream)) {
+      const pack = packs.get(dream);
+      pack.story = p.story;
+      drawPack(pack, p.story);
+      seen.add(dream);
+    }
   }
 }
 

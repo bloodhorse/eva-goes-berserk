@@ -4,7 +4,9 @@ The source is bekh's dream stream in eva (`https://eva.x/stream`, the loom on th
 
 ## Shape, as the front uses it
 
-A **passage** every ~5 minutes; a **dream** (story) is 4 of them. Three voices, three columns: the **trickle** (bekh's word — the sleeper's retelling of the story so far, one per dream, growing each turn) on the left, the **text** in the centre, the **reading** (the interpreter's note) on the right. A **plate** (painting) arrives minutes after its text, or never — the painter runs under a codex budget.
+A **passage** every ~5 minutes; a **dream** (story) is 4 of them. Three voices, three columns: the **trickle** (bekh's word — the sleeper's retelling of the story so far, one per dream, rewritten whole each turn) on the left, the **text** in the centre, the **reading** (the interpreter's note) on the right.
+
+**The trickle is one continuous telling with seams in it** (bekh, 2026-09-22). The sleeper puts a single `|` where each later scene comes in — mid-sentence, where that is where it enters — and `story.parts` is that text split there, part n belonging to passage n. `story.text` keeps the marks (the shelf is never corrected); `parts` is derived, and the front splits `text` itself by the same rule when an older mirror doesn't send it. The `|` is a cut and never a glyph: it is not displayed. A **plate** (painting) arrives minutes after its text, or never — the painter runs under a codex budget.
 
 ## API
 
@@ -14,7 +16,8 @@ A **passage** every ~5 minutes; a **dream** (story) is 4 of them. Three voices, 
 { "pages": [ { "room": "stream/2026-09-21/1558", "text": "…", "seed": "…", "name": "the body man", "verse": "10:4", "ts": 1789981106.3,
                "segments": [ { "t": "…", "mark": "touched" | "strange" | true | false } ],
                "reading": { "text": "…", "ts": 1789981200.1 },
-               "story": { "dream": "2026-09-21-1547-57af", "text": "…", "title": null, "chapter": 10, "turn": 3, "of": 4, "live": true },
+               "story": { "dream": "2026-09-21-1547-57af", "text": "…|…|…", "parts": ["…", "…", "…"],
+                          "title": null, "chapter": 10, "turn": 3, "of": 4, "live": true },
                "plate": "/stream/plate/2026-09-21/1552.jpg?v=…" } ],
   "more": true,
   "status": { "state": "dreaming", "since": 1789981106.3, "room": "…", "interval": 300 } }

@@ -694,6 +694,14 @@ if "--- the new scene ---" in prompt:
     held = re.search(r"--- what you remember of the dream so far ---\n\n(.*?)\n\n---",
                      prompt, re.S).group(1).strip()
     first = held.startswith("Nothing yet")
+    if mode == "seams":
+        # One continuous telling with a | where each later scene comes in, mid-sentence — the
+        # shape bekh asked for. The held text still carries its marks, so counting them is how
+        # this stub knows which scene it is on.
+        n = 1 if first else held.count("|") + 2
+        seamed = ["i was in it again and the door", "was a lift going down, and the",
+                  "bones sang until it", "stopped just before the end."]
+        answer("<dream>" + "|".join(seamed[:n]) + "</dream><title>the seamed night</title>")
     n = 1 if first else held.count(";") + 2
     # The sleeper names the dream too since 2026-09-22, and renames it as he rewrites it — the
     # latest version's title is the story's name, so it carries the turn.
@@ -1674,6 +1682,75 @@ class Remembering(unittest.TestCase):
         self.assertEqual([x["turn"] for x in v], [1, 2])
         self.assertEqual(v[1]["dream"], v[0]["dream"])     # the same dream, rewritten
         self.assertNotEqual(v[1]["text"], v[0]["text"])
+
+    # ---- the seams (bekh, 2026-09-22) -------------------------------------------------------
+    def test_the_shape_asks_for_the_seam_and_the_marks_are_kept_as_written(self):
+        """One continuous telling, a `|` where each later scene comes in — stored exactly as he
+        wrote it, and shown back to him with its marks so he sees where he put them."""
+        self.scene("1000", "a door in the corridor.")
+        f = self.fake("seams")
+        self.assertEqual(remember(f)[0], 0)
+        self.assertIn("Put a single | at the exact point", read_text(f["log"]))
+
+        self.scene("1005", "the door was a lift.")
+        f2 = self.fake("seams")
+        self.assertEqual(remember(f2)[0], 0)
+        v = dream_versions()
+        self.assertIn("|", v[1]["text"])                       # never corrected out
+        # his own memory carries the marks back to him, verbatim
+        self.assertIn(v[0]["text"], read_text(f2["log"]))
+
+    def test_the_parts_are_the_text_cut_at_its_seams(self):
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        self.scene("1005", "two.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        self.scene("1010", "three.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        v = dream_versions()
+        self.assertEqual([len(x["parts"]) for x in v], [1, 2, 3])
+        self.assertEqual(v[2]["parts"], [p.strip() for p in v[2]["text"].split("|")])
+        self.assertEqual("".join(v[2]["parts"]).count("|"), 0)
+        # whitespace around a cut goes and nothing else
+        self.assertEqual(remembering.split_parts(" a and then | it turned "),
+                         ["a and then", "it turned"])
+
+    def test_a_telling_with_no_marks_is_one_part(self):
+        """Nothing is an error: the sleeper who marks nothing has a telling of one part, which
+        is what every account written before the seams existed is."""
+        self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        v = dream_versions()[0]
+        self.assertNotIn("|", v["text"])
+        self.assertEqual(v["parts"], [v["text"]])
+
+    def test_the_api_carries_the_parts_beside_the_text(self):
+        a = self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        b = self.scene("1005", "two.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        by = {p["room"]: p for p in call("/api/stream?n=9")[1]["pages"]}
+        latest = dream_versions()[-1]
+        for room in (a, b):
+            story = by[room]["story"]
+            self.assertEqual(story["text"], latest["text"])    # the `|` stays in the text
+            self.assertIn("|", story["text"])
+            self.assertEqual(story["parts"], latest["parts"])
+            self.assertEqual((story["turn"], story["of"]), (2, latest["of"]))
+
+    def test_a_version_written_before_the_seams_still_has_parts_on_the_api(self):
+        """The store is derived, so a file with no `parts` in it is split where it is read."""
+        room = self.scene("1000", "one.")
+        self.assertEqual(remember(self.fake("seams"))[0], 0)
+        path = remembering.version_files()[0]
+        with open(path, encoding="utf-8") as f:
+            v = json.load(f)
+        v.pop("parts")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        page = call("/api/stream?n=3")[1]["pages"][0]
+        self.assertEqual(page["room"], room)
+        self.assertEqual(page["story"]["parts"], [p.strip() for p in v["text"].split("|")])
 
     def test_a_flagged_scene_is_never_told(self):
         self.scene("1000", "a footer.", "copyright")

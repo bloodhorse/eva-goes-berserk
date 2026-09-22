@@ -431,7 +431,10 @@ function titleLine(name, number){
 function account(story){
   const box = document.createElement('div');
   box.className = 'account';
-  box.appendChild(document.createTextNode(story.text || ''));
+  // The `|` marks are the sleeper's seams — where each later scene comes in, so the front can
+  // cut the telling into parts (dreamshit). They are a cut and not a glyph: hidden here, kept
+  // on the shelf. This page shows the whole account, so it simply drops them.
+  box.appendChild(document.createTextNode((story.text || '').replace(/\|/g, '')));
   // A count only while the pack is live and not yet full. A complete pack, or one the gap
   // ended, is simply a story — there is nothing left to count up to.
   if (story.live && (story.turn || 0) < (story.of || 0)){

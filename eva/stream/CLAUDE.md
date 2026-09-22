@@ -466,11 +466,36 @@ the code.
     it prints what it did. Run once on 2026-09-22: **11 stories, 38 versions numbered**.
   - A version with no chapter (nothing else is left like that now) gives its room no verse, and
     the page shows the name alone.
-- **The ideal, still NOT built**: whatever dream you are looking at, its note to the right and
-  *the part of the story that corresponds to it* on the left. He thinks it may be unobtainable.
-  The idea on the table: keep rewriting the whole account every time, but write it **in parts,
-  one per scene**, so a later scene can still change an earlier part — the rewriting is the
-  point and must never become an append.
+- **One telling with seams in it** (bekh, 2026-09-22, and this is the ideal he thought might be
+  unobtainable: *a really long trickle of a story that synchronizes with the particular beat
+  while remaining one continuous narrative, so that the part that corresponds to a dream is
+  always on the left of that dream*). The account stays **one continuous telling, rewritten
+  whole** — it does not become four paragraphs and it never becomes an append. The sleeper
+  simply marks where each later scene comes in with a single `|`, and the page cuts there and
+  puts part n beside passage n.
+  - **The mark may fall mid-sentence, and usually should**: that is where a scene enters, and
+    the sentence stays whole across the cut — *the door at the end* | *was a lift going down*
+    reads as one line of prose down the column. The shape says so in as many words, and says
+    **never** start a new sentence, a new line or a new paragraph for it. The word *paragraph*
+    is never asked for anywhere: paragraphs were the shape he rejected.
+  - **The paragraph asking for the mark is the CODE's** (`SHAPE` in `remembering.py`), like
+    the output tags. `remembering.txt` stays bekh's file — and its length line (*a few
+    sentences, thirty words or so*) is **his and pending**: one continuous telling that has to
+    carry four scenes will want another number, and the number is his to say.
+  - **The text is stored exactly as written, marks and all**, like everything else a voice
+    writes here; nothing corrects a missing or a surplus mark. `parts` rides beside it on the
+    version and on the api — that same string split on `|`, each part stripped of surrounding
+    whitespace and nothing more — so no reader re-implements the split. `text` is the source of
+    truth and the `|` is never taken out of it.
+  - **A wrong number of marks is not an error.** Fewer parts than passages and the later rows
+    are simply bare; more, and the surplus is appended to the last passage's part; none at all
+    and the whole telling sits beside the first passage, which is what every account written
+    before this does and what the page did before the seams existed.
+  - **His memory carries the marks back to him** — what he is shown as "what you remember of
+    the dream so far" is his own latest text, seams included, so he can see where he put them
+    last time.
+  - On the page: `dreamshit/` is where this is read (`dreamshit/docs/front.md`); eva's own
+    placeholder shows the whole account and simply hides the `|` at render.
 - **On the page the names are the menu.** A dream is headed by `12:3 · <its name>` at the very
   top of its block, above the grey seed: the number in the ghost tone, the name in the body ink
   at 14px. No name and there is only the number; neither and nothing is drawn, exactly as
@@ -480,7 +505,8 @@ the code.
   story still swaps under the soft fade — the title is part of what is compared, or a new name
   would sit unwritten above the old account until the next scene.
 - `dreams/<YYYY-MM-DD>/<HHMM>.json` per version = `{ts, dream (id), chapter, turn, of, room,
-  text, title, model, seconds, usage}`; ledger rows `kind: "dream"`. Failures are a row and
+  text, parts, title, model, seconds, usage}` — `parts` derived from `text`, never a second
+  source; ledger rows `kind: "dream"`. Failures are a row and
   exit 0, the worker's law.
 
 ```bash
@@ -774,7 +800,10 @@ after a pass**. For the sleeper: the first scene having nothing remembered yet, 
 latest version and one scene and never a note of the reader's, a flagged scene never told, the
 scene cap ending a dream and the next starting fresh, a long silence ending one, a garbage
 answer as a row with exit 0, the api carrying the running dream and a finished one where it
-ended, usage on both kinds of row, and the cli's json read in either shape.
+ended, usage on both kinds of row, and the cli's json read in either shape. For the seams: the
+shape asking for the mark, the marks kept in the stored text and handed back to him as his
+memory, `parts` being that text cut at them, a telling with no mark being one part, and the api
+carrying `parts` beside `text` — for a version written before they existed too.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

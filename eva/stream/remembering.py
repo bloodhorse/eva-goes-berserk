@@ -27,6 +27,13 @@ scenes fade as newer ones arrive — an appender would just grow a list. Every v
 the shelf, because the *sequence of rewrites* is itself the object: what survived four rewrites
 is what the dream was about.
 
+**One telling with seams in it** (bekh, 2026-09-22): the account is a single continuous
+narrative, and a `|` marks the point where each later scene comes in, so the page can put the
+part for scene n beside passage n and still have one story running down the left. The marks are
+stored in `text` like every other character he writes, and `parts` beside it is that same string
+split on the mark — derived, never corrected. He is shown his own marked text back as his
+memory, so he can see where he put the seams last time.
+
 The two voices do not share a vocabulary and do not have to: the reader's own prompt calls each
 passage a dream, and its file is left alone.
 
@@ -92,7 +99,31 @@ what you remember of the dream, now that this scene is part of it
 <title>
 what you would call this dream
 </title>
+
+Put a single | at the exact point in the telling where each later scene
+comes in — one mark per scene after the first, in order, nowhere else.
+It goes where the scene enters, and the middle of a sentence is the right
+place for it when that is where it enters. Never start a new sentence,
+a new line or a new paragraph for it.
 """
+
+# **The seam mark** (bekh, 2026-09-22). The account stays ONE continuous telling and the page
+# shows the part for scene n beside passage n — so the sleeper marks where each later scene
+# comes in, and the page cuts there. The mark is allowed to fall mid-sentence, because that is
+# where a scene usually enters; the sentence stays whole and the cut is a display decision.
+SEAM = "|"
+
+
+def split_parts(text: str) -> list[str]:
+    """The telling cut at its seams. Whitespace around a cut goes, nothing else — `text` stays
+    the source of truth and is stored exactly as it was written, marks and all.
+
+    No mark is one part; the wrong number of marks is simply the wrong number of parts. Nothing
+    here is an error: the page holds the mismatch (a missing part leaves a row bare, a surplus
+    one is appended to the last), and correcting a voice's own words is not done in this
+    project.
+    """
+    return [p.strip() for p in text.split(SEAM)]
 
 
 def log(msg: str) -> None:
@@ -320,6 +351,9 @@ def run_once() -> int:
            "of": TURNS,
            "room": page["room"],
            "text": text,
+           # Derived, never a second source: `text` is what he wrote, `parts` is that same
+           # string cut at its seams, so nothing downstream re-implements the split.
+           "parts": split_parts(text),
            # What he would call it over breakfast. Rewritten with the account, so the newest
            # version's title is the story's name.
            "title": title,

@@ -47,7 +47,9 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                and the `story` of the pack of dreams each page belongs to.
                                Each page also carries its `name` (the reader's, else the
                                naming store's) and its `verse`, `"12:3"` — the third scene of
-                               the twelfth story; a story carries its `title` and `chapter`
+                               the twelfth story; a story carries its `title` and `chapter`,
+                               and its `text` — one continuous telling, seams marked with `|` —
+                               beside `parts`, that same text cut at those seams, one per scene
   GET  /api/stream/events    -> the same stream, pushed: text/event-stream, held open, one
                                `event: change` with {"rooms": [the ones whose fingerprint
                                moved], "status": …} within ~2s of a passage, a note, a story,
@@ -1684,6 +1686,22 @@ def dream_files() -> list[str]:
     return out
 
 
+def story_parts(d: dict) -> list[str]:
+    """The telling cut at its seams (`eva/stream/remembering.py`, `split_parts`).
+
+    **The `|` never leaves `text`**: it is what the sleeper wrote and the shelf keeps it, marks
+    and all. `parts` rides beside it so the page — and anything else reading this — does not
+    re-implement the split. The stored list is used when it is there; a version written before
+    the seams existed is split here, which for an unmarked telling is the whole of it as one
+    part. Nothing is validated: the wrong number of marks is the wrong number of parts, and the
+    page holds the mismatch.
+    """
+    saved = d.get("parts")
+    if isinstance(saved, list) and all(isinstance(p, str) for p in saved) and saved:
+        return saved
+    return [p.strip() for p in (d.get("text") or "").split("|")]
+
+
 def stream_stories() -> tuple[dict, str | None, dict]:
     """({room: the story that room belongs to}, the id of the live one, {room: "12:3"}).
 
@@ -1746,7 +1764,8 @@ def stream_stories() -> tuple[dict, str | None, dict]:
     for dream, rooms in members.items():
         d = latest[dream]
         chapter = d.get("chapter") if isinstance(d.get("chapter"), int) else None
-        story = {"dream": dream, "text": d["text"], "turn": d.get("turn") or 0,
+        story = {"dream": dream, "text": d["text"], "parts": story_parts(d),
+                 "turn": d.get("turn") or 0,
                  "of": d.get("of") or STREAM_DREAM_TURNS, "live": dream == live,
                  # The name the sleeper gave it, off the LATEST version — a story renamed as it
                  # was rewritten is a story that turned out to be about something else.
