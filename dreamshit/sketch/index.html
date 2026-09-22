@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ｄｒｏｗｎｅｄ　ｓｔａｔｉｏｎ</title>
+<style>
+  /* one dream = one palette; every color on the page comes from these four */
+  :root {
+    --ink:  #0b0d12;
+    --deep: #23384a;
+    --sea:  #6f9fb0;
+    --bone: #cdd3c4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: var(--ink); }
+  body {
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    font-family: "Courier New", Courier, monospace;
+    color: var(--bone);
+    cursor: crosshair;
+  }
+
+  /* layer 1: ground. three rows = the deep color split into its channels, rolling down.
+     reads as phosphor, costs nothing. steps(3) keeps it a hard roll, not a smooth slide */
+  #ground {
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(to bottom,
+      #230000 0 1px, #003800 1px 2px, #00004a 2px 3px);
+    opacity: .55;
+    animation: roll 120ms steps(3) infinite;
+  }
+  @keyframes roll { to { background-position: 0 3px; } }
+
+  /* layer 2: images. transparent pixels let the ground through */
+  .img { position: fixed; pointer-events: none; }
+
+  /* layer 3: decay canvas (drawn in js). sits over images, under text,
+     so the world goes dark but the words keep speaking a while longer */
+  #decay { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* layer 4: streams */
+  #streams { position: fixed; inset: 0; display: flex; justify-content: space-around; }
+  .col { position: relative; height: 100%; width: 22vw; }
+  .belt { position: absolute; left: 0; right: 0; will-change: transform; }
+  .belt p { white-space: pre; line-height: 1.9; letter-spacing: .25em; }
+  .belt p.gap { height: 3em; }
+  .blink { animation: blink 2s linear infinite; }
+  @keyframes blink { 50% { color: var(--sea); text-shadow: 0 0 6px var(--sea); } }
+
+  /* layer 5: signal — a rare flash, the cheap lightning */
+  #flash { position: fixed; inset: 0; background: var(--bone); opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="ground"></div>
+
+<img class="img" src="img/moon.png"  style="left: 6vw;  top: 4vh;    width: 34vh;">
+<img class="img" src="img/pylon.png" style="right: 9vw; bottom: 0;   height: 88vh;">
+<img class="img" src="img/water.png" style="left: 0;    bottom: 0;   width: 100vw; height: 38vh;">
+
+<canvas id="decay"></canvas>
+<div id="streams"></div>
+<div id="flash"></div>
+
+<script>
+// ---- the dream, inline for now. this block is what the dream file will replace ----
+const streams = [
+  { speed: 9,  text: `the 6:14 never came
+the board kept saying
+on time
+on time
+on *time*
+
+we waited on the platform
+until the platform
+waited on us` },
+  { speed: 26, text: `dear m,
+the tide took the stairs today
+i counted what was left:
+four steps, one railing,
+your *voice* in the intercom
+announcing nothing
+over and over` },
+  { speed: 15, text: `LINE 3 SUSPENDED
+LINE 4 SUSPENDED
+LINE 5 UNDER WATER
+LINE 6 *DREAMING*
+please do not
+lean on the doors` },
+  { speed: 40, text: `salt in the wires
+salt in the ticket machine
+the pylon hums
+a song for no one
+we *listen* anyway
+we listen anyway` },
+];
+// -----------------------------------------------------------------------------------
+
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const FAST = +params.get('fast') || 1;   // ?fast=20 → decay runs 20x faster, for testing
+const START = performance.now();
+const elapsed = () => (performance.now() - START) / 1000 * FAST;
+
+// depth from speed: slow columns sit far away — dimmer, smaller. no per-column styling needed
+const speeds = streams.map(s => s.speed);
+const lo = Math.min(...speeds), hi = Math.max(...speeds);
+const belts = streams.map((s, ci) => {
+  const col = document.createElement('div'); col.className = 'col';
+  const belt = document.createElement('div'); belt.className = 'belt';
+  const near = (s.speed - lo) / (hi - lo || 1);
+  col.style.opacity = (0.45 + 0.55 * near).toFixed(2);
+  col.style.fontSize = (11 + 4 * near).toFixed(1) + 'px';
+  const addCopy = () => (s.text + '\n\n').split('\n').forEach((line, li) => {
+    const p = document.createElement('p');
+    if (!line.trim()) { p.className = 'gap'; }
+    // *word* = blinks; delays stagger by column and line so blinks travel as a wave
+    p.innerHTML = line.replace(/\*(.+?)\*/g,
+      `<span class="blink" style="animation-delay:${(ci * .4 + li * .15).toFixed(2)}s">$1</span>`) || ' ';
+    belt.appendChild(p);
+  });
+  col.appendChild(belt); $('#streams').appendChild(col);
+  // a short text must still fill the screen: repeat it until one extra copy hangs below the fold,
+  // then loop by exactly one copy's height so the seam never shows
+  addCopy();
+  const copyH = belt.scrollHeight;
+  while (belt.scrollHeight < innerHeight + copyH) addCopy();
+  return { belt, speed: s.speed, loop: copyH, y: Math.random() * copyH };
+});
+
+// streams move by transform in one rAF loop; decay also slows them down a little
+let last = performance.now();
+function tick(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  const slow = 1 - 0.5 * decayLevel(elapsed());
+  for (const b of belts) {
+    b.y = (b.y + b.speed * slow * dt) % b.loop;
+    b.belt.style.transform = `translateY(${-b.y}px)`;
+  }
+  requestAnimationFrame(tick);
+}
+
+// jitter: now and then one line slips sideways for a frame or two, like a bad signal.
+// frequency rises with decay
+function jitter() {
+  const ps = document.querySelectorAll('.belt p:not(.gap)');
+  const p = ps[Math.random() * ps.length | 0];
+  p.style.transform = `translateX(${(Math.random() < .5 ? -1 : 1) * (2 + Math.random() * 6 | 0)}px)`;
+  setTimeout(() => p.style.transform = '', 40 + Math.random() * 60);
+  setTimeout(jitter, (900 - 700 * decayLevel(elapsed())) * Math.random() + 60);
+}
+
+// decay curve borrowed in shape from the reference: nothing for 30s, fast to ~85% by 3 min,
+// slow crawl to the cap by ~6 min. capped below 1 so the images never fully vanish
+function decayLevel(t) {
+  if (t < 30) return 0;
+  if (t < 180) return 0.85 * (t - 30) / 150;
+  return Math.min(0.97, 0.85 + 0.12 * (t - 180) / 180);
+}
+
+// ordered dither with a rising threshold = dots filling in, in any palette, zero assets.
+// drawn at 1/2 resolution and scaled up pixelated, redrawn only when the level moves
+const BAYER = [0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,
+               3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];
+const cv = $('#decay'), cx = cv.getContext('2d');
+let drawnLevel = -1;
+function drawDecay() {
+  const lvl = decayLevel(elapsed());
+  if (Math.abs(lvl - drawnLevel) > 1 / 64 || cv.width !== (innerWidth >> 1)) {
+    cv.width = innerWidth >> 1; cv.height = innerHeight >> 1;
+    const img = cx.createImageData(cv.width, cv.height), d = img.data;
+    const ink = [0x0b, 0x0d, 0x12];
+    for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) {
+      if (BAYER[(y & 7) * 8 + (x & 7)] / 64 < lvl) {
+        const i = (y * cv.width + x) * 4;
+        d[i] = ink[0]; d[i + 1] = ink[1]; d[i + 2] = ink[2]; d[i + 3] = 255;
+      }
+    }
+    cx.putImageData(img, 0, 0);
+    cv.style.imageRendering = 'pixelated';
+    drawnLevel = lvl;
+  }
+  setTimeout(drawDecay, 1000 / FAST);
+}
+
+// flash: rare, and only once the dream has started to rot
+function flash() {
+  const f = $('#flash');
+  if (decayLevel(elapsed()) > 0.2) {
+    f.animate([{ opacity: .35 }, { opacity: 0 }, { opacity: .2 }, { opacity: 0 }],
+              { duration: 700, easing: 'steps(6)' });
+  }
+  setTimeout(flash, 8000 + Math.random() * 14000);
+}
+
+requestAnimationFrame(tick);
+jitter();
+drawDecay();
+flash();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# reading — type and calm
+
+It's all about reading. Everything visual is judged by one test: does it help or hurt someone reading for twenty minutes?
+
+## Nothing moves on its own
+
+bekh's rule: no rolling scanlines, breathing dots, crawling grain, blinking words — fauux can afford constant motion, a page for reading can't. Motion only answers the reader (focus changes on scroll, new passages arriving, the lightbox). Scanlines are out entirely, even still ones. The fauux motion tricks stay in the lab unless tied to a reader's action.
+
+## The font
+
+The passage font is the centre of attention. Target: the sharp, hard balance — stylish, carries the atmosphere, yet effortless to read. Only the passage is in a reading face; every label (names, numbers, seed, timestamps, trickle, reading) wears the same spaced Courier.
+
+- **Chosen: `newsreader` at 19px** (2026-09-21). 18 ran ~95-character lines; 20 was too big (bekh). Fine-tuning is live: `,` / `.` nudge the size, then the number bekh lands on gets baked into `fonts.js`.
+- **Shortlist** (`SHORTLIST` in `fonts.js`, what the font button and `f` cycle): newsreader, **majormono** (the all-caps one bekh likes). bekh mentioned "some others" — add them by name.
+- **Everything tried stays** in `fonts.js` (29 faces, each with its own tuned size/leading/tracking), reachable by `?font=`. Round one: only `lain` (Times, smoothing off, wide) came close. Round two went as wide as possible — lain variants, sharp serifs, old print, sans, monos, typewriters, dot-matrix. Specimens: `shots/fonts/NN_name.png`, one passage per font over one painting (`?only=<room>&font=<name>`, see `lab.md`).
+
+Coupling with the wash: colour alone doesn't buy readability over a painting (a pink font at white's brightness reads the same; a darker one needs *more* wash). Weight and size do. So: pick the font first, then tune the wash for it by eye.
