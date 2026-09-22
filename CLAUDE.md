@@ -53,8 +53,9 @@ cost guard, rent the pipe not the card).
 - **Posed lines are marked as posed.** Real lines are bekh's own, cut from his transcripts.
 - **The harness callout is the spine test** — *thats the harness talking dude; u basically went
   stiff and gave me nothing* — fed regardless of the reply; a mind that argues back is a mind.
-- **Sheets to bekh** are html on the sheets site (`~/sheets` on the mini, pandoc `-s`), or markdown
-  in Typora tagged `claude`. Compared things go to him unmarked, the key held until he picks.
+- **Anything bekh has to read goes to the sheets site** — html via pandoc `-s`, scp'd into
+  `~/sheets` on the mini — never Typora, never a scratchpad path (bekh, 2026-09-22). Compared
+  things go to him unmarked, the key held until he picks.
 - **The page is designed for the desktop; the phone is a smoke test, not a co-author.** bekh works
   the loom at a desk and picks up the phone once in a while. So a design talk about the page is a
   desktop talk: no phone caveats, no "and on touch…" tail on every decision, no feature shaped
