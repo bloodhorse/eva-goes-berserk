@@ -15,7 +15,10 @@ posts the whole sitting after every move; the server writes it atomically to
 Route list at the top of the file. Two routes read something the server never wrote:
 `/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room — and `/api/stream`,
 which reads the stream worker's heartbeat (`STREAM_DIR`) alongside the rooms under
-`sittings/stream/`; `/stream` serves `front/stream.html` beside it. Env: `LOOM_HOST`,
+`sittings/stream/`; `/stream` serves `front/stream.html` beside it. One route never returns:
+**`/api/stream/events`** is `text/event-stream`, held open, saying which rooms changed within
+~2s of anything landing, so a reader is pushed to instead of polling — a GET, so the mirror
+serves it too. Env: `LOOM_HOST`,
 `LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
 `LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` / `LOOM_STREAM_PAGE` /
 `STREAM_DIR` that the tests and the rigs set — production leaves them alone.
@@ -404,6 +407,9 @@ which counts what they cost onto every ledger row.
 And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through
 codex, served as a file and set as the background of the dream's own block — behind the words,
 under a measured wash, lifting on a hover or a press-and-hold.
+**Nothing in the stream waits for a timer** (2026-09-22): every writer taps the mirror push as
+it lands (`stream/push.py`), and `/api/stream/events` pushes the change on to whoever is
+reading — the 60s polls at both ends are gone.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
 ## Tests
@@ -414,7 +420,9 @@ dot segments refused, the `LOOM_CANVASES` scratch shelf, a mark landing in the r
 `Mark` for the two branch marks, and `Folders`:
 the recursive listing with the bin hidden, every rule a path has, the move of a room and of a
 folder with its collisions and its pruning, and a walked room answering to its bare name after
-it moves), `evatest.py`,
+it moves — and `StreamEvents` for the held connection: a room and its reading landing as one
+`change` with the status on it, a writer falling asleep as a change with no rooms and a
+keepalive after it, and a client that walks away leaving the loom serving), `evatest.py`,
 `censustest.py`, `wiretest.py` (the chain: the alternation, the whole document on the wire every
 turn, the newline seam, the empty-line retry and swap, the beats and the `--first` rule, the
 window stopping the chain), `berserktest.py`, all against `tests/stub_llama.py`, a fake

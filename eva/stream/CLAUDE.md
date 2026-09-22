@@ -95,8 +95,26 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
   `last_ok` survives a failed run, or one unreachable llama would look like a stream that never
   ran.
 - **Additive routes only.** `GET /stream` serves the page, `GET /api/stream` serves the pages
-  and the status. Marks go through the **existing** `/api/mark` — a second mark route would be
-  a second place the at-most-one rule lives.
+  and the status, `GET /api/stream/events` is the same thing pushed. Marks go through the
+  **existing** `/api/mark` — a second mark route would be a second place the at-most-one rule
+  lives.
+- **Nothing waits for a timer any more** (2026-09-22). Two halves, both additive:
+  - **Every landing taps the mirror.** `push.py`, one function, kickstarting
+    `com.bekh.eva-mirror` — called by the writer, the reader, the sleeper, the painter, the
+    namer and `reread.py`, so what the mini serves is a second old and not up to a minute. No
+    `-k`, for the reason the voices' kick has none: a kick during an rsync is dropped and the
+    job's own 60s tick carries that change instead. The tick stays anyway — it is the path
+    *home* for marks made on the mirror. A scratch shelf (`STREAM_DIR` or any `LOOM_*`
+    override), `STREAM_PUSH=0`, or no `launchctl` at all and it is a no-op: a test must never
+    push the real shelf, and a failed kick is a line on stderr and never a crash.
+  - **`GET /api/stream/events`** holds the connection open and emits `event: change` with
+    `{"rooms": [the ones whose fingerprint moved or appeared], "status": {…}}` every ~2s that
+    something moved; a writer falling asleep is a change with `rooms: []`, and a `: keepalive`
+    comment every 20s stops cloudflare and caddy calling a quiet connection idle. The
+    fingerprint per room covers exactly what `/api/stream` hands over for it — the room file,
+    its reading, its story, its name, its plate — built from the route's own helpers, and
+    measured at **4.4 ms** a tick over 185 rooms (`loom.stream_prints`). It is a GET, so the
+    mirror serves it exactly as the mac does, which is how `dreamshit.x` reads the stream.
 - **The reader is phone-first**, which is the one place this project's "the page is a desktop
   page" law does not apply: that law is about the loom. No model name, no sampler, no seed name
   — a reader who can see the temperature is reading an experiment and not a dream.
@@ -183,8 +201,9 @@ each side of the page.
   the real ceiling**, measured the same day: 22 plates in 90 minutes tripped the five-hour
   window at 80% while the week stood at 19%.
 
-- **The writer taps the other voices when a dream lands.** Neither has an interval at all:
-  `stream.py` ends a successful page with `launchctl kickstart` on both
+- **The writer taps the other voices when a dream lands** (and the mirror, through `push.py`).
+  Neither voice has an interval at all: `stream.py` ends a successful page with
+  `launchctl kickstart` on both
   (`STREAM_KICK_INTERPRETER=1`, set in the worker's plist only), each tapped on its own so a
   reader that cannot start is no reason for the account to go untold. bekh, 2026-09-19 — they
   should start when the dream is finished; two independent 300s timers put a note a whole tick
@@ -688,8 +707,10 @@ read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom 
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
-`STREAM_TEMP_HI`, plus loom's `LOOM_SITTINGS` and `LOOM_LLAMA`. The loom reads `STREAM_DIR` and
-`STREAM_INTERVAL` too, and `LOOM_STREAM_PAGE` for a doctored copy of the page.
+`STREAM_TEMP_HI`, `STREAM_PUSH` (`0` = don't tap the mirror), plus loom's `LOOM_SITTINGS` and
+`LOOM_LLAMA`. The loom reads `STREAM_DIR` and `STREAM_INTERVAL` too, `LOOM_STREAM_PAGE` for a
+doctored copy of the page, and `STREAM_EVENTS_TICK` / `STREAM_EVENTS_KEEPALIVE` /
+`STREAM_EVENTS_ROOMS` for the held connection.
 
 ## Reading the monitor
 

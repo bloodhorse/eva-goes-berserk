@@ -48,6 +48,11 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                Each page also carries its `name` (the reader's, else the
                                naming store's) and its `verse`, `"12:3"` — the third scene of
                                the twelfth story; a story carries its `title` and `chapter`
+  GET  /api/stream/events    -> the same stream, pushed: text/event-stream, held open, one
+                               `event: change` with {"rooms": [the ones whose fingerprint
+                               moved], "status": …} within ~2s of a passage, a note, a story,
+                               a plate or a name landing, and a `: keepalive` comment between
+                               them. A GET, so the mirror serves it too
   POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
@@ -93,11 +98,13 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
 Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLAMA,
 LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_CANVASES, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
 LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh),
-LOOM_STREAM_PAGE, STREAM_DIR and STREAM_INTERVAL (the dream stream — eva/stream/).
+LOOM_STREAM_PAGE, STREAM_DIR and STREAM_INTERVAL (the dream stream — eva/stream/),
+STREAM_EVENTS_TICK / STREAM_EVENTS_KEEPALIVE / STREAM_EVENTS_ROOMS (the held connection above).
 """
 
 from __future__ import annotations
 
+import hashlib
 import http.client
 import json
 import math
@@ -179,6 +186,14 @@ STREAM_N = 10                             # pages per call when nobody says
 # (bekh, 2026-09-21: load it honestly and stand the viewer at the bottom) — so the cap has to
 # clear a day, or the honest bottom would be the middle of yesterday.
 STREAM_N_MAX = 400
+# /api/stream/events, the held connection that says what changed (see `stream_prints`). The
+# tick is how long a landing can wait before a reader sees it; the keepalive is a comment line
+# that keeps Cloudflare and caddy from calling a quiet connection idle and closing it; ROOMS
+# caps the walk at the newest names, because a reader's window is the newest page or two and a
+# shelf that grows for a month should not cost a month per tick.
+STREAM_EVENTS_TICK = float(os.environ.get("STREAM_EVENTS_TICK", "2"))
+STREAM_EVENTS_KEEPALIVE = float(os.environ.get("STREAM_EVENTS_KEEPALIVE", "20"))
+STREAM_EVENTS_ROOMS = int(os.environ.get("STREAM_EVENTS_ROOMS", "400"))
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -1874,6 +1889,55 @@ def stream_status() -> dict:
             "room": hb.get("room"), "interval": STREAM_INTERVAL}
 
 
+# ---- watching the stream --------------------------------------------------------------------
+# A dream is written by five processes that never talk to the page — the worker, the reader, the
+# sleeper, the painter, the namer — so the page used to ask every sixty seconds whether anything
+# had happened. `/api/stream/events` holds the connection open instead and says which rooms
+# changed within a couple of seconds of their changing.
+#
+# The fingerprint is per ROOM and covers exactly what `/api/stream` hands over for that room,
+# built from the same four helpers the route itself uses (`stream_readings`, `stream_stories`,
+# `stream_names`, `plate_url`) — never a second spelling of where those files live. The three
+# index reads are cached on mtime inside those helpers, so a tick that changes nothing is three
+# directory walks plus three stats a room.
+#
+# **What it costs, measured on the real shelf 2026-09-22** (185 stream rooms — `ls -R
+# shelf/sittings/stream | wc -l` = 194 — 131 readings, 38 story versions, 43 plates): **4.4 ms**
+# per tick warm, 8.1 ms with the mtime caches cold — 0.22% of a core at a tick of 2s. It grows
+# with the shelf at roughly 2.4 ms per hundred rooms, which is why the walk is capped at the
+# newest STREAM_EVENTS_ROOMS names: 288 passages a day would put this past 50 ms a tick inside a
+# fortnight, and a reader's window is the newest page or two anyway.
+
+def stream_prints(n: int = 0) -> dict[str, str]:
+    """{room: a short digest of everything the reader sees for it}.
+
+    Not a timestamp: a plate redrawn under the same name, a note re-read, a story rewritten
+    under a new title all change what is on the page without moving the room's own file, and a
+    mark written through `/api/mark` moves the file without changing anything else. One digest
+    over all of it is the only thing that is true for every writer.
+    """
+    by_room, heads = stream_readings()
+    stories, _live, verses = stream_stories()
+    named = stream_names()
+    out: dict[str, str] = {}
+    for name in stream_room_names()[:max(1, n or STREAM_EVENTS_ROOMS)]:
+        try:
+            st = os.stat(sitting_path(name))
+        except (OSError, ValueError):
+            continue
+        read = by_room.get(name) or {}
+        story = stories.get(name) or {}
+        key = (st.st_mtime_ns, st.st_size, plate_url(name),
+               (heads.get(name) or {}).get("ts"),
+               read.get("name"), named.get(name), verses.get(name),
+               read.get("marked"), read.get("segments"),
+               story.get("dream"), story.get("turn"), story.get("live"),
+               story.get("title"), story.get("text"))
+        out[name] = hashlib.blake2b(repr(key).encode("utf-8", "replace"),
+                                    digest_size=8).hexdigest()
+    return out
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -1907,6 +1971,57 @@ class Handler(BaseHTTPRequestHandler):
     def _read_json(self) -> dict:
         n = int(self.headers.get("Content-Length", "0") or 0)
         return json.loads(self.rfile.read(n) or b"{}")
+
+    def stream_events(self) -> None:
+        """`/api/stream/events` — the connection is held and the changes are pushed down it.
+
+        One `event: change` per tick that changed anything, carrying the rooms whose
+        fingerprint moved or appeared and the same `status` object `/api/stream` returns; a
+        status-only change (the writer went to sleep) comes with `rooms: []`. Between them a
+        `: keepalive` comment, because a connection that says nothing for a minute is a
+        connection cloudflare and caddy are entitled to close.
+
+        The server is a `ThreadingHTTPServer`, so a held connection is one thread and the loom
+        goes on answering everything else; this is also why the tick is a plain `sleep` and not
+        a scheduler. Nothing here writes, so the mirror serves it exactly as the mac does —
+        `LOOM_READONLY` gates POST and this is a GET.
+
+        The client going away is the ordinary ending: a write into a socket nobody is reading
+        raises, and that is a `return`, not a traceback in the log.
+        """
+        self.close_connection = True
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        # Nginx's word for "do not buffer this", which caddy and cloudflare both honour. Without
+        # it a proxy is free to hold the whole thing and hand it over when it ends, which for a
+        # connection that never ends means the page shows nothing, forever.
+        self.send_header("X-Accel-Buffering", "no")
+        self.send_header("Connection", "close")
+        self.end_headers()
+        prints, status = stream_prints(), stream_status()
+        try:
+            # A byte straight away, before any waiting: the headers alone may sit in a proxy,
+            # and this is what proves the whole pipe is open while somebody is watching curl.
+            self.wfile.write(b": open\n\n")
+            self.wfile.flush()
+            said = time.monotonic()
+            while True:
+                time.sleep(STREAM_EVENTS_TICK)
+                fresh, now = stream_prints(), stream_status()
+                changed = sorted(r for r, fp in fresh.items() if prints.get(r) != fp)
+                if changed or now != status:
+                    prints, status = fresh, now
+                    data = json.dumps({"rooms": changed, "status": status}, ensure_ascii=False)
+                    self.wfile.write(b"event: change\ndata: " + data.encode("utf-8") + b"\n\n")
+                elif time.monotonic() - said < STREAM_EVENTS_KEEPALIVE:
+                    continue
+                else:
+                    self.wfile.write(b": keepalive\n\n")
+                self.wfile.flush()
+                said = time.monotonic()
+        except (BrokenPipeError, ConnectionResetError, TimeoutError):
+            return
 
     def do_GET(self) -> None:
         u = urlparse(self.path)
@@ -1983,6 +2098,11 @@ class Handler(BaseHTTPRequestHandler):
                                "public, max-age=31536000, immutable")
             except OSError:
                 self._json(404, {"error": "no plate there"})
+            return
+
+        # Before /api/stream, and not a query on it: this one never returns.
+        if u.path == "/api/stream/events":
+            self.stream_events()
             return
 
         if u.path == "/api/stream":

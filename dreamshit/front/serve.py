@@ -1,7 +1,8 @@
 """Local server for the dream-stream front: serves this folder and forwards eva's data.
 
 The browser only ever talks to this server. /api/* and /stream/plate/* are fetched from
-eva.x server-side and handed back as if they were ours — so there is no cross-site block,
+eva.x server-side and handed back as if they were ours — /api/stream/events chunk by chunk
+as it arrives, because it is a connection eva holds open and not a body with an end — so there is no cross-site block,
 and the plates count as same-origin, which the glass look needs (it reads their pixels;
 a cross-origin picture taints the canvas and the look silently shows nothing).
 
@@ -23,6 +24,7 @@ HERE = Path(__file__).resolve().parent
 EVA = 'https://eva.x'
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8766
 FORWARD = ('/api/', '/stream/plate/')
+EVENTS = '/api/stream/events'      # the one forwarded path that is a held connection, not a body
 TLS = ssl.create_default_context(cafile=str(HERE / 'eva-root.crt'))
 
 
@@ -36,8 +38,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def forward(self):
+        # The events route never ends, so it can neither be read in one go nor given the
+        # ordinary timeout: a read has to come back at least once a keepalive, and a read that
+        # doesn't is a connection that has died. Everything else is a body with a size.
+        held = self.path.startswith(EVENTS)
         try:
-            with urllib.request.urlopen(EVA + self.path, context=TLS, timeout=20) as r:
+            with urllib.request.urlopen(EVA + self.path, context=TLS,
+                                        timeout=60 if held else 20) as r:
+                if held:
+                    return self.relay(r)
                 body = r.read()
                 self.send_response(r.status)
                 self.send_header('Content-Type', r.headers.get('Content-Type', 'application/octet-stream'))
@@ -51,6 +60,30 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         except (urllib.error.URLError, TimeoutError) as e:
             # eva unreachable (mini down, tailscale off): say so plainly, the page shows it
             self.send_error(502, 'eva unreachable: ' + str(getattr(e, 'reason', e)))
+
+    def relay(self, r):
+        """eva's held connection, passed through as it arrives.
+
+        read1() hands over whatever has landed instead of waiting for a buffer to fill, and each
+        chunk is flushed — otherwise the whole point of an event stream is buffered away and the
+        page sits on the passages it loaded. The browser leaving raises on the write; eva going
+        quiet for a minute raises on the read; either is the end of this connection and nothing
+        else.
+        """
+        self.send_response(200)
+        self.send_header('Content-Type', r.headers.get('Content-Type', 'text/event-stream'))
+        self.send_header('Cache-Control', 'no-cache')
+        self.send_header('X-Accel-Buffering', 'no')
+        self.end_headers()
+        try:
+            while True:
+                chunk = r.read1(4096)
+                if not chunk:
+                    return
+                self.wfile.write(chunk)
+                self.wfile.flush()
+        except (BrokenPipeError, ConnectionResetError, TimeoutError, OSError):
+            return
 
     def log_message(self, fmt, *args):
         # quiet: only forwarding failures are worth a line

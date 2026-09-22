@@ -49,11 +49,19 @@ ARTS = tempfile.mkdtemp(prefix="loom-arts-")       # nor artifacts/, which gets 
 BERSERK = tempfile.mkdtemp(prefix="loom-berserk-")  # nor the daemon's real ledger
 LEDGER = os.path.join(BERSERK, "ledger.jsonl")
 CANVASES = tempfile.mkdtemp(prefix="loom-canvases-")  # nor the real boards
+STREAM = tempfile.mkdtemp(prefix="loom-stream-")   # nor the dream stream's readings and plates
 os.environ["LOOM_SITTINGS"] = SHELF
 os.environ["LOOM_STORAGE"] = STORE
 os.environ["LOOM_ARTIFACTS"] = ARTS
 os.environ["LOOM_LEDGER"] = LEDGER
 os.environ["LOOM_CANVASES"] = CANVASES
+# The stream's own shelf, which is not under LOOM_SITTINGS: without this the server under test
+# would read the real readings, dreams and plates while the rooms came from a temp dir.
+os.environ["STREAM_DIR"] = STREAM
+# The held connection at /api/stream/events, wound right up: two seconds a tick is the pace a
+# reader wants and a quarter of a second is the pace a test wants.
+os.environ["STREAM_EVENTS_TICK"] = "0.25"
+os.environ["STREAM_EVENTS_KEEPALIVE"] = "1"
 import loom  # noqa: E402 — path first; this file may be started from anywhere
 
 # loom.html's own defaults, restated. Kept as literals rather than parsed out of the page
@@ -119,7 +127,7 @@ def setUpModule() -> None:
     env = dict(os.environ,
                LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                LOOM_STORAGE=STORE, LOOM_ARTIFACTS=ARTS, LOOM_LEDGER=LEDGER,
-               LOOM_CANVASES=CANVASES, LOOM_LLAMA=STUB_BASE)
+               LOOM_CANVASES=CANVASES, LOOM_LLAMA=STUB_BASE, STREAM_DIR=STREAM)
     LOOM = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     deadline = time.time() + 20
@@ -154,6 +162,8 @@ def tearDownModule() -> None:
         shutil.rmtree(BERSERK, ignore_errors=True)
     if CANVASES:
         shutil.rmtree(CANVASES, ignore_errors=True)
+    if STREAM:
+        shutil.rmtree(STREAM, ignore_errors=True)
 
 
 class Tree:
@@ -1900,6 +1910,124 @@ class ReadOnly(unittest.TestCase):
         # and the real loom still says it is not the mirror
         self.assertFalse(json.loads(urllib.request.urlopen(self.base + "/api/health",
                                                            timeout=10).read())["readonly"])
+
+
+class StreamEvents(unittest.TestCase):
+    """`/api/stream/events`: the connection is held and the changes are pushed down it.
+
+    The stream is written by five processes that never talk to the page (eva/stream/), so this
+    route is how a passage, a note, a story, a plate or a name reaches a reader within a couple
+    of seconds instead of at the next poll. The tick and the keepalive are wound right up for
+    the test by the env at the top of this file.
+    """
+
+    def room(self, name: str, text: str) -> dict:
+        """One stream room, the worker's shape: a bare root and one model node under it.
+
+        Written straight to the shelf rather than through `loom.write_sitting`: the test
+        modules share one imported `loom` in a full run and streamtest.py repoints its shelf
+        globals, so the only path that is certainly this server's shelf is SHELF itself.
+        """
+        ts = time.time()
+        root = {"id": "r0", "parent": None, "kind": "human", "text": "a seed",
+                "ts": ts, "pruned": False, "posed": False, "meta": None}
+        node = {"id": "n0", "parent": "r0", "kind": "model", "text": text, "ts": ts,
+                "pruned": False, "posed": False, "meta": {"params": {"temperature": 2.0}}}
+        d = {"name": name, "created": ts, "updated": ts, "params": {}, "turn": TURN,
+             "root": "r0", "current": "n0", "nodes": {"r0": root, "n0": node}}
+        path = os.path.join(SHELF, name + ".json")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path + ".part", "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False)
+        os.replace(path + ".part", path)       # atomically, the way write_sitting does it
+        return d
+
+    def beat(self, room: str) -> None:
+        os.makedirs(STREAM, exist_ok=True)
+        with open(os.path.join(STREAM, "heartbeat.json"), "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time(), "last_ok": time.time(), "room": room, "ok": True}, f)
+
+    def reading(self, room: str, note: str) -> None:
+        day = os.path.join(STREAM, "readings", "2099-01-01")
+        os.makedirs(day, exist_ok=True)
+        with open(os.path.join(day, "0101.json"), "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time(), "rooms": [room], "reading": note,
+                       "marked": {room: "a door"}, "segments": {room: [{"t": "a door"}]},
+                       "names": {room: "the door in the field"}, "model": "opus"}, f)
+
+    @staticmethod
+    def listen(resp, out: list, want: int, keepalive: bool = False) -> threading.Thread:
+        """Read the event stream in its own thread: every line of it, so the comments can be
+        asserted on too, stopping once `want` events (and, if asked, one keepalive comment
+        after them) have arrived, or the socket closes."""
+        def run():
+            events = 0
+            for raw in resp:
+                line = raw.decode("utf-8").rstrip("\n")
+                out.append(line)
+                if line.startswith("data: "):
+                    events += 1
+                if events >= want and (not keepalive or line == ": keepalive"):
+                    return
+        t = threading.Thread(target=run, daemon=True)
+        t.start()
+        return t
+
+    def test_change_carries_the_room_and_the_status(self):
+        name = "stream/2099-01-01/0101"
+        self.beat("stream/2099-01-01/0100")
+        resp = urllib.request.urlopen(BASE + "/api/stream/events", timeout=20)
+        lines: list[str] = []
+        t = self.listen(resp, lines, 1)
+        # The room and its note, after the connection is up: what is being tested is the push,
+        # not the first fingerprint.
+        time.sleep(0.5)
+        self.room(name, "a door standing in a field with no house behind it")
+        self.reading(name, "it sets a door where a door cannot be")
+        t.join(timeout=15)
+        resp.close()
+        self.assertFalse(t.is_alive(), "no event arrived: " + repr(lines))
+        # The first byte is the comment that proves the pipe, before anything has happened
+        self.assertEqual(lines[0], ": open")
+        data = json.loads([x for x in lines if x.startswith("data: ")][0][len("data: "):])
+        self.assertIn(name, data["rooms"])
+        self.assertEqual(data["status"]["state"], "dreaming")
+        # and the page really does have something to fetch when it hears that — with the same
+        # status object on it, which is the whole contract: the bar is drawn off the event
+        st, d = call("/api/stream?n=5")
+        self.assertEqual(st, 200)
+        self.assertEqual(d["status"], data["status"])
+        page = [p for p in d["pages"] if p["room"] == name][0]
+        self.assertEqual(page["name"], "the door in the field")
+
+    def test_status_alone_changes_with_no_rooms(self):
+        self.beat("stream/2099-01-02/0101")
+        resp = urllib.request.urlopen(BASE + "/api/stream/events", timeout=20)
+        lines: list[str] = []
+        t = self.listen(resp, lines, 1, keepalive=True)
+        time.sleep(0.5)
+        # The writer stopped a long time ago: nothing on the shelf moved, the state did.
+        with open(os.path.join(STREAM, "heartbeat.json"), "w", encoding="utf-8") as f:
+            json.dump({"ts": time.time(), "last_ok": time.time() - 86400,   # yesterday
+                       "room": "stream/2099-01-02/0101", "ok": True}, f)
+        t.join(timeout=15)
+        resp.close()
+        self.assertFalse(t.is_alive(), "no event arrived: " + repr(lines))
+        data = json.loads([x for x in lines if x.startswith("data: ")][0][len("data: "):])
+        self.assertEqual((data["rooms"], data["status"]["state"]), ([], "asleep"))
+        # and a quiet connection says so rather than going silent until a proxy closes it
+        self.assertTrue(any(x == ": keepalive" for x in lines), repr(lines))
+
+    def test_a_client_that_leaves_leaves_the_loom_serving(self):
+        resp = urllib.request.urlopen(BASE + "/api/stream/events", timeout=20)
+        self.assertEqual(resp.headers.get("Content-Type"), "text/event-stream; charset=utf-8")
+        self.assertEqual(resp.headers.get("Cache-Control"), "no-cache")
+        self.assertEqual(resp.headers.get("X-Accel-Buffering"), "no")
+        self.assertEqual(resp.readline(), b": open\n")
+        resp.close()                       # mid-stream, the way a closed tab does it
+        time.sleep(0.6)                    # a tick or two, so the loom writes into it and fails
+        self.assertEqual(call("/api/health")[0], 200)
+        self.assertEqual(call("/api/stream?n=1")[0], 200)
 
 
 if __name__ == "__main__":

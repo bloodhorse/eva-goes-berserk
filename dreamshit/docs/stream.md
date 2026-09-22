@@ -20,7 +20,20 @@ A **passage** every ~5 minutes; a **dream** (story) is 4 of them. Three voices, 
   "status": { "state": "dreaming", "since": 1789981106.3, "room": "…", "interval": 300 } }
 ```
 
-eva's own page loads `n=300` and polls `n=5` every 60s.
+`GET /api/stream/events` → the same stream, pushed. `text/event-stream`, held open, `Cache-Control: no-cache`, `X-Accel-Buffering: no`:
+
+```
+: open
+
+event: change
+data: {"rooms": ["stream/2026-09-21/1753"], "status": {"state": "dreaming", "since": …, "room": …, "interval": 300}}
+
+: keepalive
+```
+
+One `change` within ~2s of anything landing, carrying the rooms whose fingerprint moved or appeared (the room file, its reading, its story, its name, its plate — whatever `/api/stream` would show differently) and the same `status` object. A status-only change (the writer fell asleep) comes with `"rooms": []`. A `: keepalive` comment every 20s keeps cloudflare and caddy from closing a quiet connection. It's a GET, so the read-only mirror serves it exactly as the mac does — which is where this front reads it from.
+
+eva's own page loads `n=300` and still polls `n=5` every 60s; this front listens instead.
 
 **Names** (eva's convention, mirrored by the front): each passage has a `name` and a `verse` (`chapter:turn`), shown at the top of its text as `10:4 · the body man` — number grey, name ink; the name is the first thing read and what a dream is chosen by. Each dream has a `chapter` and a `title` (still null as of 2026-09-21), shown heading its trickle, a size bigger.
 

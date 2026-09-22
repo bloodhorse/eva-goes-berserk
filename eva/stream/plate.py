@@ -46,6 +46,7 @@ for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
 import loom  # noqa: E402
+import push  # noqa: E402   the mirror, tapped the moment a painting lands
 
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, "stream"))
 PLATES = os.path.join(STREAM, "plates")
@@ -277,6 +278,9 @@ def main(argv: list[str]) -> int:
     used = tokens_used(tail)
     if used:
         print(f"codex tokens used: {used}", flush=True)
+    # Here and not in plating.py: `plating` calls this entry point, and a plate drawn by hand
+    # should reach the mirror exactly as fast as one the painter drew by itself.
+    push.now()
     return 0
 
 

@@ -41,6 +41,7 @@ for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
 import interpreter  # noqa: E402   the persona file, the name cleaning, the storage paths
 import loom  # noqa: E402
 import opus  # noqa: E402
+import push  # noqa: E402   the mirror, tapped once at the end of a pass
 
 TIMEOUT = int(os.environ.get("STREAM_NAME_TIMEOUT", "120"))
 
@@ -188,6 +189,10 @@ def run(rooms: list[str], paragraph: str) -> int:
         done += 1
         log(f"{room} · “{name}” · {seconds}s · " + opus.line(usage))
     log(f"{done} of {len(rooms)} named")
+    # Once for the pass, not once per name: this is a hand tool that can run a hundred and
+    # fifty dreams deep, and a push per name would be a hundred and fifty rsyncs of one file.
+    if done:
+        push.now()
     return 0
 
 

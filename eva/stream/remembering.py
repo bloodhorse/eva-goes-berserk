@@ -61,6 +61,7 @@ for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
 import interpreter  # noqa: E402   only for `clean_name`: one rule for both names, not two
 import loom  # noqa: E402
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
+import push  # noqa: E402   the mirror, tapped the moment a rewrite lands
 
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, "stream"))
 DREAMS = os.path.join(STREAM, "dreams")
@@ -332,6 +333,8 @@ def run_once() -> int:
             "usage": usage})
     log(f"dream · {os.path.relpath(path, STREAM)} · {obj['chapter']}:{obj['turn']} · "
         f"“{title or '—'}” · {len(text)} chars · {obj['seconds']}s · " + opus.line(usage))
+    # The trickle beside a whole pack of dreams just changed, and so may the story's name.
+    push.now()
     return 0
 
 

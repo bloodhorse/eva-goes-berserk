@@ -63,6 +63,7 @@ for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
 import codex  # noqa: E402   the other family's door, and the one place its limit is read
 import loom  # noqa: E402   the shelf, the stream rooms: nothing else here reads a room
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
+import push  # noqa: E402   the mirror, tapped the moment a note lands
 
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, "stream"))
 READINGS = os.path.join(STREAM, "readings")
@@ -496,6 +497,9 @@ def run_once() -> int:
     named = names.get(obj["rooms"][0]) or "—"
     log(f"reading · {os.path.relpath(path, STREAM)} · {len(told)} passages · "
         f"{len(marked)} marked up · “{named}” · {model} · {obj['seconds']}s · " + counted)
+    # A note changes what a reader sees — the margin and the dream's name — so the mirror is
+    # told now rather than at the next minute. Whichever family wrote it: the file is ours.
+    push.now()
     return 0
 
 

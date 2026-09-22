@@ -23,7 +23,8 @@ five minutes the GPU was busy is a stream that stops.
 by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the bedside),
 `com.bekh.eva-stream-remembering` (the sleeper remembering the night) and
 `com.bekh.eva-stream-plating` (the painter), none of which has an interval of its own.
-Best-effort: a failure is one log line and nothing else.
+Best-effort: a failure is one log line and nothing else. The mirror is tapped the same way
+(`push.py`), so the mini has the page in a second instead of in up to a minute.
 
 Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
 (shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, plus
@@ -44,11 +45,12 @@ import time
 
 HERE = os.path.dirname(os.path.realpath(__file__))              # eva/stream
 EVA = os.path.dirname(HERE)                                     # eva/
-for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli")):
+for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
 import eva  # noqa: E402   the one place a blank room's shape is written down
 import loom  # noqa: E402   rooms, names, llama: nothing else here knows how a sitting is written
+import push  # noqa: E402   the mirror, tapped the moment a page lands instead of in a minute
 
 # ---- the dials ----------------------------------------------------------------------------
 # All of them here and overridable by env, because every one of them is a thing bekh will
@@ -492,8 +494,10 @@ def write_page(rng: random.Random) -> int:
     beat(True, name)
     log(f"{name} · {ident} · t{params['temperature']} · {d.get('tokens_predicted')} tok"
         + (f" · flagged {flag}" if flag else ""))
-    # Last, and only on a page that really landed: the reader is started by the dream being
-    # finished and by nothing else.
+    # The mirror first — it is what the phone and dreamshit read, and the page is the thing a
+    # reader wants soonest. Then the voices: the reader is started by the dream being finished
+    # and by nothing else. Both only on a page that really landed.
+    push.now()
     kick()
     return 0
 

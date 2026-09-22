@@ -36,6 +36,7 @@ for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
 import codex  # noqa: E402
 import interpreter  # noqa: E402
 import loom  # noqa: E402
+import push  # noqa: E402   the mirror, tapped once at the end of a pass
 
 
 def say(msg: str) -> None:
@@ -111,6 +112,9 @@ def main(argv: list[str]) -> int:
         say(f"{name} · {os.path.relpath(path, interpreter.STREAM)} · "
             f"“{names.get(name) or '—'}” · {obj['seconds']}s · " + codex.line(usage))
     say(f"{done} of {len(rooms)} re-read")
+    # Once for the pass, like naming.py: a hand tool over a list of dreams, not a landing.
+    if done:
+        push.now()
     return 0
 
 

@@ -10,7 +10,8 @@ const saved = (() => { try { return localStorage.getItem('look'); } catch { retu
 let LOOK = LOOKS[params.get('look')] ? params.get('look') : LOOKS[saved] ? saved : LOOK_NAMES[0];
 let GB = params.has('gb') ? +params.get('gb') : 8;
 const FIRST_LOAD = 48;       // passages on open; eva's own page takes a day, we keep it lighter for now
-const POLL_MS = 60000;       // same pace as eva's page; a passage lands every ~5 min anyway
+const SLOW_MS = 300000;      // the fallback poll, used only while the events have never connected
+const RETRY_MS = 5000;       // how long before we open the event stream again after a refusal
 
 const rooms = new Map();     // room -> row state; a poll never renders a passage twice
 const trickles = new Map();  // dream -> its trickle (the dream so far), which grows as the story does
@@ -340,18 +341,75 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-// ---- live --------------------------------------------------------------------------------
-function poll() {
-  api('n=5').then(d => {
+// ---- live: pushed, not polled --------------------------------------------------------------
+// eva holds a connection open at /api/stream/events and names the rooms that changed, within a
+// couple of seconds of a passage, a note, a story, a plate or a name landing on its shelf
+// (loom.py's stream_prints). It used to be a 60s poll, which meant a passage could sit written
+// and unseen for a minute, and the mac's push to the mini for another one.
+//
+// What the front does with an event is one refetch of the window it already holds: the pages are
+// a contiguous newest-first run, so n=<held> covers anything that changed inside it and anything
+// newer than it, and a room older than the window is one we are not showing.
+let fetching = false, again = false;
+function refetch() {
+  if (fetching) { again = true; return; }   // an event mid-flight: the answer may predate it
+  fetching = true;
+  api('n=' + Math.max(FIRST_LOAD, rooms.size)).then(d => {
     drawStatus(d.status);
     sync(d.pages || []);
     const wasAtNewest = focused && focused.row === lastRow();
     const n = render(d.pages || []);
+    console.debug('stream · refetched', (d.pages || []).length, 'pages ·', n, 'new');
     if (!n) return;
     if (wasAtNewest) return toNewest(true);
     waiting += n;
     const f = $('#fresh'); f.textContent = waiting === 1 ? 'new' : waiting + ' new'; f.hidden = false;
-  }).catch(() => trouble("can't reach eva"));
+  }).catch(() => trouble("can't reach eva")).then(() => {
+    fetching = false;
+    if (again) { again = false; refetch(); }
+  });
+}
+
+function onChange(e) {
+  let d; try { d = JSON.parse(e.data); } catch { return; }
+  drawStatus(d.status);
+  // room names are timestamps (stream/<date>/<HHMM>), so a plain string compare is chronological
+  const held = [...rooms.keys()];
+  const oldest = held.length ? held.reduce((a, b) => b < a ? b : a) : '';
+  const inside = (d.rooms || []).filter(r => !oldest || r >= oldest);
+  console.debug('stream · change ·', (d.rooms || []).length, 'rooms,', inside.length, 'in the window ·', d.status && d.status.state);
+  if (inside.length) refetch();
+}
+
+// exactly one connection and at most one retry pending: `live` is the current EventSource and
+// every handler ignores an older one, so a retry that fires late can never leave two open.
+let everOpened = false, slow = 0, live = null, retry = 0;
+function listen() {
+  clearTimeout(retry); retry = 0;
+  if (live) live.close();
+  const es = live = new EventSource('/api/stream/events');
+  es.addEventListener('open', () => {
+    if (es !== live) return;
+    console.debug('stream · events open');
+    // a reconnect (a tunnel hiccup, the mirror restarting) means whatever landed while we were
+    // away is still missed — so fetch once. the first open follows the initial load, which is
+    // that fetch already.
+    if (everOpened) refetch();
+    everOpened = true;
+    clearInterval(slow);            // it has connected: nothing on this page is on a timer now
+  });
+  es.addEventListener('change', e => { if (es === live) onChange(e); });
+  // a dropped connection the browser reconnects by itself (readyState 0). a CLOSED one (2) it
+  // never retries — and that is not only "a loom too old to know this route": while the mirror
+  // restarts, the proxy in front of it answers 502, and one 502 would otherwise end the live
+  // page for good. so we open it again ourselves, and keep doing it until it takes.
+  es.addEventListener('error', () => {
+    if (es !== live) return;
+    const dead = es.readyState === 2;
+    console.debug('stream · events ' + (dead ? 'closed, opening again in ' + RETRY_MS / 1000 + 's' : 'dropped, retrying'));
+    if (dead && !retry) retry = setTimeout(listen, RETRY_MS);
+  });
+  return es;
 }
 $('#fresh').onclick = () => toNewest(true);
 for (const b of document.querySelectorAll('#flip button[data-look]')) b.onclick = () => setLook(b.dataset.look);
@@ -436,6 +494,13 @@ api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)
   // fonts landing late reflow the page; stand on the newest passage again once they have
   addEventListener('load', () => toNewest(false), { once: true });
 }).catch(() => trouble("can't reach eva"));
-setInterval(poll, POLL_MS);
+// ?tail / ?only are the screenshot modes: one shot of a fixed set of passages, nothing live.
+if (!TAIL && !ONLY) {
+  // insurance, and only until the events connect: an old loom or a proxy that eats the stream
+  // would otherwise leave the page frozen on what it loaded. the first open clears this.
+  slow = setInterval(refetch, SLOW_MS);
+  listen();
+}
+// the age in `dreaming · 4 min ago` is drawn here, off the status the events carry; no network
 setInterval(() => drawStatus(), 30000);
 requestAnimationFrame(loop);
