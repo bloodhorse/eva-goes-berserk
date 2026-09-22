@@ -35,7 +35,29 @@ cap_set() {
   launchctl bootstrap gui/$U ~/Library/LaunchAgents/com.bekh.eva-stream-plating.plist
   say "painter cap -> $1"
 }
-cap_restore() { [ -f "$PL.cap-was" ] && { cap_set "$(cat "$PL.cap-was")"; rm -f "$PL.cap-was"; }; }
+CAP_HOME=20   # the painter's everyday cap; what goes back when the run ends
+cap_restore() {  # the saved value if there is one, else the everyday cap — never an empty string
+  local was; was=$(cat "$PL.cap-was" 2>/dev/null); rm -f "$PL.cap-was"
+  case "$was" in ''|*[!0-9]*) was=$CAP_HOME ;; esac
+  cap_set "$was"
+}
+# who is at work right now: a launchd job's state flips to running while a voice is busy
+running() { launchctl print gui/$U/com.bekh.$1 2>/dev/null | grep -q "state = running"; }
+busy_lines() {  # printed on the rising edge only, so the terminal reads like a log, not a spinner
+  local now="" j label
+  for j in "eva-stream:nemo writing…" "eva-stream-interpreter:codex reading…" \
+           "eva-stream-remembering:opus retelling the story…" "eva-stream-plating:codex painting…"; do
+    label=${j#*:}; running "${j%%:*}" && now="$now$label|"
+    case "$WAS" in *"$label|"*) ;; *) [[ "$now" == *"$label|"* ]] && say "$label" ;; esac
+  done
+  WAS=$now
+}
+NARR=""
+narrate_on() {  # every ledger row as a plain line: who did what, how long it took
+  tail -n0 -F shelf/stream/ledger.jsonl 2>/dev/null | uv run --python 3.12 eva/stream/narrate.py | tee -a "$LOG" &
+  NARR=$!
+}
+narrate_off() { [ -n "$NARR" ] && { kill $NARR 2>/dev/null; pkill -P $NARR 2>/dev/null; }; NARR=""; }
 writer_off() {
   launchctl bootout gui/$U/com.bekh.eva-stream 2>/dev/null
   launchctl kill SIGTERM gui/$U/com.bekh.eva-llama 2>/dev/null
@@ -59,7 +81,8 @@ DAY=$(date +%F); STAMP=$(date +%H%M)
 say "== eva go: $N dreams, ~$((N * 5)) min; codex week $week%, painter cap $CAP% for the run. ctrl-c stops it clean."
 cap_get > "$PL.cap-was"
 cap_set "$CAP"
-trap 'echo; say "== interrupted"; writer_off; cap_restore; exit 1' INT TERM
+trap 'echo; say "== interrupted"; writer_off; narrate_off; cap_restore; exit 1' INT TERM
+WAS=""
 
 # start: nemo first, wait for it, then the writer
 launchctl kickstart gui/$U/com.bekh.eva-llama
@@ -69,32 +92,35 @@ say "nemo up"
 launchctl bootstrap gui/$U ~/Library/LaunchAgents/com.bekh.eva-stream.plist
 launchctl kickstart gui/$U/com.bekh.eva-stream
 say "writer on"
+narrate_on
 
 # wait for the dreams (one every 300s; the ceiling is twice that, in case nemo is slow)
 seen=0
-for i in $(seq 1 $((N * 40))); do
+for i in $(seq 1 $((N * 120))); do
   c=$(count_since)
-  if [ "$c" -ne "$seen" ]; then seen=$c; say "dream $c of $N landed"; fi
+  if [ "$c" -ne "$seen" ]; then seen=$c; say "— dream $c of $N —"; fi
   [ "$c" -ge "$N" ] && break
-  sleep 15
+  busy_lines
+  sleep 5
 done
 writer_off
 
 # pictures for the tail: the writer's kicks paint one per landing, so the last dreams are still
 # bare when the writer stops. paint them by hand, one at a time, until none is left or codex holds.
 say "waiting ${SETTLE}s for the reader, then the last pictures"
-sleep $SETTLE
+for i in $(seq 1 $((SETTLE / 5))); do busy_lines; sleep 5; done
 for i in $(seq 1 $((N + 2))); do
   left=$(unpainted | wc -l | tr -d ' ')
   [ "$left" -eq 0 ] && break
   say "unpainted: $left — painting"
-  while plating_busy; do sleep 10; done
+  while plating_busy; do busy_lines; sleep 5; done
+  say "codex painting…"
   out=$(STREAM_PLATE_WEEK_MAX=$CAP uv run --python 3.12 eva/stream/plating.py --once 2>&1 | tail -1)
-  say "  $out"
-  echo "$out" | grep -qi held && break
-  sleep 15
+  echo "$out" | grep -qi held && { say "  $out"; break; }
+  sleep 5
 done
 
+narrate_off
 cap_restore
 say "== done: $(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; codex week now $(week_now)%"
 curl -s -H "Title: eva go: $N dreams done" -H "Tags: w00t" \
