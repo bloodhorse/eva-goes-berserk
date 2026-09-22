@@ -4,6 +4,11 @@
   --accent: #f5c8fe; --live: #c6f1fe; --lit-a: #f29bea; --lit-b: #7fe3f5;
   --gb: 8px;
 }
+/* the passage's ink, and only the passage's: the reader picks one colour for the words he reads
+   for twenty minutes (bekh, 2026-09-22), while the labels, names, trickle, reading and seed keep
+   the house palette — they are the room, not the text. Set on body by app.js; the default is the
+   house ink, so the page with nothing chosen is the page as it was. */
+body { --ink-text: var(--ink); }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { background: var(--bg); color: var(--ink); }
 /* one plain arrow everywhere — no hand, no crosshair, no zoom glass (bekh, 2026-09-22) */
@@ -27,6 +32,33 @@ body { cursor: default; }
 #flip button.on { color: var(--lit-a); }
 #flip button:hover { color: var(--ink); }
 #status.dreaming .dot { background: var(--live); }
+/* ink: the same quiet word as the rest of the bar, with a chip of the current colour in front
+   of it, so the bar always says what the passage is wearing. It carries `on` while its panel is
+   down — the same pink the look buttons use for "this is the one showing". */
+#fontbtn + #inkbtn::before { content: '·'; margin: 0 .6em 0 .3em; color: var(--line); }
+#inkbtn .sw { display: inline-block; width: 9px; height: 9px; margin-right: .7em;
+              border: 1px solid var(--line); vertical-align: -1px; }
+/* the panel drops under the bar, right under its own button */
+#inkpanel { position: fixed; z-index: 4; top: 36px; right: 18px; padding: 12px 14px;
+  background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
+#inkpanel[hidden] { display: none; }   /* as with the lightbox: never let display beat `hidden` */
+#inkpanel .swatches { display: flex; gap: 8px; }
+#inkpanel .sw { width: 18px; height: 18px; padding: 0; border: 1px solid var(--line); }
+/* the one showing wears a ring, not a border: a border the colour of the ink is invisible on the
+   pale swatches, which are most of them */
+#inkpanel .sw.on { outline: 1px solid var(--ghost); outline-offset: 2px; }
+#inkpanel .foot { display: flex; align-items: center; gap: 2em; margin-top: 14px; }
+#inkpanel .foot label { margin-left: -.8em; }   /* `pick` belongs to the chip beside it */
+#inkpanel .foot button { padding: 0; background: none; border: 0; font: inherit; letter-spacing: inherit; color: var(--ghost); }
+#inkpanel .foot button:hover { color: var(--ink); }
+/* the native picker, stripped to a chip: on a mac clicking it opens the system colour panel —
+   the wheel, the sliders and the eyedropper, which is what bekh asked for instead of a hand-built
+   wheel. `appearance: none` is what takes the browser's own frame off it. */
+#inkpanel input[type=color] { -webkit-appearance: none; appearance: none;
+  width: 40px; height: 18px; padding: 0; border: 1px solid var(--line); background: none; }
+#inkpanel input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+#inkpanel input[type=color]::-webkit-color-swatch { border: 0; }
 
 /* room above and below so the first and the newest passage can both reach the reading line */
 #feed { padding: 40vh 0 50vh; }
@@ -47,8 +79,10 @@ body { cursor: default; }
    trickle, reading, names, seed. display only; the shelf keeps its capitals, because a starred
    passage becomes a seed and a capital in a seed is text nemo sees */
 .text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
-/* --tsize is the trickle's own size dial (app.js, `;` / `'`) — at one word a line 12px is too
-   small to sit with. The header below keeps its own size on purpose. */
+/* --tsize is the size dial for BOTH side voices (app.js, `;` / `'`) — at one word a line 12px is
+   too small to sit with. The two are moved together (bekh, 2026-09-22): the trickle at the var,
+   the reading one pixel above it, because changing one alone throws the pair off balance. The
+   headers and the timestamps keep their own sizes on purpose. */
 .trickle { width: 60%; margin: 0 auto; font: var(--tsize, 12px)/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); }
 /* stretch (bekh's fallback, 2026-09-22 — `?trickle=stretch`, key g): the whole telling as one
    thread beside the whole dream, narrowed by app.js until it reaches the bottom of the last
@@ -61,7 +95,7 @@ body { cursor: default; }
 /* the offscreen twin widths are measured on (app.js, fitAll) — never seen, but laid out */
 .trickle.probe { position: fixed; top: 0; left: -10000px; visibility: hidden; width: auto; }
 /* the passage's font comes from fonts.js through these vars */
-.text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
+.text { color: var(--ink-text); font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
 /* names (eva's convention): the passage's at the top of its text, the dream's heading its trickle,
    a size bigger — a header shouldn't read smaller than what it heads */
@@ -84,11 +118,16 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
 .seedbox[hidden] { display: none; }
 /* the passage keeps its own line breaks; a blank line is a paragraph */
 .text .body { white-space: pre-wrap; }
-/* the reader's marks, blended into the ink like on eva: magenta touched, cyan strange */
+/* the reader's marks, blended into the ink like on eva: magenta touched, cyan strange. They blend
+   out of the PASSAGE's ink (--ink-text), not the house one, so a marked run stays the same 30%
+   step away from the words around it whatever colour those words are set to. */
 :root { --lit-mix: 30%; }
-.lit-a { color: color-mix(in srgb, var(--lit-a) var(--lit-mix), var(--ink)); }
-.lit-b { color: color-mix(in srgb, var(--lit-b) var(--lit-mix), var(--ink)); }
-.reading { font: 13px/1.7 "Courier New", monospace; letter-spacing: .06em; color: var(--ghost);
+.lit-a { color: color-mix(in srgb, var(--lit-a) var(--lit-mix), var(--ink-text)); }
+.lit-b { color: color-mix(in srgb, var(--lit-b) var(--lit-mix), var(--ink-text)); }
+/* the other side voice: one pixel above the trickle, and moved by the same dial. The shorthand
+   keeps a literal 13px so a browser that chokes on calc() in `font:` still gets the old size. */
+.reading { font: 13px/1.7 "Courier New", monospace; font-size: calc(var(--tsize, 12px) + 1px);
+           letter-spacing: .06em; color: var(--ghost);
            border-left: 1px solid var(--line); padding-left: 1.2em; max-width: 290px; }
 .when { display: block; margin-top: 1em; font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--lit-b); opacity: .7; }
 

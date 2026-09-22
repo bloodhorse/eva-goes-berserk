@@ -48,6 +48,25 @@ const FONTS = {
   majormono:   { family: '"Major Mono Display", monospace', size: 15, lead: 1.9, track: '.05em', google: 'Major+Mono+Display' },
 };
 
+// ---- the passage's ink (bekh, 2026-09-22) ----
+// The one colour the reader picks, from the bar's `ink` button. Presets like the fonts and the
+// looks: tried ones stay, never deleted, because a verdict on one page can flip on another.
+// Only the passage wears it — labels, names, trickle, reading and seed keep the house palette.
+// The key is what `tell()` says on hover, so it reads as a name, not a hex.
+const INKS = {
+  'ink':       '#d4e3fe',   // the default — eva's own ink
+  'white':     '#ffffff',
+  'pink':      '#f29bea',
+  'pale pink': '#f5c8fe',
+  'cyan':      '#7fe3f5',
+  'pale cyan': '#c6f1fe',
+  'ghost':     '#7d8a9c',
+  'paper':     '#e8dcc8',   // a warm off-white
+  'bone':      '#d9d4c7',
+  'ember':     '#f0a070',
+};
+const DEFAULT_INK = INKS.ink;
+
 // the show (bekh, 2026-09-22): what the font button and f / F cycle through. the serious faces,
 // each at its thinnest cut — majormono is the reference for how thin — with the cutesy ones
 // (typewriter imitations, pixel faces) left out of the walk. they stay above, reachable by

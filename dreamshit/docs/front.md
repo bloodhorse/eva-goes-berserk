@@ -13,11 +13,11 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 
 ## Files
 
-- `index.html` — shell: status bar (state · age, font button, glass·dots switch), feed, lightbox.
+- `index.html` — shell: status bar (state · age, font button, ink button, glass·dots switch), the ink panel under it, feed, lightbox.
 - `style.css` — layout, voices, plates, wash, looks' css.
 - `app.js` — live stream, packs, focus, looks painting, font/wash knobs, lightbox.
 - `looks.js` — the picture-look presets (see `looks.md`).
-- `fonts.js` — the passage-font presets and the `SHORTLIST` (see `reading.md`).
+- `fonts.js` — the passage-font presets and the `SHORTLIST` (see `reading.md`), and `INKS`, the passage-ink presets.
 
 ## How it behaves
 
@@ -70,13 +70,14 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
+- **ink**: an `ink` word in the bar with a chip of the current colour in front of it → a panel drops under the bar: the presets (`INKS` in `fonts.js`), the native `<input type=color>` (on a mac, the system colour panel — wheel, sliders, eyedropper) and `reset`. Hovering a swatch names it in the corner label, clicking applies it, dragging in the picker recolours live. The button opens and closes it (esc and `c` too) — **a click anywhere else does not**, or reaching for the picker would shut it. **Only the passage takes the colour** (`--ink-text` on body): labels, names, trickle, reading and seed keep the house palette, and the reader's two marks blend out of the passage's ink instead of the house one, so a marked run keeps its 30% step from the words around it whatever they are wearing.
 - **pic**: a quiet word next to `seed` (it appears once the plate has landed) → the plate full screen, uncropped. Click / esc closes. (Double-click on a dream used to do the same; let go 2026-09-22.) The cursor is a plain arrow everywhere — no hand on buttons, no zoom glass — bekh's call the same day.
 - Phones (<820px): one column — each part of the trickle above its own passage, the header above part 1; a passage with no part of its own hides that cell, or the row gap would leave a hole. **The law is that the page is a desktop page**, and stretch is not sensible in one column (a thread there is just a narrow block over the passage it belongs to), so a phone draws `parts` whatever the desktop is set to — the default included. Crossing the breakpoint on a resize redraws.
 
 ## Knobs (all remembered per browser in localStorage; url params win)
 
-The trickle's three (mode, drip, band) remember **only a choice actually made** — a url param or
-the `g` key. The look, font and wash write themselves on every load, which is fine while their
+The trickle's three (mode, drip, band) and the ink remember **only a choice actually made** — a url
+param, the `g` key, a swatch, the picker. The look, font and wash write themselves on every load, which is fine while their
 defaults never change; a trickle default written that way froze each browser on whatever the page
 opened with the day it first saw it, which is why those three don't.
 
@@ -85,10 +86,11 @@ opened with the day it first saw it, which is why those three don't.
 | look | glass·dots switch; keys 1–7 | `?look=` |
 | glass blur | `[` `]` | `?gb=` |
 | font | font button / `f` `F` walk the shortlist | `?font=` (any) |
+| passage ink | ink button / `c` opens the panel: presets, the system picker, `reset` | `?ink=f5c8fe` (no `#`; a preset's name works too) · `?ink=` resets |
 | passage size | `,` smaller · `.` bigger (per font) | — |
 | passage weight | `t` thinner · `T` thicker, steps of 50 (per font; moves only on a variable face — newsreader loads 200–800) | `?fw=300` |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
-| trickle size | `;` smaller · `'` bigger, half a pixel a step, 10–20 (the header keeps its own) | `?tsize=14` |
+| side voices size | `;` smaller · `'` bigger, half a pixel a step, 10–20 — **one dial for both**: the trickle at the number, the reading a pixel above it (bekh, 2026-09-22: moving one alone throws the pair off balance). Headers and timestamps keep their own | `?tsize=14` |
 | trickle mode | `g` toggles stretch ↔ parts | `?trickle=stretch` (default) `\|parts` |
 | stretch's drip | — (a dev option, no key) | `?align=even` (default) `\|dreams\|band` |
 | the band's width | — | `?band=0.4` (align=band only) |

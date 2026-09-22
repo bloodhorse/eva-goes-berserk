@@ -55,3 +55,5 @@ eva's own page loads `n=300` and still polls `n=5` every 60s; this front listens
 Violet ground, pink, cyan as highlight. From eva's stylesheet: `#232323` bg · `#d4e3fe` ink · `#7d8a9c` ghost · `#2e3547` line · `#f29bea` / `#f5c8fe` pink · `#7fe3f5` / `#c6f1fe` cyan.
 
 eva's rule for readability over plates (bekh, 2026-09-20): **if text gets hard to read over a bright plate, raise the wash — don't add a text shadow.**
+
+**The passage's ink is a knob** (bekh, 2026-09-22) — the `ink` button in the bar, `--ink-text` on body, anything the system colour picker can reach. The rest of the palette is fixed: the house colours are the room the passage is read in, and only the words move. The presets (`INKS` in `front/fonts.js`, tried ones kept like the fonts and the looks): `ink` `#d4e3fe` (the default, eva's own) · `white` `#ffffff` · `pink` `#f29bea` · `pale pink` `#f5c8fe` · `cyan` `#7fe3f5` · `pale cyan` `#c6f1fe` · `ghost` `#7d8a9c` · `paper` `#e8dcc8` (a warm off-white) · `bone` `#d9d4c7` · `ember` `#f0a070`. The marks keep their 30% blend, taken off the chosen ink rather than the house one.

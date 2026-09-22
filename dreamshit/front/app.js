@@ -503,7 +503,9 @@ function setLook(name) {
   document.body.classList.toggle('sheen', !!look.sheen);
   document.body.style.setProperty('--gb', GB + 'px');
   for (const r of rooms.values()) if (r.plate) { r.cv.style.filter = look.css || ''; r.dither = null; r.step = r.target; paint(r); }
-  for (const b of document.querySelectorAll('#flip button')) b.classList.toggle('on', b.dataset.look === name);
+  // [data-look] only: the font and ink buttons live in the same bar and wear `on` for their own
+  // reasons (the ink panel being down), which a bare `#flip button` would wipe on every look change
+  for (const b of document.querySelectorAll('#flip button[data-look]')) b.classList.toggle('on', b.dataset.look === name);
   try { localStorage.setItem('look', name); } catch {}
   tell(`look: ${name}   [1-${LOOK_NAMES.length}]` + (/--gb/.test(look.css || '') ? `   blur ${GB}px  [ ]` : ''));
 }
@@ -608,7 +610,7 @@ const closeBox = () => { $('#lightbox').hidden = true; };
 function closeSeeds() { for (const b of document.querySelectorAll('.seedbox')) b.hidden = true; }
 addEventListener('click', closeSeeds);
 $('#lightbox').addEventListener('click', closeBox);
-addEventListener('keydown', e => { if (e.key === 'Escape') { closeBox(); closeSeeds(); } });
+addEventListener('keydown', e => { if (e.key === 'Escape') { closeBox(); closeSeeds(); inkPanel(false); } });
 
 // ---- font picker + wash knobs ------------------------------------------------------------
 const store = (k, v) => { try { v === undefined ? v = localStorage.getItem(k) : localStorage.setItem(k, v); } catch {} return v; };
@@ -643,6 +645,61 @@ $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 // the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
 function step(d) { const L = SHORTLIST, i = L.indexOf(FONT); setFont(L[i < 0 ? 0 : (i + d + L.length) % L.length]); }
 
+// ---- the passage's ink --------------------------------------------------------------------
+// bekh, 2026-09-22: a palette and a real colour picker for the main font. The presets are in
+// fonts.js (INKS); the picker is the browser's own `<input type=color>`, which on a mac is the
+// system colour panel — wheel, sliders, eyedropper — so there is no hand-built wheel here.
+// ONLY the passage takes the colour (--ink-text, style.css): the labels, names, trickle, reading
+// and seed keep the house palette. The reader's two marks blend out of --ink-text as well, so a
+// marked run keeps its 30% step away from whatever the words around it are wearing.
+// Remembered as an explicit choice only, like the trickle's dials: a default written on every
+// load would freeze each browser on whatever the default was the day it first opened the page.
+const inkHex = v => {
+  if (v === null || v === undefined) return null;
+  let s = String(v).trim().toLowerCase();
+  if (INKS[s]) return INKS[s];                        // ?ink=pink — a preset by its name
+  s = s.replace(/^#/, '');
+  if (/^[0-9a-f]{3}$/.test(s)) s = s.replace(/./g, c => c + c);
+  return /^[0-9a-f]{6}$/.test(s) ? '#' + s : null;
+};
+// ?ink=f5c8fe (no #) wins over what's remembered and is then remembered itself; ?ink= empty is
+// the reset — it wipes the memory rather than writing the default into it.
+let INK = DEFAULT_INK;
+if (params.has('ink')) {
+  const h = inkHex(params.get('ink'));
+  INK = h || DEFAULT_INK;
+  store('ink', h && h !== DEFAULT_INK ? h : '');
+} else INK = inkHex(store('ink')) || DEFAULT_INK;
+const inkName = hex => Object.keys(INKS).find(n => INKS[n] === hex) || hex;
+function setInk(hex, quiet) {
+  INK = hex;
+  document.body.style.setProperty('--ink-text', hex);
+  $('#inkpick').value = hex;
+  $('#inkbtn .sw').style.background = hex;
+  for (const s of document.querySelectorAll('#inkpanel .sw')) s.classList.toggle('on', s.dataset.ink === hex);
+  store('ink', hex === DEFAULT_INK ? '' : hex);
+  if (!quiet) tell(`ink: ${inkName(hex)}   ${hex}   [c]`);
+}
+for (const [name, hex] of Object.entries(INKS)) {
+  const b = document.createElement('button');
+  b.className = 'sw'; b.dataset.ink = hex; b.style.background = hex; b.title = name;
+  b.onmouseenter = () => tell(`ink: ${name}   ${hex}`);
+  b.onclick = () => setInk(hex);
+  $('#inkpanel .swatches').appendChild(b);
+}
+// live: the passage recolours as the colour panel is dragged, not only when it is let go
+$('#inkpick').oninput = e => setInk(e.target.value, true);
+$('#inkpick').onchange = e => setInk(e.target.value);
+$('#inkreset').onclick = () => setInk(DEFAULT_INK);
+// the button opens it and the button closes it (esc too) — bekh's shape. A click anywhere else
+// deliberately does NOT close it: reaching for the picker or a swatch is a click on the page.
+function inkPanel(on) {
+  const p = $('#inkpanel');
+  p.hidden = on === undefined ? !p.hidden : !on;
+  $('#inkbtn').classList.toggle('on', !p.hidden);
+}
+$('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
+
 // how the telling stands beside its dream. **stretch is what the site does** (bekh's verdict,
 // 2026-09-22: "unfortunately actually the best stylistically") — one thread paced down the whole
 // dream; `parts` (cut at the sleeper's seams, part n beside passage n) stays as a dev option.
@@ -669,20 +726,22 @@ const BAND = (() => {
   return v >= 0 && v <= 5 ? v : .4;
 })();
 if (params.has('band')) store('band', BAND);
-// the trickle's own size, found by eye like the passage's: `;` smaller, `'` bigger, and the
-// header keeps the size css gives it. Every step re-measures — the column is as wide as the
-// widest word, so the type decides both the width and how many lines there are to pace.
+// the size of the two SIDE VOICES, found by eye like the passage's: `;` smaller, `'` bigger.
+// One dial moves both (bekh, 2026-09-22): the trickle sits at --tsize, the reading one pixel
+// above it (style.css), because moving one alone throws the pair off balance. The headers keep
+// the size css gives them. Every step re-measures — the thread's column is as wide as its widest
+// word, so the type decides both the width and how many lines there are to pace.
 let TSIZE = (() => {
   const raw = params.has('tsize') ? params.get('tsize') : store('tsize');
   const v = raw === null || raw === '' ? NaN : +raw;
   return v >= 10 && v <= 20 ? v : 12;
 })();
 if (params.has('tsize')) store('tsize', TSIZE);
-function setTrickleSize(v) {
+function setSides(v) {
   TSIZE = Math.max(10, Math.min(20, v));
   document.body.style.setProperty('--tsize', TSIZE + 'px');
-  refit();
-  tell(`trickle ${TSIZE}px   [; smaller · ' bigger]`);
+  refit();   // the reading grows the row too, and the thread reaches for its bottom
+  tell(`sides ${TSIZE}px   [; smaller · ' bigger]`);
 }
 function setTrickleMode(m) {
   TRICKLE = m; store('drip', m);
@@ -710,14 +769,16 @@ addEventListener('keydown', e => {
     store('fw:' + FONT, Math.max(200, Math.min(800, cur + (e.key === 'T' ? 50 : -50))));
     setFont(FONT);
   }
-  else if (e.key === ';' || e.key === "'") { setTrickleSize(TSIZE + (e.key === "'" ? .5 : -.5)); store('tsize', TSIZE); }
+  else if (e.key === ';' || e.key === "'") { setSides(TSIZE + (e.key === "'" ? .5 : -.5)); store('tsize', TSIZE); }
   else if (e.key === 'g') setTrickleMode(TRICKLE === 'stretch' ? 'parts' : 'stretch');
+  else if (e.key === 'c') inkPanel();
   else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }
 });
 
 
 setLook(LOOK);
-setTrickleSize(TSIZE);   // before the other two, so the label the page opens with is the wash's
+setSides(TSIZE);         // before the others, so the label the page opens with is the wash's
+setInk(INK, true);       // quiet: the page opening is not a choice made, and it says so in the bar
 setFont(FONT);
 setWash();
 // ?tail=N: only the newest N passages, no scrolling — for headless screenshots, which come out
