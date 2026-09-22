@@ -48,6 +48,16 @@ body { cursor: default; }
    passage becomes a seed and a capital in a seed is text nemo sees */
 .text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
 .trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); }
+/* stretch (bekh's fallback, 2026-09-22 — `?trickle=stretch`, key g): the whole telling as one
+   thread beside the whole dream, narrowed by app.js until it reaches the bottom of the last
+   passage. It hangs out of the row's flow on purpose: in the flow, a 3000px thread would grow
+   the row it hangs from, which would grow the pack it is being measured against — the width
+   would chase its own tail. left/right 0 + margin auto keeps it centred in its column. */
+@media (min-width: 821px) {
+  .pack.stretch .slot > .trickle { position: absolute; top: 0; left: 0; right: 0; }
+}
+/* the offscreen twin widths are measured on (app.js, fitAll) — never seen, but laid out */
+.trickle.probe { position: fixed; top: 0; left: -10000px; visibility: hidden; width: auto; }
 /* the passage's font comes from fonts.js through these vars */
 .text { font-family: var(--tf, serif); font-size: var(--ts, 18px); line-height: var(--tlead, 1.7); letter-spacing: var(--ttrack, 0); font-weight: var(--tw, 400); }
 body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }

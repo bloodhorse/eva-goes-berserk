@@ -162,8 +162,9 @@ function titleLine(name, number) {
   return h;
 }
 // one part of the telling, in a passage's own left cell: the dream's header (chapter · title)
-// above the first one, then the words. re-rendered only when something changed, so a refetch
-// doesn't repaint the column under the reader.
+// above the first one, then the words in a `.flow` of their own — the header keeps its normal
+// width while stretch mode narrows the words. re-rendered only when something changed, so a
+// refetch doesn't repaint the column under the reader.
 function setTrickle(el, story, text, head) {
   const title = head ? (story && story.title || '') : '';
   const ch = head && story && story.chapter ? String(story.chapter) : '';
@@ -172,8 +173,11 @@ function setTrickle(el, story, text, head) {
   el.textContent = '';
   const h = head ? titleLine(story && story.title, ch) : null;
   if (h) el.appendChild(h);
-  el.appendChild(document.createTextNode(text));
+  const flow = document.createElement('div'); flow.className = 'flow';
+  flow.textContent = text;
+  el.appendChild(flow);
 }
+const flowOf = el => el.querySelector('.flow');
 
 // the telling is ONE continuous narrative with a `|` where each later scene comes in (bekh,
 // 2026-09-22 — eva/stream/remembering.py). the page cuts it there and puts part n beside
@@ -184,22 +188,78 @@ const partsOf = story => Array.isArray(story.parts) && story.parts.length
 // a passage's scene number is its verse (`12:3` → 3); without one, its place in the pack
 const verseTurn = v => { const m = /:(\d+)\s*$/.exec(v || ''); return m ? +m[1] : 0; };
 
-// the sleeper can come back with fewer marks than scenes, or more, and neither is an error:
-// a missing part leaves that row bare, a surplus one is appended to the last passage's, and a
-// telling with no mark at all sits whole beside the first passage — which is what the page did
-// before the seams existed, so nothing changes for the older dreams on the shelf.
+// parts (the default) — the sleeper can come back with fewer marks than scenes, or more, and
+// neither is an error: a missing part leaves that row bare, a surplus one is appended to the
+// last passage's, and a telling with no mark at all sits whole beside the first passage — which
+// is what the page did before the seams existed, so nothing changes for the older dreams.
+// stretch — bekh's fallback (2026-09-22): the seams are ignored, the whole telling stands as one
+// thread beside the first passage and is narrowed until it reaches the bottom of the last one.
 function drawPack(pack, story) {
   if (!pack.slots.length) return;
+  const stretch = TRICKLE === 'stretch' && innerWidth > PHONE;   // one column has no room for it
   const parts = story ? partsOf(story) : [];
   const last = pack.slots.length - 1;
+  pack.el.classList.toggle('stretch', stretch);
   pack.slots.forEach((s, i) => {
-    const n = parts.length > 1 ? s.turn : (i === 0 ? 1 : 0);
-    const text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
+    let text;
+    if (stretch) text = i ? '' : parts.join(' ');
+    else {
+      const n = parts.length > 1 ? s.turn : (i === 0 ? 1 : 0);
+      text = !n ? '' : i === last ? parts.slice(n - 1).join(' ') : (parts[n - 1] || '');
+    }
     setTrickle(s.el, story, text, i === 0);
+    if (!stretch) flowOf(s.el).style.width = '';   // back to the column's own width
     // on a phone an empty cell would still cost a row gap above its passage
     s.el.parentNode.classList.toggle('has', !!(text || (i === 0 && story && story.title)));
   });
+  if (stretch) refit();
 }
+
+// ---- stretch: the thread narrowed to reach the end of its dream ---------------------------
+// bekh (2026-09-22): "as narrow as it needs to be to reach the end of the existing story" —
+// widest beside a single scene, a thread beside four. Nothing in the text says how wide that is,
+// so it is measured, not guessed: an offscreen twin of the column is handed a width and asked
+// how tall it comes out, ~10 times per pack in a binary search. The twin is offscreen on purpose
+// — probing the real column would dirty the page's layout on every step of every search.
+const PHONE = 820;           // the one-column breakpoint in style.css
+const probe = (() => {
+  const t = document.createElement('div'); t.className = 'trickle probe';
+  const f = document.createElement('div'); f.className = 'flow';
+  t.appendChild(f); document.body.appendChild(t); return f;
+})();
+// the floor is bekh's "one word in a line": min-content is the widest unbreakable word, so the
+// thread never spills sideways into the passage. 4 characters is the floor's own floor.
+function fitWidth(text, avail, full) {
+  probe.textContent = text;
+  const at = w => { probe.style.width = w; return probe.offsetHeight; };
+  probe.style.width = '4ch'; const ch4 = probe.offsetWidth;
+  probe.style.width = 'min-content'; const floor = Math.min(full, Math.max(ch4, probe.offsetWidth));
+  if (at(floor + 'px') <= avail) return floor;   // a short telling: as narrow as it goes
+  if (at(full + 'px') > avail) return full;      // a long one: full width, and let it run past
+  let lo = floor, hi = full;                     // lo never fits, hi always does
+  for (let i = 0; i < 10 && hi - lo > 2; i++) {
+    const mid = (lo + hi) >> 1;
+    if (at(mid + 'px') <= avail) hi = mid; else lo = mid;
+  }
+  return hi;
+}
+// every stretched pack at once, reads first and writes after: a width written to one thread
+// dirties the layout, so interleaving would cost a full reflow per pack instead of one.
+function fitAll() {
+  const room = [];
+  for (const pack of packs.values()) {
+    if (!pack.slots.length || !pack.el.classList.contains('stretch')) continue;
+    const flow = flowOf(pack.slots[0].el), trickle = pack.slots[0].el;
+    if (!flow || !flow.textContent) continue;
+    const bottom = pack.slots[pack.slots.length - 1].row.getBoundingClientRect().bottom;
+    room.push({ flow, avail: bottom - flow.getBoundingClientRect().top, full: trickle.clientWidth });
+  }
+  for (const r of room) if (r.full > 0) r.flow.style.width = fitWidth(r.flow.textContent, r.avail, r.full) + 'px';
+}
+// anything that moves a row moves the bottom the thread is reaching for: a resize, a new scene,
+// a reading landing late, the passage font changing size or weight, the webfont arriving.
+let refitting = 0;
+function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
 
 // one pack per dream: its passages, and the telling running down their left cells
 function newPack(p) {
@@ -219,7 +279,7 @@ function render(pages) {
     const r = buildRow(p);
     rooms.set(p.room, r);
     lastPack.el.appendChild(r.row);
-    lastPack.slots.push({ turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle });
+    lastPack.slots.push({ turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle, row: r.row });
     if (p.story) lastPack.story = p.story;
     touched.add(lastPack);
     lastRowEl = r.row;
@@ -245,6 +305,7 @@ function sync(pages) {
       seen.add(dream);
     }
   }
+  refit();   // a reading landing late makes its row taller, and the thread reaches for its bottom
 }
 
 function ago(t) {
@@ -359,7 +420,12 @@ addEventListener('keydown', e => {
   const i = +e.key - 1; if (LOOK_NAMES[i]) return setLook(LOOK_NAMES[i]);
   if (e.key === '[' || e.key === ']') { GB = Math.max(0, Math.min(20, GB + (e.key === ']' ? 1 : -1))); setLook(LOOK); }
 });
-addEventListener('resize', () => { for (const r of rooms.values()) { r.dither = null; paint(r); } });
+addEventListener('resize', () => {
+  for (const r of rooms.values()) { r.dither = null; paint(r); }
+  // a resize can also cross the phone breakpoint, which decides whether stretch applies at all
+  for (const pack of packs.values()) drawPack(pack, pack.story);
+  refit();
+});
 
 // steps move one notch every ~70ms toward their target: a lock that clicks in, not a fade
 let lastStep = 0;
@@ -477,6 +543,7 @@ function setFont(name) {
   document.body.classList.toggle('rough', !!f.rough);
   $('#fontbtn').textContent = 'font: ' + name + (weight !== (f.weight || 400) ? ' ' + weight : '');
   store('font', name);
+  refit();   // a bigger passage is a taller row, and the stretched thread reaches for its bottom
   tell(`font: ${name}   ${size}px   ${weight}   [f / shift-f · shortlist · , smaller · . bigger · t thinner · T thicker]`);
 }
 // ?fw=300 sets the weight for the font the page opens with, then it's remembered like the rest
@@ -484,6 +551,18 @@ if (params.has('fw')) store('fw:' + FONT, params.get('fw'));
 $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 // the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
 function step(d) { const L = SHORTLIST, i = L.indexOf(FONT); setFont(L[i < 0 ? 0 : (i + d + L.length) % L.length]); }
+
+// how the telling stands beside its dream: `parts` (the default — cut at the sleeper's seams,
+// part n beside passage n) or `stretch` (bekh's fallback — one thread, narrowed to the bottom).
+const TRICKLE_MODES = ['parts', 'stretch'];
+let TRICKLE = TRICKLE_MODES.includes(params.get('trickle')) ? params.get('trickle')
+  : TRICKLE_MODES.includes(store('trickle')) ? store('trickle') : 'parts';
+store('trickle', TRICKLE);   // the url wins once and then sticks, like look and font
+function setTrickleMode(m) {
+  TRICKLE = m; store('trickle', m);
+  for (const pack of packs.values()) drawPack(pack, pack.story);
+  tell(`trickle: ${m}   [g]`);
+}
 
 // the focused plate's wash, tuned by eye: w lighter, W darker (also - and =). 0 = the bare painting
 let WA = params.has('wa') ? +params.get('wa') : +(store('wa') || .72);
@@ -505,6 +584,7 @@ addEventListener('keydown', e => {
     store('fw:' + FONT, Math.max(200, Math.min(800, cur + (e.key === 'T' ? 50 : -50))));
     setFont(FONT);
   }
+  else if (e.key === 'g') setTrickleMode(TRICKLE === 'stretch' ? 'parts' : 'stretch');
   else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }
 });
 
@@ -523,6 +603,8 @@ api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)
   render(d.pages || []);
   sync(d.pages || []);
   drawStatus(d.status);
+  // the reading face lands after the first layout and every row changes height with it
+  document.fonts.ready.then(refit);
   if (TAIL || ONLY) { if (TAIL) $('#feed').style.padding = '40px 0 0'; return; }
   toNewest(false);
   // fonts landing late reflow the page; stand on the newest passage again once they have

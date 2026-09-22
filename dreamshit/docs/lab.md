@@ -22,5 +22,12 @@
 - In sketches, load data as a `<script>`, not `fetch` (a fetch loses the race).
 - Probing state: `--dump-dom` with an injected `window.onerror` + a `setTimeout` that writes findings into `document.title`.
 - A timed-out run leaves Helium helpers alive: kill them by numeric PID, never `pkill -f`.
+- **Helium can hang on `fonts.googleapis.com`** (it is de-googled, and the block manifests as a
+  request that never settles). A pending fetch freezes virtual time, so no screenshot is ever
+  written and the run looks stalled at 0% CPU with no renderer process — every retry fails the
+  same way while `curl` fetches the very same url in 150ms. Map the two hosts to a dead port so
+  the link fails instantly, and serve the face locally instead if the shot needs it:
+  `--host-resolver-rules="MAP fonts.googleapis.com 127.0.0.1:1,MAP fonts.gstatic.com 127.0.0.1:1"`
+  (the woff2 urls come out of the `css2?family=…` stylesheet with a desktop user-agent).
 - Font specimens: loop over the names in `front/fonts.js` (`grep -oE '^  [a-z_0-9]+:'`), one `?only=<room>&font=<name>` shot each into `shots/fonts/NN_name.png`; about one in seven stalls — retry those by name. (zsh doesn't word-split `$VAR` in a `for`: use a `while read` over a file.)
 - Save to `shots/` (git-ignored), tag `claude`, and **open the folder in Finder for bekh — not kitty** (paintings look bad in the kitty mosaic).
