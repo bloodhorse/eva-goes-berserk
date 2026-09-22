@@ -685,13 +685,13 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plis
 If the loom is being used for fans at the same time, nemo stays up — it is the loom's model too.
 
 **The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — bekh: codex is the scarce thing, so a
-run is sized in stories). N whole stories of `STREAM_DREAM_TURNS` scenes with everything —
-notes, retellings, one plate per scene — then the writer off and nemo off, by the lines above.
-It detaches at once; `eva go status` reads its log (`/tmp/eva-go.log`), `eva go stop` ends a
-run early and puts things back. The painter's cap is raised for the run (the codex week now
-plus ~0.7 points a plate plus a little, never past 60%, else it refuses) and restored however
-the run ends; the tail scenes, bare when the writer stops, are painted by hand at the end. A
-finished run pushes to `kk_alert`.
+run is sized in dreams). N dreams — N passages, each with its note, its retelling and its
+plate — then the writer off and nemo off, by the lines above. **Foreground on purpose**: it
+stays in the terminal and ctrl-c ends it clean (writer off, nemo off, the painter's cap put
+back); `eva go stop` does the same from another terminal. The painter's cap is raised for the
+run (the codex week now plus ~0.7 points a plate plus a little, never past 60%, else it
+refuses) and restored however the run ends; the last dreams, bare when the writer stops, are
+painted by hand at the end. Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`.
 
 
 ```bash

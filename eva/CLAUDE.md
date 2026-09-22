@@ -292,7 +292,7 @@ picks, empty return fans; `/more /fan N /back /prune /edit /say /seed /doc /set 
 name /quit`. It talks straight to llama-server, streaming, and saves through `write_sitting`.
 `/new` on a taken name is a no-op. It doesn't read titles yet, so page-made rooms show as hex
 names there, and it takes any argument but `go` as a room name (`eva --help` made a room);
-**`eva go N`** is the dream stream's ration, N whole stories with pictures then everything off
+**`eva go N`** is the dream stream's ration, N dreams with pictures then everything off, foreground, ctrl-c to stop
 (`stream/go.sh`, `stream/CLAUDE.md`). The page and
 eva on one room: last writer wins, by the dry-run law. **Names are paths**, through loom's own
 validator and never a second copy of it: `eva experiments/basin/smoke-01`,
