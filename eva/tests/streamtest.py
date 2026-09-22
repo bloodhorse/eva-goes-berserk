@@ -2022,20 +2022,13 @@ class Plating(unittest.TestCase):
         wipe_stream()
         self.fakes = []
         put_usage()
-        # The fixture dreams are a few words long; the painter's skip-the-stubs rule would pass
-        # over every one of them. Off for the class, on in the one test that is about it.
-        was = plating.MIN_WORDS
-        plating.MIN_WORDS = 0
-        self.addCleanup(setattr, plating, "MIN_WORDS", was)
 
-    def test_a_stub_gets_no_plate_and_nothing_else_is_taken_from_it(self):
-        plating.MIN_WORDS = 15
+    def test_a_stub_is_painted_like_any_dream(self):
+        # the painter had a 15-word minimum once; bekh threw it out (2026-09-22) — no voice skips a stub
         stub = self.room(40)
         f = self.fake()
         self.assertEqual(run_plating(f)[0], 0)
-        self.assertFalse(os.path.isfile(plate.plate_paths(stub)[0]))
-        # the stub is still an ordinary unflagged dream: the page and the other voices see it
-        self.assertIsNone(loom.stream_page(stub)["flag"])
+        self.assertTrue(os.path.isfile(plate.plate_paths(stub)[0]))
         # The rooms' names carry their own clock, so the tests stamp names from real offsets.
 
     def tearDown(self):

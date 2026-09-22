@@ -259,7 +259,8 @@ shape — now.
      a seed with a single `.` and ended the document; the reader marked the one character with
      both marks; the sleeper wrote *only a small dark point, like the end of a sentence i was
      standing inside*. A 15-word minimum was added that hour and taken out again because of it —
-     a stub is a dream; only the painter skips anything under 15 words. The first day's reading
+     a stub is a dream; the painter kept a 15-word skip until 2026-09-22, when a six-word dream
+     went bare on the public page and bekh threw that out too. No voice has a minimum. The first day's reading
      (opus read all 145; bekh loved about 80% of its picks) is `docs/ledgers/stream-2026-09-19.md`.
    - **Plates.** Two prompts take turns, both handed the whole dream: his *abstract
      interpretation*, and `attic` — an unsigned attic painting with a *hand* by lot (shipped

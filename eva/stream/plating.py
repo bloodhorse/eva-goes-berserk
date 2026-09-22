@@ -141,19 +141,12 @@ def next_room() -> str | None:
         page = loom.stream_page(name)
         if page is None or page.get("flag"):
             continue
-        # A stub is a dream like any other — the reader notes it and the sleeper has to fit it
-        # into the story, and a lone full stop once gave the best sentence of its hour (bekh,
-        # 2026-09-21: "full stop is kinda awesome… it was great not having [a minimum]"). The
-        # painter is the one voice that skips it: a picture of fifteen words or fewer is the one
-        # expensive thing here, about two thirds of a point of the codex week.
-        if len((page.get("text") or "").split()) < MIN_WORDS:
-            continue
+        # A stub is a dream like any other — the reader notes it, the sleeper fits it into the
+        # story, and the painter paints it: a six-word dream went without a picture on
+        # 2026-09-22 and bekh threw the painter's 15-word minimum out (a lone full stop once
+        # gave the best sentence of its hour). No voice has a minimum now.
         return name
     return None
-
-
-# Dreams shorter than this many words get no plate (and everything else). 0 = paint them too.
-MIN_WORDS = int(os.environ.get("STREAM_PLATE_MIN_WORDS", "15"))
 
 
 def run_once() -> int:
