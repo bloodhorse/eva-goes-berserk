@@ -187,9 +187,12 @@ shape — now.
 1. **The dream stream** — the mission's machine. `eva/stream/CLAUDE.md` is the doc and the
    runbook and carries every detail; the page is `https://eva.x/stream`. bekh's call on
    2026-09-19: stop fucking around, build the stream, whatever comes out comes out, it corrects
-   itself as he reads. **It is OFF** (stopped 2026-09-21 17:57 after a 2.5-hour run; nemo stopped
-   with it, by his rule: stopping the stream stops nemo gracefully). Start and stop sequences
-   are in the runbook.
+   itself as he reads. **It runs in rations now** (bekh, 2026-09-22: codex is the scarce thing):
+   `eva go N` dreams N dreams with their notes, retellings and pictures, narrating who is at work,
+   then turns the writer and nemo off by itself; ctrl-c stops it clean (`eva/stream/CLAUDE.md`).
+   **It is OFF** between rations. The painter's minimum is gone: a six-word dream gets a picture.
+   Nothing in the stream waits for a timer any more — every landing kicks the mirror push and
+   `/api/stream/events` pushes the change on to the page.
    - **Four hands, none sees another's work.** *The sleeper dreaming*: nemo, a 170-token
      passage every five minutes, seed by shuffle bag and heat (1.8–2.5) by lot, nobody picking;
      handed only the last ~45 words of a seed, seam untouched (seeds under `seeds/kept/` go
@@ -229,16 +232,18 @@ shape — now.
      near this project, it is the haters' word; nemo's own marked lines are the pool for the
      sentence on the door, *where all the missing things go* first among them. The earlier
      "fed by a pushed feed, never the loom exposed" was my wording, not his, and is out — the
-     site is the front on the api, and may expand): it runs the
+     site is the front on the api, and may expand): eva's `/stream` runs the
      normal way, oldest at the top, one honest load of the last day, the viewer put at the
-     bottom, `earlier` on request. The dream column is the exact centre; dreams that share a
-     story are a **pack** with the story on the left, riding the top of the screen while its pack
-     passes (native sticky, no script); the reader's notes on the right; a plate lies behind its
+     bottom, `earlier` on request; the reader's notes on the right; a plate lies behind its
      dream's whole band under a wash, `cover`, never distorted, the dream deciding the box; marks
-     are faint tints. **His ideal, not built**: a part of the story beside every single dream —
-     the idea on the table is the whole account rewritten each time but written in parts, one
-     per scene. Not yet seen by a human: the sticky story while scrolling, `earlier` in Safari, the names
-     and numbers on the live page.
+     are faint tints. **The story beside the dreams, settled on dreamshit (2026-09-22):** the
+     sleeper marks with a `|` where each scene comes in, mid-sentence when that is where it
+     comes in, and the page's default is the **even drip** — the whole telling as one thread
+     of single words down the left of its dream, spread to land the last word on the last scene;
+     his verdict, *unfortunately actually the best stylistically*, over the parts cut at the
+     seams (still what the phone shows) and two aligned drips kept as dev options
+     (`dreamshit/CLAUDE.md`). His length line stays at *thirty words or so* — the sleeper writes
+     ~60 whatever it says, and more would make him narrate; compression is the point.
      The wash numbers are still my guess (`?tune=1` is the slider).
    - **Seeds — the pot is 48 and it is his.** On 2026-09-21 he cut twenty seeds from the stream's
      own first day: the quotes of opus's ledger from its start up to the measurement documents

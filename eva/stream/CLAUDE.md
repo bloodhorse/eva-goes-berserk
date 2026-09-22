@@ -480,8 +480,10 @@ the code.
     is never asked for anywhere: paragraphs were the shape he rejected.
   - **The paragraph asking for the mark is the CODE's** (`SHAPE` in `remembering.py`), like
     the output tags. `remembering.txt` stays bekh's file — and its length line (*a few
-    sentences, thirty words or so*) is **his and pending**: one continuous telling that has to
-    carry four scenes will want another number, and the number is his to say.
+    sentences, thirty words or so*) **stays as it is, his decision the same night**: measured
+    over two days he writes ~60 words whatever the line says (scene 1 median 60, scene 4
+    median 70), a four-scene telling cut at the seams is ~15 words a part, and asking for
+    more would turn the trickle into a retelling. Compression is the point.
   - **The text is stored exactly as written, marks and all**, like everything else a voice
     writes here; nothing corrects a missing or a surplus mark. `parts` rides beside it on the
     version and on the api — that same string split on `|`, each part stripped of surrounding
