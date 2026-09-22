@@ -1152,6 +1152,11 @@ def hook_history() -> None:
 
 def main(argv: list[str]) -> int:
     hook_history()
+    # `eva go N` is the dream stream's ration (stream/go.sh), not a room — the one word this
+    # repl keeps for itself (bekh, 2026-09-22)
+    if len(argv) > 1 and argv[1] == "go":
+        go = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "stream", "go.sh")
+        os.execv("/bin/bash", ["bash", go] + argv[2:])
     ev = Eva()
     name = argv[1].strip() if len(argv) > 1 else ""
     if not name:
