@@ -158,7 +158,13 @@ seeds.append(("blue-boar", "\n\n".join([
 ])))
 
 
+# Pulled from the pot by bekh. Skipped here rather than deleted from the list above, so the
+# rest keep their numbers — the stream's ledger names seeds by path.
+OUT = {"harkers-journal"}
+
 for n, (name, text) in enumerate(seeds, 1):
+    if name in OUT:
+        continue
     path = os.path.join(HERE, f"{n:02d}-{name}.txt")
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text)
