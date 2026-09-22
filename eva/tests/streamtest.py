@@ -48,6 +48,7 @@ os.environ["LOOM_ARTIFACTS"] = ARTS
 os.environ["STREAM_DIR"] = STREAM_DIR
 os.environ["STREAM_SEEDS"] = SEEDS
 os.environ["STREAM_INTERVAL"] = "300"
+os.environ["STREAM_SEED_LOWER"] = "0"     # the seed tests compare text exactly; lowering has its own
 
 import codex  # noqa: E402
 import interpreter  # noqa: E402
@@ -378,6 +379,13 @@ class Worker(unittest.TestCase):
         root = d["nodes"][d["root"]]["text"]
         self.assertLessEqual(len(root.split()), 45)          # what is stored is what nemo saw
         self.assertTrue(root.endswith("until the doors had"))
+
+        # lowercased at hand-over when the switch is on; the file on the shelf keeps its capitals
+        stream.SEED_LOWER = True
+        try:
+            self.assertEqual(stream.draw_seed(Rng(0.9))[1], stream.seed_tail(MARK + " " + long, 45).lower())
+        finally:
+            stream.SEED_LOWER = False
 
     def test_a_seed_too_big_never_enters_the_pot(self):
         put_seed("small.txt", "a" * 100)

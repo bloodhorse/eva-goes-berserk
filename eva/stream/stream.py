@@ -98,6 +98,14 @@ KICK_TIMEOUT = 15
 # conceals what the machine saw and the page's grey text should BE what it saw. 0 = whole seed.
 SEED_WORDS = int(os.environ.get("STREAM_SEED_WORDS", "45"))
 
+# Every seed is handed over lowercased. bekh, 2026-09-22: capitals and printed punctuation are
+# what tell nemo "this is a book", and the audit showed the book winning — seeds carried on as
+# the next page of their source. Lowercase points at notes and diaries instead, and the changed
+# tokens make a famous text harder to recite from memory. The cost to watch: lowercase is also
+# the web's register (lyrics, chat, tumblr). Done at hand-over, not on the shelf, so the files
+# and their cut scripts stay exact and the loom still sees the originals. 0 = as written.
+SEED_LOWER = os.environ.get("STREAM_SEED_LOWER", "1") == "1"
+
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, FOLDER))
 SEEDS = os.environ.get("STREAM_SEEDS", os.path.join(loom.SHELF, "seeds"))
@@ -374,6 +382,8 @@ def draw_seed(rng: random.Random) -> tuple[str, str] | None:
     # lead-in back off, and on the longer quotes cut into the quote itself.
     if not ident.startswith("seeds/kept/"):
         text = seed_tail(text, SEED_WORDS)
+    if SEED_LOWER:
+        text = text.lower()
     return ident, re.sub(r"[ \t]+\Z", "", text)
 
 
