@@ -833,6 +833,23 @@ def put_reading(rooms: list[str], text: str, ts: float) -> None:
                    "model": "opus", "seconds": 1.0}, f)
 
 
+class OpusName(unittest.TestCase):
+    """What the ledger says wrote a note is the id the cli reports, not the alias we asked for
+    (bekh, 2026-09-23: he wanted to know the seat is really on the newest opus)."""
+
+    def test_the_cli_names_the_model_and_a_silent_cli_leaves_the_alias(self):
+        said = {"modelUsage": {"claude-opus-5-5": {"canonicalModel": "claude-opus-5-5"}}}
+        self.assertEqual(opus.model_of(said), "claude-opus-5-5")
+        # a fallback mid-run: the last entry is what finished the answer
+        two = {"modelUsage": {"claude-opus-5-5": {"canonicalModel": "claude-opus-5-5"},
+                              "claude-sonnet-5": {"canonicalModel": "claude-sonnet-5"}}}
+        self.assertEqual(opus.model_of(two), "claude-sonnet-5")
+        # nothing, junk, or a key with no canonical name
+        self.assertEqual(opus.model_of({}), "opus")
+        self.assertEqual(opus.model_of({"modelUsage": "nonsense"}), "opus")
+        self.assertEqual(opus.model_of({"modelUsage": {"claude-opus-5-5": {}}}), "claude-opus-5-5")
+
+
 class Interpreter(unittest.TestCase):
     def setUp(self):
         wipe_stream()

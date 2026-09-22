@@ -84,8 +84,9 @@ MEMORY = int(os.environ.get("STREAM_READ_MEMORY", "0"))
 SEEDS = os.environ.get("STREAM_READ_SEEDS") == "1"
 TIMEOUT = int(os.environ.get("STREAM_READ_TIMEOUT", "300"))
 
-MODEL = opus.MODEL
-
+# The opus seat's name is NOT snapshotted here: `opus.MODEL` is the id the cli says answered,
+# and it is read after the call (see opus.py).
+#
 # Which family sits at the bedside. `opus` in code, `codex` in the plist (bekh, 2026-09-21):
 # the default stays opus so a hand run, a test and a fresh clone behave the way this file has
 # always behaved, and production says what it wants out loud.
@@ -430,9 +431,9 @@ def read(prompt: str, told: list[dict]) -> tuple[str, dict, dict, str, dict, str
                 why = f"codex · {exc}"
         log(f"falling back to opus · {why}")
         answer, usage = opus.ask(prompt, TIMEOUT)
-        return (*parse(answer, told), MODEL, usage, why)
+        return (*parse(answer, told), opus.MODEL, usage, why)
     answer, usage = opus.ask(prompt, TIMEOUT)
-    return (*parse(answer, told), MODEL, usage, "")
+    return (*parse(answer, told), opus.MODEL, usage, "")
 
 
 def run_once() -> int:

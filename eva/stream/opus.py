@@ -31,7 +31,15 @@ import tempfile
 # talks, what he is working on — is loaded into the head of somebody asked to read a dream.
 CLAUDE = ["claude", "-p", "--model", "opus", "--output-format", "json",
           "--tools", "", "--strict-mcp-config", "--setting-sources", "project"]
+
+# `opus` on the command line is an ALIAS for the latest opus, and it stays an alias: pinning an
+# id here would freeze this seat on today's model and we would find out months late. What the
+# ledger carries is what actually answered — the cli reports it as `modelUsage.<id>.canonicalModel`
+# — so `MODEL` is rewritten by every call (bekh, 2026-09-23: "make sure the opus we're using is
+# in fact the fresh one"). A caller reads it AFTER ask() returns, never at import. A cli that
+# reports nothing leaves the alias standing, which is also what the fake claude in the tests does.
 MODEL = "opus"
+ALIAS = "opus"
 
 # The four counters the cli reports and the one it prices. Named here so the ledger rows, the
 # readers of the ledger all spell them the same way (counted, never shown: bekh asks, fable reads).
@@ -67,6 +75,22 @@ def usage_of(d: dict) -> dict:
     return out
 
 
+def model_of(d: dict) -> str:
+    """Who actually answered, as the cli reports it, or the alias when it doesn't say.
+
+    `modelUsage` is `{<id>: {..., "canonicalModel": <id>}}` — one entry on an ordinary call, and
+    more than one when the cli fell back mid-run, in which case the last one is what wrote the
+    end of the answer.
+    """
+    mu = d.get("modelUsage")
+    if not isinstance(mu, dict) or not mu:
+        return ALIAS
+    key = list(mu)[-1]
+    row = mu[key] if isinstance(mu[key], dict) else {}
+    name = row.get("canonicalModel") or key
+    return name if isinstance(name, str) and name else ALIAS
+
+
 def ask(prompt: str, timeout: int = 300) -> tuple[str, dict]:
     """One call. `(the text it wrote, the usage block)`. Raises ValueError on anything that is
     not a clean answer — every caller turns that into a ledger row and exit 0.
@@ -92,6 +116,8 @@ def ask(prompt: str, timeout: int = 300) -> tuple[str, dict]:
         raise ValueError("the cli's answer carries no result text")
     if d.get("is_error"):
         raise ValueError(f"the cli reported an error: {text[:200]}")
+    global MODEL
+    MODEL = model_of(d)
     return text, usage_of(d)
 
 
