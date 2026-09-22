@@ -414,14 +414,7 @@ function listen() {
 $('#fresh').onclick = () => toNewest(true);
 for (const b of document.querySelectorAll('#flip button[data-look]')) b.onclick = () => setLook(b.dataset.look);
 
-// double-click a painted dream anywhere but its words → the painting full screen
-$('#feed').addEventListener('dblclick', e => {
-  if (e.target.closest('.text, .reading, .trickle, button')) return;
-  const row = e.target.closest('.row.plated'); if (!row) return;
-  const r = [...rooms.values()].find(x => x.row === row); if (!r) return;
-  getSelection().removeAllRanges();
-  openPlate(r);
-});
+// the painting full screen: `pic` only — the double-click on a dream was let go (bekh, 2026-09-22)
 function openPlate(r) { if (!r.img || !r.img.src) return; $('#lightbox img').src = r.img.src; $('#lightbox').hidden = false; }
 const closeBox = () => { $('#lightbox').hidden = true; };
 function closeSeeds() { for (const b of document.querySelectorAll('.seedbox')) b.hidden = true; }
@@ -443,15 +436,20 @@ function setFont(name) {
     const l = document.createElement('link'); l.rel = 'stylesheet';
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
-  // , and . nudge the size live, remembered per font — found by eye, then baked into fonts.js
+  // , and . nudge the size live, t and T the weight — both remembered per font, found by eye,
+  // then baked into fonts.js. weight only moves on a variable face (newsreader); a fixed face
+  // snaps to whatever it has
   const size = +(store('fsize:' + name) || f.size);
+  const weight = +(store('fw:' + name) || f.weight || 400);
   st.setProperty('--tf', f.family); st.setProperty('--ts', size + 'px'); st.setProperty('--tlead', f.lead);
-  st.setProperty('--ttrack', f.track); st.setProperty('--tw', f.weight || 400);
+  st.setProperty('--ttrack', f.track); st.setProperty('--tw', weight);
   document.body.classList.toggle('rough', !!f.rough);
-  $('#fontbtn').textContent = 'font: ' + name;
+  $('#fontbtn').textContent = 'font: ' + name + (weight !== (f.weight || 400) ? ' ' + weight : '');
   store('font', name);
-  tell(`font: ${name}   ${size}px   [f / shift-f · shortlist · , smaller · . bigger]`);
+  tell(`font: ${name}   ${size}px   ${weight}   [f / shift-f · shortlist · , smaller · . bigger · t thinner · T thicker]`);
 }
+// ?fw=300 sets the weight for the font the page opens with, then it's remembered like the rest
+if (params.has('fw')) store('fw:' + FONT, params.get('fw'));
 $('#fontbtn').onclick = e => step(e.shiftKey ? -1 : 1);
 // the button and f / F walk the shortlist only; a font outside it (via ?font=) steps onto the list
 function step(d) { const L = SHORTLIST, i = L.indexOf(FONT); setFont(L[i < 0 ? 0 : (i + d + L.length) % L.length]); }
@@ -469,6 +467,11 @@ addEventListener('keydown', e => {
   else if (e.key === ',' || e.key === '.') {
     const cur = +(store('fsize:' + FONT) || FONTS[FONT].size);
     store('fsize:' + FONT, Math.max(12, Math.min(30, cur + (e.key === '.' ? .5 : -.5))));
+    setFont(FONT);
+  }
+  else if (e.key === 't' || e.key === 'T') {
+    const cur = +(store('fw:' + FONT) || FONTS[FONT].weight || 400);
+    store('fw:' + FONT, Math.max(200, Math.min(800, cur + (e.key === 'T' ? 50 : -50))));
     setFont(FONT);
   }
   else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }

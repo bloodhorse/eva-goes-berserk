@@ -6,7 +6,8 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { background: var(--bg); color: var(--ink); }
-body { cursor: crosshair; }
+/* one plain arrow everywhere — no hand, no crosshair, no zoom glass (bekh, 2026-09-22) */
+body { cursor: default; }
 
 /* rule (bekh): this is for reading, so nothing moves on its own; motion only answers the reader.
    scanlines are gone entirely (2026-09-21) — even still, they were noise over the words */
@@ -19,7 +20,7 @@ body { cursor: crosshair; }
 #status .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: .8em; background: var(--ghost); }
 /* the tumbler: glass ↔ dots in one click, top right */
 #flip { float: right; }
-#flip button { font: inherit; letter-spacing: inherit; color: var(--ghost); background: none; border: 0; cursor: pointer; padding: 0 .3em; }
+#flip button { font: inherit; letter-spacing: inherit; color: var(--ghost); background: none; border: 0; padding: 0 .3em; }
 #flip button[data-look] + button::before { content: '·'; margin-right: .6em; color: var(--line); }
 #flip .sep { color: var(--line); margin: 0 1.2em 0 .6em; }
 #fontbtn { color: var(--lit-b) !important; }
@@ -58,12 +59,12 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
    attribute (the lightbox bug) */
 .btns { display: flex; gap: 1.6em; margin: 0 0 .9em; }
 .btns:not(:has(button:not([hidden]))) { display: none; }
-.btns button { padding: 0; background: none; border: 0; cursor: pointer;
+.btns button { padding: 0; background: none; border: 0;
   font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
 .btns button:hover { color: var(--ink); }
 .seedbox { position: absolute; left: -18px; right: -18px; top: 2.2em; z-index: 5; max-height: 55vh; overflow: auto;
   padding: 16px 18px; background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
-  font: 14px/1.7 "Courier New", monospace; letter-spacing: .03em; color: var(--ghost); white-space: pre-wrap; cursor: text; }
+  font: 14px/1.7 "Courier New", monospace; letter-spacing: .03em; color: var(--ghost); white-space: pre-wrap; }
 .seedbox[hidden] { display: none; }
 /* the passage keeps its own line breaks; a blank line is a paragraph */
 .text .body { white-space: pre-wrap; }
@@ -111,17 +112,14 @@ body.k-frost .plate .grain { opacity: .55; }
 body.k-frost .row.focus .plate .grain { opacity: .12; }
 
 #fresh {
-  position: fixed; right: 18px; bottom: 18px; z-index: 3; cursor: pointer;
+  position: fixed; right: 18px; bottom: 18px; z-index: 3;
   font: 12px "Courier New", monospace; letter-spacing: .25em; color: var(--accent);
   background: rgba(35,35,35,.85); border: 1px solid var(--line); padding: 6px 12px;
 }
-/* double-click a dream outside its words: the painting alone, whole, full screen.
-   click, double-click or esc closes */
-#lightbox { position: fixed; inset: 0; z-index: 10; background: rgba(18,18,20,.97); display: flex; align-items: center; justify-content: center; cursor: zoom-out; }
+/* the painting alone, whole, full screen, opened by `pic`. click or esc closes */
+#lightbox { position: fixed; inset: 0; z-index: 10; background: rgba(18,18,20,.97); display: flex; align-items: center; justify-content: center; }
 /* display:flex above beats the hidden attribute — without this the dark overlay covers the page forever */
 #lightbox[hidden] { display: none; }
 #lightbox img { max-width: 100vw; max-height: 100vh; object-fit: contain; }
-.row.plated { cursor: zoom-in; }
-.row.plated .text, .row.plated .reading { cursor: text; }
 #label { position: fixed; left: 18px; bottom: 18px; z-index: 3; font: 11px "Courier New", monospace; letter-spacing: .3em;
          color: var(--lit-b); transition: opacity 1s; opacity: 0; pointer-events: none; }

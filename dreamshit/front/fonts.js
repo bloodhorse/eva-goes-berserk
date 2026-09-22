@@ -26,8 +26,9 @@ const FONTS = {
   caslon:      { family: '"Libre Caslon Text", serif', size: 17, lead: 1.8, track: '.01em', google: 'Libre+Caslon+Text' },
   didot:       { family: 'Didot, "Bodoni 72", serif', size: 20, lead: 1.6, track: '.02em' },
   hoefler:     { family: '"Hoefler Text", serif', size: 19, lead: 1.65, track: '.01em' },
-  // bekh's pick — 19px: 18 ran ~95-character lines, 20 was too big (bekh)
-  newsreader:  { family: 'Newsreader, serif', size: 19, lead: 1.65, track: '0', google: 'Newsreader:opsz,wght@6..72,400' },
+  // bekh's pick — 19px: 18 ran ~95-character lines, 20 was too big (bekh). a variable font: the
+  // whole weight axis is loaded so t / T can walk it thinner (bekh, 2026-09-22: almost good, thinner)
+  newsreader:  { family: 'Newsreader, serif', size: 19, lead: 1.65, track: '0', google: 'Newsreader:opsz,wght@6..72,200..800' },
   // elegant / old print
   cormorant:   { family: '"Cormorant Garamond", serif', size: 21, lead: 1.55, track: '.01em', weight: 500, google: 'Cormorant+Garamond:wght@400;500;600' },
   fell:        { family: '"IM Fell English", serif', size: 19, lead: 1.6, track: '.01em', google: 'IM+Fell+English' },

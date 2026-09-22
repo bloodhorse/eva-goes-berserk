@@ -26,7 +26,7 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 - **Focus follows reading:** the passage under the middle of the screen is focused — its plate sharp and washed dark behind the words; every other plate shows the current look. Works on phones (no hover).
 - **Names** (eva's convention): `verse · name` at the top of each passage (`10:4 · the body man`), `chapter · title` heading each trickle, a size up — all in the label face.
 - **Seed** (the found text a dream grew from): not shown inline — bekh: without it the page is right. A small `seed` button above each passage opens it in a floating box over the passage; click again / elsewhere / esc closes.
-- **pic**: a quiet word next to `seed` (it appears once the plate has landed) → the plate full screen, uncropped. Double-clicking a painted dream outside its words does the same. Click / double-click / esc closes.
+- **pic**: a quiet word next to `seed` (it appears once the plate has landed) → the plate full screen, uncropped. Click / esc closes. (Double-click on a dream used to do the same; let go 2026-09-22.) The cursor is a plain arrow everywhere — no hand on buttons, no zoom glass — bekh's call the same day.
 - Phones (<820px): one column, trickle static above its passages.
 
 ## Knobs (all remembered per browser in localStorage; url params win)
@@ -37,5 +37,6 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 | glass blur | `[` `]` | `?gb=` |
 | font | font button / `f` `F` walk the shortlist | `?font=` (any) |
 | passage size | `,` smaller · `.` bigger (per font) | — |
+| passage weight | `t` thinner · `T` thicker, steps of 50 (per font; moves only on a variable face — newsreader loads 200–800) | `?fw=300` |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | screenshots | — | `?tail=N` (newest N, no scrolling) · `?only=<room>` (one passage, waits for its font) |
