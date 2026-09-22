@@ -669,6 +669,21 @@ const BAND = (() => {
   return v >= 0 && v <= 5 ? v : .4;
 })();
 if (params.has('band')) store('band', BAND);
+// the trickle's own size, found by eye like the passage's: `;` smaller, `'` bigger, and the
+// header keeps the size css gives it. Every step re-measures — the column is as wide as the
+// widest word, so the type decides both the width and how many lines there are to pace.
+let TSIZE = (() => {
+  const raw = params.has('tsize') ? params.get('tsize') : store('tsize');
+  const v = raw === null || raw === '' ? NaN : +raw;
+  return v >= 10 && v <= 20 ? v : 12;
+})();
+if (params.has('tsize')) store('tsize', TSIZE);
+function setTrickleSize(v) {
+  TSIZE = Math.max(10, Math.min(20, v));
+  document.body.style.setProperty('--tsize', TSIZE + 'px');
+  refit();
+  tell(`trickle ${TSIZE}px   [; smaller · ' bigger]`);
+}
 function setTrickleMode(m) {
   TRICKLE = m; store('drip', m);
   for (const pack of packs.values()) drawPack(pack, pack.story);
@@ -695,12 +710,14 @@ addEventListener('keydown', e => {
     store('fw:' + FONT, Math.max(200, Math.min(800, cur + (e.key === 'T' ? 50 : -50))));
     setFont(FONT);
   }
+  else if (e.key === ';' || e.key === "'") { setTrickleSize(TSIZE + (e.key === "'" ? .5 : -.5)); store('tsize', TSIZE); }
   else if (e.key === 'g') setTrickleMode(TRICKLE === 'stretch' ? 'parts' : 'stretch');
   else if ('wW-='.includes(e.key)) { WA = Math.max(0, Math.min(.95, WA + (e.key === 'W' || e.key === '=' ? .04 : -.04))); setWash(); }
 });
 
 
 setLook(LOOK);
+setTrickleSize(TSIZE);   // before the other two, so the label the page opens with is the wash's
 setFont(FONT);
 setWash();
 // ?tail=N: only the newest N passages, no scrolling — for headless screenshots, which come out

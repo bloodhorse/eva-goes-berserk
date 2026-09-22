@@ -88,6 +88,7 @@ opened with the day it first saw it, which is why those three don't.
 | passage size | `,` smaller · `.` bigger (per font) | — |
 | passage weight | `t` thinner · `T` thicker, steps of 50 (per font; moves only on a variable face — newsreader loads 200–800) | `?fw=300` |
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
+| trickle size | `;` smaller · `'` bigger, half a pixel a step, 10–20 (the header keeps its own) | `?tsize=14` |
 | trickle mode | `g` toggles stretch ↔ parts | `?trickle=stretch` (default) `\|parts` |
 | stretch's drip | — (a dev option, no key) | `?align=even` (default) `\|dreams\|band` |
 | the band's width | — | `?band=0.4` (align=band only) |

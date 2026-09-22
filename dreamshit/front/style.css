@@ -47,7 +47,9 @@ body { cursor: default; }
    trickle, reading, names, seed. display only; the shelf keeps its capitals, because a starred
    passage becomes a seed and a capital in a seed is text nemo sees */
 .text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
-.trickle { width: 60%; margin: 0 auto; font: 12px/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); }
+/* --tsize is the trickle's own size dial (app.js, `;` / `'`) — at one word a line 12px is too
+   small to sit with. The header below keeps its own size on purpose. */
+.trickle { width: 60%; margin: 0 auto; font: var(--tsize, 12px)/1.7 "Courier New", monospace; letter-spacing: .1em; color: var(--ghost); }
 /* stretch (bekh's fallback, 2026-09-22 — `?trickle=stretch`, key g): the whole telling as one
    thread beside the whole dream, narrowed by app.js until it reaches the bottom of the last
    passage. It hangs out of the row's flow on purpose: in the flow, a 3000px thread would grow
