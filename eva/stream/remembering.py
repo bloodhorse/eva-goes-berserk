@@ -326,6 +326,14 @@ def run_once() -> int:
         # Quietly and with no row: nothing new is the ordinary answer between passages, and a
         # row every time would bury the real ones.
         return 0
+    tell(page, past, persona)
+    return 0
+
+
+def tell(page: dict, past: list[dict], persona: str) -> dict | None:
+    """One scene told: the version it becomes, written and ledgered, or None when he gave no
+    account. The live run and the retell both come through here, so a retold story is made
+    exactly the way a live one is."""
     held = current(past)
 
     started = time.time()
@@ -337,7 +345,7 @@ def run_once() -> int:
         log(f"sleeper · {exc}")
         ledger({"room": page["room"], "error": str(exc),
                 "seconds": round(time.time() - started, 1)})
-        return 0
+        return None
 
     now = time.time()
     obj = {"ts": now,
@@ -367,6 +375,69 @@ def run_once() -> int:
         f"“{title or '—'}” · {len(text)} chars · {obj['seconds']}s · " + opus.line(usage))
     # The trickle beside a whole pack of dreams just changed, and so may the story's name.
     push.now()
+    return obj
+
+
+# ---- the retell --------------------------------------------------------------------------------
+
+def retell(chapter: int) -> int:
+    """Tell every scene again from `chapter` on, oldest first, as if he had been dreaming them
+    one after another all along.
+
+    Born of the gap rule (2026-09-23): it stranded stories of one scene every time the stream
+    was stopped, and giving an orphan its four means taking the next story's scenes, which
+    moves every story after it — so the only honest repair is to retell the lot from the first
+    orphan. This is the one place the "an address never shifts" rule is broken on purpose, by
+    hand, with bekh's say-so: the old versions of those chapters go to `dreams/.trash/<stamp>/`
+    (the loom and `versions()` both skip dot folders), and the chapters are handed out again
+    from `chapter` up.
+
+    Unload the sleeper's job first, or a live tap can tell the newest scene in the middle of
+    the retell and jump the watermark past everything still waiting.
+    """
+    try:
+        with open(PERSONA, encoding="utf-8") as f:
+            persona = f.read()
+    except OSError as exc:
+        print(f"no persona at {PERSONA}: {exc}", file=sys.stderr)
+        return 1
+    gone, kept = [], []
+    for path in version_files():
+        try:
+            with open(path, encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            continue
+        c = d.get("chapter") if isinstance(d, dict) else None
+        (gone if isinstance(c, int) and c >= chapter else kept).append((path, d))
+    if not gone:
+        print(f"nothing from chapter {chapter} on", file=sys.stderr)
+        return 1
+    # The scenes to tell: every unflagged passage past what the kept chapters covered, oldest
+    # first — the old versions' rooms are NOT the list, a scene they skipped is told too.
+    top = covered([d for _, d in kept])
+    rooms = sorted(n for n in loom.stream_room_names() if n > top)
+
+    bin_ = os.path.join(DREAMS, ".trash", time.strftime("%Y%m%d-%H%M%S"))
+    for path, _ in gone:
+        dest = os.path.join(bin_, os.path.relpath(path, DREAMS))
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        os.replace(path, dest)
+    print(f"{len(gone)} versions of chapters {chapter}+ moved to "
+          f"{os.path.relpath(bin_, STREAM)} · {len(rooms)} scenes to tell", file=sys.stderr)
+
+    told = 0
+    for name in rooms:
+        page = loom.stream_page(name)
+        if page is None or page.get("flag"):
+            continue
+        obj = tell(page, versions(), persona)
+        if obj is None:
+            # A missed scene is simply not in the story, as it would not be live; the next one
+            # carries on, and the ledger has the row.
+            continue
+        told += 1
+    print(f"{told} scenes told", file=sys.stderr)
     return 0
 
 
@@ -427,9 +498,15 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--number", action="store_true",
                     help="give every story on the shelf a chapter, oldest first, and exit. "
                          "A one-off for the stories written before the numbering; idempotent")
+    ap.add_argument("--retell", type=int, metavar="CHAPTER",
+                    help="bin every version from CHAPTER on and tell those scenes again, "
+                         "oldest first, chapters handed out from CHAPTER. Unload the "
+                         "sleeper's job first")
     a = ap.parse_args(argv[1:])
     if a.number:
         return number()
+    if a.retell is not None:
+        return retell(a.retell)
     if TURNS < 1:
         print("STREAM_DREAM_TURNS is at least 1", file=sys.stderr)
         return 2

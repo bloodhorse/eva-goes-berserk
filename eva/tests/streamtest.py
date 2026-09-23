@@ -1815,6 +1815,44 @@ class Remembering(unittest.TestCase):
         self.assertEqual(later[0]["dream"], later[1]["dream"])
         self.assertEqual(later[0]["chapter"], later[1]["chapter"])
 
+    def test_retell_mends_a_stranded_story_and_everything_after_it(self):
+        """What the gap left behind: a story of one scene that was ended by force, and the next
+        one starting over. The retell bins chapter 2 on and tells those scenes again in order,
+        so the stranded scene gets its company and the chapter numbers come out whole."""
+        for hhmm in ("1000", "1005", "1010", "1015", "1020"):
+            self.scene(hhmm, f"scene {hhmm}.")
+            self.assertEqual(remember(self.fake())[0], 0)
+        # strand 2:1 the way the gap did — ended after one scene
+        def ts_of(p):
+            with open(p, encoding="utf-8") as f:
+                return json.load(f)["ts"]
+        path = max(remembering.version_files(), key=ts_of)
+        with open(path, encoding="utf-8") as f:
+            v = json.load(f)
+        self.assertEqual((v["chapter"], v["turn"]), (2, 1))
+        v["of"] = 1
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        self.scene("1025", "scene 1025.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual([(x["chapter"], x["turn"]) for x in dream_versions()][-2:],
+                         [(2, 1), (3, 1)])
+
+        code, out = with_fake(self.fake(),
+                              lambda: remembering.main(["remembering.py", "--retell", "2"]))
+        self.assertEqual(code, 0, out)
+        v = dream_versions()
+        self.assertEqual([(x["chapter"], x["turn"]) for x in v],
+                         [(1, 1), (1, 2), (1, 3), (1, 4), (2, 1), (2, 2)])
+        self.assertEqual([x["room"] for x in v[4:]],
+                         ["stream/2026-09-19/1020", "stream/2026-09-19/1025"])
+        self.assertEqual(v[4]["dream"], v[5]["dream"])
+        # the old versions are in the bin, not gone, and the live run carries on from here
+        binned = [f for _, _, fs in os.walk(os.path.join(remembering.DREAMS, ".trash"))
+                  for f in fs]
+        self.assertEqual(len(binned), 2)
+        self.assertIsNone(remembering.next_scene(remembering.versions()))
+
     def test_a_garbage_answer_is_a_ledger_row_and_exit_zero(self):
         room = self.scene("1000", "one.")
         code, out = remember(self.fake("garbage"))
