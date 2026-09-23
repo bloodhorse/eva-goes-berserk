@@ -134,6 +134,9 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 
 ## open
 
+- **the 5060 Ti is taken** (2026-09-24): `/opt/llama/bin/llama-server` (pid 2327960) holds
+  15.3 of its 16.3 GB, idle at the time of the look. Whose it is and whether it's ever off decides
+  whether this box is usable at all. Its disk has 157 GB free, driver 595, CUDA 13.2.
 - **which box.** The 5060 Ti box has **30 GB RAM, ~20 available, no swap**, with 9.4 GB already
   used by something else (2026-09-24). Q4/Q5 fit, and Q6 would put ~11.5 GB in RAM with no swap
   under it. The other box: a **1080 Ti (11 GB) and 125 GB RAM, ~120 free** (idle on
