@@ -355,7 +355,7 @@ function fitAll() {
       const top = flow.getBoundingClientRect().top;
       lines.push({ flow, avail: s.row.getBoundingClientRect().bottom - top, top });
     }
-    if (lines.length) jobs.push({ align: pack.align, full, lines, deep: foot - lines[0].top });
+    if (lines.length) jobs.push({ align: pack.align, full, lines, deep: foot - lines[0].top, n: pack.slots.length });
   }
   for (const j of jobs) {
     const texts = j.lines.map(l => l.flow.textContent);
@@ -386,21 +386,26 @@ function fitAll() {
 // reading are watched — a stretched thread is absolute and never sizes its row, so a refit can't
 // feed itself. What's left calling refit by hand changes something no row height shows: the
 // column widths (resize), the thread's own size (setSides), its text (drawPack).
-// ?debug=1: per stretched dream, how often it was fitted and the height it was asked for vs the
-// height it came out — read off the page in the one browser where the thread stopped short.
+// ?debug=1: per stretched dream — scenes at fit time, the height it was fitted to, and the height
+// it is NOW (re-read every second), plus how often the row observer fired. Read off the page in
+// the one browser where the thread stopped short (Helium, 2026-09-23).
 const DEBUG = params.get('debug') === '1';
-let fits = 0;
-function fitLog(j) {
-  fits++;
-  const out = j.lines.map(l => `${Math.round(j.deep)}→${Math.round(l.flow.getBoundingClientRect().height)}`).join(' ');
-  j.lines[0].flow.dataset.fit = out;
-  const all = [...document.querySelectorAll('.flow[data-fit]')].map(f => f.dataset.fit).join(' · ');
-  $('#label').textContent = `fits ${fits} @${Math.round(performance.now())}ms · asked→got ${all}`;
-  $('#label').style.opacity = 1; clearTimeout($('#label').t);   // the page's own notices fade it
-}
+let fits = 0, roFired = 0;
+function fitLog(j) { fits++; j.lines[0].flow.dataset.fit = `${j.n}sc ${Math.round(j.deep)}`; }
+if (DEBUG) setInterval(() => {
+  const out = [];
+  for (const pack of packs.values()) {
+    const flow = pack.slots.length && flowOf(pack.slots[0].el);
+    if (!flow || !flow.dataset.fit) continue;
+    const now = pack.slots[pack.slots.length - 1].row.getBoundingClientRect().bottom - flow.getBoundingClientRect().top;
+    out.push(`${flow.dataset.fit}/${pack.slots.length}sc ${Math.round(now)}`);
+  }
+  const l = $('#label'); clearTimeout(l.t); l.style.opacity = 1;
+  l.textContent = `fits ${fits} ro ${roFired} @${Math.round(performance.now() / 1000)}s · fitted→now ${out.join(' · ')}`;
+}, 1000);
 let refitting = 0;
 function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
-const rowSizes = new ResizeObserver(refit);
+const rowSizes = new ResizeObserver(() => { roFired++; refit(); });
 
 // one pack per dream: its passages, and the telling running down their left cells
 function newPack(p) {
