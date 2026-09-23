@@ -5,10 +5,30 @@ A bigger dreamer for the stream, to replace gpt-2 xl, whose pages bekh reads and
 serverless endpoint**, woken for a burst and asleep otherwise. Mistral Small 3.1 24B base is
 the fallback if olmo's prose comes out dead.
 
-**Where it stands (2026-09-24):** the weights exist on HF already (below — no conversion), the
-deploy repo `bloodhorse/olmo-dreamer` is written and pushed (private, like azeroth-render),
-the ten seeds for the blind fan are cut into `docs/olmo-seeds/`. **No endpoint yet: the next
-move is bekh's console session**, settings table in the repo's `README.md`.
+**Where it stands (2026-09-24, night):** the weights exist on HF already (below — no
+conversion), the deploy repo `bloodhorse/olmo-dreamer` is written and pushed (private, like
+azeroth-render), the ten seeds for the blind fan are cut into `docs/olmo-seeds/`, and **the
+endpoint exists: `qdipqwxl1l5ngm`**, load-balancing, booted clean on gemma-270m (a whole
+A5000, Montreal), **streams word by word** through the balancer (61 chunks, longest gap
+0.15 s, first token 0.52 s). Next: the cached model flipped to olmo, the ten seeds fanned ×4
+(`fan.py` in the repo), the pages to the sheets site as `olmo-prophecies`.
+
+**What the first boot taught (2026-09-24):**
+- **the console lies less than the API, again.** REST listed five whole cards; the console
+  had `PRO 6000 MIG 24GB` ticked as well. Only graphql's `gpuIds` shows the truth, including
+  the exclusion once it's unticked (`…,-NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb`).
+- **`PORT_HEALTH` must be an exposed container port** (`80/http,8081/http` on the template),
+  or the console warns and the poll never reaches the shim. **`/ping` through the front door
+  hangs** — the balancer keeps that path; `probe.py ping` reads llama's `/health` instead.
+- **the slow stage is runpod's "initializing model files"**: image pulled at 19:26, model
+  ready at 19:38 — twelve minutes for 278 MB, with the worker flipping `THROTTLED` meanwhile.
+  Our own boot after that: a second. Expect the 18 GB flip to be worse; it's paid once per host.
+- **runpodctl** (`brew install runpod/runpodctl/runpodctl`, key from the keychain at the point
+  of use — `RUNPOD_API_KEY=$(_kc RUNPOD_API_KEY) runpodctl …`): `serverless logs <id>` gives
+  container and platform lines, `serverless model-status <id>` says whether the cached model is
+  assigned and mounted. It can set `--model-reference`, but its `saveEndpoint` mutation carries
+  no endpoint `type`, so the flip stays a console click until that's known safe. It can't
+  create a load-balancing endpoint or build from github either.
 
 ## why olmo
 
@@ -186,9 +206,9 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 
 1. ~~check the builder's image-size limit~~ (80 GB, fine; cached model is the pick).
 2. ~~convert~~ (Tricit's Q4 exists and checks out).
-3. ~~`bloodhorse/olmo-dreamer` written~~ → **bekh creates the load-balancing endpoint in the
-   console** (`README.md` there), gemma first; `probe.py` box / say; flip to olmo; box / say
-   again. Record the SSE verdict and the cold start here.
+3. ~~`bloodhorse/olmo-dreamer` written; endpoint `qdipqwxl1l5ngm` created, gemma booted,
+   SSE word by word~~ → flip the cached model to olmo (console); box / say again; record the
+   18 GB cold start here.
 4. the local bearer proxy; the blind fan olmo vs nemo on `docs/olmo-seeds/`, by hand, to the
    sheets site unmarked.
 5. only if olmo wins: `eva go` learns the warm-up and the endpoint URL, and olmo takes gpt-2's
