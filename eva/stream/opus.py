@@ -98,7 +98,8 @@ def model_of(d: dict) -> str:
     return name if isinstance(name, str) and name else ALIAS
 
 
-def ask(prompt: str, timeout: int = 300, resume: str | None = None) -> tuple[str, dict]:
+def ask(prompt: str, timeout: int = 300, resume: str | None = None,
+        model: str = "") -> tuple[str, dict]:
     """One call. `(the text it wrote, the usage block)`. Raises ValueError on anything that is
     not a clean answer — every caller turns that into a ledger row and exit 0.
 
@@ -114,6 +115,10 @@ def ask(prompt: str, timeout: int = 300, resume: str | None = None) -> tuple[str
            if k not in ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT")}
     try:
         argv = CLAUDE + (["--resume", resume] if resume else [])
+        if model:
+            # Another model through the same door (the analyst's `fable` seat, bekh 2026-09-23):
+            # the cli takes the last `--model`, so the alias stands and this one wins.
+            argv = argv + ["--model", model]
         r = subprocess.run(argv, input=prompt, capture_output=True, text=True,
                            timeout=timeout, env=env, cwd=tempfile.gettempdir())
     except FileNotFoundError:

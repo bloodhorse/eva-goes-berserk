@@ -64,21 +64,27 @@ Answer only in the shape the prompt asks for, and nothing else: no preamble, no 
 your own answer, no notes about the process."""
 
 
-def cmd(model: str = "", effort: str = "") -> list[str]:
+# The thread the last call ran in, as codex reports it (`thread.started`), rewritten by every
+# call — the analyst resumes it (`opus.SESSION`'s rule: read after ask() returns). "" when the
+# cli reported none.
+SESSION = ""
+
+
+def cmd(model: str = "", effort: str = "", resume: str = "") -> list[str]:
     """The argv, built in one place so a test can read it and a reader can audit it.
 
     Exec options come before the prompt; `-` as the prompt means stdin. `-C` is the seat
     folder, which is the whole point of the folder existing: its AGENTS.md is loaded natively
-    and stacks on top of the global one.
+    and stacks on top of the global one. **`resume <thread>` appends a turn to a recorded
+    thread** (the analyst's seat, 2026-09-23): the sandbox and the cwd come with the thread and
+    `resume` takes neither flag, so only the config, the model and `--json` are repeated.
     """
-    return [CODEX, "exec",
-            "-c", "base_instructions=" + json.dumps(BASE_INSTRUCTIONS),
-            "-c", "model_reasoning_effort=" + json.dumps(effort or EFFORT),
-            "-m", model or MODEL,
-            "--sandbox", "read-only",
-            "--skip-git-repo-check",
-            "-C", SEAT,
-            "--json", "-"]
+    head = [CODEX, "exec"] + (["resume", resume] if resume else [])
+    tail = [] if resume else ["--sandbox", "read-only", "-C", SEAT]
+    return head + ["-c", "base_instructions=" + json.dumps(BASE_INSTRUCTIONS),
+                   "-c", "model_reasoning_effort=" + json.dumps(effort or EFFORT),
+                   "-m", model or MODEL,
+                   "--skip-git-repo-check"] + tail + ["--json", "-"]
 
 
 def parse(stdout: str) -> tuple[str, dict]:
@@ -90,6 +96,8 @@ def parse(stdout: str) -> tuple[str, dict]:
     perfectly well, which fim.py learned by losing whole answers to the first one.
     """
     text, usage, err = "", {}, ""
+    global SESSION
+    SESSION = ""
     for line in stdout.splitlines():
         line = line.strip()
         if not line.startswith("{"):
@@ -101,7 +109,10 @@ def parse(stdout: str) -> tuple[str, dict]:
         if not isinstance(ev, dict):
             continue
         kind = ev.get("type")
-        if kind in ("item.completed", "item_completed"):
+        if kind in ("thread.started", "thread_started"):
+            tid = ev.get("thread_id") or ev.get("id")
+            SESSION = tid if isinstance(tid, str) else ""
+        elif kind in ("item.completed", "item_completed"):
             item = ev.get("item") if isinstance(ev.get("item"), dict) else {}
             if str(item.get("type", "")).lower() in ("agent_message", "agentmessage"):
                 text = item.get("text") or text
@@ -133,16 +144,18 @@ def tokens_of(u: dict) -> dict:
     return out
 
 
-def ask(prompt: str, timeout: int = 120) -> tuple[str, dict]:
+def ask(prompt: str, timeout: int = 120, resume: str = "", model: str = "",
+        effort: str = "") -> tuple[str, dict]:
     """One call. `(the text it wrote, the token counts)`. Raises ValueError on anything that is
     not a clean answer — every caller turns that into a fallback and a ledger row.
 
     The cwd is the seat, like `-C`: codex resolves its instruction files from the working root
-    and there is no reason for the two to disagree.
+    and there is no reason for the two to disagree. `resume` is a thread id from a previous
+    call's `SESSION`; `model` and `effort` override the reader's pins for another seat.
     """
     try:
-        r = subprocess.run(cmd(), input=prompt, capture_output=True, text=True,
-                           timeout=timeout, cwd=SEAT)
+        r = subprocess.run(cmd(model, effort, resume), input=prompt, capture_output=True,
+                           text=True, timeout=timeout, cwd=SEAT)
     except FileNotFoundError:
         raise ValueError(f"no `{CODEX}` on PATH")
     except subprocess.TimeoutExpired:

@@ -56,6 +56,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import codex  # noqa: E402   the third door: GPT through codex, one thread resumed
 import deepseek  # noqa: E402   the second door: v3.2 over openrouter, the transcript kept here
 import loom  # noqa: E402
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
@@ -73,13 +74,21 @@ EVERY = int(os.environ.get("STREAM_ANALYST_EVERY", "10"))
 # resumed session; `deepseek` is v3.2 over openrouter with the transcript kept in the seat as
 # `messages.json`, sent whole every call. A seat is born with a door and keeps it — a session
 # can't move houses. The prompts are the same to the byte; only the door differs.
-DOORS = ("opus", "deepseek")
+DOORS = ("opus", "fable", "deepseek", "codex")
+# `fable` is the opus door with the model flipped: the same cli, the same resumed session, on
+# bekh's fable limit instead — his ask the same night, unhappy with opus's prose.
 DOOR = os.environ.get("STREAM_ANALYST_DOOR", "opus")
+# The third door: GPT through codex, one recorded thread resumed every call (`codex exec
+# resume <thread>`), the same countermanded seat folder the reader uses. bekh's pick for it
+# (2026-09-23): `gpt-5.6-sol`. It draws on his codex window, which is the scarce thing here,
+# and a resumed turn replays the whole thread plus the harness's ~18k every call.
+CODEX_MODEL = os.environ.get("STREAM_ANALYST_CODEX_MODEL", "gpt-5.6-sol")
+CODEX_EFFORT = os.environ.get("STREAM_ANALYST_CODEX_EFFORT", "low")
 # Under the point where the seat's window runs out — for opus, where the cli would compact the
 # session by itself (see the module doc); for deepseek, a 128k window. Measured 2026-09-23: a
 # dream costs ~420 tokens of context with the portraits in the session, so this is ~350 dreams
 # in an opus seat and ~280 in a deepseek one. One env var overrides either.
-CONTEXT_MAX = {"opus": 150000, "deepseek": 120000}
+CONTEXT_MAX = {"opus": 150000, "fable": 150000, "deepseek": 120000, "codex": 180000}
 if os.environ.get("STREAM_ANALYST_CONTEXT_MAX"):
     CONTEXT_MAX = dict.fromkeys(DOORS, int(os.environ["STREAM_ANALYST_CONTEXT_MAX"]))
 # The transcript-kept door has no id; this stands in for one so `live()` and every reader of
@@ -417,9 +426,14 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
             os.makedirs(seat_dir(seat), exist_ok=True)
             write_json_list(messages_path(seat), msgs + [{"role": "assistant", "content": answer}])
             sid, model = LOCAL_SESSION, deepseek.MODEL
+        elif door == "codex":
+            answer, usage = codex.ask(prompt, TIMEOUT, resume=state["session_id"] if resuming else "",
+                                      model=CODEX_MODEL, effort=CODEX_EFFORT)
+            sid, model = codex.SESSION, "codex:" + CODEX_MODEL
         else:
             answer, usage = opus.ask(prompt, TIMEOUT,
-                                     resume=state["session_id"] if resuming else None)
+                                     resume=state["session_id"] if resuming else None,
+                                     model="fable" if door == "fable" else "")
             sid, model = opus.SESSION, opus.MODEL
     except ValueError as exc:
         log(f"portrait · {seat} · {exc}")
@@ -468,7 +482,7 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
     ledger({"seat": seat, "door": door, "session_id": sid, "rooms": len(rooms), "dreams": total,
             "line": line, "context": ctx, "model": model, "seconds": obj["seconds"],
             "usage": usage})
-    told = deepseek.line(usage) if door == "deepseek" else opus.line(usage)
+    told = {"deepseek": deepseek.line, "codex": codex.line}.get(door, opus.line)(usage)
     log(f"portrait · {os.path.relpath(path, STREAM)} · {seat} · {len(rooms)} dreams ({total}) · "
         f"{ctx} ctx · {obj['seconds']}s · {model} · " + told)
     print(text)
