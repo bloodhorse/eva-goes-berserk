@@ -21,8 +21,9 @@ five minutes the GPU was busy is a stream that stops.
 
 **The other jobs are tapped from here.** With STREAM_KICK_INTERPRETER=1 a page that landed ends
 by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the bedside),
-`com.bekh.eva-stream-remembering` (the sleeper remembering the night) and
-`com.bekh.eva-stream-plating` (the painter), none of which has an interval of its own.
+`com.bekh.eva-stream-remembering` (the sleeper remembering the night),
+`com.bekh.eva-stream-plating` (the painter) and `com.bekh.eva-stream-analyst` (the portrait
+every ten dreams), none of which has an interval of its own.
 Best-effort: a failure is one log line and nothing else. The mirror is tapped the same way
 (`push.py`), so the mini has the page in a second instead of in up to a minute.
 
@@ -99,13 +100,17 @@ TAIL_CHARS = 600
 # llama a document it has to truncate the front off in silence.
 SEED_MAX_CHARS = 12000
 
-# The two other voices have no clock of their own: both are launchd jobs with no interval, and
+# The other voices have no clock of their own: all are launchd jobs with no interval, and
 # this is what starts them. bekh, 2026-09-19 — they should start when the dream is finished,
 # not on timers of their own, which used to land a note a whole tick late.
 KICK = os.environ.get("STREAM_KICK_INTERPRETER") == "1"
 KICK_JOBS = ("com.bekh.eva-stream-interpreter",      # the reader at the bedside
              "com.bekh.eva-stream-remembering",      # the sleeper remembering the night
-             "com.bekh.eva-stream-plating")          # the painter, with a hand on the limit
+             "com.bekh.eva-stream-plating",          # the painter, with a hand on the limit
+             # The analyst, on every landing: he counts for himself and does nothing until ten
+             # new dreams are above his watermark, so nine taps in ten cost one directory walk.
+             # A timer of his own would put the portrait up to a tick behind its tenth dream.
+             "com.bekh.eva-stream-analyst")
 KICK_TIMEOUT = 15
 
 # How much of a drawn seed nemo is actually handed: its TAIL, about this many words. bekh,
@@ -771,7 +776,7 @@ def write_page(rng: random.Random, seats: list[tuple[str, str]] | None = None) -
 
 
 def kick() -> None:
-    """Tap the other two voices, best-effort. Never anything but a log line if one fails.
+    """Tap the other voices, best-effort. Never anything but a log line if one fails.
 
     Each job is tapped on its own and a failure on one does not touch the other: they are two
     unrelated voices, and a reader that cannot start is no reason for the night to go untold.

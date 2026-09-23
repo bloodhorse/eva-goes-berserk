@@ -15,7 +15,12 @@ posts the whole sitting after every move; the server writes it atomically to
 Route list at the top of the file. Two routes read something the server never wrote:
 `/api/berserk` — the daemon's ledger, `LOOM_LEDGER`, alongside the room — and `/api/stream`,
 which reads the stream worker's heartbeat (`STREAM_DIR`) alongside the rooms under
-`sittings/stream/`; `/stream` serves `front/stream.html` beside it. One route never returns:
+`sittings/stream/`; `/stream` serves `front/stream.html` beside it. Two more read the analyst's
+portraits (`STREAM_DIR/portraits/<STREAM_ANALYST_SEAT>/`, the public seat only, `analyst`):
+**`GET /api/stream/portraits`**, every version newest first as `{id, ts, line, text, dreams,
+rooms}`, and **`GET /api/stream/portrait?id=2026-09-23/1831`**, one of them (404 none, 400 an id
+`name_ok` refuses) — and `/api/stream` hangs the same object as `portrait` on the page each
+version was written right after. One route never returns:
 **`/api/stream/events`** is `text/event-stream`, held open, saying which rooms changed within
 ~2s of anything landing, so a reader is pushed to instead of polling — a GET, so the mirror
 serves it too. **`POST /api/stream/live`** takes the stream writer's `{text so far, seed, done}`
@@ -410,6 +415,11 @@ passages are **scenes of one dream** so it has to find connective tissue; every 
 a dream ending after 4 scenes and nothing else — a stopped stream leaves it waiting. The page carries it at the top with
 its `3 / 4`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
 which counts what they cost onto every ledger row.
+And a fourth, **the analyst** (`stream/analyst.py`, 2026-09-23): opus in one resumed cli session
+reading every dream, rewriting a portrait of the dreamer every ten and one remark he would say
+out loud — the line a card in the feed will carry, the portrait the manuscript behind it.
+Tapped by the writer like the others; `/api/stream` hangs each portrait on the dream it
+followed, and eva's page shows it there as a quiet band that unfolds on a click.
 And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through
 codex, served as a file and set as the background of the dream's own block — behind the words,
 under a measured wash, lifting on a hover or a press-and-hold.
@@ -464,9 +474,11 @@ Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, lo
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
 plus `com.bekh.eva-gpt2` (llama-server, GPT-2 XL, loopback 8083, on the cpu — the stream's
-second dreamer), `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the two
-voices it kickstarts, `com.bekh.eva-stream-interpreter` and `com.bekh.eva-stream-remembering`, neither of
-which has an interval of its own (those plists, gpt-2's included, live in `stream/`) — and
+second dreamer), `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the
+voices it kickstarts, `com.bekh.eva-stream-interpreter`, `com.bekh.eva-stream-remembering`,
+`com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (a portrait every ten dreams,
+loaded 2026-09-23), none of which has an interval of its own (those plists, gpt-2's included,
+live in `stream/`; log `/tmp/eva-stream-analyst.log` for the analyst) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-gpt2.log`, `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need

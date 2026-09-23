@@ -24,10 +24,20 @@ sent once, in the session's first turn, and never again.
 the reduction bekh forbade — so the tool refuses before the cli gets the chance, at
 `STREAM_ANALYST_CONTEXT_MAX` tokens, and the answer is a new seat.
 
-Like every voice here he sees nemo's text only: no seed, no reader's note, no name, no story —
-each dream under the date and minute it was written.
+Like every voice here he sees the dreamer's text only: no seed, no reader's note, no name, no
+story — each dream under the date and minute it was written and, since two models write the pages
+in turn, the one that wrote it: `[2026-09-23 18:58 · gpt2]`.
 
-Env: STREAM_DIR (default shelf/stream/), STREAM_ANALYST_SEAT (analyst), STREAM_ANALYST_PERSONA
+**The remark** (bekh, 2026-09-23): beside the portrait, one sentence he would say out loud about
+the dreamer right now. It is what the feed shows on the card every ten dreams — the portrait is
+the manuscript behind it — so it is his own voice, never a summary of the portrait.
+
+**The clock is the tap**: `com.bekh.eva-stream-analyst` has no interval, and stream.py kickstarts
+it with the other voices when a page lands. Nine landings in ten that is a quiet no-op — fewer
+than ten new dreams above the watermark — and the tenth is a portrait.
+
+Env: STREAM_DIR (default shelf/stream/), STREAM_ANALYST_SEAT (analyst — the loom reads it too:
+only this seat's portraits reach /api/stream), STREAM_ANALYST_PERSONA
 (eva/stream/analyst.txt), STREAM_ANALYST_EVERY (10), STREAM_ANALYST_CONTEXT_MAX (150000),
 STREAM_ANALYST_TIMEOUT (600), plus loom's LOOM_SITTINGS.
 """
@@ -66,18 +76,25 @@ CONTEXT_MAX = int(os.environ.get("STREAM_ANALYST_CONTEXT_MAX", "150000"))
 TIMEOUT = int(os.environ.get("STREAM_ANALYST_TIMEOUT", "600"))
 
 PORTRAIT_RE = re.compile(r"<portrait>(.*?)</portrait>", re.S | re.I)
+REMARK_RE = re.compile(r"<remark>(.*?)</remark>", re.S | re.I)
 ROOM_RE = re.compile(r"(\d{4}-\d{2}-\d{2})/(\d{2})(\d{2})(?:-\d+)?$")
 SEAT_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 
 SHAPE = """
-Answer with the whole portrait, rewritten, and nothing else — no preamble, no code fences:
+Answer with the whole portrait, rewritten, then one remark, and nothing else — no preamble, no
+code fences:
 
 <portrait>
 the portrait as it stands now
 </portrait>
+<remark>
+one sentence, two at most, that you would say out loud about the dreamer right now — your own
+words to somebody beside you, not a summary of the portrait
+</remark>
 """
 
-AGAIN = "The portrait again, rewritten whole, inside <portrait></portrait>."
+AGAIN = ("The portrait again, rewritten whole, inside <portrait></portrait>, "
+         "then your remark inside <remark></remark>.")
 
 
 def log(msg: str) -> None:
@@ -220,19 +237,25 @@ def batch(covered: str, n: int, partial: bool) -> list[dict]:
 
 # ---- the prompt ---------------------------------------------------------------------------------
 
-def header(room: str) -> str:
+def header(room: str, model: str | None = None) -> str:
     """`[2026-09-22 17:11]` off `stream/2026-09-22/1711` — the name IS when it was written, and
-    a `-2` is a hand run inside the same minute, so it gets the same stamp."""
+    a `-2` is a hand run inside the same minute, so it gets the same stamp.
+
+    With the dreamer after it when the page says who wrote it — `[2026-09-23 18:58 · gpt2]` —
+    because since 2026-09-23 two models write the pages in turn, and a tic he pins on the one
+    dreamer that turns out to be only the other one's is a wrong portrait. `model` is
+    `loom.stream_model`'s short name, so a page from before the seats (nemo's file name on it)
+    reads `nemo` like tonight's. No stamp at all and the header is what it always was."""
     m = ROOM_RE.search(room)
-    if not m:
-        return f"[{room}]"
-    return f"[{m.group(1)} {m.group(2)}:{m.group(3)}]"
+    stamp = f"{m.group(1)} {m.group(2)}:{m.group(3)}" if m else room
+    return f"[{stamp} · {model}]" if model else f"[{stamp}]"
 
 
 def material(pages: list[dict]) -> str:
-    """Each dream under its stamp, the text exactly as nemo left it — ragged edges, stray
+    """Each dream under its stamp, the text exactly as the dreamer left it — ragged edges, stray
     brackets, all of it, because the tics are in exactly what a tidier would take out."""
-    return "\n\n".join(header(p["room"]) + "\n" + (p.get("text") or "") for p in pages)
+    return "\n\n".join(header(p["room"], p.get("model")) + "\n" + (p.get("text") or "")
+                        for p in pages)
 
 
 def first_prompt(persona: str, pages: list[dict]) -> str:
@@ -244,11 +267,26 @@ def next_prompt(pages: list[dict]) -> str:
     return (f"--- {len(pages)} more dreams ---\n\n" + material(pages) + "\n\n" + AGAIN + "\n")
 
 
-def parse(answer: str) -> str:
+def parse(answer: str) -> tuple[str, str]:
+    """(the portrait, the remark). The portrait is the run: without it there is nothing to
+    store. The remark is lenient — missing, empty or unclosed it is "", never a failed run, since
+    a portrait that landed with no line is still the portrait, and the card simply has no words."""
     m = PORTRAIT_RE.search(answer)
     if not m or not m.group(1).strip():
         raise ValueError("no <portrait> in the answer")
-    return m.group(1).strip()
+    return m.group(1).strip(), remark(answer)
+
+
+def remark(answer: str) -> str:
+    """One line for the card: wrapped lines joined, and quotes round the whole of it taken off,
+    because the card and the narration put their own round it."""
+    m = REMARK_RE.search(answer)
+    if not m:
+        return ""
+    line = " ".join(m.group(1).split())
+    if len(line) >= 2 and line[0] + line[-1] in ('""', "“”", "''", "‘’"):
+        line = line[1:-1].strip()
+    return line
 
 
 def context_of(usage: dict) -> int:
@@ -353,7 +391,7 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
                         "covered": rooms[-1], "dreams": total, "context": ctx,
                         "model": opus.MODEL})
     try:
-        text = parse(answer)
+        text, line = parse(answer)
     except ValueError as exc:
         log(f"portrait · {seat} · {exc}")
         ledger({"seat": seat, "session_id": sid, "rooms": len(rooms), "dreams": total,
@@ -362,15 +400,22 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
         return 0
 
     obj = {"ts": now, "seat": seat, "session_id": sid, "rooms": rooms, "dreams": total,
-           "text": text, "model": opus.MODEL, "seconds": round(now - started, 1),
+           "text": text, "line": line, "model": opus.MODEL, "seconds": round(now - started, 1),
            "usage": usage, "context": ctx}
     path = version_path(seat, now)
     write_json(path, obj)
+    # `line` on the row too, so the ledger reads as the remarks in order and `eva go` can say
+    # one out loud as it lands.
     ledger({"seat": seat, "session_id": sid, "rooms": len(rooms), "dreams": total,
-            "context": ctx, "model": opus.MODEL, "seconds": obj["seconds"], "usage": usage})
+            "line": line, "context": ctx, "model": opus.MODEL, "seconds": obj["seconds"],
+            "usage": usage})
     log(f"portrait · {os.path.relpath(path, STREAM)} · {seat} · {len(rooms)} dreams ({total}) · "
         f"{ctx} ctx · {obj['seconds']}s · " + opus.line(usage))
     print(text)
+    if line:
+        print("\n" + line)
+    # The mirror, the moment it lands: the portrait rides on a page in /api/stream, and the
+    # mini serves that page to dreamshit. Without this the card waits up to a minute.
     push.now()
     return 0
 
@@ -384,6 +429,8 @@ def show(seat: str) -> int:
     print(f"{seat} · {v.get('dreams')} dreams · {state.get('context', v.get('context'))} ctx",
           file=sys.stderr)
     print(v["text"])
+    if v.get("line"):
+        print("\n" + v["line"])
     return 0
 
 

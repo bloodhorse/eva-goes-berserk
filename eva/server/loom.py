@@ -51,7 +51,13 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                `verse`, `"12:3"` — the third scene of
                                the twelfth story; a story carries its `title` and `chapter`,
                                and its `text` — one continuous telling, seams marked with `|` —
-                               beside `parts`, that same text cut at those seams, one per scene
+                               beside `parts`, that same text cut at those seams, one per scene.
+                               A page the analyst's portrait was written right after carries
+                               `portrait`: {id, ts, line, text, dreams, rooms}; every other
+                               page carries null
+  GET  /api/stream/portraits -> every portrait of the public seat (STREAM_ANALYST_SEAT,
+                               `analyst`), newest first, in that same shape
+  GET  /api/stream/portrait?id= -> one of them by id (`2026-09-23/1831`); 404 none, 400 bad id
   GET  /api/stream/events    -> the same stream, pushed: text/event-stream, held open, one
                                `event: change` with {"rooms": [the ones whose fingerprint
                                moved], "status": …} within ~2s of a passage, a note, a story,
@@ -113,6 +119,7 @@ LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh
 LOOM_STREAM_PAGE, STREAM_DIR and STREAM_INTERVAL (the dream stream — eva/stream/),
 STREAM_EVENTS_TICK / STREAM_EVENTS_KEEPALIVE / STREAM_EVENTS_ROOMS (the held connection above),
 STREAM_LIVE_STALE (600 s: a live dream older than that is a writer that died mid-dream),
+STREAM_ANALYST_SEAT (analyst: the one seat whose portraits the api hands over),
 LOOM_LIVE_UPSTREAM (the mirror: another loom whose live events this one pulls and passes on)
 and LOOM_LIVE_RETRY_MAX (30 s, the longest wait between two tries at that upstream).
 """
@@ -196,6 +203,11 @@ STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
 # (eva/stream/remembering.py). A story ends on its count alone — a stopped stream leaves it
 # live, waiting for its next scene.
 STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
+# The analyst's seat whose portraits are PUBLIC (eva/stream/analyst.py). Other seats are
+# experiments bekh runs side by side — a blind persona, a machine-told one — and a card in the
+# feed from one of them would be an experiment passing itself off as the voice. Same env and
+# default as the analyst's own, so a launchd job that sets neither agrees with itself.
+STREAM_ANALYST_SEAT = os.environ.get("STREAM_ANALYST_SEAT", "analyst")
 STREAM_N = 10                             # pages per call when nobody says
 # A day is 288 passages at one every five minutes, and the page loads a day in one call now
 # (bekh, 2026-09-21: load it honestly and stand the viewer at the bottom) — so the cap has to
@@ -1799,6 +1811,78 @@ def stream_stories() -> tuple[dict, str | None, dict]:
     return by_room, live, verses
 
 
+# The fourth voice (eva/stream/analyst.py): every ten dreams a portrait of the dreamer, rewritten
+# whole in one resumed session, plus one `line` he would say out loud. One small json per version
+# under `portraits/<seat>/<YYYY-MM-DD>/<HHMM>[-n].json`, beside the seat's `session.json`, which
+# is his memory's bookkeeping and never a portrait. Only STREAM_ANALYST_SEAT is read. Read here
+# and never written; cached on mtime like the others, and a seat writes ~30 versions a day at
+# most, so loading all of them on every call is nothing.
+_PORTRAITS: dict[str, tuple[int, int, dict]] = {}
+
+
+def portrait_view(pid: str, d: dict) -> dict:
+    """What the api hands over for one version — the text whole, since the manuscript screen
+    wants exactly that, and the session's plumbing (its id, usage, context) left behind."""
+    rooms = [r for r in d.get("rooms") or [] if isinstance(r, str)]
+    return {"id": pid, "ts": d.get("ts") or 0, "line": d.get("line") or "",
+            "text": d["text"], "dreams": d.get("dreams") or len(rooms), "rooms": rooms}
+
+
+def stream_portraits() -> list[dict]:
+    """Every version of the public seat, newest first.
+
+    `id` is the version's path under the seat without `.json` — `2026-09-23/1831` — which is
+    what `/api/stream/portrait?id=` takes and what a manuscript screen will ask for. It passes
+    `name_ok` by construction (a date folder and an HHMM stem), and a file that would not is
+    skipped rather than served under an id nobody can ask for back.
+    """
+    root = os.path.join(STREAM_DIR, "portraits", STREAM_ANALYST_SEAT)
+    out, seen = [], set()
+    for dirpath, dirnames, filenames in os.walk(root):
+        # `.trash` never, and nothing starting with a dot: a binned seat is not the voice.
+        dirnames[:] = [x for x in dirnames if not x.startswith(".")]
+        for fname in filenames:
+            if not fname.endswith(".json") or fname == "session.json":
+                continue
+            path = os.path.join(dirpath, fname)
+            pid = os.path.relpath(path, root)[:-len(".json")].replace(os.sep, "/")
+            if not name_ok(pid):
+                continue
+            try:
+                st = os.stat(path)
+                hit = _PORTRAITS.get(path)
+                if hit and hit[0] == st.st_mtime_ns and hit[1] == st.st_size:
+                    d = hit[2]
+                else:
+                    with open(path, encoding="utf-8") as f:
+                        d = json.load(f)
+                    if not isinstance(d, dict) or not isinstance(d.get("text"), str):
+                        continue
+                    _PORTRAITS[path] = (st.st_mtime_ns, st.st_size, d)
+            except (OSError, ValueError):
+                continue
+            seen.add(path)
+            out.append(portrait_view(pid, d))
+    for gone in set(_PORTRAITS) - seen:
+        _PORTRAITS.pop(gone, None)
+    # By its own ts, then the id: two landed inside one minute are `1831` and `1831-2`, and the
+    # walk hands files over in whatever order the disk likes.
+    out.sort(key=lambda v: (v["ts"], v["id"]), reverse=True)
+    return out
+
+
+def portraits_by_room(portraits: list[dict] | None = None) -> dict:
+    """{room: the portrait written right after it} — the newest room of each version's batch,
+    which is where the card goes in the feed (bekh, 2026-09-23: right after the dream it was
+    written after). Two versions ending on one room (a batch re-run by hand) and the newer
+    wins; `portraits` is newest first, so the first one seen is kept."""
+    out: dict[str, dict] = {}
+    for v in portraits if portraits is not None else stream_portraits():
+        if v["rooms"]:
+            out.setdefault(max(v["rooms"]), v)
+    return out
+
+
 # A plate is one painting per room, made by hand with eva/stream/plate.py. Served as a file
 # and never read into a payload: it is a quarter of a megabyte, and the page puts it behind the
 # passage's text as a background image.
@@ -1856,7 +1940,7 @@ def stream_model(meta: dict) -> str | None:
 
 def stream_page(name: str, readings: tuple[dict, dict] | None = None,
                 stories: dict | None = None, verses: dict | None = None,
-                names: dict | None = None) -> dict | None:
+                names: dict | None = None, portraits: dict | None = None) -> dict | None:
     """One page as the reader reads it: the seed, the page, the two marks, the flag, and — when
     the interpreter has been past — its copy of the dream and the reading it heads.
 
@@ -1907,7 +1991,10 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None,
             # the same object; the page groups on `story.dream` and draws it once, beside them.
             "story": (stories or {}).get(name),
             # The painting for this dream, if one was made by hand. A url, not the bytes.
-            "plate": plate_url(name)}
+            "plate": plate_url(name),
+            # The analyst's portrait when one was written right after this dream — the card in
+            # the feed every ten dreams. None on every other page.
+            "portrait": (portraits or {}).get(name)}
 
 
 def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> dict:
@@ -1925,12 +2012,13 @@ def stream_pages(before: str = "", n: int = STREAM_N, flagged: bool = False) -> 
     readings = stream_readings()
     stories, _live, verses = stream_stories()
     named = stream_names()
+    drawn = portraits_by_room()
     pages, more = [], False
     for name in names:
         if len(pages) >= max(1, min(int(n), STREAM_N_MAX)):
             more = True
             break
-        page = stream_page(name, readings, stories, verses, named)
+        page = stream_page(name, readings, stories, verses, named, drawn)
         if page is None or (page["flag"] and not flagged):
             continue
         pages.append(page)
@@ -1966,8 +2054,8 @@ def stream_status() -> dict:
 # changed within a couple of seconds of their changing.
 #
 # The fingerprint is per ROOM and covers exactly what `/api/stream` hands over for that room,
-# built from the same four helpers the route itself uses (`stream_readings`, `stream_stories`,
-# `stream_names`, `plate_url`) — never a second spelling of where those files live. The three
+# built from the same helpers the route itself uses (`stream_readings`, `stream_stories`,
+# `stream_names`, `plate_url`, `portraits_by_room`) — never a second spelling of where those files live. The three
 # index reads are cached on mtime inside those helpers, so a tick that changes nothing is three
 # directory walks plus three stats a room.
 #
@@ -1989,6 +2077,7 @@ def stream_prints(n: int = 0) -> dict[str, str]:
     by_room, heads = stream_readings()
     stories, _live, verses = stream_stories()
     named = stream_names()
+    drawn = portraits_by_room()
     out: dict[str, str] = {}
     for name in stream_room_names()[:max(1, n or STREAM_EVENTS_ROOMS)]:
         try:
@@ -1997,7 +2086,9 @@ def stream_prints(n: int = 0) -> dict[str, str]:
             continue
         read = by_room.get(name) or {}
         story = stories.get(name) or {}
+        portrait = drawn.get(name) or {}
         key = (st.st_mtime_ns, st.st_size, plate_url(name),
+               portrait.get("id"), portrait.get("ts"),
                (heads.get(name) or {}).get("ts"),
                read.get("name"), named.get(name), verses.get(name),
                read.get("marked"), read.get("segments"),
@@ -2321,6 +2412,25 @@ class Handler(BaseHTTPRequestHandler):
         # Before /api/stream, and not a query on it: this one never returns.
         if u.path == "/api/stream/events":
             self.stream_events()
+            return
+
+        # The analyst's portraits: the whole run of them for a manuscript screen, and one by id.
+        # Only the public seat (STREAM_ANALYST_SEAT); the id is looked up among the versions
+        # that seat has, never joined onto a path, and `name_ok` refuses a bad one up front.
+        if u.path == "/api/stream/portraits":
+            self._json(200, {"portraits": stream_portraits()})
+            return
+
+        if u.path == "/api/stream/portrait":
+            pid = (parse_qs(u.query).get("id", [""])[0] or "").strip()
+            if not name_ok(pid):
+                self._json(400, {"error": "bad id"})
+                return
+            hit = next((v for v in stream_portraits() if v["id"] == pid), None)
+            if hit is None:
+                self._json(404, {"error": "no such portrait"})
+                return
+            self._json(200, hit)
             return
 
         if u.path == "/api/stream":

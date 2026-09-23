@@ -18,7 +18,8 @@ sleeper remembering (`remembering.py`, opus rewriting the account of the dream s
 reader at the bedside (`interpreter.py`, opus noting and underlining). They do not read each
 other. `opus.py` is the one way the two opus voices talk to the cli and the one place their
 cost is counted; `monitor.py` watches; `../front/stream.html` is the page, served by the loom at
-`/stream`. Only the writer has a clock — it taps the other two when a passage lands.
+`/stream`. Only the writer has a clock — it taps the other voices when a passage lands (the
+painter and the analyst too, since they joined).
 
 ## The calls, and what breaks if each one goes
 
@@ -281,8 +282,9 @@ each side of the page.
   window at 80% while the week stood at 19%.
 
 - **The writer taps the other voices when a dream lands** (and the mirror, through `push.py`).
-  Neither voice has an interval at all: `stream.py` ends a successful page with
-  `launchctl kickstart` on both
+  No voice has an interval at all: `stream.py` ends a successful page with
+  `launchctl kickstart` on each — the reader, the sleeper, the painter and, since 2026-09-23,
+  the analyst —
   (`STREAM_KICK_INTERPRETER=1`, set in the worker's plist only), each tapped on its own so a
   reader that cannot start is no reason for the account to go untold. bekh, 2026-09-19 — they
   should start when the dream is finished; two independent 300s timers put a note a whole tick
@@ -620,9 +622,13 @@ the blind twin, `analyst-blind.txt`, found the same room-and-wall core and diffe
 its last sentence; the told line read the woman told to write a story as the dreamer's own
 condition, which is what the sentence bought). Positive register only, told up front that
 nemo writes in lowercase and starts mid-sentence so he doesn't file that as a pattern, and
-asked to write in lowercase himself. Like every voice here he sees nemo's text and nothing
-else — no seed, no note, no name, no story — each dream under the date and minute it was
-written, `[2026-09-22 17:11]`. What ten dreams cost: ~5k context, 12–18s, four to five cents.
+asked to write in lowercase himself. Like every voice here he sees the dreamer's text and
+nothing else — no seed, no note, no name, no story — each dream under the date and minute it was
+written and, since the two dreamers, whoever wrote it: `[2026-09-23 18:58 · gpt2]`, or
+`[2026-09-22 17:11]` for a page with no stamp (`loom.stream_model`'s short name, so a page from
+before the seats reads `nemo`). That header is the only thing about the second dreamer he is
+shown — `analyst.txt` still says the dreamer is one machine called nemo, and the file is bekh's.
+What ten dreams cost: ~5k context, 12–18s, four to five cents.
 
 - **His memory is a resumed cli session, never a summary** (bekh's law). Each run hands the
   next batch over as the next user turn of one `claude --resume` session, so every dream he was
@@ -645,11 +651,50 @@ written, `[2026-09-22 17:11]`. What ten dreams cost: ~5k context, 12–18s, four
   own, and compaction is exactly the reduction bekh forbade — so the tool stops first, with a
   ledger row saying *start a new seat*, and makes no call. `context` is input + cache read +
   cache creation of the last call.
+- **The remark** (bekh, 2026-09-23): every ten dreams the portrait lands **in the feed**, right
+  after the dream it was written after, as a card — a picture and one sentence or two of his
+  own, something he would say out loud and not a summary — and pressing it opens the manuscript,
+  the whole portrait of that version with the earlier ones reachable. The card is dreamshit's to
+  draw; everything under it is here. The shape asks for a second tag after `<portrait>`:
+  `<remark>`, one sentence he would say out loud about the dreamer right now, and `AGAIN` asks
+  for both. Parsed leniently — missing, empty or unclosed is `""`, never a failed run (a
+  portrait with no line is still the portrait) — wrapped lines joined and quotes round the whole
+  of it taken off, since the card and the narration put their own. Stored as `line`.
 - **Storage**, under `shelf/stream/portraits/<seat>/`: `session.json` = `{session_id, persona,
   started, covered, dreams, context, model}`, rewritten after every call; one version per
   portrait at `<YYYY-MM-DD>/<HHMM>[-n].json` = `{ts, seat, session_id, rooms, dreams, text,
-  model, seconds, usage, context}`, every one kept, the latest being the portrait. Ledger rows
-  `kind: "portrait"`; failures are a row and exit 0.
+  line, model, seconds, usage, context}`, every one kept, the latest being the portrait (the
+  three written before the remark have no `line`, read as `""`). Ledger rows `kind:
+  "portrait"` carrying `line`; failures are a row and exit 0.
+- **The api carries the public seat only** — `STREAM_ANALYST_SEAT`, `analyst`, which the loom
+  reads from the same env with the same default. Other seats are experiments run side by side,
+  and a card from one would be an experiment passing itself off as the voice.
+  - In `/api/stream` a page carries `portrait` when a version of that seat was written right
+    after it — the version's newest room is this page — as `{id, ts, line, text, dreams,
+    rooms}`; every other page carries `null`. Two versions ending on one room (a batch re-run by
+    hand) and the newer wins.
+  - `id` is the version's path under the seat without `.json`, `2026-09-23/1831`: what a
+    manuscript screen asks for. `GET /api/stream/portraits` is every version of the seat,
+    newest first, the same objects; `GET /api/stream/portrait?id=` is one, 404 on none, 400 on
+    an id `name_ok` refuses — it is looked up among the loaded versions, never joined onto a
+    path. Loaded the way the readings are: all of them, cached on mtime, on every call.
+  - **A landing is a `change`**: the room's fingerprint (`loom.stream_prints`) covers its
+    portrait's id and ts, so the held connection names that room within ~2s, as it does for a
+    note or a plate. Nothing else new on the wire. `push.now()` runs as the version lands, so
+    the mirror has it in a second.
+- **The clock is the tap** (2026-09-23): `com.bekh.eva-stream-analyst`
+  (`eva/stream/com.bekh.eva-stream-analyst.plist`, tracked) — the sleeper's shape, no interval,
+  `--once`, `RunAtLoad` false, log `/tmp/eva-stream-analyst.log` — and `stream.py` kickstarts it
+  with the other voices when a page lands (`STREAM_KICK_INTERPRETER=1`), each kick on its own.
+  He runs on every landing and does nothing until ten new unflagged dreams are above his
+  watermark, so nine taps in ten are a directory walk and no call, and the tenth puts the
+  portrait on the dream that completed the ten. A backlog (the stream ran while he was off) is
+  eaten one batch per landing, never all at once. His session keys on the cli's cwd, which is
+  `tempfile.gettempdir()`: launchd hands this mac's agents the same `/var/folders/…/T` as the
+  shell (the sleeper's tapped sessions land in that project slug too), so a session started by
+  hand resumes from the job. `eva go`'s narration names each landing as
+  `the analyst · 40 dreams · "<line>"` (`narrate.py`, off the ledger row); a seat other than
+  `analyst` says which, `the analyst (blind) · …`.
 
 ```bash
 uv run --python 3.12 eva/stream/analyst.py --once                                # next batch, default seat
@@ -659,7 +704,15 @@ uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10 \
 uv run --python 3.12 eva/stream/analyst.py --show                                # the latest, no call
 ```
 
-No job and no tap yet — it runs by hand. Env: `STREAM_ANALYST_SEAT` (analyst),
+```bash
+cp eva/stream/com.bekh.eva-stream-analyst.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-analyst.plist   # runs nothing
+launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-analyst      # what the writer does
+launchctl bootout gui/$(id -u)/com.bekh.eva-stream-analyst        # no more portraits; the stream keeps dreaming
+curl -s https://eva.x/api/stream/portraits | python3 -m json.tool | head
+```
+
+Env: `STREAM_ANALYST_SEAT` (analyst; the loom reads it too),
 `STREAM_ANALYST_PERSONA`, `STREAM_ANALYST_EVERY` (10), `STREAM_ANALYST_CONTEXT_MAX` (150000),
 `STREAM_ANALYST_TIMEOUT` (600).
 
@@ -967,7 +1020,17 @@ handing over the last three unflagged dreams oldest first under dated headers, p
 no seed or note, no `--resume`; the next run resuming that id with only the new dreams; too few
 new being no call, `--partial` taking them; two seats with their own persona and session; the
 ceiling refusing with a row; a garbage answer moving the session on and a dead cli moving
-nothing; `--start` on a live seat refused and `--new` binning it; the file shapes. For live
+nothing; `--start` on a live seat refused and `--new` binning it; the file shapes; the shape
+asking for `<portrait>` then `<remark>` and `AGAIN` for both, the remark cleaned into `line` on
+the version and the row, and no remark being `""` and still a portrait; the header with the
+dreamer (`· gpt2`, an old file name read as `· nemo`) and without; the narration's line. For the
+portrait on the api (`AnalystApi`): the page it was written after carrying it and no other page,
+its `id` asking for the same object back; `/api/stream/portraits` newest first, a version from
+before the remark reading `line: ""`, `?id=` 404 on none and on `session`, 400 on `..`, a dot
+segment, an empty or doubled slash; a re-run on the same last room winning; a non-default seat
+and a binned version never on the api; a landing moving that room's fingerprint and no other.
+The kick holds the analyst's job in the argv with the flag on, none with it off, and a failure
+at either end of the list (the reader, the analyst) leaving every other job tapped. For live
 writing (the stub streams its line token by token, `token_delay` per server): the streamed
 answer equal to the one-lump answer and the room and row it writes; the posts reaching a fake
 loom growing, seed first, `done` last with the page's text; a dead loom as one line with the page

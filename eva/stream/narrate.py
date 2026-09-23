@@ -2,7 +2,8 @@
 """narrate.py — the stream's ledger as a running commentary, one plain line per row.
 
 `eva go` pipes `tail -F shelf/stream/ledger.jsonl` through this so the terminal says who is
-doing what — nemo or gpt2 wrote a dream, codex read it, opus retold the story, codex painted — instead
+doing what — nemo or gpt2 wrote a dream, codex read it, opus retold the story, codex painted,
+the analyst rewrote his portrait — instead
 of a bare "dream 3 of 5 landed" (bekh, 2026-09-22: say what is actually going on). Reads json
 rows on stdin, writes lines on stdout, never touches the shelf. A half-written row is skipped.
 
@@ -73,6 +74,15 @@ def line(r: dict) -> str | None:
             return (f"codex · painter holding · {r['held']} · week {r.get('week', '?')}% "
                     f"session {r.get('session', '?')}%")
         return f"codex · painter found nothing to paint"
+    if k == "portrait":
+        # The analyst, every ten dreams, and his remark said out loud — the line the feed's card
+        # carries. A seat other than the public one is an experiment and says which.
+        seat = r.get("seat")
+        who_ = "the analyst" + (f" ({seat})" if seat and seat != "analyst" else "")
+        if r.get("error"):
+            return f"{who_} · FAILED · {r['error']}"
+        said = f' · "{r["line"]}"' if r.get("line") else ""
+        return f"{who_} · {r.get('dreams', '?')} dreams{said}{t}"
     if k == "name":
         return f"{who(r.get('model'), 'namer')} · named {leaf(r.get('room'))} \"{r.get('name', '')}\""
     return None

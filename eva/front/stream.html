@@ -216,6 +216,15 @@
   .stroke.good.on{color:var(--accent);}
   .when{margin-left:auto; font-size:12px;}
   .sep{border:0; border-top:1px solid var(--line); margin:0;}
+  /* The analyst's portrait, under the dream it was written after (every ten dreams). The quiet
+     tone, a thin rule above: `the analyst · 40 dreams`, his remark, and the whole portrait
+     folded under it — a click unfolds it in place, a second folds it. A placeholder like the
+     rest of this page; the card with a picture is dreamshit's. */
+  .portrait{margin:14px 0 0; padding:10px 0 0; border-top:1px dashed var(--line);
+    color:var(--ghost); font-size:14px; line-height:1.55; cursor:pointer;}
+  .portrait .phead{font-size:12px;}
+  .portrait .pline{margin:4px 0 0; color:var(--ink); opacity:.8;}
+  .portrait .ptext{margin:10px 0 0; white-space:pre-wrap; overflow-wrap:anywhere;}
   /* The way back. The feed runs forward now — oldest at the top, newest at the bottom, the
      viewer put at the honest bottom on load — so the past is not something you fall into by
      scrolling; it is asked for, once, at the top. */
@@ -568,6 +577,8 @@ function build(p){
     block.appendChild(f);
   }
 
+  if (p.portrait) block.appendChild(portraitBand(p.portrait));
+
   const foot = document.createElement('div');
   foot.className = 'foot';
   const good = stroke('good', p), keep = stroke('keep', p);
@@ -590,6 +601,60 @@ function build(p){
   art.repaint();
   art.render();
   return art;
+}
+
+// ---- the analyst ---------------------------------------------------------------------------
+// Every ten dreams a portrait lands on the dream it was written after (`p.portrait`). Folded to
+// its head and his remark; the whole text is one click away and folds back on the next. Through
+// textContent like everything else a voice wrote.
+function portraitBand(v){
+  const box = document.createElement('div');
+  box.className = 'portrait';
+  box.dataset.id = v.id;
+  box.tabIndex = 0;
+  box.setAttribute('role', 'button');
+  box.setAttribute('aria-expanded', 'false');
+  const head = document.createElement('div');
+  head.className = 'phead';
+  head.textContent = 'the analyst · ' + v.dreams + ' dreams';
+  box.appendChild(head);
+  if (v.line){
+    const line = document.createElement('p');
+    line.className = 'pline';
+    line.textContent = v.line;
+    box.appendChild(line);
+  }
+  const text = document.createElement('p');
+  text.className = 'ptext';
+  text.textContent = v.text;
+  text.hidden = true;
+  box.appendChild(text);
+  const flip = () => {
+    text.hidden = !text.hidden;
+    box.setAttribute('aria-expanded', String(!text.hidden));
+  };
+  // A click that ends a text selection inside the unfolded portrait is a reader copying a
+  // sentence, not asking to fold it away.
+  box.addEventListener('click', () => { if (!String(getSelection() || '')) flip(); });
+  box.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
+  });
+  return box;
+}
+
+// A portrait lands ~15s AFTER the dream it follows — the analyst is tapped when the page lands —
+// so the dream is usually on screen already when the loom's `change` names it again. New dreams
+// are only ever appended, so this is what puts the band on one that is already drawn.
+function syncPortraits(pages){
+  for (const p of pages){
+    if (!p.portrait) continue;
+    const art = el.feed.querySelector('[data-room="' + CSS.escape(p.room) + '"]');
+    if (!art || art.querySelector('.portrait[data-id="' + CSS.escape(p.portrait.id) + '"]')) continue;
+    const old = art.querySelector('.portrait');
+    const band = portraitBand(p.portrait);
+    if (old) old.replaceWith(band);
+    else art.querySelector('.block').insertBefore(band, art.querySelector('.foot'));
+  }
 }
 
 // ---- the plate ---------------------------------------------------------------------------
@@ -880,6 +945,7 @@ function poll(){
   api('n=5').then(d => {
     drawStatus(d.status);
     syncStories(d.pages || []);
+    syncPortraits(d.pages || []);
     const fresh = (d.pages || []).filter(p => !rooms.has(p.room));
     // A finished live block has done its job once the loom has said something since `done`:
     // either its room is in `fresh` and takes its place below, or the filter hid it.

@@ -128,7 +128,7 @@ def setUpModule() -> None:
     BASE = f"http://127.0.0.1:{port}"
     env = dict(os.environ, LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
                LOOM_ARTIFACTS=ARTS, LOOM_LLAMA=STUB_BASE, STREAM_DIR=STREAM_DIR,
-               STREAM_INTERVAL="300")
+               STREAM_INTERVAL="300", STREAM_ANALYST_SEAT="analyst")
     LOOM = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
                             env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     deadline = time.time() + 20
@@ -483,34 +483,39 @@ class Worker(unittest.TestCase):
             put_seed("k.txt", MARK + " and then\n")
             stream.KICK = True
             self.assertEqual(run("--once")[0], 0)
-            # every other job, each tapped on its own
+            # every other job, each tapped on its own — the analyst among them
             self.assertEqual(seen, [["launchctl", "kickstart", f"gui/{os.getuid()}/{job}"]
                                     for job in stream.KICK_JOBS])
+            self.assertIn(["launchctl", "kickstart",
+                           f"gui/{os.getuid()}/com.bekh.eva-stream-analyst"], seen)
         finally:
             stream.subprocess.run = real
             stream.KICK = False
 
     def test_one_voice_failing_to_start_does_not_stop_the_other(self):
-        put_seed("k.txt", MARK + " and then\n")
-        seen = []
-        real = stream.subprocess.run
+        # The first job and the last one: a failure at either end leaves every other tapped.
+        for failing in ("interpreter", "analyst"):
+            wipe_stream()
+            put_seed("k.txt", MARK + " and then\n")
+            seen = []
+            real = stream.subprocess.run
 
-        def half(cmd, **kw):
-            seen.append(cmd[-1])
-            if "interpreter" in cmd[-1]:
-                raise OSError("launchctl went away")
-            return real([sys.executable, "-c", ""], **kw)
+            def half(cmd, **kw):
+                seen.append(cmd[-1])
+                if failing in cmd[-1]:
+                    raise OSError("launchctl went away")
+                return real([sys.executable, "-c", ""], **kw)
 
-        stream.subprocess.run = half
-        stream.KICK = True
-        try:
-            code, out = run("--once")
-        finally:
-            stream.subprocess.run = real
-            stream.KICK = False
-        self.assertEqual(code, 0, out)
-        self.assertEqual([j.rsplit("/", 1)[-1] for j in seen], list(stream.KICK_JOBS))
-        self.assertIn("kick · com.bekh.eva-stream-interpreter", out)
+            stream.subprocess.run = half
+            stream.KICK = True
+            try:
+                code, out = run("--once")
+            finally:
+                stream.subprocess.run = real
+                stream.KICK = False
+            self.assertEqual(code, 0, out)
+            self.assertEqual([j.rsplit("/", 1)[-1] for j in seen], list(stream.KICK_JOBS))
+            self.assertIn(f"kick · com.bekh.eva-stream-{failing}", out)
 
     def test_a_kick_that_fails_costs_the_page_nothing(self):
         put_seed("k.txt", MARK + " and then\n")
@@ -545,15 +550,19 @@ class Worker(unittest.TestCase):
 
 # ---- the two routes -------------------------------------------------------------------
 
-def make_page(name: str, seed: str, text: str, flag=None, ts=None) -> str:
-    """A stream room written by hand, so the api tests do not depend on what a stub said."""
+def make_page(name: str, seed: str, text: str, flag=None, ts=None, model=None) -> str:
+    """A stream room written by hand, so the api tests do not depend on what a stub said.
+    `model` is the writer's stamp (`meta.model`) — none, as on the one-server path, by default."""
     import eva as eva_mod
     s = eva_mod.blank(name, is_bare=True, root_text=seed)
     nid = "n" + name.replace("/", "").replace("-", "")[-8:]
+    meta = {"logprobs": [-0.1, -2.0], "flag": flag, "params": {"temperature": 2.0},
+            "seed": "seeds/x.txt"}
+    if model:
+        meta["model"] = model
     s["nodes"][nid] = {"id": nid, "parent": s["root"], "kind": "model", "text": text,
                        "ts": ts or time.time(), "pruned": False, "posed": False,
-                       "meta": {"logprobs": [-0.1, -2.0], "flag": flag,
-                                "params": {"temperature": 2.0}, "seed": "seeds/x.txt"}}
+                       "meta": meta}
     s["current"] = nid
     loom.write_sitting(s)
     return nid
@@ -708,8 +717,12 @@ if re.search(r"^--- (the dreams|\d+ more dreams) ---$", prompt, re.M):
             else str(uuid.uuid4())
     if mode == "garbage":
         answer("i would rather not say who this is")
-    k = len(re.findall(r"^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}\]$", prompt, re.M))
-    answer(f"here it is\n<portrait>\n  a dreamer of {k} more dreams.\n</portrait>\n")
+    # A header is the minute, and the dreamer after it when the page says who that was.
+    k = len(re.findall(r"^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?: · [\w.-]+)?\]$", prompt, re.M))
+    # The remark after the portrait, wrapped and quoted the way a voice does it anyway — the
+    # cleaning is what makes it one line. `noremark` leaves it out altogether.
+    said = "" if mode == "noremark" else f'<remark>\n  "the one who dreamt\n  {k} more."\n</remark>'
+    answer(f"here it is\n<portrait>\n  a dreamer of {k} more dreams.\n</portrait>\n{said}\n")
 
 # The sleeper remembering asks a different question and takes a different tag.
 if "--- the new scene ---" in prompt:
@@ -2045,7 +2058,7 @@ class Analyst(unittest.TestCase):
         v = self.versions()
         self.assertEqual(len(v), 1)
         self.assertEqual(set(v[0]), {"ts", "seat", "session_id", "rooms", "dreams", "text",
-                                     "model", "seconds", "usage", "context"})
+                                     "line", "model", "seconds", "usage", "context"})
         self.assertEqual(v[0]["rooms"], [f"stream/2026-09-20/{h}" for h in want])
         self.assertEqual(v[0]["text"], "a dreamer of 3 more dreams.")   # inside the tag, stripped
         self.assertEqual((v[0]["dreams"], v[0]["context"], v[0]["session_id"]),
@@ -2196,6 +2209,63 @@ class Analyst(unittest.TestCase):
         self.assertIn("a dreamer of 3 more dreams.", out)
         self.assertFalse(os.path.exists(f["log"]))
 
+    def test_the_shape_asks_for_both_tags_and_the_remark_is_the_line(self):
+        code, out, f = self.run_("--start", "last:3", "--n", "3")
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f["log"])
+        self.assertLess(prompt.index("<portrait>"), prompt.index("<remark>"))
+        self.assertIn("say out loud", prompt)
+        # wrapped and quoted by the voice, one clean line on the version and on the row
+        want = "the one who dreamt 3 more."
+        self.assertEqual(self.versions()[0]["line"], want)
+        self.assertEqual(self.rows()[-1]["line"], want)
+        self.assertEqual(self.versions()[0]["text"], "a dreamer of 3 more dreams.")
+        self.assertIn(want, out)                                    # printed for bekh
+        # the later turn asks for both again
+        self.assertIn("<portrait>", analyst.AGAIN)
+        self.assertIn("<remark>", analyst.AGAIN)
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
+        code, out, f = self.run_("--n", "1")
+        self.assertIn(analyst.AGAIN, read_text(f["log"]))
+        self.assertEqual(self.versions()[-1]["line"], "the one who dreamt 1 more.")
+
+    def test_no_remark_is_an_empty_line_and_still_a_portrait(self):
+        code, out, f = self.run_("--start", "last:3", "--n", "3", mode="noremark")
+        self.assertEqual(code, 0, out)
+        v = self.versions()
+        self.assertEqual(len(v), 1)
+        self.assertEqual((v[0]["text"], v[0]["line"]), ("a dreamer of 3 more dreams.", ""))
+        self.assertEqual(self.rows()[-1]["line"], "")
+        self.assertNotIn("error", self.rows()[-1])
+        # the parser on its own: an unclosed or empty tag is "" too, never a failure
+        self.assertEqual(analyst.parse("<portrait>p</portrait><remark>half"), ("p", ""))
+        self.assertEqual(analyst.parse("<portrait>p</portrait><remark> </remark>"), ("p", ""))
+
+    def test_the_header_carries_the_dreamer_when_the_page_names_one(self):
+        self.assertEqual(analyst.header("stream/2026-09-23/1858", "gpt2"),
+                         "[2026-09-23 18:58 · gpt2]")
+        self.assertEqual(analyst.header("stream/2026-09-23/1858-2"), "[2026-09-23 18:58]")
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030", model="gpt2")
+        make_page("stream/2026-09-20/1035", "s\n", "ANALYSTDREAM 1035",
+                  model="Mistral-Nemo-Base-2407.Q5_K_M.gguf")
+        code, out, f = self.run_("--start", "stream/2026-09-20/1025", "--n", "3")
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f["log"])
+        # no stamp, a seat name, and an older page's file name read as the seat it was
+        self.assertIn("[2026-09-20 10:25]\nANALYSTDREAM 1025", prompt)
+        self.assertIn("[2026-09-20 10:30 · gpt2]\nANALYSTDREAM 1030", prompt)
+        self.assertIn("[2026-09-20 10:35 · nemo]\nANALYSTDREAM 1035", prompt)
+        self.assertNotIn("Mistral", prompt)
+        self.assertEqual(self.versions()[0]["dreams"], 3)            # the fake counted all three
+
+    def test_narration_says_the_remark_out_loud(self):
+        import narrate
+        self.assertEqual(narrate.line({"kind": "portrait", "seat": "analyst", "dreams": 40,
+                                       "line": "he keeps a door", "seconds": 14.2}),
+                         'the analyst · 40 dreams · "he keeps a door" · 14s')
+        self.assertEqual(narrate.line({"kind": "portrait", "seat": "blind", "error": "x"}),
+                         "the analyst (blind) · FAILED · x")
+
     def test_opus_resume_is_on_the_argv_and_the_old_callers_are_untouched(self):
         f = self.fake()
         def go():
@@ -2210,6 +2280,106 @@ class Analyst(unittest.TestCase):
         with_fake(f2, lambda: (opus.ask("hello", 30), 0)[1])
         self.assertNotIn("--resume", argv_log(f2)[0])
         self.assertEqual(opus.SESSION, "")
+
+
+def put_portrait(seat: str, pid: str, rooms: list[str], ts: float, text: str,
+                 line: str | None = None) -> str:
+    """A portrait version straight onto disk, in analyst.py's shape — for the api tests, which
+    are about which version hangs where, not about what the cli said. `line` None is a version
+    written before the remark existed."""
+    path = os.path.join(analyst.PORTRAITS, seat, pid + ".json")
+    d = {"ts": ts, "seat": seat, "session_id": "s-1", "rooms": rooms, "dreams": len(rooms),
+         "text": text, "model": "opus", "seconds": 1.0, "usage": {}, "context": 1}
+    if line is not None:
+        d["line"] = line
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(d, f)
+    return path
+
+
+class AnalystApi(unittest.TestCase):
+    """The portrait in the feed: on the page it was written after, the whole run of them, one by
+    id — the public seat only — and its landing as a change on the held connection."""
+
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+        for hhmm in ("1000", "1005", "1010", "1015"):
+            make_page(f"stream/2026-09-21/{hhmm}", "s\n", f"PORTRAITAPIDREAM {hhmm}")
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def pages(self) -> dict:
+        code, d = call("/api/stream?n=20")
+        self.assertEqual(code, 200, d)
+        return {p["room"]: p for p in d["pages"]}
+
+    def test_the_page_it_was_written_after_carries_it_and_no_other(self):
+        f = fake_claude()
+        self.fakes.append(f)
+        code, out = analyse(f, "--once", "--start", "last:3", "--n", "3")
+        self.assertEqual(code, 0, out)
+        pages = self.pages()
+        v = pages["stream/2026-09-21/1015"]["portrait"]
+        self.assertEqual(set(v), {"id", "ts", "line", "text", "dreams", "rooms"})
+        self.assertEqual((v["text"], v["line"], v["dreams"]),
+                         ("a dreamer of 3 more dreams.", "the one who dreamt 3 more.", 3))
+        self.assertEqual(v["rooms"], [f"stream/2026-09-21/{h}" for h in ("1005", "1010", "1015")])
+        # the id is the version's path under the seat, and it asks for the same thing back
+        path = analyst.version_files("analyst")[0]
+        self.assertEqual(v["id"], os.path.relpath(path, os.path.join(analyst.PORTRAITS,
+                                                                     "analyst"))[:-5])
+        self.assertRegex(v["id"], r"^\d{4}-\d{2}-\d{2}/\d{4}(-\d+)?$")
+        self.assertEqual(call("/api/stream/portrait?id=" + v["id"]), (200, v))
+        for room in ("1000", "1005", "1010"):
+            self.assertIsNone(pages[f"stream/2026-09-21/{room}"]["portrait"])
+
+    def test_the_run_newest_first_and_one_by_id(self):
+        now = time.time()
+        put_portrait("analyst", "2026-09-21/1006", ["stream/2026-09-21/1000",
+                                                    "stream/2026-09-21/1005"], now - 600,
+                     "PORTRAITAPIOLD", "the old line")
+        put_portrait("analyst", "2026-09-21/1016", ["stream/2026-09-21/1010",
+                                                    "stream/2026-09-21/1015"], now, "PORTRAITAPINEW")
+        code, d = call("/api/stream/portraits")
+        self.assertEqual(code, 200, d)
+        self.assertEqual([v["id"] for v in d["portraits"]], ["2026-09-21/1016", "2026-09-21/1006"])
+        self.assertEqual(d["portraits"][0]["line"], "")        # written before the remark: ""
+        code, v = call("/api/stream/portrait?id=2026-09-21/1006")
+        self.assertEqual((code, v["text"], v["line"]), (200, "PORTRAITAPIOLD", "the old line"))
+        self.assertEqual(call("/api/stream/portrait?id=2026-09-21/9999")[0], 404)
+        self.assertEqual(call("/api/stream/portrait?id=session")[0], 404)   # bookkeeping, never a version
+        for bad in ("", "../x", "2026-09-21/../1006", ".trash/1006", "a//b"):
+            self.assertEqual(call("/api/stream/portrait?id=" + urllib.parse.quote(bad))[0], 400,
+                             bad)
+        # each version on its own last room; with two ending on one room, the newer wins
+        pages = self.pages()
+        self.assertEqual(pages["stream/2026-09-21/1005"]["portrait"]["id"], "2026-09-21/1006")
+        self.assertEqual(pages["stream/2026-09-21/1015"]["portrait"]["id"], "2026-09-21/1016")
+        put_portrait("analyst", "2026-09-21/1017", ["stream/2026-09-21/1015"], now + 60, "PORTRAITAPIREDO")
+        self.assertEqual(self.pages()["stream/2026-09-21/1015"]["portrait"]["id"], "2026-09-21/1017")
+
+    def test_a_seat_that_is_not_the_default_never_reaches_the_api(self):
+        put_portrait("blind", "2026-09-21/1016", ["stream/2026-09-21/1015"], time.time(),
+                     "PORTRAITAPIBLIND")
+        self.assertEqual(call("/api/stream/portraits"), (200, {"portraits": []}))
+        self.assertIsNone(self.pages()["stream/2026-09-21/1015"]["portrait"])
+        self.assertEqual(call("/api/stream/portrait?id=2026-09-21/1016")[0], 404)
+        # nor does a binned one of the public seat
+        put_portrait("analyst", ".trash/2026-09-21/1016", ["stream/2026-09-21/1015"],
+                     time.time(), "PORTRAITAPIBINNED")
+        self.assertEqual(call("/api/stream/portraits"), (200, {"portraits": []}))
+
+    def test_a_portrait_landing_changes_its_rooms_fingerprint_and_no_other(self):
+        before = loom.stream_prints()
+        put_portrait("analyst", "2026-09-21/1016", ["stream/2026-09-21/1010",
+                                                    "stream/2026-09-21/1015"], time.time(), "x")
+        after = loom.stream_prints()
+        moved = sorted(r for r in after if after[r] != before.get(r))
+        self.assertEqual(moved, ["stream/2026-09-21/1015"])
 
 
 # ---- plates ----------------------------------------------------------------------------------
@@ -2548,7 +2718,7 @@ class Plating(unittest.TestCase):
         self.assertEqual(run_plating(self.fake())[0], 0)
         self.assertTrue(os.path.isfile(plate.plate_paths(room)[0]))
 
-    def test_the_writer_taps_all_three(self):
+    def test_the_writer_taps_every_voice(self):
         put_seed("k.txt", MARK + " and then\n")
         seen = []
         real = stream.subprocess.run
@@ -2569,7 +2739,8 @@ class Plating(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertEqual(seen, ["com.bekh.eva-stream-interpreter",
                                 "com.bekh.eva-stream-remembering",
-                                "com.bekh.eva-stream-plating"])
+                                "com.bekh.eva-stream-plating",
+                                "com.bekh.eva-stream-analyst"])
         self.assertIn("kick · com.bekh.eva-stream-remembering", out)
 
 
