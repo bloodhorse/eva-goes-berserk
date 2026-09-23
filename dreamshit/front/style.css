@@ -206,20 +206,24 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    --rgap, the air between it and the painted rows above and below (a row's plate fills the row,
    so the margin IS the gap; 0 = flush). HEIGHT MEANS HEIGHT: the band never grows — app.js steps
    the remark's size down until it fits, and past the floor clips it on a whole line. */
-:root { --rh: 95px; --rgap: 18px; --rpos: 33%; }
-.ribbon { position: relative; z-index: 2; display: grid; margin: var(--rgap) 0;
+:root { --rh: 95px; --rgap: 18px; --rpos: 33%; --rg: 100; }
+/* --rg is the gloss, one number for the whole 3D of it (bekh asked for it as a dial): every
+   alpha below is scaled by it — 100 is the softened look, 150 the first evening's, 0 a flat
+   matte band with only its own black gradient left */
+.ribbon { --rgf: calc(var(--rg) / 100);
+  position: relative; z-index: 2; display: grid; margin: var(--rgap) 0;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); height: var(--rh); overflow: hidden;
   background: linear-gradient(180deg, #121215 0, #09090b 12%, #030304 55%, #000 90%, #050507 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.105), inset 0 -1px 0 rgba(255,255,255,.025),
-              0 -1px 0 rgba(0,0,0,.33), 0 11px 18px -8px rgba(0,0,0,.6); }
+  box-shadow: inset 0 1px 0 rgba(255,255,255,calc(.105 * var(--rgf))), inset 0 -1px 0 rgba(255,255,255,calc(.025 * var(--rgf))),
+              0 -1px 0 rgba(0,0,0,calc(.33 * var(--rgf))), 0 11px 18px -8px rgba(0,0,0,calc(.6 * var(--rgf))); }
 /* the glass: light pooled in the top half, over the face as well as the words — it is one pane */
 .ribbon::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 48%; z-index: 1;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.013) 75%, rgba(255,255,255,0)); }
+  background: linear-gradient(180deg, rgba(255,255,255,calc(.05 * var(--rgf))), rgba(255,255,255,calc(.013 * var(--rgf))) 75%, rgba(255,255,255,0)); }
 /* the top edge catches a little of the house light, pink on the left and cyan to the right */
 .ribbon::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; z-index: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(245,200,254,0), rgba(245,200,254,.21) 22%, rgba(198,241,254,.19) 70%, rgba(198,241,254,0)); }
+  background: linear-gradient(90deg, rgba(245,200,254,0), rgba(245,200,254,calc(.21 * var(--rgf))) 22%, rgba(198,241,254,calc(.19 * var(--rgf))) 70%, rgba(198,241,254,0)); }
 /* the face surfaces out of the black: a strip across the eyes and the mustache (they sit ~30–38%
    down the painting), the right edge fading into the ribbon so it is not a photo pasted on. The
    crop follows --rh by itself: `cover` on a lower band just shows a thinner strip at the same 33% */

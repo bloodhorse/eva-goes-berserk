@@ -895,8 +895,10 @@ $('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
 // wash; `reset` forgets both and the stylesheet's --rh / --rgap are back. Once he reads the
 // numbers out they get baked into style.css's :root and this memory is moot.
 // face: where the crop sits down the portrait (object-position y, 0 = his hat, 100 = his chin)
+// gloss: one factor over every light and shadow on the band (style.css --rg; 100 = as shipped,
+// 150 = the first evening's, 0 = matte)
 const RT = { h: ['ribbon-h', '--rh', 40, 200, 'px'], gap: ['ribbon-gap', '--rgap', 0, 48, 'px'],
-             pos: ['ribbon-pos', '--rpos', 0, 100, '%'] };
+             pos: ['ribbon-pos', '--rpos', 0, 100, '%'], g: ['ribbon-gloss', '--rg', 0, 200, ''] };
 const rtDefault = v => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v)) || 0;
 function rtApply(which, v, save) {
   const [key, css, lo, hi, unit] = RT[which];
@@ -909,11 +911,11 @@ function rtApply(which, v, save) {
   const now = v === null ? rtDefault(css) : v;
   $('#rt-' + which).value = now;
   $('#rt-' + which).nextElementSibling.textContent = now + unit;
-  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value}`;
+  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value} · gloss ${$('#rt-g').value}`;
 }
 // ?rh=60&rgap=0 is the same as dragging there (and remembered, as a drag is) — how a headless
 // shot proves a setting, since it can't move a slider; ?rh= empty resets that one, like ?ink=
-const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos' };
+const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos', g: 'rg' };
 for (const w of Object.keys(RT)) {
   $('#rt-' + w).oninput = e => rtApply(w, +e.target.value, true);
   const u = params.get(RT_URL[w]);
