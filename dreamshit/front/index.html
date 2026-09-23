@@ -36,6 +36,9 @@
   <label class="dial">b.wash<input type="range" id="rt-bw" min="0" max="95" step="1"><output for="rt-bw"></output></label>
   <div class="foot"><span class="read"></span><button id="rt-reset">reset</button></div>
 </div>
+<!-- the dev hub (dev.js): every dial of the page in one panel, by tab — opened by ?dev and nothing
+     else, remembered per browser, ?dev=0 puts it away. Invisible to everyone who never asked. -->
+<div id="dev" hidden></div>
 <main id="feed"></main>
 <button id="fresh" hidden>new</button>
 <div id="label"></div>
@@ -57,5 +60,6 @@
 <script src="looks.js"></script>
 <script src="fonts.js"></script>
 <script src="app.js"></script>
+<script src="dev.js"></script>
 </body>
 </html>

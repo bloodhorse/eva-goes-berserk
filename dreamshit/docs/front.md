@@ -15,6 +15,7 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 
 - `index.html` — shell: status bar (state · age, font button, ink button, glass·dots switch), the ink panel under it, the ribbon tuner, feed, lightbox, manuscript.
 - `style.css` — layout, voices, plates, wash, looks' css.
+- `dev.js` — the dev hub (`?dev`): every dial of the page in one panel by tab, drawn from one list (`TABS`), driving app.js's own setters; loaded after app.js, in its own function scope because a classic script's top-level names are shared.
 - `app.js` — live stream, packs, focus, looks painting, font/wash knobs, lightbox.
 - `looks.js` — the picture-look presets (see `looks.md`).
 - `analyst.jpg` — the analyst's face (a copy of `eva/stream/analyst.jpg`; re-copy if it is ever repainted), for the ribbon and the manuscript.

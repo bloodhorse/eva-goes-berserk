@@ -60,6 +60,31 @@ body { cursor: default; }
 #ribbontune input[type=range] { width: 100%; accent-color: var(--lit-b); }
 #ribbontune .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
 #ribbontune .read { color: var(--lit-b); letter-spacing: .15em; }
+/* the dev hub (dev.js, ?dev): every dial in one panel, by tab, parked bottom-right in the ink
+   panel's clothes. Mouse only — vimium eats keys. Folds to a `dev` chip. */
+#dev { position: fixed; z-index: 6; right: 18px; bottom: 18px; width: 460px; max-height: 72vh; overflow: auto;
+  padding: 10px 14px 12px; background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  font: 11px "Courier New", monospace; letter-spacing: .15em; color: var(--ghost); }
+#dev[hidden], #dev.folded { display: none; }
+#devchip { position: fixed; z-index: 6; right: 18px; bottom: 18px; display: none; padding: 5px 10px;
+  background: #1c1c21; border: 1px solid var(--line); font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); }
+body:has(#dev.folded) #devchip { display: block; }
+#dev button { padding: 0; background: none; border: 0; font: inherit; letter-spacing: inherit; color: var(--ghost); cursor: default; }
+#dev button:hover, #devchip:hover { color: var(--ink); }
+#dev button.on { color: var(--lit-a); }
+#dev .tabs { display: flex; gap: 16px; align-items: baseline; padding-bottom: 8px; margin-bottom: 10px; border-bottom: 1px solid var(--line); }
+#dev .tabs .x { margin-left: auto; }
+#dev .drow { display: grid; grid-template-columns: 6.5em 1fr 4.5em; align-items: center; gap: 4px 10px; margin-bottom: 9px; }
+#dev .drow .opts { grid-column: 2 / 4; display: flex; gap: 4px 12px; }
+#dev .drow .opts.wrap { flex-wrap: wrap; }
+#dev .drow .act, #dev .drow a { grid-column: 2 / 4; justify-self: start; color: var(--lit-b); text-decoration: none; }
+#dev .drow input[type=range] { width: 100%; accent-color: var(--lit-b); }
+#dev .drow output { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+#dev .drow .note { grid-column: 2 / 4; margin-top: -4px; font-size: 10px; letter-spacing: .08em; color: color-mix(in srgb, var(--ghost) 60%, transparent); }
+/* the ribbon tuner moved in whole: its own box loses its corner and its frame */
+#dev #ribbontune { position: static; width: auto; padding: 0; background: none; border: 0; box-shadow: none; }
+#dev #ribbontune .foot { align-items: flex-end; gap: 14px; }
+#dev #ribbontune .read { flex: 1; }
 /* the native picker, stripped to a chip: on a mac clicking it opens the system colour panel —
    the wheel, the sliders and the eyedropper, which is what bekh asked for instead of a hand-built
    wheel. `appearance: none` is what takes the browser's own frame off it. */
@@ -257,8 +282,10 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    px, not em (46em of 18px): in em it narrowed as the size stepped down and made more lines. */
 .ribbon .say { position: relative; z-index: 2; align-self: center; max-width: 828px; max-height: 100%;
   overflow: hidden; padding: min(16px, calc(var(--rh) * .12)) 40px min(16px, calc(var(--rh) * .12)) 8px;
-  font-family: var(--tf, serif); font-weight: var(--tw, 400);
-  font-size: var(--rfs, 18px); line-height: 1.45; color: var(--ink); }
+  /* his line's face and base size are dev-hub dials (--rf / --rw / --rfs0); unset, it wears the
+     passage's — the font gets chosen again (bekh, 2026-09-24) */
+  font-family: var(--rf, var(--tf, serif)); font-weight: var(--rw, var(--tw, 400));
+  font-size: var(--rfs, var(--rfs0, 18px)); line-height: 1.45; color: var(--ink); }
 /* an ellipsis opens the line: it is cut out of something longer (bekh, 2026-09-24 — the quote
    marked without quote marks) */
 .ribbon .say::before { content: '…'; }

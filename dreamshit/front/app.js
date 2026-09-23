@@ -878,8 +878,8 @@ const FONT_NAMES = Object.keys(FONTS);
 const DEFAULT_FONT = 'newsreader';
 let FONT = FONTS[params.get('font')] ? params.get('font') : FONTS[store('font')] ? store('font') : DEFAULT_FONT;
 const loadedGoogle = new Set();
-function setFont(name) {
-  FONT = name; const f = FONTS[name], st = document.body.style;
+// a face from fonts.js, fetched once — the passage's (setFont) and, from the dev hub, his line's
+function loadFace(f) {
   if (f.google && !loadedGoogle.has(f.google)) {
     loadedGoogle.add(f.google);
     const l = document.createElement('link'); l.rel = 'stylesheet';
@@ -889,12 +889,17 @@ function setFont(name) {
     l.onload = () => document.fonts.load(`${f.size}px ${f.family}`).then(refit, refit);
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
+}
+function setFont(name) {
+  FONT = name; const f = FONTS[name], st = document.body.style;
+  loadFace(f);
   // , and . nudge the size live, t and T the weight — both remembered per font, found by eye,
   // then baked into fonts.js. weight only moves on a variable face (newsreader); a fixed face
   // snaps to whatever it has
   const size = +(store('fsize:' + name) || f.size);
   const weight = +(store('fw:' + name) || f.weight || 400);
-  st.setProperty('--tf', f.family); st.setProperty('--ts', size + 'px'); st.setProperty('--tlead', f.lead);
+  const lead = +(store('flead:' + name) || f.lead);   // the dev hub's leading dial, per font like the rest
+  st.setProperty('--tf', f.family); st.setProperty('--ts', size + 'px'); st.setProperty('--tlead', lead);
   st.setProperty('--ttrack', f.track); st.setProperty('--tw', weight);
   document.body.classList.toggle('rough', !!f.rough);
   $('#fontbtn').textContent = 'font: ' + name + (weight !== (f.weight || 400) ? ' ' + weight : '');
@@ -1007,7 +1012,7 @@ for (const w of Object.keys(RT)) {
   rtApply(w, saved === null || saved === '' || isNaN(+saved) ? null : +saved, false);
 }
 $('#rt-reset').onclick = () => { for (const w of Object.keys(RT)) rtApply(w, null); };
-if (params.get('tune') === 'ribbon') $('#ribbontune').hidden = false;
+// ?tune=ribbon opens the dev hub on the analyst's tab (dev.js), where these dials now live
 
 // how the telling stands beside its dream. **stretch is what the site does** (bekh's verdict,
 // 2026-09-22: "unfortunately actually the best stylistically") — one thread paced down the whole
