@@ -1799,13 +1799,21 @@ class Remembering(unittest.TestCase):
         # the third starts from nothing, as a new dream must
         self.assertTrue(dream_versions()[2]["text"].startswith("I was in it again;"))
 
-    def test_a_long_silence_starts_a_new_dream(self):
+    def test_a_long_silence_does_not_end_a_dream(self):
+        """A stopped stream leaves the story waiting for its next scene: one passage tonight
+        and three tomorrow are one story of four, not a stranded one and a fresh one."""
         self.scene("1000", "one.")
         self.assertEqual(remember(self.fake())[0], 0)
-        first = dream_versions()[0]
-        # `current` decides it off the versions and the clock, with no state file in between
-        self.assertIsNotNone(remembering.current([first], first["ts"] + 10))
-        self.assertIsNone(remembering.current([first], first["ts"] + remembering.GAP + 1))
+        v, path = dream_versions()[0], remembering.version_files()[0]
+        v["ts"] = time.time() - 86400
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(v, f)
+        self.scene("1005", "two.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        later = dream_versions()
+        self.assertEqual([x["turn"] for x in later], [1, 2])
+        self.assertEqual(later[0]["dream"], later[1]["dream"])
+        self.assertEqual(later[0]["chapter"], later[1]["chapter"])
 
     def test_a_garbage_answer_is_a_ledger_row_and_exit_zero(self):
         room = self.scene("1000", "one.")
@@ -1844,18 +1852,18 @@ class Remembering(unittest.TestCase):
         self.assertNotIn("dream", call("/api/stream?n=1")[1])
         self.assertNotIn("dream_end", by[a])
 
-    def test_live_is_the_newest_pack_inside_its_gap_and_cap(self):
+    def test_live_is_the_newest_pack_until_its_cap(self):
         room = self.scene("1000", "one.")
         self.assertEqual(remember(self.fake())[0], 0)
         self.assertIs(call("/api/stream?n=3")[1]["pages"][0]["story"]["live"], True)
 
-        # older than the gap: the pack is still shown, it is simply not live any more
+        # a day old and still live: a stopped stream leaves the story waiting, not ended
         v, path = dream_versions()[0], remembering.version_files()[0]
-        v["ts"] = time.time() - remembering.GAP - 10
+        v["ts"] = time.time() - 86400
         with open(path, "w", encoding="utf-8") as f:
             json.dump(v, f)
         p = call("/api/stream?n=3")[1]["pages"][0]
-        self.assertIs(p["story"]["live"], False)
+        self.assertIs(p["story"]["live"], True)
         self.assertEqual(p["story"]["text"], v["text"])
 
         # and a pack that used up its scenes is not live either

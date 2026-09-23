@@ -45,8 +45,7 @@ computed from what is on the shelf, because forgetting will one day prune the sh
 address must not shift under him. `--number` backfills the stories written before this.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_DREAM_TURNS (how many scenes a dream runs to,
-default 4 — about twenty minutes), STREAM_DREAM_GAP (seconds of silence that end a dream,
-default 1800), STREAM_DREAM_SEEDS (1 = hand him the seed as well, off by default),
+default 4 — about twenty minutes), STREAM_DREAM_SEEDS (1 = hand him the seed as well, off by default),
 STREAM_DREAM_TIMEOUT, STREAM_DREAM_PERSONA, plus loom's LOOM_SITTINGS.
 """
 
@@ -78,10 +77,11 @@ PERSONA = os.environ.get("STREAM_DREAM_PERSONA", os.path.join(HERE, "remembering
 # How many scenes one dream runs to before he starts again. Two hours at a passage every five
 # minutes. bekh: after a couple of hours he starts again.
 TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
-# The other way a dream ends: a silence. Half an hour with no passage means the mac slept or
-# llama went away, and the sleeper woke — carrying that gap across as if it were one dream
-# would make an account of two evenings pretending to be one.
-GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
+# **No other way a dream ends** (bekh, 2026-09-23). There was a second one — half an hour of
+# silence, "the mac slept, so he woke" — and in practice the silence was always bekh stopping
+# the stream, which lands anywhere in the count: every evening that ran 4n+1 passages left a
+# story of one scene stranded, and the next evening started over. Now a story waits across a
+# stop for its four: one passage tonight, two tomorrow, one the day after is one story.
 TIMEOUT = int(os.environ.get("STREAM_DREAM_TIMEOUT", "300"))
 # Off by default: he is handed the scene and nothing else. See prompt_for for why the ragged
 # edges are the point. `=1` puts the seed and the labels back, for going back in one env var.
@@ -165,20 +165,18 @@ def versions() -> list[dict]:
     return out
 
 
-def current(past: list[dict], now: float | None = None) -> dict | None:
+def current(past: list[dict]) -> dict | None:
     """The version this run should rewrite, or None when the next scene starts a new dream.
 
-    A dream is over when it has had its scenes, or when the silence since its last version is
-    longer than the gap. Both are read off the files and not off a state file: there is one
-    record, the versions, and a second place to keep "which dream are we in" would be a second
-    place for it to be wrong.
+    A dream is over when it has had its scenes — and only then, however long the stream was
+    off in between. Read off the files and not off a state file: there is one record, the
+    versions, and a second place to keep "which dream are we in" would be a second place for
+    it to be wrong.
     """
     if not past:
         return None
     last = past[-1]
     if (last.get("turn") or 0) >= (last.get("of") or TURNS):
-        return None
-    if (now or time.time()) - (last.get("ts") or 0) > GAP:
         return None
     return last
 

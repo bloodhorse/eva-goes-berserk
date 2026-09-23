@@ -178,11 +178,11 @@ STREAM_PAGE = os.environ.get("LOOM_STREAM_PAGE", os.path.join(ROOT, "eva", "fron
 STREAM_DIR = os.environ.get("STREAM_DIR", os.path.join(SHELF, "stream"))
 STREAM_FOLDER = "stream"                  # where its rooms are filed under SITTINGS
 STREAM_INTERVAL = int(os.environ.get("STREAM_INTERVAL", "300"))
-# The writer's own two dials, restated so the server can tell a dream that is still running
-# from one that ended without keeping a second opinion about it. Change one and change the
-# other (eva/stream/remembering.py).
+# The sleeper's own dial, restated so the server can tell a dream that is still running from
+# one that ended without keeping a second opinion about it. Change one and change the other
+# (eva/stream/remembering.py). A story ends on its count alone — a stopped stream leaves it
+# live, waiting for its next scene.
 STREAM_DREAM_TURNS = int(os.environ.get("STREAM_DREAM_TURNS", "4"))
-STREAM_DREAM_GAP = int(os.environ.get("STREAM_DREAM_GAP", "1800"))
 STREAM_N = 10                             # pages per call when nobody says
 # A day is 288 passages at one every five minutes, and the page loads a day in one call now
 # (bekh, 2026-09-21: load it honestly and stand the viewer at the bottom) — so the cap has to
@@ -1755,9 +1755,7 @@ def stream_stories() -> tuple[dict, str | None, dict]:
     live = None
     if rows:
         last = latest[rows[-1]["dream"]]
-        over = ((last.get("turn") or 0) >= (last.get("of") or STREAM_DREAM_TURNS)
-                or (time.time() - (last.get("ts") or 0)) > STREAM_DREAM_GAP)
-        if not over:
+        if (last.get("turn") or 0) < (last.get("of") or STREAM_DREAM_TURNS):
             live = last["dream"]
 
     by_room, verses = {}, {}

@@ -403,7 +403,7 @@ its dream. It has no clock: the worker kickstarts it when a page lands.
 And a third voice, **the sleeper remembering** (`stream/remembering.py`, 2026-09-19): opus
 rewriting one index-card account of the dream so far every time a passage lands, told that the
 passages are **scenes of one dream** so it has to find connective tissue; every rewrite kept,
-a dream ending after 4 scenes or half an hour's silence. The page carries it at the top with
+a dream ending after 4 scenes and nothing else — a stopped stream leaves it waiting. The page carries it at the top with
 its `3 / 4`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
 which counts what they cost onto every ledger row.
 And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through

@@ -404,9 +404,13 @@ the code.
   `shelf/stream/dreams/<date>/*.json`, `text` by `turn`.
 - **Which scene**: the newest unflagged passage above **his own** watermark, never a backlog.
   His watermark is kept apart from the reader's, so neither voice waits for the other.
-- **A dream ends** after `STREAM_DREAM_TURNS` scenes (**4**, about twenty minutes — it shipped at 24 and bekh cut it the same evening, 2026-09-19: needling 24 scenes together is torture for a man, and a real dream has around four) or when the silence
-  since its last version passes `STREAM_DREAM_GAP` (1800s — the mac slept, so he woke). Both
-  are read off the versions themselves and there is no state file: a second place to keep
+- **A dream ends** after `STREAM_DREAM_TURNS` scenes (**4**, about twenty minutes — it shipped at 24 and bekh cut it the same evening, 2026-09-19: needling 24 scenes together is torture for a man, and a real dream has around four) — **and only
+  then**. There used to be a second ending, half an hour of silence (`STREAM_DREAM_GAP`, "the
+  mac slept, so he woke"), and it was cut on 2026-09-23: the silence was always bekh stopping
+  the stream, which lands anywhere in the count, so every evening that ran 4n+1 passages left a
+  one-scene story stranded (chapters 11, 13, 17) and the next evening started over. Now a story
+  waits across a stop: one passage tonight, two tomorrow, one the day after is one story of
+  four. The count is read off the versions themselves and there is no state file: a second place to keep
   "which dream are we in" is a second place for it to be wrong. The last version of a finished
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
@@ -519,7 +523,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-reme
 launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the worker does
 ```
 
-Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_GAP` (1800), `STREAM_DREAM_TIMEOUT`,
+Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_TIMEOUT`,
 `STREAM_DREAM_PERSONA`. Log: `/tmp/eva-stream-remembering.log`.
 
 ## Counting what opus costs
@@ -800,7 +804,7 @@ note shape, a named room skipped without a call, a day to a file with the ROOM's
 short keeping what it did, a flagged dream never named, and **every reading file byte-identical
 after a pass**. For the sleeper: the first scene having nothing remembered yet, a later call carrying only the
 latest version and one scene and never a note of the reader's, a flagged scene never told, the
-scene cap ending a dream and the next starting fresh, a long silence ending one, a garbage
+scene cap ending a dream and the next starting fresh, a long silence NOT ending one, a garbage
 answer as a row with exit 0, the api carrying the running dream and a finished one where it
 ended, usage on both kinds of row, and the cli's json read in either shape. For the seams: the
 shape asking for the mark, the marks kept in the stored text and handed back to him as his
