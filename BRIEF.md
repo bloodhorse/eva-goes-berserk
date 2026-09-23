@@ -303,11 +303,14 @@ shape — now.
      not acted on: the prompt's word *Landscape.* (meant as a shape) makes GPT paint seashores.
      Other hands: `IMAGE-MODELS.md`; Google's API has no free image tier; driving Gemini's web
      page by script was weighed and he hated it.
-   - **Where the writer could live next**: the box (a 16 GB 5060 Ti on ubuntu at his employer's
-     office, only ever the muscle: llama-server on localhost behind an ssh tunnel, mistral small
-     3.1 24b base at 4-bit, a runbook he runs himself; open: how he reaches it, who else uses
-     the card); by the token only Featherless.ai serves true bases, from $50 a month; a rented
-     pod only for the day we want weights. It must be live, never pre-recorded.
+   - **The next dreamer is olmo** (2026-09-24, bekh reads gpt-2's pages and doesn't like them):
+     OLMo 3 32B at its last pre-anneal checkpoint, the one base where "nothing installed" is
+     checkable, converted by us, Q4 on the team's 5060 Ti box (ds-dev2) with the rest spilled
+     to RAM, Q8 on the 1080 Ti box (ds-dev) as the check before any "it's dead" verdict, blind
+     against nemo before it takes gpt-2's seat. **Parked** until the permission gap is closed
+     (the global `Bash(*)` lets ssh to work boxes run unasked). `docs/olmo.md` is the doc,
+     the box facts and the next moves. By the token only Featherless.ai serves true bases,
+     from $50 a month. The writer must be live, never pre-recorded.
    - **Open, small**: codex loads his global `~/.codex/AGENTS.md` on every call and nothing
      switches it off (the seat's file overrides it, and has held); a codex session file lands in
      `~/.codex/sessions` per note (`--ephemeral` exists, unused); the filter misses most dead
