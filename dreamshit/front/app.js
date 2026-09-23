@@ -377,20 +377,17 @@ function fitAll() {
     }
   }
 }
-// anything that moves a row moves the bottom the thread is reaching for: a resize, a new scene,
-// a reading landing late, the passage font changing size or weight, the webfont arriving.
+// the thread reaches for the bottom of its dream, so anything that moves that bottom refits it.
+// Row heights are WATCHED, not announced (2026-09-23): the webfont swapping in, a reading landing
+// late, the passage resized — each used to call refit by hand, and the webfont's call hung on
+// fonts.ready, which resolves before a runtime-injected stylesheet has even declared newsreader:
+// the thread fitted the fallback serif and stopped a whole scene short. Only the passage and the
+// reading are watched — a stretched thread is absolute and never sizes its row, so a refit can't
+// feed itself. What's left calling refit by hand changes something no row height shows: the
+// column widths (resize), the thread's own size (setSides), its text (drawPack).
 let refitting = 0;
 function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
-// ...and whatever else moves a row, found by watching the rows themselves (2026-09-23). The font
-// stylesheet is injected at runtime, so fonts.ready could resolve before newsreader was even
-// asked for: the thread fitted itself to the fallback serif, newsreader swapped in, the passages
-// changed height and the telling stopped a whole scene short of its dream's end. Only the passage
-// and the reading are watched — a stretched thread is absolute and never sizes its row, so a
-// refit cannot feed itself.
 const rowSizes = new ResizeObserver(refit);
-// the webfont itself, said out loud: whenever a face finishes loading, refit. Belt to the
-// observer's braces — this one is the event the bug actually came from.
-document.fonts.addEventListener('loadingdone', refit);
 
 // one pack per dream: its passages, and the telling running down their left cells
 function newPack(p) {
@@ -436,7 +433,6 @@ function sync(pages) {
       seen.add(dream);
     }
   }
-  refit();   // a reading landing late makes its row taller, and the thread reaches for its bottom
 }
 
 function ago(t) {
@@ -664,10 +660,6 @@ function setFont(name) {
   if (f.google && !loadedGoogle.has(f.google)) {
     loadedGoogle.add(f.google);
     const l = document.createElement('link'); l.rel = 'stylesheet';
-    // the face is only asked for once this sheet is parsed — fonts.ready can't wait for a font
-    // nobody has declared yet — so load it by hand the moment the sheet lands, and refit after:
-    // newsreader swapping in changes every passage's height (the telling stopped a scene short)
-    l.onload = () => document.fonts.load(`${f.size}px ${f.family}`).then(refit, refit);
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
   // , and . nudge the size live, t and T the weight — both remembered per font, found by eye,
@@ -680,7 +672,6 @@ function setFont(name) {
   document.body.classList.toggle('rough', !!f.rough);
   $('#fontbtn').textContent = 'font: ' + name + (weight !== (f.weight || 400) ? ' ' + weight : '');
   store('font', name);
-  refit();   // a bigger passage is a taller row, and the stretched thread reaches for its bottom
   tell(`font: ${name}   ${size}px   ${weight}   [f / shift-f · shortlist · , smaller · . bigger · t thinner · T thicker]`);
 }
 // ?fw=300 sets the weight for the font the page opens with, then it's remembered like the rest
@@ -784,7 +775,7 @@ if (params.has('tsize')) store('tsize', TSIZE);
 function setSides(v) {
   TSIZE = Math.max(10, Math.min(20, v));
   document.body.style.setProperty('--tsize', TSIZE + 'px');
-  refit();   // the reading grows the row too, and the thread reaches for its bottom
+  refit();   // the thread's own size; the reading growing with it is the observer's
   tell(`sides ${TSIZE}px   [; smaller · ' bigger]`);
 }
 function setTrickleMode(m) {
@@ -836,8 +827,6 @@ api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)
   render(d.pages || []);
   sync(d.pages || []);
   drawStatus(d.status);
-  // the reading face lands after the first layout and every row changes height with it
-  document.fonts.ready.then(refit);
   if (TAIL || ONLY) { if (TAIL) $('#feed').style.padding = '40px 0 0'; return; }
   toNewest(false);
   // fonts landing late reflow the page; stand on the newest passage again once they have
