@@ -87,23 +87,36 @@ tolerable if it's paid once per burst and hidden:
 - **if olmo isn't up when its turn comes, nemo takes the turn.** A burst never stalls on a cold
   worker.
 
-**The first thing to check, since it picks the shape:** whether RunPod's GitHub builder takes a
-~22 GB image at all.
-- **it does** → bake the weights in (azeroth's rule: fewer moving parts on the cold path, no
-  datacenter pin).
-- **it doesn't, or first pulls run way past 10 minutes** → a small image with just llama.cpp,
-  and the gguf on a **network volume**, loaded at start. The cost: the endpoint is pinned to that
-  volume's datacenter and its GPUs.
+**Checked 2026-09-24 against RunPod's docs:**
+- **the GitHub builder takes it.** Images up to **80 GB**; the whole build must finish in 160
+  minutes, and **the `docker build` step in 30**. Baking in ~20 GB pulled from HF at ~40 MB/s is
+  ~9 minutes of that 30, which fits but without much margin.
+- **better than baking: RunPod's cached model.** The endpoint names one HF model (public, gated
+  or **private**). RunPod starts workers on hosts that already hold it, or downloads it there
+  first **without billing the download**, and it lands under
+  `/runpod-volume/huggingface-cache/hub/models--<org>--<name>/snapshots/<hash>/`. The docs
+  claim cold starts of "a few seconds, even for large models". Two catches: one cached model per
+  endpoint, and **it downloads every file in the repo**. So the private HF repo holds the Q4 gguf
+  and nothing else, and the image stays small (llama.cpp only). azeroth left this blank because
+  its weights were 4 GB.
+
+**The pick: a small image plus a cached model from a one-file private HF repo.** Baking is the
+fallback if caching disappoints, and the network volume is now last.
 
 ## how the stream talks to it: the normal way
 
 bekh doesn't care about privacy here, it's only text, so **RunPod's own front door**, no tailnet.
 In order of preference, to verify against RunPod's current docs before building:
 
-1. **a load-balancing endpoint, if RunPod still has them**: plain HTTP straight to the worker's
-   port. llama-server runs stock, and the stream calls `/completion` with `stream: true` **exactly
-   as it calls nemo**. Same body, same sampler (DRY, xtc, min_p), word by word onto the page. No
-   handler to write.
+1. **a load-balancing endpoint (they exist, checked 2026-09-24)**: plain HTTP straight to the
+   worker's port, any HTTP server, no handler. llama-server runs stock, and the stream calls
+   `/completion` with `stream: true` **exactly as it calls nemo**. Same body, same sampler (DRY,
+   xtc, min_p), word by word onto the page. The docs' terms: a health check on `PORT_HEALTH`
+   at `/ping` (200 healthy, 204 initializing), which llama-server doesn't serve at that path, so
+   it needs a tiny shim or a path setting; **a request waits at most 2 minutes for a worker** (so a
+   cold start longer than that fails the request, and the warm-up plus nemo fallback matter);
+   5.5 minutes per request; no queue. Whether it scales to zero isn't stated. Verify that before
+   trusting it with money.
 2. **the queue endpoint** (`/run`, `/runsync`, `/stream`): a thin handler starts llama-server in
    the worker and forwards the `/completion` body untouched, so the sampler still matches. Words
    come back through `/stream` polling. Whether that feels live or comes in lumps is a test;
@@ -149,8 +162,8 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 
 ## order
 
-1. check the builder's image-size limit → bake or volume.
-2. convert on a pod → Q4 into a private HF repo.
+1. ~~check the builder's image-size limit~~ (80 GB, fine; cached model is the pick).
+2. convert on a pod → Q4 into a private HF repo, alone.
 3. `bloodhorse/olmo-dreamer`: Dockerfile + handler (or none, on a load-balancing endpoint);
    endpoint configured by the lore above; one seed through it, `box.gpu` read.
 4. the blind fan olmo vs nemo, by hand.
@@ -171,7 +184,3 @@ own idle sq1-r3vi3w qwen service) with Q4 spilled to RAM, and ds-dev (1080 Ti, 1
 root filesystem 100% full) for Q8. Dropped for RunPod: team boxes mean sudo, other people's
 services and full disks, and bursts cost pennies on serverless. Survey facts are in git history
 (this file, before the RunPod rewrite) and `~/.claude/docs/hosts.md`.
-
-Found on the way and still true: the global `~/.claude/settings.json` has `Bash(*)` in `allow`,
-so **ssh to a work box runs without a permission prompt**. The proposed fix, not applied:
-`"ask": ["Bash(*x340.org*)", "Bash(*10.4.2.14*)"]` (ask beats allow).
