@@ -190,7 +190,7 @@ function setPlate(r, url) {
     const wash = document.createElement('div'); wash.className = 'wash';
     plate.append(img, cv, grain, sheen, wash); r.row.prepend(plate); r.row.classList.add('plated');
     Object.assign(r, { plate, img, cv });
-    img.onload = () => { r.dither = null; paint(r); };
+    img.onload = () => { r.dither = null; paint(r); redrawRibbons(); };   // a neighbour landing repaints its band
     cv.style.filter = LOOKS[LOOK].css || '';
   }
   if (r.near) r.img.src = url;   // already seen: a repainted plate (?v= moved) loads at once
@@ -236,7 +236,8 @@ function setPortrait(r, v) {
   const line = String(v.line || '').trim();
   say.textContent = line || firstSentence(v.text);
   if (!line) say.classList.add('quiet');
-  rb.append(face, say);
+  const cv = document.createElement('canvas'), bw = document.createElement('div'); bw.className = 'bwash';
+  rb.append(cv, bw, face, say);
   ribbonSizes.observe(rb);   // fitted once it has a size, and again whenever the band's size moves
   const open = e => { e.stopPropagation(); openManuscript(v); };
   rb.onclick = open;
@@ -245,6 +246,7 @@ function setPortrait(r, v) {
   const box = ribbonsOf(r.pack);
   box.insertBefore(rb, [...box.children].find(c => c.dataset.room > r.room) || null);
   r.ribbon = rb;
+  redrawRibbons();
 }
 
 // HEIGHT MEANS HEIGHT (bekh, 2026-09-23): the band is --rh tall whatever he says. The remark
@@ -270,7 +272,63 @@ function fitRibbon(rb) {
   say.classList.add('clip');
 }
 const fitRibbons = () => { for (const rb of document.querySelectorAll('.ribbon')) fitRibbon(rb); };
-const ribbonSizes = new ResizeObserver(es => { for (const e of es) fitRibbon(e.target); });
+const ribbonSizes = new ResizeObserver(es => { for (const e of es) fitRibbon(e.target); redrawRibbons(); });
+
+// the fill (bekh, 2026-09-24, out of sketch/band/): the band's black gives way to the two
+// paintings either side of it, bled in. The one above is the last row of the pack the band
+// follows, the one below the first row of the next pack — the newest band has none below yet,
+// so its lower half stays black until the next dream is painted (a plate landing redraws).
+// The dials are css vars on body (style.css :root has the defaults, ?tune=ribbon moves them).
+// Where a row's edge sits in its painting: the plate's `cover`, run backwards — the source
+// rect (image px) behind rows [y0, y1) of the row, across its whole width.
+function srcRows(img, row, y0, y1) {
+  const W = row.clientWidth, H = row.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
+  const s = Math.max(W / iw, H / ih), ox = (W - iw * s) / 2, oy = (H - ih * s) / 2;
+  const sy0 = Math.max(0, (y0 - oy) / s), sy1 = Math.min(ih, (y1 - oy) / s);
+  return [-ox / s, sy0, W / s, Math.max(1, sy1 - sy0)];
+}
+const plateOf = row => { const i = row && row.querySelector('.plate img'); return i && i.naturalWidth ? i : null; };
+function drawRibbon(rb) {
+  const cv = rb.querySelector('canvas'); if (!cv || !rb.clientWidth) return;
+  const holder = rb.parentElement, above = holder && holder.previousElementSibling, below = holder && holder.nextElementSibling;
+  const upRow = above ? [...above.querySelectorAll('.row')].pop() : null;
+  const downRow = below && below.classList.contains('pack') ? below.querySelector('.row') : null;
+  const ia = plateOf(upRow), ib = plateOf(downRow);
+  const cs = getComputedStyle(document.body), v = k => +cs.getPropertyValue(k) || 0;
+  const fill = v('--rfill') || 2, edge = Math.max(1, v('--redge')), reach = Math.max(1, v('--rreach')), m = v('--rblur') * 2;
+  const dpr = devicePixelRatio || 1, W = rb.clientWidth + m * 2, H = rb.clientHeight + m * 2, R = rb.clientHeight * reach;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  const c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.imageSmoothingQuality = 'high';
+  // one side's paint: streak pulls `edge` rows long, mirror flips `R` of it in, overlap carries `R` on
+  const put = (ctx, img, row, top) => {
+    const Hr = row.clientHeight;
+    const rows = fill === 1 ? (top ? [Hr - edge, Hr] : [0, edge]) : (top ? [Hr - R, Hr] : [0, R]);
+    const src = srcRows(img, row, ...rows);
+    if (fill === 2) { ctx.save(); ctx.translate(0, H); ctx.scale(1, -1); ctx.drawImage(img, ...src, 0, 0, W, H); ctx.restore(); }
+    else ctx.drawImage(img, ...src, 0, 0, W, H);
+  };
+  if (ia) put(c, ia, upRow, true);
+  if (ib) {   // the lower painting on its own layer, faded in from the top — the two meet mid-band
+    const lay = document.createElement('canvas'); lay.width = cv.width; lay.height = cv.height;
+    const l = lay.getContext('2d'); l.setTransform(dpr, 0, 0, dpr, 0, 0); l.imageSmoothingQuality = 'high';
+    put(l, ib, downRow, false);
+    l.globalCompositeOperation = 'destination-in';
+    const g = l.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(ia ? .3 : 0, 'rgba(0,0,0,0)'); g.addColorStop(ia ? .7 : .5, '#000'); g.addColorStop(1, '#000');
+    l.fillStyle = g; l.fillRect(0, 0, W, H);
+    c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(lay, 0, 0);
+  }
+  if (ia && !ib) {   // nothing painted below yet: the upper fill fades out into the band's black
+    c.setTransform(1, 0, 0, 1, 0, 0); c.globalCompositeOperation = 'destination-in';
+    const g = c.createLinearGradient(0, 0, 0, cv.height);
+    g.addColorStop(0, '#000'); g.addColorStop(.45, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    c.fillStyle = g; c.fillRect(0, 0, cv.width, cv.height); c.globalCompositeOperation = 'source-over';
+  }
+}
+// batched to one frame: plates land one by one, and a band only needs painting once per frame
+let ribbonFrame = 0;
+const redrawRibbons = () => { if (!ribbonFrame) ribbonFrame = requestAnimationFrame(() => {
+  ribbonFrame = 0; for (const rb of document.querySelectorAll('.ribbon')) drawRibbon(rb); }); };
 
 // the manuscript: the whole portrait of one version, and ‹ › through every version, which are
 // fetched when it opens (newest first, as the api gives them). Until they arrive — or if they
@@ -916,7 +974,12 @@ $('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
 // 150 = the first evening's, 0 = matte)
 const RT = { h: ['ribbon-h', '--rh', 40, 200, 'px'], gap: ['ribbon-gap', '--rgap', 0, 48, 'px'],
              pos: ['ribbon-pos', '--rpos', 0, 100, '%'], g: ['ribbon-gloss', '--rg', 0, 200, ''],
-             wash: ['ribbon-wash', '--rwash', 0, 100, ''] };   // wash: how dark his face is, 0 = bare
+             wash: ['ribbon-wash', '--rwash', 0, 100, ''],   // wash: how dark his face is, 0 = bare
+             // the fill (2026-09-24): which way, how much of each painting, blur, and its black wash
+             fill: ['ribbon-fill', '--rfill', 1, 3, ''], edge: ['ribbon-edge', '--redge', 1, 80, ''],
+             reach: ['ribbon-reach', '--rreach', 1, 12, ''], blur: ['ribbon-blur', '--rblur', 0, 40, ''],
+             bw: ['ribbon-bw', '--rbw', 0, 95, ''] };
+const FILLS = { 1: 'streak', 2: 'mirror', 3: 'overlap' };
 const rtDefault = v => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v)) || 0;
 function rtApply(which, v, save) {
   const [key, css, lo, hi, unit] = RT[which];
@@ -928,12 +991,13 @@ function rtApply(which, v, save) {
   }
   const now = v === null ? rtDefault(css) : v;
   $('#rt-' + which).value = now;
-  $('#rt-' + which).nextElementSibling.textContent = now + unit;
-  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value} · gloss ${$('#rt-g').value} · wash ${$('#rt-wash').value}`;
+  $('#rt-' + which).nextElementSibling.textContent = which === 'fill' ? FILLS[now] || now : now + unit;
+  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value} · gloss ${$('#rt-g').value} · wash ${$('#rt-wash').value} · fill ${$('#rt-fill').value} · edge ${$('#rt-edge').value} · reach ${$('#rt-reach').value} · blur ${$('#rt-blur').value} · band wash ${$('#rt-bw').value}`;
+  redrawRibbons();
 }
 // ?rh=60&rgap=0 is the same as dragging there (and remembered, as a drag is) — how a headless
 // shot proves a setting, since it can't move a slider; ?rh= empty resets that one, like ?ink=
-const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos', g: 'rg', wash: 'rwash' };
+const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos', g: 'rg', wash: 'rwash', fill: 'rfill', edge: 'redge', reach: 'rreach', blur: 'rblur', bw: 'rbw' };
 for (const w of Object.keys(RT)) {
   $('#rt-' + w).oninput = e => rtApply(w, +e.target.value, true);
   const u = params.get(RT_URL[w]);

@@ -208,7 +208,19 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    the remark's size down until it fits, and past the floor clips it on a whole line. */
 /* bekh's numbers off the tuner, 2026-09-23 late (first 95 / 18 / 33% / 100 / 0, then 113 / 3 / 31 / 0 / 0):
    a low band, flush, a touch of gloss, his face washed a third down */
-:root { --rh: 71px; --rgap: 0px; --rpos: 30%; --rg: 25; --rwash: 35; }
+:root { --rh: 86px; --rgap: 0px; --rpos: 29%; --rg: 25; --rwash: 59; }
+/* the fill (bekh, 2026-09-24, from the band sketch — sketch/band/): the band is no longer black
+   but the two neighbouring paintings bled into it — app.js drawRibbon paints them on the band's
+   canvas. --rfill 1 streak (each edge's rows stretched across) · 2 mirror (each reflected in,
+   squashed, like water) · 3 overlap (both carry on and cross); --redge the streak's rows,
+   --rreach how far mirror/overlap reach into each painting in band heights, --rblur (px) over the
+   whole fill, --rbw (0–100) a black wash on it so the words stay readable. His pick: mirror, 1,
+   no blur, 50 — "still not too sure", so every one is a dial in ?tune=ribbon */
+:root { --rfill: 2; --redge: 1; --rreach: 1; --rblur: 0; --rbw: 50; }
+.ribbon canvas { position: absolute; left: calc(var(--rblur) * -2px); top: calc(var(--rblur) * -2px);
+  width: calc(100% + var(--rblur) * 4px); height: calc(100% + var(--rblur) * 4px);
+  filter: blur(calc(var(--rblur) * 1px)); pointer-events: none; }   /* overhangs so the blur doesn't grey its own edges */
+.ribbon .bwash { position: absolute; inset: 0; background: rgba(0,0,0,calc(var(--rbw) / 100)); pointer-events: none; }
 /* --rg is the gloss, one number for the whole 3D of it (bekh asked for it as a dial): every
    alpha below is scaled by it — 100 is the softened look, 150 the first evening's, 0 a flat
    matte band with only its own black gradient left */
@@ -247,6 +259,9 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
   overflow: hidden; padding: min(16px, calc(var(--rh) * .12)) 40px min(16px, calc(var(--rh) * .12)) 8px;
   font-family: var(--tf, serif); font-weight: var(--tw, 400);
   font-size: var(--rfs, 18px); line-height: 1.45; color: var(--ink); }
+/* an ellipsis opens the line: it is cut out of something longer (bekh, 2026-09-24 — the quote
+   marked without quote marks) */
+.ribbon .say::before { content: '…'; }
 /* the clip: the box cut to its whole lines (app.js sets --rclip) and centred in the band. No
    vertical padding here — overflow clips at the PADDING edge, so the bottom padding was a window
    the next line showed through half-cut; the air is kept by counting it out of the lines instead.

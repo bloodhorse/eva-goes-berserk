@@ -40,10 +40,9 @@ body { padding: 60px 0 120px; cursor: default; }
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%);
           mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%); }
 .band .say { position: relative; z-index: 2; align-self: center; max-width: 828px; padding: 6px 40px 6px 8px;
-  /* the side voices' clothes (bekh, 2026-09-24): the reader's courier in the quiet grey, not the
-     passage's face — he is a voice beside the dreams, not one of them. Opens on an ellipsis: a
-     line cut out of something longer, which is what a portrait line is */
-  font: var(--fs, 13px)/1.7 "Courier New", monospace; letter-spacing: .06em; text-transform: lowercase; color: var(--ghost); }
+  /* the passage's face, as on the page (courier was tried and dropped, 2026-09-24 — the font gets
+     chosen again properly). Opens on an ellipsis: a line cut out of something longer */
+  font: 400 var(--fs, 18px)/1.45 Newsreader, serif; text-transform: lowercase; color: var(--ink); }
 .band .say::before { content: '…'; }
 
 #hud { position: fixed; right: 18px; bottom: 18px; z-index: 5; padding: 10px 14px; background: #1c1c21;
@@ -137,7 +136,7 @@ function draw() {
 
 // the remark steps down until it fits the band, as on the page
 function fit(b) {
-  for (let fs = 13; fs >= 10; fs--) { b.say.style.setProperty('--fs', fs + 'px'); if (b.say.scrollHeight <= b.el.clientHeight) break; }
+  for (let fs = 18; fs >= 11; fs--) { b.say.style.setProperty('--fs', fs + 'px'); if (b.say.scrollHeight <= b.el.clientHeight) break; }
 }
 
 // on-screen controls, not keys: bekh browses with vimium, which eats bare keypresses
