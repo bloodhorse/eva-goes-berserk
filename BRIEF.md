@@ -202,9 +202,10 @@ shape — now.
      a black glassy ribbon in dreamshit's feed with his remark on it and the manuscript behind
      it, tuned by `?tune=ribbon` (his numbers still pending). Four models were sat in the seat
      on the same dreams and **he wants GPT and deepseek, and is done with the claude family's
-     tics**. Where it stands, decided and not built: **two characters** — a student (deepseek,
-     a fresh read of the last thirty every ten, no memory) and his mentor (GPT sol, one thread
-     that has read everything, every twenty), the mentor modelled on **Dhall**, Planescape's
+     tics**. Where it stands: **two characters** — a student (deepseek, a fresh read of the
+     last thirty every eight, no memory — **wired and on the public seat**, the writer taps
+     him) and his mentor (GPT sol, one thread that has read everything, every twenty — decided,
+     not wired), the mentor modelled on **Dhall**, Planescape's
      scrivener of the dead — nemo being *nobody*, the nameless one who wakes with no memory —
      with a cough mark in his text, the student addressed by name, and the bare analyst
      persona for both (every attempt to write dhall into the prompt came back stylised; the

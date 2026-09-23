@@ -706,11 +706,20 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
     opus and sol tracked gpt-2's arrival as an event (*two hundred pages of an empty second
     chair*); deepseek's final portrait was the last ten dreams wearing a coat. A fresh read of
     thirty (`--start last:40 --n 30`, one call, 5.4k tokens, a tenth of a cent) was his best.
-- **The shape decided, not yet built (bekh, 2026-09-23, late): two characters.** *The
-  student* — deepseek, a fresh read of the **last thirty dreams every ten**, no session (a
-  `--window N` mode: the seat keeps only its watermark). *The mentor* — sol through codex, one
+- **Two characters (bekh, 2026-09-23, late). The student is wired; the mentor is decided.**
+  *The student* — **deepseek, a fresh read of the last thirty dreams, every eight** (two
+  four-scene stories), no session: `--window N` (`STREAM_ANALYST_WINDOW`; 0 = the session
+  mode) makes the batch the trigger and the last N dreams the material, `first_prompt` every
+  time, nothing resumed, no transcript kept, `session_id: "window"`, `window` on the version
+  and the row, `dreams` = the window's width; a backlog is read batch by batch, each with the
+  window that stood at its time; `--start` in window mode only moves the watermark, so the
+  seat's earlier portraits (opus's thirty-nine) stay where the feed shows them. It runs on the
+  public `analyst` seat from the job's plist (`STREAM_ANALYST_DOOR=deepseek`,
+  `STREAM_ANALYST_WINDOW=30`, `STREAM_ANALYST_EVERY=8`); the persona is still `analyst.txt`.
+  Measured: 30 dreams, 5.1k tokens in, 12s, $0.0012. *The mentor* — sol through codex, one
   thread, every dream ever, spoken to **every twenty dreams** (bekh: *you're rationing that
-  shit too much*). The api carries both; the front reaches the mentor through the student. The
+  shit too much*) — not wired yet; the door and the seat exist (`--door codex`), the job, the
+  tap at twenty and the api's second key do not. The front reaches the mentor through the student. The
   lore is bekh's and it is Planescape: the mentor is **Dhall**, the Mortuary's scrivener who
   keeps the book of every name and remembers the one who keeps coming back — and nemo is
   *nobody*, the nameless one who wakes every five minutes with no memory; the student is old

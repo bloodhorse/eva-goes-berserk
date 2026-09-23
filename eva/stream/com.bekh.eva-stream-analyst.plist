@@ -45,6 +45,15 @@
              one authenticates as nobody and exits non-zero. -->
         <key>HOME</key>
         <string>/Users/bekh</string>
+        <!-- the student (bekh, 2026-09-23): deepseek, a fresh read of the last thirty dreams,
+             every eight — two four-scene stories — no session. The key comes from the login
+             keychain at the moment of the call (deepseek.py), never from here. -->
+        <key>STREAM_ANALYST_DOOR</key>
+        <string>deepseek</string>
+        <key>STREAM_ANALYST_WINDOW</key>
+        <string>30</string>
+        <key>STREAM_ANALYST_EVERY</key>
+        <string>8</string>
     </dict>
     <key>RunAtLoad</key>
     <false/>
