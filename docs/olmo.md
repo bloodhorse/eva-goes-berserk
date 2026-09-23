@@ -124,7 +124,12 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 
 ## open
 
-- **the box's RAM and disk.** `free -g; df -h ~; nvidia-smi` answers all three, and it decides the quant.
+- **which box.** The 5060 Ti box has **30 GB RAM, ~20 available, no swap**, with 9.4 GB already
+  used by something else (2026-09-24). Q4/Q5 fit, and Q6 would put ~11.5 GB in RAM with no swap
+  under it. The other box: a **1080 Ti (11 GB) and 100–200 GB RAM**. bekh ran llama 70b there with
+  offload. There, Q8 fits with room to spare. Unknowns on it: RAM channels/speed (that's the
+  tok/s), who else uses it, and whether its CUDA still builds for Pascal (CUDA 12 does, 13
+  doesn't).
 - **how bekh reaches the box from here**: ssh, vpn, from Vietnam. Still open from BRIEF.
 - **who else uses the card.** A training job or someone's desktop on it changes the split.
 - **the box's CUDA/driver** for building llama.cpp with `-DGGML_CUDA=ON`.
