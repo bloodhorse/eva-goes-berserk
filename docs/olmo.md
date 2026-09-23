@@ -1,13 +1,12 @@
 # olmo
 
 A bigger dreamer for the stream, to replace gpt-2 xl, whose pages bekh reads and doesn't like
-(2026-09-24). The pick is **OLMo 3 32B at its last pre-anneal checkpoint**, on the team's 16 GB
-card, with whatever doesn't fit spilled into system RAM. Mistral Small 3.1 24B base is the
-fallback if olmo's prose comes out dead.
+(2026-09-24). The pick is **OLMo 3 32B at its last pre-anneal checkpoint, Q4_K_M, on a RunPod
+serverless endpoint**, woken for a burst and asleep otherwise. Mistral Small 3.1 24B base is
+the fallback if olmo's prose comes out dead.
 
-**Where it stands:** nothing downloaded, nothing converted, nothing changed on either box. One
-read-only survey of ds-dev2 ran. Parked by bekh (*I kinda hate dealing with the team boxes*) until
-the permission gap below is closed. Picking it up = close the gap, then "next moves".
+**Where it stands:** decided, nothing built. No weights downloaded, no repo, no endpoint. The
+first move is the build-size check (below), because it picks between two shapes.
 
 ## why olmo
 
@@ -37,144 +36,142 @@ name the genre first, then look for what exceeds it.
 - it's pre-anneal, so the learning rate was still high at that point. Expect prose rougher than
   a finished base. For dreams that may be a feature. We don't know until we read it.
 
-sizes (q4 and q8 from the research sheet; q5/q6 scaled from them, est.):
+## Q4, on a whole 24 GB card
 
-| quant | size | on a 16 GB card |
-|---|---|---|
-| Q4_K_M | ~19.5 GB | ~5 GB spills to RAM |
-| Q5_K_M | ~23 GB | ~8.5 GB spills |
-| Q6_K | ~26 GB | ~11.5 GB spills |
-| Q8_0 | ~34 GB | ~19.5 GB spills |
+**Q4_K_M, ~19.5 GB** (bekh, 2026-09-24: Q8 is superfluous; save the memory and the gold). It
+fits a whole **RTX 4090** with room for an 8k KV cache (~0.25 MB a token, est.), and the 4090 is
+the card azeroth-render proved on RunPod: ~$0.69/hr, billed per second. Q8 (~34 GB) would force
+the 48 GB pool, a bigger image and a slower cold start.
 
-## the boxes
+One condition, cheap: 4-bit shaves the low-probability tail, which is the part we hunt in at
+heat 1.8–2.5, so **if olmo reads dead, one fan at Q8 before we bury it**. A dud at Q4 may be the
+quant, not the model.
 
-Both are team boxes at bekh's employer, reached over the VPN (`~/.claude/docs/hosts.md`). The team
-gave the green light for LLM work on ds-dev2 (2026-08-25), and the agreed rule there is that
-everything LLM lives in `/opt/llama`.
+## the endpoint: `bloodhorse/olmo-dreamer`
 
-**ds-dev2** (`ds-dev2.x340.org`): RTX 5060 Ti 16 GB, Ryzen 5 3500X (six cores, desktop
-dual-channel RAM), 30 GB RAM, no swap, 157 GB free on `/` (home and `/opt` share it), driver 595 /
-CUDA 13.2, python 3.14 and git but **no uv**, huggingface reachable from the office network.
-- the card is held by **bekh's own sq1-r3vi3w endpoint**: `llama-server.service`, Qwen3.6-35B-A3B
-  instruct, 15.3 of 16.3 GB, ~9 GB of RAM, zero connections and zero requests in the journal for
-  14 days. Stop it only when serving starts: **stop, never disable**, `systemctl start
-  llama-server` brings it back. A reboot also brings it back by itself and takes the card again.
-- `/opt/llama` is owned by the `llama` user. It has a CUDA build of llama.cpp (commit `3737e41`,
-  2026-08-25, recent enough for `olmo2`), but **only `llama-server` was built**: no
-  `llama-quantize`, and the converter is only in `/opt/llama/src`. Its setup runbook is
-  `~/wrk/profi/dba/sq1-r3vi3w/docs/ds-dev2-setup.md`.
+The deploy artifact gets its own repo, like `azeroth-render`: RunPod builds straight from a
+GitHub repo on every push, with no registry and no write token lying around, and it clones the
+whole repo, so nothing else rides along. It holds a Dockerfile (llama.cpp's CUDA server, plus
+the weights or a path to them) and a handler.
 
-**ds-dev** (`ds-dev.x340.org`): GTX 1080 Ti 11 GB (someone's `python3` holds 1.8 GB, so ~9.4 GB
-is free), 125 GB RAM with ~120 free, driver 560 / CUDA 12.6 (Pascal builds fine; CUDA 13 wouldn't).
-**Its root filesystem is 100% full**, and the big pool is mounted somewhere else (path not yet
-looked up). Nothing of ours may land on root: the HF cache, uv's cache and any build default to
-home, which is on root, so each one gets pointed at the pool (`HF_HOME`, `UV_CACHE_DIR`, the work
-dir). bekh ran llama 70b there with offload. It's the box for Q8, for the `main` control, and
-maybe for 70b.
+**The lore to carry, all measured on azeroth-render** (its `SETUP.md` and `README.md`, and
+`~/tower/attic/runpod-kit`):
 
-## the offload math and the plan
+- **active workers = 0**, always. Anything above bills forever; this is the one setting that
+  costs real money. Max workers small (1–2); FlashBoot on.
+- **the MIG trap.** A "24 GB" tier includes `RTX PRO 6000 Blackwell MIG 1g.24gb`, an eighth of a
+  card. Untick every PRO/MIG entry **in the console**, because `gpuTypeIds` set through the API
+  doesn't bind the scheduler. The worker reports its own GPU with every answer (`box.gpu`), and
+  no timing is believed before it's read.
+- **a narrow pool gets throttled.** With only 4090 / A5000 / 3090 ticked, one job queued 278 s
+  for a card. Whole 48 GB cards (A40, A6000, L40S) fit Q4 too and buy availability back.
+- **the CUDA trap.** Pin "Allowed CUDA versions" to what the image's llama.cpp was built for,
+  or a worker lands on an old driver.
+- **build logs**: read them from the downloaded file, not the web view, which hides the failing
+  step's output. There's no builds route in the REST API.
+- env vars are set in the console (the API can't write them) and reach only workers started
+  after the edit.
+- the API key is in the keychain as `RUNPOD_API_KEY` and works (checked 2026-09-24, by one
+  read-only call; the account's only endpoint is `azeroth-render`, min workers 0).
 
-Offloading only costs speed, and the stream doesn't need speed: one ~170-token passage every
-five minutes. Per token, the card's share is read at ~448 GB/s and the RAM's share at DDR speed.
-On ds-dev2's desktop board that's maybe ~40 GB/s, so every GB left in RAM hurts there (est.):
+## cold start, and the way round it
 
-| quant on ds-dev2 | est. tok/s | est. per passage |
-|---|---|---|
-| Q4_K_M | 5–8 | ~25–35 s |
-| Q6_K | 2–4 | ~45–90 s |
+azeroth's ~10 GB image: **~10 minutes the first time a host pulls it, 30–110 s after that, under
+a second warm.** Olmo baked in is ~22 GB, so first pulls get worse. For a burst that's
+tolerable if it's paid once per burst and hidden:
 
-**The plan (bekh, 2026-09-24): start on ds-dev2 at Q4_K_M, because experiments on a new model want
-speed.** Download, convert, and make both Q4 and Q8 there from the same bf16 (~120 GB at the peak,
-the bf16 deleted after). Q8 gets copied to ds-dev when its check is due. One condition: 4-bit
-shaves the low-probability tail, which is the part we hunt in at heat 1.8–2.5, so **no verdict of
-"olmo's prose is dead" is final until the same seeds have run at Q8 on ds-dev**. A dud at Q4 may
-be the quant, not the model.
+- **`eva go N` wakes olmo first.** A warm-up request goes out as the ration starts, and nemo
+  writes the first dream while the worker boots (they take turns anyway).
+- **idle timeout covers a burst**, not a request: long enough to span the gap between olmo's
+  turns (a few minutes), so one ration costs one cold start. Pennies at per-second billing.
+- **if olmo isn't up when its turn comes, nemo takes the turn.** A burst never stalls on a cold
+  worker.
 
-Fans are the experiment, and they batch: a llama-server with `-np N` decodes N branches in one
-pass over the weights, and offloaded decoding is bound by memory reads, so a fan of 8 costs far
-less than 8 single runs. Each slot needs its own KV (~0.25 MB a token, est.: 64 layers × 8 kv
-heads × 128 dim, f16), so keep `-c` at N × ~1k and the KV on the card. The layer split is
-whatever `-ngl` leaves ~1 GB free for KV and compute buffers; tune it on the first run by
-watching `nvidia-smi`.
+**The first thing to check, since it picks the shape:** whether RunPod's GitHub builder takes a
+~22 GB image at all.
+- **it does** → bake the weights in (azeroth's rule: fewer moving parts on the cold path, no
+  datacenter pin).
+- **it doesn't, or first pulls run way past 10 minutes** → a small image with just llama.cpp,
+  and the gguf on a **network volume**, loaded at start. The cost: the endpoint is pinned to that
+  volume's datacenter and its GPUs.
 
-## how Claude touches the boxes — the gap
+## how the stream talks to it: the normal way
 
-**Closing this comes before any command.** bekh wants Claude to run the box work itself,
-not paste it. His SSH rule says every work host is asked per command, and Claude claimed the
-harness's permission prompt would enforce that. **It doesn't**: the global
-`~/.claude/settings.json` has `Bash(*)` in `allow`, so ssh to a work box runs unasked. The
-survey on 2026-09-24 went through that way (read-only, but by luck, not by rule).
+bekh doesn't care about privacy here, it's only text, so **RunPod's own front door**, no tailnet.
+In order of preference, to verify against RunPod's current docs before building:
 
-The fix, on bekh's go: add an `ask` rule to the global settings (ask beats allow) and commit it
-in `~/.claude`:
+1. **a load-balancing endpoint, if RunPod still has them**: plain HTTP straight to the worker's
+   port. llama-server runs stock, and the stream calls `/completion` with `stream: true` **exactly
+   as it calls nemo**. Same body, same sampler (DRY, xtc, min_p), word by word onto the page. No
+   handler to write.
+2. **the queue endpoint** (`/run`, `/runsync`, `/stream`): a thin handler starts llama-server in
+   the worker and forwards the `/completion` body untouched, so the sampler still matches. Words
+   come back through `/stream` polling. Whether that feels live or comes in lumps is a test;
+   lumps are acceptable, olmo's pages would just land a sentence at a time.
 
-```json
-"permissions": {
-  "ask": ["Bash(*x340.org*)", "Bash(*10.4.2.14*)"]
-}
-```
+**Parked: the lease over the tailnet.** One job holds the worker for a burst, the worker joins
+the tailnet (as azeroth's does) and serves llama-server there. It's the cleanest stream, but it
+needs bekh in the tailscale admin console for a new tag and a tagged key, so it's not worth it
+unless both options above disappoint.
 
-Everything touching the work zone then prompts, and the mini and local stay free. Test: the next
-ssh to ds-dev2 must stop and ask. Claude always uses the full `BekmemetevVO@<host>.x340.org` form
-so the rule sees it.
+vLLM, RunPod's ready-made LLM worker, is out: no DRY, no xtc, and a blind test with a different
+sampler compares samplers, not models.
 
-A heavier option was weighed and dropped as too much: a dedicated user with a forced-command
-`gate.sh` (verbs only, no shell). It's worth reviving only if per-command approval turns out
-too tedious.
+## the conversion: once
 
-Guardrails Claude keeps on the boxes: no `sudo` except the qwen stop/start and the one-time
-folder creation, each called out; our files only under `/opt/llama/olmo/`; never `kill` anything
-that isn't ours (nine users on ds-dev2); long jobs in the background with a log, checked on.
-
-## next moves (ds-dev2)
-
-1. `sudo install -d -o BekmemetevVO /opt/llama/olmo`: the one sudo line. Everything after runs
-   as plain BekmemetevVO.
-2. uv as a single binary into `~/.local/bin`, a venv in `/opt/llama/olmo/.venv` with
-   `huggingface_hub` and the converter's requirements.
-3. a shallow clone of llama.cpp in `/opt/llama/olmo/`, CPU-only build of `llama-quantize`.
-   Quantizing needs no CUDA, and the llama user's source tree stays untouched.
-4. download, convert, quantize, all in the background with logs:
+On a plain RunPod pod (CPU-heavy, fat pipe; no GPU needed to convert), then destroyed:
 
 ```bash
-cd /opt/llama/olmo
-.venv/bin/hf download allenai/Olmo-3-1125-32B --revision stage1-step656000 \
-  --local-dir olmo3-32b-stage1
-.venv/bin/python llama.cpp/convert_hf_to_gguf.py olmo3-32b-stage1 \
-  --outtype bf16 --outfile olmo3-32b-stage1-bf16.gguf
+pip install -U huggingface_hub
+hf download allenai/Olmo-3-1125-32B --revision stage1-step656000 --local-dir olmo3-32b-stage1
+git clone --depth 1 https://github.com/ggml-org/llama.cpp
+pip install -r llama.cpp/requirements/requirements-convert_hf_to_gguf.txt
+python llama.cpp/convert_hf_to_gguf.py olmo3-32b-stage1 --outtype bf16 \
+  --outfile olmo3-32b-stage1-bf16.gguf
+cmake -S llama.cpp -B llama.cpp/build && cmake --build llama.cpp/build -j --target llama-quantize
 llama.cpp/build/bin/llama-quantize olmo3-32b-stage1-bf16.gguf olmo3-32b-stage1-Q4_K_M.gguf Q4_K_M
-llama.cpp/build/bin/llama-quantize olmo3-32b-stage1-bf16.gguf olmo3-32b-stage1-Q8_0.gguf Q8_0
 ```
 
-5. checks: `general.architecture` in the gguf reads `olmo2`; a plain seed through the server
-   produces English, not token soup (soup = the `olmo2` mapping or the tokenizer went wrong, not
-   the model).
-6. stop qwen, serve with the team's binary, localhost only:
-
-```bash
-/opt/llama/bin/llama-server -m /opt/llama/olmo/olmo3-32b-stage1-Q4_K_M.gguf \
-  -c 8192 -np 8 -ngl 40 --no-jinja --host 127.0.0.1 --port 8081
-```
-
-   From the mac: `ssh -N -L 8081:127.0.0.1:8081 BekmemetevVO@ds-dev2.x340.org`. The
-   `/completion` facts (no template, BOS from metadata, `n_predict` must be set, DRY's 64-token
-   default window) are in `research-base-models.md`, q4.
-7. when done: stop ours, `systemctl start llama-server` to give sq1-r3vi3w its card back.
+The Q4 goes to a **private HF repo** (the permanent home of the weights, where a Dockerfile or a
+volume pulls it from), or straight onto the network volume if that's the shape. Downloads from
+HF ran at 36–44 MB/s on the vast run (`friendship-is-magic/docs/attic/cousin-arm-01.md`), so the
+65 GB of bf16 is ~30 minutes. Checks: `general.architecture` reads `olmo2`; a plain seed gives
+English, not token soup (soup = the `olmo2` mapping or the tokenizer, not the model).
 
 ## the test
 
 Before olmo takes gpt-2's seat: the same seeds from the stream's pot, the same sampler (heat by
 lot 1.8–2.5, min_p 0.08, the stream's settings), one fan on nemo and one on olmo, mixed
 unlabelled, and bekh says which pile has the ghosts. `census.py --models` already does a mixed
-blind fan. It needs olmo reachable as a second endpoint (the tunnel).
+blind fan. It needs olmo as a second endpoint URL.
 
 Worth a look while we're there: the same fan on `main` (the dirty control, see above).
 
+## order
+
+1. check the builder's image-size limit → bake or volume.
+2. convert on a pod → Q4 into a private HF repo.
+3. `bloodhorse/olmo-dreamer`: Dockerfile + handler (or none, on a load-balancing endpoint);
+   endpoint configured by the lore above; one seed through it, `box.gpu` read.
+4. the blind fan olmo vs nemo, by hand.
+5. only if olmo wins: `eva go` learns the warm-up and the endpoint URL, and olmo takes gpt-2's
+   turns.
+
 ## open
 
-- ds-dev's pool path and CPU (the Q8 speed), and who else uses its card.
 - **sampler at 32B**: nemo's heat range was found on nemo. Olmo may want its own; the first fans
   tell.
-- **the stream wiring**: a third writer beside nemo, or olmo replacing gpt-2 in the turn-about.
-  Only after the blind test. The stream's writer reaching a box across the VPN from the mac is its
-  own question (the tunnel has to be up whenever the stream runs).
+- **the first word typed**: with a cold worker behind a queue, how the page's live writing
+  looks on olmo's turns.
+
+## footnote: the team boxes (weighed and dropped, 2026-09-24)
+
+The first plan was bekh's employer's boxes: ds-dev2 (RTX 5060 Ti 16 GB, 30 GB RAM, holding his
+own idle sq1-r3vi3w qwen service) with Q4 spilled to RAM, and ds-dev (1080 Ti, 125 GB RAM,
+root filesystem 100% full) for Q8. Dropped for RunPod: team boxes mean sudo, other people's
+services and full disks, and bursts cost pennies on serverless. Survey facts are in git history
+(this file, before the RunPod rewrite) and `~/.claude/docs/hosts.md`.
+
+Found on the way and still true: the global `~/.claude/settings.json` has `Bash(*)` in `allow`,
+so **ssh to a work box runs without a permission prompt**. The proposed fix, not applied:
+`"ask": ["Bash(*x340.org*)", "Bash(*10.4.2.14*)"]` (ask beats allow).
