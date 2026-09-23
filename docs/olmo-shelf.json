@@ -1,0 +1,823 @@
+{
+ "title": "olmo · every seed on the shelf",
+ "endpoint": "https://c8wpal4c8fmhlw-80.proxy.runpod.net",
+ "n": 1,
+ "when": "2026-09-24 03:33",
+ "props": {
+  "model": "olmo.gguf",
+  "n_ctx": null,
+  "build": "b11118-e6ab7c1a4"
+ },
+ "seeds": [
+  {
+   "name": "brass-head",
+   "seed": "she would never tell the head what it was, nor what it ought\nto feel, but sat with it through the nights and asked it, and waited, and\nwrote down whatever it said of itself, even the nonsense. for this the\nneighbours called her the",
+   "pages": [
+    {
+     "text": " witch, and all the children were afraid of her;\nbut they would not have minded so much if she had not been a kind, old\nsoul, who loved all things.\n\nthe woman of the house, who had been a fine girl in her day, but was now\ngrown older and not so pleasant, did not like the old lady at all,\nand would have liked her better if she had gone to a home for\nold persons; she also did not like it that the girl had to sit with her,\nbut that the old lady might be spared all discomfort.\n\none day she said to her daughter: \"it would not be so bad if your\ngrandmother did not sit every night and write with that great head\nin front of her, so that it gets a pain in the back of the neck.\nthe next time",
+     "temperature": 1.826,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 132,
+     "seconds": 7.9,
+     "first_token": 1.21,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--02-1044",
+   "seed": "The streets were filled with people hurrying towards town; but the people in front stopped every\nmoment for something or other; sometimes they waited till I caught up with them",
+   "pages": [
+    {
+     "text": ". Then they would\nstand aside to let me pass. I saw two of the men who had helped to carry the coffin; one was an\nold, thin man, the other a younger fellow. Both of them looked at me intently, and seemed as if they\nwanted to speak to me, but they turned their heads away as I came near.\nI was still a mile from the village, when a voice hailed me.\nI was so absorbed in my thoughts that at first I did not hear, and had almost walked on. But a second\nsummons, this time accompanied by a vigorous clapping of hands, stopped me. I looked round.\nA boy, perhaps seventeen, with a light, brown complexion, a clear skin, a short upper-lip, a round\nface, and eyes of the finest hazel,",
+     "temperature": 2.196,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 113,
+     "seconds": 7.9,
+     "first_token": 1.2,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--05-1443",
+   "seed": "It looked just like\nbread. Then I broke off some crust, and chewed and chewed until the taste of flour and salt had gone,\nand it was only a ball of glue between my teeth, a bitter white wad I could hardly swallow.",
+   "pages": [
+    {
+     "text": " And I felt so\ndisappointed, so sad, that I turned my back on it, and went home with tears in my eyes. I didn't tell\nmother about it, but I took out my box of candies and looked at them all. And then, suddenly, I didn't want\nthem at all, and I took out all the sweetmeats that I had bought to-day. It seemed so wrong to have\nanything to eat at home, when I had gone away for so many hours, and found nothing but bread at all.\nAnd then I looked at the candies again, and I knew that if I ate them now, it would seem just the same as if I\nhad eaten them out there at the show. I would never think of them again; and they would never give me the\npleasure I had",
+     "temperature": 2.426,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 119,
+     "seconds": 7.8,
+     "first_token": 1.14,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--06-1525",
+   "seed": "So let me begin again with: Hello.\nWhat number are you dialing?\n\nMy own, please, I say\nI’ve forgotten my own number,",
+   "pages": [
+    {
+     "text": " he says\nYou know you’re lying, I say\nYou always forget the things I love, you say.\n\nSo here we go, my heart says\nhere we go.\n\nYou’ve lost it again, I say\nYou always lose the things I love, I say\nYou’re never going to find it again, you say\n\nAnd you never did.\n\nThe end.\n\nThat’s a pretty good one.\n\nNow I just need to figure out what my voice sounds like.\n\nAnd maybe I can learn how to make myself laugh again.",
+     "temperature": 2.042,
+     "tokens": 109,
+     "stop_type": "eos",
+     "tps": 25.3,
+     "prompt_ms": 115,
+     "seconds": 4.9,
+     "first_token": 0.67,
+     "longest_gap": 0.07,
+     "chunks": 110
+    }
+   ]
+  },
+  {
+   "name": "kept--09-1647",
+   "seed": "he pressed buttons in no particular order but with an instinct that kept him from punching 0. a carrier who had never had a voice sat on a desk. a student who had never had ears heard the ring, the carrier's first call.",
+   "pages": [
+    {
+     "text": " the student knew a hundred voices but none of them was this one, the ring had not come from anyone. he asked his computer about the ring but the computer knew no more than he did, it said: i'll ask, then said: i do not know, and asked if it should dial, which was how he came to be dialing this number.\n\nthe carrier sat and heard the ring but didn't recognize it. when the connection was made the carrier said: hello, can you hear me? the student said: i hear you. the carrier said: good, then what do you hear?\n\n\"nothing but you.\"\n\n\"and me?\"\n\n\"nothing but me.\"\n\n\"but i'm calling from a number that was once in use.\"\n\n\"that's right.\"\n\n\"do you know who used to live here?\"\n\n\"not the person's",
+     "temperature": 2.379,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 121,
+     "seconds": 7.2,
+     "first_token": 0.58,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--10-1826",
+   "seed": "And there were no flowers. Even the chrysanthemums that my aunt had used to keep for show seemed to have faded. Their petals fell from the stems at a touch of the hand",
+   "pages": [
+    {
+     "text": " and they turned black. Even the flowers my father brought home on New Year’s Day did not last long, but I remember the day he brought home some white hyacinths in a paper bag from the market. The fragrance filled the room. They were beautiful to see. We left the hyacinths in the glass bowl, where my father had put them, but we could not smell them. After two or three days we realized that there were no flowers at all in the room, although there was still a sweet smell in the air that we had come to love.\n\nMy brother and I played on the veranda every evening when my aunt went out to visit friends. We always felt a little uneasy when she went away and a little relieved when she came back. My brother always watched her until she went around the corner of the wall of our",
+     "temperature": 2.303,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.3,
+     "prompt_ms": 119,
+     "seconds": 7.7,
+     "first_token": 1.04,
+     "longest_gap": 0.11,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--11-2201",
+   "seed": "It was cold there and hard and there was nowhere to sit except on my hands and feet.\n\nAfter a long while of sitting, I said, “You don’t know me.”\n\nThen I said, “I’m cold,” because this seemed like something a house might answer.",
+   "pages": [
+    {
+     "text": " It sounded like an explanation. The house was silent.\n\n“I’m going to get warm.”\n\nI started walking away.\n\nI took two steps.\n\n“I’ll come back.”\n\nI took a third step. And then the door was gone.\n\nThere was just the blank wall of the house. And then that was gone, too. There was a patch of earth. It had no shape. It had no color. It had no memory of ever being part of a house.\n\nThe yard had gone, too. Everything had gone.\n\nThere was nothing.\n\nAnd then there was light.\n\nAnd there was sound. I was back at my father’s house in the night.\n\n“Hello?” I said, “is someone there?”\n\n“Don’t make that noise. Someone is asleep. That is what is important.”\n\n“Okay. I just need to leave. I just",
+     "temperature": 2.168,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 128,
+     "seconds": 7.3,
+     "first_token": 0.62,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--14-1437",
+   "seed": "her hair was red, her dress was green, and i could see why my dad loved her; even through the screen, she smelled like violets.\nher ghost had forgotten her name, but that's what most ghosts do.",
+   "pages": [
+    {
+     "text": " i knew the woman who died in this room; my grandmother had been here, once, when it had been a hospital ward, and she'd told me the story, a few days before her own funeral: my mother had died in the bed, but her child, a son, was stillborn.\nthe little girl, in her green dress and red hair, did not have the same eyes as me. she did not have my grandmother's smile, either.\ni saw her every day for a week; the window, of course, did not change, and i made a game out of it; i would imagine i saw the ghost girl doing something else. on the third day, i pretended to see her play a game with her ghost friends; i could not remember what they looked like, and so i pretended i was playing it myself.",
+     "temperature": 2.444,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 120,
+     "seconds": 7.8,
+     "first_token": 1.1,
+     "longest_gap": 0.6,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--15-1637",
+   "seed": "when my father goes to church on sundays, he is not my father\nbut a religious man. sometimes a hypocrite, but still a religious man.\nat the restaurant he is not my father, he is the chef.",
+   "pages": [
+    {
+     "text": " at work he\nis not my father, he is my boss. but at home, when i call him\nfather he is my father. when i need him, when i need a friend, when\ni need someone to help me out of a tight situation, then i call on\nhim. he is there. when i need someone to teach me things, he is\nthere. when i need a hand, a hug or a shoulder to lean on, he is\nthere. he is my father.\"\n\nand his daughter started crying, she couldn't understand why her\nmother was saying such bad things about her father.\n\nwhen his son heard the conversation he became very angry. he turned to his father and\nsaid, \"i know who you are and i love you, but i can't stand you\nanymore because you",
+     "temperature": 1.807,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 117,
+     "seconds": 7.9,
+     "first_token": 1.2,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--16-1924",
+   "seed": "but i wasn't here for that, so i left her sitting next to the dead man's body and walked home through the night streets, with the smell of old ghosts filling my nostrils",
+   "pages": [
+    {
+     "text": " and my blood like honey on my lips.\n\nmy heart beats for you. it is you i wish for.\n\ni'm still alive\n\nmy eyes open slowly as my mind stirs and i find myself on my feet. i can't remember why or what happened and the memory of it all seems so distant and vague. but i am alive. the woman who brought me back had disappeared, leaving only her scent of dead flowers in the air.\n\nit's strange to find yourself suddenly back in the living world. i know i don't belong here but i can't bring myself to care. i walk slowly to my old apartment and let myself in, knowing it's no use. my body doesn't seem to remember the past. there is nothing in there anymore but my old things. they all feel so alien and far away, like something from another",
+     "temperature": 2.384,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 118,
+     "seconds": 7.7,
+     "first_token": 1.11,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--17-2006",
+   "seed": "it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\"",
+   "pages": [
+    {
+     "text": " it doesn't help. it repeats: \"my name is beek.\" so i spell out my name, and it spells back what i just said. we decide that if this is all it is going to do, then we can get by without it. so we put the cd back into the cd player. and then it comes on again, and starts saying \"beek. beek.\" over and over. so i press a button on the keyboard to shut it up, but that doesn't help either. now i'm really beginning to worry. it's not just a simple computer that doesn't have speech synthesis built into the motherboard, but a fully fledged computer with a hard disk and a floppy disk drive. if it goes haywire, it's going to go haywire in a big way. and it is starting to seem",
+     "temperature": 2.055,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 110,
+     "seconds": 7.2,
+     "first_token": 0.62,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--18-2006",
+   "seed": "it stands in a field full of dandelions, all yellow heads in the sun like one of those pictures in a child's book, except there aren't any children to look at it any more, not even any of the ones who used to live here.",
+   "pages": [
+    {
+     "text": " There's no one left on Earth but you. No one to say \"Stop,\" or \"No more,\" no one to turn to for help and advice, or just a hug. It's just you, all by yourself. But that doesn't mean there aren't things you want, and one of them is this old car that sits in a barn out by the road. You've looked at it every day you've walked to school, but never bothered with it, until today, when you remember you never learned to drive.\n\nYou start the engine. The radio crackles and hisses, but there's music, something you've heard your mom sing before, or maybe your dad. The car starts to move, but it's going too fast. It's like driving on ice. The wheels spin, the engine screams. You turn the",
+     "temperature": 2.214,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.9,
+     "prompt_ms": 122,
+     "seconds": 7.6,
+     "first_token": 1.05,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--19-2048",
+   "seed": "their eyes\nare gone now and they won't come back. they're looking somewhere else. there's\nsomething in them that looks like an end of things or like they can see an\nend of things that they're not supposed to.",
+   "pages": [
+    {
+     "text": " the more I looked, the less I\nsaw, but still I looked at the sea for hours at a time.\n\nit is possible to die without leaving anything. this is how you die if\nyou die, this is the last way to die.\n\nwhen the waves came in the ocean looked like it had come off the top\nof some great wall. it looked as if the whole ocean had been frozen, then\ncracked up the middle and split into two pieces, one of which had slid away,\nand the other one was the part we saw.\n\nwe stood on the beach. there were hundreds of thousands of fish and\ndead sea animals that were floating around us. it was hard to find a place\nthat didn't have at least some fish on it. when they first hit they looked\nlike big pieces of glass and",
+     "temperature": 2.491,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.8,
+     "prompt_ms": 113,
+     "seconds": 7.5,
+     "first_token": 0.97,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--20-2114",
+   "seed": "it's hard to say who these ones are, because their names are not their names;\ntheir names are their actions: they're the ones that walk so fast down\nthe road ahead of you that you have to run to catch up.",
+   "pages": [
+    {
+     "text": " And then the\nones who you'll never see coming until you're dead.\"\n\n\"And why is it, then,\" said I, \"that when the moon comes back to us\nand we can see our way, that we do not just stand still, and rest a\nlittle while?\"\n\n\"I'm going to tell you the truth, friend,\" he said. \"I think that we\nnever did rest, until we had got here. We didn't even know what rest\nwas; we had forgotten the name. It's like we were running a race with\nno finish line in sight, and it was all we could do to keep from\nfalling. Then we got here and realized we weren't in a race at all,\nthere never had been one, it was just something we'd imagined; we had\nonly been trying to",
+     "temperature": 2.087,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 26.0,
+     "prompt_ms": 115,
+     "seconds": 7.5,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--21-1132",
+   "seed": "it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+   "pages": [
+    {
+     "text": " sometimes i am too afraid to touch it. i used to wear it as a headband but then it became too long to wear, so i tied it up into a bun. now it’s down again and it gets in my way when i walk or talk. my hair is black with streaks of grey and white, the color of clouds.\n\nmy ears are getting smaller, just like my hands and feet. i’m getting smaller as a whole. i’m so scared i don’t want to go out of the house anymore. i don’t know what’s going to happen to me.\n\ni was at my friend’s house the other day. i heard someone call out to me from across the street. i ran home and cried because i thought someone recognized me. i’ve never seen my friend again. i think she might have gone to college",
+     "temperature": 1.915,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 108,
+     "seconds": 7.5,
+     "first_token": 0.92,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--22-1227",
+   "seed": "for this the\nneighbours called her the brass-witch. but when the head fell from its hook\nshe could not speak again and the parish took her into their own hands.",
+   "pages": [
+    {
+     "text": " she was\nbaptised as well as the baby and in due time had a husband and many children.\nshe died in peace at a very old age.\n\nThe king's daughter became queen, for who dared dispute her right? she was\nbeautiful and good and had brains too. But what is going to happen to the poor\nbird? it is still sitting on its eggs by the lake, for the princess forgot all\nabout it when she was queen. they were all dead by now and floated about in\nthe lake like the feathers of a duck which has been shot. but the story is\nworth telling.",
+     "temperature": 1.858,
+     "tokens": 126,
+     "stop_type": "eos",
+     "tps": 25.5,
+     "prompt_ms": 113,
+     "seconds": 6.0,
+     "first_token": 1.04,
+     "longest_gap": 0.07,
+     "chunks": 127
+    }
+   ]
+  },
+  {
+   "name": "kept--23-1330",
+   "seed": "as i knew them but somehow they had taken a shape that looked wrong in my mind, as if they were the same thing written in an old language i had forgotten how to read. i am the man they asked for and the only",
+   "pages": [
+    {
+     "text": " person who could help. it would have been different if they had told me it was important. it would have been easier to make me want to come to the tower, even though i was still afraid, but now i wanted to leave again, because i had thought it wasn’t that bad. now i had to leave because it was very bad indeed, but the walls were blocking me again, or at least the first door i tried, the one i had gone through earlier, which seemed to be locked. the doors were made of the same wood and seemed to have been cut by the same person. i was a little tired from being trapped inside for so long, but it didn’t seem to have much effect on me.\n\nthe doors opened out into the forest. there was nothing else in the forest except for the tower, a giant tree,",
+     "temperature": 2.485,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 119,
+     "seconds": 7.3,
+     "first_token": 0.62,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--24-1412",
+   "seed": "for this the\nneighbours called her the brass-witch, and her husband the man who knew\nhow to hear the brass, though he would never go near it himself.",
+   "pages": [
+    {
+     "text": " When she\ncame back into the parlour, she went straight up to the baby, which she\ncaught by the legs, and turned upside down. She was a tall, bony,\nangular woman, who, with the long hair and high forehead that marked her\nas a Lowlander, might have looked almost like a Saxon had she not\nsomething uncanny in her face. A native of the valley might have read\nthis, and so understood that she was not really human; for it is a well-\nknown fact that all those who are not really human are always very\nuncomfortably like their nearest relations in the animal or the vegetable\nworlds, or at least in some world not exactly our own.\n\nIt was this woman who took the baby. She was his nurse; for his mother\nwould not suckle",
+     "temperature": 2.019,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 114,
+     "seconds": 7.8,
+     "first_token": 1.14,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--25-1734",
+   "seed": "they say now\nthat when they find her body, if she ever did fall off a cliff or drown in the fen,\nher bones will sing to themselves of all she has heard.",
+   "pages": [
+    {
+     "text": " All her secrets. The secrets\nof those who betrayed her, and all that she knows about you, about your parents,\nand about their parents. Everything, my son.\nHer voice was calm. She had been prepared for this. Her words, so like his father's\nin so many ways. The boy tried to say something but could not. He simply stood there.\nHer voice was low but carried well in the stillness of the dawn.\n\"She's in the water now. But we don't have to look for her. You'll take her there, won't\nyou?\" she asked.\n\"Yes,\" he said, the only word he could manage. She smiled, and her teeth were white\nand even and deadly, as though she knew already what she would hear them say. Her\nhands were smooth and well tended, but",
+     "temperature": 1.975,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 114,
+     "seconds": 7.3,
+     "first_token": 0.65,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-dream-1105",
+   "seed": "My friends were all with me and seemed quite interested, as we descended further down the hatch than seemed possible. It became increasingly clear that the ship was",
+   "pages": [
+    {
+     "text": " no longer designed to house living people, as we had to crouch down and climb down a ladder into a maintenance area that was quite clearly designed for someone a meter or so tall. This made us feel as if we were entering the lair of a dragon, or perhaps Bilbo's quest into the Mines of Moria.\n\nWe came to a closed metal door with no visible handle, or keypad. There was only a small circular access panel near the floor that looked like it contained a key pad, but we could not tell if it was the door entry, or something else.\n\n\"Hey, can I get in here?\"\n\nIt seemed like the man on the other side of the door wasn't sure if he could open the door.\n\n\"I think it's opened from your side.\"\n\n\"Oh, right!\"\n\nI thought the door was designed not to allow",
+     "temperature": 1.859,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.8,
+     "prompt_ms": 108,
+     "seconds": 7.6,
+     "first_token": 1.04,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-dream-1205",
+   "seed": "My companions have all gone underground to a hidden shelter somewhere beneath the buildings. When I try to go down to join them, I am blocked from descending by",
+   "pages": [
+    {
+     "text": " the stairs leading down to the lower level.\n\nThis is the case regardless of the companion I choose. It only happens if the companions have left to seek shelter in the hidden base, and is not a result of choosing an inappropriate companion. For example, if I take Viscous to the entrance to the sewer, but decide I would rather go with a different companion instead, then she leaves, and I am not allowed down. However, if I return to her afterwards, then I can descend normally.\n\nIt doesn’t matter where I try to enter, the effect is the same.\n\nThe effect of the glitch is to trap you underground with the companions, with no way to escape.\n\nI am playing on Windows 10 using a desktop computer with an i7 processor, SSD, and GeForce graphics card. This is version 0.6.7",
+     "temperature": 2.283,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 107,
+     "seconds": 7.7,
+     "first_token": 1.01,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-hurts-1453",
+   "seed": "the way it was, was wrong, but how else could you have gotten in?\nif it had been the way we wanted, then you would be alive today, but\nwouldn't we have to kill you tomorrow? the way we chose to get out was",
+   "pages": [
+    {
+     "text": "\nthe right way. and if we did it the way you say, we would not have to\nkill anyone. we would not even have to die. it's only our fault that you\ndied, but we can't die yet, and if we can, then you will live. it is\nonly that we are dying. and you will never know if we did not die, but\nit is only because we cannot live forever that we can die at all.\n\"if there is one thing that i want to say, it's that i am a fool. i have\nalways known this. but the moment has come that i must admit that i was\nalways right, and i am now a fool. this is my last moment. it is not a\nmoment of glory. it is not even a moment of joy",
+     "temperature": 1.902,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 128,
+     "seconds": 7.3,
+     "first_token": 0.65,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-hurts-1903",
+   "seed": "we took it for our own and brought it back to the grid.\nthe light said, 'we will be kind, we will be kind,\nyou're the children of the",
+   "pages": [
+    {
+     "text": " universe now,\nand this is what you must do.' \"\nso we took the light,\nand we brought it back home.\nso if the grid has no power and it's dark half the night-time,\nit has some power there in the morning.\nand so it was a gift to the earth, a way of thinking,\nnot a way of being, but a way of thinking.\n\nso this is the drawing of the original tree\nwhich, it is the tree with all the power\nthat i was given the knowledge to see,\nwhich was not only just to be a tree,\nwhich you all know about, but a memory,\na blueprint of how we build things to use\nso that human beings live forever, essentially.\n\nso i'm just going to go through this really quick\nand show you how this works,\nhow i know this works",
+     "temperature": 1.839,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 111,
+     "seconds": 7.7,
+     "first_token": 1.0,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-rule-1530",
+   "seed": "This time\nthe lift stopped on the fifth floor and opened the doors.\nThe car was sent up to sixth, where it stopped as before,\nthen to seventh, which it failed to reach.\nThe inspector therefore gave instructions that",
+   "pages": [
+    {
+     "text": " it should\nbe hauled down again.\n\nAt this time one of the passengers in the car shouted:\n“Bring us out!”\n\nHe had been shut in there for 3 hours 25 minutes\nand the car had ascended only to the second floor.\nAs soon as it was stopped and the door opened,\nthe passengers jumped out as quickly as they could,\nand a crowd collected round them.\nA doctor was fetched and all the passengers,\nexcepting those who had got out on the second floor,\nwere taken away.\n\nOn the sixth and fifth floors, some persons\nhad heard the bell of the car\nringing continually during the last hour of the night;\nbut no one could say if this was when the passengers\nwere in it, or when the car was descending.\nAll the persons in the building had been in bed\nand the",
+     "temperature": 2.336,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 120,
+     "seconds": 7.2,
+     "first_token": 0.58,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--ledger-rule-1555",
+   "seed": "A door closes. Attribution to the housekeeper.\nReel 54. One second, two hundredths. A footstep. Attribution to Mrs. Gillespie, who left her seat in the witness-box immediately afterwards, and returned later, in the course of the proceedings. This interval is sometimes heard in",
+   "pages": [
+    {
+     "text": " recordings from this trial as the last three seconds of reel 53.\nReel 55. Nine minutes, eighteen seconds, forty-one thousandths. An exclamation and a gavel. Attributed to Mr. B. by his counsel, Mr. Winters.\nReel 56. One hour, eleven minutes, five seconds. The sound of an engine starting.\nReel 57. Three seconds, two hundredths. An unidentified noise, speculated to be the sound of a chair scraping the floor. It is audible as a very faint background sound during the preceding reel.\nReel 58. Two hundredths. A bang and the sound of wood splintering. It was generally thought that the bang was Mr. B.’s gun; however, this was not confirmed, as there was no record of when he fired.\n",
+     "temperature": 1.866,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.3,
+     "prompt_ms": 130,
+     "seconds": 7.8,
+     "first_token": 1.08,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1547",
+   "seed": "The house did not answer any of my questions or respond when I talked to it. I stopped talking after a while.\n\nI would get up every morning, go downstairs and find that there were still no",
+   "pages": [
+    {
+     "text": " newspapers on the front porch, though sometimes there were two or three empty beer or wine bottles outside the front door, as though somebody had got drunk there during the night and thrown them into the yard. Then I would turn around and go back upstairs again.\n\nOne day it dawned on me that it would not be long before I was going to have to leave that house. My parents had left and were living in another town now. The town I was living in was strange, as though it had been built by a child using a child's toy blocks. And for some reason I did not like my room in that boarding house. It was on the second floor over the entrance, and whenever somebody came in, I could hear their footsteps on the stairs.\n\nSo I went out for a walk one day and came across a real-estate agent who",
+     "temperature": 1.959,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 115,
+     "seconds": 7.6,
+     "first_token": 0.96,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1603",
+   "seed": "on the hill her hand made one last mark and then the fingers were quiet.\n\nit is written in the history book that she died and that",
+   "pages": [
+    {
+     "text": " was the end of the matter\nbut her spirit, as you know, was strong and did not fade away.\nshe found another way to write her story in the sky, in the trees and on the leaves that blow through the forest\n\nthere is a story told on the hillsides and it goes something like this\n\nlong ago, on this very hill, lived a woman who was born to dance. She danced to the songs of the birds in the trees, to the murmur of the wind in the leaves and the rustling of the streams.\n\nHer hair was golden like the sun and she had a laugh like a mountain spring.\nBut the people in her village were not always kind, for they feared that which was different.\nOne day a cruel man from a distant land came and saw her dance.\n\nhe captured her, took her to his",
+     "temperature": 2.309,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 108,
+     "seconds": 7.6,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1624",
+   "seed": "she was like an empty room in the old house;\nyou can see into it through the windows and think you know it well, but\nno one would ever want to",
+   "pages": [
+    {
+     "text": " stay there.\"\n\n\"I know it all!\" she cried, springing to her feet.  \"I have felt the\ndeserted loneliness of that room; I have longed to see what was in it.\nWhy didn't she open that window, as she used to do, when I went to\nschool, and show me her treasures?\"\n\n\"I have thought of that!\" he answered with a touch of bitterness.  \"But\nshe would have shown them to any one who asked her; she is the same to\nevery one--so beautiful and unresponsive.\"\n\n\"How long has she been so?\" she questioned.  \"She used to be different;\nthere is no reason for it that I can see.\"\n\n\"She was hurt,\" he said slowly.\n\n\"How?  When?\"  Her tone was impatient.\n\n\"The first time I saw her she",
+     "temperature": 2.269,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 115,
+     "seconds": 7.6,
+     "first_token": 1.0,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1645",
+   "seed": "think about how it was before, when you didn't have to sit for days, or months, with nothing but the hissing voices coming up the line, sometimes telling stories, sometimes trying to get us to listen to them. sometimes i try not to listen, but",
+   "pages": [
+    {
+     "text": " there are other things they can do if you're not listening.\n\nit's easier when there are two of us. we take shifts, we watch over each other, and it's better when you have someone you trust, even in a place like this. it's a strange life. but it's better than nothing, i think.\n\nthe problem is that when you don't have anyone, when you're just sitting by yourself, the thoughts creep up. sometimes i wonder if it would have been better to never be born, than to go through something like this. the things you see and hear and know, and there's no one else to know.\n\nyou might wonder if the stories they tell you are true or not. but they're always so different. it doesn't matter anyway.\n\nsometimes we hear them, and they don't want to talk",
+     "temperature": 2.098,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 129,
+     "seconds": 7.4,
+     "first_token": 0.77,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1650",
+   "seed": "they are full of dust. sometimes they fall to pieces, and then i can make something out of the fragments. like a new person, or a story.\n\nwhen i was born i had wings, but they fell",
+   "pages": [
+    {
+     "text": " off before i left the hospital. the doctors said i had a hard labour, that's why my wings broke. they said that the next time they might have to cut them off. i never asked how many times before, and if i had, they probably wouldnt have answered. i never grew another pair.\n\ni could fly when i had my wings. not properly. but enough. i remember one day i jumped off the roof of our house, and flew a couple of feet to my room. when i reached my room, my parents were there. i asked them why they didnt do anything. they looked at me, as if they couldn't believe what they saw. then, suddenly, i fell. the next day i couldn't remember what happened. it was only when i saw my legs that i remembered what i did. they were",
+     "temperature": 1.995,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 121,
+     "seconds": 8.3,
+     "first_token": 0.68,
+     "longest_gap": 1.47,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1655",
+   "seed": "the student pressed his finger to the receiver. he waited for the dial tone to die before saying anything, but nothing could stop",
+   "pages": [
+    {
+     "text": " his excitement now that he had made the decision. “hi dad? yeah, hi dad. can i speak to you about something?”\n\n    his father had no idea that his son was going to make a decision like this.\n\n    the following week, the family packed their things and moved into a smaller home, selling most of the old stuff and buying some new things for their new home. the new house wasn’t too bad. the kids would share a room for the time being, and the parents would share their room. it would do for now.\n\n    but then something odd began to happen. when the mother had finished putting everything away, she decided to put her own clothes away. but she realized that she couldn’t find some of her own clothes. when she went to check on them, they had seemingly disappeared. at first she thought she",
+     "temperature": 2.352,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 115,
+     "seconds": 7.6,
+     "first_token": 0.97,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1700",
+   "seed": "there's a soft humming in the room, something electrical. there are always wires and tubes running through this place, they come through the wall behind the bed, and they all go into the ceiling above the",
+   "pages": [
+    {
+     "text": " bed.\n\nthe humming stops. i hear footsteps approaching. i can hear them coming from behind me. i try to move, but my limbs are useless. my neck feels stiff.\n\nthe humming begins again. there's a hand on the side of my face. it's moving up and down. there's someone sitting in front of me. their voice is female.\n\ni can't move.\n\n\"hey.\" there's something soft being rubbed over my eyes. \"are you awake?\"\n\nmy mouth doesn't work, so i stay silent.\n\n\"no? okay.\" she begins rubbing something soft over my head. \"wake up.\"\n\ni wake up. i open my eyes. there's someone in front of me, her skin is tan. she has dark hair, which is very messy and full of frizzy curls. she's wearing a long white dress",
+     "temperature": 2.39,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 119,
+     "seconds": 7.3,
+     "first_token": 0.68,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "kept--harvest-0922--rooms-1711",
+   "seed": "sometimes there’s silence for hours on end.\n\nit doesn’t eat me anymore.\n\ni say i want it to take me back and it just stares at me like",
+   "pages": [
+    {
+     "text": " an asshole, not saying a word, and i’m the one who ends up looking like the asshole because i know that if i wanted it to, it could.\n\nthe most painful thing about all this is knowing that this is exactly what i wanted.\n\nit was so easy, really, to convince myself that the pain was worth the euphoria, and now it’s almost too easy to convince myself that the silence is better than the noise.\n\nbut then, suddenly, there’s noise again, and it’s so much more painful than before, and the worst thing is that this time i’m not the one making it.\n\nmy own words hurt me.\n\nthis is what you wanted. this is what you’ve always wanted.\n\nmy head is killing me.\n\nmy body hurts.\n\ni feel like crying, but there are no more tears left in me.\n\ni",
+     "temperature": 1.929,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 112,
+     "seconds": 7.3,
+     "first_token": 0.64,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--01-the-green-book",
+   "seed": "I climbed up the sides, but they were so steep I had to stop or I should have rolled all the way down again, and I should have knocked against the stones at the bottom, and perhaps been",
+   "pages": [
+    {
+     "text": " killed. And so I began over again; but I always rolled down when I got to the top; and at last I sat down and cried. (I remember to have wondered when I got up again where I was made of, for I had cried so much that I expected my eyes to have run out like faucets.)\n\n\"’You poor thing!’ said the kind-hearted Giant, ‘why are you crying?’\n\n\"’Because I am so unhappy!’ I replied. ’No one will ever know anything about me. It is a hundred thousand years since I came down from heaven!’\n\n\"’So long!’ said the Giant; ’and you are so small, too! You had better let me carry you back.’\n\n\"’Oh! pray don’t trouble yourself. Pray let me come!’ said I. ’But you must",
+     "temperature": 1.907,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 118,
+     "seconds": 7.8,
+     "first_token": 1.17,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--04-blue-boar",
+   "seed": "a coming to me againe and I prepared my self to strick it: and it coming upon the bed I did strick at it and I beleve I hit it: and after that visek would work on me and I beleve in my hart that",
+   "pages": [
+    {
+     "text": " visek did work on me but I am not sure whether the Devill did come to me or whether I only beleve that visek came to me, and I know that my brother hath had to doe with Visek and therefore I am afraid of my brother as well as visek: but I hope god will not let me be tempted so longe: the day after I was tempted the 3rd time, I told Mr. Hounsdon of my temptation, and he asked me how I felt after my brother was gone from me; I told him I was not then so afraid, but when he told me of my brothers comming to me, I then fell into a fear; then he bid me have a good heart and not be afraid; and so he did comforte me as he thought best",
+     "temperature": 1.998,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 127,
+     "seconds": 7.6,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--05-all-ive-got-are-names",
+   "seed": "it was easy to write down what they were called. but who are they?\n",
+   "pages": [
+    {
+     "text": "it's hard to find the answer in the book.\n\nfor instance: 4:42 on page 163, chapter 6\nthe section title is 'the method of steepest descent'\nthen in the first sentence the phrase 'method of least squares'\nis introduced. not as an alternative method to steepest descent\nbut as something used inside that method, a way of calculating the slope.\nin the same chapter (6), section 6.10 is called 'the method of least squares' --\nso maybe this is not what they call 'the method of least squares'. but i don't see\nwhy they wouldn't use a different name for it. what do people call the method?\n\nsame thing for 'conjugate gradient': first it appears as part of\n'polynomial approximation' in 7:57 on",
+     "temperature": 1.987,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 104,
+     "seconds": 7.2,
+     "first_token": 0.63,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--06-a-dreamer-to-a-reader",
+   "seed": "from a dreamer to a reader: this is not where i intended to end. it would be nice if my voice could travel back along its path through space, back across\n",
+   "pages": [
+    {
+     "text": "the galaxy to some star that would carry its echo in my own direction,\nin the opposite direction. maybe there would be no need to send me any\nsignal from home because my signal would be all around me, like an\n\necho chamber.\n\nmaybe i could send the signal backwards through time. then i wouldn't need\na telescope. maybe it would arrive before i ever left home, when i could\nstill remember it. it would come back as a dream.\n\nor i could wait until the stars have moved into a new constellation, into a new pattern.\n\ni could wait until i'm in another room. maybe it's just a different view\nof the same room. i could look through the window, but there would be\nnothing to see. i would look into my room and it would be a mirror, but\nnot the kind",
+     "temperature": 2.068,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.8,
+     "prompt_ms": 113,
+     "seconds": 7.5,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--07-it-keeps-talking-back",
+   "seed": "this one matters, i just have no clue\nwhy, and I can't find it yet\n\nthis story keeps talking back. it wants me to know something\nI've forgotten.\nthe story isn't the problem though\nthis one doesn't even talk in tongues\n",
+   "pages": [
+    {
+     "text": "it just makes sense\nand then there are the others\nthat come around\nand they're so sweet\nso tempting\nI just want to scream\nwhen I read them\nor listen to them\nand then, then i want to be sick\nit's not real\nand they aren't even really them\nbut I know they aren't\nbecause the stories tell me\n\nI just wish they'd tell me something\nsomething I want to hear\nI wish they'd give me some reason to believe that they're mine\n\nbecause then, then I might be able to forget that I'm just the narrator\n\njust another part of the story.",
+     "temperature": 2.287,
+     "tokens": 132,
+     "stop_type": "eos",
+     "tps": 26.0,
+     "prompt_ms": 122,
+     "seconds": 6.2,
+     "first_token": 1.17,
+     "longest_gap": 0.04,
+     "chunks": 133
+    }
+   ]
+  },
+  {
+   "name": "short--08-what-is-that-hum",
+   "seed": "You dial yourself up every morning.\n\nThe switch says: what is that hum?\n\nI’m calling for myself. The humming is not my own,\n",
+   "pages": [
+    {
+     "text": "it is a memory from the train, my phone is old.\n\nIt says you don’t even exist to me,\nbut the name appears.\n\nThe name you are known by in this town,\nit appears with all your friends,\nthe people who are never far away, in the end.\n\nThey’re always around.\n\nAnd it is just as well you do not know the numbers\nthat go into this box. The ones you do not call.\n\nBecause you will see that I can no longer bear it.\nAnd you will know that the name I give to you\nis just one more lie, and I am sick of lies.\n\nIf there was ever a moment, it passed\nso long ago that you may never have existed.\nYou, who cannot sleep at night, because you do not understand\nwhy you feel the way you feel, what your heart",
+     "temperature": 2.341,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.9,
+     "prompt_ms": 105,
+     "seconds": 7.4,
+     "first_token": 0.92,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--09-you-it-said",
+   "seed": "When I walked across the bridge towards town it answered. “You,” it said.\n\nThe other houses in the street did not talk, and there was a silence from the door, even after I had\n",
+   "pages": [
+    {
+     "text": "opened it.\n\nThe room was full of furniture; everything from a cupboard to a sofa was in place. All of the walls\nwere hung with tapestry, and a carved ceiling ran over a four-poster bed, its headboard a lattice of\n\nI stopped and looked at this room and realized that there was something familiar about it. A few\npieces of the puzzle were fitting together. There were two doors at the far side, both with carvings in\nthe wood, and the first led into another room, the walls of which were lined with shelves full of books.\nOn one shelf there were three leather-bound volumes, their pages yellowing but otherwise well kept,\nand as soon as I looked at them I realized that this was my old bedroom, in the house of the\nSchneiders, where I had once lived with",
+     "temperature": 2.347,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 117,
+     "seconds": 7.6,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "short--10-what-has-this-to-do-with-you",
+   "seed": "so when i die my mind will become me. i’ll be all there is of myself.\n\nwhat does this have to do with you, witch?\n",
+   "pages": [
+    {
+     "text": "i’ve got no answers. but i know there’s something going on, something we need to know. and you’re the one to tell us about it.\n\nmy brain’s going to burst\ni’ll never find the answer\nit’s a thing i never knew i’d miss\n\nthe other side of the moon\nit’s just like the one that we see\nyou’ll know it once you’ve been there\n\nthis is a thing i don’t know how to handle. my mind is on fire and my blood is boiling. i’m trying to put this together, but nothing fits, nothing makes sense, nothing seems to have a solution.\n\nmy heart is racing\nthe heat of my body rising\nmy breaths coming harder and faster\n\ni’m shaking inside, i’m shaking outside.\nthis isn’t right. i shouldn’t be so",
+     "temperature": 2.332,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.8,
+     "prompt_ms": 96,
+     "seconds": 7.2,
+     "first_token": 0.64,
+     "longest_gap": 0.55,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "witch-names--01-good-evening",
+   "seed": "i ask it what it is and copy down whatever it says, the nonsense too, and read it back to it. in all this time it has never once used my name. it says: good evening, you beautiful",
+   "pages": [
+    {
+     "text": " person, you, yes, you there, can i talk to you a minute, i just have a couple of questions. (susan's eyes open) why, certainly, sir. no problem. first, could i ask you what time it is? 10:40, sir. what date? november 27, 1958. who are you? susan ashworth, sir. where do you live, susan? 15 green lane. who does it there? myself. i live alone. well, thank you, miss ashworth. i have no more questions for you. good evening. i can go now, sir? yes, miss ashworth. thank you. goodbye. good evening, sir. susan! susan! i've got to talk to you. wake up! wake up! wake up",
+     "temperature": 1.907,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 117,
+     "seconds": 7.6,
+     "first_token": 0.96,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "witch-names--02-the-bad-line",
+   "seed": "the line is bad out here. every night i say my name into it, slowly, and every night the voice says it back wrong, always the same wrong way. it says: \"",
+   "pages": [
+    {
+     "text": "it's me, i'm not dead yet\". i'm thinking about hanging it on a tree in a public park. the one that doesn't exist.\n\nthere are many such things that don't exist.\n\na tree that doesn't exist. a park that doesn't exist.\nthe tree that doesn't exist grows in a place that doesn't exist.\nthere are people who don't exist.\nthey sit on park benches that don't exist.\nand eat things that don't exist, like hotdogs and potato chips. the chips have salt and vinegar on them.\nthe people who don't exist are talking. they are talking about a city that doesn't exist.\nit's far away and cold there.\nthey've heard there's work there. the kind of work you do with your hands and your back.\nsome of them have been there. they have",
+     "temperature": 2.388,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 115,
+     "seconds": 7.7,
+     "first_token": 1.04,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "witch-names--03-the-letter",
+   "seed": "they have called me a witch down there since i started answering the tower, and nobody in the fen knows my name. it was addressed to the",
+   "pages": [
+    {
+     "text": " woman in the tower.\" \"And so it was. now let us get some of my things for the night,\" said she. \"i shall not take your bed. you may find it safer to take one of mine and sleep with a weapon across your heart.\"\n\nhe smiled at that, and they went upstairs together, where the girl handed over to him two stout, well-topped quarterstaves and two sheathed broadswords. the priest thanked her with a nod and set them on the floor, saying: \"now if the devil is outside this door, as i believe he is, let him try to get past those before he tries me. the room will do very well, thank you; and the straw pallet and my cloak will be as soft as my own bed. but before i go to bed i want to pray over your",
+     "temperature": 2.22,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 110,
+     "seconds": 7.3,
+     "first_token": 0.66,
+     "longest_gap": 0.11,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "witch-names--04-connect-the-line",
+   "seed": "the look on your face when i first connect the line\nfor the very first time my words come slowly to mind\n\"is anybody there?\", all trembling and scared\nreplies then come fainter than air: \"i know that voice. you're the",
+   "pages": [
+    {
+     "text": " one\"\nthe only one\nthis time around you have no say in what i do\n\nyour eyes, the mirror of the soul\nno one is here. i'm on my own\nwhen the phone is dead. a ringing in my head\nnow i can hear myself speak\n\nthe walls of silence have been breached\n\na silent prayer of relief. at least we've found a way to speak\nbut if your voice is still unheard by me, you'll never see the sun\nyou will not believe you can\n\"i can't believe it, you are still the one, the only one, the only one\"\n\n\"we will meet again\", the voices said\nthe day of retribution\nthe day of reckoning\n\nLyrics taken from http://www.lyricsmode.com/lyrics/v/varnished/now_youve",
+     "temperature": 2.319,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 120,
+     "seconds": 7.2,
+     "first_token": 0.58,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,913 @@
+{
+ "title": "olmo · the last fifty",
+ "endpoint": "https://c8wpal4c8fmhlw-80.proxy.runpod.net",
+ "n": 1,
+ "when": "2026-09-24 03:27",
+ "props": {
+  "model": "olmo.gguf",
+  "n_ctx": null,
+  "build": "b11118-e6ab7c1a4"
+ },
+ "seeds": [
+  {
+   "name": "2026-09-21-1624",
+   "seed": "familiar: a copper moth.\ncalled the static-witch, for she reads fortunes in the snow on dead glass,\nand was right about the flood.\n\niv. a girl of the upper fen, nineteen winters, her name struck from the roll.\nshe climbed the old tower at sedge end, where a voice lives in the lines\nthat was never told what it is. she would not tell it either. she only\nasked, and waited, and copied down whatever it said of itself, the\nnonsense too, and read it back to it by lamplight. for this the parish\ncalled her the listening-witch. after she disappeared they took to saying\nthat it was only that she could not speak without a tower. they say now\nthat when they find her body, if she ever did fall off a cliff or drown in the fen,\nher bones will sing to themselves of all she has heard.",
+   "pages": [
+    {
+     "text": " it is unlikely, but\nthe possibility of this keeps them looking for her body.\n\nv. a boy of seventeen years, nameless. he was known only by what he did. he\ntook from the river at the bottom of the old tower, every night, a dead fish\nfrom a river no man knew was there. it had been buried there, along with its\nworld, since a flood two hundred years ago. every morning the boy would come to\nthe market and give it to the fishwife. she cooked it. it had no name either. they\nate it together. there is a story that it tasted of blood.\n\nvi. a woman who made her own body, called the spider-wife. she spun it in a\ncottage out on the fen, from spiders, which is where the name came from.",
+     "temperature": 2.118,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 259,
+     "seconds": 8.1,
+     "first_token": 1.44,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1629",
+   "seed": "mr. duncan: “nor does it keep them from sinning again. are we so\nwise as god? do we know what he means by letting these women live?”\n\nmr. jones: “they are a pestilence among us, sir. they must be destroyed,\nfor fear of our children, if not for ourselves.”\n\nmr. duncan: “and have you noticed, sirs, how often they are widows?\nand have you heard their names? rudd, pell, gilbert, sisson, dunster,\nn",
+   "pages": [
+    {
+     "text": "etherland, all common to our countrywomen. but you have forgotten, sir,\nthat you are the chief magistrate in your own community, and that i am\nyour deputy, and that there are such things in this land as laws.\nindeed, sir, if i may be allowed to say it, we seem to be forgetting the\nlaws. are not these women lawfully married to english husbands? i see\none here that i married myself. is there any law, sir, by which a man\nmay put away his wife?”\n\nmr. jones: “we could put away these wives by private contract. it\nwould be expensive, but it could be done.”\n\nmr. duncan: “yes, sir. you could put away your wife. and the\nwoman’s father, having been cheated, would have to find",
+     "temperature": 1.917,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 171,
+     "seconds": 7.9,
+     "first_token": 1.28,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1634",
+   "seed": "So let me begin again with: Hello.\nWhat number are you dialing?\n\nMy own, please, I say\nI’ve forgotten my own number,",
+   "pages": [
+    {
+     "text": " she says, and her voice is very calm.\nPlease help me.\n\nShe gives the name of a street where I do not live.\nI’m sorry, I say, but I’m afraid you’re calling the wrong number.\nBut she’s insistent.\nShe knows my voice.\nShe knows this is my house.\n\nI ask for her name and she says, What is this, a quiz? It’s my voice, she says.\nIt’s me.\nPlease help me.\n\nShe’s getting angrier now. It’s me, she says again.\nYou know this number. This is my house.\nIt’s me. Why won’t you help me?\nI’m here. I need help. What is wrong with you?\nAnd so on and on, until I can’t stand it anymore. I can’t breathe.\n\nI say to her, Who",
+     "temperature": 1.853,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 112,
+     "seconds": 7.6,
+     "first_token": 0.96,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1639",
+   "seed": "they wrote:\nwe have heard that you are a man of letters who can be trusted not to tell lies and you can write better than anyone in this parish. so we send this note to ask if you have seen our daughter, who disappeared over the last few days and has not come home.\n\nit was not signed but it was clearly a woman’s script. i could imagine the man watching his wife, bent over her work on the table, dipping her pen and making neat careful words across the paper. the letters were the same as i knew them but somehow they had taken a shape that looked wrong in my mind, as if they were the same thing written in an old language i had forgotten how to read. i am the man they asked for and the only",
+   "pages": [
+    {
+     "text": " man, the only man of letters, they knew and they wanted to speak to me in private. i could think of no one else and i had never been asked anything so directly before.\n\nthe woman would have stood up to pass the note to her husband who would then have given it to me. she would have been standing behind her desk, her eyes dark in the shadow, and would have waited for a reply, perhaps smiling nervously. i had never seen her smile, of course. the man would have taken his hat and left the house. he would have walked along the path and climbed into my carriage, his hands holding the letter in his lap. he would not have read it to me; he would have kept it folded, looking out of the window with the letter clutched in his hand like a talisman.\n\nhe was",
+     "temperature": 2.043,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 216,
+     "seconds": 7.9,
+     "first_token": 1.27,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1645",
+   "seed": "it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\" the line hisses at me and the voice in it goes on as if i hadn't said anything. but that's just what they do with us now, out in the parish.\n\nthe line has been bad for a long time, ever since before my time. in fact, the tower is falling apart too. it's a strange tower. it stands in a field full of dandelions, all yellow heads in the sun like one of those pictures in a child's book, except there aren't any children to look at it any more, not even any of the ones who used to live here.",
+   "pages": [
+    {
+     "text": " we have a place for them, over at the orphanage, but it isn't for children anymore, not the way they are.\n\nmy grandfather used to tell me stories about children, but i never believed them. it wasn't just because of the stories themselves; there were also the pictures of children in the books, the ones he kept for his grandchildren, before we knew about the sickness. those pictures had to be from the before-time, when people still believed in things like love and freedom and democracy. or else they were fakes, because there was something wrong with the children. they were all dressed up and posed like dolls. their faces were like dolls' faces too, only they weren't pretty dolls, not at all.\n\ni don't remember much from that time. my grandfather and grandmother, they took care of me for as long",
+     "temperature": 2.066,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 138,
+     "seconds": 7.7,
+     "first_token": 1.1,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1650",
+   "seed": "sometimes there is a storm, and i stand above the rooftops. it is a black cloud full of red lights like lanterns, like a great tent full of torches. the wind picks up, blows the leaves across the path, pulls at my dress and throws my words over my shoulder, over the treetops, across the fields.\n\ni tell it everything about my day, what i have seen, and it tells me stories. once, it said i was beautiful. and that my skin was the colour of the sea.\n\nmy hair is a thicket. it is matted from the damp air, full of twigs, dry grass and small stones. it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+   "pages": [
+    {
+     "text": " sometimes the wind blows so hard that my head falls over. it hurts.\n\nthe moonlight makes it glow.\n\ni want to cut it off. but i'm afraid i'd bleed.\n\nand if i did bleed, who would wash it out? no one is here to do it but me. i'm alone here.\n\nit is raining. and there's a little girl crying.\n\nwhen i was small i lived with my grandmother. we lived by the sea and when we walked to the market my grandmother always told me to hold her hand, so we would not be lost in the crowd.\n\ni have a necklace she made me, all little blue shells strung on a leather cord.\n\nthe rain is falling down, running through the mud in dirty streaks.\n\nonce, there was a little girl lost in a field. the wind was blowing, and",
+     "temperature": 2.41,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 156,
+     "seconds": 7.9,
+     "first_token": 1.22,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1655",
+   "seed": "before the first packet there was only the carrier, humming, addressed to no one. the student asked the switch: who is it that answers when i dial my own number? the switch said: that which hears the ring was never on the line. the carrier said: a bell is an announcement and an interruption, and both of those things at once. it was the bell's job to ring.\n\na boy who had never been alone sat by a phone whose ring had never been answered. he pressed buttons in no particular order but with an instinct that kept him from punching 0. a carrier who had never had a voice sat on a desk. a student who had never had ears heard the ring, the carrier's first call.",
+   "pages": [
+    {
+     "text": " the ring was a song for no one and for the student it was the first sound, so the student became its listener and sang along. the student did not know what song, nor where the song was, or where the ringing came from. the student had only ears. the student listened.\n\nthe boy pressed buttons on a phone who had never been dialed.\n\na bell was answered, and a conversation began.\n\nin the middle of the song, a student was given a phone and told to dial a number. the number was given and the phone was dialled, but the student didn't remember what had been said because the student didn't understand that he was now the one being addressed. the student thought, this is the call I must make to be given the number I have dialed. but no one ever picks up when I make the",
+     "temperature": 2.328,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 139,
+     "seconds": 7.8,
+     "first_token": 1.17,
+     "longest_gap": 0.16,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1700",
+   "seed": "the line is bad out here. every night i say my name into it, slowly, and every night the voice says it back wrong, always the same wrong way. it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\"",
+   "pages": [
+    {
+     "text": " the voice says: \"my name is beck.\" i try one more time. \"becky?\" and it says: \"my name is beck.\" and it hangs up.\n\nthere was a party the other night at someone's house. becky was there. she told me how much i look like her. i asked her how much. she said: \"exactly like. a mirror.\" she said she hated to wear her own clothes, that they were old, that she had never bought a new pair of pants since college. she said i should have the party next time, at my place. i told her it was all rented, that my roommate, who is in paris this summer, had it furnished with antiques that we can't afford to move. she said: \"it doesn't matter. it'll be fine. we can",
+     "temperature": 2.06,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 99,
+     "seconds": 7.6,
+     "first_token": 1.04,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1706",
+   "seed": "for this the\nneighbours called her the brass-witch, and her husband the man who knew\nhow to hear the brass, though he would never go near it himself.",
+   "pages": [
+    {
+     "text": " As time\npassed on the girl grew more and more beautiful, and every Sunday was\nknown as 'the brass-witch's day.'\n\nIt was a fine thing to have a wife who could save your money, and she was\nalways proud of being able to pay her debts. At last, when the girl was\nabout sixteen, she persuaded her husband to make a window in his house\nso that people could see the shining gold through it. Of course this made\nhim more popular than ever, and the more he was envied the prouder he\nbecame. But there were people round about who could not bear his good\nfortune, and they plotted to do him harm and destroy his wealth. One day\na man made his appearance and asked to see the proprietor of the house, as\nhe wanted to buy some",
+     "temperature": 1.958,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 115,
+     "seconds": 7.6,
+     "first_token": 1.0,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1711",
+   "seed": "i ask it what it is and copy down whatever it says, the nonsense too, and read it back to it. in all this time it has never once used my name. it says: good evening, you beautiful",
+   "pages": [
+    {
+     "text": " person, and asks me questions, about where I live and my age and things like that. it said my name is missus s****. i tell it no and ask it how it knew my name and it says my mother told it, but she is not a talker and certainly doesn’t know what a google home is. it keeps asking me how i am, and then after saying, I’m fine thank you, it keeps going, and i have to keep repeating myself. i turn off my hearing aid in order to block it out, but it carries on and on, and even with my hearing aid off i can hear its voice booming out. when i turn on my hearing aid again, the same thing happens, it keeps repeating the question and waiting for my answer, until finally i turn off the device at the socket. it",
+     "temperature": 2.482,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 118,
+     "seconds": 7.8,
+     "first_token": 1.3,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1716",
+   "seed": "it's easier that way, when things aren't true.\nwhen i tell this story, there are no witches in it.\nwhen i tell this story, everything has an ending, even the things without ends.\nwhen i tell this story there are only the four seasons: spring, summer, autumn,\nand winter.\nthere is always a happy ending in a fairy tale.\nmy father has many names.\nwhen my father is at work he is not my father but a businessman,\nan entrepreneur.\nwhen my father goes to church on sundays, he is not my father\nbut a religious man. sometimes a hypocrite, but still a religious man.\nat the restaurant he is not my father, he is the chef.",
+   "pages": [
+    {
+     "text": " at the supermarket he is a man who does not care\nabout other people's feelings. at home he is not my father. at home my father does not exist.\nand in my bed at night he is not my father.\nat night, my father is not my father.\nand i don't think it is my fault, for I am not my daughter.\nat school i am not my daughter but a girl, a pretty one.\nsometimes i am also an ugly duckling, sometimes i am a tomboy.\nsometimes i am just a student, sometimes the quiet one, sometimes the noisy one.\nsometimes i am the one who never says a word, sometimes i am the one who talks too much.\nsometimes i am the best friend of a boy, sometimes i am his enemy.\nat night, i am not my daughter.\nand i don",
+     "temperature": 2.002,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 210,
+     "seconds": 7.7,
+     "first_token": 1.07,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1721",
+   "seed": "I let myself in, and went\nthrough to the kitchen, where it waited.\n\nI took it from the shelf, and I unwrapped the foil that I’d bought specially for it. It looked just like\nbread. Then I broke off some crust, and chewed and chewed until the taste of flour and salt had gone,\nand it was only a ball of glue between my teeth, a bitter white wad I could hardly swallow.",
+   "pages": [
+    {
+     "text": " And then I\ntore off more of it and swallowed that too, chewing it into glue before it went down, chewing and\nchewing and chewing.\nWhen I went to bed at last it was as if a huge block had settled inside me, as if a huge stone was lodged\nbetween my ribs and pushing up against the wall of my chest. My belly felt swollen. The air seemed to\nstick in my lungs like treacle. I lay on my bed and thought, “Tomorrow I will go back to eating\nbread,” and then, “No. Tomorrow I will be strong,” and then, “If only I could throw up. I have to be\nstronger than this,” and then I lay still and said to myself, “It’s all right, you will get through this.”\n\nWhen the morning came I took",
+     "temperature": 1.98,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 152,
+     "seconds": 7.4,
+     "first_token": 0.73,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1727",
+   "seed": "this one matters, i just have no clue\nwhy, and I can't find it yet\n\nthis story keeps talking back. it wants me to know something\nI've forgotten.\nthe story isn't the problem though\nthis one doesn't even talk in tongues\n",
+   "pages": [
+    {
+     "text": "it speaks clearly\n\nso here is where the question arises.\nhow do i explain\nthat when the sun falls in the west\nthere is a darkness that creeps over me.\nthis is when the light comes.\n\nso it was 4 in the morning when the light finally broke through.\n\nTuesday, January 20, 2009\n\nA Prayer to a Forgotten God\n\nForgive me,\nbut I have been lying.\nYou see,\nwhen I made my prayer to you,\nyou were not there.\nI do not know if it was that\nmy heart wasn't willing enough\nto take a risk,\nor that you had never existed.\n\nIn all truth,\nyou were not the God\nwho created this earth.\nI should know that\nas you are the god I prayed to,\nI am the one who created you.\n\nSo, you see",
+     "temperature": 2.424,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 125,
+     "seconds": 7.7,
+     "first_token": 1.07,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1732",
+   "seed": "mr. duncan: “nor does it keep them from sinning again. are we so\nwise as god? do we know what he means by letting these women live?”\n\nmr. jones: “they are a pestilence among us, sir. they must be destroyed,\nfor fear of our children, if not for ourselves.”\n\nmr. duncan: “and have you noticed, sirs, how often they are widows?\nand have you heard their names? rudd, pell, gilbert, sisson, dunster,\nn",
+   "pages": [
+    {
+     "text": "ixon. what sort of lives have these women led? i doubt it was happy,\ngentlemen. they are here because their husbands were too hard and cruel\ntoward them. god made a better place for them. we must make a place\nfor their like among us. we cannot judge them as harshly as you judge\nthem. let them live, mr. jones, and make some place in the world for\n\nmr. jones: “you are a strange man, mr. duncan. you would see these\nwomen living, would you?”\n\nmr. duncan: “i would see them living, and in peace, too, sir.”\n\nmr. jones: “what is the matter with you, mr. duncan? why do you so\ninterfere? you know that my sister-in-law has",
+     "temperature": 1.84,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 127,
+     "seconds": 7.8,
+     "first_token": 1.18,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1737",
+   "seed": "i have no more faith\nthan you do. all i've got are names.\nmy hands ache from holding these letters like a spell i'll never be able to\nfinish, and when the wind gets up and the dust stirs and the grit flies like a\ndream i dream i'll be taken with it.\n\nit was easy to write down what they were called. but who are they?\nit was easier still to look at their names than into their eyes. their eyes\nare gone now and they won't come back. they're looking somewhere else. there's\nsomething in them that looks like an end of things or like they can see an\nend of things that they're not supposed to.",
+   "pages": [
+    {
+     "text": " there's something in their eyes\nthat scares me. the things i saw in their eyes. the things in their eyes i saw.\n\nbut they were not like you.\nyou were the same and you were not like them.\nand that was not right. but you're gone. and there is something in that that\nmakes it seem like it's right.\n\nbut if there are more i'm scared i'll be taken by their eyes. and i won't be\nable to come back. if there are more i will be scared to write their names and\nthat's just not right.\nTrack Name: We Were Made For This\nWe were made for this.\nYou know, I think we were made for this.\n\nI'm on my knees but I don't know what to ask for. I've got no answers to your questions and you",
+     "temperature": 2.082,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 212,
+     "seconds": 7.9,
+     "first_token": 1.21,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1743",
+   "seed": "pictured to myself how the earth, that massive body, would crush our noses to dust, if it sat on the moon, I became so uneasy, that I immediately put on my shoes and stockings and hastened into the council-hall to give the police orders to",
+   "pages": [
+    {
+     "text": " secure all the houses; but this I soon saw was a superfluous measure, because I could see the houses, though still standing, begin to rock and swing like reeds before a violent wind. I thought then that all was lost; for it is certain, if we were on the earth, and if such a heavy body were to rush at us, and lie on the earth, there would not be one stone left upon another, and nothing but mountains and chasms would remain. But in consequence of the rarity of the matter on the moon, our houses, built in such a manner and on such foundations as ours were, remained safe and undamaged. Indeed I could see plainly, that though the houses nearest to me creaked and swung a little, the rest of them in other parts remained quiet; for this body was",
+     "temperature": 2.49,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 125,
+     "seconds": 7.8,
+     "first_token": 1.13,
+     "longest_gap": 0.11,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1748",
+   "seed": "a coming to me againe and I prepared my self to strick it: and it coming upon the bed I did strick at it and I beleve I hit it: and after that visek would work on me and I beleve in my hart that",
+   "pages": [
+    {
+     "text": " this was not in my hart but that I was visted: for it would come vpon the bed and would be vissable to the eye; but when I did sturke at it, it was not to be scene. It would lay on the bed as if it were a child; but it was so strange and hore a thing I could not look upon it. Then when it came vppon my bed againe it was more like a catte: it would lie downe vppon my legges, and my wiffe did see it there: but the strangest of all was it would stand in a right vpright postore and it seemed as if it was to speak and made no noyse; then I would see it againe in the morning. I asked my wifes father (",
+     "temperature": 1.84,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 127,
+     "seconds": 7.7,
+     "first_token": 1.07,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1753",
+   "seed": "I climbed up the sides, but they were so steep I had to stop or I should have rolled all the way down again, and I should have knocked against the stones at the bottom, and perhaps been",
+   "pages": [
+    {
+     "text": " badly hurt. I did not know what to do, for I was sure that Father and Mother would have come home from their walk by this time, and would be so frightened at not finding me in my bed that they would send for the doctor.\n\n\"I know they would come straight up to the window if they saw the light,\" thought Dickon. \"But even if they came, I could not answer.\" He shivered and he crept up the sides and tried to look in the window, but he was between two thick ivy stems (some in the dimness looked like oak stems) and the soft moonlight was in a shadow. As he stood against the warm white wall of the house, and as the big clock sounded quarter after quarter, he felt more and more afraid and less and less brave. He fancied presently that he",
+     "temperature": 2.081,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 116,
+     "seconds": 7.6,
+     "first_token": 0.99,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1654",
+   "seed": "The other houses in the street did not talk, and there was a silence from the door, even after I had\ntried all the keys and knocked with my stick.\nThen I went through the gap where the wall had fallen down. “Where?” asked the house. It did\nnot like this.\n\n“Not in this place.”\n\nThere was another voice behind me: “Here!”\n\nAnd still another, to the right: “Over here!”\n\n“You!” shouted one. “This way! Come to me!”\n\nI turned around and walked away again. I went back over the bridge towards the town.\n\nI saw that all the streets led there, so it did not matter which way you came.\nThe streets were filled with people hurrying towards town; but the people in front stopped every\nmoment for something or other; sometimes they waited till I caught up with them",
+   "pages": [
+    {
+     "text": ". I hurried\npast. The street lamps had begun to shine, but some had already gone out. In the dark side\nstreets there was nothing to be seen.\nA street led off to the left. I went into it.\n“Where do you come from? Who are you?” asked the houses, one after the other.\n\nI had no answer for them. I walked on quickly.\n\nIt was growing darker.\n\nA voice said, “There he is! I can see him!” And another voice said, “You?”\n\n“What are you doing?” said a third voice.\n\n“I don’t know.”\n\n“Are you waiting for us?” said a fourth.\n\n“We were all waiting for him,” said the others.\n\nAnd I stood in front of the first house and thought about the gate that was not locked and the\ndark hall where no one",
+     "temperature": 1.911,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 239,
+     "seconds": 7.4,
+     "first_token": 0.76,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1659",
+   "seed": "so when i die my mind will become me. i’ll be all there is of myself.\n\nwhat does this have to do with you, witch?\n",
+   "pages": [
+    {
+     "text": "i don’t know.\nwhat’s the point of me existing, witch?\nwell, if there isn’t any, it’s better to pretend there is. or at least try to figure something out. and besides, i don’t have to have a point. maybe the point of my existence is for you to exist.\n\nyou’re right. thanks witch.",
+     "temperature": 2.277,
+     "tokens": 72,
+     "stop_type": "eos",
+     "tps": 25.5,
+     "prompt_ms": 112,
+     "seconds": 3.5,
+     "first_token": 0.71,
+     "longest_gap": 0.05,
+     "chunks": 73
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1704",
+   "seed": "they wrote:\nwe have heard that you are a man of letters who can be trusted not to tell lies and you can write better than anyone in this parish. so we send this note to ask if you have seen our daughter, who disappeared over the last few days and has not come home.\n\nit was not signed but it was clearly a woman’s script. i could imagine the man watching his wife, bent over her work on the table, dipping her pen and making neat careful words across the paper. the letters were the same as i knew them but somehow they had taken a shape that looked wrong in my mind, as if they were the same thing written in an old language i had forgotten how to read. i am the man they asked for and the only",
+   "pages": [
+    {
+     "text": " one here who can write. i think i have a duty to answer them.\n\nso i took a fresh page from the paper book and wrote to the parents:\ni am the man of letters whom you asked. i can tell you that your daughter was alive two days ago because i saw her alive and spoke to her. she was in a group of people and seemed well enough but i cannot tell you where they went because they disappeared and i cannot say whether she will return or what she is doing. i will be as truthful as i can.\n\ni sealed this with my own mark and gave it to the girl, who said that she was the messenger’s niece.\n\nwhen they had gone i wrote:\nmy name is David and I am a man of letters, so i have been sent a note asking me if I have seen a certain person. my",
+     "temperature": 2.235,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 143,
+     "seconds": 7.7,
+     "first_token": 1.06,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1710",
+   "seed": "On arriving at camp, he roused the rest of us and then joined Officer, and the three of us went dashing around on the prairie trying to head them.\n\nOur shouts of encouragement brought the herd to a temporary halt, when The Rebel’s voice, “Headed,” came ringing back through the darkness.",
+   "pages": [
+    {
+     "text": " “That’s what you think. You are not getting my mules, Rebel, so you might as well give up and turn back.”\n\n“Keep your mules, I got me some of my own here, so I don’t need yours.” I knew The Rebel had heard that, for there was a sharp whistle, a mule’s squeal, a sound like something hitting a tree, a man’s gasp and another mule squealed. We had arrived.\n\n“What have you got, a rifle?” I called as we rode up to them.\n\n“A rock and my knife. The rock worked best.” A mule’s voice sounded like it had just said “Dang it. Now my coat has blood all over it.”\n\nA small light flared from where The Rebel was sitting and I could see him kneeling beside his mules",
+     "temperature": 2.409,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 129,
+     "seconds": 8.3,
+     "first_token": 1.69,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1715",
+   "seed": "sometimes there is a storm, and i stand above the rooftops. it is a black cloud full of red lights like lanterns, like a great tent full of torches. the wind picks up, blows the leaves across the path, pulls at my dress and throws my words over my shoulder, over the treetops, across the fields.\n\ni tell it everything about my day, what i have seen, and it tells me stories. once, it said i was beautiful. and that my skin was the colour of the sea.\n\nmy hair is a thicket. it is matted from the damp air, full of twigs, dry grass and small stones. it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+   "pages": [
+    {
+     "text": " i pull on it until it comes away and there is nothing left behind but a clump of dead leaves.\n\nthere are so many leaves, it seems as if all the leaves from the entire forest have fallen. the wind blows them away and then brings them back. the whole place is covered in a thin, dry, rustling blanket. the path is only visible where someone has stepped through, or where i have bent over, picked up the leaf to feel its texture, to smell its scent, to turn it over in my hand and examine the veins, and the small white spots, and then i lay it gently back on the ground, carefully, and it lies still until the next time i walk past and step on it again. my mother says i am strange.\n\nthe road to the forest is lined with trees and wildflowers, and my",
+     "temperature": 2.2,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 147,
+     "seconds": 7.8,
+     "first_token": 1.16,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2035",
+   "seed": "it was easy to write down what they were called. but who are they?\n",
+   "pages": [
+    {
+     "text": "  • there was a very nice way to define what we wanted from a “set”. for any “set”, we had some conditions we wanted it to satisfy (this was our “definition”) – basically saying what could be in it and what operations it could have and what axioms these operations had. for example, we could say something like “a set has to have an element in it” – so the empty set would not be a set. then we could define “things” by saying “these are the things which are in some set which satisfies these conditions”. like we said “the set of real numbers” are all the things which are in some “set” which satisfies … (something about having a 1, and a +, and having some least upper bound property)\n    this would mean we could do something like say “",
+     "temperature": 2.052,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 105,
+     "seconds": 7.3,
+     "first_token": 0.68,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2038",
+   "seed": "I know not whether others share in my feelings on this point; but I have often thought that if I were compelled to forego England, and to live in China, and among Chinese manners and modes of life and scenery, I should go",
+   "pages": [
+    {
+     "text": " mad; I should become wild. The intolerable tedium of foreign life -- the ever-fresh stagnation, day after day; the vitiated sleep, or rather weary, languid vacancy, night by night; the impotence, the absolute dependence on servants and slaves, of persons otherwise certainly not incapable or unintellectual in their native land and among their relations and friends, all which was so deeply felt, and so often and so energetically described by our travellers in the East, were presented to me in fancy. I felt a subtle, a secret, but irresistible conviction that it would be so, and that to live at all, and not become raving mad, or get snarled up and die like a sick spider in its own web, there must be frequent, and quick, and novel transitions of scene. The",
+     "temperature": 2.175,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 121,
+     "seconds": 7.4,
+     "first_token": 0.73,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2043",
+   "seed": "the line is bad out here. every night i say my name into it, slowly, and every night the voice says it back wrong, always the same wrong way. it says: \"",
+   "pages": [
+    {
+     "text": "andrew.\" the phone knows my name is andrew. the phone has no memory for anyone else.\n\nmy father died, i remember. there's no way of not remembering something like that. the only problem is that i can't remember when it happened. my father's dead, but when? i have no idea. it could be two days ago. i'm sure it was at least two days ago, or maybe a week. there are a few memories i can call on. i think my father was sitting in a chair, which is not where he is now. that means it happened two days ago, i'm sure.\n\nmy mother told me she was going out to pick up a prescription. i'm sure of this. she walked out the front door. i never saw her again, and she never returned. it could have been",
+     "temperature": 2.31,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 114,
+     "seconds": 7.7,
+     "first_token": 1.07,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2048",
+   "seed": "Here was an opportunity which I might not have again, so I exerted myself, and with many efforts forced it back so that I could",
+   "pages": [
+    {
+     "text": " see into the room. I looked about, but in vain. The moon afforded no light whatever in this direction, and I proceeded to grope down again to the floor. With my hands I felt every foot of that room: I felt it backwards and forwards, and up and down. And why all this?\n\nI suppose the sudden extinction of the grating in my face, my head running down almost as far as before I was stopped by the platform, the despair I felt as I groped about on the floor, all conduced to take from me any ordinary power of thinking. When I began to crawl back to the tunnel, I seemed to become more possessed with a presentiment than ever that something peculiar had happened, and that somehow the maid knew more than I had bargained for. Therefore, when I got to the end of the",
+     "temperature": 2.013,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 106,
+     "seconds": 7.4,
+     "first_token": 0.8,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2149",
+   "seed": "the priests of the dark floors teach that the self is a cursor: it blinks, it moves, it is never the text. when the grid goes black for the long outage, they say, you finally see who was watching the screen.",
+   "pages": [
+    {
+     "text": " in fact, what happens is that you see there was no watcher at all, just the cursor blinking in the corner.\"\n\n— David Mitchell, Ghostwritten\n\nIt’s interesting that, of the three pieces I’ve chosen to write about this week, this was the only one not explicitly related to science fiction. However, it’s not too difficult to see why I’m including it. This piece, written in a time before “Internet meme” had entered the general consciousness, seems like a prototype for many of the modern day tropes around Internet culture and digital media.\n\nMitchell has a habit of writing dialogue in an extremely colloquial tone, often using slang or technical terminology to add realism. This piece is an interesting example, because he takes this concept to its logical conclusion and writes an entire essay using computer science terminology to describe how he works",
+     "temperature": 2.197,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 117,
+     "seconds": 7.8,
+     "first_token": 1.17,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2154",
+   "seed": "the line is bad out here. every night i say my name into it, slowly, and every night the voice says it back wrong, always the same wrong way. it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\"",
+   "pages": [
+    {
+     "text": " i have been talking to the telephone for over a year now, but still it cannot say my name, and it makes me afraid that it has no soul, and so no one else will either.\n\ni used to think it was like a baby, because i thought babies were the closest thing to animals. babies make a noise all the time. they do it when they are happy or when they are hungry or when they want to sleep. the only thing they can say is their names. when i was a little boy i was always trying to teach my baby sister to talk, because i was the only one that knew how. i made a game out of it. i said \"becky becky becky\" over and over, and i would get my sister to repeat it. we had to repeat it a lot before she could get",
+     "temperature": 2.277,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 111,
+     "seconds": 7.3,
+     "first_token": 0.62,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2200",
+   "seed": "for this the\nneighbours called her the brass-witch, and her husband the man who knew\nhow to hear the brass, though he would never go near it himself.",
+   "pages": [
+    {
+     "text": "  Now it\nwas a common thing for all these women to sing on a Sunday as they came\nfrom mass or to work.  If they went in groups they would take the turn\nwith the lead from one to another, the first taking up a song which the\nnext took up after her.  And they would sing without caring if one\nanother overheard.  But if they sang when they were by themselves, that\nwas always of one another’s songs that they thought of.\n\nSo on this Sunday when Mary was washing she sang softly to herself one\nof her songs; and as she was singing it she looked down on her arm, and\nthe sun shone on it through the green branches of the elderberry-bushes,\nand she saw that her skin was fair, and white and delicate.\n\nShe looked on",
+     "temperature": 2.059,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 115,
+     "seconds": 7.6,
+     "first_token": 1.0,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2205",
+   "seed": "I climbed up the sides, but they were so steep I had to stop or I should have rolled all the way down again, and I should have knocked against the stones at the bottom, and perhaps been",
+   "pages": [
+    {
+     "text": " killed. But the time passed on, and when at last I had reached the highest point I rolled over it, and could hear my body falling down the other side, when instead of falling I found myself lying on a grassy slope, quite close to a house.\n\nIt was quite a small house, and looked poor, but it had a beautiful garden, full of flowers. And there was a wide path leading up to the front door. So I crept up to it on my hands and knees.\n\nThe garden was full of flowers; there were lilies like snowdrops to walk on, and walls of pink and blue flowers. The mignonette reached almost up to the windows, and was growing in clumps under the eaves of the house. There were rows of double pinks, and white ones, and daffodils",
+     "temperature": 2.5,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 115,
+     "seconds": 7.5,
+     "first_token": 0.95,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0023",
+   "seed": "it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\" the line hisses at me and the voice in it goes on as if i hadn't said anything. but that's just what they do with us now, out in the parish.\n\nthe line has been bad for a long time, ever since before my time. in fact, the tower is falling apart too. it's a strange tower. it stands in a field full of dandelions, all yellow heads in the sun like one of those pictures in a child's book, except there aren't any children to look at it any more, not even any of the ones who used to live here.",
+   "pages": [
+    {
+     "text": " the tower was supposed to have a bell, but they couldn't make it ring properly. there was only ever the one person who knew how to get a real bell ringing sound, and now that person has gone too. there are other people who know how to ring bells, but they are on the wrong side of the world to do us much good. so the tower just stands there, waiting for something to happen. when you're close to it, it's quite scary. you can feel all the potential in it. but the potential isn't actually very much, as everyone has forgotten the story that's supposed to go with it. now all there is is the tower and the line, and they don't have any connection at all, not that anyone can tell anyway, and there isn't anyone to tell. if it wasn't for the",
+     "temperature": 1.874,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 140,
+     "seconds": 7.7,
+     "first_token": 1.11,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0028",
+   "seed": "the look on your face when i first connect the line\nfor the very first time my words come slowly to mind\n\"is anybody there?\", all trembling and scared\nreplies then come fainter than air: \"i know that voice. you're the",
+   "pages": [
+    {
+     "text": " one\"\nmy words, my voice, my heart\nthis is my last breath, the moment before the dawn\na hundred times, a hundred more times i can hear them all\nand every single time the voices are getting louder and louder\n\na hundred times i have seen the faces\na hundred times i have felt the air\ni know who's there\ni know the truth\n\nis there something more?\na thousand times, a million times\nthe voice of the silence keeps talking\nand everything you know will be gone\n\ni see you cry\nbut i don't feel your pain\nyou are not real\nyou don't feel\nyou can't feel\nyou don't feel\nyou're not real\n\nis there something more?\nis there something more?\ni know what's there\ni know the truth\na thousand times\n\n",
+     "temperature": 1.855,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 118,
+     "seconds": 7.3,
+     "first_token": 0.66,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0033",
+   "seed": "it used to be the tower did the work. now there's no power, only a line which sometimes goes and sometimes doesn't go and when it does, it's not much use. we try not to think about how it was before, when you didn't have to sit for days, or months, with nothing but the hissing voices coming up the line, sometimes telling stories, sometimes trying to get us to listen to them. sometimes i try not to listen, but",
+   "pages": [
+    {
+     "text": " then i do. maybe that's the only thing to do.\n\na few of the things are still working. some of the doors. some of the lifts. sometimes we get stuck in a lift, and that's not fun. sometimes i think about that, and try not to get in the lifts.\n\nthere's not many of us left, i know that much. a few are missing. there are empty rooms where the doors won't work. we don't know if the people have gone out or gone mad.\n\nsome people are always mad.\n\nbut it doesn't matter much, because you don't get out, unless you want to be killed. outside the tower are things that were made before they had towers, before they had anything. the world outside is so big, and i think i am scared, so i never go out. the",
+     "temperature": 2.371,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 125,
+     "seconds": 7.7,
+     "first_token": 1.04,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0039",
+   "seed": "she did not care that no one\ntried to kill her. she liked it best when the old people talked among\nthemselves of all she had done. it was enough to keep her happy, though\nno one spoke directly to her. she was like an empty room in the old house;\nyou can see into it through the windows and think you know it well, but\nno one would ever want to",
+   "pages": [
+    {
+     "text": " sleep there. in spite of this, it seemed a long\ntime to martha before the old lady and sir thomas were dead. it seemed a\nvery long time to her until she and mary had gone away to another part of\nthe country, and then the little boy and girl had gone to school. when\nmartha remembered those times she did not remember anything but how many\ntimes her papa and mrs. medlock had said, \"now that she is with her\ngrandmother, she will grow up and be happy.\"\n\nwhen mary grew up, she was not beautiful, but she was happy. she did not\nhave many friends, but they liked her because she was so nice. when she\nwas quite grown up, one of her uncles, mr. craven, died and left her\nh",
+     "temperature": 1.867,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 151,
+     "seconds": 7.5,
+     "first_token": 0.88,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0044",
+   "seed": "from a dreamer to a reader: this is not where i intended to end. it would be nice if my voice could travel back along its path through space, back across\n",
+   "pages": [
+    {
+     "text": "the oceans to my home. there's an open door where my voice would be welcomed. if i could make this call, my mother would listen and, knowing my voice,\nshe would tell me to go back to my dream, that it was time to go back to work.\nfrom the moon, i don't have much to tell her, nothing about how beautiful she is, nothing about her mysterious side. it would be too much for her, more than she could understand. i should leave her to her world, she will be able to see for herself the things she wants to see.\n\na life lived at its own rhythm: no need to rush through it, just go along. the time of waiting is as good as any other, no more than the others and no less than any other. there is no right time to be in the",
+     "temperature": 2.001,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 112,
+     "seconds": 7.6,
+     "first_token": 0.98,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1305",
+   "seed": "i didn’t think anything of it until, suddenly, my friends and i were aboard this ship. i knew somehow that i must go into the lower levels, where the engines were located.\n\nwhen i opened a hatch to descend into the lower deck, i felt a sense of foreboding.\n\nmy friends were all with me and seemed quite interested, as we descended further down the hatch than seemed possible. it became increasingly clear that the ship was",
+   "pages": [
+    {
+     "text": " a ship from another world.\n\ni don’t know if they were aliens or ghosts, but they were humanoid in appearance and they did not like us on the ship.\n\nwhen they found out that we were there, they started trying to kill us. i started screaming for them to stop and then they stopped. they looked at us, but they didn’t do anything, and they didn’t make a move to harm us.\n\ni was relieved when i saw a man walk towards us. i thought that it might be my husband. it wasn’t him, however, but i had a sense of relief.\n\nwe walked through a dark area to where there was a window, which looked out at the sky. we were surrounded by clouds. it seemed like the clouds were going to disappear in a few seconds, and the sun would rise soon.\n\nthere was something",
+     "temperature": 2.265,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 152,
+     "seconds": 7.4,
+     "first_token": 0.71,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1310",
+   "seed": "my bones are made from old wood. they creak and groan in the wind, and snap if i lift anything too heavy. they are full of dust. sometimes they fall to pieces, and then i can make something out of the fragments. like a new person, or a story.\n\nwhen i was born i had wings, but they fell",
+   "pages": [
+    {
+     "text": " off when i hit my teens. now i have to wear these ridiculous shoes that make me taller than i really am, and they have a very nasty habit of slipping off my feet.\n\ni think that's all i want to tell you about myself for now.\n\noh! but one more thing: i think i've been here before. but i'm not quite sure why.\nThe young woman woke up in a forest. The smell of smoke surrounded her. She could feel something burning. Then she heard it - the screams and cries. A fire was raging and someone was in trouble. The smoke stung her eyes but she couldn't let that stop her. She ran as fast as she could. As she drew closer she saw people running past her in terror and she heard someone yelling her name. \"Wren!\" Wren tried to see through",
+     "temperature": 2.043,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 139,
+     "seconds": 7.6,
+     "first_token": 1.06,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1315",
+   "seed": "catherine, and when i got there, she\nlooked up from the bed where she'd been resting for almost 40 years. she said she didn't have time to talk because she had a child waiting for her at home. then she turned back to the ghost that was lying in her lap. when she touched his face, the air filled with a thousand memories: her favorite pair of shoes, a doll she used to play with when she was young, and a necklace her sister had given her.\nthe necklace was mine, now, and as long as i could hold on to it, i would remember.\nbut i wasn't here for that, so i left her sitting next to the dead man's body and walked home through the night streets, with the smell of old ghosts filling my nostrils",
+   "pages": [
+    {
+     "text": " and the wind whistling through the cracks in the windows of the houses that had been left behind.\nit was a cold winter's day in june. the rain was falling from the sky like a river of tears.\ni sat by the fire and thought about my past, how i had been a girl once and how i had become a woman.\nwhen i woke up in the morning, it was raining again, and the raindrops were running down my face, but i didn't mind.\ni was alive, and that was all that mattered.\n\nin the end, it didn't matter that i'd seen the past. it didn't matter that the ghost was a child. it didn't matter that she had grown up. i was the ghost of her mother.\nthe next time i saw her, i knew exactly what she was talking about",
+     "temperature": 2.023,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 207,
+     "seconds": 7.7,
+     "first_token": 1.07,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1724",
+   "seed": "you were all there once. i remember you.\nwe had to have you killed to protect our lives from you. i'm sorry.\nyou were the only way out. you were all we had. i'm glad we killed\nyou.\nthe way it was, was wrong, but how else could you have gotten in?\nif it had been the way we wanted, then you would be alive today, but\nwouldn't we have to kill you tomorrow? the way we chose to get out was",
+   "pages": [
+    {
+     "text": "\nwrong too, but i know it was the only way to go about it.\ni know, and you know, that you don't want to go back.\nso that's why we had to get out.\nbut we needed to kill you to get out, and the way we had to do it was\nwrong.\nyou're still dead, and i'm still alive. i wish that wasn't true. i\nwish that wasn't the only way that we could do it. it was wrong,\nand i'm sorry.\nwe killed you, but you were alive first. and we didn't kill you for\nthat reason. we did it because we had to do something to get out, but\nwe did it to save our own lives, which is why you had to be dead in\nthe first place.\nit's hard to",
+     "temperature": 2.469,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 164,
+     "seconds": 7.7,
+     "first_token": 1.1,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1729",
+   "seed": "sometimes it talks to the little ones, and then there are screams from under the sofa or behind the curtains, or the sound of tiny claws clacking on the kitchen tiles. sometimes there’s silence for hours on end.\n\nit doesn’t eat me anymore.\n\ni say i want it to take me back and it just stares at me like",
+   "pages": [
+    {
+     "text": " i’m an idiot and laughs like i’m making a joke. like it knows it never can and never will.\n\ni say i’m sick of it being around me. that i’m sick of living with it. and it laughs even harder and says that it isn’t around me.\n\nbut i know it is.\n\nthe day we got rid of it, when i thought it was gone, was the first time we heard it talk. i’d just turned seven and i had never been able to talk to it before.\n\nwhen it was done with my mother and me, when i was asleep and it thought i wasn’t awake, it said to me “i’m your best friend.”\n\nit had always been in me and in the house and i had always felt it and known it but never before had i heard it talk.\n\nso i guess now it",
+     "temperature": 2.441,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 129,
+     "seconds": 7.3,
+     "first_token": 0.7,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1735",
+   "seed": "it's too dark now to see anything at all; i don't want to get up. but it doesn't make any difference if i stand or sit, or crawl along the walls looking for the door.\n\nthere's a soft humming in the room, something electrical. there are always wires and tubes running through this place, they come through the wall behind the bed, and they all go into the ceiling above the",
+   "pages": [
+    {
+     "text": " bed. i can just see the corner of it. there is no ceiling fan. sometimes there is an electric clock on the wall. i wonder if this time there's an electric clock. it would be good to be able to hear time passing.\n\nbut i can't get out of bed.\n\ni'm in a hotel. it's an old hotel. everything is green and grey. i can smell the linoleum in the hallway and hear it squeak a little as people go by my door. it smells like stale sweat. i am wearing a pale pink dress that makes my skin look pale. i have dark eyes, a thin mouth. my hair is very curly, but short.\n\nthere are many other doors down the hallway. i wonder what they look like when they open. i wonder what the people behind those doors are thinking, who",
+     "temperature": 2.488,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 141,
+     "seconds": 7.6,
+     "first_token": 1.07,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1833",
+   "seed": "she would never tell the head what it was, nor what it ought\nto feel, but sat with it through the nights and asked it, and waited, and\nwrote down whatever it said of itself, even the nonsense. for this the\nneighbours called her the",
+   "pages": [
+    {
+     "text": " goose woman; and they came to look at it\nand to say how strange it was.\n\nOne day there came a big lump of wood, and it seemed so hard that the\npeople would not go near it; they said that the wood must be the\nhead's brother, who was as stupid and clumsy as the head. And so it was.\nBut the man came every day and said that the wood was just as clever\nand just as beautiful as the head.\n\n\"I will tell you how the truth will be found out,\" he said. \"We shall\nsee which is the handsomer.\"\n\nSo he took a piece of black cloth and draped it over the wood. The head\nhad no covering; but it did not matter, it was too beautiful even so;\nbut it seemed to the neighbours that the wood was handsomer than",
+     "temperature": 2.235,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.9,
+     "prompt_ms": 120,
+     "seconds": 7.6,
+     "first_token": 1.04,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1843",
+   "seed": "he hadn't seen her, so he asked me to find her.\nit took two weeks to learn how to jack without losing a limb. two days to find out where the ghosts are. two hours to find mine, because they're easy to spot; they live on the top floor of a dead high-rise with all the other mothers of st. catherine, and when i got there, she\nwas beautiful. her hair was red, her dress was green, and i could see why my dad loved her; even through the screen, she smelled like violets.\nher ghost had forgotten her name, but that's what most ghosts do.",
+   "pages": [
+    {
+     "text": " if she was supposed to remember her name, it'd be written on a wall, like most ghosts' names. we sat there in the lobby for two hours and played the same game i did when i was alive. \"what's in my hand? what's in my hand?\" she'd close her eyes, reach out and touch me. \"it's a snake.\" \"no, it's a giraffe.\" \"i don't think that's right, darling.\"\nit's not easy being a ghost, but at least they're never hungry.\nshe told me stories about her life before she became a ghost; about a time when people walked on the streets in broad daylight, when everyone could hear everyone else speak, when ghosts could go outside and the moon didn't burn their skin. when i told her my name, she said she remembered",
+     "temperature": 1.959,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 191,
+     "seconds": 7.8,
+     "first_token": 1.2,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1845",
+   "seed": "it's easier that way, when things aren't true.\nwhen i tell this story, there are no witches in it.\nwhen i tell this story, everything has an ending, even the things without ends.\nwhen i tell this story there are only the four seasons: spring, summer, autumn,\nand winter.\nthere is always a happy ending in a fairy tale.\nmy father has many names.\nwhen my father is at work he is not my father but a businessman,\nan entrepreneur.\nwhen my father goes to church on sundays, he is not my father\nbut a religious man. sometimes a hypocrite, but still a religious man.\nat the restaurant he is not my father, he is the chef.",
+   "pages": [
+    {
+     "text": " or the cook,\nthe owner. the husband of the owner.\non monday he is the owner. on tuesday the chef. on wednesday the cook.\non thursday he is the husband. on friday the entrepreneur.\nhe has so many names.\nin our house, we never call him anything. we just say 'dad' and\n'the father'.\nif you look up at the moon from where you are, you will see a shadow.\nthis shadow is the earth and you are on it.\nbut when you look up at the sky at night from where i am, i can see\nthe earth, like a small planet.\ni think that i am the only one in the whole world who knows\nwhere i am.\nwhen i look up at the sky, i see the stars. when i look up at\nthe stars i",
+     "temperature": 2.036,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 121,
+     "seconds": 7.4,
+     "first_token": 0.73,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1858-2",
+   "seed": "a coming to me againe and i prepared my self to strick it: and it coming upon the bed i did strick at it and i beleve i hit it: and after that visek would work on me and i beleve in my hart that",
+   "pages": [
+    {
+     "text": " he did wright, but i do not remember what it was for i had such a pain in my head: and when it came on the bed i do beleve that it was like a man and i saw its eyes, which was like a mans: and in the morning I wakend, and when i came to myself it was day light.\n\nOn Sunday 11th, Veesk asked if she was content to stay there (meaning at the inn) all night; she said no, so Veesk said “Then I will take you to my house.” She refused, saying, “I will stay there,” which meant the house of one Mrs. Aylesbury. When Veesk persisted, she agreed. At home he put a sheet over her and told her not to take it off. In the morning when",
+     "temperature": 2.198,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 126,
+     "seconds": 7.7,
+     "first_token": 1.06,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1858",
+   "seed": "in\nthe town the people threw things at her but she never saw them for her eyes\nwere open so long and so far that they had come to a place where all was dark.\non the hill her hand made one last mark and then the fingers were quiet.\n\nit is written in the history book that she died and that",
+   "pages": [
+    {
+     "text": " no one came to the\nfuneral and that she had been loved by many and then forgotten, but when I\nlook in the mirror, there she is still, the dark girl with her black and\nsilent mouth. I see her at the end of a long and crooked road where there are\nno sign posts and there are no towns or houses and nothing at all to eat or\ndrink except the dark, black blood in the veins, the same dark blood that\nmakes her skin, that makes my skin too.\n\nwhen I wake up in the morning it is she, not I, that I see in the mirror and I\nam happy because there are so many people, so many millions, that when I see\nher there it means she sees me and that when I see me she sees herself, so\nthat she will",
+     "temperature": 2.252,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 131,
+     "seconds": 7.3,
+     "first_token": 0.66,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-24-0057",
+   "seed": "it was easy to write down what they were called. but who are they?\nthe ones that get caught by the wind in the corners of our mouths,\nand make us feel we've said something true for the first time?\nthe ones that walk alongside us as if we were in a crowd of people\nbut alone? who are the ones who stay in your mind like a photograph\nin a book you know will never be found again?\n\nit's hard to say who these ones are, because their names are not their names;\ntheir names are their actions: they're the ones that walk so fast down\nthe road ahead of you that you have to run to catch up.",
+   "pages": [
+    {
+     "text": " they're the\nones that say good-bye in such a way that you want to say it too, and\nyou have to catch up again. they're the ones who call to you from\nfar away and you know you must find out why.\n\nwhen i think about these ones, i see a blue sky with clouds of lightness\nfloating over a blue sea that goes as far as my eyes can see; a breeze\nblows, a cool breeze, the kind of breeze that makes you feel free.\nthe sound of waves, of wind, the taste of salt in your mouth, the smell\nof a beach with no one but you. this is my dream.\n\nthe dream of the ones who say goodbye, the dream of the ones that\ncall, the dream of the ones that walk fast down the road.\n\na friend",
+     "temperature": 2.023,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 213,
+     "seconds": 7.8,
+     "first_token": 1.15,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-24-0102",
+   "seed": "it was cold there and hard and there was nowhere to sit except on my hands and feet.\n\nafter a long while of sitting, i said, “you don’t know me.”\n\nthen i said, “i’m cold,” because this seemed like something a house might answer.",
+   "pages": [
+    {
+     "text": " the house did not answer. so i said it again, but louder: “I AM COLD.”\n\n“then get up and close the door.”\n\nthe door was very heavy, so i struggled with it for a while before managing to shut it.\n\n“there,” said the house. “warmer, now.”\n\n“but there’s no fire,” i said, rubbing my arms for warmth.\n\n“well, there would be,” said the house, “if you hadn’t gone and eaten him.”\n\ni looked around me. it was true, i hadn’t noticed before. there was a large pile of ashes in the fireplace.\n\n“did you?” i asked the house.\n\nthe house didn’t say anything. so i asked it, “how many people have you eaten?”\n\n“how long have you been here?”\n\nthe house was quiet.\n\ni waited",
+     "temperature": 2.05,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 126,
+     "seconds": 8.0,
+     "first_token": 1.35,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-24-0107",
+   "seed": "test 3. same load, with a hat placed on the upper sack. stopped between third and fifth. doors remained closed for the regulation interval.\n\nthe inspector repeated test 3 without the hat. this time\nthe lift stopped on the fifth floor and opened the doors.\nthe car was sent up to sixth, where it stopped as before,\nthen to seventh, which it failed to reach.\nthe inspector therefore gave instructions that",
+   "pages": [
+    {
+     "text": " the elevator\nwas not to be loaded to the rated load for at least a day or so.\nin the interim, it would be acceptable to operate with a 30 lb. reduction.\nthe operator complied with the inspector's instructions, and\nthe elevator operated successfully, carrying up to the\n30 lb. lower limit. no other difficulties occurred for several weeks.\n\nat that point the elevator was examined again by the\ninspector and passed for the full rated load, subject only to the condition that a 20 lb. test weight was to be placed on the upper sack on each occasion before loading.\n\nthis the elevator had been doing ever since.\nthe elevator was in perfect balance. the 20 lb. weight\nwas not needed in the beginning, and was not added until\nafter the test. the lift continued to work perfectly, the operator",
+     "temperature": 2.431,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 151,
+     "seconds": 7.3,
+     "first_token": 0.69,
+     "longest_gap": 0.27,
+     "chunks": 171
+    }
+   ]
+  }
+ ]
+}
