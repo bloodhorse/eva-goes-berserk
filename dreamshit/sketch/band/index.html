@@ -68,15 +68,16 @@ body { padding: 60px 0 120px; cursor: default; }
 const params = new URLSearchParams(location.search);
 const N = Math.max(1, Math.min(8, +params.get('n') || 3));
 const FROM = params.get('from') || params.get('a');   // the topmost dream's room (no `stream/`); default: recent ones
+// defaults = bekh's pick off the panel, 2026-09-24: mirror, reach 1, no blur, wash 50, 86 high, face 29 / wash 59
 const S = {
-  mode: +params.get('mode') || 1,     // 1 streak · 2 mirror · 3 overlap
+  mode: +params.get('mode') || 2,     // 1 streak · 2 mirror · 3 overlap
   edge: +params.get('edge') || 6,     // streak: how many px of each painting's edge get stretched
-  reach: +params.get('reach') || 4,   // mirror/overlap: how far into each painting it reaches, in band heights
-  blur: params.has('blur') ? +params.get('blur') : 8,
-  wash: params.has('wash') ? +params.get('wash') : 45,
-  h: +params.get('h') || 71,
-  fpos: params.has('fpos') ? +params.get('fpos') : 30,    // his face: where the crop sits down the portrait
-  fwash: params.has('fwash') ? +params.get('fwash') : 35, // his face: how dark, 0 = bare
+  reach: +params.get('reach') || 1,   // mirror/overlap: how far into each painting it reaches, in band heights
+  blur: params.has('blur') ? +params.get('blur') : 0,
+  wash: params.has('wash') ? +params.get('wash') : 50,
+  h: +params.get('h') || 86,
+  fpos: params.has('fpos') ? +params.get('fpos') : 29,    // his face: where the crop sits down the portrait
+  fwash: params.has('fwash') ? +params.get('fwash') : 59, // his face: how dark, 0 = bare
 };
 const MODES = { 1: 'streak', 2: 'mirror', 3: 'overlap' };
 const $ = s => document.querySelector(s);
