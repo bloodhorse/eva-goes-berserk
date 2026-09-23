@@ -97,7 +97,9 @@ function ghostLine(seed) {
   if (last.length <= 120) return last;
   const tail = last.slice(-120);
   const cut = tail.indexOf(' ');
-  return '… ' + (cut >= 0 ? tail.slice(cut + 1) : tail);
+  // no '…' in front: the fade on the opening words already says it was cut, and a faded-out
+  // ellipsis only left a gap that read as an indent
+  return cut >= 0 ? tail.slice(cut + 1) : tail;
 }
 
 function buildRow(p) {
@@ -131,7 +133,16 @@ function buildRow(p) {
   // surfaces out of the last thing the found text said, and the whole seed stays behind its
   // button. ?ghost=0 takes it away.
   const g = ghostLine(p.seed);
-  if (g && GHOST) { const gh = document.createElement('p'); gh.className = 'ghost'; gh.textContent = g; text.append(gh); }
+  if (g && GHOST) {
+    // only the opening words surface out of nothing — the fade is theirs, not the paragraph's,
+    // or a wrapped second line fades at its left edge too
+    const gh = document.createElement('p'); gh.className = 'ghost';
+    const m = g.match(/^(\S+\s+\S+\s+\S+)(\s[\s\S]*)?$/);
+    if (m) { const lead = document.createElement('span'); lead.className = 'lead'; lead.textContent = m[1];
+             gh.append(lead, m[2] || ''); }
+    else gh.textContent = g;
+    text.append(gh);
+  }
   const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
