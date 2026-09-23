@@ -616,8 +616,9 @@ Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_TIMEOUT`,
 bekh's (2026-09-23): a psychological portrait of the dreamer — what keeps coming back, and just
 as much the way it is told: a turn of phrase, a word it cannot leave alone, a tic. `analyst.py`,
 persona in `analyst.txt`, bekh's file, never rewritten by the code. **What runs, since
-2026-09-23 late: one character — GPT (`gpt-5.6-sol` through codex) reading the last sixteen
-dreams fresh, every sixteen dreams** (four four-scene stories), no session, no memory. The
+2026-09-24: one character — GPT (`gpt-5.6-sol` through codex) reading the last eight
+dreams fresh, every four dreams** (a portrait per four-scene story, each reading two stories
+back), no session, no memory. The
 persona tells him *a machine dreams them, one page every five minutes, alone* — no nemo, no
 gpt-2, no "language model" (bekh is fine with *machine*; sol's first pass wrote *the dreamer is a
 listening apparatus… the machine's deepest habit*) — and asks for *one paragraph of about a
@@ -630,7 +631,7 @@ each dream sits under `[2026-09-23 18:58]`, the date and minute and nothing more
 `· nemo` stamp stood there for part of 2026-09-23 and was taken out the same night (bekh: *let
 them think that's an actual stream*); the page's `model` stays on the page for us.
 Measured: a window of sixteen through sol is ~20.7k codex tokens a call, 11.9k of it the
-cached harness, ~15s.
+cached harness, ~15s. A window of eight should be ~18k harness + ~1.5k dreams — untested.
 
 - **The portrait only; the ribbon's line is its closing, cut by code.** `SHAPE` and `AGAIN` ask
   for `<portrait>` and nothing else, and he is never told a card or a ribbon exists. `line` is
@@ -683,8 +684,9 @@ cached harness, ~15s.
   dreams, text, line, model, seconds, usage, context}` (plus `window`), every one kept, the
   latest being the portrait. Ledger rows `kind: "portrait"` carrying `line`; failures are a row
   and exit 0. **The public seat, `analyst`, holds the sol window's portraits only**: it started
-  with three written by hand over the last 48 dreams (`--start last:48`, three windows of
-  sixteen) and the job carries on from there. The earlier tenants were moved out, kept:
+  with six written by hand on 2026-09-24 over the last 48 dreams (`--start last:48`, windows of
+  sixteen every eight — the shape before the change to 8/4; bekh kept them rather than rerun)
+  and the job carries on from there at eight every four. The earlier tenants were moved out, kept:
   opus's whole-catalogue session to `portraits/opus-session/`, deepseek's evening to
   `portraits/student-deepseek/` — two seats' portraits ending inside one four-scene pack stack
   two ribbons at its foot.
@@ -744,16 +746,16 @@ cached harness, ~15s.
   (`eva/stream/com.bekh.eva-stream-analyst.plist`, tracked) — the sleeper's shape, no interval,
   `--once`, `RunAtLoad` false, log `/tmp/eva-stream-analyst.log` — and `stream.py` kickstarts it
   with the other voices when a page lands (`STREAM_KICK_INTERPRETER=1`), each kick on its own.
-  He runs on every landing and does nothing until sixteen new unflagged dreams are above his
-  watermark, so fifteen taps in sixteen are a directory walk and no call, and the sixteenth puts
-  the portrait on the dream that completed the sixteen. A backlog (the stream ran while he was
+  He runs on every landing and does nothing until four new unflagged dreams are above his
+  watermark, so three taps in four are a directory walk and no call, and the fourth puts
+  the portrait on the dream that completed the four. A backlog (the stream ran while he was
   off) is eaten one batch per landing, never all at once. `eva go`'s narration names each
-  landing as `the analyst · 16 dreams · "<line>"` (`narrate.py`, off the ledger row); a seat
+  landing as `the analyst · 8 dreams · "<line>"` (`narrate.py`, off the ledger row); a seat
   other than `analyst` says which, `the analyst (blind) · …`.
 
 ```bash
-uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16   # what the job runs, by hand
-uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16 --start last:48   # a backlog by hand: three windows, run three times
+uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 8 --n 4     # what the job runs, by hand
+uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 8 --n 4 --start last:48     # a backlog by hand: one window per run, twelve runs
 uv run --python 3.12 eva/stream/analyst.py --show                                # the latest, no call
 uv run --python 3.12 eva/stream/analyst.py --once --seat blind --new --start last:10 \
   --persona eva/stream/analyst-blind.txt                                         # a side seat, session mode
@@ -769,7 +771,7 @@ curl -s https://eva.x/api/stream/portraits | python3 -m json.tool | head
 
 Env: `STREAM_ANALYST_SEAT` (analyst; the loom reads it too), `STREAM_ANALYST_PERSONA`,
 `STREAM_ANALYST_DOOR` (opus in code; codex in the plist), `STREAM_ANALYST_WINDOW` (0 in
-code; 16 in the plist), `STREAM_ANALYST_EVERY` (10 in code; 16 in the plist),
+code; 8 in the plist), `STREAM_ANALYST_EVERY` (10 in code; 4 in the plist),
 `STREAM_ANALYST_CONTEXT_MAX` (per door unless set), `STREAM_ANALYST_TIMEOUT` (600),
 `STREAM_ANALYST_CODEX_MODEL` (gpt-5.6-sol), `STREAM_ANALYST_CODEX_EFFORT` (low); the deepseek
 door's own: `OPENROUTER_URL`, `OPENROUTER_KEYCHAIN` (OPENROUTER_API_KEY), `STREAM_DEEPSEEK_MODEL`,

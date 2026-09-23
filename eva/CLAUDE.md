@@ -420,7 +420,7 @@ manuscript behind a ribbon in the feed, and the ribbon's line is the portrait's 
 sentences, cut by code — he is asked for the portrait and nothing else. Four doors (opus, fable,
 deepseek over openrouter, GPT through codex) and two shapes: one resumed session reading every
 dream, or a fresh read of the last N. What runs is **GPT (sol, through codex) reading the last
-sixteen every sixteen dreams**, no memory (`stream/CLAUDE.md`, the analyst section). Tapped by the
+eight every four dreams**, no memory (`stream/CLAUDE.md`, the analyst section). Tapped by the
 writer like the others; `/api/stream` hangs each portrait on the dream it followed, and eva's
 page shows it there as a quiet band that unfolds on a click.
 And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through
@@ -480,7 +480,7 @@ plus `com.bekh.eva-gpt2` (llama-server, GPT-2 XL, loopback 8083, on the cpu — 
 second dreamer), `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the
 voices it kickstarts, `com.bekh.eva-stream-interpreter`, `com.bekh.eva-stream-remembering`,
 `com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (GPT sol through codex, a fresh read of
-the last sixteen every sixteen dreams, loaded 2026-09-23), none of which has an interval of its own (those plists, gpt-2's included,
+the last eight every four dreams, loaded 2026-09-23, 8/4 since 2026-09-24), none of which has an interval of its own (those plists, gpt-2's included,
 live in `stream/`; log `/tmp/eva-stream-analyst.log` for the analyst) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,

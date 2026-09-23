@@ -200,12 +200,15 @@ shape — now.
      new character — a painted face (from his own system prompt, portrait, a mustache — *too
      good to raise disagreements*) and a black glassy ribbon in dreamshit's feed with the
      manuscript behind it, tuned by `?tune=ribbon` (his numbers still pending). Where it
-     stands: **one character — GPT sol through codex, a fresh read of the last sixteen dreams
-     every sixteen**, no memory; told only that *a machine dreams them*, never which model wrote
-     a page; asked for **one paragraph of ~150 words and nothing else**. The ribbon carries the
+     stands: **one character — GPT sol through codex, a fresh read of the last eight dreams
+     every four** (a portrait per four-scene story, each reading two stories back, since
+     2026-09-24), no memory; told only that *a machine dreams them*, never which model wrote a
+     page; asked for **one paragraph of ~150 words and nothing else**. The ribbon carries the
      portrait's **last two sentences, cut by code** — every box that asked him for a remark came
      back a list, and the portraits' own closings were the register bekh wanted. The public
-     seat opened on three portraits over the last 48 dreams, by hand. Tried and parked the same
+     seat opened on six portraits over the last 48 dreams, written by hand on 2026-09-24 as
+     windows of sixteen every eight (before the change to 8/4; bekh kept them rather than
+     rerun), and the job carries on from there at eight every four. Tried and parked the same
      day: the claude family (the tics), deepseek as a student (every eight on thirty — its
      lines were captions of the last dream), a Dhall-like mentor (never wired; `scrivener.txt`
      is the draft). The four hand pages from the day's real runs (`1843`, `1845`, `1858`,

@@ -1,14 +1,14 @@
 #!/usr/bin/env -S uv run --python 3.12
 """analyst.py — a portrait of the dreamer, rewritten as the dreams come in.
 
-    uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16
+    uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 8 --n 4
     uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10
     uv run --python 3.12 eva/stream/analyst.py --show --seat blind
 
 bekh's fourth voice (2026-09-23): a psychological portrait of whoever dreams the pages — the
-themes, and just as much the verbal tics. What runs (the job's plist, 2026-09-23, late): **GPT
-(gpt-5.6-sol through codex) reading the last sixteen dreams fresh, every sixteen dreams** — four
-four-scene stories — with no session and no memory: `--window N` makes the batch only the trigger
+themes, and just as much the verbal tics. What runs (the job's plist, 2026-09-24): **GPT
+(gpt-5.6-sol through codex) reading the last eight dreams fresh, every four dreams** — a portrait
+per four-scene story, each reading two stories back — with no session and no memory: `--window N` makes the batch only the trigger
 and the last N dreams the material, the first prompt every time, nothing resumed.
 
 **The other shape still in the code: one resumed session** (`--window 0`, the default here), his
@@ -38,13 +38,13 @@ portrait and is never told there is a card — every remark box we gave him came
 (`closing` has the story).
 
 **The clock is the tap**: `com.bekh.eva-stream-analyst` has no interval, and stream.py kickstarts
-it with the other voices when a page lands. Fifteen landings in sixteen that is a quiet no-op —
-fewer than STREAM_ANALYST_EVERY new dreams above the watermark — and the sixteenth is a portrait.
+it with the other voices when a page lands. Three landings in four that is a quiet no-op —
+fewer than STREAM_ANALYST_EVERY new dreams above the watermark — and the fourth is a portrait.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_ANALYST_SEAT (analyst — the loom reads it too:
 only this seat's portraits reach /api/stream), STREAM_ANALYST_PERSONA
 (eva/stream/analyst.txt), STREAM_ANALYST_DOOR (opus in code, codex in the plist),
-STREAM_ANALYST_WINDOW (0 in code, 16 in the plist), STREAM_ANALYST_EVERY (10 in code, 16 in the
+STREAM_ANALYST_WINDOW (0 in code, 8 in the plist), STREAM_ANALYST_EVERY (10 in code, 4 in the
 plist), STREAM_ANALYST_CONTEXT_MAX (per door), STREAM_ANALYST_TIMEOUT (600), plus loom's
 LOOM_SITTINGS.
 """
@@ -262,7 +262,7 @@ def start_mark(spec: str) -> str:
 
 def window_of(newest: str, n: int) -> list[dict]:
     """The last n unflagged dreams up to and including `newest`, oldest first — the window's
-    material (bekh, 2026-09-23): a fresh read of the last sixteen, no memory, every sixteen."""
+    material (bekh, 2026-09-23): a fresh read of the last eight, no memory, every four."""
     out = []
     for name in sorted((r for r in loom.stream_room_names() if r <= newest), reverse=True):
         page = loom.stream_page(name)

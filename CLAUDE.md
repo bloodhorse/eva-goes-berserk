@@ -194,8 +194,8 @@ launchd agent), a passage every five minutes, **typed onto the page word by word
 written** (the writer streams and posts the growing text to the loom, the events route pushes it,
 the mirror pulls it from the mac), a codex reader notes every one and marks two things in it, an
 opus sleeper remembers four scenes at a time as one dream, a picture is painted behind each, and
-**an analyst** — GPT through codex — reads the last sixteen dreams and writes a fresh portrait of
-the dreamer every sixteen: a character with a painted face and a ribbon in the feed carrying the
+**an analyst** — GPT through codex — reads the last eight dreams and writes a fresh portrait of
+the dreamer every four (one per four-scene story, since 2026-09-24): a character with a painted face and a ribbon in the feed carrying the
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
 `https://eva.x/stream` and, as the site, at `https://dreamshit.net`. Whether it is running is whether its writer's job is
 loaded (`launchctl print gui/$(id -u)/com.bekh.eva-stream`); it needs nemo up
