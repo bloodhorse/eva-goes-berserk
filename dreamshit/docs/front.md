@@ -23,21 +23,25 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 
 ## How it behaves
 
-- Loads the newest 48 passages, lands on the newest at the reading line, then **listens**: an `EventSource` on `/api/stream/events` (eva holds it open) names the rooms that changed within a couple of seconds of a passage, a note, a story, a plate or a name landing. Anything inside the window it holds — the pages are one contiguous newest-first run — is one refetch of that window; anything older is ignored. On a reconnect it refetches once, so nothing missed stays missed. The 60s poll is gone; a 5-minute poll survives only as insurance while the events have *never* connected, and is cleared the moment they do. New passages append at the bottom: followed if you're on the newest, otherwise counted on a "new" button. Late plates and readings attach in place; the trickle is re-cut and redrawn whole as its story grows. (`?tail` / `?only`, the screenshot modes, don't listen at all.)
+- Loads the newest 48 passages, lands on the newest at the reading line, and **reaches back on scroll** (bekh, 2026-09-24): an IntersectionObserver on a sentinel above the feed's top margin (`#older`, seen two screens early) asks the api for the 48 before the oldest room held (`/api/stream?n=48&before=<room>` — loom.py's own paging) and prepends them, holding the camera: the first row is measured before and after and the scroll moves by the difference (0 if the browser's scroll anchoring already held it). A story cut by the window's edge joins the pack on top, so it stays one pack with one header and one thread; every pack touched is redrawn and re-measured like any other. Again at the top, again 48, until the api answers `more: false` — then it stops asking, with no message. Off until the page has landed on the newest, and never in `?tail` / `?only`. (`loadOlder` / `renderOlder` in `app.js`.) Then it **listens**: an `EventSource` on `/api/stream/events` (eva holds it open) names the rooms that changed within a couple of seconds of a passage, a note, a story, a plate or a name landing. Anything inside the window it holds — the pages are one contiguous newest-first run — is one refetch of that window; anything older is ignored. Because older pages keep that run contiguous, the refetch covers everything reached back to — its cost grows with every trip up, and the api caps `n` at 400, so pages further back than that stop getting late plates and readings (a refetch sized to the oldest room an event names would fix both; not built). On a reconnect it refetches once, so nothing missed stays missed. The 60s poll is gone; a 5-minute poll survives only as insurance while the events have *never* connected, and is cleared the moment they do. New passages append at the bottom: followed if you're on the newest, otherwise counted on a "new" button. Late plates and readings attach in place; the trickle is re-cut and redrawn whole as its story grows. (`?tail` / `?only`, the screenshot modes, don't listen at all.)
 - **Plates load near the screen only** (bekh, 2026-09-23): a row's painting (~500 KB, 1400×933) is fetched when the row comes within two screens of view (`plateSight`, an IntersectionObserver in `app.js`) and kept once fetched. Before, all 48 were requested on open and the newest — where the page lands — queued behind the rest; at `?tail=48` from the top it is now 5 of 48. Next if scrolling still stutters: a small copy (~480px) for the unfocused plates, since glass and dots hide the difference and the full size only matters focused and under `pic` — that one needs eva (or the mirror) to cut the copies and the api to name them.
 - **Packs:** one per dream. Rows are 3-column grids (`slot | text | reading`), and the left cell
   is where the telling of that dream runs. **What the page does is `trickle=stretch`,
   `align=even`** — bekh's verdict, 2026-09-22: *"unfortunately actually the best
   stylistically"*. The seams are joined up, the whole telling stands as *one* thread in the first
   passage's slot, and it is stretched to **reach the bottom of the dream's last passage**. The
-  header (`chapter · title`) sits above it at the column's normal width. **Three dials, each
+  header (`chapter · title`) is the first passage's slot's own first child, above the thread at
+  the cell's full width — one line when it fits, wrapped at the cell's edge when it doesn't (bekh,
+  2026-09-24; inside the thread's box it was cut to a word a line with the drip). The stretched
+  thread has no `top`, so it sits at its static position right under the header, and the drip is
+  paced from the words' own top: the header's height is never counted as room for them. **Three dials, each
   moving only when the one before it ran out: narrow the column, then one word to a line, then
   open the leading.** So a 45-word telling beside four scenes becomes a column of single words
   paced down the whole dream, while the same telling beside one scene is just the full-width
   block it always was. The floor of dial 1 is the telling's widest word (`min-content`), never
   under 4 characters, so the thread can't spill sideways into the passage; dial 2 is a
   `word-spacing` wider than any column, which turns every space into a break; dial 3 searches the
-  leading (on the words alone, so the header keeps its own) and goes below 1.7 as well as up to
+  leading (on the words alone) and goes below 1.7 as well as up to
   14 — breaking every space can overshoot a room that normal wrapping fell short of, and the
   one-word-a-line is not given back to save a line. A telling too long for even the full width
   keeps the full width and runs past the bottom; nothing is clipped. It is all measured, never
@@ -54,7 +58,7 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
   - **`?trickle=parts`** (key `g` toggles it): the seams are kept and nothing is measured — the
     sleeper marks them with `|`, `story.parts` is the telling split there, and part n goes into
     passage n's own `slot` cell, top-aligned, 60% of the column, centred; the header above part
-    1; the grid places it all. Mismatches are not errors: fewer parts than passages leaves the
+    1, at the cell's full width; the grid places it all. Mismatches are not errors: fewer parts than passages leaves the
     later rows bare, a surplus is appended to the last passage's part, and one part (no marks at
     all — every dream on the shelf from before the seams) sits whole beside the first passage.
   - **`?align=dreams`** — stretch with the drip lined up to the scenes: the seams are kept

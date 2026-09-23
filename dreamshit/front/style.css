@@ -124,9 +124,11 @@ body:has(#dev.folded) #devchip { display: block; }
    thread beside the whole dream, narrowed by app.js until it reaches the bottom of the last
    passage. It hangs out of the row's flow on purpose: in the flow, a 3000px thread would grow
    the row it hangs from, which would grow the pack it is being measured against — the width
-   would chase its own tail. left/right 0 + margin auto keeps it centred in its column. */
+   would chase its own tail. left/right 0 + margin auto keeps it centred in its column. No `top`
+   on purpose: an absolute box with top:auto sits at its static position, i.e. right under the
+   dream's header (.slot > .title) — the header's height is measured by layout, never guessed. */
 @media (min-width: 821px) {
-  .pack.stretch .slot > .trickle { position: absolute; top: 0; left: 0; right: 0; }
+  .pack.stretch .slot > .trickle { position: absolute; left: 0; right: 0; }
 }
 /* the offscreen twin widths are measured on (app.js, fitAll) — never seen, but laid out */
 .trickle.probe { position: fixed; top: 0; left: -10000px; visibility: hidden; width: auto; }
@@ -139,7 +141,10 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
    the name in ink, the number in grey */
 .title { margin: 0 0 .6em; font: 13px/1.5 "Courier New", monospace; letter-spacing: .15em; color: var(--ink); }
 .title .verse { font-size: 11px; letter-spacing: .2em; color: var(--ghost); font-variant-numeric: tabular-nums; }
-.trickle .title { font-size: 14px; margin-bottom: .8em; }
+/* the dream's header: the slot's own first child, above the trickle, at the cell's full width —
+   one line when it fits, wrapped at the cell's edge when it doesn't (bekh, 2026-09-24). Inside the
+   stretched trickle it was cut to one word a line with the drip */
+.slot > .title { font-size: 14px; margin-bottom: .8em; }
 /* seed · pic: quiet words above the passage; the seed opens in a box floating over it, pic opens
    the painting full screen. no display on the buttons themselves — it would beat their hidden
    attribute (the lightbox bug) */

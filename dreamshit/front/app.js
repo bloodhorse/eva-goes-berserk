@@ -407,17 +407,24 @@ function titleLine(name, number, who) {
   return h;
 }
 // one part of the telling, in a passage's own left cell: the dream's header (chapter · title)
-// above the first one, then the words in a `.flow` of their own — the header keeps its normal
-// width while stretch mode narrows the words. re-rendered only when something changed, so a
-// refetch doesn't repaint the column under the reader.
+// above the first one, then the words in a `.flow` of their own. re-rendered only when something
+// changed, so a refetch doesn't repaint the column under the reader.
+// The header is the SLOT's first child, not the trickle's (bekh, 2026-09-24: "let it be in proper
+// one line where possible"): inside the trickle it lived in the thread's 60% box, and stretch
+// hangs that box out of the flow at a word's width, so `18 · the inspector of open doors` broke
+// every three words. Out here it has the whole cell and wraps only at the cell's edge. The
+// stretched trickle has no `top` (style.css), so it sits at its static position — right under the
+// header, measured by layout, whatever the header's height — and fitAll paces the drip from the
+// flow's own top, so the header's lines are never counted as room for the words.
 function setTrickle(el, story, text, head) {
   const title = head ? (story && story.title || '') : '';
   const ch = head && story && story.chapter ? String(story.chapter) : '';
   if (el.dataset.text === text && el.dataset.title === title && el.dataset.ch === ch) return;
   el.dataset.text = text; el.dataset.title = title; el.dataset.ch = ch;
-  el.textContent = '';
+  if (el._head) { el._head.remove(); el._head = null; }
   const h = head ? titleLine(story && story.title, ch) : null;
-  if (h) el.appendChild(h);
+  if (h) { el.before(h); el._head = h; }
+  el.textContent = '';
   const flow = document.createElement('div'); flow.className = 'flow';
   flow.textContent = text;
   el.appendChild(flow);
@@ -623,10 +630,11 @@ function refit() { clearTimeout(refitting); refitting = setTimeout(() => { fitAl
 const rowSizes = new ResizeObserver(() => { roFired++; refit(); });
 
 // one pack per dream: its passages, and the telling running down their left cells
-function newPack(p) {
+// `top`: the pack goes in above everything (the older pages, loadOlder) instead of at the bottom
+function newPack(p, top) {
   const dream = p.story && p.story.dream || null;
   const el = document.createElement('div'); el.className = 'pack';
-  $('#feed').appendChild(el);
+  if (top) $('#feed').prepend(el); else $('#feed').appendChild(el);
   const pack = { el, dream, slots: [], story: p.story || null };
   if (dream) packs.set(dream, pack);
   return pack;
@@ -642,7 +650,7 @@ function render(pages) {
     rooms.set(p.room, r);
     lastPack.el.appendChild(r.row);
     setPortrait(r, p.portrait);
-    lastPack.slots.push({ turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle, row: r.row });
+    lastPack.slots.push({ v: verseTurn(p.verse), turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle, row: r.row });
     if (p.story) lastPack.story = p.story;
     touched.add(lastPack);
     lastRowEl = r.row;
@@ -651,6 +659,84 @@ function render(pages) {
   for (const pack of touched) drawPack(pack, pack.story);
   return fresh.length;
 }
+
+// the older pages, prepended (loadOlder): `pages` come newest first and are all older than every
+// row held, so walking them in that order and putting each ABOVE what is there builds the feed
+// upwards. A page of the story already on top joins that pack at its head — a story cut by the
+// window's edge ends up one pack, not two — and anything else opens a new pack above it. Every
+// pack touched is redrawn whole, as render does: its first row changed, so the header and the
+// thread move up to the new first slot and the drip is re-cut and re-measured.
+function renderOlder(pages) {
+  const touched = new Set();
+  // the pack on top is the first row's (not a walk of `packs`: a page with no story has a pack
+  // that map never holds)
+  const first = $('#feed .row');
+  let top = first ? [...rooms.values()].find(r => r.row === first).pack : null;
+  for (const p of pages) {
+    if (rooms.has(p.room)) continue;
+    const dream = p.story && p.story.dream || null;
+    if (!top || !dream || top.dream !== dream) top = newPack(p, true);
+    const r = buildRow(p);
+    r.room = p.room; r.pack = top;
+    rooms.set(p.room, r);
+    top.el.prepend(r.row);
+    setPortrait(r, p.portrait);
+    // a scene without a verse takes its place in the pack — counted once the pack is whole, below
+    top.slots.unshift({ v: verseTurn(p.verse), el: r.trickle, row: r.row });
+    if (!top.story && p.story) top.story = p.story;
+    if (!lastRowEl) lastRowEl = r.row;
+    touched.add(top);
+  }
+  for (const pack of touched) {
+    pack.slots.forEach((s, i) => { s.turn = s.v || i + 1; });
+    drawPack(pack, pack.story);
+  }
+  redrawRibbons();   // the old top pack has a new neighbour above it
+  return touched.size;
+}
+
+// ---- older passages, on scroll (bekh, 2026-09-24) -------------------------------------------
+// The page opens on the newest FIRST_LOAD passages; reaching the top of the feed fetches the 48
+// before the oldest one held (the api's own `before=<room>` — rooms are timestamps, so a name is
+// a place in time) and prepends them, holding the camera: the row that was first is measured
+// before and after, and the scroll moves by exactly what went in above it. Again at the top,
+// again 48, until the api says there is nothing further back (`more: false`) — then it stops
+// asking, quietly. The held pages stay one contiguous newest-first run, so refetch() still covers
+// the window with n=<held>; the cost is that an event refetches every page held — 48 on open, ~N
+// after N/48 trips up — and the api caps n at 400, so a reader deep in the past stops getting
+// late plates and readings on the pages furthest back. A refetch sized to the oldest room the
+// event names would fix both; not built.
+// The trigger is a sentinel above the feed's top margin, seen two screens early. Off until the
+// page has landed on the newest (the sentinel is on screen while the feed is still empty), and
+// never in the screenshot modes.
+const OLDER = 48;
+let olderBusy = false, olderDone = false, olderReady = false;
+const olderMark = document.createElement('div'); olderMark.id = 'older';
+$('#feed').before(olderMark);
+const nearTop = () => olderMark.getBoundingClientRect().bottom > -2 * innerHeight;
+function loadOlder() {
+  if (!olderReady || olderBusy || olderDone || !rooms.size) return;
+  olderBusy = true;
+  const oldest = [...rooms.keys()].reduce((a, b) => b < a ? b : a);
+  api('n=' + OLDER + '&before=' + encodeURIComponent(oldest)).then(d => {
+    const pages = (d.pages || []).filter(p => !rooms.has(p.room));
+    if (!d.more || !pages.length) olderDone = true;
+    if (!pages.length) return;
+    // the camera: the first row on the page now, where it stands on screen, before and after
+    const anchor = $('#feed .row'), was = anchor ? anchor.getBoundingClientRect().top : 0;
+    renderOlder(pages);
+    // if the browser's own scroll anchoring already held it, this is 0 and nothing moves
+    if (anchor) scrollBy(0, anchor.getBoundingClientRect().top - was);
+    console.debug('stream · older', pages.length, 'pages before', oldest, d.more ? '' : '· the end');
+  }).catch(() => {}).then(() => {
+    olderBusy = false;
+    // still near the top (a short batch, a tall screen): the observer won't fire again for a
+    // sentinel that never left the margin, so ask once more by hand
+    if (!olderDone && nearTop()) loadOlder();
+  });
+}
+new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) loadOlder(); },
+  { rootMargin: '200% 0px' }).observe(olderMark);
 
 // update what already exists: late paintings, late readings, the telling rewritten. the story
 // is rewritten WHOLE every time a scene lands — part 1 can change when scene 3 arrives — so a
@@ -1125,6 +1211,9 @@ api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)
   toNewest(false);
   // fonts landing late reflow the page; stand on the newest passage again once they have
   addEventListener('load', () => toNewest(false), { once: true });
+  // standing on the newest now: the top of the feed may start asking for older pages (a feed
+  // shorter than the screen is already at the top, so look once by hand)
+  requestAnimationFrame(() => { olderReady = true; if (nearTop()) loadOlder(); });
 }).catch(() => trouble("can't reach eva"));
 // ?tail / ?only are the screenshot modes: one shot of a fixed set of passages, nothing live.
 if (!TAIL && !ONLY) {
