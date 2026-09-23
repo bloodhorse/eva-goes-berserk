@@ -17,6 +17,14 @@
   <div class="swatches"></div>
   <div class="foot"><input type="color" id="inkpick" title="the system colour panel — wheel, sliders, eyedropper"><label for="inkpick">pick</label><button id="inkreset">reset</button></div>
 </div>
+<!-- the ribbon's tuner: opened by ?tune=ribbon and nothing else. Two sliders — the analyst's band
+     height and the air around it — live as they move, remembered per browser; `reset` gives
+     the stylesheet's defaults back. -->
+<div id="ribbontune" hidden>
+  <label class="dial">height<input type="range" id="rt-h" min="40" max="200" step="1"><output for="rt-h"></output></label>
+  <label class="dial">gap<input type="range" id="rt-gap" min="0" max="48" step="1"><output for="rt-gap"></output></label>
+  <div class="foot"><span class="read"></span><button id="rt-reset">reset</button></div>
+</div>
 <main id="feed"></main>
 <button id="fresh" hidden>new</button>
 <div id="label"></div>

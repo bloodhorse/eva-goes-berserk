@@ -220,6 +220,7 @@ function setPortrait(r, v) {
   say.textContent = line || firstSentence(v.text);
   if (!line) say.classList.add('quiet');
   rb.append(face, say);
+  ribbonSizes.observe(rb);   // fitted once it has a size, and again whenever the band's size moves
   const open = e => { e.stopPropagation(); openManuscript(v); };
   rb.onclick = open;
   rb.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
@@ -228,6 +229,31 @@ function setPortrait(r, v) {
   box.insertBefore(rb, [...box.children].find(c => c.dataset.room > r.room) || null);
   r.ribbon = rb;
 }
+
+// HEIGHT MEANS HEIGHT (bekh, 2026-09-23): the band is --rh tall whatever he says. The remark
+// starts at its size (18, 15 on a phone — the stylesheet's) and steps down a pixel at a time to
+// 11 until it fits; if it still doesn't, it is clipped on its last whole line (.clip), so it
+// never spills onto the next row. Measured, not guessed: scrollHeight is the text's full height
+// even while the box hides the rest. Runs when a ribbon lands, when its size moves (the height
+// slider, a resize — the observer) and on refit() (a font change).
+const RFS_FLOOR = 11;
+function fitRibbon(rb) {
+  const say = rb.querySelector('.say'); if (!say) return;
+  say.classList.remove('clip'); say.style.removeProperty('--rfs'); say.style.removeProperty('--rclip');
+  const room = rb.clientHeight; if (!room) return;
+  const base = Math.round(parseFloat(getComputedStyle(say).fontSize)) || 18;
+  for (let fs = base; fs >= RFS_FLOOR; fs--) {
+    say.style.setProperty('--rfs', fs + 'px');
+    if (say.scrollHeight <= room + 1) return;
+  }
+  const cs = getComputedStyle(say), pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+  const lh = RFS_FLOOR * 1.45, n = Math.max(1, Math.floor((room - pad) / lh));
+  say.style.setProperty('--rlines', n);
+  say.style.setProperty('--rclip', Math.ceil(n * lh) + 'px');   // no padding in .clip (style.css)
+  say.classList.add('clip');
+}
+const fitRibbons = () => { for (const rb of document.querySelectorAll('.ribbon')) fitRibbon(rb); };
+const ribbonSizes = new ResizeObserver(es => { for (const e of es) fitRibbon(e.target); });
 
 // the manuscript: the whole portrait of one version, and ‹ › through every version, which are
 // fetched when it opens (newest first, as the api gives them). Until they arrive — or if they
@@ -506,7 +532,7 @@ if (DEBUG) setInterval(() => {
   l.textContent = `fits ${fits} ro ${roFired} @${Math.round(performance.now() / 1000)}s · fitted→now ${out.join(' · ')}`;
 }, 1000);
 let refitting = 0;
-function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
+function refit() { clearTimeout(refitting); refitting = setTimeout(() => { fitAll(); fitRibbons(); }, 50); }
 const rowSizes = new ResizeObserver(() => { roFired++; refit(); });
 
 // one pack per dream: its passages, and the telling running down their left cells
@@ -860,6 +886,42 @@ function inkPanel(on) {
   $('#inkbtn').classList.toggle('on', !p.hidden);
 }
 $('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
+
+// ---- the ribbon's tuner ---------------------------------------------------------------------
+// bekh, 2026-09-23: "smaller — give me two sliders, the height of his band and the height of the
+// space between his band and the dreams; i'll fiddle and give you the numbers." Opened by
+// ?tune=ribbon and nothing else (no key, no button: it is a tuning bench, not a dial of the
+// page). What he sets is remembered per browser and applies without the param too, like the
+// wash; `reset` forgets both and the stylesheet's --rh / --rgap are back. Once he reads the
+// numbers out they get baked into style.css's :root and this memory is moot.
+const RT = { h: ['ribbon-h', '--rh', 40, 200], gap: ['ribbon-gap', '--rgap', 0, 48] };
+const rtDefault = v => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v)) || 0;
+function rtApply(which, v, save) {
+  const [key, css, lo, hi] = RT[which];
+  if (v === null) { document.body.style.removeProperty(css); try { localStorage.removeItem(key); } catch {} }
+  else {
+    v = Math.max(lo, Math.min(hi, Math.round(v)));
+    document.body.style.setProperty(css, v + 'px');
+    if (save) store(key, v);
+  }
+  const now = v === null ? rtDefault(css) : v;
+  $('#rt-' + which).value = now;
+  $('#rt-' + which).nextElementSibling.textContent = now + 'px';
+  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value}`;
+}
+// ?rh=60&rgap=0 is the same as dragging there (and remembered, as a drag is) — how a headless
+// shot proves a setting, since it can't move a slider; ?rh= empty resets that one, like ?ink=
+const RT_URL = { h: 'rh', gap: 'rgap' };
+for (const w of Object.keys(RT)) {
+  $('#rt-' + w).oninput = e => rtApply(w, +e.target.value, true);
+  const u = params.get(RT_URL[w]);
+  if (u === '') rtApply(w, null);
+  else if (u !== null && !isNaN(+u)) { rtApply(w, +u, true); continue; }
+  const saved = store(RT[w][0]);
+  rtApply(w, saved === null || saved === '' || isNaN(+saved) ? null : +saved, false);
+}
+$('#rt-reset').onclick = () => { rtApply('h', null); rtApply('gap', null); };
+if (params.get('tune') === 'ribbon') $('#ribbontune').hidden = false;
 
 // how the telling stands beside its dream. **stretch is what the site does** (bekh's verdict,
 // 2026-09-22: "unfortunately actually the best stylistically") — one thread paced down the whole

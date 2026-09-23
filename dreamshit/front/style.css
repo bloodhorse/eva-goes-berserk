@@ -39,10 +39,10 @@ body { cursor: default; }
 #inkbtn .sw { display: inline-block; width: 9px; height: 9px; margin-right: .7em;
               border: 1px solid var(--line); vertical-align: -1px; }
 /* the panel drops under the bar, right under its own button */
-#inkpanel { position: fixed; z-index: 4; top: 36px; right: 18px; padding: 12px 14px;
+#inkpanel, #ribbontune { position: fixed; z-index: 4; top: 36px; right: 18px; padding: 12px 14px;
   background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   font: 11px "Courier New", monospace; letter-spacing: .3em; color: var(--ghost); }
-#inkpanel[hidden] { display: none; }   /* as with the lightbox: never let display beat `hidden` */
+#inkpanel[hidden], #ribbontune[hidden] { display: none; }   /* as with the lightbox: never let display beat `hidden` */
 #inkpanel .swatches { display: flex; gap: 8px; }
 #inkpanel .sw { width: 18px; height: 18px; padding: 0; border: 1px solid var(--line); }
 /* the one showing wears a ring, not a border: a border the colour of the ink is invisible on the
@@ -50,8 +50,16 @@ body { cursor: default; }
 #inkpanel .sw.on { outline: 1px solid var(--ghost); outline-offset: 2px; }
 #inkpanel .foot { display: flex; align-items: center; gap: 2em; margin-top: 14px; }
 #inkpanel .foot label { margin-left: -.8em; }   /* `pick` belongs to the chip beside it */
-#inkpanel .foot button { padding: 0; background: none; border: 0; font: inherit; letter-spacing: inherit; color: var(--ghost); }
-#inkpanel .foot button:hover { color: var(--ink); }
+#inkpanel .foot button, #ribbontune button { padding: 0; background: none; border: 0; font: inherit; letter-spacing: inherit; color: var(--ghost); }
+#inkpanel .foot button:hover, #ribbontune button:hover { color: var(--ink); }
+/* the ribbon's tuner (`?tune=ribbon` only): the ink panel's clothes, parked bottom-right so it
+   doesn't sit on the ink panel or on the bar. Two sliders and the two numbers, plain, to read out */
+#ribbontune { top: auto; bottom: 18px; width: 300px; }
+#ribbontune .dial { display: grid; grid-template-columns: 4.5em 1fr 4em; align-items: center; gap: 10px; margin-bottom: 10px; }
+#ribbontune .dial output { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+#ribbontune input[type=range] { width: 100%; accent-color: var(--lit-b); }
+#ribbontune .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+#ribbontune .read { color: var(--lit-b); letter-spacing: .15em; }
 /* the native picker, stripped to a chip: on a mac clicking it opens the system colour panel —
    the wheel, the sliders and the eyedropper, which is what bekh asked for instead of a hand-built
    wheel. `appearance: none` is what takes the browser's own frame off it. */
@@ -192,38 +200,56 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    every tenth dream the analyst's portrait lands, and after that dream's pack a black band the
    full width of the page carries his face and his remark. Glassy, not flat: a hairline of light
    on the top edge, a sheen over the upper half, a shadow under it — all still, nothing on it
-   moves (the reading rule). It grows past ~95px rather than clip a long remark. */
-.ribbon { position: relative; z-index: 2; display: grid; margin: 18px 0;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); min-height: 95px; overflow: hidden;
-  background: linear-gradient(180deg, #17171b 0, #09090b 12%, #030304 55%, #000 90%, #060608 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(255,255,255,.035),
-              0 -1px 0 rgba(0,0,0,.5), 0 16px 24px -10px rgba(0,0,0,.9); }
+   moves (the reading rule). Softened to ~2/3 the same afternoon (bekh: "a little less 3D, a
+   little less protruding"), still clearly a band.
+   Two dials, bekh's to set by eye with `?tune=ribbon` (app.js): --rh, the band's height, and
+   --rgap, the air between it and the painted rows above and below (a row's plate fills the row,
+   so the margin IS the gap; 0 = flush). HEIGHT MEANS HEIGHT: the band never grows — app.js steps
+   the remark's size down until it fits, and past the floor clips it on a whole line. */
+:root { --rh: 95px; --rgap: 18px; }
+.ribbon { position: relative; z-index: 2; display: grid; margin: var(--rgap) 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); height: var(--rh); overflow: hidden;
+  background: linear-gradient(180deg, #121215 0, #09090b 12%, #030304 55%, #000 90%, #050507 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.105), inset 0 -1px 0 rgba(255,255,255,.025),
+              0 -1px 0 rgba(0,0,0,.33), 0 11px 18px -8px rgba(0,0,0,.6); }
 /* the glass: light pooled in the top half, over the face as well as the words — it is one pane */
 .ribbon::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 48%; z-index: 1;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.018) 75%, rgba(255,255,255,0)); }
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.013) 75%, rgba(255,255,255,0)); }
 /* the top edge catches a little of the house light, pink on the left and cyan to the right */
 .ribbon::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; z-index: 1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(245,200,254,0), rgba(245,200,254,.32) 22%, rgba(198,241,254,.28) 70%, rgba(198,241,254,0)); }
+  background: linear-gradient(90deg, rgba(245,200,254,0), rgba(245,200,254,.21) 22%, rgba(198,241,254,.19) 70%, rgba(198,241,254,0)); }
 /* the face surfaces out of the black: a strip across the eyes and the mustache (they sit ~30–38%
-   down the painting), the right edge fading into the ribbon so it is not a photo pasted on */
+   down the painting), the right edge fading into the ribbon so it is not a photo pasted on. The
+   crop follows --rh by itself: `cover` on a lower band just shows a thinner strip at the same 33% */
 .ribbon .face { position: relative; overflow: hidden; }
 .ribbon .face img { position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: 50% 33%;
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%);
           mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%); }
 /* his remark, in the passage's face, at a reading width; the fallback (no remark: the first
-   sentence of the portrait) sits a step dimmer, so it does not pass for something he said aloud */
-.ribbon .say { position: relative; z-index: 2; align-self: center; max-width: 46em;
-  padding: 16px 40px 16px 8px; font-family: var(--tf, serif); font-weight: var(--tw, 400);
-  font-size: 18px; line-height: 1.45; color: var(--ink); }
+   sentence of the portrait) sits a step dimmer, so it does not pass for something he said aloud.
+   --rfs is the size app.js measured to fit (18 desktop, 15 phone, down to 11); the padding
+   shrinks with a low band so a 60px one still has room for two lines. Past the floor it is
+   `.clip`: cut on its last whole line, never spilling onto the next row. The reading width is in
+   px, not em (46em of 18px): in em it narrowed as the size stepped down and made more lines. */
+.ribbon .say { position: relative; z-index: 2; align-self: center; max-width: 828px; max-height: 100%;
+  overflow: hidden; padding: min(16px, calc(var(--rh) * .12)) 40px min(16px, calc(var(--rh) * .12)) 8px;
+  font-family: var(--tf, serif); font-weight: var(--tw, 400);
+  font-size: var(--rfs, 18px); line-height: 1.45; color: var(--ink); }
+/* the clip: the box cut to its whole lines (app.js sets --rclip) and centred in the band. No
+   vertical padding here — overflow clips at the PADDING edge, so the bottom padding was a window
+   the next line showed through half-cut; the air is kept by counting it out of the lines instead.
+   The line clamp is there for the ellipsis */
+.ribbon .say.clip { display: -webkit-box; -webkit-box-orient: vertical; padding-top: 0; padding-bottom: 0;
+  -webkit-line-clamp: var(--rlines, 2); max-height: var(--rclip, 100%); }
 .ribbon .say.quiet { color: color-mix(in srgb, var(--ghost) 75%, transparent); font-style: italic; }
 /* the only answer to a hover: the top edge catches a little more light (nothing moves) */
 .ribbon:hover::before { filter: brightness(1.7); }
 .ribbon:focus-visible { outline: 1px solid var(--line); outline-offset: -1px; }
 @media (max-width: 820px) {
-  .ribbon .say { font-size: 15px; padding: 12px 16px 12px 4px; }
+  .ribbon .say { font-size: var(--rfs, 15px); padding-left: 4px; padding-right: 16px; }
 }
 
 /* the manuscript: one version of the portrait, whole, over the feed — the lightbox's kind of
