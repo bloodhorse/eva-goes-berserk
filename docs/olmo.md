@@ -13,6 +13,30 @@ A5000, Montreal), **streams word by word** through the balancer (61 chunks, long
 0.15 s, first token 0.52 s). Next: the cached model flipped to olmo, the ten seeds fanned ×4
 (`fan.py` in the repo), the pages to the sheets site as `olmo-prophecies`.
 
+**The flip to olmo stalled (2026-09-24, 19:41–20:10 UTC):** after the cached model was set to
+the 18 GB repo, every worker sat on runpod's "initializing model files" — assigned, never
+mounted, no failure reported, `THROTTLED` on and off — three of them reaped with nothing to
+show, the fourth still fetching at 28 minutes. **Tonight's read came off a plain pod
+instead** (`olmo-box`: an A40 48 GB in EU-SE-1, secure, $0.49/hr, stock `server-cuda` image,
+the gguf curl'd from HF at boot — **50 MB/s, 6 minutes for 18.1 GB**, so HF's pipe is not the
+problem; runpod's cache is). Two pod traps, both paid for: a `bash -c` entrypoint loses the
+image's library path, and llama-server's libs live in `/app` beside the binary — export
+`LD_LIBRARY_PATH=/app` or it dies on `libllama-server-impl.so`; and updating a pod's start
+command recreates the container and wipes its disk, so the download runs again. `fan.py`
+and `probe.py` take `--url` for a pod's proxied port.
+
+**bekh's call (2026-09-24, 03:20 his clock): serverless stays** — zero idle, per-second, the
+burst shape is exactly what it's priced for. **Tomorrow's move is baking the weights into the
+image**, the doc's own fallback: runpod's *registry* is fast (the 3 GB image landed in 20 s on
+every host, cached after the first pull) and their *model cache* is a black box; an image with
+the gguf inside skips "initializing model files" entirely, and the cold path becomes a
+registry pull plus llama mmapping 18 GB off local disk. Builder limits fit: 80 GB image cap,
+30 min for the docker build step, the curl is ~6 of them. The Dockerfile change is one `RUN
+curl` line and `MODEL_PATH` set to it; the cached-model setting comes off the endpoint. The
+network volume stays plan C. The alternative shape, argued and not taken: a pod with the
+weights on its own volume disk, stopped and started by api (~$4/month for the disk, start in
+seconds) — the serverless promise kept by a box.
+
 **What the first boot taught (2026-09-24):**
 - **the console lies less than the API, again.** REST listed five whole cards; the console
   had `PRO 6000 MIG 24GB` ticked as well. Only graphql's `gpuIds` shows the truth, including
