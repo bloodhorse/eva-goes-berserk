@@ -35,12 +35,16 @@ body { padding: 60px 0 120px; cursor: default; }
   width: calc(100% + var(--m) * 2); height: calc(100% + var(--m) * 2); filter: blur(var(--blur)); }
 .band .bwash { position: absolute; inset: 0; background: rgba(0,0,0,var(--bw)); }
 .band .face { position: relative; overflow: hidden; z-index: 2; }
-.band .face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
-  filter: brightness(.65);
+.band .face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--fpos, 30%);
+  filter: brightness(calc(1 - var(--fwash, .35)));
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%);
           mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%); }
 .band .say { position: relative; z-index: 2; align-self: center; max-width: 828px; padding: 6px 40px 6px 8px;
-  font: 400 var(--fs, 18px)/1.45 Newsreader, serif; text-transform: lowercase; color: var(--ink); }
+  /* the side voices' clothes (bekh, 2026-09-24): the reader's courier in the quiet grey, not the
+     passage's face — he is a voice beside the dreams, not one of them. Opens on an ellipsis: a
+     line cut out of something longer, which is what a portrait line is */
+  font: var(--fs, 13px)/1.7 "Courier New", monospace; letter-spacing: .06em; text-transform: lowercase; color: var(--ghost); }
+.band .say::before { content: '…'; }
 
 #hud { position: fixed; right: 18px; bottom: 18px; z-index: 5; padding: 10px 14px; background: #1c1c21;
   border: 1px solid var(--line); font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); line-height: 1.8; }
@@ -49,7 +53,7 @@ body { padding: 60px 0 120px; cursor: default; }
 #hud button:hover { color: var(--ink); }
 #hud button.on { color: #f29bea; }
 #hud label[hidden] { display: none; }
-#hud label { display: grid; grid-template-columns: 5.5em 200px 3em; align-items: center; gap: 10px; }
+#hud label { display: grid; grid-template-columns: 7.5em 200px 3em; align-items: center; gap: 10px; }
 #hud input { width: 100%; accent-color: var(--lit-b); }
 #hud output { text-align: right; color: var(--ink); }
 </style>
@@ -71,6 +75,8 @@ const S = {
   blur: params.has('blur') ? +params.get('blur') : 8,
   wash: params.has('wash') ? +params.get('wash') : 45,
   h: +params.get('h') || 71,
+  fpos: params.has('fpos') ? +params.get('fpos') : 30,    // his face: where the crop sits down the portrait
+  fwash: params.has('fwash') ? +params.get('fwash') : 35, // his face: how dark, 0 = bare
 };
 const MODES = { 1: 'streak', 2: 'mirror', 3: 'overlap' };
 const $ = s => document.querySelector(s);
@@ -92,6 +98,8 @@ function drawBand(b) {
   band.style.setProperty('--blur', S.blur + 'px');
   band.style.setProperty('--m', S.blur * 2 + 'px');   // the canvas overhangs so the blur doesn't grey its own edges
   band.style.setProperty('--bw', S.wash / 100);
+  band.style.setProperty('--fpos', S.fpos + '%');
+  band.style.setProperty('--fwash', S.fwash / 100);
   fit(b);
   if (!ia.naturalWidth || !ib.naturalWidth) return;
   const dpr = devicePixelRatio || 1, m = S.blur * 2;
@@ -128,14 +136,14 @@ function draw() {
 
 // the remark steps down until it fits the band, as on the page
 function fit(b) {
-  for (let fs = 18; fs >= 11; fs--) { b.say.style.setProperty('--fs', fs + 'px'); if (b.say.scrollHeight <= b.el.clientHeight) break; }
+  for (let fs = 13; fs >= 10; fs--) { b.say.style.setProperty('--fs', fs + 'px'); if (b.say.scrollHeight <= b.el.clientHeight) break; }
 }
 
 // on-screen controls, not keys: bekh browses with vimium, which eats bare keypresses
 // (dreamshit/CLAUDE.md). Built once; hud() only syncs what they show.
 const DIALS = [   // [state key, label, min, max, step] — `edge` is streak's, `reach` the other two's
   ['edge', 'edge', 1, 80, 1], ['reach', 'reach', 1, 12, 1], ['blur', 'blur', 0, 40, 1],
-  ['wash', 'wash', 0, 95, 1], ['h', 'height', 40, 240, 1]];
+  ['wash', 'wash', 0, 95, 1], ['h', 'height', 40, 240, 1], ['fpos', 'face', 0, 100, 1], ['fwash', 'face wash', 0, 100, 1]];
 function buildHud() {
   const box = $('#hud'), modes = document.createElement('div'); modes.className = 'modes';
   for (const [k, n] of Object.entries(MODES)) {
