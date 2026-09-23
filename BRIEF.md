@@ -210,8 +210,11 @@ shape — now.
      with a cough mark in his text, the student addressed by name, and the bare analyst
      persona for both (every attempt to write dhall into the prompt came back stylised; the
      character lives in the picture). His face is not found after four tries; *fresh eyes
-     tomorrow*. Four hand pages from the day's real runs (`1843`, `1845`, `1858`, `1858-2`)
-     sit on the shelf bare — no note, story or plate — by his word: read after the experiments.
+     tomorrow*. The four hand pages from the day's real runs (`1843`, `1845`, `1858`, `1858-2`)
+     got the full treatment at the end of the night — notes and names by `reread.py`, plates by
+     hand, and the sleeper's `--retell 17` folding them into story 17 (*i will not go along*)
+     with `1858-2` opening 18. The student read the last fifty as his backlog, a portrait every
+     eight, so the feed carries his ribbons from there on.
      Details, verdicts, costs and every command: `eva/stream/CLAUDE.md`, the analyst section.
    - **Four hands, none sees another's work.** *The sleeper dreaming*: nemo, a 170-token
      passage every five minutes, seed by shuffle bag and heat (1.8–2.5) by lot, nobody picking;

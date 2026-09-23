@@ -789,9 +789,13 @@ launchctl bootout gui/$(id -u)/com.bekh.eva-stream-analyst        # no more port
 curl -s https://eva.x/api/stream/portraits | python3 -m json.tool | head
 ```
 
-Env: `STREAM_ANALYST_SEAT` (analyst; the loom reads it too),
-`STREAM_ANALYST_PERSONA`, `STREAM_ANALYST_EVERY` (10), `STREAM_ANALYST_CONTEXT_MAX` (150000),
-`STREAM_ANALYST_TIMEOUT` (600).
+Env: `STREAM_ANALYST_SEAT` (analyst; the loom reads it too), `STREAM_ANALYST_PERSONA`,
+`STREAM_ANALYST_DOOR` (opus in code; deepseek in the plist), `STREAM_ANALYST_WINDOW` (0 in
+code; 30 in the plist), `STREAM_ANALYST_EVERY` (10 in code; 8 in the plist),
+`STREAM_ANALYST_CONTEXT_MAX` (per door unless set), `STREAM_ANALYST_TIMEOUT` (600),
+`STREAM_ANALYST_CODEX_MODEL` (gpt-5.6-sol), `STREAM_ANALYST_CODEX_EFFORT` (low); the deepseek
+door's own: `OPENROUTER_URL`, `OPENROUTER_KEYCHAIN` (OPENROUTER_API_KEY), `STREAM_DEEPSEEK_MODEL`,
+`STREAM_DEEPSEEK_PROVIDER` (GMICloud), `STREAM_DEEPSEEK_MAX_TOKENS`.
 
 ## Counting what opus costs
 
