@@ -135,8 +135,9 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 ## open
 
 - **the 5060 Ti is taken** (2026-09-24): `/opt/llama/bin/llama-server` (pid 2327960) holds
-  15.3 of its 16.3 GB, idle at the time of the look. Whose it is and whether it's ever off decides
-  whether this box is usable at all. Its disk has 157 GB free, driver 595, CUDA 13.2.
+  15.3 of its 16.3 GB, idle at the time of the look. It's a deployed service: system user `llama`, Qwen3.6-35B-A3B
+  instruct, `0.0.0.0:8080`, an api key, `--metrics`, up 26 days. Whether anyone actually calls it
+  decides whether this box is usable at all. Its disk has 157 GB free, driver 595, CUDA 13.2.
 - **the 1080 Ti box is `ds-dev`** (the 5060 is `ds-dev2`). Driver 560, CUDA 12.6: Pascal builds
   fine. A `/usr/bin/python3` (pid 1022, someone's) holds 1.8 GB of the card, so ~9.4 GB is ours.
   **Its root filesystem is 100% full (46 GB, 0 free)**, and the big pool is mounted elsewhere.
