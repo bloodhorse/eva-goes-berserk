@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>band sketch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200..800&display=swap" rel="stylesheet">
+<style>
+/* the analyst's band with the two neighbouring paintings bleeding into it instead of black
+   (bekh, 2026-09-23). A sketch: two real dreams from the api as mock rows, the band between.
+   Served from dreamshit.x/band/ so the plates are same-origin — the canvas reads their pixels,
+   and a cross-origin picture would taint it and show nothing. */
+:root { --bg: #232323; --ink: #d4e3fe; --ghost: #aab5c7; --line: #2e3547; --lit-b: #7fe3f5; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body { padding: 60px 0 120px; cursor: default; }
+.row { position: relative; height: 520px; overflow: hidden; display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(0, 600px) minmax(180px, 1fr); column-gap: 28px; padding: 0 32px; }
+.row img.plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.row .wash { position: absolute; inset: 0; background: rgba(35,35,35,.62); }
+.row .text { grid-column: 2; position: relative; z-index: 2; align-self: end; padding: 40px 0;
+  font: 400 19px/1.65 Newsreader, serif; text-transform: lowercase; white-space: pre-wrap;
+  max-height: 100%; overflow: hidden; }
+.row.up .text { -webkit-mask-image: linear-gradient(transparent, #000 40%); mask-image: linear-gradient(transparent, #000 40%); }
+.row.down .text { align-self: start; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+
+.band { position: relative; height: var(--h, 71px); overflow: hidden; display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.band canvas { position: absolute; left: calc(var(--m) * -1); top: calc(var(--m) * -1);
+  width: calc(100% + var(--m) * 2); height: calc(100% + var(--m) * 2); filter: blur(var(--blur)); }
+.band .bwash { position: absolute; inset: 0; background: rgba(0,0,0,var(--bw)); }
+.band .face { position: relative; overflow: hidden; z-index: 2; }
+.band .face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  filter: brightness(.65);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%);
+          mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%); }
+.band .say { position: relative; z-index: 2; align-self: center; max-width: 828px; padding: 6px 40px 6px 8px;
+  font: 400 var(--fs, 18px)/1.45 Newsreader, serif; text-transform: lowercase; color: var(--ink); }
+
+#hud { position: fixed; right: 18px; bottom: 18px; z-index: 5; padding: 10px 14px; background: #1c1c21;
+  border: 1px solid var(--line); font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); line-height: 1.8; }
+#hud b { color: var(--lit-b); font-weight: normal; }
+#hud .on { color: #f29bea; }
+</style>
+</head>
+<body>
+<div class="row up"><img class="plate" alt=""><div class="wash"></div><div class="text"></div></div>
+<div class="band"><canvas></canvas><div class="bwash"></div><div class="face"><img src="../analyst.jpg" alt=""></div><p class="say"></p></div>
+<div class="row down"><img class="plate" alt=""><div class="wash"></div><div class="text"></div></div>
+<div id="hud"></div>
+<script>
+const params = new URLSearchParams(location.search);
+const A = 'stream/' + (params.get('a') || '2026-09-23/1735');   // the dream above the band
+const B = 'stream/' + (params.get('b') || '2026-09-23/1833');   // the dream below it
+const S = {
+  mode: +params.get('mode') || 1,     // 1 streak · 2 mirror · 3 overlap
+  edge: +params.get('edge') || 6,     // streak: how many px of each painting's edge get stretched
+  reach: +params.get('reach') || 4,   // mirror/overlap: how far into each painting it reaches, in band heights
+  blur: params.has('blur') ? +params.get('blur') : 8,
+  wash: params.has('wash') ? +params.get('wash') : 45,
+  h: +params.get('h') || 71,
+};
+const MODES = { 1: 'streak', 2: 'mirror', 3: 'overlap' };
+const $ = s => document.querySelector(s);
+const up = $('.row.up'), down = $('.row.down'), band = $('.band'), cv = $('.band canvas');
+
+// where a row's edge sits in its painting: the same `cover` the <img> does, run backwards —
+// returns the source rect (in image px) behind rows [y0, y1) of the row, across its full width
+function srcRows(img, row, y0, y1) {
+  const W = row.clientWidth, H = row.clientHeight, iw = img.naturalWidth, ih = img.naturalHeight;
+  const s = Math.max(W / iw, H / ih), ox = (W - iw * s) / 2, oy = (H - ih * s) / 2;
+  const sy0 = Math.max(0, (y0 - oy) / s), sy1 = Math.min(ih, (y1 - oy) / s);
+  return [-ox / s, sy0, W / s, Math.max(1, sy1 - sy0)];
+}
+
+function draw() {
+  const ia = up.querySelector('img'), ib = down.querySelector('img');
+  if (!ia.naturalWidth || !ib.naturalWidth) return;
+  band.style.setProperty('--h', S.h + 'px');
+  band.style.setProperty('--blur', S.blur + 'px');
+  band.style.setProperty('--m', S.blur * 2 + 'px');   // the canvas overhangs so the blur doesn't grey its own edges
+  band.style.setProperty('--bw', S.wash / 100);
+  const dpr = devicePixelRatio || 1, m = S.blur * 2;
+  const W = band.clientWidth + m * 2, H = band.clientHeight + m * 2;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  const c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.imageSmoothingQuality = 'high';
+  const Ha = up.clientHeight, R = S.h * S.reach;
+  // the lower painting goes onto its own layer and fades in from the top — the two meet mid-band
+  const lay = document.createElement('canvas'); lay.width = cv.width; lay.height = cv.height;
+  const l = lay.getContext('2d'); l.setTransform(dpr, 0, 0, dpr, 0, 0); l.imageSmoothingQuality = 'high';
+  if (S.mode === 1) {          // streak: the last rows of the one above and the first of the one below, pulled long
+    c.drawImage(ia, ...srcRows(ia, up, Ha - S.edge, Ha), 0, 0, W, H);
+    l.drawImage(ib, ...srcRows(ib, down, 0, S.edge), 0, 0, W, H);
+  } else if (S.mode === 2) {   // mirror: each painting reflected into the band, squashed, like water
+    c.save(); c.translate(0, H); c.scale(1, -1); c.drawImage(ia, ...srcRows(ia, up, Ha - R, Ha), 0, 0, W, H); c.restore();
+    l.save(); l.translate(0, H); l.scale(1, -1); l.drawImage(ib, ...srcRows(ib, down, 0, R), 0, 0, W, H); l.restore();
+  } else {                     // overlap: each painting simply carries on across the band, squashed, and they cross
+    c.drawImage(ia, ...srcRows(ia, up, Ha - R, Ha), 0, 0, W, H);
+    l.drawImage(ib, ...srcRows(ib, down, 0, R), 0, 0, W, H);
+  }
+  l.globalCompositeOperation = 'destination-in';
+  const g = l.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(.3, 'rgba(0,0,0,0)'); g.addColorStop(.7, '#000'); g.addColorStop(1, '#000');
+  l.fillStyle = g; l.fillRect(0, 0, W, H);
+  c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(lay, 0, 0);
+  fit(); hud();
+}
+
+// the remark steps down until it fits the band, as on the page
+function fit() {
+  const say = $('.band .say');
+  for (let fs = 18; fs >= 11; fs--) { say.style.setProperty('--fs', fs + 'px'); if (say.scrollHeight <= band.clientHeight) break; }
+}
+
+function hud() {
+  const m = Object.entries(MODES).map(([k, n]) => `<span class="${+k === S.mode ? 'on' : ''}">${k} ${n}</span>`).join(' · ');
+  const knob = S.mode === 1 ? `edge <b>${S.edge}</b> [ ]` : `reach <b>${S.reach}</b> [ ]`;
+  $('#hud').innerHTML = `${m}<br>${knob} · blur <b>${S.blur}</b> - = · wash <b>${S.wash}</b> w W · height <b>${S.h}</b> h H`;
+}
+
+addEventListener('keydown', e => {
+  const k = e.key;
+  if (MODES[k]) S.mode = +k;
+  else if (k === '[') S.mode === 1 ? S.edge = Math.max(1, S.edge - 1) : S.reach = Math.max(1, S.reach - 1);
+  else if (k === ']') S.mode === 1 ? S.edge = Math.min(80, S.edge + 1) : S.reach = Math.min(12, S.reach + 1);
+  else if (k === '-') S.blur = Math.max(0, S.blur - 2);
+  else if (k === '=') S.blur = Math.min(40, S.blur + 2);
+  else if (k === 'w') S.wash = Math.max(0, S.wash - 5);
+  else if (k === 'W') S.wash = Math.min(95, S.wash + 5);
+  else if (k === 'h') S.h = Math.max(40, S.h - 5);
+  else if (k === 'H') S.h = Math.min(240, S.h + 5);
+  else return;
+  draw();
+});
+addEventListener('resize', draw);
+
+fetch('/api/stream?n=80', { cache: 'no-store' }).then(r => r.json()).then(d => {
+  const by = Object.fromEntries((d.pages || []).map(p => [p.room, p]));
+  const a = by[A], b = by[B];
+  if (!a || !b) { $('#hud').textContent = `not in the newest 80: ${!a ? A : ''} ${!b ? B : ''}`; return; }
+  up.querySelector('.text').textContent = String(a.text || '').trim();
+  down.querySelector('.text').textContent = String(b.text || '').trim();
+  const po = a.portrait || (d.pages || []).find(p => p.portrait)?.portrait || {};
+  $('.band .say').textContent = String(po.line || po.text || '').trim();
+  let n = 0; const done = () => { if (++n === 2) draw(); };
+  for (const [row, p] of [[up, a], [down, b]]) { const img = row.querySelector('img'); img.onload = done; img.src = p.plate; }
+  document.fonts.ready.then(fit);
+});
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@
 - `index.html` — first sketch: four auto-scrolling columns over procedural moon/water/pylon placeholders, live decay (`?fast=20`).
 - `three.html` — blind phase: three parallax columns with bekh's pasted text, one test picture (`sketch/pic/test.jpg`, macOS Sonoma wallpaper, git-ignored), five hand filters on keys 1–5.
 - `stream.html` — a snapshot of the real stream with the looks on keys 1–7 (`?mat=`, `?gb=`, `?skip=N`). Snapshot in `sketch/data/` (git-ignored): `stream.json` from the API, `stream.js` = `window.STREAM = <json>;`, plates in `data/plate/`.
+- `band/` — the analyst's band with the neighbouring paintings bled into it instead of black (bekh, 2026-09-23): two real dreams from the api as mock rows (`?a=` / `?b=` rooms, default `2026-09-23/1735` → `1833`), his face and a portrait line between, the fill on keys `1` streak (each painting's edge rows stretched across the band) · `2` mirror (reflected in, squashed) · `3` overlap (both carry on and cross); `[ ]` edge/reach, `- =` blur, `w W` wash, `h H` height, every one also a url param. Deployed by hand to the mini's `/srv/dreamshit/band/` — same origin as the plates, so the canvas can read them (`front/deploy.sh` never touches it): `rsync -a sketch/band/ bek@miniarch:/srv/dreamshit/band/` → `https://dreamshit.x/band/`.
 - Pages that read pixels must be served over http: `cd sketch && uv run --python 3.12 -m http.server 8765` (under `file://` the canvas is tainted and pictures vanish silently).
 
 ## Tools
