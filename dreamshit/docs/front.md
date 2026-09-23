@@ -76,10 +76,17 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
 
 ## Knobs (all remembered per browser in localStorage; url params win)
 
-The trickle's three (mode, drip, band) and the ink remember **only a choice actually made** — a url
+The trickle's mode and the ink remember **only a choice actually made** — a url
 param, the `g` key, a swatch, the picker. The look, font and wash write themselves on every load, which is fine while their
 defaults never change; a trickle default written that way froze each browser on whatever the page
-opened with the day it first saw it, which is why those three don't.
+opened with the day it first saw it, which is why those two don't.
+
+**An experiment is never remembered — url only, gone on the next plain load.** The precedent
+(2026-09-23): `?align=dreams`, opened once in Helium for the three-drip comparison, was stored
+like a dial, and for a day that one browser ran the dreams drip while every other ran the even
+one. It showed as the thread stopping a scene short of its dream — three parts paced to three
+scenes, the fourth bare — in Helium alone, and a whole session went to fonts, observers, zoom and
+caches before the storage was read. A knob with no key and no ui has no business in localStorage.
 
 | what | ui / keys | url |
 |---|---|---|
@@ -92,6 +99,6 @@ opened with the day it first saw it, which is why those three don't.
 | wash darkness | `w` lighter · `W` darker (also `-` `=`) | `?wa=0.72` |
 | side voices size | `;` smaller · `'` bigger, half a pixel a step, 10–20 — **one dial for both**: the trickle at the number, the reading a pixel above it (bekh, 2026-09-22: moving one alone throws the pair off balance). Headers and timestamps keep their own | `?tsize=14` |
 | trickle mode | `g` toggles stretch ↔ parts | `?trickle=stretch` (default) `\|parts` |
-| stretch's drip | — (a dev option, no key) | `?align=even` (default) `\|dreams\|band` |
-| the band's width | — | `?band=0.4` (align=band only) |
+| stretch's drip | — (a dev option, no key, not remembered) | `?align=even` (default) `\|dreams\|band` |
+| the band's width | — (not remembered) | `?band=0.4` (align=band only) |
 | screenshots | — | `?tail=N` (newest N, no scrolling) · `?only=<room>` (one passage, waits for its font) |

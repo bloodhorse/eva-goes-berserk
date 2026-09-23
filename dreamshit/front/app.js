@@ -768,21 +768,24 @@ let TRICKLE = TRICKLE_MODES.includes(params.get('trickle')) ? params.get('trickl
   : TRICKLE_MODES.includes(store('drip')) ? store('drip') : 'stretch';
 if (params.has('trickle')) store('drip', TRICKLE);
 // stretch's own sub-knob: does the drip run evenly down the whole dream, or does each part of
-// the telling line up with the scene it belongs to? No key — it is an experiment, not a dial.
+// the telling line up with the scene it belongs to? No key — it is an experiment, not a dial —
+// and NOT REMEMBERED: url only, gone on the next plain load. It used to be stored like the
+// dials, and one `?align=dreams` opened in Helium for a comparison (2026-09-22) left that
+// browser on the dreams drip for a day, which showed as the thread stopping a scene short of
+// its dream in that one browser and nowhere else (docs/front.md, the precedent).
 const ALIGNS = ['even', 'dreams', 'band'];
-const ALIGN = ALIGNS.includes(params.get('align')) ? params.get('align')
-  : ALIGNS.includes(store('align')) ? store('align') : 'even';
-if (params.has('align')) store('align', ALIGN);
+const ALIGN = ALIGNS.includes(params.get('align')) ? params.get('align') : 'even';
 // how far from the even drip's pace a part may go in align=band. 0 would be the even pace held
 // everywhere (and most parts ending early); 1 lets a part run at twice or at nothing.
 // (0 is a real setting — the even pace held everywhere — so a MISSING value has to be told from
 // a zero one, which `+null` is not: it is 0, and the band silently collapsed to nothing.)
 const BAND = (() => {
-  const raw = params.has('band') ? params.get('band') : store('band');
+  const raw = params.get('band');
   const v = raw === null || raw === '' ? NaN : +raw;
   return v >= 0 && v <= 5 ? v : .4;
 })();
-if (params.has('band')) store('band', BAND);
+// the stale memory itself, wiped once in every browser that carries it
+try { localStorage.removeItem('align'); localStorage.removeItem('band'); } catch {}
 // the size of the two SIDE VOICES, found by eye like the passage's: `;` smaller, `'` bigger.
 // One dial moves both (bekh, 2026-09-22): the trickle sits at --tsize, the reading one pixel
 // above it (style.css), because moving one alone throws the pair off balance. The headers keep
