@@ -894,24 +894,26 @@ $('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
 // page). What he sets is remembered per browser and applies without the param too, like the
 // wash; `reset` forgets both and the stylesheet's --rh / --rgap are back. Once he reads the
 // numbers out they get baked into style.css's :root and this memory is moot.
-const RT = { h: ['ribbon-h', '--rh', 40, 200], gap: ['ribbon-gap', '--rgap', 0, 48] };
+// face: where the crop sits down the portrait (object-position y, 0 = his hat, 100 = his chin)
+const RT = { h: ['ribbon-h', '--rh', 40, 200, 'px'], gap: ['ribbon-gap', '--rgap', 0, 48, 'px'],
+             pos: ['ribbon-pos', '--rpos', 0, 100, '%'] };
 const rtDefault = v => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v)) || 0;
 function rtApply(which, v, save) {
-  const [key, css, lo, hi] = RT[which];
+  const [key, css, lo, hi, unit] = RT[which];
   if (v === null) { document.body.style.removeProperty(css); try { localStorage.removeItem(key); } catch {} }
   else {
     v = Math.max(lo, Math.min(hi, Math.round(v)));
-    document.body.style.setProperty(css, v + 'px');
+    document.body.style.setProperty(css, v + unit);
     if (save) store(key, v);
   }
   const now = v === null ? rtDefault(css) : v;
   $('#rt-' + which).value = now;
-  $('#rt-' + which).nextElementSibling.textContent = now + 'px';
-  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value}`;
+  $('#rt-' + which).nextElementSibling.textContent = now + unit;
+  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value}`;
 }
 // ?rh=60&rgap=0 is the same as dragging there (and remembered, as a drag is) — how a headless
 // shot proves a setting, since it can't move a slider; ?rh= empty resets that one, like ?ink=
-const RT_URL = { h: 'rh', gap: 'rgap' };
+const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos' };
 for (const w of Object.keys(RT)) {
   $('#rt-' + w).oninput = e => rtApply(w, +e.target.value, true);
   const u = params.get(RT_URL[w]);
@@ -920,7 +922,7 @@ for (const w of Object.keys(RT)) {
   const saved = store(RT[w][0]);
   rtApply(w, saved === null || saved === '' || isNaN(+saved) ? null : +saved, false);
 }
-$('#rt-reset').onclick = () => { rtApply('h', null); rtApply('gap', null); };
+$('#rt-reset').onclick = () => { for (const w of Object.keys(RT)) rtApply(w, null); };
 if (params.get('tune') === 'ribbon') $('#ribbontune').hidden = false;
 
 // how the telling stands beside its dream. **stretch is what the site does** (bekh's verdict,
