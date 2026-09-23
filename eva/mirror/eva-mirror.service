@@ -16,6 +16,9 @@ Environment=LOOM_READONLY=1
 # through its own loom. Outside ~/eva-mirror, which rsync --delete owns.
 Environment=LOOM_MARKS=/home/bek/eva-marks.jsonl
 Environment=LOOM_LLAMA=http://127.0.0.1:9
+# The dream being written: one held connection to the mac loom's /api/stream/events, its `live`
+# events passed on to whoever reads this mirror (dreamshit.net). The mac asleep is a quiet retry.
+Environment=LOOM_LIVE_UPSTREAM=http://100.91.166.121:8082
 # uv's 3.12, by path: stdlib only, and the box's own python is whatever pacman shipped this week.
 ExecStart=/home/bek/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 /home/bek/eva-mirror/eva/server/loom.py
 Restart=always

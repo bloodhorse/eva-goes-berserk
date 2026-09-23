@@ -41,6 +41,13 @@ CLAUDE = ["claude", "-p", "--model", "opus", "--output-format", "json",
 MODEL = "opus"
 ALIAS = "opus"
 
+# The session the last call ran in, as the cli reports it (`session_id` on the result), or "" when
+# it reports none — which is what the fake claude in the tests does unless it is taught to. Same
+# contract as MODEL: rewritten by every call, read after ask() returns. Only the analyst reads
+# it: he is the one voice whose memory IS a cli session, resumed run after run, so losing the id
+# would mean starting his reading over from nothing.
+SESSION = ""
+
 # The four counters the cli reports and the one it prices. Named here so the ledger rows, the
 # readers of the ledger all spell them the same way (counted, never shown: bekh asks, fable reads).
 FIELDS = ("input_tokens", "cache_read_input_tokens", "cache_creation_input_tokens",
@@ -91,9 +98,13 @@ def model_of(d: dict) -> str:
     return name if isinstance(name, str) and name else ALIAS
 
 
-def ask(prompt: str, timeout: int = 300) -> tuple[str, dict]:
+def ask(prompt: str, timeout: int = 300, resume: str | None = None) -> tuple[str, dict]:
     """One call. `(the text it wrote, the usage block)`. Raises ValueError on anything that is
     not a clean answer — every caller turns that into a ledger row and exit 0.
+
+    `resume` appends this prompt as the next turn of that session instead of starting a fresh
+    one (the analyst's seat). The return stays two things on purpose — the reader and the
+    sleeper unpack it — and the session the answer came from is left in `SESSION`.
 
     CLAUDECODE and CLAUDE_CODE_ENTRYPOINT come out of the env because a claude started from
     inside a claude session refuses to start, and these may be run by hand from one. The cwd is
@@ -102,7 +113,8 @@ def ask(prompt: str, timeout: int = 300) -> tuple[str, dict]:
     env = {k: v for k, v in os.environ.items()
            if k not in ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT")}
     try:
-        r = subprocess.run(CLAUDE, input=prompt, capture_output=True, text=True,
+        argv = CLAUDE + (["--resume", resume] if resume else [])
+        r = subprocess.run(argv, input=prompt, capture_output=True, text=True,
                            timeout=timeout, env=env, cwd=tempfile.gettempdir())
     except FileNotFoundError:
         raise ValueError("no `claude` on PATH")
@@ -116,8 +128,10 @@ def ask(prompt: str, timeout: int = 300) -> tuple[str, dict]:
         raise ValueError("the cli's answer carries no result text")
     if d.get("is_error"):
         raise ValueError(f"the cli reported an error: {text[:200]}")
-    global MODEL
+    global MODEL, SESSION
     MODEL = model_of(d)
+    sid = d.get("session_id")
+    SESSION = sid if isinstance(sid, str) else ""
     return text, usage_of(d)
 
 

@@ -18,7 +18,9 @@ which reads the stream worker's heartbeat (`STREAM_DIR`) alongside the rooms und
 `sittings/stream/`; `/stream` serves `front/stream.html` beside it. One route never returns:
 **`/api/stream/events`** is `text/event-stream`, held open, saying which rooms changed within
 ~2s of anything landing, so a reader is pushed to instead of polling — a GET, so the mirror
-serves it too. Env: `LOOM_HOST`,
+serves it too. **`POST /api/stream/live`** takes the stream writer's `{text so far, seed, done}`
+while nemo writes, holds it in memory only and pushes it down that connection as `event: live`
+(403 on the mirror, which pulls the mac's through `LOOM_LIVE_UPSTREAM`). Env: `LOOM_HOST`,
 `LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
 `LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` / `LOOM_STREAM_PAGE` /
 `STREAM_DIR` that the tests and the rigs set — production leaves them alone.

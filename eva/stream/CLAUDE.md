@@ -115,6 +115,41 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
     its reading, its story, its name, its plate — built from the route's own helpers, and
     measured at **4.4 ms** a tick over 185 rooms (`loom.stream_prints`). It is a GET, so the
     mirror serves it exactly as the mac does, which is how `dreamshit.x` reads the stream.
+- **The dream is written live** (2026-09-23): a reader watches the page arrive word by word.
+  - **The writer streams.** `stream.py` reads nemo's answer through `eva.complete_stream` (the
+    repl's own SSE reader; `stream: true`, the per-token `completion_probabilities` collected
+    off every chunk, tokens and tps off the final `stop: true` one), so the room and the ledger
+    row are what the one-lump call wrote — checked on real nemo with a fixed sampler seed:
+    text, flat logprobs, tokens, stop type identical. The only drift ever seen (≤0.002 in a
+    logprob) is a cold versus a warm prompt cache, and it shows up lump-against-lump too.
+  - **It posts the text so far** to `POST /api/stream/live` — `{"text": all of it so far,
+    "seed": the tail nemo was handed, "done"}` — every `STREAM_LIVE_EVERY` (0.5s, ~5 tokens)
+    from its own thread, the first post before nemo's first token so the seed shows at once,
+    and one `done: true` after the thread is stopped (so no half-page post can land after it)
+    and just before the room is written. `done` with an empty text means nothing landed and the
+    page takes the block away. Where: `LOOM_LIVE` (default the mac's loom,
+    `http://100.91.166.121:8082`; empty = nowhere; **unset on a scratch shelf = nowhere**, push.py's
+    rule, so a test never types onto the real reader).
+  - **A dead loom costs one line.** 2s timeout per post, generation never waits on one, and a
+    loom that is down, slow or refusing is one `live ·` line on stderr per run — the page lands
+    exactly as before.
+  - **The loom holds one live state in memory** (`text, seed, done, ts`, never on disk — the
+    room is the record) and pushes it as `event: live` down every held events connection the
+    moment a post lands, woken by a condition and not by the tick. A client connecting mid-dream
+    gets the dream so far first; a finished (`done`) one is not handed to a late client, because
+    its room has landed or is landing. `done` goes out as its own live event and the ordinary
+    `change` for the room follows on the next tick. A state older than `STREAM_LIVE_STALE` (600s)
+    is a writer that died mid-dream and is dropped. `LOOM_READONLY` refuses the post (403).
+  - **The mirror pulls it.** With `LOOM_LIVE_UPSTREAM` set (the mini's unit points it at the mac's
+    loom) the loom holds one `GET <upstream>/api/stream/events` open on a thread, takes the
+    `live` events out and re-emits them to its own clients — so `dreamshit.net` gets the typing
+    through the pipe it already holds. Reconnects with a doubling wait up to
+    `LOOM_LIVE_RETRY_MAX` (30s), one log line when the upstream goes and one when it comes back.
+  - **eva's page** (`front/stream.html`) now holds the events connection too: `live` draws one
+    block at the bottom of the feed, seed quiet, text growing in place, `writing` in its foot;
+    `change` fetches at once (the minute's poll stays as the net) and the room coming in takes the
+    finished block's place. Measured 2026-09-23 through `eva.x`: 8 growing `live` events for a
+    42-token page, `done`, then the `change`; through the mirror, 31 for a 170-token one.
 - **The reader is phone-first**, which is the one place this project's "the page is a desktop
   page" law does not apply: that law is about the loom. No model name, no sampler, no seed name
   — a reader who can see the temperature is reading an experiment and not a dream.
@@ -529,6 +564,60 @@ launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the wo
 Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_TIMEOUT`,
 `STREAM_DREAM_PERSONA`. Log: `/tmp/eva-stream-remembering.log`.
 
+## The analyst — the fourth voice
+
+bekh's (2026-09-23): opus reading **all** the dreams, oldest first, and rewriting a
+psychological portrait of the dreamer — what keeps coming back, and just as much the way it is
+told: a turn of phrase, a word it cannot leave alone, a tic. `analyst.py`, persona in
+`analyst.txt`, bekh's file, never rewritten by the code — **told the dreamer is a machine
+called nemo** (his pick, 2026-09-23, after reading the two lines on ten dreams side by side:
+the blind twin, `analyst-blind.txt`, found the same room-and-wall core and differed only in
+its last sentence; the told line read the woman told to write a story as the dreamer's own
+condition, which is what the sentence bought). Positive register only, told up front that
+nemo writes in lowercase and starts mid-sentence so he doesn't file that as a pattern, and
+asked to write in lowercase himself. Like every voice here he sees nemo's text and nothing
+else — no seed, no note, no name, no story — each dream under the date and minute it was
+written, `[2026-09-22 17:11]`. What ten dreams cost: ~5k context, 12–18s, four to five cents.
+
+- **His memory is a resumed cli session, never a summary** (bekh's law). Each run hands the
+  next batch over as the next user turn of one `claude --resume` session, so every dream he was
+  ever given is still in his context word for word. A tic is a phrasing that returns across
+  forty dreams; any reduction — his own last portrait, a digest of ours — keeps the themes and
+  loses exactly the phrasing he is hunting. So the later turns carry the new dreams and one line
+  asking for the portrait again, and nothing else: the persona and every earlier portrait are
+  already in the session. `opus.ask(..., resume=id)` is the door, and `opus.SESSION` is what the
+  cli answered from.
+- **The backlog is the point**: unflagged rooms above the seat's watermark, oldest first, `--n`
+  (10) at a time, one batch per run. Fewer than n new is a quiet no-op; `--partial` takes what
+  is there. The watermark moves whenever the cli answered, parse or not — the dreams are in the
+  session by then, and holding it back would hand them over twice.
+- **Seats**, so two persona lines can read the same dreams side by side: a seat is one
+  session and one persona, the persona sent once, when the session starts — so an edit to
+  the file reaches a new seat only. `--start ROOM` or `--start last:K` puts a fresh seat's first dream there; a
+  fresh seat without it begins at the oldest dream on the shelf. `--start` on a live seat is
+  refused; `--new` bins the seat to `portraits/.trash/<stamp>/` first.
+- **The ceiling** (`STREAM_ANALYST_CONTEXT_MAX`, 150000): the cli compacts a full session on its
+  own, and compaction is exactly the reduction bekh forbade — so the tool stops first, with a
+  ledger row saying *start a new seat*, and makes no call. `context` is input + cache read +
+  cache creation of the last call.
+- **Storage**, under `shelf/stream/portraits/<seat>/`: `session.json` = `{session_id, persona,
+  started, covered, dreams, context, model}`, rewritten after every call; one version per
+  portrait at `<YYYY-MM-DD>/<HHMM>[-n].json` = `{ts, seat, session_id, rooms, dreams, text,
+  model, seconds, usage, context}`, every one kept, the latest being the portrait. Ledger rows
+  `kind: "portrait"`; failures are a row and exit 0.
+
+```bash
+uv run --python 3.12 eva/stream/analyst.py --once                                # next batch, default seat
+uv run --python 3.12 eva/stream/analyst.py --once --seat analyst --start last:10
+uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10 \
+  --persona eva/stream/analyst-blind.txt
+uv run --python 3.12 eva/stream/analyst.py --show                                # the latest, no call
+```
+
+No job and no tap yet — it runs by hand. Env: `STREAM_ANALYST_SEAT` (analyst),
+`STREAM_ANALYST_PERSONA`, `STREAM_ANALYST_EVERY` (10), `STREAM_ANALYST_CONTEXT_MAX` (150000),
+`STREAM_ANALYST_TIMEOUT` (600).
+
 ## Counting what opus costs
 
 `opus.py` is the one call both opus voices make: `claude -p --model opus` in
@@ -725,7 +814,9 @@ plate — then the writer off and nemo off, by the lines above. **Foreground on 
 stays in the terminal and ctrl-c ends it clean (writer off, nemo off, the painter's cap put
 back); `eva go stop` does the same from another terminal. The painter's cap for the run is
 bekh's own number for the week — 43, `eva go 5 50` for another — not a formula (his call the
-same day: a computed cap is arbitrary); a week already past it refuses; restored however the
+same day: a computed cap is arbitrary); a week already past it refuses; **`eva go -l N`**
+(`--limitless`, 2026-09-23) lifts the week cap for the run and skips that refusal — the
+session guard (80) and no-cache-no-pictures still hold; restored however the
 run ends; the last dreams, bare when the writer stops, are
 painted by hand at the end. Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`.
 
@@ -752,10 +843,12 @@ read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom 
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
-`STREAM_TEMP_HI`, `STREAM_PUSH` (`0` = don't tap the mirror), plus loom's `LOOM_SITTINGS` and
+`STREAM_TEMP_HI`, `STREAM_PUSH` (`0` = don't tap the mirror), `LOOM_LIVE` (where the live posts
+go; empty = nowhere) and `STREAM_LIVE_EVERY` (0.5), plus loom's `LOOM_SITTINGS` and
 `LOOM_LLAMA`. The loom reads `STREAM_DIR` and `STREAM_INTERVAL` too, `LOOM_STREAM_PAGE` for a
-doctored copy of the page, and `STREAM_EVENTS_TICK` / `STREAM_EVENTS_KEEPALIVE` /
-`STREAM_EVENTS_ROOMS` for the held connection.
+doctored copy of the page, `STREAM_EVENTS_TICK` / `STREAM_EVENTS_KEEPALIVE` /
+`STREAM_EVENTS_ROOMS` for the held connection, `STREAM_LIVE_STALE` (600) for the live state, and
+`LOOM_LIVE_UPSTREAM` / `LOOM_LIVE_RETRY_MAX` (30) on the mirror.
 
 ## Reading the monitor
 
@@ -812,7 +905,20 @@ answer as a row with exit 0, the api carrying the running dream and a finished o
 ended, usage on both kinds of row, and the cli's json read in either shape. For the seams: the
 shape asking for the mark, the marks kept in the stored text and handed back to him as his
 memory, `parts` being that text cut at them, a telling with no mark being one part, and the api
-carrying `parts` beside `text` — for a version written before they existed too.
+carrying `parts` beside `text` — for a version written before they existed too. For the
+analyst (the fake `claude` answering with a session id and logging its argv): `--start last:3`
+handing over the last three unflagged dreams oldest first under dated headers, persona verbatim,
+no seed or note, no `--resume`; the next run resuming that id with only the new dreams; too few
+new being no call, `--partial` taking them; two seats with their own persona and session; the
+ceiling refusing with a row; a garbage answer moving the session on and a dead cli moving
+nothing; `--start` on a live seat refused and `--new` binning it; the file shapes. For live
+writing (the stub streams its line token by token, `token_delay` per server): the streamed
+answer equal to the one-lump answer and the room and row it writes; the posts reaching a fake
+loom growing, seed first, `done` last with the page's text; a dead loom as one line with the page
+landed; and against real looms — a post reaching a held client well inside the tick, a late
+client handed the dream so far first and never a finished one, `done` before the `change`, a bad
+body 400, a stale state dropped, 403 read-only, and a mirror pulling from an upstream loom,
+surviving it going away and finding it again.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

@@ -312,11 +312,17 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/event-stream")
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
+        # Per server, 0 by default: the stream writer posts the text so far on a clock, and a
+        # stub that emits every token in the same millisecond gives that clock nothing to see
+        # grow. A real nemo is ~10 tokens a second.
+        delay = getattr(self.server, "token_delay", 0) or 0
         for i, piece in enumerate(pieces):
             ev = {"content": piece, "stop": False}
             if probs:
                 ev["completion_probabilities"] = [probs[i]]
             self._event(ev)
+            if delay:
+                time.sleep(delay)
         self._event(dict(done, content="", stop=True))
 
     def _event(self, obj: dict) -> None:
@@ -326,7 +332,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def serve(port: int = 0, n_ctx: int = 8192,
           model_path: str = "/models/stub-base-12b.Q5_K_M.gguf",
-          lines: list[str] | None = None) -> ThreadingHTTPServer:
+          lines: list[str] | None = None, token_delay: float = 0) -> ThreadingHTTPServer:
     """Bound and ready, not yet serving. port 0 lets the OS pick — read it back off
     `srv.server_address[1]`, which is how the test avoids racing another process for a
     port it guessed.
@@ -340,6 +346,7 @@ def serve(port: int = 0, n_ctx: int = 8192,
     srv.n_ctx = n_ctx
     srv.model_path = model_path
     srv.lines = lines
+    srv.token_delay = token_delay           # seconds between streamed tokens
     srv.seen = []
     return srv
 

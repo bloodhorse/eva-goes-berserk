@@ -795,8 +795,14 @@ function addTop(p){
 function render(pages, where){
   const taken = pages.filter(p => !rooms.has(p.room));
   for (const p of taken) rooms.add(p.room);
+  // The dream being written stays LAST. It is lifted out while rooms go in below, because
+  // addBottom reads the feed's last element to decide whether a dream continues a pack, and the
+  // live block is not a pack — left in, the next scene would open a second pack with one id.
+  const held = where === 'bottom' && live.el && live.el.parentNode;
+  if (held){ live.el.remove(); if (live.rule) live.rule.remove(); }
   if (where === 'bottom') for (const p of taken.slice().reverse()) addBottom(p);
   else for (const p of taken) addTop(p);
+  if (held) putLive();
   const first = el.feed.querySelector('.pass');
   if (first) oldest = first.dataset.room;
   return taken.length;
@@ -870,6 +876,9 @@ function poll(){
     drawStatus(d.status);
     syncStories(d.pages || []);
     const fresh = (d.pages || []).filter(p => !rooms.has(p.room));
+    // A finished live block has done its job once the loom has said something since `done`:
+    // either its room is in `fresh` and takes its place below, or the filter hid it.
+    if (live.done) dropLive();
     if (!fresh.length) return;
     const wasAtBottom = atBottom();
     render(fresh, 'bottom');
@@ -881,6 +890,71 @@ function poll(){
 }
 
 el.fresh.addEventListener('click', showWaiting);
+
+// ---- the dream being written ------------------------------------------------------------
+// The writer posts the text so far to the loom about twice a second and the loom pushes it here
+// as `event: live` (eva/stream/CLAUDE.md, live writing). One block at the bottom of the feed,
+// the seed in the quiet tone and the text growing in place. On `done` it stays, whole, until the
+// loom's `change` for the new room brings the real dream in under it — then it goes. A `done`
+// with no text is a page that never landed (llama failed, nemo said nothing): gone at once.
+// Raw text, untrimmed: the ragged end is part of watching it being written.
+const live = {el: null, rule: null, seed: null, body: null, foot: null, done: false};
+
+function putLive(){
+  live.rule = el.feed.lastElementChild ? rule() : null;
+  if (live.rule) el.feed.appendChild(live.rule);
+  el.feed.appendChild(live.el);
+}
+
+function dropLive(){
+  if (live.el) live.el.remove();
+  if (live.rule) live.rule.remove();
+  live.el = live.rule = null;
+  live.done = false;
+}
+
+function onLive(s){
+  if (!s || typeof s.text !== 'string') return;
+  if (s.done && !s.text){ dropLive(); return; }
+  const follow = atBottom();
+  if (!live.el){
+    const art = document.createElement('article');
+    art.className = 'pass live';
+    const block = document.createElement('div');
+    block.className = 'block';
+    live.seed = document.createElement('p');
+    live.seed.className = 'seed';
+    live.body = document.createElement('p');
+    live.body.className = 'body';
+    live.foot = document.createElement('div');
+    live.foot.className = 'foot';
+    const w = document.createElement('span');
+    w.className = 'when';
+    live.foot.appendChild(w);
+    block.appendChild(live.seed);
+    block.appendChild(live.body);
+    block.appendChild(live.foot);
+    art.appendChild(block);
+    live.el = art;
+    putLive();
+  }
+  live.seed.textContent = s.seed || '';
+  live.body.textContent = s.text;
+  live.foot.firstChild.textContent = s.done ? '' : 'writing';
+  live.done = !!s.done;
+  // Following only when he was already at the bottom: the block grows downward, so nothing he
+  // is reading higher up moves either way.
+  if (follow) toBottom();
+}
+
+// The held connection. EventSource reconnects by itself, and the loom hands a reconnecting
+// client the dream so far first, so a reload or a dropped phone connection picks up mid-dream.
+// `change` fetches at once instead of waiting for the minute's poll, which stays as the net.
+if (window.EventSource){
+  const es = new EventSource('/api/stream/events');
+  es.addEventListener('live', e => { try { onLive(JSON.parse(e.data)); } catch (_) {} });
+  es.addEventListener('change', () => poll());
+}
 
 // ---- the wash tuner -----------------------------------------------------------------------
 // Four numbers chosen by eye (?tune=1). It writes the same custom properties the stylesheet

@@ -54,8 +54,15 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                `event: change` with {"rooms": [the ones whose fingerprint
                                moved], "status": …} within ~2s of a passage, a note, a story,
                                a plate or a name landing, and a `: keepalive` comment between
-                               them. A GET, so the mirror serves it too
-  POST /api/mark            -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
+                               them. A GET, so the mirror serves it too. And `event: live`
+                               with {"text", "seed", "done", "ts"} the moment the writer posts
+                               the dream it is writing — first thing on connect, too, while one
+                               is being written
+  POST /api/stream/live      -> {"text": all of it so far, "seed", "done"}: the writer's dream
+                               while nemo writes it, held in memory (never on disk) and pushed
+                               down every held events connection. 403 on the mirror, whose
+                               live state comes from LOOM_LIVE_UPSTREAM instead
+  POST /api/mark           -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
                                marked, in the room itself — the same flags the choose screen
                                leaves. `kept` goes in an artifact; `good` only says he liked
                                reading it, and nothing downstream reads it. A branch wears
@@ -101,7 +108,10 @@ Env: LOOM_HOST, LOOM_PORT (8082 — 8080 is llama-server, 8081 is fim), LOOM_LLA
 LOOM_SITTINGS, LOOM_STORAGE, LOOM_ARTIFACTS, LOOM_LEDGER, LOOM_CANVASES, LOOM_READONLY (1 = the mirror: every POST 403 but marks),
 LOOM_MARKS (the mirror's mark journal, replayed on the mac by eva/mirror/push.sh),
 LOOM_STREAM_PAGE, STREAM_DIR and STREAM_INTERVAL (the dream stream — eva/stream/),
-STREAM_EVENTS_TICK / STREAM_EVENTS_KEEPALIVE / STREAM_EVENTS_ROOMS (the held connection above).
+STREAM_EVENTS_TICK / STREAM_EVENTS_KEEPALIVE / STREAM_EVENTS_ROOMS (the held connection above),
+STREAM_LIVE_STALE (600 s: a live dream older than that is a writer that died mid-dream),
+LOOM_LIVE_UPSTREAM (the mirror: another loom whose live events this one pulls and passes on)
+and LOOM_LIVE_RETRY_MAX (30 s, the longest wait between two tries at that upstream).
 """
 
 from __future__ import annotations
@@ -196,6 +206,15 @@ STREAM_N_MAX = 400
 STREAM_EVENTS_TICK = float(os.environ.get("STREAM_EVENTS_TICK", "2"))
 STREAM_EVENTS_KEEPALIVE = float(os.environ.get("STREAM_EVENTS_KEEPALIVE", "20"))
 STREAM_EVENTS_ROOMS = int(os.environ.get("STREAM_EVENTS_ROOMS", "400"))
+# The dream while it is being written (see `set_live`). A writer that died mid-dream leaves its
+# last post behind forever; past this age that post is nobody's dream and a late client must not
+# be handed a half-page as if nemo were still at it. Ten minutes is two whole passages.
+STREAM_LIVE_STALE = float(os.environ.get("STREAM_LIVE_STALE", "600"))
+LIVE_UPSTREAM = os.environ.get("LOOM_LIVE_UPSTREAM", "").rstrip("/")
+LIVE_RETRY_MAX = float(os.environ.get("LOOM_LIVE_RETRY_MAX", "30"))
+# A passage is 170 tokens, a kilobyte or so. The cap is only there so a broken writer cannot
+# park megabytes in memory that every held client is then sent.
+LIVE_MAX = 64 * 1024
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -1955,6 +1974,117 @@ def stream_prints(n: int = 0) -> dict[str, str]:
     return out
 
 
+# ---- the dream while it is being written ------------------------------------------------------
+# The writer (eva/stream/stream.py) streams nemo's answer and posts the text so far here about
+# twice a second, then once more with `done` just before the room lands. It is ONE state and it
+# lives in memory only: the room file is still the record, and a half-page on disk would be a
+# second record that can disagree with it. A loom restart mid-dream loses the typing and nothing
+# else — the room lands on the shelf as it always did.
+#
+# Held connections are woken by the condition, not by a shorter tick: the tick walks the shelf
+# and costs milliseconds, the wake costs nothing, and a post has to reach the page in the same
+# instant or the text arrives in two-second lurches instead of as it is written.
+
+LIVE: dict | None = None
+LIVE_SEQ = 0                      # bumped on every post; a held loop compares it to what it sent
+LIVE_COND = threading.Condition()
+
+
+def set_live(text: str, seed: str, done: bool) -> dict:
+    """Take a new live state and wake every held events connection. Returns the state."""
+    global LIVE, LIVE_SEQ
+    state = {"text": text, "seed": seed, "done": bool(done), "ts": time.time()}
+    with LIVE_COND:
+        LIVE = state
+        LIVE_SEQ += 1
+        LIVE_COND.notify_all()
+    return state
+
+
+def live_now() -> dict | None:
+    """The live state, or None when there is none or it is stale — a writer that died mid-dream
+    must not be handed to the next reader as nemo still writing."""
+    with LIVE_COND:
+        state = LIVE
+    if state is None or time.time() - state["ts"] > STREAM_LIVE_STALE:
+        return None
+    return state
+
+
+def live_check(payload) -> str:
+    """Why a live post is refused, or ''. Strings and a boolean, nothing else is looked at."""
+    if not isinstance(payload, dict):
+        return "a live post is an object"
+    text, seed, done = payload.get("text"), payload.get("seed", ""), payload.get("done", False)
+    if not isinstance(text, str) or not isinstance(seed, str) or not isinstance(done, bool):
+        return "a live post takes text and seed as strings and done as a boolean"
+    if len(text) + len(seed) > LIVE_MAX:
+        return "a live post that size is not a passage"
+    return ""
+
+
+def pull_live(base: str) -> None:
+    """The mirror's side: hold `<base>/api/stream/events` open and take the `live` events out of it.
+
+    The mini serves dreamshit.net through a pipe it already holds open, so the typing gets there
+    by this loom holding ONE connection to the mac's loom and passing every live state on to its
+    own clients through `set_live` — the same wake a local post uses. The `change` events on the
+    upstream are ignored: the mirror learns about rooms from its own shelf, which the push fills.
+
+    Forever, on a daemon thread, and never a crash: the mac sleeping is the ordinary state, so an
+    upstream that refuses, hangs or drops is a wait (doubling to LIVE_RETRY_MAX) and another try.
+    One line on stderr when the upstream goes away and one when it comes back — never one per
+    try, or a night with the lid shut would be the whole journal.
+    """
+    u = urlparse(base)
+    prefix = (u.path or "").rstrip("/")
+    wait, up = 1.0, None
+    while True:
+        conn = None
+        try:
+            # 3x the upstream's keepalive: a connection that has said nothing for a minute is
+            # dead (a mac that went to sleep mid-connection never sends the FIN).
+            conn = http.client.HTTPConnection(u.hostname or "127.0.0.1", u.port or 80,
+                                              timeout=max(3 * STREAM_EVENTS_KEEPALIVE, 10))
+            conn.request("GET", prefix + "/api/stream/events")
+            resp = conn.getresponse()
+            if resp.status != 200:
+                raise OSError(f"upstream said {resp.status}")
+            if up is not True:
+                print(f"live · upstream {base} up", file=sys.stderr, flush=True)
+            up, wait = True, 1.0
+            event = ""
+            for raw in resp:
+                line = raw.decode("utf-8", "replace").rstrip("\r\n")
+                if line.startswith("event:"):
+                    event = line[6:].strip()
+                elif line.startswith("data:") and event == "live":
+                    try:
+                        d = json.loads(line[5:].strip())
+                    except ValueError:
+                        d = None
+                    if not live_check(d):
+                        set_live(d["text"], d.get("seed", ""), d.get("done", False))
+                elif not line:
+                    event = ""
+            raise OSError("upstream closed")
+        # Everything, not a list of expected errors: this thread dying would end the typing on
+        # the mirror silently until the next restart, which is worse than any one bad line.
+        except Exception as exc:  # noqa: BLE001
+            if up is not False:
+                print(f"live · upstream {base} gone ({exc}); retrying quietly",
+                      file=sys.stderr, flush=True)
+            up = False
+        finally:
+            if conn is not None:
+                try:
+                    conn.close()
+                except OSError:
+                    pass
+        time.sleep(wait)
+        wait = min(wait * 2, LIVE_RETRY_MAX)
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -1996,7 +2126,8 @@ class Handler(BaseHTTPRequestHandler):
         fingerprint moved or appeared and the same `status` object `/api/stream` returns; a
         status-only change (the writer went to sleep) comes with `rooms: []`. Between them a
         `: keepalive` comment, because a connection that says nothing for a minute is a
-        connection cloudflare and caddy are entitled to close.
+        connection cloudflare and caddy are entitled to close. And `event: live` the moment the
+        writer posts (see `set_live`) — out of band from the tick, woken by the condition.
 
         The server is a `ThreadingHTTPServer`, so a held connection is one thread and the loom
         goes on answering everything else; this is also why the tick is a plain `sleep` and not
@@ -2017,14 +2148,38 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Connection", "close")
         self.end_headers()
         prints, status = stream_prints(), stream_status()
+        with LIVE_COND:
+            seen = LIVE_SEQ
         try:
             # A byte straight away, before any waiting: the headers alone may sit in a proxy,
             # and this is what proves the whole pipe is open while somebody is watching curl.
             self.wfile.write(b": open\n\n")
+            # A reader arriving mid-dream sees it mid-way, not from the next post on. A finished
+            # one is not sent: its room has landed or is landing, and a `done` with no `change`
+            # after it would leave a block on the page that nothing ever takes away.
+            cur = live_now()
+            if cur is not None and not cur["done"]:
+                self.live_event(cur)
             self.wfile.flush()
             said = time.monotonic()
+            tick = said + STREAM_EVENTS_TICK
             while True:
-                time.sleep(STREAM_EVENTS_TICK)
+                # Sleep until the tick OR a live post, whichever comes first. The wait is on the
+                # condition so a post reaches every held client at once; the tick is unchanged.
+                with LIVE_COND:
+                    LIVE_COND.wait_for(lambda: LIVE_SEQ != seen,
+                                       timeout=max(0.0, tick - time.monotonic()))
+                    seq, state = LIVE_SEQ, LIVE
+                if seq != seen:
+                    # Posts that came faster than this loop are coalesced into the newest: the
+                    # text is the whole text so far every time, so nothing is lost by skipping.
+                    seen = seq
+                    if state is not None:
+                        self.live_event(state)
+                        self.wfile.flush()
+                        said = time.monotonic()
+                    continue
+                tick = time.monotonic() + STREAM_EVENTS_TICK
                 fresh, now = stream_prints(), stream_status()
                 changed = sorted(r for r, fp in fresh.items() if prints.get(r) != fp)
                 if changed or now != status:
@@ -2039,6 +2194,10 @@ class Handler(BaseHTTPRequestHandler):
                 said = time.monotonic()
         except (BrokenPipeError, ConnectionResetError, TimeoutError):
             return
+
+    def live_event(self, state: dict) -> None:
+        data = json.dumps(state, ensure_ascii=False)
+        self.wfile.write(b"event: live\ndata: " + data.encode("utf-8") + b"\n\n")
 
     def do_GET(self) -> None:
         u = urlparse(self.path)
@@ -2310,6 +2469,18 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "updated": ts})
             return
 
+        # The writer's dream while nemo writes it. Past the READONLY gate above on purpose: the
+        # mirror's live state is the mac's, pulled (LIVE_UPSTREAM), and a second writer posting
+        # to the mini would be two dreams fighting over one block.
+        if u.path == "/api/stream/live":
+            why = live_check(payload)
+            if why:
+                self._json(400, {"error": why})
+                return
+            set_live(payload["text"], payload.get("seed", ""), payload.get("done", False))
+            self._json(200, {"ok": True})
+            return
+
         if u.path in ("/api/mark", "/api/keep"):
             # One route, two spellings. /api/keep is what the page called before `good`
             # existed and what anything outside this repo may still call, so it stays —
@@ -2526,6 +2697,10 @@ def main() -> int:
     os.makedirs(ARTIFACTS, exist_ok=True)
     print(f"loom up: http://{HOST}:{PORT}  (llama {LLAMA}, sittings {SITTINGS})", flush=True)
     srv = ThreadingHTTPServer((HOST, PORT), Handler)
+    # Only with the env var: the mac's loom is the upstream and pulls from nobody.
+    if LIVE_UPSTREAM:
+        threading.Thread(target=pull_live, args=(LIVE_UPSTREAM,), daemon=True,
+                         name="live-upstream").start()
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

@@ -14,6 +14,8 @@ starts a launchd agent or asks the live nemo for anything.
 
 from __future__ import annotations
 
+import http.client
+import http.server
 import io
 import json
 import os
@@ -52,6 +54,7 @@ os.environ["STREAM_SEED_LOWER"] = "0"     # the seed tests compare text exactly;
 
 import codex  # noqa: E402
 import interpreter  # noqa: E402
+import analyst  # noqa: E402
 import naming  # noqa: E402
 import plate  # noqa: E402
 import plating  # noqa: E402
@@ -674,11 +677,16 @@ class Routes(unittest.TestCase):
 # the right rooms.
 
 FAKE_CLAUDE = r'''#!/usr/bin/env python3
-import io, json, os, re, sys
+import io, json, os, re, sys, uuid
 prompt = sys.stdin.read()
 with open(os.environ["FAKE_CLAUDE_LOG"], "a", encoding="utf-8") as f:
     f.write(prompt + "\n=====\n")
+# The argv too, one json line per call, beside the prompts: the analyst's memory is a resumed
+# session, and `--resume <id>` on the command line is the only place that shows.
+with open(os.environ["FAKE_CLAUDE_LOG"] + ".argv", "a", encoding="utf-8") as f:
+    f.write(json.dumps(sys.argv[1:]) + "\n")
 mode = os.environ.get("FAKE_MODE", "")
+SESSION = ""
 
 USAGE = {"input_tokens": 12, "cache_read_input_tokens": 6642,
          "cache_creation_input_tokens": 3, "output_tokens": 301}
@@ -686,11 +694,22 @@ USAGE = {"input_tokens": 12, "cache_read_input_tokens": 6642,
 def answer(text, error=False):
     # The cli's own --output-format json shape: one result event with the usage block on it.
     json.dump({"type": "result", "subtype": "success", "is_error": error, "result": text,
-               "usage": USAGE, "total_cost_usd": 0.0021782}, sys.stdout)
+               "usage": USAGE, "total_cost_usd": 0.0021782, "session_id": SESSION}, sys.stdout)
     raise SystemExit(0)
 
 if mode == "boom":
     raise SystemExit(3)
+
+# The analyst: a session id like the real cli's — the one resumed, or a fresh one — and a
+# portrait that says how many dreams it has been handed this turn, so a test can count them.
+if re.search(r"^--- (the dreams|\d+ more dreams) ---$", prompt, re.M):
+    if mode != "nosession":
+        SESSION = sys.argv[sys.argv.index("--resume") + 1] if "--resume" in sys.argv \
+            else str(uuid.uuid4())
+    if mode == "garbage":
+        answer("i would rather not say who this is")
+    k = len(re.findall(r"^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}\]$", prompt, re.M))
+    answer(f"here it is\n<portrait>\n  a dreamer of {k} more dreams.\n</portrait>\n")
 
 # The sleeper remembering asks a different question and takes a different tag.
 if "--- the new scene ---" in prompt:
@@ -1936,6 +1955,263 @@ class Remembering(unittest.TestCase):
         self.assertEqual(opus.add({"input_tokens": 1}, {"input_tokens": 2})["input_tokens"], 3)
 
 
+# ---- the analyst ------------------------------------------------------------------------------
+
+def analyse(fake: dict, *args) -> tuple[int, str]:
+    return with_fake(fake, lambda: analyst.main(["analyst.py", *args]))
+
+
+def argv_log(fake: dict) -> list[list[str]]:
+    try:
+        with open(fake["log"] + ".argv", encoding="utf-8") as f:
+            return [json.loads(line) for line in f if line.strip()]
+    except OSError:
+        return []
+
+
+class Analyst(unittest.TestCase):
+    """The fourth voice: one resumed session per seat, every dream verbatim, oldest first."""
+
+    def setUp(self):
+        wipe_stream()
+        self.fakes = []
+        self.persona = os.path.join(BOX, "analyst-persona-test.txt")
+        with open(self.persona, "w", encoding="utf-8") as f:
+            f.write("ANALYSTPERSONAMARK you read someone's dreams.\n")
+        # six dreams, one flagged: 1000 1005 [1010 flagged] 1015 1020 1025
+        self.rooms = []
+        for hhmm in ("1000", "1005", "1010", "1015", "1020", "1025"):
+            name = f"stream/2026-09-20/{hhmm}"
+            make_page(name, f"ANALYSTSEEDMARK {hhmm}\n", f"ANALYSTDREAM {hhmm} and the  ragged",
+                      flag="copyright" if hhmm == "1010" else None)
+            self.rooms.append(name)
+        # a reader's note on one of them, which must never reach the analyst
+        put_reading(["stream/2026-09-20/1025"], "ANALYSTNOTEMARK a note.", time.time())
+
+    def tearDown(self):
+        for f in self.fakes:
+            shutil.rmtree(f["dir"], ignore_errors=True)
+
+    def fake(self, mode: str = "") -> dict:
+        f = fake_claude(mode)
+        self.fakes.append(f)
+        return f
+
+    def run_(self, *args, mode: str = "") -> tuple[int, str, dict]:
+        f = self.fake(mode)
+        code, out = analyse(f, "--once", "--persona", self.persona, *args)
+        return code, out, f
+
+    def rows(self) -> list[dict]:
+        return [r for r in ledger_rows() if r.get("kind") == "portrait"]
+
+    def session(self, seat: str = "analyst") -> dict:
+        with open(os.path.join(analyst.PORTRAITS, seat, "session.json"), encoding="utf-8") as f:
+            return json.load(f)
+
+    def versions(self, seat: str = "analyst") -> list[dict]:
+        out = []
+        for path in analyst.version_files(seat):
+            with open(path, encoding="utf-8") as f:
+                out.append(json.load(f))
+        return sorted(out, key=lambda d: d["ts"])
+
+    def test_a_fresh_seat_reads_the_last_three_oldest_first(self):
+        code, out, f = self.run_("--start", "last:3", "--n", "3")
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f["log"])
+        # the last three unflagged, oldest first, each under its date and minute
+        want = ["1015", "1020", "1025"]
+        at = [prompt.index(f"[2026-09-20 {h[:2]}:{h[2:]}]\nANALYSTDREAM {h} and the  ragged")
+              for h in want]
+        self.assertEqual(at, sorted(at))
+        for h in ("1000", "1005", "1010"):
+            self.assertNotIn(f"ANALYSTDREAM {h}", prompt)
+        self.assertTrue(prompt.startswith("ANALYSTPERSONAMARK you read someone's dreams.\n\n"))
+        self.assertIn("<portrait>", prompt)
+        self.assertIn("--- the dreams ---", prompt)
+        for never in ("ANALYSTSEEDMARK", "ANALYSTNOTEMARK", "<title>", "<name>"):
+            self.assertNotIn(never, prompt)
+        self.assertNotIn("--resume", argv_log(f)[0])
+        self.assertIn("a dreamer of 3 more dreams.", out)            # printed for bekh
+
+        s = self.session()
+        self.assertTrue(s["session_id"])
+        self.assertEqual((s["covered"], s["dreams"], s["persona"]),
+                         ("stream/2026-09-20/1025", 3, self.persona))
+        self.assertEqual(s["context"], 12 + 6642 + 3)                 # the three counters
+        self.assertEqual(set(s), {"session_id", "persona", "started", "covered", "dreams",
+                                  "context", "model"})
+        v = self.versions()
+        self.assertEqual(len(v), 1)
+        self.assertEqual(set(v[0]), {"ts", "seat", "session_id", "rooms", "dreams", "text",
+                                     "model", "seconds", "usage", "context"})
+        self.assertEqual(v[0]["rooms"], [f"stream/2026-09-20/{h}" for h in want])
+        self.assertEqual(v[0]["text"], "a dreamer of 3 more dreams.")   # inside the tag, stripped
+        self.assertEqual((v[0]["dreams"], v[0]["context"], v[0]["session_id"]),
+                         (3, 6657, s["session_id"]))
+        path = analyst.version_files("analyst")[0]
+        self.assertRegex(os.path.relpath(path, analyst.PORTRAITS),
+                         r"^analyst/\d{4}-\d{2}-\d{2}/\d{4}(-\d+)?\.json$")
+        row = self.rows()[-1]
+        self.assertEqual((row["seat"], row["rooms"], row["dreams"], row["context"]),
+                         ("analyst", 3, 3, 6657))
+        self.assertEqual(row["usage"]["cache_read_input_tokens"], 6642)
+
+    def test_the_second_run_resumes_with_only_the_new_dreams(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        sid = self.session()["session_id"]
+        make_page("stream/2026-09-20/1030", "ANALYSTSEEDMARK\n", "ANALYSTDREAM 1030 new")
+        make_page("stream/2026-09-20/1030-2", "ANALYSTSEEDMARK\n", "ANALYSTDREAM 1030b new")
+        code, out, f = self.run_("--n", "2")
+        self.assertEqual(code, 0, out)
+        argv = argv_log(f)[0]
+        self.assertEqual(argv[argv.index("--resume") + 1], sid)
+        prompt = read_text(f["log"])
+        self.assertTrue(prompt.startswith("--- 2 more dreams ---\n\n[2026-09-20 10:30]\n"
+                                          "ANALYSTDREAM 1030 new\n\n[2026-09-20 10:30]\n"
+                                          "ANALYSTDREAM 1030b new\n\n"))
+        self.assertIn(analyst.AGAIN, prompt)
+        for never in ("ANALYSTPERSONAMARK", "ANALYSTDREAM 1025", "a dreamer of", "ANALYSTSEEDMARK"):
+            self.assertNotIn(never, prompt)
+        s = self.session()
+        self.assertEqual((s["session_id"], s["dreams"], s["covered"]),
+                         (sid, 5, "stream/2026-09-20/1030-2"))
+        self.assertEqual([v["dreams"] for v in self.versions()], [3, 5])
+
+    def test_fewer_than_n_new_is_no_call_and_no_row_and_partial_takes_them(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
+        before = len(self.rows())
+        code, out, f = self.run_("--n", "3")
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(f["log"]))
+        self.assertEqual(len(self.rows()), before)
+        code, out, f = self.run_("--n", "3", "--partial")
+        self.assertEqual(code, 0, out)
+        self.assertIn("--- 1 more dreams ---", read_text(f["log"]))
+        self.assertEqual(self.session()["dreams"], 4)
+
+    def test_a_fresh_seat_starts_at_the_oldest_and_skips_the_flagged(self):
+        code, out, f = self.run_("--n", "4")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.versions()[0]["rooms"],
+                         [f"stream/2026-09-20/{h}" for h in ("1000", "1005", "1015", "1020")])
+        self.assertNotIn("ANALYSTDREAM 1010", read_text(f["log"]))
+
+    def test_start_at_a_named_room(self):
+        code, out, f = self.run_("--start", "stream/2026-09-20/1005", "--n", "2")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.versions()[0]["rooms"],
+                         ["stream/2026-09-20/1005", "stream/2026-09-20/1015"])
+
+    def test_two_seats_keep_their_own_persona_and_session(self):
+        other = os.path.join(BOX, "analyst-persona-other.txt")
+        with open(other, "w", encoding="utf-8") as f:
+            f.write("ANALYSTMACHINEMARK the dreamer is not a person.\n")
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        f2 = self.fake()
+        code, out = analyse(f2, "--once", "--seat", "told", "--persona", other,
+                            "--start", "last:3", "--n", "3")
+        self.assertEqual(code, 0, out)
+        prompt = read_text(f2["log"])
+        self.assertIn("ANALYSTMACHINEMARK", prompt)
+        self.assertNotIn("ANALYSTPERSONAMARK", prompt)
+        self.assertNotIn("--resume", argv_log(f2)[0])
+        a, b = self.session("analyst"), self.session("told")
+        self.assertNotEqual(a["session_id"], b["session_id"])
+        self.assertEqual(b["persona"], other)
+        self.assertEqual(len(self.versions("told")), 1)
+
+    def test_the_ceiling_refuses_with_a_row_and_no_call(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        s = self.session()
+        s["context"] = analyst.CONTEXT_MAX
+        with open(os.path.join(analyst.PORTRAITS, "analyst", "session.json"), "w") as fh:
+            json.dump(s, fh)
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
+        code, out, f = self.run_("--n", "1")
+        self.assertEqual(code, 0, out)
+        self.assertFalse(os.path.exists(f["log"]))
+        self.assertIn("over the ceiling", out)
+        self.assertIn(f"session at {analyst.CONTEXT_MAX} tokens", self.rows()[-1]["error"])
+        self.assertEqual(self.session()["covered"], "stream/2026-09-20/1025")
+
+    def test_a_garbage_answer_is_a_row_and_exit_zero(self):
+        code, out, f = self.run_("--start", "last:3", "--n", "3", mode="garbage")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.versions(), [])
+        row = self.rows()[-1]
+        self.assertIn("no <portrait>", row["error"])
+        self.assertEqual(row["usage"]["input_tokens"], 12)
+        # the cli answered, so the dreams are in the session: it moves on, and the next run
+        # resumes it with only what is new — never the same three handed over twice
+        s = self.session()
+        self.assertTrue(s["session_id"])
+        self.assertEqual((s["covered"], s["dreams"]), ("stream/2026-09-20/1025", 3))
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
+        code, out, f = self.run_("--n", "1")
+        self.assertEqual(code, 0, out)
+        argv = argv_log(f)[0]
+        self.assertEqual(argv[argv.index("--resume") + 1], s["session_id"])
+        self.assertNotIn("ANALYSTDREAM 1025", read_text(f["log"]))
+        self.assertEqual(self.versions()[0]["dreams"], 4)
+
+    def test_a_dead_cli_moves_nothing(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        before = self.session()
+        make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
+        code, out, f = self.run_("--n", "1", mode="boom")
+        self.assertEqual(code, 0, out)
+        self.assertIn("exited 3", self.rows()[-1]["error"])
+        self.assertEqual(self.session(), before)
+
+    def test_no_session_id_is_a_row_not_a_portrait(self):
+        code, out, f = self.run_("--n", "3", mode="nosession")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.versions(), [])
+        self.assertIn("no session id", self.rows()[-1]["error"])
+
+    def test_start_on_a_live_seat_is_refused_and_new_bins_it(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        old = self.session()["session_id"]
+        code, out, f = self.run_("--start", "last:2", "--n", "2")
+        self.assertEqual(code, 2)
+        self.assertIn("--new", out)
+        self.assertFalse(os.path.exists(f["log"]))
+        code, out, f = self.run_("--start", "last:2", "--n", "2", "--new")
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("--resume", argv_log(f)[0])
+        self.assertNotEqual(self.session()["session_id"], old)
+        self.assertEqual(len(self.versions()), 1)
+        binned = [os.path.join(dp, fn) for dp, _, fs in
+                  os.walk(os.path.join(analyst.PORTRAITS, ".trash")) for fn in fs]
+        self.assertTrue(any(p.endswith(os.path.join("analyst", "session.json")) for p in binned))
+
+    def test_show_prints_the_latest_and_calls_nobody(self):
+        self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
+        f = self.fake()
+        code, out = analyse(f, "--show")
+        self.assertEqual(code, 0)
+        self.assertIn("a dreamer of 3 more dreams.", out)
+        self.assertFalse(os.path.exists(f["log"]))
+
+    def test_opus_resume_is_on_the_argv_and_the_old_callers_are_untouched(self):
+        f = self.fake()
+        def go():
+            opus.ask("--- the dreams ---\n\n[2026-09-20 10:00]\nx\n", 30, resume="abc-123")
+            return 0
+        with_fake(f, go)
+        self.assertEqual(opus.SESSION, "abc-123")
+        argv = argv_log(f)[0]
+        self.assertEqual(argv[-2:], ["--resume", "abc-123"])
+        # a call with no resume carries no flag and reports no session from the plain fake
+        f2 = self.fake()
+        with_fake(f2, lambda: (opus.ask("hello", 30), 0)[1])
+        self.assertNotIn("--resume", argv_log(f2)[0])
+        self.assertEqual(opus.SESSION, "")
+
+
 # ---- plates ----------------------------------------------------------------------------------
 # A stub `codex` first on PATH that writes a tiny png where the real one would put a painting.
 # No generation is ever spent from a test: every plate costs one off bekh's allowance.
@@ -2295,6 +2571,366 @@ class Plating(unittest.TestCase):
                                 "com.bekh.eva-stream-remembering",
                                 "com.bekh.eva-stream-plating"])
         self.assertIn("kick · com.bekh.eva-stream-remembering", out)
+
+
+# ---- live writing: the dream on the page while nemo writes it -------------------------------
+
+def start_loom(**extra) -> tuple[subprocess.Popen, str]:
+    """A loom of its own, on its own port, over the same scratch shelf — for the switches a
+    loom reads once at start (read-only, the stale age, an upstream) that the module's loom
+    cannot be flipped into."""
+    port = int(extra.pop("port", 0) or free_port())
+    env = dict(os.environ, LOOM_HOST="127.0.0.1", LOOM_PORT=str(port), LOOM_SITTINGS=SHELF,
+               LOOM_ARTIFACTS=ARTS, LOOM_LLAMA=STUB_BASE, STREAM_DIR=STREAM_DIR,
+               STREAM_INTERVAL="300", **{k: str(v) for k, v in extra.items()})
+    proc = subprocess.Popen([sys.executable, os.path.join(EVA, "server", "loom.py")],
+                            env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    base = f"http://127.0.0.1:{port}"
+    deadline = time.time() + 20
+    while time.time() < deadline:
+        if proc.poll() is not None:
+            raise RuntimeError("loom died on start")
+        try:
+            with urllib.request.urlopen(base + "/api/health", timeout=2) as r:
+                if r.status == 200:
+                    return proc, base
+        except OSError:
+            pass
+        time.sleep(0.15)
+    raise RuntimeError("loom never came up")
+
+
+def stop_loom(proc: subprocess.Popen) -> None:
+    if proc.poll() is None:
+        proc.terminate()                  # by handle, never by name
+        try:
+            proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+
+
+def post_live(base: str, text: str, seed: str = "LIVESEEDMARK the seed", done: bool = False):
+    req = urllib.request.Request(base + "/api/stream/live",
+                                 data=json.dumps({"text": text, "seed": seed,
+                                                  "done": done}).encode("utf-8"),
+                                 method="POST", headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+
+
+class Events:
+    """One held `/api/stream/events` client, read on its own thread: every event as
+    (name, data, arrival time), in order, and the raw lines for the comments."""
+
+    def __init__(self, base: str) -> None:
+        u = urllib.parse.urlparse(base)
+        self.conn = http.client.HTTPConnection(u.hostname, u.port, timeout=60)
+        self.conn.request("GET", "/api/stream/events")
+        # Kept before getresponse: a `Connection: close` answer makes http.client drop its own
+        # handle on the socket, and close() below needs one to shut down.
+        self.sock = self.conn.sock
+        self.resp = self.conn.getresponse()
+        self.events: list[tuple[str, dict, float]] = []
+        self.lines: list[str] = []
+        self.opened = threading.Event()
+        self.t = threading.Thread(target=self.run, daemon=True)
+        self.t.start()
+        if not self.opened.wait(10):
+            raise RuntimeError("the events route never said it was open")
+
+    def run(self) -> None:
+        name = ""
+        try:
+            for raw in self.resp:
+                line = raw.decode("utf-8").rstrip("\n")
+                self.lines.append(line)
+                if line == ": open":
+                    self.opened.set()
+                elif line.startswith("event: "):
+                    name = line[len("event: "):]
+                elif line.startswith("data: "):
+                    self.events.append((name, json.loads(line[len("data: "):]), time.monotonic()))
+                elif not line:
+                    name = ""
+        except (OSError, ValueError):
+            pass
+
+    def wait(self, pred, timeout: float = 10):
+        """The first event `pred` accepts, or None when none came in time."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            for ev in list(self.events):
+                if pred(ev):
+                    return ev
+            time.sleep(0.02)
+        return None
+
+    def live(self) -> list[dict]:
+        return [d for n, d, _ in self.events if n == "live"]
+
+    def close(self) -> None:
+        # The socket, shut down under the reader: closing the response instead waits for the
+        # reading thread to let go of its buffer, which is the next keepalive, 20 seconds away.
+        try:
+            self.sock.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+        self.t.join(5)
+        self.resp.close()
+        self.sock.close()
+
+
+class FakeLoom:
+    """A loom that only listens: every `/api/stream/live` body it is sent, in arrival order."""
+
+    def __init__(self) -> None:
+        got = self.posts = []
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def do_POST(self):
+                n = int(self.headers.get("Content-Length", "0") or 0)
+                got.append((self.path, json.loads(self.rfile.read(n))))
+                data = b'{"ok": true}'
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+        self.srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=self.srv.serve_forever, daemon=True).start()
+        self.base = f"http://127.0.0.1:{self.srv.server_address[1]}"
+
+    def close(self) -> None:
+        self.srv.shutdown()
+        self.srv.server_close()
+
+
+class LiveWriter(unittest.TestCase):
+    """The writer streams nemo's answer, and what lands on the shelf is what landed before."""
+
+    def setUp(self):
+        wipe_stream()
+        loom.LLAMA = STUB_BASE
+        self.live, self.every = stream.LIVE, stream.LIVE_EVERY
+
+    def tearDown(self):
+        stream.LIVE, stream.LIVE_EVERY = self.live, self.every
+        loom.LLAMA = STUB_BASE
+
+    def test_the_streamed_answer_is_the_one_lump_answer(self):
+        # Same server, same scripted line: everything but the tps (the stub draws it per call)
+        # must be the same dict, probabilities trimmed and rounded the same way.
+        params = stream.sampler(Rng(0.9))
+        loom.LLAMA = CLEAN_BASE
+        lump = loom.complete("LIVESEEDMARK the lamp", params)
+        streamed = stream.eva.complete_stream("LIVESEEDMARK the lamp", params, lambda s: None,
+                                              url=CLEAN_BASE)
+        for d in (lump, streamed):
+            d.pop("tps")
+        self.assertEqual(streamed, lump)
+        self.assertTrue(lump["probs"])
+        # and the wire said stream: true for the one and false for the other
+        wire = [b for b in STUB_CLEAN.seen if "LIVESEEDMARK" in (b.get("prompt") or "")]
+        self.assertEqual(sorted(bool(b.get("stream")) for b in wire[-2:]), [False, True])
+
+        # A whole run: the room and the row are what the one-lump call would have written.
+        stream.LIVE = ""
+        put_seed("live.txt", "LIVESEEDMARK the lamp\n")
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        d = on_disk(rooms()[0])
+        node = [n for n in d["nodes"].values() if n["kind"] == "model"][0]
+        self.assertEqual(node["text"], lump["text"])
+        self.assertEqual(node["meta"]["logprobs"], stream.logprobs_of(lump["probs"]))
+        self.assertNotIn("probs", node["meta"])
+        self.assertEqual(node["meta"]["tokens_predicted"], lump["tokens_predicted"])
+        self.assertEqual(node["meta"]["stop_type"], lump["stop_type"])
+        self.assertGreater(node["meta"]["tps"], 0)
+        row = ledger_rows()[-1]
+        self.assertEqual((row["room"], row["tokens"]), (rooms()[0], lump["tokens_predicted"]))
+        self.assertGreater(row["tps"], 0)
+
+    def test_the_text_so_far_goes_to_the_loom_growing_and_done_comes_last(self):
+        slow = stub_llama.serve(0, lines=["the lamp in the hall was still warm at four and "
+                                          "nobody had come down to turn it off yet"],
+                                token_delay=0.05)
+        threading.Thread(target=slow.serve_forever, daemon=True).start()
+        fake = FakeLoom()
+        try:
+            loom.LLAMA = f"http://127.0.0.1:{slow.server_address[1]}"
+            stream.LIVE, stream.LIVE_EVERY = fake.base, 0.1
+            put_seed("grow.txt", "LIVESEEDMARK it was late\n")
+            code, out = run("--once")
+        finally:
+            slow.shutdown()
+            fake.close()
+        self.assertEqual(code, 0, out)
+        d = on_disk(rooms()[0])
+        root = d["nodes"][d["root"]]["text"]
+        text = [n for n in d["nodes"].values() if n["kind"] == "model"][0]["text"]
+        self.assertTrue(all(p == "/api/stream/live" for p, _ in fake.posts))
+        posts = [b for _, b in fake.posts]
+        self.assertGreaterEqual(len(posts), 4, posts)
+        # the seed first, before nemo's first word, so the page has something to show at once
+        self.assertEqual(posts[0]["text"], "")
+        self.assertTrue(all(b["seed"] == root for b in posts))
+        # growing: each post is the whole text so far, so every one is a prefix of the next
+        for a, b in zip(posts, posts[1:]):
+            self.assertTrue(b["text"].startswith(a["text"]), (a, b))
+        self.assertEqual([b["done"] for b in posts], [False] * (len(posts) - 1) + [True])
+        self.assertEqual(posts[-1]["text"], text)          # done carries the whole page
+
+    def test_a_dead_loom_costs_one_line_and_the_page_lands(self):
+        stream.LIVE, stream.LIVE_EVERY = f"http://127.0.0.1:{free_port()}", 0.05
+        put_seed("dead.txt", "LIVESEEDMARK nobody listening\n")
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(len(rooms()), 1)
+        self.assertEqual(ledger_rows()[-1]["room"], rooms()[0])
+        self.assertEqual(out.count("live · "), 1, out)     # one line, not one per post
+
+    def test_a_scratch_shelf_posts_nowhere_by_default(self):
+        # this module runs on a scratch shelf with LOOM_LIVE unset: a test never types onto
+        # the real reader
+        self.assertEqual(self.live, "")
+
+
+class LiveRoute(unittest.TestCase):
+    """`POST /api/stream/live` → `event: live` on every held client, at once."""
+
+    def tearDown(self):
+        post_live(BASE, "", done=True)        # leave no half-dream for the next test's client
+
+    def test_a_post_reaches_a_held_client_before_the_next_tick(self):
+        ev = Events(BASE)
+        try:
+            time.sleep(0.1)
+            sent = time.monotonic()
+            self.assertEqual(post_live(BASE, "the lamp in"), 200)
+            got = ev.wait(lambda e: e[0] == "live" and e[1]["text"] == "the lamp in")
+        finally:
+            ev.close()
+        self.assertIsNotNone(got, ev.lines)
+        # the tick is 2s here: under a second means the post woke the loop, not the clock
+        self.assertLess(got[2] - sent, 1.0)
+        self.assertEqual((got[1]["seed"], got[1]["done"]), ("LIVESEEDMARK the seed", False))
+        self.assertIsInstance(got[1]["ts"], float)
+
+    def test_a_late_client_gets_the_dream_so_far_first(self):
+        post_live(BASE, "half a dre")
+        ev = Events(BASE)
+        try:
+            got = ev.wait(lambda e: e[0] == "live", timeout=1.5)
+        finally:
+            ev.close()
+        self.assertIsNotNone(got, ev.lines)
+        self.assertEqual(got[1]["text"], "half a dre")
+        # first thing after the open comment, before any tick could have said anything
+        self.assertEqual(ev.lines[0], ": open")
+        self.assertEqual(ev.lines[1:3], ["", "event: live"])
+
+    def test_a_finished_dream_is_not_handed_to_a_late_client(self):
+        post_live(BASE, "all of it", done=True)
+        ev = Events(BASE)
+        try:
+            self.assertIsNone(ev.wait(lambda e: e[0] == "live", timeout=1.0))
+        finally:
+            ev.close()
+
+    def test_done_then_the_change_with_the_room(self):
+        wipe_stream()
+        ev = Events(BASE)
+        try:
+            post_live(BASE, "the whole page")
+            post_live(BASE, "the whole page", done=True)
+            make_page("stream/2099-02-02/0202", "LIVESEEDMARK seed\n", "the whole page")
+            change = ev.wait(lambda e: e[0] == "change"
+                             and "stream/2099-02-02/0202" in e[1]["rooms"], timeout=10)
+        finally:
+            ev.close()
+        self.assertIsNotNone(change, ev.lines)
+        names = [(n, d.get("done")) for n, d, _ in ev.events]
+        done_at = names.index(("live", True))
+        self.assertLess(done_at, ev.events.index(change))
+
+    def test_a_bad_post_is_refused(self):
+        for body in ({"text": 5}, {"text": "x", "done": "yes"}, {"seed": "no text"}):
+            req = urllib.request.Request(BASE + "/api/stream/live",
+                                         data=json.dumps(body).encode("utf-8"), method="POST",
+                                         headers={"Content-Type": "application/json"})
+            with self.assertRaises(urllib.error.HTTPError) as cm:
+                urllib.request.urlopen(req, timeout=10)
+            self.assertEqual(cm.exception.code, 400, body)
+
+
+class LiveLooms(unittest.TestCase):
+    """The switches a loom reads at start: the stale age, read-only, and the upstream pull."""
+
+    def test_a_stale_dream_is_dropped(self):
+        proc, base = start_loom(STREAM_LIVE_STALE="0.5")
+        try:
+            post_live(base, "a writer that died here")
+            time.sleep(1.0)
+            ev = Events(base)
+            try:
+                self.assertIsNone(ev.wait(lambda e: e[0] == "live", timeout=1.0), ev.lines)
+            finally:
+                ev.close()
+        finally:
+            stop_loom(proc)
+
+    def test_the_mirror_refuses_a_post(self):
+        proc, base = start_loom(LOOM_READONLY="1")
+        try:
+            self.assertEqual(post_live(base, "not here"), 403)
+        finally:
+            stop_loom(proc)
+
+    def test_the_mirror_pulls_live_from_upstream_and_survives_it_going(self):
+        up_port = free_port()
+        up, up_base = start_loom(port=up_port)
+        mirror, mirror_base = start_loom(LOOM_LIVE_UPSTREAM=up_base, LOOM_LIVE_RETRY_MAX="0.3",
+                                         LOOM_READONLY="1")
+        ev = None
+        try:
+            ev = Events(mirror_base)
+            # The mirror's own connection upstream comes up on its own thread; post until the
+            # typing shows up downstream instead of guessing how long that takes.
+            got, deadline = None, time.monotonic() + 10
+            while got is None and time.monotonic() < deadline:
+                post_live(up_base, "typed on the mac")
+                got = ev.wait(lambda e: e[0] == "live" and e[1]["text"] == "typed on the mac",
+                              timeout=0.5)
+            self.assertIsNotNone(got, ev.lines)
+
+            # The mac goes to sleep: the mirror keeps serving and keeps its readers.
+            stop_loom(up)
+            time.sleep(1.0)
+            self.assertEqual(urllib.request.urlopen(mirror_base + "/api/health",
+                                                    timeout=5).status, 200)
+            self.assertIsNone(mirror.poll())
+            self.assertTrue(ev.t.is_alive())
+
+            # And wakes: the mirror finds it again by itself.
+            up, _ = start_loom(port=up_port)
+            got, deadline = None, time.monotonic() + 10
+            while got is None and time.monotonic() < deadline:
+                post_live(up_base, "typed after the nap")
+                got = ev.wait(lambda e: e[0] == "live"
+                              and e[1]["text"] == "typed after the nap", timeout=0.5)
+            self.assertIsNotNone(got, ev.lines)
+        finally:
+            if ev:
+                ev.close()
+            stop_loom(mirror)
+            stop_loom(up)
 
 
 if __name__ == "__main__":

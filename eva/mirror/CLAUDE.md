@@ -30,6 +30,12 @@ the read-only switch all stay when the loom itself moves; only who writes change
 - **The mirror pushes too, to whoever is reading it.** `GET /api/stream/events` is a held
   connection that says which rooms changed (`loom.py`); it is a GET, so the read-only switch
   does not touch it, and `dreamshit.x` reads the stream through it from here.
+- **The dream being written comes from the mac.** `LOOM_LIVE_UPSTREAM=http://100.91.166.121:8082`
+  in the unit makes this loom hold one connection to the mac loom's `/api/stream/events` and pass
+  its `live` events (the text nemo is writing, twice a second) on to its own clients. The mac
+  asleep is the ordinary state: a quiet retry, doubling to 30s, one journal line when it goes and
+  one when it comes back. `POST /api/stream/live` itself is a 403 here, like every other POST.
+  Deployed 2026-09-23; the unit before it is `/etc/systemd/system/eva-mirror.service.bak-live-20260923`.
 - **The page follows.** It polls `/api/health` every 5s. Read-only: the composer, edit/spin,
   the menu's write buttons, the sampler, continue and fan again disappear; the marks stay and go
   out one at a time through `/api/mark` instead of a whole-room save; tapping a card doesn't

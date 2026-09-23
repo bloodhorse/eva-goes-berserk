@@ -26,14 +26,22 @@ by `launchctl kickstart`ing `com.bekh.eva-stream-interpreter` (the reader at the
 Best-effort: a failure is one log line and nothing else. The mirror is tapped the same way
 (`push.py`), so the mini has the page in a second instead of in up to a minute.
 
+**The dream is written live.** nemo's answer is streamed (`eva.complete_stream`, the same
+reader the terminal repl uses) and the text so far is posted to the loom's `/api/stream/live`
+about twice a second, then once with `done` just before the room lands, so a reader watches the
+page being written. Fire and forget: a loom that is down costs one line on stderr and the room
+lands exactly as it would have.
+
 Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
-(shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, plus
-loom's own LOOM_SITTINGS and LOOM_LLAMA.
+(shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, LOOM_LIVE
+(where the live posts go; empty = nowhere), STREAM_LIVE_EVERY, plus loom's own LOOM_SITTINGS and
+LOOM_LLAMA.
 """
 
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import os
 import random
@@ -41,7 +49,9 @@ import re
 import secrets
 import subprocess
 import sys
+import threading
 import time
+from urllib.parse import urlparse
 
 HERE = os.path.dirname(os.path.realpath(__file__))              # eva/stream
 EVA = os.path.dirname(HERE)                                     # eva/
@@ -105,6 +115,19 @@ SEED_WORDS = int(os.environ.get("STREAM_SEED_WORDS", "45"))
 # the web's register (lyrics, chat, tumblr). Done at hand-over, not on the shelf, so the files
 # and their cut scripts stay exact and the loom still sees the originals. 0 = as written.
 SEED_LOWER = os.environ.get("STREAM_SEED_LOWER", "1") == "1"
+
+# Where the live posts go: the mac's own loom, at the only address it answers on. Explicitly
+# empty = nowhere. Left unset on a scratch shelf (a test, a hand experiment — push.py's rule)
+# it is nowhere too, because a fake page typing itself onto bekh's real reader is a surprise.
+LIVE = os.environ.get("LOOM_LIVE")
+if LIVE is None:
+    LIVE = "" if any(os.environ.get(k) for k in push.SCRATCH) else "http://100.91.166.121:8082"
+LIVE = LIVE.rstrip("/")
+# How often the text so far goes out. Half a second is ~5 tokens at nemo's 10–12 tok/s: the text
+# arrives as phrases, which reads as writing, and a 170-token page costs ~35 small posts.
+LIVE_EVERY = float(os.environ.get("STREAM_LIVE_EVERY", "0.5"))
+# Short on purpose: a live post that takes longer than this has missed its moment anyway.
+LIVE_TIMEOUT = 2.0
 
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, FOLDER))
@@ -442,6 +465,76 @@ def room_name(when: float) -> str:
     return name
 
 
+# ---- the dream, live ------------------------------------------------------------------------
+
+class Live:
+    """The text so far, posted to the loom on its own thread while nemo writes.
+
+    A thread and not a post per chunk: generation must never wait on the loom, and a loom that is
+    slow or down would otherwise be paid for token by token. The streaming loop only appends to
+    `text` under a lock; this thread wakes every LIVE_EVERY, posts the whole text if it moved,
+    and that is all it does. The first post goes out before nemo's first token (text "", the
+    seed), so the page shows the seed while the prompt is still being read.
+
+    One failure line per run, never one per post: a loom down for a whole page is one fact.
+    """
+
+    def __init__(self, base: str, seed: str) -> None:
+        self.base, self.seed = base, seed
+        self.text, self.sent = "", None
+        self.lock = threading.Lock()
+        self.stop = threading.Event()
+        self.failed = False
+        self.thread = None
+        if base:
+            self.thread = threading.Thread(target=self.run, daemon=True, name="live")
+            self.thread.start()
+
+    def feed(self, piece: str) -> None:
+        with self.lock:
+            self.text += piece
+
+    def run(self) -> None:
+        while True:
+            with self.lock:
+                text = self.text
+            if text != self.sent:
+                self.sent = text
+                self.post(text, False)
+            if self.stop.wait(LIVE_EVERY):
+                return
+
+    def post(self, text: str, done: bool) -> None:
+        u = urlparse(self.base)
+        body = json.dumps({"text": text, "seed": self.seed, "done": done},
+                          ensure_ascii=False).encode("utf-8")
+        conn = http.client.HTTPConnection(u.hostname or "127.0.0.1", u.port or 80,
+                                          timeout=LIVE_TIMEOUT)
+        try:
+            conn.request("POST", (u.path or "").rstrip("/") + "/api/stream/live", body=body,
+                         headers={"Content-Type": "application/json"})
+            r = conn.getresponse()
+            r.read()
+            if r.status != 200:
+                raise OSError(f"the loom said {r.status}")
+        except (OSError, http.client.HTTPException) as exc:
+            if not self.failed:
+                self.failed = True
+                log(f"live · {self.base} · {exc} (the page lands anyway)")
+        finally:
+            conn.close()
+
+    def finish(self, text: str) -> None:
+        """Stop the thread, THEN post `done` — in that order, so no half-page post still in
+        flight can land after `done` and put the block back into "writing". An empty text says
+        nothing landed (llama failed, nemo said nothing) and the page takes the block away."""
+        if not self.thread:
+            return
+        self.stop.set()
+        self.thread.join(LIVE_TIMEOUT + 1)
+        self.post(text, True)
+
+
 def write_page(rng: random.Random) -> int:
     """One page: draw a seed, draw a heat, ask nemo once, write the room. Exit code."""
     drawn = draw_seed(rng)
@@ -462,7 +555,16 @@ def write_page(rng: random.Random) -> int:
     # The prompt is the root's text and nothing else: a bare room, no header, no turn names,
     # no stop strings. The words "AI" and "assistant" never appear in a document here, and
     # neither does anything else of ours — the seed is the whole document the model sees.
-    d = loom.complete(seed, params)
+    #
+    # Streamed, so the page can be watched being written. `eva.complete_stream` returns the
+    # very shape `loom.complete` does — the joined text, `trim_probs` over the per-token
+    # probabilities it collects off every chunk, tokens and tps off the final one — so the room
+    # and the ledger row come out as they did from the one-lump call. loom.LLAMA and not eva's,
+    # because that is the global every other stance (and every test) points at the server.
+    live = Live(LIVE, seed)
+    d = eva.complete_stream(seed, params, live.feed, url=loom.LLAMA)
+    if d.get("error") or not (d.get("text") or "").strip():
+        live.finish("")
     if d.get("error"):
         log(f"llama · {d['error']}")
         ledger({"room": None, "seed": ident, "temperature": params["temperature"],
@@ -496,6 +598,9 @@ def write_page(rng: random.Random) -> int:
                      "flag": flag}}
     sitting["nodes"][node["id"]] = node
     sitting["current"] = node["id"]
+    # `done` just before the room: the loom's `change` for this room follows on its next tick,
+    # and that is what replaces the live block with the real dream on the page.
+    live.finish(text)
     loom.write_sitting(sitting)
 
     ledger({"room": name, "seed": ident, "temperature": params["temperature"],
