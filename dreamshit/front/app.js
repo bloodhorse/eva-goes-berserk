@@ -898,7 +898,8 @@ $('#inkbtn').onclick = e => { e.stopPropagation(); inkPanel(); };
 // gloss: one factor over every light and shadow on the band (style.css --rg; 100 = as shipped,
 // 150 = the first evening's, 0 = matte)
 const RT = { h: ['ribbon-h', '--rh', 40, 200, 'px'], gap: ['ribbon-gap', '--rgap', 0, 48, 'px'],
-             pos: ['ribbon-pos', '--rpos', 0, 100, '%'], g: ['ribbon-gloss', '--rg', 0, 200, ''] };
+             pos: ['ribbon-pos', '--rpos', 0, 100, '%'], g: ['ribbon-gloss', '--rg', 0, 200, ''],
+             wash: ['ribbon-wash', '--rwash', 0, 100, ''] };   // wash: how dark his face is, 0 = bare
 const rtDefault = v => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v)) || 0;
 function rtApply(which, v, save) {
   const [key, css, lo, hi, unit] = RT[which];
@@ -911,11 +912,11 @@ function rtApply(which, v, save) {
   const now = v === null ? rtDefault(css) : v;
   $('#rt-' + which).value = now;
   $('#rt-' + which).nextElementSibling.textContent = now + unit;
-  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value} · gloss ${$('#rt-g').value}`;
+  $('#ribbontune .read').textContent = `height ${$('#rt-h').value} · gap ${$('#rt-gap').value} · face ${$('#rt-pos').value} · gloss ${$('#rt-g').value} · wash ${$('#rt-wash').value}`;
 }
 // ?rh=60&rgap=0 is the same as dragging there (and remembered, as a drag is) — how a headless
 // shot proves a setting, since it can't move a slider; ?rh= empty resets that one, like ?ink=
-const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos', g: 'rg' };
+const RT_URL = { h: 'rh', gap: 'rgap', pos: 'rpos', g: 'rg', wash: 'rwash' };
 for (const w of Object.keys(RT)) {
   $('#rt-' + w).oninput = e => rtApply(w, +e.target.value, true);
   const u = params.get(RT_URL[w]);

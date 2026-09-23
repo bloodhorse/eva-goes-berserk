@@ -206,7 +206,7 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    --rgap, the air between it and the painted rows above and below (a row's plate fills the row,
    so the margin IS the gap; 0 = flush). HEIGHT MEANS HEIGHT: the band never grows — app.js steps
    the remark's size down until it fits, and past the floor clips it on a whole line. */
-:root { --rh: 95px; --rgap: 18px; --rpos: 33%; --rg: 100; }
+:root { --rh: 95px; --rgap: 18px; --rpos: 33%; --rg: 100; --rwash: 0; }
 /* --rg is the gloss, one number for the whole 3D of it (bekh asked for it as a dial): every
    alpha below is scaled by it — 100 is the softened look, 150 the first evening's, 0 a flat
    matte band with only its own black gradient left */
@@ -230,6 +230,9 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
 .ribbon .face { position: relative; overflow: hidden; }
 .ribbon .face img { position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: 50% var(--rpos);   /* --rpos: the tuner's third dial, `face` */
+  /* --rwash (0–100): his wash, as the plates have theirs — toward black, not the house grey,
+     because the band he sits in is black; brightness(1-a) is a black overlay at alpha a */
+  filter: brightness(calc(1 - var(--rwash) / 100));
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%);
           mask-image: linear-gradient(90deg, rgba(0,0,0,.55), #000 22%, #000 50%, transparent 96%); }
 /* his remark, in the passage's face, at a reading width; the fallback (no remark: the first
