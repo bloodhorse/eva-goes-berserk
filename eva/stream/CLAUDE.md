@@ -712,9 +712,12 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   mode) makes the batch the trigger and the last N dreams the material, `first_prompt` every
   time, nothing resumed, no transcript kept, `session_id: "window"`, `window` on the version
   and the row, `dreams` = the window's width; a backlog is read batch by batch, each with the
-  window that stood at its time; `--start` in window mode only moves the watermark, so the
-  seat's earlier portraits (opus's thirty-nine) stay where the feed shows them. It runs on the
-  public `analyst` seat from the job's plist (`STREAM_ANALYST_DOOR=deepseek`,
+  window that stood at its time; `--start` in window mode only moves the watermark and keeps
+  the seat's versions. **The public seat holds the student's portraits only**: opus's
+  whole-catalogue session (37 versions) was moved out to `portraits/opus-session/` the same
+  night, because where two seats' portraits ended inside one four-scene pack the front
+  stacked two ribbons at its foot; the two that ended on the newest page are in
+  `portraits/.trash/retracted/`. It runs on the public `analyst` seat from the job's plist (`STREAM_ANALYST_DOOR=deepseek`,
   `STREAM_ANALYST_WINDOW=30`, `STREAM_ANALYST_EVERY=8`); the persona is still `analyst.txt`.
   Measured: 30 dreams, 5.1k tokens in, 12s, $0.0012. *The mentor* — sol through codex, one
   thread, every dream ever, spoken to **every twenty dreams** (bekh: *you're rationing that
