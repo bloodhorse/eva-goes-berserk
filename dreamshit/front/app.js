@@ -63,11 +63,20 @@ function twoMarks(segs) {
     return Object.assign({}, s, { mark: seen === 1 ? 'touched' : seen === 2 ? 'strange' : false });
   });
 }
+// who dreamt it (bekh, 2026-09-24): two dreamers take turns since 2026-09-23 and every page is
+// stamped with its writer; a page from before the stamp is nemo's
+const WRITERS = { nemo: 'nemo', gpt2: 'gpt-2 xl' };
+const writerOf = p => WRITERS[p.model] || p.model || 'nemo';
+// gpt-2 sets every line apart with a blank one (bekh: "preposterous superfluous new lines") —
+// shown as one stanza, each line still its own: a blank line becomes a plain break. Not joined
+// into prose: its lines often dangle, and running them together would invent grammar it never
+// wrote. Display only; the shelf keeps the text as written. Nemo's paragraphs are left alone.
+const squash = (p, t) => p.model === 'gpt2' ? t.replace(/\n[ \t]*\n(\s*\n)*/g, '\n') : t;
 function drawBody(body, p) {
   body.textContent = '';
   const segs = Array.isArray(p.segments) && p.segments.length
-    ? twoMarks(afterDreamLabel(p.segments.filter(s => s.kind !== 'gone'))) : null;
-  if (!segs || !segs.length) { const t = String(p.text || '').trim(); body.textContent = t.slice(0, trimAt(t)); return; }
+    ? twoMarks(afterDreamLabel(p.segments.filter(s => s.kind !== 'gone'))).map(s => Object.assign({}, s, { t: squash(p, s.t || '') })) : null;
+  if (!segs || !segs.length) { const t = squash(p, String(p.text || '').trim()); body.textContent = t.slice(0, trimAt(t)); return; }
   // a passage often begins with the space left over from the cut before it; don't indent the first line
   segs[0] = Object.assign({}, segs[0], { t: (segs[0].t || '').replace(/^\s+/, '') });
   const plain = segs.map(s => s.t).join(''), cut = trimAt(plain);
@@ -113,7 +122,7 @@ function buildRow(p) {
   const body = document.createElement('div'); body.className = 'body';
   drawBody(body, p);
   // the name first — it's the first thing read and the thing a dream is chosen by (eva's order)
-  const head = titleLine(p.name, p.verse);
+  const head = titleLine(p.name, p.verse, writerOf(p));
   if (head) text.append(head);
   // quiet words above the passage: seed and pic. the seed (the found text the dream grew from)
   // opens in a floating box over it (bekh: without the seed the page is right); pic opens the
@@ -146,11 +155,7 @@ function buildRow(p) {
     if (seedBtn) gh.onclick = seedBtn.onclick;
     text.append(gh);
   }
-  // who dreamt it, beside when (bekh, 2026-09-24): two dreamers take turns since 2026-09-23 and
-  // every page is stamped with its writer; a page from before the stamp is nemo's
-  const WRITERS = { nemo: 'nemo', gpt2: 'gpt-2 xl' };
-  const w = document.createElement('span'); w.className = 'when';
-  w.textContent = when(p.ts) + ' · ' + (WRITERS[p.model] || p.model || 'nemo');
+  const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
   row.append(slot, text, reading);
@@ -391,10 +396,13 @@ addEventListener('keydown', e => {
 // pages come newest first; the feed reads down, oldest first
 // eva's title line: 'verse · name' (a passage: '10:4 · the body man'; a dream: '10 · its title').
 // the number is grey, the name is ink; either may be missing
-function titleLine(name, number) {
+// `who`, a passage's only: its dreamer between the number and the name — 16:4 · nemo · a name
+// (bekh, 2026-09-24). The telling's header calls this without one.
+function titleLine(name, number, who) {
   if (!name && !number) return null;
   const h = document.createElement('p'); h.className = 'title';
-  if (number) { const n = document.createElement('span'); n.className = 'verse'; n.textContent = name ? number + ' · ' : number; h.appendChild(n); }
+  const lead = [number, who].filter(Boolean).join(' · ');
+  if (lead) { const n = document.createElement('span'); n.className = 'verse'; n.textContent = name ? lead + ' · ' : lead; h.appendChild(n); }
   if (name) h.appendChild(document.createTextNode(name));
   return h;
 }
