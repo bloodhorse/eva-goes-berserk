@@ -267,11 +267,15 @@ def version_path(when_ts: float) -> str:
     lt = time.localtime(when_ts)
     day = os.path.join(DREAMS, time.strftime("%Y-%m-%d", lt))
     stem = time.strftime("%H%M", lt)
-    for i in range(1, 10):
+    # No ceiling on the suffix: it stopped at 9 and the tenth version inside one minute
+    # overwrote the ninth — unreachable live at a passage every five minutes, twelve a minute
+    # under --retell, where opus answers in five seconds.
+    i = 1
+    while True:
         path = os.path.join(day, stem + ("" if i == 1 else f"-{i}") + ".json")
         if not os.path.exists(path):
             return path
-    return os.path.join(day, stem + "-9.json")
+        i += 1
 
 
 def write_version(obj: dict) -> str:
