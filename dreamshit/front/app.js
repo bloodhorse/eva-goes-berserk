@@ -148,6 +148,7 @@ function buildRow(p) {
   const reading = document.createElement('div'); reading.className = 'reading';
   row.append(slot, text, reading);
   const r = { row, slot, trickle, reading, pic, plateUrl: null, step: 0, target: 0 };
+  rowSizes.observe(text); rowSizes.observe(reading);
   pic.onclick = e => { e.stopPropagation(); openPlate(r); };
   setReading(r, p.reading);
   if (p.plate) setPlate(r, p.plate);
@@ -380,6 +381,16 @@ function fitAll() {
 // a reading landing late, the passage font changing size or weight, the webfont arriving.
 let refitting = 0;
 function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
+// ...and whatever else moves a row, found by watching the rows themselves (2026-09-23). The font
+// stylesheet is injected at runtime, so fonts.ready could resolve before newsreader was even
+// asked for: the thread fitted itself to the fallback serif, newsreader swapped in, the passages
+// changed height and the telling stopped a whole scene short of its dream's end. Only the passage
+// and the reading are watched — a stretched thread is absolute and never sizes its row, so a
+// refit cannot feed itself.
+const rowSizes = new ResizeObserver(refit);
+// the webfont itself, said out loud: whenever a face finishes loading, refit. Belt to the
+// observer's braces — this one is the event the bug actually came from.
+document.fonts.addEventListener('loadingdone', refit);
 
 // one pack per dream: its passages, and the telling running down their left cells
 function newPack(p) {
@@ -653,6 +664,10 @@ function setFont(name) {
   if (f.google && !loadedGoogle.has(f.google)) {
     loadedGoogle.add(f.google);
     const l = document.createElement('link'); l.rel = 'stylesheet';
+    // the face is only asked for once this sheet is parsed — fonts.ready can't wait for a font
+    // nobody has declared yet — so load it by hand the moment the sheet lands, and refit after:
+    // newsreader swapping in changes every passage's height (the telling stopped a scene short)
+    l.onload = () => document.fonts.load(`${f.size}px ${f.family}`).then(refit, refit);
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
   // , and . nudge the size live, t and T the weight — both remembered per font, found by eye,
