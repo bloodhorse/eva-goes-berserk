@@ -21,6 +21,20 @@
 <button id="fresh" hidden>new</button>
 <div id="label"></div>
 <div id="lightbox" hidden><img alt=""></div>
+<!-- the manuscript: one version of the analyst's portrait, whole, over the feed. Opened by a
+     press on his ribbon; closed like the lightbox — esc, a click outside the sheet, or ×. -->
+<div id="manuscript" hidden>
+  <button class="x" title="close (esc)">×</button>
+  <article class="sheet">
+    <header>
+      <img class="face" src="analyst.jpg" alt="">
+      <div class="meta"><span class="after"></span><span class="date"></span></div>
+      <nav><button class="prev" title="earlier (←)">‹</button><span class="pos"></span><button class="next" title="later (→)">›</button></nav>
+    </header>
+    <p class="remark"></p>
+    <div class="words"></div>
+  </article>
+</div>
 <script src="looks.js"></script>
 <script src="fonts.js"></script>
 <script src="app.js"></script>

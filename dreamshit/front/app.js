@@ -181,6 +181,108 @@ function setPlate(r, url) {
   r.pic.hidden = false;
 }
 
+// ---- the analyst's ribbon ------------------------------------------------------------------
+// every ten dreams the analyst (eva/stream/analyst.py) rewrites his portrait of the dreamer, and
+// the page it was written right after carries it as `portrait`. After that dream's PACK — not
+// its row — a black ribbon: his face, his remark. After the pack because the stretched telling
+// hangs absolutely from a pack's first row down to its last: a ribbon between two rows would
+// sit right on the drip's column and cover words of it. So a portrait written after scene 2 is
+// shown where the story ends; the order it keeps is the stories', which is the page's order.
+// Like a plate it attaches late, in place: the event names the room, the refetch brings
+// `portrait` on it, sync() lands here. The face is the front's own file, never the api's.
+const FACE = 'analyst.jpg';
+const firstSentence = t => {
+  const s = String(t || '').trim(), m = /^[\s\S]*?[.!?…]["'”’)\]]*(?=\s|$)/.exec(s);
+  const one = m ? m[0] : s;
+  return one.length > 260 ? one.slice(0, 260).replace(/\s+\S*$/, '') + '…' : one;
+};
+function ribbonsOf(pack) {
+  // one holder per pack, right after it — so rows appended to the pack later stay above it, and
+  // the next pack, appended to the feed, lands below it
+  if (!pack.ribbons) { pack.ribbons = document.createElement('div'); pack.ribbons.className = 'ribbons'; pack.el.after(pack.ribbons); }
+  return pack.ribbons;
+}
+function setPortrait(r, v) {
+  const key = v && v.id ? v.id + '@' + v.ts : '';
+  if (r.portraitKey === key) return;
+  r.portraitKey = key;
+  if (r.ribbon) { r.ribbon.remove(); r.ribbon = null; }
+  if (!key || !r.pack) return;
+  const rb = document.createElement('div'); rb.className = 'ribbon';
+  rb.tabIndex = 0; rb.setAttribute('role', 'button'); rb.dataset.room = r.room;
+  rb.title = `the analyst, after ${v.dreams} dreams`;
+  const face = document.createElement('div'); face.className = 'face';
+  const img = new Image(); img.alt = ''; img.decoding = 'async'; img.src = FACE; face.append(img);
+  const say = document.createElement('p'); say.className = 'say';
+  // the three portraits written before the remark existed have no line: the first sentence of
+  // the portrait stands in, dimmer, so it doesn't pass for something he said out loud
+  const line = String(v.line || '').trim();
+  say.textContent = line || firstSentence(v.text);
+  if (!line) say.classList.add('quiet');
+  rb.append(face, say);
+  const open = e => { e.stopPropagation(); openManuscript(v); };
+  rb.onclick = open;
+  rb.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(e); } };
+  // two portraits in one pack (possible, not yet seen) keep the rooms' order
+  const box = ribbonsOf(r.pack);
+  box.insertBefore(rb, [...box.children].find(c => c.dataset.room > r.room) || null);
+  r.ribbon = rb;
+}
+
+// the manuscript: the whole portrait of one version, and ‹ › through every version, which are
+// fetched when it opens (newest first, as the api gives them). Until they arrive — or if they
+// never do — it is the one version the page already holds, with nowhere to step.
+const MS = { list: [], i: 0, open: false };
+const msEl = () => $('#manuscript');
+function drawManuscript() {
+  const v = MS.list[MS.i], m = msEl();
+  m.querySelector('.after').textContent = `the analyst · after ${v.dreams} dreams`;
+  m.querySelector('.date').textContent = when(v.ts);
+  m.querySelector('.remark').textContent = String(v.line || '').trim();
+  m.querySelector('.words').textContent = String(v.text || '').trim();
+  const n = MS.list.length;
+  m.querySelector('.pos').textContent = n > 1 ? `${n - MS.i} / ${n}` : '';
+  m.querySelector('.prev').disabled = MS.i >= n - 1;      // ‹ earlier = further down the list
+  m.querySelector('.next').disabled = MS.i <= 0;
+  m.scrollTop = 0;
+}
+function openManuscript(v) {
+  MS.list = [v]; MS.i = 0; MS.open = true;
+  drawManuscript(); msEl().hidden = false;
+  fetch('/api/stream/portraits', { cache: 'no-store' }).then(r => { if (!r.ok) throw r.status; return r.json(); }).then(d => {
+    const L = d.portraits || [], j = L.findIndex(x => x.id === v.id);
+    // still on the one it opened with? then take the list; a closed or reopened sheet ignores it
+    if (!MS.open || MS.list.length !== 1 || MS.list[0] !== v || j < 0) return;
+    MS.list = L; MS.i = j;
+    const top = msEl().scrollTop; drawManuscript(); msEl().scrollTop = top;
+  }).catch(() => {});
+}
+function stepManuscript(d) {
+  const i = MS.i + d;
+  if (!MS.open || i < 0 || i >= MS.list.length) return;
+  MS.i = i; drawManuscript();
+}
+function closeManuscript() { MS.open = false; msEl().hidden = true; }
+// ?portrait=<id> opens that version's manuscript over the page — a link to one portrait, and the
+// way a headless screenshot gets the sheet open without a click. Not remembered.
+if (params.get('portrait')) fetch('/api/stream/portrait?id=' + encodeURIComponent(params.get('portrait')), { cache: 'no-store' })
+  .then(r => { if (!r.ok) throw r.status; return r.json(); }).then(v => openManuscript(v.portrait || v)).catch(() => {});
+msEl().querySelector('.x').onclick = closeManuscript;
+msEl().querySelector('.prev').onclick = () => stepManuscript(1);
+msEl().querySelector('.next').onclick = () => stepManuscript(-1);
+// a click outside the sheet closes it, as the lightbox does; one on the sheet doesn't
+msEl().addEventListener('click', e => { if (!e.target.closest('.sheet')) closeManuscript(); });
+// while it is open it owns the keyboard: esc, ← →, and nothing reaches the page's own keys
+// (1–7, f, t, , . would otherwise restyle the feed behind it). Capture, so this runs first.
+addEventListener('keydown', e => {
+  if (!MS.open) return;
+  if (e.key === 'Escape') closeManuscript();
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); stepManuscript(1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); stepManuscript(-1); }
+  // anything else (the scroll keys included) keeps its browser default but never reaches the page
+  e.stopImmediatePropagation();
+}, true);
+
 // pages come newest first; the feed reads down, oldest first
 // eva's title line: 'verse · name' (a passage: '10:4 · the body man'; a dream: '10 · its title').
 // the number is grey, the name is ink; either may be missing
@@ -423,8 +525,10 @@ function render(pages) {
     const dream = p.story && p.story.dream || null;
     if (!lastPack || !dream || lastPack.dream !== dream) lastPack = newPack(p);
     const r = buildRow(p);
+    r.room = p.room; r.pack = lastPack;
     rooms.set(p.room, r);
     lastPack.el.appendChild(r.row);
+    setPortrait(r, p.portrait);
     lastPack.slots.push({ turn: verseTurn(p.verse) || lastPack.slots.length + 1, el: r.trickle, row: r.row });
     if (p.story) lastPack.story = p.story;
     touched.add(lastPack);
@@ -442,7 +546,7 @@ function sync(pages) {
   const seen = new Set();
   for (const p of pages) {
     const r = rooms.get(p.room);
-    if (r) { if (p.plate) setPlate(r, p.plate); setReading(r, p.reading); }
+    if (r) { if (p.plate) setPlate(r, p.plate); setReading(r, p.reading); setPortrait(r, p.portrait); }
     const dream = p.story && p.story.dream;
     if (dream && !seen.has(dream) && packs.has(dream)) {
       const pack = packs.get(dream);
