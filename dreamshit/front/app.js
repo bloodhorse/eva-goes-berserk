@@ -161,6 +161,19 @@ function setReading(r, rd) {
   r.reading.innerHTML = esc(rd.text) + `<span class="when">${when(rd.ts)}</span>`;
 }
 
+// plates load only near the screen (bekh, 2026-09-23): 48 paintings at ~500 KB each used to be
+// requested all at once on open, and the newest — the one the page lands on — waited behind the
+// 47 above it. A row's painting is fetched when the row comes within two screens of view, and
+// stays once fetched (no unloading: scrolling back must not refetch or repaint). paint() already
+// skips a plate whose image hasn't arrived, so an unfetched plate is simply an unpainted one.
+const plateSight = new IntersectionObserver(es => {
+  for (const e of es) {
+    if (!e.isIntersecting) continue;
+    const r = e.target._plate; plateSight.unobserve(e.target);
+    r.near = true; r.img.src = r.plateUrl;
+  }
+}, { rootMargin: '200% 0px' });
+
 // a passage often gets its painting minutes after its text — so plates attach late, in place
 function setPlate(r, url) {
   if (r.plateUrl === url) return;
@@ -177,7 +190,8 @@ function setPlate(r, url) {
     img.onload = () => { r.dither = null; paint(r); };
     cv.style.filter = LOOKS[LOOK].css || '';
   }
-  r.img.src = url;
+  if (r.near) r.img.src = url;   // already seen: a repainted plate (?v= moved) loads at once
+  else { r.row._plate = r; plateSight.observe(r.row); }
   r.pic.hidden = false;
 }
 
@@ -789,7 +803,7 @@ $('#fresh').onclick = () => toNewest(true);
 for (const b of document.querySelectorAll('#flip button[data-look]')) b.onclick = () => setLook(b.dataset.look);
 
 // the painting full screen: `pic` only — the double-click on a dream was let go (bekh, 2026-09-22)
-function openPlate(r) { if (!r.img || !r.img.src) return; $('#lightbox img').src = r.img.src; $('#lightbox').hidden = false; }
+function openPlate(r) { if (!r.plateUrl) return; $('#lightbox img').src = r.plateUrl; $('#lightbox').hidden = false; }
 const closeBox = () => { $('#lightbox').hidden = true; };
 function closeSeeds() { for (const b of document.querySelectorAll('.seedbox')) b.hidden = true; }
 addEventListener('click', closeSeeds);
