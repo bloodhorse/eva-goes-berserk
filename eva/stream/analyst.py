@@ -56,6 +56,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import deepseek  # noqa: E402   the second door: v3.2 over openrouter, the transcript kept here
 import loom  # noqa: E402
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
 import push  # noqa: E402   the mirror, tapped the moment a portrait lands
@@ -68,9 +69,22 @@ PERSONA = os.environ.get("STREAM_ANALYST_PERSONA", os.path.join(HERE, "analyst.t
 # Ten dreams a turn: fewer and a run is mostly the cli's overhead and a portrait rewritten for
 # one new scrap; more and a backlog of a day is a handful of enormous turns.
 EVERY = int(os.environ.get("STREAM_ANALYST_EVERY", "10"))
-# Under the point where the cli would compact the session by itself — see the module doc. A
-# dream is ~250 tokens, so this is roughly five hundred dreams in one seat.
-CONTEXT_MAX = int(os.environ.get("STREAM_ANALYST_CONTEXT_MAX", "150000"))
+# **Two doors, one seat each** (bekh, 2026-09-23: fresh blood). `opus` is the claude cli in one
+# resumed session; `deepseek` is v3.2 over openrouter with the transcript kept in the seat as
+# `messages.json`, sent whole every call. A seat is born with a door and keeps it — a session
+# can't move houses. The prompts are the same to the byte; only the door differs.
+DOORS = ("opus", "deepseek")
+DOOR = os.environ.get("STREAM_ANALYST_DOOR", "opus")
+# Under the point where the seat's window runs out — for opus, where the cli would compact the
+# session by itself (see the module doc); for deepseek, a 128k window. Measured 2026-09-23: a
+# dream costs ~420 tokens of context with the portraits in the session, so this is ~350 dreams
+# in an opus seat and ~280 in a deepseek one. One env var overrides either.
+CONTEXT_MAX = {"opus": 150000, "deepseek": 120000}
+if os.environ.get("STREAM_ANALYST_CONTEXT_MAX"):
+    CONTEXT_MAX = dict.fromkeys(DOORS, int(os.environ["STREAM_ANALYST_CONTEXT_MAX"]))
+# The transcript-kept door has no id; this stands in for one so `live()` and every reader of
+# session.json see a seat that can be resumed.
+LOCAL_SESSION = "messages"
 # Longer than the other voices': a resumed turn re-reads the whole session, and at a hundred
 # thousand tokens of dreams five minutes is not generous.
 TIMEOUT = int(os.environ.get("STREAM_ANALYST_TIMEOUT", "600"))
@@ -108,12 +122,15 @@ def ledger(row: dict) -> None:
                            ensure_ascii=False) + "\n")
 
 
-def write_json(path: str, obj: dict) -> None:
+def write_json(path: str, obj: dict | list) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     tmp = f"{path}.{os.getpid()}.part"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=1)
     os.replace(tmp, path)
+
+
+write_json_list = write_json
 
 
 # ---- the seat ---------------------------------------------------------------------------------
@@ -291,16 +308,46 @@ def remark(answer: str) -> str:
 
 def context_of(usage: dict) -> int:
     """How big the session is now: everything that went in on this call. Output is left out —
-    it becomes input on the next call and is counted there."""
+    it becomes input on the next call and is counted there. Opus's door reports three counters,
+    deepseek's one; a usage block has one shape or the other."""
+    if "prompt_tokens" in usage:
+        return int(usage.get("prompt_tokens") or 0)
     return (int(usage.get("input_tokens") or 0) + int(usage.get("cache_read_input_tokens") or 0)
             + int(usage.get("cache_creation_input_tokens") or 0))
+
+
+# ---- the transcript-kept session (the deepseek door) ------------------------------------------
+
+def messages_path(seat: str) -> str:
+    return os.path.join(seat_dir(seat), "messages.json")
+
+
+def load_messages(seat: str) -> list[dict]:
+    try:
+        with open(messages_path(seat), encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return []
+    return d if isinstance(d, list) else []
+
+
+def whole_answer(text: str) -> bool:
+    """A complete answer ends on the remark's closing tag; one cut short gets a rethrow."""
+    return text.rstrip().endswith("</remark>")
 
 
 # ---- one run -------------------------------------------------------------------------------------
 
 def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | None,
-             new: bool) -> int:
+             new: bool, door: str = DOOR) -> int:
     state = load_session(seat)
+
+    if live(state) and not new and (state.get("door") or "opus") != door:
+        # A session is one door's: the cli's id means nothing to the router and the transcript
+        # means nothing to the cli. --new is the only way across.
+        print(f"seat {seat} is a {state.get('door') or 'opus'} seat; --door {door} needs --new",
+              file=sys.stderr)
+        return 2
 
     if new and os.path.isdir(seat_dir(seat)):
         # Binned, never deleted: an old seat's versions are the record of what he saw then.
@@ -322,8 +369,8 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
             return 2
         # Written before the call, so a first call that fails still leaves the start where bekh
         # put it and the next plain --once picks up from there.
-        state = {"session_id": "", "persona": persona_path, "started": None, "covered": mark,
-                 "dreams": 0, "context": 0, "model": None}
+        state = {"session_id": "", "door": door, "persona": persona_path, "started": None,
+                 "covered": mark, "dreams": 0, "context": 0, "model": None}
         save_session(seat, state)
 
     resuming = live(state)
@@ -340,8 +387,8 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
     # After the batch and not before it, so a full seat with nothing new stays as quiet as any
     # other; the refusal is for a call that would otherwise have been made.
     held = int((state or {}).get("context") or 0)
-    if resuming and held >= CONTEXT_MAX:
-        msg = f"session at {held} tokens, over the ceiling of {CONTEXT_MAX} — start a new seat"
+    if resuming and held >= CONTEXT_MAX[door]:
+        msg = f"session at {held} tokens, over the ceiling of {CONTEXT_MAX[door]} — start a new seat"
         print(f"portrait · {seat} · {msg}", file=sys.stderr)
         ledger({"seat": seat, "error": msg, "context": held})
         return 0
@@ -361,18 +408,30 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
     rooms = [p["room"] for p in pages]
     started = time.time()
     try:
-        answer, usage = opus.ask(prompt, TIMEOUT, resume=state["session_id"] if resuming else None)
+        if door == "deepseek":
+            # The whole conversation goes over every time; the answer is appended to the
+            # transcript before anything is parsed, for the same reason the watermark moves
+            # below: what was sent is in the session now, parse or no parse.
+            msgs = (load_messages(seat) if resuming else []) + [{"role": "user", "content": prompt}]
+            answer, usage = deepseek.ask(msgs, TIMEOUT, whole=whole_answer)
+            os.makedirs(seat_dir(seat), exist_ok=True)
+            write_json_list(messages_path(seat), msgs + [{"role": "assistant", "content": answer}])
+            sid, model = LOCAL_SESSION, deepseek.MODEL
+        else:
+            answer, usage = opus.ask(prompt, TIMEOUT,
+                                     resume=state["session_id"] if resuming else None)
+            sid, model = opus.SESSION, opus.MODEL
     except ValueError as exc:
         log(f"portrait · {seat} · {exc}")
-        ledger({"seat": seat, "rooms": len(rooms), "error": str(exc),
+        ledger({"seat": seat, "door": door, "rooms": len(rooms), "error": str(exc),
                 "seconds": round(time.time() - started, 1)})
         return 0
-    sid = opus.SESSION
     if not sid:
         # Without an id there is nothing to resume, and the next run would start him over with
         # no memory — the one outcome this voice exists to avoid. Nothing is stored.
         log(f"portrait · {seat} · the cli reported no session id")
-        ledger({"seat": seat, "rooms": len(rooms), "error": "the cli reported no session id",
+        ledger({"seat": seat, "door": door, "rooms": len(rooms),
+                "error": "the cli reported no session id",
                 "seconds": round(time.time() - started, 1)})
         return 0
     if resuming and sid != state["session_id"]:
@@ -385,32 +444,33 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
     # The session moves on whether or not the answer parses: the cli answered, so these dreams
     # ARE in his context now. Holding the watermark back would hand them over a second time and
     # he would read them twice — a garbage answer costs one portrait, never a duplicate.
-    save_session(seat, {"session_id": sid,
+    save_session(seat, {"session_id": sid, "door": door,
                         "persona": (state or {}).get("persona") or persona_path,
                         "started": (state or {}).get("started") if resuming else now,
                         "covered": rooms[-1], "dreams": total, "context": ctx,
-                        "model": opus.MODEL})
+                        "model": model})
     try:
         text, line = parse(answer)
     except ValueError as exc:
         log(f"portrait · {seat} · {exc}")
-        ledger({"seat": seat, "session_id": sid, "rooms": len(rooms), "dreams": total,
-                "context": ctx, "error": str(exc), "seconds": round(now - started, 1),
-                "usage": usage})
+        ledger({"seat": seat, "door": door, "session_id": sid, "rooms": len(rooms),
+                "dreams": total, "context": ctx, "error": str(exc),
+                "seconds": round(now - started, 1), "usage": usage})
         return 0
 
-    obj = {"ts": now, "seat": seat, "session_id": sid, "rooms": rooms, "dreams": total,
-           "text": text, "line": line, "model": opus.MODEL, "seconds": round(now - started, 1),
-           "usage": usage, "context": ctx}
+    obj = {"ts": now, "seat": seat, "door": door, "session_id": sid, "rooms": rooms,
+           "dreams": total, "text": text, "line": line, "model": model,
+           "seconds": round(now - started, 1), "usage": usage, "context": ctx}
     path = version_path(seat, now)
     write_json(path, obj)
     # `line` on the row too, so the ledger reads as the remarks in order and `eva go` can say
     # one out loud as it lands.
-    ledger({"seat": seat, "session_id": sid, "rooms": len(rooms), "dreams": total,
-            "line": line, "context": ctx, "model": opus.MODEL, "seconds": obj["seconds"],
+    ledger({"seat": seat, "door": door, "session_id": sid, "rooms": len(rooms), "dreams": total,
+            "line": line, "context": ctx, "model": model, "seconds": obj["seconds"],
             "usage": usage})
+    told = deepseek.line(usage) if door == "deepseek" else opus.line(usage)
     log(f"portrait · {os.path.relpath(path, STREAM)} · {seat} · {len(rooms)} dreams ({total}) · "
-        f"{ctx} ctx · {obj['seconds']}s · " + opus.line(usage))
+        f"{ctx} ctx · {obj['seconds']}s · {model} · " + told)
     print(text)
     if line:
         print("\n" + line)
@@ -451,6 +511,10 @@ def main(argv: list[str]) -> int:
                     help="start the seat at ROOM, or at the K-th newest unflagged dream")
     ap.add_argument("--new", action="store_true",
                     help="bin the seat's folder to portraits/.trash/ and start it over")
+    ap.add_argument("--door", choices=DOORS, default=DOOR,
+                    help=f"who sits in the seat: opus (the cli, one resumed session) or "
+                         f"deepseek (v3.2 over openrouter, the transcript kept here); "
+                         f"default {DOOR}")
     a = ap.parse_args(argv[1:])
     if not SEAT_RE.match(a.seat):
         print(f"--seat {a.seat!r}: letters, digits, - and _ only", file=sys.stderr)
@@ -463,7 +527,7 @@ def main(argv: list[str]) -> int:
     if not a.once:
         ap.print_help(sys.stderr)
         return 2
-    return run_once(a.seat, a.persona, a.n, a.partial, a.start, a.new)
+    return run_once(a.seat, a.persona, a.n, a.partial, a.start, a.new, a.door)
 
 
 if __name__ == "__main__":

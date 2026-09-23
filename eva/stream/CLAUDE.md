@@ -677,6 +677,18 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   pages, a face asleep inside the eye socket, ink on the fingers. He knows it reads as a man
   and took it anyway: *too good to raise some disagreements.* Meant for the card in the feed
   (dreamshit, not yet drawn): face left, the remark right, a press opening the manuscript.
+- **Two doors** (bekh, 2026-09-23: *fresh blood* — he has read too much of one family's prose,
+  and the analyst is the voice he reads most): `--door opus` (the default; the cli, one
+  resumed session) or `--door deepseek` — v3.2 over openrouter, the wire carried over from
+  friendship-is-magic's third chair (`deepseek.py`: pinned to one host with no fallbacks,
+  thinking off, a reasonless or cut reply rethrown, the key read from the login keychain
+  `OPENROUTER_API_KEY` at the moment of the call and never from the env). There is no session
+  on the far side, so the seat keeps the transcript itself as `messages.json` and sends it
+  whole every call — the same prompts to the byte, the router caching the prefix. A seat is
+  born with a door and keeps it (`--door` on a seat of the other door needs `--new`); the
+  ceiling is per door (`CONTEXT_MAX`, 120000 for deepseek's 128k window). Measured on ten
+  dreams: 10s, 1660 tokens in, $0.0004. The public seat stays opus until bekh reads the two
+  side by side and says otherwise.
 - **The api carries the public seat only** — `STREAM_ANALYST_SEAT`, `analyst`, which the loom
   reads from the same env with the same default. Other seats are experiments run side by side,
   and a card from one would be an experiment passing itself off as the voice.

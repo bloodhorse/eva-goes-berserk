@@ -2053,11 +2053,12 @@ class Analyst(unittest.TestCase):
         self.assertEqual((s["covered"], s["dreams"], s["persona"]),
                          ("stream/2026-09-20/1025", 3, self.persona))
         self.assertEqual(s["context"], 12 + 6642 + 3)                 # the three counters
-        self.assertEqual(set(s), {"session_id", "persona", "started", "covered", "dreams",
+        self.assertEqual(set(s), {"session_id", "door", "persona", "started", "covered", "dreams",
                                   "context", "model"})
+        self.assertEqual(s["door"], "opus")
         v = self.versions()
         self.assertEqual(len(v), 1)
-        self.assertEqual(set(v[0]), {"ts", "seat", "session_id", "rooms", "dreams", "text",
+        self.assertEqual(set(v[0]), {"ts", "seat", "door", "session_id", "rooms", "dreams", "text",
                                      "line", "model", "seconds", "usage", "context"})
         self.assertEqual(v[0]["rooms"], [f"stream/2026-09-20/{h}" for h in want])
         self.assertEqual(v[0]["text"], "a dreamer of 3 more dreams.")   # inside the tag, stripped
@@ -2139,7 +2140,7 @@ class Analyst(unittest.TestCase):
     def test_the_ceiling_refuses_with_a_row_and_no_call(self):
         self.assertEqual(self.run_("--start", "last:3", "--n", "3")[0], 0)
         s = self.session()
-        s["context"] = analyst.CONTEXT_MAX
+        s["context"] = analyst.CONTEXT_MAX["opus"]
         with open(os.path.join(analyst.PORTRAITS, "analyst", "session.json"), "w") as fh:
             json.dump(s, fh)
         make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
@@ -2147,7 +2148,7 @@ class Analyst(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertFalse(os.path.exists(f["log"]))
         self.assertIn("over the ceiling", out)
-        self.assertIn(f"session at {analyst.CONTEXT_MAX} tokens", self.rows()[-1]["error"])
+        self.assertIn(f"session at {analyst.CONTEXT_MAX["opus"]} tokens", self.rows()[-1]["error"])
         self.assertEqual(self.session()["covered"], "stream/2026-09-20/1025")
 
     def test_a_garbage_answer_is_a_row_and_exit_zero(self):
