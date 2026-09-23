@@ -378,7 +378,9 @@ file directly — don't have the room open in the page while one runs.
 **stream** (`stream/stream.py`, 2026-09-19): **one short passage every five minutes, and nobody
 picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion` of 170 tokens, a bare room
 at `stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the passage, and that is the run — `--once`
-writes one and exits, because the loop is launchd's `StartInterval` and not a sleep. A
+writes one and exits, because the loop is launchd's `StartInterval` and not a sleep. Two
+dreamers since 2026-09-23 — nemo and gpt-2, strictly alternating, the turn read off the newest
+page and every page stamped `meta.model` with who wrote it (`STREAM_MODELS`). A
 failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots —
 everything under `shelf/seeds/`, and the tails of passages bekh **starred** — with a starred
 tail weighing what one seed weighs, capped at half the draws; that is the only place his hand is
@@ -461,12 +463,13 @@ While the mac is off, `eva.x` falls over to a copy on the mini that takes readin
 Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
 `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
-plus `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the two voices it
-kickstarts, `com.bekh.eva-stream-interpreter` and `com.bekh.eva-stream-remembering`, neither of
-which has an interval of its own (all three plists live in `stream/`) — and
+plus `com.bekh.eva-gpt2` (llama-server, GPT-2 XL, loopback 8083, on the cpu — the stream's
+second dreamer), `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the two
+voices it kickstarts, `com.bekh.eva-stream-interpreter` and `com.bekh.eva-stream-remembering`, neither of
+which has an interval of its own (those plists, gpt-2's included, live in `stream/`) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
-`/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need
+`/tmp/eva-gpt2.log`, `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need
 only a reload; `loom.py` changes need the kickstart**, or the live server keeps running the old
 routes. **A plist edit needs bootout + bootstrap** — kickstart restarts the process from
 launchd's cached copy of the plist, which is how the loom died on a stale path once.
@@ -476,6 +479,8 @@ launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom          # restart the loo
 launchctl bootout gui/$(id -u)/com.bekh.eva-loom; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist   # after editing the plist
 launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # give the mac its ~10 GB back
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-llama.plist   # and take it again
+launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2             # gpt-2 up (loaded once, stays loaded)
+launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2          # gpt-2 off, gracefully
 ```
 
 The page saying *the mac is off* = caddy fell over to the mirror (the mac asleep or the loom
@@ -489,20 +494,26 @@ which timed out on one connection and wrote nothing. Nemo answers as a base mode
 `dry_penalty_last_n: -1`** (validates 0..INT_MAX) — the sheet's sampler line is wrong on that one
 field; the page defaults it to the context size, 8192.
 
-**A second base model beside nemo** (2026-09-17), for blind comparisons with `census.py --models`:
-GPT-2 XL, `~/.cache/llama.cpp/gpt2-xl.Q8_0.gguf` (mradermacher/gpt2-xl-GGUF, 1.75 GB, 1024
-window, ~21 tok/s on the cpu with nemo busy on the gpu). Not a launchd agent — a plain process,
-started for a run and stopped by pid after it. Pythia 2.8b
+**A second base model beside nemo** (2026-09-17), for blind comparisons with `census.py --models`
+and, since 2026-09-23, **the stream's second dreamer**, writing every other page
+(`stream/CLAUDE.md`): GPT-2 XL, `~/.cache/llama.cpp/gpt2-xl.Q8_0.gguf` (mradermacher/gpt2-xl-GGUF,
+1.75 GB, 1024 window, ~21 tok/s on the cpu with nemo busy on the gpu). **A launchd agent now**,
+`com.bekh.eva-gpt2` (`stream/com.bekh.eva-gpt2.plist`, tracked, copied to
+`~/Library/LaunchAgents/` and bootstrapped once): `127.0.0.1:8083`, `-c 1024 -ngl 0
+--no-webui`, log `/tmp/eva-gpt2.log`, crash restarted and a clean exit left exited, the shape
+of nemo's — so it is started with `launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2` and
+stopped with `launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2`, and `eva go` does both.
+Pythia 2.8b
 (`EleutherAI_pythia-2.8b.Q8_0.gguf`, port 8081, `-c 2048`) is on disk too and was dropped after
 the first run: fewest marks, under 5 tok/s, ends the document early three times in ten. Port
 8082 is the loom's; don't use it.
 
 ```bash
-cd ~/.cache/llama.cpp && nohup llama-server -m gpt2-xl.Q8_0.gguf --host 127.0.0.1 --port 8083 \
-  -c 1024 -ngl 0 --no-webui > /tmp/gpt2.log 2>&1 & echo $! > /tmp/gpt2.pid
+launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2
+until curl -sf http://127.0.0.1:8083/health >/dev/null; do sleep 2; done
 cd ~/tower/forge/eva-goes-berserk && uv run --python 3.12 eva/cli/census.py \
   --name experiments/<folder>/<room> --doc shelf/seeds/short/<seed>.txt --tail 260 \
   --bare --n 30 --temps 1.4,2.2 --n-predict 60 --set xtc_probability=0 --set min_p=0.08 \
   --models nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083
-kill $(cat /tmp/gpt2.pid)        # by pid, never pkill -f
+launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2     # unless the stream is dreaming on it
 ```

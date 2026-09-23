@@ -1,6 +1,6 @@
 # stream — the machine dreaming with nobody there
 
-One short passage every five minutes, written by nemo, picked by nobody. bekh opens his phone at
+One short passage every five minutes, written by nemo and gpt-2 in turn, picked by nobody. bekh opens his phone at
 a random moment, reads down from the newest into the night, marks what moved him, puts the
 phone down. That is the whole instrument, and it is the brief's mission taken literally: *a
 dream machine that runs on the mac perpetually and writes dreams on its own… he won't read
@@ -12,7 +12,8 @@ that ever touches a page is bekh's mark on it afterwards, which acts on the **ne
 seed and never on generation. Read the root `CLAUDE.md` for what we are hunting and `BRIEF.md`
 for why picking is not where the hunt is.
 
-**Three voices on one page** (2026-09-19): the sleeper dreaming (`stream.py`, nemo), the
+**Three voices on one page** (2026-09-19): the sleeper dreaming (`stream.py`, nemo — and
+since 2026-09-23 gpt-2, every other page), the
 sleeper remembering (`remembering.py`, opus rewriting the account of the dream so far), and the
 reader at the bedside (`interpreter.py`, opus noting and underlining). They do not read each
 other. `opus.py` is the one way the two opus voices talk to the cli and the one place their
@@ -82,6 +83,46 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
   before the heat flattens what survived, which is why 2.5 is still a sentence. Everything not
   named is eva's room default, DRY above all: base models loop, and a hot page with no brake on
   repetition is one sentence said nine times.
+- **Two dreamers, turn and turn about** (bekh, 2026-09-23): GPT-2 XL writes pages into the same
+  stream as nemo, **strictly alternating**, and every page says which model wrote it. His
+  design: no blindness, no coin — the model's name is the first thing in the dream's head.
+  - **Seats** are `STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083`, the
+    `name=url` list, its order the turn order; the writer's plist sets it. **Unset → nemo alone
+    at `LOOM_LLAMA`, byte-for-byte the old path** (the file name as the stamp, no `model` on the
+    row or the live posts) — so deleting the key is a real way back and not a third behaviour. A
+    malformed list writes nothing and says so: an error row, exit 0.
+  - **The turn is read off the shelf, never a state file**: the next writer is the seat after
+    whoever wrote the newest room under `sittings/stream/` (`meta.model` of its page). A ration
+    that stops and one that starts a day later, a hand run in between, a crashed page — the
+    newest room already says who went last in all of them, and a second record could only
+    disagree. A stamp is known by a seat's name or, for pages from before the seats (stamped
+    with nemo's file name), by the file that seat's `/props` says is loaded — so the first
+    two-seat page after a night of nemo alone is gpt-2's. No page, or a stamp nobody answers
+    to → the first seat.
+  - **A seat that can't take the page is skipped for it, and the next one takes it**: its
+    server down (no `/props`), or its window unable to hold the seed plus `n_predict` —
+    counted on that server's own `/tokenize` against its `/props` window, wire.py's rule,
+    because gpt-2's 1024 are gpt-2 tokens. The reason rides on the row as `skipped:
+    [{model, why}]`. A skip does not pass the turn on: the page is stamped with whoever wrote
+    it and the next page follows that. Every seat out → an error row (`every seat is out`,
+    with the skips) and exit 0, as ever. Both servers stay up the whole ration — nothing loads
+    or unloads between pages.
+  - **Everything else is identical for both**: the seed is drawn and the heat drawn before the
+    seat is chosen, and the sampler, the seed pots, the tail cut, the lowercasing, the filter
+    and the flat logprobs are the same code for either. A difference between the two piles
+    should be who answered, not how they were asked.
+  - **The stamp**: the page node's `meta.model` is the seat name (`nemo`, `gpt2`) — the key the
+    canvas's `reveal` reads, and what the turn is read back from — with `meta.model_file`
+    beside it, so a name is never the only record of which weights. The ledger row carries
+    `model`; the live posts carry `model`; `/api/stream` hands each page its `model`
+    (`loom.stream_model`: a seat name as is, an older page's file name shortened —
+    `mistral-nemo-base-2407` — with no table of known files); eva's page heads a dream
+    `gpt2 · 12:3 · the singing bones`, the name in the number's own ghost tone, no colour, no
+    badge, and the live block carries who is typing in the same place.
+  - GPT-2 is its own launchd agent, `com.bekh.eva-gpt2` (`eva/stream/com.bekh.eva-gpt2.plist`,
+    tracked): brew's llama-server, `gpt2-xl.Q8_0.gguf`, `127.0.0.1:8083`, `-c 1024 -ngl 0` —
+    on the cores, because nemo owns the GPU — the same crash-restarts, clean-exit-stays shape as
+    nemo's, so `launchctl kill SIGTERM` is its graceful stop. Log `/tmp/eva-gpt2.log`.
 - **The filter is a column, not a knife.** `FILTERS` in `stream.py` — urls, html, markdown
   headers and links, bylines, blog chrome, `chapter N`, copyright, bracket tags, @handles,
   hashtags. A page that trips one is **written to the shelf like any other** with
@@ -90,7 +131,8 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
   many pages he marked did it flag? — so false positives cost one page behind a query string
   and are expected.
 - **Ledger and heartbeat, berserk's shapes.** `shelf/stream/ledger.jsonl`, a row per run (ts,
-  room, seed, temperature, tokens, tps, flag, seconds — or `error` and a null room);
+  room, seed, temperature, tokens, tps, flag, seconds, and with two dreamers `model` and any
+  `skipped` — or `error` and a null room);
   `shelf/stream/heartbeat.json`, rewritten every run with `ts`, `last_ok`, `room`, `ok`.
   `last_ok` survives a failed run, or one unreachable llama would look like a stream that never
   ran.
@@ -151,8 +193,10 @@ cost is counted; `monitor.py` watches; `../front/stream.html` is the page, serve
     finished block's place. Measured 2026-09-23 through `eva.x`: 8 growing `live` events for a
     42-token page, `done`, then the `change`; through the mirror, 31 for a 170-token one.
 - **The reader is phone-first**, which is the one place this project's "the page is a desktop
-  page" law does not apply: that law is about the loom. No model name, no sampler, no seed name
-  — a reader who can see the temperature is reading an experiment and not a dream.
+  page" law does not apply: that law is about the loom. No sampler, no seed name — a reader who
+  can see the temperature is reading an experiment and not a dream. The dreamer's name is the
+  one exception, and on purpose (2026-09-23): with two of them, which one dreamt it is part of
+  the dream.
 - **The reader is one continuous scroll, newest at the top.** Passage, thin rule, passage;
   scrolling down goes back into the night and an IntersectionObserver near the bottom lazy-loads
   the next batch through `?before=<room>&n=`, stopping for good when `more` is false. It was a
@@ -540,7 +584,8 @@ the code.
     placeholder shows the whole account and simply hides the `|` at render.
 - **On the page the names are the menu.** A dream is headed by `12:3 · <its name>` at the very
   top of its block, above the grey seed: the number in the ghost tone, the name in the body ink
-  at 14px. No name and there is only the number; neither and nothing is drawn, exactly as
+  at 14px — and since 2026-09-23 its dreamer before both, `gpt2 · 12:3 · <its name>`, in the
+  number's tone. No name and there is only the number; neither and nothing is drawn, exactly as
   before. The story's name heads its account on the left with its chapter, **a size bigger**
   (16px — his words: the block header is a bit bigger), and on a phone it heads the pack's
   inset. Both through `textContent`, like everything else here. A rewrite that only renames the
@@ -791,28 +836,37 @@ changed for the stream.
 
 ## Running it
 
-**Starting and stopping the stream means nemo too** (bekh, 2026-09-21: *when we decide to stop
-the stream, we gracefully finish nemo as well*). Nemo wires about 10 GB of a 16 GB mac and has no
-job once the writer is off. Its launchd job restarts a crash and lets a clean exit stay exited,
-so a SIGTERM is the graceful stop and the job stays loaded for the next start:
+**Starting and stopping the stream means both dreamers too** (bekh, 2026-09-21: *when we decide
+to stop the stream, we gracefully finish nemo as well* — and gpt-2 the same since it joined).
+Nemo wires about 10 GB of a 16 GB mac and has no job once the writer is off; gpt-2 holds ~2 GB
+and a few cores. Both launchd jobs restart a crash and let a clean exit stay exited, so a SIGTERM
+is the graceful stop and the jobs stay loaded for the next start. gpt-2's agent is bootstrapped
+once (`cp eva/stream/com.bekh.eva-gpt2.plist ~/Library/LaunchAgents/` then `launchctl bootstrap
+gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-gpt2.plist`); after that these are the lines:
 
 ```bash
-# stop: the writer first, then nemo
+# stop: the writer first, then both dreamers
 launchctl bootout gui/$(id -u)/com.bekh.eva-stream
 launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-llama
-# start: nemo first, wait for it, then the writer
+launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2
+# start: both dreamers first, wait for both, then the writer
 launchctl kickstart gui/$(id -u)/com.bekh.eva-llama
-until curl -sf http://127.0.0.1:8080/health >/dev/null; do sleep 2; done
+launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2
+until curl -sf http://127.0.0.1:8080/health >/dev/null && curl -sf http://127.0.0.1:8083/health >/dev/null; do sleep 2; done
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
 ```
 
 If the loom is being used for fans at the same time, nemo stays up — it is the loom's model too.
+One dreamer down is not a dead stream: the writer skips that seat and the other writes every page,
+with the skip on each row.
 
 **The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — bekh: codex is the scarce thing, so a
-run is sized in dreams). N dreams — N passages, each with its note, its retelling and its
-plate — then the writer off and nemo off, by the lines above. **Foreground on purpose**: it
-stays in the terminal and ctrl-c ends it clean (writer off, nemo off, the painter's cap put
-back); `eva go stop` does the same from another terminal. The painter's cap for the run is
+run is sized in dreams). Both dreamers kickstarted and both `/health`s waited for (either one
+never coming up stops the run before the writer starts, and says which), then N dreams — N
+passages, nemo's and gpt-2's in turn, each with its note, its retelling and its plate — then the
+writer off and both dreamers off, by the lines above; the narration names who wrote each page
+and any seat skipped. **Foreground on purpose**: it stays in the terminal and ctrl-c ends it
+clean (writer off, nemo and gpt-2 off, the painter's cap put back); `eva go stop` does the same from another terminal. The painter's cap for the run is
 bekh's own number for the week — 43, `eva go 5 50` for another — not a formula (his call the
 same day: a computed cap is arbitrary); a week already past it refuses; **`eva go -l N`**
 (`--limitless`, 2026-09-23) lifts the week cap for the run and skips that refusal — the
@@ -838,12 +892,14 @@ launchctl bootout gui/$(id -u)/com.bekh.eva-stream        # stop dreaming
 launchctl bootout gui/$(id -u)/com.bekh.eva-stream; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist   # after editing the plist
 ```
 
-It needs `com.bekh.eva-llama` up. It does **not** need the loom agent to write pages — only to
+It needs `com.bekh.eva-llama` and `com.bekh.eva-gpt2` up (one down costs that seat its turns,
+not the stream). It does **not** need the loom agent to write pages — only to
 read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom serves the old
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
-`STREAM_TEMP_HI`, `STREAM_PUSH` (`0` = don't tap the mirror), `LOOM_LIVE` (where the live posts
+`STREAM_TEMP_HI`, `STREAM_MODELS` (the dreamers, `name=url,…` in turn order; the plist sets
+nemo and gpt2; unset = nemo alone at `LOOM_LLAMA`), `STREAM_PUSH` (`0` = don't tap the mirror), `LOOM_LIVE` (where the live posts
 go; empty = nowhere) and `STREAM_LIVE_EVERY` (0.5), plus loom's `LOOM_SITTINGS` and
 `LOOM_LLAMA`. The loom reads `STREAM_DIR` and `STREAM_INTERVAL` too, `LOOM_STREAM_PAGE` for a
 doctored copy of the page, `STREAM_EVENTS_TICK` / `STREAM_EVENTS_KEEPALIVE` /
@@ -918,7 +974,17 @@ loom growing, seed first, `done` last with the page's text; a dead loom as one l
 landed; and against real looms — a post reaching a held client well inside the tick, a late
 client handed the dream so far first and never a finished one, `done` before the `change`, a bad
 body 400, a stale state dropped, 403 read-only, and a mirror pulling from an upstream loom,
-surviving it going away and finding it again.
+surviving it going away and finding it again. For the two dreamers (two stubs naming
+different files, a third with a 64-token window): three runs alternating nemo, gpt2, nemo with
+the stamp, the file and the text of the right server on each page and each row, one sampler for
+both; a fresh shelf starting on the first seat; a run after a stop resuming from the newest
+page; a page stamped with a file name known by its server's file, and a stamp nobody answers to
+starting over; a dead seat and a too-small window each skipped to the other with the reason on
+the row (the tight one counted on its own tokenizer and never handed the document); every seat
+out as an error row and exit 0; a malformed list writing nothing; `STREAM_MODELS` unset being
+the old path, file stamp and all, with no window check; the live posts carrying `model` (and not
+carrying it on the old path); the live route passing it on and refusing a non-string; and
+`/api/stream` carrying it for a seat name, a file name and berserk's props object.
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

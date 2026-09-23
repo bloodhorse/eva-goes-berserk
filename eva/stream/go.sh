@@ -1,12 +1,14 @@
 #!/bin/bash
 # go.sh — `eva go N`: dream N dreams with everything (note, retelling, picture each), then stop,
-# nemo included. bekh's ration (2026-09-22): codex is the scarce thing, so a run is sized in
+# both dreamers included — nemo and gpt-2, who take the pages turn and turn about (2026-09-23;
+# the writer's plist says STREAM_MODELS, the turn is read off the shelf so a ration picks up
+# where the last one stopped). bekh's ration (2026-09-22): codex is the scarce thing, so a run is sized in
 # dreams — N passages, N plates — not in hours. A dream here is one passage (one plate); the
 # four-scene story is the sleeper's unit, not this one's.
 #
 # Every step is the runbook's own line (stream/CLAUDE.md, "Running it"); this only orders them.
 # It runs IN THE FOREGROUND on purpose (bekh: so it's easy to kill): ctrl-c ends it, and the
-# trap puts everything back — writer off, nemo off, the painter's cap restored. Lost the
+# trap puts everything back — writer off, both dreamers off, the painter's cap restored. Lost the
 # terminal with a run half done? `eva go stop` does the same from anywhere.
 #
 # The painter's cap: its launchd job holds under STREAM_PLATE_WEEK_MAX (20 in its plist, a guard
@@ -48,7 +50,7 @@ cap_restore() {  # the saved value if there is one, else the everyday cap — ne
 running() { launchctl print gui/$U/com.bekh.$1 2>/dev/null | grep -q "state = running"; }
 busy_lines() {  # printed on the rising edge only, so the terminal reads like a log, not a spinner
   local now="" j label
-  for j in "eva-stream:nemo writing…" "eva-stream-interpreter:codex reading…" \
+  for j in "eva-stream:writing a dream…" "eva-stream-interpreter:codex reading…" \
            "eva-stream-remembering:opus retelling the story…" "eva-stream-plating:codex painting…"; do
     label=${j#*:}; running "${j%%:*}" && now="$now$label|"
     case "$WAS" in *"$label|"*) ;; *) [[ "$now" == *"$label|"* ]] && say "$label" ;; esac
@@ -64,8 +66,15 @@ narrate_off() { [ -n "$NARR" ] && { kill $NARR 2>/dev/null; pkill -P $NARR 2>/de
 writer_off() {
   launchctl bootout gui/$U/com.bekh.eva-stream 2>/dev/null
   launchctl kill SIGTERM gui/$U/com.bekh.eva-llama 2>/dev/null
-  say "writer off, nemo told to stop"
+  launchctl kill SIGTERM gui/$U/com.bekh.eva-gpt2 2>/dev/null
+  say "writer off, nemo and gpt-2 told to stop"
 }
+# both dreamers up, or say which one isn't. Both, not either: the writer would carry on with one
+# (the other's pages simply skipped), but a ration asked for turn and turn about and should not
+# quietly become nemo alone.
+up() { curl -sf http://127.0.0.1:8080/health >/dev/null && curl -sf http://127.0.0.1:8083/health >/dev/null; }
+who_down() { local d=""; curl -sf http://127.0.0.1:8080/health >/dev/null || d="nemo"
+  curl -sf http://127.0.0.1:8083/health >/dev/null || d="${d:+$d and }gpt-2"; echo "$d"; }
 
 LIMITLESS=0; ARGS=()
 for a in "$@"; do case "$a" in -l|--limitless) LIMITLESS=1 ;; *) ARGS+=("$a") ;; esac; done
@@ -92,11 +101,12 @@ cap_set "$CAP"
 trap 'echo; say "== interrupted"; writer_off; narrate_off; cap_restore; exit 1' INT TERM
 WAS=""
 
-# start: nemo first, wait for it, then the writer
+# start: both dreamers first, wait for both, then the writer
 launchctl kickstart gui/$U/com.bekh.eva-llama
-for i in $(seq 1 90); do curl -sf http://127.0.0.1:8080/health >/dev/null && break; sleep 2; done
-if ! curl -sf http://127.0.0.1:8080/health >/dev/null; then say "nemo never came up; stopping"; cap_restore; exit 1; fi
-say "nemo up"
+launchctl kickstart gui/$U/com.bekh.eva-gpt2
+for i in $(seq 1 90); do up && break; sleep 2; done
+if ! up; then say "$(who_down) never came up; stopping"; writer_off; cap_restore; exit 1; fi
+say "nemo and gpt-2 up"
 launchctl bootstrap gui/$U ~/Library/LaunchAgents/com.bekh.eva-stream.plist
 launchctl kickstart gui/$U/com.bekh.eva-stream
 say "writer on"
@@ -132,4 +142,4 @@ narrate_off
 cap_restore
 say "== done: $(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; codex week now $(week_now)%"
 curl -s -H "Title: eva go: $N dreams done" -H "Tags: w00t" \
-  -d "$(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; writer + nemo off; codex week $(week_now)%" ntfy.sh/kk_alert >/dev/null
+  -d "$(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; writer, nemo, gpt-2 off; codex week $(week_now)%" ntfy.sh/kk_alert >/dev/null

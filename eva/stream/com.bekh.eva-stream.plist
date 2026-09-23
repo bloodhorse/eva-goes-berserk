@@ -14,8 +14,10 @@
 
              launchctl kickstart gui/$(id -u)/com.bekh.eva-stream
 
-         Needs com.bekh.eva-llama up (nemo on 127.0.0.1:8080). The loom agent is NOT needed
-         to write pages — stream.py writes the room itself — only to read them at eva.x.
+         Needs com.bekh.eva-llama up (nemo on 127.0.0.1:8080) and com.bekh.eva-gpt2 (gpt-2 on
+         127.0.0.1:8083) — the two dreamers take turns (STREAM_MODELS below). One of them down
+         is not a dead stream: the other takes its page. The loom agent is NOT needed to write
+         pages — stream.py writes the room itself — only to read them at eva.x.
 
          A plist edit needs bootout + bootstrap; kickstart restarts from launchd's cached
          copy, which is how the loom once died on a stale path. -->
@@ -38,6 +40,12 @@
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
         <key>LOOM_LLAMA</key>
         <string>http://127.0.0.1:8080</string>
+        <!-- The dreamers, name=url, in turn order (bekh, 2026-09-23: turn and turn about, the
+             name first in the dream's head). The next page goes to the seat after whoever wrote
+             the newest page on the shelf. Delete this key and nemo dreams alone at LOOM_LLAMA,
+             exactly as before. -->
+        <key>STREAM_MODELS</key>
+        <string>nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083</string>
         <!-- A page that landed taps the reader: `launchctl kickstart` on
              com.bekh.eva-stream-interpreter, which has no clock of its own. Best-effort — a
              failed kick is one line in this log and the dream simply has no note. -->

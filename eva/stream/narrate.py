@@ -2,7 +2,7 @@
 """narrate.py — the stream's ledger as a running commentary, one plain line per row.
 
 `eva go` pipes `tail -F shelf/stream/ledger.jsonl` through this so the terminal says who is
-doing what — nemo wrote a dream, codex read it, opus retold the story, codex painted — instead
+doing what — nemo or gpt2 wrote a dream, codex read it, opus retold the story, codex painted — instead
 of a bare "dream 3 of 5 landed" (bekh, 2026-09-22: say what is actually going on). Reads json
 rows on stdin, writes lines on stdout, never touches the shelf. A half-written row is skipped.
 
@@ -38,11 +38,17 @@ def line(r: dict) -> str | None:
     secs = r.get("seconds")
     t = f" · {secs:.0f}s" if isinstance(secs, (int, float)) else ""
     if k == "page":
+        # Two dreamers since 2026-09-23: the row's `model` is the seat that wrote it, and a
+        # seat passed over (down, or its window too small) is said too — a gpt-2 that never
+        # gets a turn should be visible in the terminal, not only in the ledger.
+        dreamer = r.get("model") or ("writer" if r.get("skipped") else "nemo")
+        passed = "".join(f" · {s.get('model')} skipped ({s.get('why')})"
+                         for s in r.get("skipped") or [] if isinstance(s, dict))
         if r.get("error"):
-            return f"nemo · FAILED · {r['error']}"
+            return f"{dreamer} · FAILED · {r['error']}{passed}"
         flag = f" · flagged {r['flag']}" if r.get("flag") else ""
-        return (f"nemo · wrote {leaf(r.get('room'))} · {r.get('tokens', '?')} tok at heat "
-                f"{r.get('temperature', 0):.2f}{t}{flag}")
+        return (f"{dreamer} · wrote {leaf(r.get('room'))} · {r.get('tokens', '?')} tok at heat "
+                f"{r.get('temperature', 0):.2f}{t}{flag}{passed}")
     if k == "reading":
         rooms = ", ".join(leaf(x) for x in r.get("rooms") or [])
         if r.get("error"):

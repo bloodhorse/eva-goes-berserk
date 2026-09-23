@@ -45,8 +45,10 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                where the interpreter has been: each page's `marked` copy and
                                its `segments`, the `reading` on the page that heads a block,
                                and the `story` of the pack of dreams each page belongs to.
-                               Each page also carries its `name` (the reader's, else the
-                               naming store's) and its `verse`, `"12:3"` — the third scene of
+                               Each page carries its `model` — who dreamt it, the writer's
+                               seat name, or an older page's file name shortened — and its
+                               `name` (the reader's, else the naming store's) and its
+                               `verse`, `"12:3"` — the third scene of
                                the twelfth story; a story carries its `title` and `chapter`,
                                and its `text` — one continuous telling, seams marked with `|` —
                                beside `parts`, that same text cut at those seams, one per scene
@@ -55,11 +57,12 @@ somewhere else and you want the page on the tailnet — that is a decision, not 
                                moved], "status": …} within ~2s of a passage, a note, a story,
                                a plate or a name landing, and a `: keepalive` comment between
                                them. A GET, so the mirror serves it too. And `event: live`
-                               with {"text", "seed", "done", "ts"} the moment the writer posts
-                               the dream it is writing — first thing on connect, too, while one
-                               is being written
-  POST /api/stream/live      -> {"text": all of it so far, "seed", "done"}: the writer's dream
-                               while nemo writes it, held in memory (never on disk) and pushed
+                               with {"text", "seed", "done", "model", "ts"} the moment the
+                               writer posts the dream it is writing — first thing on connect,
+                               too, while one is being written
+  POST /api/stream/live      -> {"text": all of it so far, "seed", "done", "model"}: the
+                               writer's dream while a dreamer writes it (`model` is which one,
+                               optional), held in memory (never on disk) and pushed
                                down every held events connection. 403 on the mirror, whose
                                live state comes from LOOM_LIVE_UPSTREAM instead
   POST /api/mark           -> {"room", "node", "mark": "kept"|"good", "on"}: one branch
@@ -1823,6 +1826,34 @@ def plate_url(room: str) -> str | None:
     return f"/stream/plate/{parts[1]}/{parts[2]}.jpg?v={v}"
 
 
+def stream_model(meta: dict) -> str | None:
+    """Who wrote a stream page, as a short name for the head of the dream.
+
+    Since 2026-09-23 the writer stamps the seat's own name (`nemo`, `gpt2`) and that passes
+    untouched. Pages from before — and any written on the one-server path — carry the model's
+    FILE name, which is shortened here and not mapped: `Mistral-Nemo-Base-2407.Q5_K_M.gguf` →
+    `mistral-nemo-base-2407`, the extension and the quant off, lowercased because the page is.
+    No table of known files, so a model nobody listed still says what it is. The room keeps the
+    stamp as written; this is display, the way the ragged-end trim is.
+    """
+    m = meta.get("model")
+    if isinstance(m, dict):                     # berserk's shape: llama's whole /props
+        m = m.get("model_path")
+    if not isinstance(m, str) or not m:
+        return None
+    m = os.path.basename(m)
+    if m.lower().endswith(".gguf"):
+        m = re.sub(r"\.(?:i?q\d[\w]*|f16|f32|bf16)$", "", m[:-5], flags=re.I)
+    m = m.lower()
+    # One dreamer, one name: the ~200 pages written before the seats existed carry nemo's
+    # file name, and a feed that says `mistral-nemo-base-2407` above them and `nemo` above
+    # tonight's is two dreamers where there is one. The only alias, for the only model that
+    # wrote pages before it had a seat name.
+    if m.startswith("mistral-nemo"):
+        return "nemo"
+    return m
+
+
 def stream_page(name: str, readings: tuple[dict, dict] | None = None,
                 stories: dict | None = None, verses: dict | None = None,
                 names: dict | None = None) -> dict | None:
@@ -1859,6 +1890,9 @@ def stream_page(name: str, readings: tuple[dict, dict] | None = None,
             "kept": bool(node.get("kept")), "good": bool(node.get("good")),
             "flag": meta.get("flag") or None,
             "temperature": params.get("temperature"),
+            # Which dreamer wrote it (bekh, 2026-09-23 — two of them, turn and turn about, and
+            # the name is the first thing in the head). See `stream_model`.
+            "model": stream_model(meta),
             # The interpreter's copy, verbatim, and the same copy already diffed against the
             # dream. The page draws the segments; the string is the record.
             "marked": read.get("marked"),
@@ -1990,10 +2024,14 @@ LIVE_SEQ = 0                      # bumped on every post; a held loop compares i
 LIVE_COND = threading.Condition()
 
 
-def set_live(text: str, seed: str, done: bool) -> dict:
-    """Take a new live state and wake every held events connection. Returns the state."""
+def set_live(text: str, seed: str, done: bool, model: str | None = None) -> dict:
+    """Take a new live state and wake every held events connection. Returns the state.
+
+    `model` is who is typing — the writer's seat name since there are two dreamers — and None
+    from a writer that does not say (the one-server path), which the page reads as no name."""
     global LIVE, LIVE_SEQ
-    state = {"text": text, "seed": seed, "done": bool(done), "ts": time.time()}
+    state = {"text": text, "seed": seed, "done": bool(done), "model": model or None,
+             "ts": time.time()}
     with LIVE_COND:
         LIVE = state
         LIVE_SEQ += 1
@@ -2018,6 +2056,9 @@ def live_check(payload) -> str:
     text, seed, done = payload.get("text"), payload.get("seed", ""), payload.get("done", False)
     if not isinstance(text, str) or not isinstance(seed, str) or not isinstance(done, bool):
         return "a live post takes text and seed as strings and done as a boolean"
+    model = payload.get("model")
+    if model is not None and not (isinstance(model, str) and len(model) <= 64):
+        return "a live post's model is a short string"
     if len(text) + len(seed) > LIVE_MAX:
         return "a live post that size is not a passage"
     return ""
@@ -2064,7 +2105,8 @@ def pull_live(base: str) -> None:
                     except ValueError:
                         d = None
                     if not live_check(d):
-                        set_live(d["text"], d.get("seed", ""), d.get("done", False))
+                        set_live(d["text"], d.get("seed", ""), d.get("done", False),
+                                 d.get("model"))
                 elif not line:
                     event = ""
             raise OSError("upstream closed")
@@ -2477,7 +2519,8 @@ class Handler(BaseHTTPRequestHandler):
             if why:
                 self._json(400, {"error": why})
                 return
-            set_live(payload["text"], payload.get("seed", ""), payload.get("done", False))
+            set_live(payload["text"], payload.get("seed", ""), payload.get("done", False),
+                     payload.get("model"))
             self._json(200, {"ok": True})
             return
 

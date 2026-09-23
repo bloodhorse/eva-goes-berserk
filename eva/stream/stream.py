@@ -32,10 +32,17 @@ about twice a second, then once with `done` just before the room lands, so a rea
 page being written. Fire and forget: a loom that is down costs one line on stderr and the room
 lands exactly as it would have.
 
+**Two dreamers, turn and turn about** (bekh, 2026-09-23). With STREAM_MODELS set —
+`nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083`, the order being the turn order — each
+page is written by the seat after the one that wrote the newest page on the shelf, and every page
+says who wrote it (`meta.model`, the ledger row's `model`, the live posts' `model`). No coin and
+no blindness: the name is the first thing in the dream's head. Unset, nemo writes alone at
+LOOM_LLAMA exactly as before.
+
 Env: STREAM_DIR (ledger + heartbeat, default shelf/stream/), STREAM_KICK_INTERPRETER, STREAM_SEEDS
-(shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, LOOM_LIVE
-(where the live posts go; empty = nowhere), STREAM_LIVE_EVERY, plus loom's own LOOM_SITTINGS and
-LOOM_LLAMA.
+(shelf/seeds/), STREAM_INTERVAL, STREAM_N_PREDICT, STREAM_TEMP_LO, STREAM_TEMP_HI, STREAM_MODELS,
+LOOM_LIVE (where the live posts go; empty = nowhere), STREAM_LIVE_EVERY, plus loom's own
+LOOM_SITTINGS and LOOM_LLAMA.
 """
 
 from __future__ import annotations
@@ -58,6 +65,7 @@ EVA = os.path.dirname(HERE)                                     # eva/
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
+import census  # noqa: E402   /props and /tokenize per server: the window rule wire.py uses
 import eva  # noqa: E402   the one place a blank room's shape is written down
 import loom  # noqa: E402   rooms, names, llama: nothing else here knows how a sitting is written
 import push  # noqa: E402   the mirror, tapped the moment a page lands instead of in a minute
@@ -128,6 +136,12 @@ LIVE = LIVE.rstrip("/")
 LIVE_EVERY = float(os.environ.get("STREAM_LIVE_EVERY", "0.5"))
 # Short on purpose: a live post that takes longer than this has missed its moment anyway.
 LIVE_TIMEOUT = 2.0
+
+# The dreamers, `name=url,name=url`, in turn order. Empty = the one-server stream of before, at
+# loom.LLAMA, stamped with the model's file name — kept byte-for-byte so turning this off is a
+# real way back and not a third behaviour. Read at call time off this global, which is what the
+# tests point at their stubs.
+MODELS = os.environ.get("STREAM_MODELS", "")
 
 FOLDER = "stream"                       # where the rooms are filed, under the sittings shelf
 STREAM = os.environ.get("STREAM_DIR", os.path.join(loom.SHELF, FOLDER))
@@ -465,6 +479,116 @@ def room_name(when: float) -> str:
     return name
 
 
+# ---- the dreamers ---------------------------------------------------------------------------
+# bekh's design (2026-09-23): a second base model writes into the same stream, strictly
+# alternating — no coin, no blindness, the name first in the dream's head. What these functions
+# decide is WHO writes this page, and nothing else: the seed, the heat, the sampler, the tail cut,
+# the filter and the flat logprobs are the same for every seat, or a difference between the two
+# piles would be a difference in how they were asked and not in who answered.
+
+def seats_of(spec: str) -> list[tuple[str, str]]:
+    """`nemo=http://…,gpt2=http://…` → [(name, url)], in turn order. ValueError on a malformed
+    list — a typo in a plist should stop the writer loudly, not quietly drop a dreamer."""
+    out, names = [], set()
+    for part in (spec or "").split(","):
+        part = part.strip()
+        if not part:
+            continue
+        name, sep, url = part.partition("=")
+        name, url = name.strip(), url.strip().rstrip("/")
+        if not sep or not re.fullmatch(r"[A-Za-z0-9_.-]{1,32}", name) \
+                or not url.startswith("http://"):
+            raise ValueError(f"STREAM_MODELS: {part!r} is not name=http://host:port")
+        if name in names:
+            raise ValueError(f"STREAM_MODELS: {name} twice")
+        names.add(name)
+        out.append((name, url))
+    return out
+
+
+def stamp_of(meta) -> str | None:
+    """What a page's `meta.model` says, as one string. A seat name since 2026-09-23; the model's
+    file name before that (and on the one-server path); berserk-style rooms freeze llama's whole
+    /props object, whose `model_path` is the file."""
+    m = (meta or {}).get("model") if isinstance(meta, dict) else None
+    if isinstance(m, dict):
+        m = m.get("model_path")
+    return os.path.basename(m) if isinstance(m, str) and m else None
+
+
+def last_writer() -> str | None:
+    """The stamp of the newest page on the shelf, or None.
+
+    **Read off the shelf, never off a state file** — the turn has to survive a ration that
+    stops and one that starts a day later, a hand run between them, and a crashed page; the
+    newest room already says who went last in every one of those cases, and a second record of
+    it could only disagree. Whichever kind of room is newest under `stream/`: the first model
+    child of its root, the node `/api/stream` reads as the page.
+    """
+    for name in loom.stream_room_names()[:1]:
+        try:
+            with open(loom.sitting_path(name), encoding="utf-8") as f:
+                d = json.load(f)
+        except (OSError, ValueError):
+            return None
+        nodes = d.get("nodes") if isinstance(d, dict) else None
+        if not isinstance(nodes, dict):
+            return None
+        kids = sorted((n for n in nodes.values()
+                       if isinstance(n, dict) and n.get("kind") == "model"
+                       and n.get("parent") == d.get("root")),
+                      key=lambda n: n.get("ts") or 0)
+        return stamp_of(kids[0].get("meta")) if kids else None
+    return None
+
+
+def turn_order(seats: list[tuple[str, str]], files: dict[str, str | None],
+               last: str | None) -> list[int]:
+    """Seat indexes in the order they are offered this page: the one after whoever wrote the
+    newest page first, then round. `last` matches a seat by its name, or — for the pages
+    written before the seats existed, stamped with a file name — by the file that seat's server
+    says it has loaded, so the first two-seat page after a night of nemo-alone is gpt-2's. No
+    page, or a stamp nobody answers to → the first seat."""
+    start = 0
+    for i, (name, _url) in enumerate(seats):
+        if last and (last == name or (files.get(name) and last == files[name])):
+            start = i + 1
+            break
+    return [(start + k) % len(seats) for k in range(len(seats))]
+
+
+def pick_seat(seats: list[tuple[str, str]], seed: str) -> tuple[tuple[str, str, str | None] | None,
+                                                                list[dict]]:
+    """((name, url, model file), skipped) for this page, or (None, skipped) when every seat is
+    out.
+
+    A seat is out for THIS page, and the next one takes it, when its server does not answer
+    /props (down) or when its window cannot hold the seed plus N_PREDICT — counted on that
+    server's own /tokenize, as wire.py counts, because gpt-2's 1024 are gpt-2 tokens and a
+    characters-per-token guess is how a truncated prompt gets in front of one model unseen.
+    A tokenizer that won't answer is not a reason to skip (wire.py's rule): the seed is capped
+    at ~45 words, far inside either window. The turn is not handed on by a skip — the page
+    written is stamped with whoever wrote it, and the next page follows THAT.
+    """
+    probes = {name: census.props(url) for name, url in seats}
+    files = {name: p.get("file") for name, p in probes.items()}
+    skipped = []
+    for i in turn_order(seats, files, last_writer()):
+        name, url = seats[i]
+        p = probes[name]
+        if not p:
+            skipped.append({"model": name, "why": "down"})
+            continue
+        n_ctx = p.get("n_ctx")
+        need = census.count_tokens(url, seed) if n_ctx else None
+        if n_ctx and need is not None and need + N_PREDICT > n_ctx:
+            skipped.append({"model": name,
+                            "why": f"window: {need} + {N_PREDICT} to write > {n_ctx}"})
+            continue
+        return (name, url, p.get("file")), skipped
+    return None, skipped
+
+
 # ---- the dream, live ------------------------------------------------------------------------
 
 class Live:
@@ -479,8 +603,10 @@ class Live:
     One failure line per run, never one per post: a loom down for a whole page is one fact.
     """
 
-    def __init__(self, base: str, seed: str) -> None:
-        self.base, self.seed = base, seed
+    def __init__(self, base: str, seed: str, model: str | None = None) -> None:
+        # `model` is who is typing, on every post, so a page can say it before the room lands.
+        # None on the one-server path, where the post goes out exactly as it always did.
+        self.base, self.seed, self.model = base, seed, model
         self.text, self.sent = "", None
         self.lock = threading.Lock()
         self.stop = threading.Event()
@@ -506,8 +632,10 @@ class Live:
 
     def post(self, text: str, done: bool) -> None:
         u = urlparse(self.base)
-        body = json.dumps({"text": text, "seed": self.seed, "done": done},
-                          ensure_ascii=False).encode("utf-8")
+        post = {"text": text, "seed": self.seed, "done": done}
+        if self.model:
+            post["model"] = self.model
+        body = json.dumps(post, ensure_ascii=False).encode("utf-8")
         conn = http.client.HTTPConnection(u.hostname or "127.0.0.1", u.port or 80,
                                           timeout=LIVE_TIMEOUT)
         try:
@@ -535,8 +663,9 @@ class Live:
         self.post(text, True)
 
 
-def write_page(rng: random.Random) -> int:
-    """One page: draw a seed, draw a heat, ask nemo once, write the room. Exit code."""
+def write_page(rng: random.Random, seats: list[tuple[str, str]] | None = None) -> int:
+    """One page: draw a seed, draw a heat, pick the dreamer, ask it once, write the room.
+    Exit code. `seats` empty or None = nemo alone at loom.LLAMA, the stream as it was."""
     drawn = draw_seed(rng)
     if drawn is None:
         log(f"no seeds in {SEEDS} and nothing starred — nothing to dream on")
@@ -545,6 +674,24 @@ def write_page(rng: random.Random) -> int:
         return 0
     ident, seed = drawn
     params = sampler(rng)
+
+    # Who writes. The seed and the heat are drawn FIRST and the same way whoever it is — the
+    # seat is chosen for the page, never the page for the seat. `who` stays empty on the
+    # one-server path, and every `**who` below then adds nothing to what was written before.
+    url, who, skipped, model_file = loom.LLAMA, {}, [], None
+    if seats:
+        seat, skipped = pick_seat(seats, seed)
+        for s in skipped:
+            log(f"seat · {s['model']} · {s['why']} — the next one takes it")
+        if seat is None:
+            ledger({"room": None, "seed": ident, "temperature": params["temperature"],
+                    "error": "every seat is out", "skipped": skipped})
+            beat(False, None)
+            return 0
+        name_, url, model_file = seat
+        who = {"model": name_}
+        if skipped:
+            who["skipped"] = skipped
 
     started = time.time()
     name = room_name(started)
@@ -561,23 +708,23 @@ def write_page(rng: random.Random) -> int:
     # probabilities it collects off every chunk, tokens and tps off the final one — so the room
     # and the ledger row come out as they did from the one-lump call. loom.LLAMA and not eva's,
     # because that is the global every other stance (and every test) points at the server.
-    live = Live(LIVE, seed)
-    d = eva.complete_stream(seed, params, live.feed, url=loom.LLAMA)
+    live = Live(LIVE, seed, who.get("model"))
+    d = eva.complete_stream(seed, params, live.feed, url=url)
     if d.get("error") or not (d.get("text") or "").strip():
         live.finish("")
     if d.get("error"):
-        log(f"llama · {d['error']}")
+        log(f"llama · {who.get('model', 'nemo')} · {d['error']}")
         ledger({"room": None, "seed": ident, "temperature": params["temperature"],
-                "error": d["error"]})
+                "error": d["error"], **who})
         beat(False, None)
         return 0
     text = d.get("text") or ""
     if not text.strip():
         # Not an error worth a non-zero exit, and not a room either: an empty page is nothing
         # to read and nothing to mark.
-        log("nemo answered nothing")
+        log(f"{who.get('model', 'nemo')} answered nothing")
         ledger({"room": None, "seed": ident, "temperature": params["temperature"],
-                "error": "empty page"})
+                "error": "empty page", **who})
         beat(False, None)
         return 0
 
@@ -591,7 +738,12 @@ def write_page(rng: random.Random) -> int:
                      # The flat list, never llama's `probs` tables — see logprobs_of.
                      "logprobs": logprobs_of(d.get("probs")),
                      "params": params,
-                     "model": (loom.model_info() or {}).get("file"),
+                     # The seat's NAME on a two-dreamer stream — the key the canvas's `reveal`
+                     # reads, and what the alternation reads back off the newest page — with
+                     # the file beside it so a name is never the only record of which weights.
+                     # The file name alone on the one-server path, as it always was.
+                     "model": who.get("model") or (loom.model_info() or {}).get("file"),
+                     **({"model_file": model_file} if who else {}),
                      # Which seed, so a page can be traced back to what it grew on without
                      # the ledger open beside it.
                      "seed": ident,
@@ -605,9 +757,10 @@ def write_page(rng: random.Random) -> int:
 
     ledger({"room": name, "seed": ident, "temperature": params["temperature"],
             "tokens": d.get("tokens_predicted") or 0, "tps": d.get("tps") or 0,
-            "flag": flag, "seconds": round(time.time() - started, 1)})
+            "flag": flag, "seconds": round(time.time() - started, 1), **who})
     beat(True, name)
-    log(f"{name} · {ident} · t{params['temperature']} · {d.get('tokens_predicted')} tok"
+    log(f"{name} · " + (f"{who['model']} · " if who else "")
+        + f"{ident} · t{params['temperature']} · {d.get('tokens_predicted')} tok"
         + (f" · flagged {flag}" if flag else ""))
     # The mirror first — it is what the phone and dreamshit read, and the page is the thing a
     # reader wants soonest. Then the voices: the reader is started by the dream being finished
@@ -656,7 +809,17 @@ def main(argv: list[str]) -> int:
     if TEMP_HI < TEMP_LO:
         print("STREAM_TEMP_HI is below STREAM_TEMP_LO", file=sys.stderr)
         return 2
-    return write_page(random.Random())
+    try:
+        seats = seats_of(MODELS)
+    except ValueError as exc:
+        # A broken plist writes NOTHING rather than quietly dreaming on one model forever — and
+        # says so the way every other failed run does: a ledger row, a heartbeat the monitor
+        # shows pink, exit 0 so launchd does not back the job off on top of it.
+        log(str(exc))
+        ledger({"room": None, "seed": None, "error": str(exc)})
+        beat(False, None)
+        return 0
+    return write_page(random.Random(), seats)
 
 
 if __name__ == "__main__":

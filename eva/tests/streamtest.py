@@ -2870,6 +2870,236 @@ class LiveRoute(unittest.TestCase):
             self.assertEqual(cm.exception.code, 400, body)
 
 
+# ---- two dreamers: nemo and gpt-2, turn and turn about -----------------------------------------
+# bekh, 2026-09-23: no blindness, no coin — strictly alternating, and every page says who wrote
+# it. The turn is read off the newest page on the shelf, so everything here is set up by what is
+# on the shelf and nothing else.
+
+DUO = "DUOSEEDMARK"            # not a substring of any other test file's marker
+
+
+def stamped_page(name: str, model) -> None:
+    """A stream room written by hand and stamped as `model` wrote it — the shelf a ration
+    that stopped earlier left behind."""
+    nid = make_page(name, DUO + " an older seed\n", "an older page")
+    d = on_disk(name)
+    d["nodes"][nid]["meta"]["model"] = model
+    loom.write_sitting(d)
+
+
+class Dreamers(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Two stubs that answer differently and name different files on /props, so a page can
+        # be traced to the server that wrote it by its text as well as by its stamp — the stamp
+        # being right about the wrong server is the bug this guards.
+        cls.a = stub_llama.serve(0, model_path="/m/stub-nemo.Q5_K_M.gguf",
+                                 lines=["the nemo stub says the kettle is singing."])
+        cls.b = stub_llama.serve(0, n_ctx=1024, model_path="/m/stub-gpt2.Q8_0.gguf",
+                                 lines=["the gpt2 stub says the rain has a key."])
+        # a gpt-2 whose window holds nothing like a page: 64 < seed + 170
+        cls.tight = stub_llama.serve(0, n_ctx=64, model_path="/m/stub-gpt2.Q8_0.gguf",
+                                     lines=["never asked"])
+        for srv in (cls.a, cls.b, cls.tight):
+            threading.Thread(target=srv.serve_forever, daemon=True).start()
+        cls.A = f"http://127.0.0.1:{cls.a.server_address[1]}"
+        cls.B = f"http://127.0.0.1:{cls.b.server_address[1]}"
+        cls.TIGHT = f"http://127.0.0.1:{cls.tight.server_address[1]}"
+        cls.DEAD = f"http://127.0.0.1:{free_port()}"
+
+    @classmethod
+    def tearDownClass(cls):
+        for srv in (cls.a, cls.b, cls.tight):
+            srv.shutdown()
+
+    def setUp(self):
+        wipe_stream()
+        loom.LLAMA = STUB_BASE
+        self.models, self.live = stream.MODELS, stream.LIVE
+        stream.MODELS = f"nemo={self.A},gpt2={self.B}"
+        stream.LIVE = ""
+        put_seed("duo.txt", DUO + " the hall light was\n")
+        for srv in (self.a, self.b, self.tight):
+            srv.seen.clear()                  # what each was asked in THIS test, not the class
+
+    def tearDown(self):
+        stream.MODELS, stream.LIVE = self.models, self.live
+        loom.LLAMA = STUB_BASE
+
+    def pages(self) -> list[dict]:
+        """(room, the page node) for every stream room, oldest first."""
+        out = []
+        for name in rooms():
+            d = on_disk(name)
+            out.append((name, [n for n in d["nodes"].values() if n["kind"] == "model"][0]))
+        return out
+
+    def page_rows(self) -> list[dict]:
+        return [r for r in ledger_rows() if r.get("kind") == "page"]
+
+    def test_three_runs_alternate_and_every_page_and_row_is_stamped(self):
+        for _ in range(3):
+            code, out = run("--once")
+            self.assertEqual(code, 0, out)
+        got = self.pages()
+        self.assertEqual([n["meta"]["model"] for _, n in got], ["nemo", "gpt2", "nemo"])
+        # the stamp is the server that really wrote it, not only a label
+        self.assertEqual([n["text"].split()[1] for _, n in got], ["nemo", "gpt2", "nemo"])
+        self.assertEqual([n["meta"]["model_file"] for _, n in got],
+                         ["stub-nemo.Q5_K_M.gguf", "stub-gpt2.Q8_0.gguf", "stub-nemo.Q5_K_M.gguf"])
+        rows = self.page_rows()
+        self.assertEqual([r["model"] for r in rows], ["nemo", "gpt2", "nemo"])
+        self.assertEqual([r["room"] for r in rows], [name for name, _ in got])
+        self.assertTrue(all("skipped" not in r for r in rows), rows)
+        # one sampler for both seats: the params differ only in the heat drawn by lot
+        ps = [dict(n["meta"]["params"]) for _, n in got]
+        for p in ps:
+            p.pop("temperature")
+        self.assertEqual(ps[0], ps[1])
+        # and each seat was handed the seed and nothing else
+        for srv in (self.a, self.b):
+            wire = [b for b in srv.seen if DUO in (b.get("prompt") or "")]
+            self.assertTrue(wire)
+            self.assertEqual(wire[-1]["prompt"], DUO + " the hall light was\n")
+
+    def test_a_fresh_shelf_starts_on_the_first_seat(self):
+        stream.MODELS = f"gpt2={self.B},nemo={self.A}"        # the order IS the turn order
+        self.assertEqual(run("--once")[0], 0)
+        self.assertEqual(self.pages()[0][1]["meta"]["model"], "gpt2")
+
+    def test_a_run_after_a_stop_resumes_the_turn_from_the_newest_page(self):
+        # yesterday's ration ended on gpt2; an older nemo page must not decide it
+        stamped_page("stream/2026-01-01/2300", "nemo")
+        stamped_page("stream/2026-01-01/2305", "gpt2")
+        self.assertEqual(run("--once")[0], 0)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "nemo")
+        self.assertEqual(run("--once")[0], 0)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "gpt2")
+
+    def test_a_page_stamped_with_a_file_name_is_known_by_its_servers_file(self):
+        # every page from before the seats carries nemo's FILE name; the first two-seat page
+        # after such a night belongs to the other dreamer
+        stamped_page("stream/2026-01-01/2300", "stub-nemo.Q5_K_M.gguf")
+        self.assertEqual(run("--once")[0], 0)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "gpt2")
+        # and a stamp nobody answers to is the first seat
+        wipe_stream()
+        put_seed("duo.txt", DUO + " the hall light was\n")
+        stamped_page("stream/2026-01-01/2300", "pythia")
+        self.assertEqual(run("--once")[0], 0)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "nemo")
+
+    def test_a_dead_seat_is_skipped_and_the_row_says_why(self):
+        stream.MODELS = f"nemo={self.A},gpt2={self.DEAD}"
+        stamped_page("stream/2026-01-01/2300", "nemo")          # gpt2's turn, and it is down
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "nemo")
+        row = self.page_rows()[-1]
+        self.assertEqual(row["model"], "nemo")
+        self.assertEqual(row["skipped"], [{"model": "gpt2", "why": "down"}])
+        self.assertIn("gpt2 · down", out)
+
+    def test_a_seat_whose_window_cannot_hold_the_page_is_skipped(self):
+        stream.MODELS = f"nemo={self.A},gpt2={self.TIGHT}"
+        stamped_page("stream/2026-01-01/2300", "nemo")
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.pages()[-1][1]["meta"]["model"], "nemo")
+        row = self.page_rows()[-1]
+        self.assertEqual(len(row["skipped"]), 1)
+        self.assertEqual(row["skipped"][0]["model"], "gpt2")
+        self.assertRegex(row["skipped"][0]["why"], r"^window: \d+ \+ 170 to write > 64$")
+        # counted on ITS tokenizer, and never handed the document it could not hold
+        self.assertTrue(any(DUO in (b.get("content") or "") for b in self.tight.seen))
+        self.assertFalse(any(DUO in (b.get("prompt") or "") for b in self.tight.seen))
+
+    def test_every_seat_out_is_an_error_row_and_exit_zero(self):
+        stream.MODELS = f"nemo={self.DEAD},gpt2={self.TIGHT}"
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(rooms(), [])
+        row = self.page_rows()[-1]
+        self.assertIsNone(row["room"])
+        self.assertEqual(row["error"], "every seat is out")
+        self.assertEqual([s["model"] for s in row["skipped"]], ["nemo", "gpt2"])
+        self.assertEqual(row["skipped"][0]["why"], "down")
+        self.assertFalse(heartbeat()["ok"])
+
+    def test_a_malformed_list_writes_nothing_and_says_so(self):
+        stream.MODELS = "nemo http://127.0.0.1:1"
+        code, out = run("--once")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(rooms(), [])
+        self.assertIn("STREAM_MODELS", self.page_rows()[-1]["error"])
+
+    def test_unset_is_the_old_single_server_path(self):
+        stream.MODELS = ""
+        loom.LLAMA = self.A
+        self.assertEqual(run("--once")[0], 0)
+        node = self.pages()[0][1]
+        self.assertEqual(node["meta"]["model"], "stub-nemo.Q5_K_M.gguf")   # the file, as ever
+        self.assertNotIn("model_file", node["meta"])
+        row = self.page_rows()[-1]
+        self.assertNotIn("model", row)
+        self.assertNotIn("skipped", row)
+        # and /props is never asked for a window it has no use for
+        self.assertFalse(any(DUO in (b.get("content") or "") for b in self.a.seen))
+
+    def test_the_live_posts_say_who_is_typing(self):
+        fake = FakeLoom()
+        try:
+            stream.LIVE = fake.base
+            stamped_page("stream/2026-01-01/2300", "nemo")
+            self.assertEqual(run("--once")[0], 0)
+            posts = [b for _, b in fake.posts]
+            self.assertTrue(posts)
+            self.assertTrue(all(b.get("model") == "gpt2" for b in posts), posts)
+            self.assertTrue(posts[-1]["done"])
+            # the one-server path posts exactly what it always posted
+            fake.posts.clear()
+            stream.MODELS = ""
+            self.assertEqual(run("--once")[0], 0)
+            self.assertTrue(fake.posts)
+            self.assertTrue(all("model" not in b for _, b in fake.posts))
+        finally:
+            fake.close()
+
+    def test_the_live_route_carries_the_model(self):
+        ev = Events(BASE)
+        try:
+            req = urllib.request.Request(
+                BASE + "/api/stream/live", method="POST",
+                data=json.dumps({"text": "DUO typing", "seed": "s", "done": False,
+                                 "model": "gpt2"}).encode("utf-8"),
+                headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as r:
+                self.assertEqual(r.status, 200)
+            got = ev.wait(lambda e: e[0] == "live" and e[1]["text"] == "DUO typing")
+        finally:
+            ev.close()
+            post_live(BASE, "", done=True)
+        self.assertIsNotNone(got, ev.lines)
+        self.assertEqual(got[1]["model"], "gpt2")
+        # a model that is not a short string is refused like any other bad field
+        req = urllib.request.Request(BASE + "/api/stream/live", method="POST",
+                                     data=json.dumps({"text": "x", "model": 5}).encode("utf-8"),
+                                     headers={"Content-Type": "application/json"})
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(req, timeout=10)
+        self.assertEqual(cm.exception.code, 400)
+
+    def test_the_api_carries_the_model(self):
+        stamped_page("stream/2026-01-01/2300", "stub-nemo.Q5_K_M.gguf")   # before the seats
+        stamped_page("stream/2026-01-01/2301", {"model_path": "/x/GPT2-XL.Q8_0.gguf"})
+        # the newest stamp answers to no seat (neither name nor file) → the first seat
+        self.assertEqual(run("--once")[0], 0)
+        pages = {p["room"]: p for p in call("/api/stream?n=10")[1]["pages"]}
+        self.assertEqual(pages["stream/2026-01-01/2300"]["model"], "stub-nemo")
+        self.assertEqual(pages["stream/2026-01-01/2301"]["model"], "gpt2-xl")
+        self.assertEqual(pages[self.pages()[-1][0]]["model"], "nemo")
+
+
 class LiveLooms(unittest.TestCase):
     """The switches a loom reads at start: the stale age, read-only, and the upstream pull."""
 

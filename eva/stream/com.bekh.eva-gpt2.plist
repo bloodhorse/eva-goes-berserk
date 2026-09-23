@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.bekh.eva-gpt2</string>
+    <!-- The stream's second dreamer (2026-09-23): GPT-2 XL, taking every other page from nemo.
+         The same shape as com.bekh.eva-llama on purpose, so the two start and stop by the same
+         lines:
+
+             launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2          # start
+             launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2       # graceful stop
+
+         Copy to ~/Library/LaunchAgents/ and bootstrap once; after that it stays loaded and the
+         two lines above are the whole switch. A plist edit needs bootout + bootstrap.
+
+         On the CPU (-ngl 0) because nemo owns the GPU and the ~10 GB it wires; gpt-2 at q8 is
+         1.75 GB and ~21 tok/s on the cores. Its window is 1024 — the model's own, trained at
+         that length and no longer; the writer counts every seed against it on this server's
+         /tokenize and skips the seat for a page that would not fit.
+
+         Port 8083. 8082 is the loom's and must never be taken; 8081 is where pythia sat. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/llama-server</string>
+        <string>-m</string>
+        <string>/Users/bekh/.cache/llama.cpp/gpt2-xl.Q8_0.gguf</string>
+        <string>-c</string>
+        <string>1024</string>
+        <string>-ngl</string>
+        <string>0</string>
+        <!-- loopback only, like nemo: the writer and the census are the only clients -->
+        <string>--host</string>
+        <string>127.0.0.1</string>
+        <string>--port</string>
+        <string>8083</string>
+        <string>--no-webui</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <!-- Restart a crash, let a clean exit stay exited — which is what makes a SIGTERM the
+             graceful stop that leaves the job loaded for the next kickstart. -->
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/eva-gpt2.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/eva-gpt2.log</string>
+</dict>
+</plist>
