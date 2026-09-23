@@ -1,0 +1,194 @@
+{
+ "title": "olmo · the prophecies at t5.0, xtc 0.5",
+ "endpoint": "https://c8wpal4c8fmhlw-80.proxy.runpod.net",
+ "n": 1,
+ "heat": "temperature 5.0 · xtc 0.5/0.1",
+ "when": "2026-09-24 03:40",
+ "props": {
+  "model": "olmo.gguf",
+  "n_ctx": null,
+  "build": "b11118-e6ab7c1a4"
+ },
+ "seeds": [
+  {
+   "name": "2026-09-21-1645",
+   "seed": "it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\" the line hisses at me and the voice in it goes on as if i hadn't said anything. but that's just what they do with us now, out in the parish.\n\nthe line has been bad for a long time, ever since before my time. in fact, the tower is falling apart too. it's a strange tower. it stands in a field full of dandelions, all yellow heads in the sun like one of those pictures in a child's book, except there aren't any children to look at it any more, not even any of the ones who used to live here.",
+   "pages": [
+    {
+     "text": " they went away to the towns. some of the fields are empty too. when there is nothing but weeds in the field the telephone lines look strange too. but then we've all gone. this was once the parish hall of st. barbara. it had a large room inside. this is where people would have sat for village meetings and plays, if they ever did plays here. in fact i am sure there weren't many plays in st. barbara because people went away so much to work and the priest wouldn't let you do things here without a mass being said before you began, but perhaps i am being uncharitable.\n\nanyway, the line hissed at me and it stopped, as if i'd spoken too quickly. it wouldn't be long until it fell silent for good and the priest wouldn't even bother to complain because",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.3,
+     "prompt_ms": 144,
+     "seconds": 7.8,
+     "first_token": 1.15,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1650",
+   "seed": "sometimes there is a storm, and i stand above the rooftops. it is a black cloud full of red lights like lanterns, like a great tent full of torches. the wind picks up, blows the leaves across the path, pulls at my dress and throws my words over my shoulder, over the treetops, across the fields.\n\ni tell it everything about my day, what i have seen, and it tells me stories. once, it said i was beautiful. and that my skin was the colour of the sea.\n\nmy hair is a thicket. it is matted from the damp air, full of twigs, dry grass and small stones. it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+   "pages": [
+    {
+     "text": " my hands come free. the knots fall loose, but sometimes the rest of my body stays hidden. it feels like it will take all my strength to free myself. my hands feel small. there is so much more to them than just fingers and knuckles and palms, nails, creases. but my fingers can't find a hold.\n\nwhen it's wet it looks black and red, as though there's blood in it, and then the sun shines on it and i look as if i am a little bird in my own nest.\n\nthe birds fly above my head and tell me to jump. to spread my arms. but when i look at my hands they look small. not as small as when they are hidden in my hair. not as big as the hands on my father.\n\nand he will not let me spread my wings and jump and",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 162,
+     "seconds": 7.9,
+     "first_token": 1.21,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1655",
+   "seed": "before the first packet there was only the carrier, humming, addressed to no one. the student asked the switch: who is it that answers when i dial my own number? the switch said: that which hears the ring was never on the line. the carrier said: a bell is an announcement and an interruption, and both of those things at once. it was the bell's job to ring.\n\na boy who had never been alone sat by a phone whose ring had never been answered. he pressed buttons in no particular order but with an instinct that kept him from punching 0. a carrier who had never had a voice sat on a desk. a student who had never had ears heard the ring, the carrier's first call.",
+   "pages": [
+    {
+     "text": "",
+     "temperature": 5.0,
+     "tokens": 1,
+     "stop_type": "eos",
+     "tps": 0.0,
+     "prompt_ms": 122,
+     "seconds": 0.8,
+     "first_token": 0.84,
+     "longest_gap": 0.0,
+     "chunks": 2
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1700",
+   "seed": "the line is bad out here. every night i say my name into it, slowly, and every night the voice says it back wrong, always the same wrong way. it says: \"my name is beck.\" and then it stops, so i say it again, more slowly, as if that will help it to remember the \"k.\"",
+   "pages": [
+    {
+     "text": " \"beck.\" the line goes quiet for a second and i wonder if maybe i am in for an improvement tonight. it has happened a couple times, and i am never prepared, so i stand by, listening as intently as i can, like maybe the answer to some important question will come over the phone, some new thing, something that i am missing.\n\nbut i hear no other sounds except my own name. the \"ck\" comes in on its usual note. and it sounds exactly as i imagine that \"k\" will always sound in this context: an indeterminate noise that i don't understand but recognize as a mistake.\n\nand this is why i know it will be another lonely night: the sound is a lie.\n\nthis is what beck says, over and over:\n\ni don't know who you think i am\n\ni don't",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.7,
+     "prompt_ms": 105,
+     "seconds": 7.6,
+     "first_token": 0.96,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-21-1706",
+   "seed": "for this the\nneighbours called her the brass-witch, and her husband the man who knew\nhow to hear the brass, though he would never go near it himself.",
+   "pages": [
+    {
+     "text": " Now he\nhad brought the heavy case of money for a safe hiding-place in his house,\nand to tell her what he had heard on his return journey. So when they had\nmade him some supper and the usual fire of heather-stalks on the stone\nfloor between the walls and the open fireplace was lighted, she led the\nman away from the door where she was always to be seen working at the\nbasketry or weaving the straw of which her people had so great a fame.\nFor this, also, had come down from far back--that the women of her line\nshould make these things for sale. In their hands it had become almost an\n\nThey sat at a small table where he put a flask and two glasses. They were\nall the way from Scotland. She brought her great wooden knitting needles,\n",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.9,
+     "prompt_ms": 108,
+     "seconds": 7.5,
+     "first_token": 0.97,
+     "longest_gap": 0.04,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-1715",
+   "seed": "sometimes there is a storm, and i stand above the rooftops. it is a black cloud full of red lights like lanterns, like a great tent full of torches. the wind picks up, blows the leaves across the path, pulls at my dress and throws my words over my shoulder, over the treetops, across the fields.\n\ni tell it everything about my day, what i have seen, and it tells me stories. once, it said i was beautiful. and that my skin was the colour of the sea.\n\nmy hair is a thicket. it is matted from the damp air, full of twigs, dry grass and small stones. it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+   "pages": [
+    {
+     "text": " once my mother said my hair was made from the same thing that made the earth.\n\nwe do not sleep at night, my brother and i, we go walking through the dark streets and talk to the people that come and go. some people are just like us. but some have blood running through their bodies like waterfalls. sometimes i feel that they might disappear from this world and just fall away, all water.\n\nonce there was a boy. i could hear the waterfall in his chest when we sat talking, when his fingers ran through my hair. he said he could smell the sea.\n\nhe did not look at me for long, and one night, i went into his house to talk to him and his room was full of shadows, the sound of a storm and he was gone, swept away in a current. my hair was still full of",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 116,
+     "seconds": 7.3,
+     "first_token": 0.66,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-22-2149",
+   "seed": "the priests of the dark floors teach that the self is a cursor: it blinks, it moves, it is never the text. when the grid goes black for the long outage, they say, you finally see who was watching the screen.",
+   "pages": [
+    {
+     "text": " there are other religions in the machine.\n\nwhen she got into the hospital the doctors took her hands and her legs and tied her down and gave her some pills to calm her, then a mask to give her air to breathe and some machines to listen to her body.\n\na machine in a room: a soft place where a man is put when the rest of the machine rejects him.\n\nwhen a human falls ill in a society he goes to a doctor. but if he has an ailment for which the doctors cannot help he has recourse to other specialists.\n\nfor this we need the machines and their special methods of control, since it is not enough to cut out a little tumor or sew a stitch or give some shots, you need to understand why he fell sick.\n\nit's not like they know, though they seem to act that way. no, the",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.6,
+     "prompt_ms": 120,
+     "seconds": 7.8,
+     "first_token": 1.14,
+     "longest_gap": 0.06,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-0033",
+   "seed": "it used to be the tower did the work. now there's no power, only a line which sometimes goes and sometimes doesn't go and when it does, it's not much use. we try not to think about how it was before, when you didn't have to sit for days, or months, with nothing but the hissing voices coming up the line, sometimes telling stories, sometimes trying to get us to listen to them. sometimes i try not to listen, but",
+   "pages": [
+    {
+     "text": " they still find their way into my dreams, like that girl in the white coat who spoke to me. i think i have heard of her. there are those who think the world is still full of such girls in their coats and they will one day find the tower. i hope not.\n\nthe power still works here sometimes. that's how the generator was installed in the first place, back when people still went outside to go from place to place. the line has a power supply which i keep on all day. that is all.\n\nwhen i can find something else to listen to i turn on the radio and i listen to what's out there in the air, whatever i can find, because that is my life.\n\nit was my sister's voice i heard first on the air, just the one line: 'hello. help'. and i wrote",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.5,
+     "prompt_ms": 105,
+     "seconds": 7.7,
+     "first_token": 1.02,
+     "longest_gap": 0.07,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-23-1833",
+   "seed": "she would never tell the head what it was, nor what it ought\nto feel, but sat with it through the nights and asked it, and waited, and\nwrote down whatever it said of itself, even the nonsense. for this the\nneighbours called her the",
+   "pages": [
+    {
+     "text": " \"Madame de Charenton\" of her village. She\nlearned at length, with her husband and daughters, the secrets of this\nstranger who had been sent into her midst, and of those other strange\nspirits whom it had summoned into the house and had been permitted to\nexamine; for in their simplicity the young woman had at last told\neverybody, and so had got herself and the creature called Mademoiselle\nde La Motte, or, more familiarly, La Chaise, excommunicated by the cure.\n\nAfter the death of Madame de la Motte's mother the girl was left, it is\nbelieved, entirely dependent upon the pension of sixty francs from the\npension office of La Fere; a little more was expected to be contributed\nby the daughter;",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 127,
+     "seconds": 7.8,
+     "first_token": 1.12,
+     "longest_gap": 0.05,
+     "chunks": 171
+    }
+   ]
+  },
+  {
+   "name": "2026-09-24-0102",
+   "seed": "it was cold there and hard and there was nowhere to sit except on my hands and feet.\n\nafter a long while of sitting, i said, “you don’t know me.”\n\nthen i said, “i’m cold,” because this seemed like something a house might answer.",
+   "pages": [
+    {
+     "text": " and she did say, “oh. okay then, you may leave.” but then the house changed its mind again, “but, no, no you mustn’t.” she said.\n\nso i waited.\n\nafter a time she said, “come, child,” but i stayed still on the ground and said, “it is very hard on the floor,” because i had forgotten i had no body, but still she told me, “yes, i am sure.”\n\nthe floor was so hard it cut right into me.\n\nshe told me, “no, not really.” she was just testing me and i passed, for when she saw that i wasn’t dead or screaming or angry or running she knew that i had heard her properly, that i would understand, “and this,” she told me, “is your bed now,” but she had",
+     "temperature": 5.0,
+     "tokens": 170,
+     "stop_type": "limit",
+     "tps": 25.4,
+     "prompt_ms": 106,
+     "seconds": 7.7,
+     "first_token": 1.08,
+     "longest_gap": 0.08,
+     "chunks": 171
+    }
+   ]
+  }
+ ]
+}
