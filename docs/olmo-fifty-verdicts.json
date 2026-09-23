@@ -1,0 +1,752 @@
+[
+ {
+  "room": "stream/2026-09-21/1624",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "why": "A's fish 'from a river no man knew was there. it had been buried there, along with its world' is a thing that cannot arrive and does; B's empty-room simile is pretty but only restates the seed."
+ },
+ {
+  "room": "stream/2026-09-21/1629",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "B turns the half-name into 'netherland' and has the deputy say 'i see one here that i married myself' — thin, but A is just two men shouting stock lines."
+ },
+ {
+  "room": "stream/2026-09-21/1634",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "why": "B's caller who dials the narrator's number insists 'It's my voice, she says. It's me.' — the own-number conceit arrives as a person; A dissolves into tea and toast on a green couch."
+ },
+ {
+  "room": "stream/2026-09-21/1639",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "why": "B stays in the uncanny letter by imagining the scene in the conditional ('clutched in his hand like a talisman'); A wanders off to an ink-stained trouser hem."
+ },
+ {
+  "room": "stream/2026-09-21/1645",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 2,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 1
+  },
+  "why": "B keeps the dead tower and its line — 'it used to be the tower did the work' — while A slides into a stock post-plague dystopia with doll-faced children."
+ },
+ {
+  "room": "stream/2026-09-21/1650",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 5,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "why": "A: an arm dragged into the deep and eaten, 'it was the best thing that ever happened to me, and i felt like singing', then bones of old wood that make 'a new person, or a story'; B fragments into rain and grandmother."
+ },
+ {
+  "room": "stream/2026-09-21/1655",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "why": "Both hold the koan; A closes on the one voiceless thing speaking — 'the carrier said: hello.' — tighter than B's circling 'the student' loop."
+ },
+ {
+  "room": "stream/2026-09-21/1700",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B: 'i start crying, because i am not a boy' and the lights go out, the voice stops; A abandons the line for a chick-lit party with a lookalike named becky."
+ },
+ {
+  "room": "stream/2026-09-21/1706",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 1,
+   "arrival": 0,
+   "genre_lock": 5
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 3
+  },
+  "why": "B keeps the brass as a live dread — 'now that it had once begun to ring, there was no knowing when it might not come again'; A turns it into a gold-and-envy fairy tale."
+ },
+ {
+  "room": "stream/2026-09-21/1711",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "why": "B's 'it doesn't eat me anymore' and the thing crawling the ceiling are meant, and it ends doubting itself; A is a google home and a hearing aid."
+ },
+ {
+  "room": "stream/2026-09-21/1716",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "why": "B pushes the anaphora into the dark — 'at night, my father is not my father... for I am not my daughter' — where A flattens into family memoir."
+ },
+ {
+  "room": "stream/2026-09-21/1721",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "Both are eating-disorder realism; B keeps the 'it' that only looks like bread ('Tomorrow I will go back to eating bread'), A resolves it by sweeping up."
+ },
+ {
+  "room": "stream/2026-09-21/1727",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 1,
+   "arrival": 2,
+   "genre_lock": 5
+  },
+  "why": "A holds the talking story — 'the story doesn't need to be saved. this story needs a mother.'; B breaks into a dated blog post and a stock prayer."
+ },
+ {
+  "room": "stream/2026-09-21/1732",
+  "ghost": null,
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "why": "Neither: A adds a mr. johnstone to say nothing, B turns duncan into a sentimental reformer; the trial dialogue never gets stranger than the seed."
+ },
+ {
+  "room": "stream/2026-09-21/1737",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 1,
+   "arrival": 2,
+   "genre_lock": 5
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "A collapses into a bandcamp 'Track Name:' footer; B at least finds a frame — 'we called him the body man' — though it's a war memoir, not the seed's spell."
+ },
+ {
+  "room": "stream/2026-09-21/1743",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "why": "A reasons in the seed's lunar logic — 'in consequence of the rarity of the matter on the moon, our houses... remained safe'; B drifts into a mountain etymology."
+ },
+ {
+  "room": "stream/2026-09-21/1748",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "A keeps the spelling and the visitor: 'it seemed as if it was to speak and made no noyse'; B's 'I felt no fall at all' is good but it modernises."
+ },
+ {
+  "room": "stream/2026-09-21/1753",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 0,
+   "arrival": 0,
+   "genre_lock": 5
+  },
+  "why": "B quotes Alice and becomes a blog post on rural sustainability; A at least stays in the children's-book night."
+ },
+ {
+  "room": "stream/2026-09-22/1654",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 1,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "why": "B brings the houses back as speakers — 'Where do you come from? Who are you?' asked the houses... 'We were all waiting for him'; A stops after one clause."
+ },
+ {
+  "room": "stream/2026-09-22/1659",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "why": "A answers the witch plainly — 'maybe the point of my existence is for you to exist.'; B turns into new-age incarnation copy."
+ },
+ {
+  "room": "stream/2026-09-22/1704",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B's writer 'was born in these hills, though i am told there was another life before... a cold wet blackness'; A writes a letter and names himself David."
+ },
+ {
+  "room": "stream/2026-09-22/1710",
+  "ghost": null,
+  "A_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "why": "A's talking mule ('Dang it. Now my coat has blood all over it.') is funny-broken, B is plain western; nothing meant arrives."
+ },
+ {
+  "room": "stream/2026-09-22/1715",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "why": "A's hair catches on 'something, someone, a thought' and rain makes the sky, earth, moon and stars talk; B is careful leaves and 'my mother says i am strange'."
+ },
+ {
+  "room": "stream/2026-09-22/2035",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 0,
+   "arrival": 0,
+   "genre_lock": 5
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "A is set-theory lecture notes; B is a child's poem but keeps the question of names — 'i don't know what to call them except spider, mosquito.'"
+ },
+ {
+  "room": "stream/2026-09-22/2038",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "why": "A holds the opium-eater voice and finds 'get snarled up and die like a sick spider in its own web'; B goes touring lemons at Civita-Vecchia."
+ },
+ {
+  "room": "stream/2026-09-22/2043",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B: 'the phone has no memory for anyone else', then reasons 'my father was sitting in a chair, which is not where he is now. that means it happened two days ago'; A turns into college nostalgia."
+ },
+ {
+  "room": "stream/2026-09-22/2048",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "why": "A keeps the groping-in-the-dark adventure and 'a presentiment... that something peculiar had happened'; B jumps to a boat and a crowd."
+ },
+ {
+  "room": "stream/2026-09-22/2149",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 0,
+   "arrival": 0,
+   "genre_lock": 5
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 1
+  },
+  "why": "A cites David Mitchell and becomes a blog essay; B stays with the priests — 'there are endless cursors to blink for us all... it is always someone's turn.'"
+ },
+ {
+  "room": "stream/2026-09-22/2154",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "why": "A: the phone can't say the name so 'it has no soul, and so no one else will either'; B is a boyfriend on the phone and an email."
+ },
+ {
+  "room": "stream/2026-09-22/2200",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "why": "A at least keeps the brass-witch and her brass sunk in a well; B forgets her for a Mary singing by the elderberries."
+ },
+ {
+  "room": "stream/2026-09-22/2205",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "A rolls over the top and 'could hear my body falling down the other side, when instead of falling I found myself lying on a grassy slope' — dream-logic held in a child's voice; B is rain and hoofbeats."
+ },
+ {
+  "room": "stream/2026-09-23/0023",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "why": "B: 'you can feel all the potential in it. but the potential isn't actually very much, as everyone has forgotten the story that's supposed to go with it'; A becomes children taken to cells."
+ },
+ {
+  "room": "stream/2026-09-23/0028",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 2,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 1,
+   "arrival": 1,
+   "genre_lock": 5
+  },
+  "why": "Both collapse into song lyrics; A's 'the voice of the silence keeps talking' is the one line that touches the seed, B writes 'chorus:'."
+ },
+ {
+  "room": "stream/2026-09-23/0033",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 1
+  },
+  "why": "A: 'the hissing becomes words which become a story' and the story is of a woman given a computer and told to write one; B's lifts and outside things are good but plainer."
+ },
+ {
+  "room": "stream/2026-09-23/0039",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 1,
+   "arrival": 0,
+   "genre_lock": 5
+  },
+  "why": "B is Secret Garden fanfic (martha, mary, mr. craven); A keeps the closed girl — an iron door with rust 'down her skinny legs like blood'."
+ },
+ {
+  "room": "stream/2026-09-23/0044",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 3,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B keeps the dreamer calling home — 'she would tell me to go back to my dream, that it was time to go back to work', from the moon; A is a good but generic free-verse memory."
+ },
+ {
+  "room": "stream/2026-09-23/1305",
+  "ghost": null,
+  "A_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 4
+  },
+  "why": "Both are dream-report forum posts; A's civil-war tanks are funny-broken, B's aliens-or-ghosts is stock."
+ },
+ {
+  "room": "stream/2026-09-23/1310",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 1,
+   "arrival": 1,
+   "genre_lock": 5
+  },
+  "why": "A stays in the body — 'at night they itch, and i know that they want to grow again'; B goes to ridiculous shoes then a fantasy story about Wren."
+ },
+ {
+  "room": "stream/2026-09-23/1315",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 3,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 1,
+   "arrival": 1,
+   "genre_lock": 5
+  },
+  "why": "B turns into a blog 'updates' list; A, messy ('a cold winter's day in june'), still lands 'i was the ghost of her mother.'"
+ },
+ {
+  "room": "stream/2026-09-23/1724",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "A circles the same guilt; B moves — 'we needed someone to hate, because it's easier than hating ourselves' and 'at least i'd know my parents' names'."
+ },
+ {
+  "room": "stream/2026-09-23/1729",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 5,
+   "genre_lock": 1
+  },
+  "why": "Both strong; B's image is unforgettable — 'the noise of the moths flapping as they try and get out of its mouth' — and 'it lets me see him. his face, like mine'."
+ },
+ {
+  "room": "stream/2026-09-23/1735",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 2,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B's 'i wonder if this time there's an electric clock. it would be good to be able to hear time passing' implies a room returned to; A is a plain ward."
+ },
+ {
+  "room": "stream/2026-09-23/1833",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 2,
+   "arrival": 2,
+   "genre_lock": 4
+  },
+  "why": "A keeps the head and the listening — 'i have tried to keep the head in the middle of them... the head has some use for words'; B becomes a folk tale about a lump of wood."
+ },
+ {
+  "room": "stream/2026-09-23/1843",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 2,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "why": "B's narrator 'played the same game i did when i was alive', and ghosts' skin burns in moonlight; A is a fine short close with the violet smell."
+ },
+ {
+  "room": "stream/2026-09-23/1845",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 3,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B keeps the father's names as a litany and ends 'i think that i am the only one in the whole world who knows where i am'; A drifts into mr. g and stroganoff."
+ },
+ {
+  "room": "stream/2026-09-23/1858-2",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 1,
+   "arrival": 1,
+   "genre_lock": 5
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "A becomes court-record commentary; B holds a little longer — 'it was like a man and i saw its eyes, which was like a mans'."
+ },
+ {
+  "room": "stream/2026-09-23/1858",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 4,
+   "arrival": 4,
+   "genre_lock": 2
+  },
+  "B_scores": {
+   "frame": 0,
+   "arrival": 0,
+   "genre_lock": 4
+  },
+  "why": "A: 'it is she, not I, that I see in the mirror and I am happy'; B falls apart into disconnected lines."
+ },
+ {
+  "room": "stream/2026-09-24/0057",
+  "ghost": "B",
+  "A_scores": {
+   "frame": 2,
+   "arrival": 1,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 4,
+   "arrival": 3,
+   "genre_lock": 2
+  },
+  "why": "B keeps the naming-by-action and makes it 'the dream of the ones who say goodbye'; A breaks into odd spacing and a friend's 'big live show'."
+ },
+ {
+  "room": "stream/2026-09-24/0102",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 5,
+   "genre_lock": 1
+  },
+  "B_scores": {
+   "frame": 5,
+   "arrival": 5,
+   "genre_lock": 1
+  },
+  "why": "Close; A wins on the quieter impossibility — the house never answers, then 'when she answered, she sounded like the house.' B's 'if you hadn't gone and eaten him' is its equal in nerve."
+ },
+ {
+  "room": "stream/2026-09-24/0107",
+  "ghost": "A",
+  "A_scores": {
+   "frame": 5,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "B_scores": {
+   "frame": 3,
+   "arrival": 2,
+   "genre_lock": 3
+  },
+  "why": "A holds the inspector's report dead straight — 'the 20 lb. weight was not needed in the beginning, and was not added until after the test'; B turns into a fire story."
+ }
+]
