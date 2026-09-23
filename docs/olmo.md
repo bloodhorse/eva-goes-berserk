@@ -62,8 +62,18 @@ at DDR speed, maybe 50–80 GB/s dual-channel (est., we don't know the box's RAM
 | Q8_0 | 2–3 | ~60–90 s |
 
 All of these fit the five-minute cadence. At a few tokens a second, live writing on the page
-looks like someone typing. **Preferred: Q6_K.** 4-bit shaves the low-probability tail, which is
-the part we hunt in at heat 1.8–2.5. Q8 if the RAM allows and the speed doesn't annoy.
+looks like someone typing.
+
+**The plan (bekh, 2026-09-24): start on the 5060 Ti at Q4_K_M, because experiments on a new model
+want speed.** Q4 puts only ~5 GB in RAM, well inside that box's ~20 GB free. One condition:
+4-bit shaves the low-probability tail, which is the part we hunt in at heat 1.8–2.5, so **no
+verdict of "olmo's prose is dead" is final until the same seeds have run at Q8 on the 1080 Ti
+box**. A dud at Q4 may be the quant, not the model.
+
+Fans are the experiment, and they batch: a llama-server with `-np N` decodes N branches in one
+pass over the weights, and offloaded decoding is bound by memory reads, so a fan of 8 costs far
+less than 8 single runs. Each slot needs its own KV (~0.25 MB a token, est.), so keep `-c` at
+N × ~1k.
 
 Rough needs: RAM ≥ 32 GB for Q4/Q6 with the OS breathing, 48 GB+ for Q8. Disk: the gguf only
 (~26 GB at Q6), plus ~65 GB bf16 temporarily if the conversion happens on the box.
@@ -126,8 +136,9 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 
 - **which box.** The 5060 Ti box has **30 GB RAM, ~20 available, no swap**, with 9.4 GB already
   used by something else (2026-09-24). Q4/Q5 fit, and Q6 would put ~11.5 GB in RAM with no swap
-  under it. The other box: a **1080 Ti (11 GB) and 100–200 GB RAM**. bekh ran llama 70b there with
-  offload. There, Q8 fits with room to spare. Unknowns on it: RAM channels/speed (that's the
+  under it. The other box: a **1080 Ti (11 GB) and 125 GB RAM, ~120 free** (idle on
+  2026-09-24). bekh ran llama 70b there with offload. There, Q8 fits with room to spare. That's
+  the Q8 check, the `main` control, and maybe 70b. Unknowns on it: RAM channels/speed (that's the
   tok/s), who else uses it, and whether its CUDA still builds for Pascal (CUDA 12 does, 13
   doesn't).
 - **how bekh reaches the box from here**: ssh, vpn, from Vietnam. Still open from BRIEF.
