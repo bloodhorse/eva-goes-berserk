@@ -30,9 +30,12 @@ The dream-stream front, reading eva live. Plain html/css/js, no build step: what
   `align=even`** — bekh's verdict, 2026-09-22: *"unfortunately actually the best
   stylistically"*. The seams are joined up, the whole telling stands as *one* thread in the first
   passage's slot, and it is stretched to **reach the bottom of the dream's last passage**. The
-  header (`chapter · title`) is the first passage's slot's own first child, above the thread at
-  the cell's full width — one line when it fits, wrapped at the cell's edge when it doesn't (bekh,
-  2026-09-24; inside the thread's box it was cut to a word a line with the drip). The stretched
+  header is the first passage's slot's own first child, above the thread at the cell's full
+  width, stacked: the number on its own line (`13 ·`), the name under it on ONE line — an
+  inline-block that refuses to wrap while `fitTitle` steps its size down from 14px to a floor of
+  10 (`--tfs`) until it fits the cell; only past the floor does `.wrap` let it break (bekh,
+  2026-09-24: "i really want the title to fit in one line"; inside the thread's box it was cut to
+  a word a line with the drip). Re-fitted on `refit()`, so a resize or a font change re-measures. The stretched
   thread has no `top`, so it sits at its static position right under the header, and the drip is
   paced from the words' own top: the header's height is never counted as room for them. **Three dials, each
   moving only when the one before it ran out: narrow the column, then one word to a line, then

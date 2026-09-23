@@ -403,9 +403,28 @@ function titleLine(name, number, who) {
   const h = document.createElement('p'); h.className = 'title';
   const lead = [number, who].filter(Boolean).join(' · ');
   if (lead) { const n = document.createElement('span'); n.className = 'verse'; n.textContent = name ? lead + ' · ' : lead; h.appendChild(n); }
-  if (name) h.appendChild(document.createTextNode(name));
+  if (name) { const s = document.createElement('span'); s.className = 'name'; s.textContent = name; h.appendChild(s); }
   return h;
 }
+// the dream's header wants ONE line (bekh, 2026-09-24): the number stands on its own line above
+// (style.css stacks `.slot > .title .verse`), the name alone on the next, held to one line by
+// stepping its size down from the stylesheet's to a floor; only past the floor may it wrap.
+// Measured like the ribbon's line: the name is an inline-block that refuses to wrap while it is
+// being sized, so its scrollWidth is its one-line width against the header's cell. Runs when the
+// header is placed and on refit() — a resize moves the cell, a font change the glyphs.
+const TFS_FLOOR = 10;
+function fitTitle(h) {
+  const nm = h.querySelector('.name'); if (!nm) return;
+  nm.classList.remove('wrap'); nm.style.removeProperty('--tfs');
+  const cell = h.clientWidth; if (!cell) return;
+  const base = Math.round(parseFloat(getComputedStyle(nm).fontSize)) || 14;
+  for (let fs = base; fs >= TFS_FLOOR; fs--) {
+    nm.style.setProperty('--tfs', fs + 'px');
+    if (nm.scrollWidth <= cell + 1) return;
+  }
+  nm.classList.add('wrap');
+}
+const fitTitles = () => { for (const h of document.querySelectorAll('.slot > .title')) fitTitle(h); };
 // one part of the telling, in a passage's own left cell: the dream's header (chapter · title)
 // above the first one, then the words in a `.flow` of their own. re-rendered only when something
 // changed, so a refetch doesn't repaint the column under the reader.
@@ -423,7 +442,7 @@ function setTrickle(el, story, text, head) {
   el.dataset.text = text; el.dataset.title = title; el.dataset.ch = ch;
   if (el._head) { el._head.remove(); el._head = null; }
   const h = head ? titleLine(story && story.title, ch) : null;
-  if (h) { el.before(h); el._head = h; }
+  if (h) { el.before(h); el._head = h; fitTitle(h); }
   el.textContent = '';
   const flow = document.createElement('div'); flow.className = 'flow';
   flow.textContent = text;
@@ -626,7 +645,7 @@ if (DEBUG) setInterval(() => {
   l.textContent = `fits ${fits} ro ${roFired} @${Math.round(performance.now() / 1000)}s · fitted→now ${out.join(' · ')}`;
 }, 1000);
 let refitting = 0;
-function refit() { clearTimeout(refitting); refitting = setTimeout(() => { fitAll(); fitRibbons(); }, 50); }
+function refit() { clearTimeout(refitting); refitting = setTimeout(() => { fitTitles(); fitAll(); fitRibbons(); }, 50); }
 const rowSizes = new ResizeObserver(() => { roFired++; refit(); });
 
 // one pack per dream: its passages, and the telling running down their left cells
