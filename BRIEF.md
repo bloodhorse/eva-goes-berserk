@@ -193,6 +193,25 @@ shape — now.
    **It is OFF** between rations. The painter's minimum is gone: a six-word dream gets a picture.
    Nothing in the stream waits for a timer any more — every landing kicks the mirror push and
    `/api/stream/events` pushes the change on to the page.
+   - **The mechanics day, 2026-09-23** — three builds, all live and committed, none yet watched
+     through a whole ration: *live writing* (the page typed word by word as nemo writes, on
+     eva's page and on dreamshit through the mirror); *the second dreamer* (gpt-2 xl and nemo
+     one after another, the model first in every dream's head); and **the analyst**, bekh's
+     new character — a portrait of the dreamer rewritten every ten dreams, a painted face
+     (from his own system prompt, portrait, a mustache — *too good to raise disagreements*),
+     a black glassy ribbon in dreamshit's feed with his remark on it and the manuscript behind
+     it, tuned by `?tune=ribbon` (his numbers still pending). Four models were sat in the seat
+     on the same dreams and **he wants GPT and deepseek, and is done with the claude family's
+     tics**. Where it stands, decided and not built: **two characters** — a student (deepseek,
+     a fresh read of the last thirty every ten, no memory) and his mentor (GPT sol, one thread
+     that has read everything, every twenty), the mentor modelled on **Dhall**, Planescape's
+     scrivener of the dead — nemo being *nobody*, the nameless one who wakes with no memory —
+     with a cough mark in his text, the student addressed by name, and the bare analyst
+     persona for both (every attempt to write dhall into the prompt came back stylised; the
+     character lives in the picture). His face is not found after four tries; *fresh eyes
+     tomorrow*. Four hand pages from the day's real runs (`1843`, `1845`, `1858`, `1858-2`)
+     sit on the shelf bare — no note, story or plate — by his word: read after the experiments.
+     Details, verdicts, costs and every command: `eva/stream/CLAUDE.md`, the analyst section.
    - **Four hands, none sees another's work.** *The sleeper dreaming*: nemo, a 170-token
      passage every five minutes, seed by shuffle bag and heat (1.8–2.5) by lot, nobody picking;
      handed only the last ~45 words of a seed, seam untouched (seeds under `seeds/kept/` go
@@ -292,8 +311,18 @@ shape — now.
      switches it off (the seat's file overrides it, and has held); a codex session file lands in
      `~/.codex/sessions` per note (`--ephemeral` exists, unused); the filter misses most dead
      passages (a blog post sailed through at 17:53); nothing prunes old pages; dreams from
-     before the sleeper existed have no story. **Parked with a name: the trace** — a passage's
-     own per-token surprise drawn as its picture; he loves it, as its own thing.
+     before the sleeper existed have no story; the analyst's long seats hit their ceilings
+     (opus 150k at ~350 dreams, sol's codex thread ~600) and the move then — a new seat with
+     the last portrait as its first memory — is not written; the ribbon's height, gap and
+     gloss wait on bekh's numbers; the analyst's persona still says one machine in places
+     bekh wants reworded. **Parked with a name: the trace** — a passage's own per-token
+     surprise drawn as its picture; he loves it, as its own thing. **Parked from the day's
+     talk**: the site alive — a pulse is honest only over a writer that runs, "always on"
+     waits for a local image model, and for someone who checks in *alive* is difference since
+     last visit, not motion; the site as a room and fronts as branches (an agent forks the
+     front to its own url, bekh marks, a star promotes — the loom pointed at itself); nemo
+     and gpt-2 analysing their own dreams as a document; the reader's marked phrase seeding
+     the next dream; kokoro reading a dream aloud.
 2. **The wire** — done (`experiments/wire/`, twenty rooms); the verdict is under "what seems
    true". Not the stream's shape. What it leaves behind: a plain reading surface matters more
    than the loom for finished text, and a wire room is marked as a whole.

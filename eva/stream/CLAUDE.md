@@ -677,18 +677,61 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   pages, a face asleep inside the eye socket, ink on the fingers. He knows it reads as a man
   and took it anyway: *too good to raise some disagreements.* Meant for the card in the feed
   (dreamshit, not yet drawn): face left, the remark right, a press opening the manuscript.
-- **Two doors** (bekh, 2026-09-23: *fresh blood* — he has read too much of one family's prose,
-  and the analyst is the voice he reads most): `--door opus` (the default; the cli, one
-  resumed session) or `--door deepseek` — v3.2 over openrouter, the wire carried over from
-  friendship-is-magic's third chair (`deepseek.py`: pinned to one host with no fallbacks,
+- **Four doors, one seat each** (bekh, 2026-09-23: *fresh blood* — he has read too much of
+  one family's prose, and the analyst is the voice he reads most). `--door opus` (the
+  default; the cli, one resumed session); `--door fable` (the same door, `--model fable`, on
+  his fable limit); `--door codex` (GPT through codex, one recorded thread resumed with
+  `codex exec resume <thread>`, the reader's countermanded seat folder, model
+  `STREAM_ANALYST_CODEX_MODEL` = `gpt-5.6-sol`, effort low; a resumed turn replays the whole
+  thread plus the harness's ~18k every call — 20k codex tokens at ten dreams, 44k at
+  twenty); `--door deepseek` (v3.2 over openrouter, the wire carried over from
+  friendship-is-magic's third chair — `deepseek.py`: pinned to one host with no fallbacks,
   thinking off, a reasonless or cut reply rethrown, the key read from the login keychain
-  `OPENROUTER_API_KEY` at the moment of the call and never from the env). There is no session
-  on the far side, so the seat keeps the transcript itself as `messages.json` and sends it
-  whole every call — the same prompts to the byte, the router caching the prefix. A seat is
-  born with a door and keeps it (`--door` on a seat of the other door needs `--new`); the
-  ceiling is per door (`CONTEXT_MAX`, 120000 for deepseek's 128k window). Measured on ten
-  dreams: 10s, 1660 tokens in, $0.0004. The public seat stays opus until bekh reads the two
-  side by side and says otherwise.
+  `OPENROUTER_API_KEY` at the moment of the call and never from the env; no session on the
+  far side, so the seat keeps the transcript itself as `messages.json` and sends it whole
+  every call, the router caching the prefix). The same prompts to the byte through every
+  door. A seat is born with a door and keeps it (`--door` on a seat of another door needs
+  `--new`); the ceiling is per door (`CONTEXT_MAX`: 150k opus and fable, 120k deepseek, 180k
+  codex).
+  - **What the same dreams read like through each** (the four on the last ten, then opus and
+    deepseek on the whole catalogue of 205; the pages are on the sheets, *the analyst — four
+    doors* and *two doors*). bekh: **he likes GPT and deepseek and is done with the claude
+    family** — not the insight, the tics; opus's whole-catalogue portrait he called more
+    insightful *and the prose is killing me*; fable was the most exact (it alone caught
+    gpt-2's capital *I*) and the same family. Costs on ten dreams: deepseek $0.0004, opus
+    $0.06, fable $0.21, sol 20k codex tokens; **the whole catalogue through deepseek cost
+    $0.034** (21 calls, 486k in, 373k cached) and its context came out at 42k where opus's
+    was 85k — a tighter tokenizer and no cli preamble.
+  - **The long session is a claude/GPT strength and it broke deepseek**: over 205 dreams
+    opus and sol tracked gpt-2's arrival as an event (*two hundred pages of an empty second
+    chair*); deepseek's final portrait was the last ten dreams wearing a coat. A fresh read of
+    thirty (`--start last:40 --n 30`, one call, 5.4k tokens, a tenth of a cent) was his best.
+- **The shape decided, not yet built (bekh, 2026-09-23, late): two characters.** *The
+  student* — deepseek, a fresh read of the **last thirty dreams every ten**, no session (a
+  `--window N` mode: the seat keeps only its watermark). *The mentor* — sol through codex, one
+  thread, every dream ever, spoken to **every twenty dreams** (bekh: *you're rationing that
+  shit too much*). The api carries both; the front reaches the mentor through the student. The
+  lore is bekh's and it is Planescape: the mentor is **Dhall**, the Mortuary's scrivener who
+  keeps the book of every name and remembers the one who keeps coming back — and nemo is
+  *nobody*, the nameless one who wakes every five minutes with no memory; the student is old
+  and tired too. Settled in the talk: the mentor **coughs** (a lone `*` in the text where it
+  takes him, the page to paint an ink blotch there, black or a dried-blood red), he **addresses
+  the student by name** (no names yet), he is handed the student's latest portrait and the
+  student never sees his, and *the dhall lives in the picture and in those two things, never
+  in the prose*: every attempt to put the register in the prompt — mine by hand, and a persona
+  naming Dhall outright — came back stylised and thin, and he keeps **the bare analyst persona**
+  for both, to be changed later. `scrivener.txt` is the draft of the mentor's persona as the
+  night left it (*the scrivener of a book of dreams… old and ill… you cough… a student*),
+  tracked, not in use. His **face is not found**: four tries on the sheets (*the scrivener*) —
+  from the dhall persona (a cowled lens-headed thing at a ledger, the student drawn unasked in
+  the corner), from the analyst's face as a reference (`-i`; the same painter, the man aged into
+  pages — *the same idea, no*), under the cut persona (a chandelier of cables and cards over a
+  numbered book), and close with the book out (a card-built head with a hose mouth coughing the
+  `*`, which *got him, but that's not it*). bekh: *i don't know what i'm searching for; fresh
+  eyes tomorrow.* The one paint lesson kept: a scene gets inventoried, a single thing does not.
+- **Also on the table**: nemo and gpt-2 as analysts of their own dreams — not a seat, a
+  document: ten dreams, then *notes on the dreamer, written after reading these pages:*, a
+  fan on the loom; gpt-2 gets four dreams and a seam. Untried.
 - **The api carries the public seat only** — `STREAM_ANALYST_SEAT`, `analyst`, which the loom
   reads from the same env with the same default. Other seats are experiments run side by side,
   and a card from one would be an experiment passing itself off as the voice.
@@ -725,6 +768,8 @@ uv run --python 3.12 eva/stream/analyst.py --once --seat analyst --start last:10
 uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10 \
   --persona eva/stream/analyst-blind.txt
 uv run --python 3.12 eva/stream/analyst.py --show                                # the latest, no call
+uv run --python 3.12 eva/stream/analyst.py --once --door deepseek --seat ds30 --new --start last:40 --n 30   # a fresh read of thirty
+uv run --python 3.12 eva/stream/analyst.py --once --door codex --seat sol --start last:20     # GPT, one thread
 ```
 
 ```bash

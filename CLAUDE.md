@@ -185,10 +185,16 @@ GPT-2 XL, runs beside nemo for blind comparisons (`census.py --models`; Pythia 2
 and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 `ls shelf/artifacts/`; what berserk did: `shelf/berserk/ledger.jsonl`.
 
-**The dream stream** (2026-09-19) is the mission's machine: nemo writes a passage every five
-minutes by lot, an opus reader notes every one and marks two things in it, a second opus
-remembers four scenes at a time as one dream, and a picture can be painted behind any dream by
-hand — all read at `https://eva.x/stream`. Whether it is running is whether its writer's job is
+**The dream stream** (2026-09-19) is the mission's machine: **two dreamers, nemo and gpt-2 xl,
+turn and turn about** (2026-09-23, every page stamped with its writer, gpt-2 with its own
+launchd agent), a passage every five minutes, **typed onto the page word by word as it is
+written** (the writer streams and posts the growing text to the loom, the events route pushes it,
+the mirror pulls it from the mac), a codex reader notes every one and marks two things in it, an
+opus sleeper remembers four scenes at a time as one dream, a picture is painted behind each, and
+**an analyst** reads across the dreams and rewrites a portrait of the dreamer every ten — a
+character with a painted face and a card in the feed, four models behind four doors and bekh
+choosing between GPT and deepseek (`eva/stream/CLAUDE.md`, the analyst section) — all read at
+`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. Whether it is running is whether its writer's job is
 loaded (`launchctl print gui/$(id -u)/com.bekh.eva-stream`); it needs nemo up
 (`com.bekh.eva-llama`), and **stopping the stream stops nemo gracefully as well** — it wires
 ~10 GB and has no job with the writer off; the stop and start sequences are in
