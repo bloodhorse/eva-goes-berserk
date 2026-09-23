@@ -4,14 +4,14 @@
 <dict>
     <key>Label</key>
     <string>com.bekh.eva-stream-analyst</string>
-    <!-- The fourth voice: the analyst. One run reads the last sixteen dreams fresh and writes
+    <!-- The fourth voice: the analyst. One run reads the last eight dreams fresh and writes
          the portrait, then exits; the ribbon's line is the portrait's closing, cut by the tool.
 
          **No interval, on purpose** (2026-09-23): the clock is the tap. stream.py kickstarts
          this job with the other voices after a page lands (STREAM_KICK_INTERPRETER=1 in
-         com.bekh.eva-stream.plist), and the run is a quiet no-op until sixteen new unflagged
-         dreams sit above his watermark — so fifteen taps in sixteen cost a directory walk and
-         no call, and the sixteenth puts the portrait right after the dream that completed it.
+         com.bekh.eva-stream.plist), and the run is a quiet no-op until four new unflagged
+         dreams sit above his watermark — so three taps in four cost a directory walk and
+         no call, and the fourth puts the portrait right after the dream that completed it.
 
          Putting a StartInterval back breaks nothing; it only wakes him to count and exit. A
          lost kick costs nothing at all: the dreams stay above the watermark and the next tap
@@ -45,16 +45,16 @@
              one authenticates as nobody and exits non-zero. -->
         <key>HOME</key>
         <string>/Users/bekh</string>
-        <!-- bekh, 2026-09-23, late: GPT (sol through codex), a fresh read of the last sixteen
-             dreams every sixteen — four four-scene stories — no session, nothing resumed.
+        <!-- bekh, 2026-09-23, late: GPT (sol through codex), a fresh read of the last eight
+             dreams every four — a portrait per story, each reading two (bekh, 2026-09-24) — no session, nothing resumed.
              The student (deepseek, thirty every eight) ran for one evening and was retired:
              its lines read as captions of the last dream. -->
         <key>STREAM_ANALYST_DOOR</key>
         <string>codex</string>
         <key>STREAM_ANALYST_WINDOW</key>
-        <string>16</string>
+        <string>8</string>
         <key>STREAM_ANALYST_EVERY</key>
-        <string>16</string>
+        <string>4</string>
     </dict>
     <key>RunAtLoad</key>
     <false/>
