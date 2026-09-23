@@ -666,6 +666,17 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   line, model, seconds, usage, context}`, every one kept, the latest being the portrait (the
   three written before the remark have no `line`, read as `""`). Ledger rows `kind:
   "portrait"` carrying `line`; failures are a row and exit 0.
+- **His face is `analyst.jpg`** beside his persona (`analyst-source.png` the png GPT handed
+  back), tracked: one face, a second only if the persona changes. bekh's idea (2026-09-23):
+  the portrait is painted **from the system prompt** — GPT's image tool through `plate.draw`,
+  told *below is the system prompt of an LLM; paint a portrait of that LLM: how would the
+  entity described by this prompt look? go for something creative; magenta, neon and cyan*,
+  the persona file verbatim under it, no attic frame, no hand. The first try (landscape) put
+  a page-headed figure at a desk in front of the sunset sea; his two edits were *portrait
+  orientation* and *he has a mustache*, and the second try is the one — half flesh, half torn
+  pages, a face asleep inside the eye socket, ink on the fingers. He knows it reads as a man
+  and took it anyway: *too good to raise some disagreements.* Meant for the card in the feed
+  (dreamshit, not yet drawn): face left, the remark right, a press opening the manuscript.
 - **The api carries the public seat only** — `STREAM_ANALYST_SEAT`, `analyst`, which the loom
   reads from the same env with the same default. Other seats are experiments run side by side,
   and a card from one would be an experiment passing itself off as the voice.
