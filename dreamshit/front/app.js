@@ -362,6 +362,7 @@ function fitAll() {
     if (j.align === 'even') {
       const { w, lh, one } = fit(texts[0], j.deep, j.full);
       dress(j.lines[0].flow, w, lh, one);
+      if (DEBUG) fitLog(j);
       continue;
     }
     const w = widestWord(texts, j.full);
@@ -385,6 +386,18 @@ function fitAll() {
 // reading are watched — a stretched thread is absolute and never sizes its row, so a refit can't
 // feed itself. What's left calling refit by hand changes something no row height shows: the
 // column widths (resize), the thread's own size (setSides), its text (drawPack).
+// ?debug=1: per stretched dream, how often it was fitted and the height it was asked for vs the
+// height it came out — read off the page in the one browser where the thread stopped short.
+const DEBUG = params.get('debug') === '1';
+let fits = 0;
+function fitLog(j) {
+  fits++;
+  const out = j.lines.map(l => `${Math.round(j.deep)}→${Math.round(l.flow.getBoundingClientRect().height)}`).join(' ');
+  j.lines[0].flow.dataset.fit = out;
+  const all = [...document.querySelectorAll('.flow[data-fit]')].map(f => f.dataset.fit).join(' · ');
+  $('#label').textContent = `fits ${fits} @${Math.round(performance.now())}ms · asked→got ${all}`;
+  $('#label').style.opacity = 1; clearTimeout($('#label').t);   // the page's own notices fade it
+}
 let refitting = 0;
 function refit() { clearTimeout(refitting); refitting = setTimeout(fitAll, 50); }
 const rowSizes = new ResizeObserver(refit);
@@ -660,6 +673,10 @@ function setFont(name) {
   if (f.google && !loadedGoogle.has(f.google)) {
     loadedGoogle.add(f.google);
     const l = document.createElement('link'); l.rel = 'stylesheet';
+    // the one hand call the observer didn't make redundant after all: without it the telling
+    // stopped a scene short again in bekh's browser (2026-09-23), though never in headless. The
+    // face is only declared once this sheet is parsed, so load it by hand then, and refit.
+    l.onload = () => document.fonts.load(`${f.size}px ${f.family}`).then(refit, refit);
     l.href = `https://fonts.googleapis.com/css2?family=${f.google}&display=swap`; document.head.appendChild(l);
   }
   // , and . nudge the size live, t and T the weight — both remembered per font, found by eye,
