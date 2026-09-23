@@ -410,7 +410,8 @@ the code.
   the stream, which lands anywhere in the count, so every evening that ran 4n+1 passages left a
   one-scene story stranded (chapters 11, 13, 17) and the next evening started over. Now a story
   waits across a stop: one passage tonight, two tomorrow, one the day after is one story of
-  four. The count is read off the versions themselves and there is no state file: a second place to keep
+  four. The strays it left were mended by `--retell 11` the same day (every story from 11 on
+  retold, so the numbers from 11 on moved; the old versions are in `dreams/.trash/`). The count is read off the versions themselves and there is no state file: a second place to keep
   "which dream are we in" is a second place for it to be wrong. The last version of a finished
   dream is the finished piece. A dream's id carries two random bytes beside the clock, because
   two dreams under one name would silently be one dream on the page and in every count.
@@ -518,6 +519,8 @@ the code.
 ```bash
 uv run --python 3.12 eva/stream/remembering.py --once
 uv run --python 3.12 eva/stream/remembering.py --number   # chapters for the old stories; idempotent
+launchctl bootout gui/$(id -u)/com.bekh.eva-stream-remembering    # before a retell, or a live tap cuts in
+uv run --python 3.12 eva/stream/remembering.py --retell 11   # bin chapters 11+ to dreams/.trash/, tell those scenes again
 cp eva/stream/com.bekh.eva-stream-remembering.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream-remembering.plist
 launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-remembering   # what the worker does
