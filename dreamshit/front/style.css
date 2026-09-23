@@ -206,7 +206,8 @@ body.k-frost .row.focus .plate .grain { opacity: .12; }
    --rgap, the air between it and the painted rows above and below (a row's plate fills the row,
    so the margin IS the gap; 0 = flush). HEIGHT MEANS HEIGHT: the band never grows — app.js steps
    the remark's size down until it fits, and past the floor clips it on a whole line. */
-:root { --rh: 95px; --rgap: 18px; --rpos: 33%; --rg: 100; --rwash: 0; }
+/* bekh's numbers off the tuner, 2026-09-23 (were 95 / 18 / 33% / 100): taller, nearly flush, matte */
+:root { --rh: 113px; --rgap: 3px; --rpos: 31%; --rg: 0; --rwash: 0; }
 /* --rg is the gloss, one number for the whole 3D of it (bekh asked for it as a dial): every
    alpha below is scaled by it — 100 is the softened look, 150 the first evening's, 0 a flat
    matte band with only its own black gradient left */
