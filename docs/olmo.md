@@ -5,8 +5,10 @@ A bigger dreamer for the stream, to replace gpt-2 xl, whose pages bekh reads and
 serverless endpoint**, woken for a burst and asleep otherwise. Mistral Small 3.1 24B base is
 the fallback if olmo's prose comes out dead.
 
-**Where it stands:** decided, nothing built. No weights downloaded, no repo, no endpoint. The
-first move is the build-size check (below), because it picks between two shapes.
+**Where it stands (2026-09-24):** the weights exist on HF already (below — no conversion), the
+deploy repo `bloodhorse/olmo-dreamer` is written and pushed (private, like azeroth-render),
+the ten seeds for the blind fan are cut into `docs/olmo-seeds/`. **No endpoint yet: the next
+move is bekh's console session**, settings table in the repo's `README.md`.
 
 ## why olmo
 
@@ -28,8 +30,16 @@ name the genre first, then look for what exceeds it.
 - **8k context, hard.** stage1's config says `max_position_embeddings: 8192`. Long context only
   comes in stage 3, after the instruction-bearing midtrain, so clean and long are mutually
   exclusive. That's fine for us: a dream is a ~45-word seed and ~170 tokens out.
-- **No gguf exists for this branch.** We convert it ourselves. It goes through as the **`olmo2`**
-  arch (llama.cpp has no `olmo3`; mradermacher's gguf of `main` shows the path works).
+- **A gguf of this branch exists**: `Tricit/Olmo-3-1125-32B-stage1-step656000-Q4_K_M-GGUF`,
+  one file, 18.1 GB, public, apache, made 2026-09-21 through ggml's gguf-my-repo space. The
+  doc said "none exists" for three days and nobody checked; bekh asked. Two checks (2026-09-24):
+  its source is a mirror repo (`from-our-page/…`, because gguf-my-repo can't take a branch)
+  whose 14 shards match allenai's branch by size and sha256, tokenizer and config by size;
+  and the gguf header, read by range request, carries `olmo2.attention.sliding_window = 4096`
+  with the 64-entry pattern, 48 sliding layers — the config's `layer_types` exactly. A
+  conversion by a pre-olmo3 llama.cpp would have no window at all and run full attention on
+  48 layers. Arch `olmo2` (llama.cpp registers `Olmo3ForCausalLM` on it and writes the
+  window), ctx 8192, file type 15 = Q4_K_M, pre-tokenizer `dbrx`.
 - the dirty control is `main`: the same model after the midtrain. A fan on both, on the same seed,
   is a direct read of what the instruction data did to the dreams. Optional, but it's the
   cleanest experiment this project could run.
@@ -49,10 +59,18 @@ quant, not the model.
 
 ## the endpoint: `bloodhorse/olmo-dreamer`
 
-The deploy artifact gets its own repo, like `azeroth-render`: RunPod builds straight from a
+The deploy artifact has its own repo, like `azeroth-render`: RunPod builds straight from a
 GitHub repo on every push, with no registry and no write token lying around, and it clones the
-whole repo, so nothing else rides along. It holds a Dockerfile (llama.cpp's CUDA server, plus
-the weights or a path to them) and a handler.
+whole repo, so nothing else rides along. **Written 2026-09-24, `~/tower/forge/olmo-dreamer`**:
+a Dockerfile on `ghcr.io/ggml-org/llama.cpp:server-cuda` (CUDA 12.8.1, ubuntu 24.04) plus
+python3; `boot.sh` finds the gguf under the cached-model path, writes `box.json` (card, cpus,
+gguf, a `mig` flag) into a dir llama-server serves with `--path`, so `GET /box.json` needs no
+proxy in front of the streaming route; `health.py` is the shim RunPod polls on `PORT_HEALTH`
+— 204 until llama's `/health` says 200, because llama says 503 while loading and RunPod reads
+that as broken; `probe.py` on the mac does ping / box / props / workers and `say`, which
+streams a completion and stamps every token's arrival — the measurement of whether a
+load-balancing endpoint passes SSE through word by word or in lumps. The console settings
+table and the verify sequence are the repo's `README.md`.
 
 **The lore to carry, all measured on azeroth-render** (its `SETUP.md` and `README.md`, and
 `~/tower/attic/runpod-kit`):
@@ -100,8 +118,11 @@ tolerable if it's paid once per burst and hidden:
   and nothing else, and the image stays small (llama.cpp only). azeroth left this blank because
   its weights were 4 GB.
 
-**The pick: a small image plus a cached model from a one-file private HF repo.** Baking is the
-fallback if caching disappoints, and the network volume is now last.
+**The pick: a small image plus a cached model from a one-file public HF repo** (Tricit's, above
+— public, so no HF token anywhere). Baking is the fallback if caching disappoints, and the
+network volume is now last. The endpoint is probed first with `ggml-org/gemma-3-270m-GGUF`
+(one file, 278 MB) so a boot fix costs seconds and not an 18 GB pull per fresh host, then the
+cached model is flipped to olmo.
 
 ## how the stream talks to it: the normal way
 
@@ -130,43 +151,46 @@ unless both options above disappoint.
 vLLM, RunPod's ready-made LLM worker, is out: no DRY, no xtc, and a blind test with a different
 sampler compares samplers, not models.
 
-## the conversion: once
+## the conversion: not needed
 
-On a plain RunPod pod (CPU-heavy, fat pipe; no GPU needed to convert), then destroyed:
-
-```bash
-pip install -U huggingface_hub
-hf download allenai/Olmo-3-1125-32B --revision stage1-step656000 --local-dir olmo3-32b-stage1
-git clone --depth 1 https://github.com/ggml-org/llama.cpp
-pip install -r llama.cpp/requirements/requirements-convert_hf_to_gguf.txt
-python llama.cpp/convert_hf_to_gguf.py olmo3-32b-stage1 --outtype bf16 \
-  --outfile olmo3-32b-stage1-bf16.gguf
-cmake -S llama.cpp -B llama.cpp/build && cmake --build llama.cpp/build -j --target llama-quantize
-llama.cpp/build/bin/llama-quantize olmo3-32b-stage1-bf16.gguf olmo3-32b-stage1-Q4_K_M.gguf Q4_K_M
-```
-
-The Q4 goes to a **private HF repo** (the permanent home of the weights, where a Dockerfile or a
-volume pulls it from), or straight onto the network volume if that's the shape. Downloads from
-HF ran at 36–44 MB/s on the vast run (`friendship-is-magic/docs/attic/cousin-arm-01.md`), so the
-65 GB of bf16 is ~30 minutes. Checks: `general.architecture` reads `olmo2`; a plain seed gives
-English, not token soup (soup = the `olmo2` mapping or the tokenizer, not the model).
+Tricit's Q4 (above) is the checkpoint, checked. If a Q8 fan is ever wanted (the "dud at Q4
+may be the quant" clause), no Q8 of stage1 exists on HF as of 2026-09-24; the recipe is then
+a GPU pod, `hf download allenai/Olmo-3-1125-32B --revision stage1-step656000`, llama.cpp's
+`convert_hf_to_gguf.py` (now a shim over a `conversion/` package — clone the whole repo) to
+bf16, `llama-quantize` to Q8_0, ~65 GB of bf16 at 36–44 MB/s from HF. Q4s of `main` (the dirty
+control) exist from several quantizers (`lmstudio-community`, `mradermacher`, `Hyperccino`).
 
 ## the test
 
-Before olmo takes gpt-2's seat: the same seeds from the stream's pot, the same sampler (heat by
-lot 1.8–2.5, min_p 0.08, the stream's settings), one fan on nemo and one on olmo, mixed
-unlabelled, and bekh says which pile has the ghosts. `census.py --models` already does a mixed
-blind fan. It needs olmo as a second endpoint URL.
+Before olmo takes gpt-2's seat: the same seeds, the same sampler (heat by lot 1.8–2.5, min_p
+0.08, the stream's settings), one fan on nemo and one on olmo, mixed unlabelled, and bekh
+says which pile has the ghosts. `census.py --models` already does a mixed blind fan. It needs
+olmo as a second endpoint URL — and RunPod's door wants a bearer header the loom's tools
+don't send, so the plan is a tiny local proxy on the mac that adds it, and every tool talks
+to `http://127.0.0.1:<port>` unchanged.
+
+**The seeds are cut (2026-09-24): `docs/olmo-seeds/`**, ten files named by the room they came
+from, each the seed exactly as it was fed (the room's root text), with `picks.json` as the
+index (room, writer, temperature, source seed, why). bekh's brief: opus reads the last fifty
+pages of the stream, picks the ten that read mystical, prophetic, weird — where the weirdness
+feels meant, not broken — and returns their seeds. All ten were nemo's pages (the six gpt-2
+pages in the window read flat or fell apart); nine distinct seed files, the storm-girl seed
+(`seeds/kept/21-1132.txt`) twice, mystical both times. Four of the ten are one family — the
+line, the tower, the carrier, the voice — and one of those seeds is the harvested text of
+another pick's dream, whose page then went meta: a woman in a grey room given a computer and
+told to write a story. The brass-head and brass-witch seeds reliably summon an oracle's voice.
 
 Worth a look while we're there: the same fan on `main` (the dirty control, see above).
 
 ## order
 
 1. ~~check the builder's image-size limit~~ (80 GB, fine; cached model is the pick).
-2. convert on a pod → Q4 into a private HF repo, alone.
-3. `bloodhorse/olmo-dreamer`: Dockerfile + handler (or none, on a load-balancing endpoint);
-   endpoint configured by the lore above; one seed through it, `box.gpu` read.
-4. the blind fan olmo vs nemo, by hand.
+2. ~~convert~~ (Tricit's Q4 exists and checks out).
+3. ~~`bloodhorse/olmo-dreamer` written~~ → **bekh creates the load-balancing endpoint in the
+   console** (`README.md` there), gemma first; `probe.py` box / say; flip to olmo; box / say
+   again. Record the SSE verdict and the cold start here.
+4. the local bearer proxy; the blind fan olmo vs nemo on `docs/olmo-seeds/`, by hand, to the
+   sheets site unmarked.
 5. only if olmo wins: `eva go` learns the warm-up and the endpoint URL, and olmo takes gpt-2's
    turns.
 

@@ -1,0 +1,92 @@
+[
+ {
+  "room": "stream/2026-09-24/0102",
+  "model": "nemo",
+  "temperature": 2.05,
+  "seed_path": "seeds/kept/11-2201.txt",
+  "why": "The speaker says goodbye to a house that won't answer, then her reflection in the river ice answers in the house's voice: a quiet, perfectly placed uncanny turn.",
+  "file": "docs/olmo-seeds/2026-09-24-0102.txt",
+  "words": 44
+ },
+ {
+  "room": "stream/2026-09-22/2149",
+  "model": null,
+  "temperature": 2.197,
+  "seed_path": "seeds/dark-floors.txt",
+  "why": "A theology of 'the priests of the dark rooms' and 'the self as cursor', held steady as scripture about endless rooms and whose turn it is; it reads like the machine dreaming its own condition.",
+  "file": "docs/olmo-seeds/2026-09-22-2149.txt",
+  "words": 41
+ },
+ {
+  "room": "stream/2026-09-21/1655",
+  "model": null,
+  "temperature": 2.328,
+  "seed_path": "seeds/kept/09-1647.txt",
+  "why": "A switch that never knew when to cut the circuit feels its way through the wires, and then 'the carrier said: hello.' It is first contact in eleven words.",
+  "file": "docs/olmo-seeds/2026-09-21-1655.txt",
+  "words": 128
+ },
+ {
+  "room": "stream/2026-09-21/1645",
+  "model": null,
+  "temperature": 2.066,
+  "seed_path": "seeds/kept/18-2006.txt",
+  "why": "A tower that used to do the work, now only a line bringing up 'hissing voices… trying to get us to listen'; a lonely oracle-station with the power gone.",
+  "file": "docs/olmo-seeds/2026-09-21-1645.txt",
+  "words": 129
+ },
+ {
+  "room": "stream/2026-09-21/1700",
+  "model": null,
+  "temperature": 2.06,
+  "seed_path": "seeds/kept/17-2006.txt",
+  "why": "A voice in a wired room says the child's name back, gets it wrong, and every light goes out at once; the silence of the voice is the grief.",
+  "file": "docs/olmo-seeds/2026-09-21-1700.txt",
+  "words": 56
+ },
+ {
+  "room": "stream/2026-09-22/1715",
+  "model": null,
+  "temperature": 2.2,
+  "seed_path": "seeds/kept/21-1132.txt",
+  "why": "Rain becomes 'a million whispers and a thousand voices all telling secrets' until sky, earth, moon and stars are all talking: a small visionary rapture, cut mid-sight.",
+  "file": "docs/olmo-seeds/2026-09-22-1715.txt",
+  "words": 139
+ },
+ {
+  "room": "stream/2026-09-23/0033",
+  "model": null,
+  "temperature": 2.371,
+  "seed_path": "seeds/kept/harvest-0922/rooms-1645.txt",
+  "why": "The hissing becomes words and the words become a story, and the story is of a woman put in a grey room, given a computer and told to write a story: an eerie self-portrait, held in frame.",
+  "file": "docs/olmo-seeds/2026-09-23-0033.txt",
+  "words": 80
+ },
+ {
+  "room": "stream/2026-09-21/1650",
+  "model": null,
+  "temperature": 2.41,
+  "seed_path": "seeds/kept/21-1132.txt",
+  "why": "Being dragged into the deep sea and eaten is 'the best thing that ever happened to me'; bones of old wood that break into new people or stories; born with wings that fell away. A mythic body-dream.",
+  "file": "docs/olmo-seeds/2026-09-21-1650.txt",
+  "words": 139
+ },
+ {
+  "room": "stream/2026-09-23/1833",
+  "model": null,
+  "temperature": 2.235,
+  "seed_path": "seeds/brass-head.txt",
+  "why": "A woman who could speak to her head keeps it in the middle of her gardens, and a stranger insists 'the head has some use for words': folk-parable about an oracle that should talk.",
+  "file": "docs/olmo-seeds/2026-09-23-1833.txt",
+  "words": 45
+ },
+ {
+  "room": "stream/2026-09-21/1706",
+  "model": null,
+  "temperature": 1.958,
+  "seed_path": "seeds/kept/24-1412.txt",
+  "why": "A village that won't walk the highroad because the brass rang once 'that dreadful night' and no one knows when it will ring again: a true omen, dread without explanation.",
+  "file": "docs/olmo-seeds/2026-09-21-1706.txt",
+  "words": 28
+ }
+]
