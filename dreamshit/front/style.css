@@ -78,7 +78,7 @@ body { cursor: default; }
 /* the lowercaser (bekh, 2026-09-22): whatever a model wrote is shown lowercase — passage,
    trickle, reading, names, seed. display only; the shelf keeps its capitals, because a starred
    passage becomes a seed and a capital in a seed is text nemo sees */
-.text, .trickle, .reading, .title, .seedbox { text-transform: lowercase; }
+.text, .trickle, .reading, .title, .seedbox, .ghost { text-transform: lowercase; }
 /* --tsize is the size dial for BOTH side voices (app.js, `;` / `'`) — at one word a line 12px is
    too small to sit with. The two are moved together (bekh, 2026-09-22): the trickle at the var,
    the reading one pixel above it, because changing one alone throws the pair off balance. The
@@ -116,6 +116,15 @@ body.rough .text { -webkit-font-smoothing: none; font-smooth: never; }
   padding: 16px 18px; background: #1c1c21; border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   font: 14px/1.7 "Courier New", monospace; letter-spacing: .03em; color: var(--ghost); white-space: pre-wrap; }
 .seedbox[hidden] { display: none; }
+/* the seed's last line above the passage: the passage's own face, italic, barely there, in a
+   haze of its own ink, surfacing out of nothing on the left. it must never read as part of the
+   dream, so it is well under the quiet voices (#aab5c7) — raise the alpha if a bright plate eats
+   it, don't add weight. nothing on it moves. */
+.ghost { margin: 0 0 1.1em; font-style: italic; font-size: .82em; line-height: 1.5;
+  color: color-mix(in srgb, var(--ghost) 42%, transparent);
+  text-shadow: 0 0 .5em color-mix(in srgb, var(--ghost) 35%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%);
+          mask-image: linear-gradient(90deg, transparent, #000 30%); }
 /* the passage keeps its own line breaks; a blank line is a paragraph */
 .text .body { white-space: pre-wrap; }
 /* the reader's marks, blended into the ink like on eva: magenta touched, cyan strange. They blend

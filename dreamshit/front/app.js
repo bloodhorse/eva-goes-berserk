@@ -87,6 +87,19 @@ function drawBody(body, p) {
 }
 
 // ---- rendering -------------------------------------------------------------------------
+const GHOST = params.get('ghost') !== '0';
+// the last line of the seed that has words in it. a long one (a seed is often one paragraph
+// on one line) keeps only its tail — the words right before the dream begins — cut at a word.
+function ghostLine(seed) {
+  const lines = String(seed || '').split('\n').map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return '';
+  const last = lines[lines.length - 1];
+  if (last.length <= 120) return last;
+  const tail = last.slice(-120);
+  const cut = tail.indexOf(' ');
+  return '… ' + (cut >= 0 ? tail.slice(cut + 1) : tail);
+}
+
 function buildRow(p) {
   const row = document.createElement('section'); row.className = 'row';
   // the first cell holds this passage's part of the telling — the trickle is cut at its seams
@@ -114,6 +127,11 @@ function buildRow(p) {
   } else text.append(btns);
   const pic = document.createElement('button'); pic.textContent = 'pic'; pic.hidden = true;
   btns.append(pic);
+  // the seed's last line, ghostly, right above the passage (bekh, 2026-09-23): the dream
+  // surfaces out of the last thing the found text said, and the whole seed stays behind its
+  // button. ?ghost=0 takes it away.
+  const g = ghostLine(p.seed);
+  if (g && GHOST) { const gh = document.createElement('p'); gh.className = 'ghost'; gh.textContent = g; text.append(gh); }
   const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
