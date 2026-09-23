@@ -197,24 +197,21 @@ shape — now.
      through a whole ration: *live writing* (the page typed word by word as nemo writes, on
      eva's page and on dreamshit through the mirror); *the second dreamer* (gpt-2 xl and nemo
      one after another, the model first in every dream's head); and **the analyst**, bekh's
-     new character — a portrait of the dreamer rewritten every ten dreams, a painted face
-     (from his own system prompt, portrait, a mustache — *too good to raise disagreements*),
-     a black glassy ribbon in dreamshit's feed with his remark on it and the manuscript behind
-     it, tuned by `?tune=ribbon` (his numbers still pending). Four models were sat in the seat
-     on the same dreams and **he wants GPT and deepseek, and is done with the claude family's
-     tics**. Where it stands: **two characters** — a student (deepseek, a fresh read of the
-     last thirty every eight, no memory — **wired and on the public seat**, the writer taps
-     him) and his mentor (GPT sol, one thread that has read everything, every twenty — decided,
-     not wired), the mentor modelled on **Dhall**, Planescape's
-     scrivener of the dead — nemo being *nobody*, the nameless one who wakes with no memory —
-     with a cough mark in his text, the student addressed by name, and the bare analyst
-     persona for both (every attempt to write dhall into the prompt came back stylised; the
-     character lives in the picture). His face is not found after four tries; *fresh eyes
-     tomorrow*. The four hand pages from the day's real runs (`1843`, `1845`, `1858`, `1858-2`)
-     got the full treatment at the end of the night — notes and names by `reread.py`, plates by
-     hand, and the sleeper's `--retell 17` folding them into story 17 (*i will not go along*)
-     with `1858-2` opening 18. The student read the last fifty as his backlog, a portrait every
-     eight, so the feed carries his ribbons from there on.
+     new character — a painted face (from his own system prompt, portrait, a mustache — *too
+     good to raise disagreements*) and a black glassy ribbon in dreamshit's feed with the
+     manuscript behind it, tuned by `?tune=ribbon` (his numbers still pending). Where it
+     stands: **one character — GPT sol through codex, a fresh read of the last sixteen dreams
+     every sixteen**, no memory; told only that *a machine dreams them*, never which model wrote
+     a page; asked for **one paragraph of ~150 words and nothing else**. The ribbon carries the
+     portrait's **last two sentences, cut by code** — every box that asked him for a remark came
+     back a list, and the portraits' own closings were the register bekh wanted. The public
+     seat opened on three portraits over the last 48 dreams, by hand. Tried and parked the same
+     day: the claude family (the tics), deepseek as a student (every eight on thirty — its
+     lines were captions of the last dream), a Dhall-like mentor (never wired; `scrivener.txt`
+     is the draft). The four hand pages from the day's real runs (`1843`, `1845`, `1858`,
+     `1858-2`) got the full treatment at the end of the night — notes and names by
+     `reread.py`, plates by hand, and the sleeper's `--retell 17` folding them into story 17
+     (*i will not go along*) with `1858-2` opening 18.
      Details, verdicts, costs and every command: `eva/stream/CLAUDE.md`, the analyst section.
    - **Four hands, none sees another's work.** *The sleeper dreaming*: nemo, a 170-token
      passage every five minutes, seed by shuffle bag and heat (1.8–2.5) by lot, nobody picking;
@@ -315,11 +312,8 @@ shape — now.
      switches it off (the seat's file overrides it, and has held); a codex session file lands in
      `~/.codex/sessions` per note (`--ephemeral` exists, unused); the filter misses most dead
      passages (a blog post sailed through at 17:53); nothing prunes old pages; dreams from
-     before the sleeper existed have no story; the analyst's long seats hit their ceilings
-     (opus 150k at ~350 dreams, sol's codex thread ~600) and the move then — a new seat with
-     the last portrait as its first memory — is not written; the ribbon's height, gap and
-     gloss wait on bekh's numbers; the analyst's persona still says one machine in places
-     bekh wants reworded. **Parked with a name: the trace** — a passage's own per-token
+     before the sleeper existed have no story; the ribbon's height, gap and gloss wait on
+     bekh's numbers. **Parked with a name: the trace** — a passage's own per-token
      surprise drawn as its picture; he loves it, as its own thing. **Parked from the day's
      talk**: the site alive — a pulse is honest only over a writer that runs, "always on"
      waits for a local image model, and for someone who checks in *alive* is difference since

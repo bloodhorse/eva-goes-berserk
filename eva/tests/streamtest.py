@@ -719,10 +719,8 @@ if re.search(r"^--- (the dreams|\d+ more dreams) ---$", prompt, re.M):
         answer("i would rather not say who this is")
     # A header is the minute, and the dreamer after it when the page says who that was.
     k = len(re.findall(r"^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?: · [\w.-]+)?\]$", prompt, re.M))
-    # The remark after the portrait, wrapped and quoted the way a voice does it anyway — the
-    # cleaning is what makes it one line. `noremark` leaves it out altogether.
-    said = "" if mode == "noremark" else f'<remark>\n  "the one who dreamt\n  {k} more."\n</remark>'
-    answer(f"here it is\n<portrait>\n  a dreamer of {k} more dreams.\n</portrait>\n{said}\n")
+    # The portrait alone; the line is its closing, cut by the tool — nothing else is asked.
+    answer(f"here it is\n<portrait>\n  a dreamer of {k} more dreams.\n</portrait>\n")
 
 # The sleeper remembering asks a different question and takes a different tag.
 if "--- the new scene ---" in prompt:
@@ -2210,41 +2208,45 @@ class Analyst(unittest.TestCase):
         self.assertIn("a dreamer of 3 more dreams.", out)
         self.assertFalse(os.path.exists(f["log"]))
 
-    def test_the_shape_asks_for_both_tags_and_the_remark_is_the_line(self):
+    def test_the_shape_asks_for_the_portrait_only_and_the_line_is_its_closing(self):
         code, out, f = self.run_("--start", "last:3", "--n", "3")
         self.assertEqual(code, 0, out)
         prompt = read_text(f["log"])
-        self.assertLess(prompt.index("<portrait>"), prompt.index("<remark>"))
-        self.assertIn("say out loud", prompt)
-        # wrapped and quoted by the voice, one clean line on the version and on the row
-        want = "the one who dreamt 3 more."
+        # nothing about a remark, a card or a ribbon reaches him — the portrait is all he is asked
+        self.assertIn("<portrait>", prompt)
+        for never in ("remark", "ribbon", "card", "sentence"):
+            self.assertNotIn(never, prompt)
+        self.assertNotIn("remark", analyst.AGAIN)
+        # a one-sentence portrait closes on itself: the line on the version and on the row
+        want = "a dreamer of 3 more dreams."
         self.assertEqual(self.versions()[0]["line"], want)
         self.assertEqual(self.rows()[-1]["line"], want)
-        self.assertEqual(self.versions()[0]["text"], "a dreamer of 3 more dreams.")
-        self.assertIn(want, out)                                    # printed for bekh
-        # the later turn asks for both again
-        self.assertIn("<portrait>", analyst.AGAIN)
-        self.assertIn("<remark>", analyst.AGAIN)
+        self.assertEqual(self.versions()[0]["text"], want)
         make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030")
         code, out, f = self.run_("--n", "1")
         self.assertIn(analyst.AGAIN, read_text(f["log"]))
-        self.assertEqual(self.versions()[-1]["line"], "the one who dreamt 1 more.")
+        self.assertEqual(self.versions()[-1]["line"], "a dreamer of 1 more dreams.")
 
-    def test_no_remark_is_an_empty_line_and_still_a_portrait(self):
-        code, out, f = self.run_("--start", "last:3", "--n", "3", mode="noremark")
-        self.assertEqual(code, 0, out)
-        v = self.versions()
-        self.assertEqual(len(v), 1)
-        self.assertEqual((v[0]["text"], v[0]["line"]), ("a dreamer of 3 more dreams.", ""))
-        self.assertEqual(self.rows()[-1]["line"], "")
-        self.assertNotIn("error", self.rows()[-1])
-        # the parser on its own: an unclosed or empty tag is "" too, never a failure
-        self.assertEqual(analyst.parse("<portrait>p</portrait><remark>half"), ("p", ""))
-        self.assertEqual(analyst.parse("<portrait>p</portrait><remark> </remark>"), ("p", ""))
+    def test_the_closing_is_the_last_two_sentences_as_one_line(self):
+        text = ("the dreamer is a witness.\nit wants to ask “what does this\nmean?” yet fails. "
+                "bread is “the best thing,” torn and swept. behind the dread is a wish: tea, "
+                "toast, honey.")
+        self.assertEqual(analyst.closing(text),
+                         "bread is “the best thing,” torn and swept. behind the dread is a wish: "
+                         "tea, toast, honey.")
+        # a quote closing after the stop is a seam; a comma inside one is not
+        self.assertEqual(analyst.closing("one. two.” three."), "two.” three.")
+        self.assertEqual(analyst.closing("one. two, “three.”"), "one. two, “three.”")
+        self.assertEqual(analyst.closing("alone."), "alone.")
+        self.assertEqual(analyst.closing("   "), "")
+        # the parser hands the closing back and ignores anything after the tag
+        self.assertEqual(analyst.parse("<portrait>p. q. r.</portrait>\nand more"), ("p. q. r.", "q. r."))
+        # a whole answer (the deepseek door's rethrow test) ends on the portrait's tag now
+        self.assertTrue(analyst.whole_answer("<portrait>p.</portrait>\n"))
+        self.assertFalse(analyst.whole_answer("<portrait>p. and then"))
 
-    def test_the_header_carries_the_dreamer_when_the_page_names_one(self):
-        self.assertEqual(analyst.header("stream/2026-09-23/1858", "gpt2"),
-                         "[2026-09-23 18:58 · gpt2]")
+    def test_the_header_never_says_who_wrote_the_page(self):
+        self.assertEqual(analyst.header("stream/2026-09-23/1858"), "[2026-09-23 18:58]")
         self.assertEqual(analyst.header("stream/2026-09-23/1858-2"), "[2026-09-23 18:58]")
         make_page("stream/2026-09-20/1030", "s\n", "ANALYSTDREAM 1030", model="gpt2")
         make_page("stream/2026-09-20/1035", "s\n", "ANALYSTDREAM 1035",
@@ -2252,11 +2254,12 @@ class Analyst(unittest.TestCase):
         code, out, f = self.run_("--start", "stream/2026-09-20/1025", "--n", "3")
         self.assertEqual(code, 0, out)
         prompt = read_text(f["log"])
-        # no stamp, a seat name, and an older page's file name read as the seat it was
+        # a page with no stamp, one stamped gpt2, one stamped with nemo's file name: all bare
         self.assertIn("[2026-09-20 10:25]\nANALYSTDREAM 1025", prompt)
-        self.assertIn("[2026-09-20 10:30 · gpt2]\nANALYSTDREAM 1030", prompt)
-        self.assertIn("[2026-09-20 10:35 · nemo]\nANALYSTDREAM 1035", prompt)
-        self.assertNotIn("Mistral", prompt)
+        self.assertIn("[2026-09-20 10:30]\nANALYSTDREAM 1030", prompt)
+        self.assertIn("[2026-09-20 10:35]\nANALYSTDREAM 1035", prompt)
+        for word in ("gpt2", "nemo", "Mistral", " · "):
+            self.assertNotIn(word, prompt)
         self.assertEqual(self.versions()[0]["dreams"], 3)            # the fake counted all three
 
     def test_narration_says_the_remark_out_loud(self):
@@ -2327,7 +2330,7 @@ class AnalystApi(unittest.TestCase):
         v = pages["stream/2026-09-21/1015"]["portrait"]
         self.assertEqual(set(v), {"id", "ts", "line", "text", "dreams", "rooms"})
         self.assertEqual((v["text"], v["line"], v["dreams"]),
-                         ("a dreamer of 3 more dreams.", "the one who dreamt 3 more.", 3))
+                         ("a dreamer of 3 more dreams.", "a dreamer of 3 more dreams.", 3))
         self.assertEqual(v["rooms"], [f"stream/2026-09-21/{h}" for h in ("1005", "1010", "1015")])
         # the id is the version's path under the seat, and it asks for the same thing back
         path = analyst.version_files("analyst")[0]

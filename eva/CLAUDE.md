@@ -415,12 +415,12 @@ passages are **scenes of one dream** so it has to find connective tissue; every 
 a dream ending after 4 scenes and nothing else — a stopped stream leaves it waiting. The page carries it at the top with
 its `3 / 4`, and a finished one where it ended. Both opus voices call through `stream/opus.py`,
 which counts what they cost onto every ledger row.
-And a fourth, **the analyst** (`stream/analyst.py`, 2026-09-23): a portrait of the dreamer and
-one remark he would say out loud — the line a card in the feed carries, the portrait the
-manuscript behind it. Four doors (opus, fable, deepseek over openrouter, GPT through codex)
-and two shapes: one resumed session reading every dream, or a fresh read of the last N. What
-runs is **deepseek reading the last thirty every eight dreams**, the student; a mentor on a
-GPT thread is decided and not wired (`stream/CLAUDE.md`, the analyst section). Tapped by the
+And a fourth, **the analyst** (`stream/analyst.py`, 2026-09-23): a portrait of the dreamer, the
+manuscript behind a ribbon in the feed, and the ribbon's line is the portrait's own last two
+sentences, cut by code — he is asked for the portrait and nothing else. Four doors (opus, fable,
+deepseek over openrouter, GPT through codex) and two shapes: one resumed session reading every
+dream, or a fresh read of the last N. What runs is **GPT (sol, through codex) reading the last
+sixteen every sixteen dreams**, no memory (`stream/CLAUDE.md`, the analyst section). Tapped by the
 writer like the others; `/api/stream` hangs each portrait on the dream it followed, and eva's
 page shows it there as a quiet band that unfolds on a click.
 And **plates** (`stream/plate.py`, 2026-09-20): a painting per dream drawn by hand through
@@ -479,8 +479,8 @@ and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk
 plus `com.bekh.eva-gpt2` (llama-server, GPT-2 XL, loopback 8083, on the cpu — the stream's
 second dreamer), `com.bekh.eva-stream` (one passage every 300s, loaded 2026-09-19) and the
 voices it kickstarts, `com.bekh.eva-stream-interpreter`, `com.bekh.eva-stream-remembering`,
-`com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (deepseek, a fresh read of the
-last thirty every eight dreams, loaded 2026-09-23), none of which has an interval of its own (those plists, gpt-2's included,
+`com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (GPT sol through codex, a fresh read of
+the last sixteen every sixteen dreams, loaded 2026-09-23), none of which has an interval of its own (those plists, gpt-2's included,
 live in `stream/`; log `/tmp/eva-stream-analyst.log` for the analyst) — and
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying the name to that address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,

@@ -1,45 +1,52 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""analyst.py — the one who has read every dream, writing a portrait of the dreamer.
+"""analyst.py — a portrait of the dreamer, rewritten as the dreams come in.
 
-    uv run --python 3.12 eva/stream/analyst.py --once
+    uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16
     uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10
     uv run --python 3.12 eva/stream/analyst.py --show --seat blind
 
-bekh's fourth voice (2026-09-23): opus reading ALL the dreams, oldest first, and rewriting a
-psychological portrait of whoever dreams them — the themes, and just as much the verbal tics.
+bekh's fourth voice (2026-09-23): a psychological portrait of whoever dreams the pages — the
+themes, and just as much the verbal tics. What runs (the job's plist, 2026-09-23, late): **GPT
+(gpt-5.6-sol through codex) reading the last sixteen dreams fresh, every sixteen dreams** — four
+four-scene stories — with no session and no memory: `--window N` makes the batch only the trigger
+and the last N dreams the material, the first prompt every time, nothing resumed.
 
-**His memory is a cli session, never a summary** (bekh's law, not negotiable). Each run hands
-the next batch of dreams over as the next user turn of ONE resumed `claude` session, so every
-dream he has ever been handed is still in his context word for word. A tic is a turn of phrase
-coming back across forty dreams; a digest of the first thirty — his own or ours — keeps the
-themes and drops exactly the phrasing he is hunting. So there is no memory block and no previous
-portrait in the prompt: both are already in the session.
+**The other shape still in the code: one resumed session** (`--window 0`, the default here), his
+memory a cli session and never a summary (bekh's law for that shape). Each run hands the next
+batch over as the next user turn of ONE resumed session, so every dream he was ever handed is
+still in his context word for word — a digest keeps the themes and drops exactly the phrasing he
+is hunting. It held for opus and GPT over the whole catalogue and broke deepseek, whose last
+portrait was the last ten dreams wearing a coat.
 
-**Seats.** A seat is one session with one persona, everything under `portraits/<seat>/`. They
-exist so bekh can run two persona lines over the same dreams side by side — `analyst.txt`
-(told the dreamer is nemo; his pick on 2026-09-23) against `analyst-blind.txt`. The persona is
-sent once, in the session's first turn, and never again.
+**Seats.** A seat is one persona and, in session mode, one session, everything under
+`portraits/<seat>/`. They exist so persona lines or doors can read the same dreams side by side
+(`analyst.txt` against `analyst-blind.txt`, say). The persona is sent once, in a session's first
+turn — every turn, in window mode.
 
-**The ceiling.** A full session is compacted by the cli on its own, and compaction is precisely
-the reduction bekh forbade — so the tool refuses before the cli gets the chance, at
-`STREAM_ANALYST_CONTEXT_MAX` tokens, and the answer is a new seat.
+**The ceiling** (session mode only). A full session is compacted by the cli on its own, and
+compaction is precisely the reduction bekh forbade — so the tool refuses before the cli gets the
+chance, at `STREAM_ANALYST_CONTEXT_MAX` tokens, and the answer is a new seat.
 
 Like every voice here he sees the dreamer's text only: no seed, no reader's note, no name, no
-story — each dream under the date and minute it was written and, since two models write the pages
-in turn, the one that wrote it: `[2026-09-23 18:58 · gpt2]`.
+story — each dream under the date and minute it was written, and nothing about who wrote it
+(bekh, 2026-09-23: one machine dreams, as far as he is told; two models take turns behind it and
+he is never shown which).
 
-**The remark** (bekh, 2026-09-23): beside the portrait, one sentence he would say out loud about
-the dreamer right now. It is what the feed shows on the card every ten dreams — the portrait is
-the manuscript behind it — so it is his own voice, never a summary of the portrait.
+**The line** (bekh, 2026-09-23, late): the feed's card carries the portrait's last two sentences,
+cut here by position; the portrait is the manuscript behind it. He is asked for nothing but the
+portrait and is never told there is a card — every remark box we gave him came back a list
+(`closing` has the story).
 
 **The clock is the tap**: `com.bekh.eva-stream-analyst` has no interval, and stream.py kickstarts
-it with the other voices when a page lands. Nine landings in ten that is a quiet no-op — fewer
-than ten new dreams above the watermark — and the tenth is a portrait.
+it with the other voices when a page lands. Fifteen landings in sixteen that is a quiet no-op —
+fewer than STREAM_ANALYST_EVERY new dreams above the watermark — and the sixteenth is a portrait.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_ANALYST_SEAT (analyst — the loom reads it too:
 only this seat's portraits reach /api/stream), STREAM_ANALYST_PERSONA
-(eva/stream/analyst.txt), STREAM_ANALYST_EVERY (10), STREAM_ANALYST_CONTEXT_MAX (150000),
-STREAM_ANALYST_TIMEOUT (600), plus loom's LOOM_SITTINGS.
+(eva/stream/analyst.txt), STREAM_ANALYST_DOOR (opus in code, codex in the plist),
+STREAM_ANALYST_WINDOW (0 in code, 16 in the plist), STREAM_ANALYST_EVERY (10 in code, 16 in the
+plist), STREAM_ANALYST_CONTEXT_MAX (per door), STREAM_ANALYST_TIMEOUT (600), plus loom's
+LOOM_SITTINGS.
 """
 
 from __future__ import annotations
@@ -85,8 +92,8 @@ DOOR = os.environ.get("STREAM_ANALYST_DOOR", "opus")
 CODEX_MODEL = os.environ.get("STREAM_ANALYST_CODEX_MODEL", "gpt-5.6-sol")
 CODEX_EFFORT = os.environ.get("STREAM_ANALYST_CODEX_EFFORT", "low")
 # **The window** (bekh, 2026-09-23, after reading four doors over the whole catalogue): the
-# student reads the LAST N dreams fresh every time and remembers nothing — no session, no
-# ceiling, the same cost forever. 0 keeps the session mode above (the mentor's shape). The
+# analyst reads the LAST N dreams fresh every time and remembers nothing — no session, no
+# ceiling, the same cost forever. 0 keeps the session mode above. The
 # batch (`--n`) is only the trigger then: every n new dreams, one read of the last WINDOW.
 WINDOW = int(os.environ.get("STREAM_ANALYST_WINDOW", "0"))
 # The stand-in id of a seat with no session: every version is a fresh read.
@@ -106,25 +113,24 @@ LOCAL_SESSION = "messages"
 TIMEOUT = int(os.environ.get("STREAM_ANALYST_TIMEOUT", "600"))
 
 PORTRAIT_RE = re.compile(r"<portrait>(.*?)</portrait>", re.S | re.I)
-REMARK_RE = re.compile(r"<remark>(.*?)</remark>", re.S | re.I)
 ROOM_RE = re.compile(r"(\d{4}-\d{2}-\d{2})/(\d{2})(\d{2})(?:-\d+)?$")
 SEAT_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+# A sentence ends on . ? or !, with a closing quote allowed after it (the dreamer's words get
+# quoted, and the quote lands after the stop: `"the best thing," bread` is not a seam,
+# `…a story.” behind the dread` is). Two lookbehinds because Python's must be fixed-width.
+SENTENCE_RE = re.compile(r"(?<=[.?!])\s+|(?<=[.?!][”\"'’])\s+")
+# How many closing sentences make the ribbon's line.
+CLOSING = 2
 
 SHAPE = """
-Answer with the whole portrait, rewritten, then one remark, and nothing else — no preamble, no
-code fences:
+Answer with the whole portrait, rewritten, and nothing else — no preamble, no code fences:
 
 <portrait>
 the portrait as it stands now
 </portrait>
-<remark>
-one sentence, two at most, that you would say out loud about the dreamer right now — your own
-words to somebody beside you, not a summary of the portrait
-</remark>
 """
 
-AGAIN = ("The portrait again, rewritten whole, inside <portrait></portrait>, "
-         "then your remark inside <remark></remark>.")
+AGAIN = "The portrait again, rewritten whole, inside <portrait></portrait>."
 
 
 def log(msg: str) -> None:
@@ -255,8 +261,8 @@ def start_mark(spec: str) -> str:
 
 
 def window_of(newest: str, n: int) -> list[dict]:
-    """The last n unflagged dreams up to and including `newest`, oldest first — the student's
-    material (bekh, 2026-09-23): a fresh read of the last thirty, no memory, every eight."""
+    """The last n unflagged dreams up to and including `newest`, oldest first — the window's
+    material (bekh, 2026-09-23): a fresh read of the last sixteen, no memory, every sixteen."""
     out = []
     for name in sorted((r for r in loom.stream_room_names() if r <= newest), reverse=True):
         page = loom.stream_page(name)
@@ -285,25 +291,24 @@ def batch(covered: str, n: int, partial: bool) -> list[dict]:
 
 # ---- the prompt ---------------------------------------------------------------------------------
 
-def header(room: str, model: str | None = None) -> str:
+def header(room: str) -> str:
     """`[2026-09-22 17:11]` off `stream/2026-09-22/1711` — the name IS when it was written, and
     a `-2` is a hand run inside the same minute, so it gets the same stamp.
 
-    With the dreamer after it when the page says who wrote it — `[2026-09-23 18:58 · gpt2]` —
-    because since 2026-09-23 two models write the pages in turn, and a tic he pins on the one
-    dreamer that turns out to be only the other one's is a wrong portrait. `model` is
-    `loom.stream_model`'s short name, so a page from before the seats (nemo's file name on it)
-    reads `nemo` like tonight's. No stamp at all and the header is what it always was."""
+    Never who wrote it. For one day (2026-09-23) the header carried the page's writer —
+    `[… · gpt2]` — so a tic could be pinned on the right model; bekh threw that out the same
+    night: the analyst is told one machine dreams, and a stamp naming two would have him
+    writing about nemo and gpt-2 instead of the dreamer. The page's `model` stays on the page
+    for us; he never sees it."""
     m = ROOM_RE.search(room)
     stamp = f"{m.group(1)} {m.group(2)}:{m.group(3)}" if m else room
-    return f"[{stamp} · {model}]" if model else f"[{stamp}]"
+    return f"[{stamp}]"
 
 
 def material(pages: list[dict]) -> str:
     """Each dream under its stamp, the text exactly as the dreamer left it — ragged edges, stray
     brackets, all of it, because the tics are in exactly what a tidier would take out."""
-    return "\n\n".join(header(p["room"], p.get("model")) + "\n" + (p.get("text") or "")
-                        for p in pages)
+    return "\n\n".join(header(p["room"]) + "\n" + (p.get("text") or "") for p in pages)
 
 
 def first_prompt(persona: str, pages: list[dict]) -> str:
@@ -316,25 +321,27 @@ def next_prompt(pages: list[dict]) -> str:
 
 
 def parse(answer: str) -> tuple[str, str]:
-    """(the portrait, the remark). The portrait is the run: without it there is nothing to
-    store. The remark is lenient — missing, empty or unclosed it is "", never a failed run, since
-    a portrait that landed with no line is still the portrait, and the card simply has no words."""
+    """(the portrait, the line). The portrait is the run: without it there is nothing to
+    store. The line is the portrait's own closing — see `closing`."""
     m = PORTRAIT_RE.search(answer)
     if not m or not m.group(1).strip():
         raise ValueError("no <portrait> in the answer")
-    return m.group(1).strip(), remark(answer)
+    text = m.group(1).strip()
+    return text, closing(text)
 
 
-def remark(answer: str) -> str:
-    """One line for the card: wrapped lines joined, and quotes round the whole of it taken off,
-    because the card and the narration put their own round it."""
-    m = REMARK_RE.search(answer)
-    if not m:
-        return ""
-    line = " ".join(m.group(1).split())
-    if len(line) >= 2 and line[0] + line[-1] in ('""', "“”", "''", "‘’"):
-        line = line[1:-1].strip()
-    return line
+def closing(text: str, n: int = CLOSING) -> str:
+    """The last n sentences of the portrait, as one line: what the ribbon carries.
+
+    bekh's call (2026-09-23), after three nights of asking for a remark in a second box: every
+    wording of that box came back a list — a caption of the last dream, then *the eternal images
+    are: windows, doors, wires…*, then two sentences he wrote INTO the portrait so he could copy
+    them out. The closings of the portraits themselves, written with nobody asking, were the
+    thing he wanted on the card: one thought, landing a paragraph. So the analyst is told
+    nothing about the ribbon and asked for nothing but the portrait, and the line is cut here,
+    by position. Some ribbons will be weaker than others; that is the price of not asking."""
+    sentences = [s for s in SENTENCE_RE.split(" ".join(text.split())) if s]
+    return " ".join(sentences[-n:]) if sentences else ""
 
 
 def context_of(usage: dict) -> int:
@@ -364,7 +371,7 @@ def load_messages(seat: str) -> list[dict]:
 
 def whole_answer(text: str) -> bool:
     """A complete answer ends on the remark's closing tag; one cut short gets a rethrow."""
-    return text.rstrip().endswith("</remark>")
+    return text.rstrip().endswith("</portrait>")
 
 
 # ---- one run -------------------------------------------------------------------------------------
@@ -520,7 +527,7 @@ def run_once(seat: str, persona_path: str, n: int, partial: bool, start: str | N
            **({"window": window} if window else {})}
     path = version_path(seat, now)
     write_json(path, obj)
-    # `line` on the row too, so the ledger reads as the remarks in order and `eva go` can say
+    # `line` on the row too, so the ledger reads as the closings in order and `eva go` can say
     # one out loud as it lands.
     ledger({"seat": seat, "door": door, "session_id": sid, "rooms": len(rooms), "dreams": total,
             "line": line, "context": ctx, "model": model, "seconds": obj["seconds"],

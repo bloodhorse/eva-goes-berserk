@@ -613,59 +613,81 @@ Env: `STREAM_DREAM_TURNS` (4), `STREAM_DREAM_TIMEOUT`,
 
 ## The analyst — the fourth voice
 
-bekh's (2026-09-23): opus reading **all** the dreams, oldest first, and rewriting a
-psychological portrait of the dreamer — what keeps coming back, and just as much the way it is
-told: a turn of phrase, a word it cannot leave alone, a tic. `analyst.py`, persona in
-`analyst.txt`, bekh's file, never rewritten by the code — **told the dreamer is a machine
-called nemo** (his pick, 2026-09-23, after reading the two lines on ten dreams side by side:
-the blind twin, `analyst-blind.txt`, found the same room-and-wall core and differed only in
-its last sentence; the told line read the woman told to write a story as the dreamer's own
-condition, which is what the sentence bought). Positive register only, told up front that
-nemo writes in lowercase and starts mid-sentence so he doesn't file that as a pattern, and
-asked to write in lowercase himself. Like every voice here he sees the dreamer's text and
-nothing else — no seed, no note, no name, no story — each dream under the date and minute it was
-written and, since the two dreamers, whoever wrote it: `[2026-09-23 18:58 · gpt2]`, or
-`[2026-09-22 17:11]` for a page with no stamp (`loom.stream_model`'s short name, so a page from
-before the seats reads `nemo`). That header is the only thing about the second dreamer he is
-shown — `analyst.txt` still says the dreamer is one machine called nemo, and the file is bekh's.
-What ten dreams cost: ~5k context, 12–18s, four to five cents.
+bekh's (2026-09-23): a psychological portrait of the dreamer — what keeps coming back, and just
+as much the way it is told: a turn of phrase, a word it cannot leave alone, a tic. `analyst.py`,
+persona in `analyst.txt`, bekh's file, never rewritten by the code. **What runs, since
+2026-09-23 late: one character — GPT (`gpt-5.6-sol` through codex) reading the last sixteen
+dreams fresh, every sixteen dreams** (four four-scene stories), no session, no memory. The
+persona tells him *a machine dreams them, one page every five minutes, alone* — no nemo, no
+gpt-2, no "language model" (bekh is fine with *machine*; sol's first pass wrote *the dreamer is a
+listening apparatus… the machine's deepest habit*) — and asks for *one paragraph of about a
+hundred and fifty words* (under "a couple of paragraphs at most" sol wrote 250–290; bekh: *he
+writes a shit ton, halve it*; he now writes ~150–165). Positive register only, told up front
+that the dreamer writes in lowercase and starts mid-sentence so he doesn't file that as a
+pattern, and asked to write in lowercase himself. Like every voice here he sees the dreamer's
+text and nothing else — no seed, no note, no name, no story, **and never who wrote the page**:
+each dream sits under `[2026-09-23 18:58]`, the date and minute and nothing more. A `· gpt2` /
+`· nemo` stamp stood there for part of 2026-09-23 and was taken out the same night (bekh: *let
+them think that's an actual stream*); the page's `model` stays on the page for us.
+Measured: a window of sixteen through sol is ~20.7k codex tokens a call, 11.9k of it the
+cached harness, ~15s.
 
-- **His memory is a resumed cli session, never a summary** (bekh's law). Each run hands the
-  next batch over as the next user turn of one `claude --resume` session, so every dream he was
-  ever given is still in his context word for word. A tic is a phrasing that returns across
-  forty dreams; any reduction — his own last portrait, a digest of ours — keeps the themes and
-  loses exactly the phrasing he is hunting. So the later turns carry the new dreams and one line
-  asking for the portrait again, and nothing else: the persona and every earlier portrait are
-  already in the session. `opus.ask(..., resume=id)` is the door, and `opus.SESSION` is what the
-  cli answered from.
-- **The backlog is the point**: unflagged rooms above the seat's watermark, oldest first, `--n`
-  (10) at a time, one batch per run. Fewer than n new is a quiet no-op; `--partial` takes what
-  is there. The watermark moves whenever the cli answered, parse or not — the dreams are in the
-  session by then, and holding it back would hand them over twice.
-- **Seats**, so two persona lines can read the same dreams side by side: a seat is one
-  session and one persona, the persona sent once, when the session starts — so an edit to
-  the file reaches a new seat only. `--start ROOM` or `--start last:K` puts a fresh seat's first dream there; a
-  fresh seat without it begins at the oldest dream on the shelf. `--start` on a live seat is
-  refused; `--new` bins the seat to `portraits/.trash/<stamp>/` first.
-- **The ceiling** (`STREAM_ANALYST_CONTEXT_MAX`, 150000): the cli compacts a full session on its
-  own, and compaction is exactly the reduction bekh forbade — so the tool stops first, with a
-  ledger row saying *start a new seat*, and makes no call. `context` is input + cache read +
-  cache creation of the last call.
-- **The remark** (bekh, 2026-09-23): every ten dreams the portrait lands **in the feed**, right
-  after the dream it was written after, as a card — a picture and one sentence or two of his
-  own, something he would say out loud and not a summary — and pressing it opens the manuscript,
-  the whole portrait of that version with the earlier ones reachable. The card is dreamshit's to
-  draw; everything under it is here. The shape asks for a second tag after `<portrait>`:
-  `<remark>`, one sentence he would say out loud about the dreamer right now, and `AGAIN` asks
-  for both. Parsed leniently — missing, empty or unclosed is `""`, never a failed run (a
-  portrait with no line is still the portrait) — wrapped lines joined and quotes round the whole
-  of it taken off, since the card and the narration put their own. Stored as `line`.
+- **The portrait only; the ribbon's line is its closing, cut by code.** `SHAPE` and `AGAIN` ask
+  for `<portrait>` and nothing else, and he is never told a card or a ribbon exists. `line` is
+  the portrait's **last two sentences** (`analyst.closing`, `SENTENCE_RE`, `CLOSING = 2`): a
+  sentence ends on `.` `?` `!`, a closing quote allowed after the stop, so `…a story.” behind`
+  is a seam and `"the best thing," bread` is not. The portraits' own closings, written with
+  nobody asking, were the register bekh wanted (*alone, sleepless, and listening through
+  walls, it keeps making maps from wounds and stories from noise.*); every box that asked for a
+  line came back a list (below). Some ribbons will be weaker than others — that is the price of
+  not asking. `line` is never empty on a new version; the versions written before any line
+  existed read `""`.
+- **Window mode** (`--window N`, `STREAM_ANALYST_WINDOW`; 0 = the session mode below): the batch
+  (`--n`) is only the trigger and the last N unflagged dreams are the material, `first_prompt`
+  every time, nothing resumed, no transcript kept, `session_id: "window"`, `window` on the
+  version and the row, `dreams` = the window's width. A backlog is read batch by batch, each with
+  the window that stood at its time; `--start` in window mode only moves the watermark and keeps
+  the seat's versions.
+- **The backlog**: unflagged rooms above the seat's watermark, oldest first, `--n` at a time, one
+  batch per run. Fewer than n new is a quiet no-op; `--partial` takes what is there. The
+  watermark moves whenever the door answered, parse or not.
+- **Session mode, still in the code** (`--window 0`, the code's default): his memory is a
+  resumed session, never a summary (bekh's law for that shape). Each run hands the next batch
+  over as the next user turn of one session, so every dream he was given is still in his context
+  word for word — a tic is a phrasing that returns across forty dreams, and any reduction keeps
+  the themes and loses exactly the phrasing. `opus.ask(..., resume=id)` is the opus door. **The
+  ceiling** (`STREAM_ANALYST_CONTEXT_MAX`, per door: 150k opus and fable, 120k deepseek, 180k
+  codex): the cli compacts a full session on its own, and compaction is exactly the reduction
+  bekh forbade — so the tool stops first, with a ledger row saying *start a new seat*, and makes
+  no call. `context` is input + cache read + cache creation of the last call.
+- **Seats**, so persona lines or doors can read the same dreams side by side: a seat is one
+  persona and, in session mode, one session — the persona sent once, when the session starts,
+  so an edit reaches a new seat only (in window mode it goes every call). `--start ROOM` or
+  `--start last:K` puts a fresh seat's first dream there; a fresh seat without it begins at the
+  oldest dream on the shelf. `--start` on a live session seat is refused; `--new` bins the seat
+  to `portraits/.trash/<stamp>/` first.
+- **Four doors, one seat each**: `--door opus` (the code's default; the cli, one resumed
+  session); `--door fable` (the same door, `--model fable`, on his fable limit); `--door codex`
+  (GPT through codex, the reader's countermanded seat folder, model `STREAM_ANALYST_CODEX_MODEL`
+  = `gpt-5.6-sol`, effort low; in session mode one recorded thread resumed with `codex exec
+  resume <thread>`, replaying the whole thread plus the harness every call); `--door deepseek`
+  (v3.2 over openrouter, the wire carried over from friendship-is-magic's third chair —
+  `deepseek.py`: pinned to one host with no fallbacks, thinking off, a reasonless or cut reply
+  rethrown, the key read from the login keychain `OPENROUTER_API_KEY` at the moment of the call
+  and never from the env; in session mode the seat keeps the transcript itself as
+  `messages.json`). The same prompts to the byte through every door. A seat is born with a door
+  and keeps it (`--door` on a seat of another door needs `--new`).
 - **Storage**, under `shelf/stream/portraits/<seat>/`: `session.json` = `{session_id, persona,
-  started, covered, dreams, context, model}`, rewritten after every call; one version per
-  portrait at `<YYYY-MM-DD>/<HHMM>[-n].json` = `{ts, seat, session_id, rooms, dreams, text,
-  line, model, seconds, usage, context}`, every one kept, the latest being the portrait (the
-  three written before the remark have no `line`, read as `""`). Ledger rows `kind:
-  "portrait"` carrying `line`; failures are a row and exit 0.
+  started, covered, dreams, context, model}` (plus `door`), rewritten after every call; one
+  version per portrait at `<YYYY-MM-DD>/<HHMM>[-n].json` = `{ts, seat, door, session_id, rooms,
+  dreams, text, line, model, seconds, usage, context}` (plus `window`), every one kept, the
+  latest being the portrait. Ledger rows `kind: "portrait"` carrying `line`; failures are a row
+  and exit 0. **The public seat, `analyst`, holds the sol window's portraits only**: it started
+  with three written by hand over the last 48 dreams (`--start last:48`, three windows of
+  sixteen) and the job carries on from there. The earlier tenants were moved out, kept:
+  opus's whole-catalogue session to `portraits/opus-session/`, deepseek's evening to
+  `portraits/student-deepseek/` — two seats' portraits ending inside one four-scene pack stack
+  two ribbons at its foot.
 - **His face is `analyst.jpg`** beside his persona (`analyst-source.png` the png GPT handed
   back), tracked: one face, a second only if the persona changes. bekh's idea (2026-09-23):
   the portrait is painted **from the system prompt** — GPT's image tool through `plate.draw`,
@@ -675,72 +697,30 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   a page-headed figure at a desk in front of the sunset sea; his two edits were *portrait
   orientation* and *he has a mustache*, and the second try is the one — half flesh, half torn
   pages, a face asleep inside the eye socket, ink on the fingers. He knows it reads as a man
-  and took it anyway: *too good to raise some disagreements.* Meant for the card in the feed
-  (dreamshit, not yet drawn): face left, the remark right, a press opening the manuscript.
-- **Four doors, one seat each** (bekh, 2026-09-23: *fresh blood* — he has read too much of
-  one family's prose, and the analyst is the voice he reads most). `--door opus` (the
-  default; the cli, one resumed session); `--door fable` (the same door, `--model fable`, on
-  his fable limit); `--door codex` (GPT through codex, one recorded thread resumed with
-  `codex exec resume <thread>`, the reader's countermanded seat folder, model
-  `STREAM_ANALYST_CODEX_MODEL` = `gpt-5.6-sol`, effort low; a resumed turn replays the whole
-  thread plus the harness's ~18k every call — 20k codex tokens at ten dreams, 44k at
-  twenty); `--door deepseek` (v3.2 over openrouter, the wire carried over from
-  friendship-is-magic's third chair — `deepseek.py`: pinned to one host with no fallbacks,
-  thinking off, a reasonless or cut reply rethrown, the key read from the login keychain
-  `OPENROUTER_API_KEY` at the moment of the call and never from the env; no session on the
-  far side, so the seat keeps the transcript itself as `messages.json` and sends it whole
-  every call, the router caching the prefix). The same prompts to the byte through every
-  door. A seat is born with a door and keeps it (`--door` on a seat of another door needs
-  `--new`); the ceiling is per door (`CONTEXT_MAX`: 150k opus and fable, 120k deepseek, 180k
-  codex).
-  - **What the same dreams read like through each** (the four on the last ten, then opus and
-    deepseek on the whole catalogue of 205; the pages are on the sheets, *the analyst — four
-    doors* and *two doors*). bekh: **he likes GPT and deepseek and is done with the claude
-    family** — not the insight, the tics; opus's whole-catalogue portrait he called more
-    insightful *and the prose is killing me*; fable was the most exact (it alone caught
-    gpt-2's capital *I*) and the same family. Costs on ten dreams: deepseek $0.0004, opus
-    $0.06, fable $0.21, sol 20k codex tokens; **the whole catalogue through deepseek cost
-    $0.034** (21 calls, 486k in, 373k cached) and its context came out at 42k where opus's
-    was 85k — a tighter tokenizer and no cli preamble.
-  - **The long session is a claude/GPT strength and it broke deepseek**: over 205 dreams
-    opus and sol tracked gpt-2's arrival as an event (*two hundred pages of an empty second
-    chair*); deepseek's final portrait was the last ten dreams wearing a coat. A fresh read of
-    thirty (`--start last:40 --n 30`, one call, 5.4k tokens, a tenth of a cent) was his best.
-- **Two characters (bekh, 2026-09-23, late). The student is wired; the mentor is decided.**
-  *The student* — **deepseek, a fresh read of the last thirty dreams, every eight** (two
-  four-scene stories), no session: `--window N` (`STREAM_ANALYST_WINDOW`; 0 = the session
-  mode) makes the batch the trigger and the last N dreams the material, `first_prompt` every
-  time, nothing resumed, no transcript kept, `session_id: "window"`, `window` on the version
-  and the row, `dreams` = the window's width; a backlog is read batch by batch, each with the
-  window that stood at its time; `--start` in window mode only moves the watermark and keeps
-  the seat's versions. **The public seat holds the student's portraits only**: opus's
-  whole-catalogue session (37 versions) was moved out to `portraits/opus-session/` the same
-  night, because where two seats' portraits ended inside one four-scene pack the front
-  stacked two ribbons at its foot; the two that ended on the newest page are in
-  `portraits/.trash/retracted/`. It runs on the public `analyst` seat from the job's plist (`STREAM_ANALYST_DOOR=deepseek`,
-  `STREAM_ANALYST_WINDOW=30`, `STREAM_ANALYST_EVERY=8`); the persona is still `analyst.txt`.
-  Measured: 30 dreams, 5.1k tokens in, 12s, $0.0012. *The mentor* — sol through codex, one
-  thread, every dream ever, spoken to **every twenty dreams** (bekh: *you're rationing that
-  shit too much*) — not wired yet; the door and the seat exist (`--door codex`), the job, the
-  tap at twenty and the api's second key do not. The front reaches the mentor through the student. The
-  lore is bekh's and it is Planescape: the mentor is **Dhall**, the Mortuary's scrivener who
-  keeps the book of every name and remembers the one who keeps coming back — and nemo is
-  *nobody*, the nameless one who wakes every five minutes with no memory; the student is old
-  and tired too. Settled in the talk: the mentor **coughs** (a lone `*` in the text where it
-  takes him, the page to paint an ink blotch there, black or a dried-blood red), he **addresses
-  the student by name** (no names yet), he is handed the student's latest portrait and the
-  student never sees his, and *the dhall lives in the picture and in those two things, never
-  in the prose*: every attempt to put the register in the prompt — mine by hand, and a persona
-  naming Dhall outright — came back stylised and thin, and he keeps **the bare analyst persona**
-  for both, to be changed later. `scrivener.txt` is the draft of the mentor's persona as the
-  night left it (*the scrivener of a book of dreams… old and ill… you cough… a student*),
-  tracked, not in use. His **face is not found**: four tries on the sheets (*the scrivener*) —
-  from the dhall persona (a cowled lens-headed thing at a ledger, the student drawn unasked in
-  the corner), from the analyst's face as a reference (`-i`; the same painter, the man aged into
-  pages — *the same idea, no*), under the cut persona (a chandelier of cables and cards over a
-  numbered book), and close with the book out (a card-built head with a hose mouth coughing the
-  `*`, which *got him, but that's not it*). bekh: *i don't know what i'm searching for; fresh
-  eyes tomorrow.* The one paint lesson kept: a scene gets inventoried, a single thing does not.
+  and took it anyway: *too good to raise some disagreements.* The ribbon in dreamshit's feed
+  draws it: face left, the closing right, a press opening the manuscript.
+- **Tried and parked (2026-09-23).** *The doors*: the four on the last ten dreams, then opus and
+  deepseek on the whole catalogue of 205 (the sheets, *the analyst — four doors* and *two
+  doors*) — bekh likes GPT and deepseek and is **done with the claude family**: not the insight,
+  the tics (*the prose is killing me*). The long session is a claude/GPT strength and it broke
+  deepseek — opus and sol tracked gpt-2's arrival as an event, deepseek's final portrait was the
+  last ten dreams wearing a coat; a fresh read of thirty was his best. *The student* — deepseek, a
+  fresh read of the last thirty every eight — ran one evening on the public seat and was retired:
+  its remarks read as captions of the last dream retold as a metaphor. *The mentor* — sol on one
+  thread that has read everything, every twenty, modelled on Planescape's **Dhall** (the
+  Mortuary's scrivener; nemo as the nameless one), with a cough mark in his text and the student
+  addressed by name — was never wired; every attempt to write that register into a prompt came
+  back stylised and thin, and his face was never found. `scrivener.txt` is the mentor's draft
+  persona as that night left it, tracked, not in use. *The remark box* — a second tag asking
+  for a line of his own — was worded three ways and each came back a list: (a) *one sentence
+  you'd say out loud… not a summary* gave captions of the last dream and similes (18 of 78
+  remarks carried *like* / *as if*); (b) *a couple of sentences… the images, patterns or ideas
+  that keep coming back — the eternal things* gave three remarks all opening *the eternal images
+  are* and closing on a question, an inventory of nouns; (c) *two sentences copied word for word
+  from your portrait* made him write *what keeps coming back is…* sentences into the portrait to
+  copy out. bekh loved the portraits and hated the remarks *because they have a template and
+  it's just a list* — hence the closing by position. The sheets page of the first two sol
+  passes, before the closing rule, is `analyst-sixteen.html`.
 - **Also on the table**: nemo and gpt-2 as analysts of their own dreams — not a seat, a
   document: ten dreams, then *notes on the dreamer, written after reading these pages:*, a
   fan on the loom; gpt-2 gets four dreams and a seam. Untried.
@@ -764,24 +744,19 @@ What ten dreams cost: ~5k context, 12–18s, four to five cents.
   (`eva/stream/com.bekh.eva-stream-analyst.plist`, tracked) — the sleeper's shape, no interval,
   `--once`, `RunAtLoad` false, log `/tmp/eva-stream-analyst.log` — and `stream.py` kickstarts it
   with the other voices when a page lands (`STREAM_KICK_INTERPRETER=1`), each kick on its own.
-  He runs on every landing and does nothing until ten new unflagged dreams are above his
-  watermark, so nine taps in ten are a directory walk and no call, and the tenth puts the
-  portrait on the dream that completed the ten. A backlog (the stream ran while he was off) is
-  eaten one batch per landing, never all at once. His session keys on the cli's cwd, which is
-  `tempfile.gettempdir()`: launchd hands this mac's agents the same `/var/folders/…/T` as the
-  shell (the sleeper's tapped sessions land in that project slug too), so a session started by
-  hand resumes from the job. `eva go`'s narration names each landing as
-  `the analyst · 40 dreams · "<line>"` (`narrate.py`, off the ledger row); a seat other than
-  `analyst` says which, `the analyst (blind) · …`.
+  He runs on every landing and does nothing until sixteen new unflagged dreams are above his
+  watermark, so fifteen taps in sixteen are a directory walk and no call, and the sixteenth puts
+  the portrait on the dream that completed the sixteen. A backlog (the stream ran while he was
+  off) is eaten one batch per landing, never all at once. `eva go`'s narration names each
+  landing as `the analyst · 16 dreams · "<line>"` (`narrate.py`, off the ledger row); a seat
+  other than `analyst` says which, `the analyst (blind) · …`.
 
 ```bash
-uv run --python 3.12 eva/stream/analyst.py --once                                # next batch, default seat
-uv run --python 3.12 eva/stream/analyst.py --once --seat analyst --start last:10
-uv run --python 3.12 eva/stream/analyst.py --once --seat blind --start last:10 \
-  --persona eva/stream/analyst-blind.txt
+uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16   # what the job runs, by hand
+uv run --python 3.12 eva/stream/analyst.py --once --door codex --window 16 --n 16 --start last:48   # a backlog by hand: three windows, run three times
 uv run --python 3.12 eva/stream/analyst.py --show                                # the latest, no call
-uv run --python 3.12 eva/stream/analyst.py --once --door deepseek --seat ds30 --new --start last:40 --n 30   # a fresh read of thirty
-uv run --python 3.12 eva/stream/analyst.py --once --door codex --seat sol --start last:20     # GPT, one thread
+uv run --python 3.12 eva/stream/analyst.py --once --seat blind --new --start last:10 \
+  --persona eva/stream/analyst-blind.txt                                         # a side seat, session mode
 ```
 
 ```bash
@@ -793,8 +768,8 @@ curl -s https://eva.x/api/stream/portraits | python3 -m json.tool | head
 ```
 
 Env: `STREAM_ANALYST_SEAT` (analyst; the loom reads it too), `STREAM_ANALYST_PERSONA`,
-`STREAM_ANALYST_DOOR` (opus in code; deepseek in the plist), `STREAM_ANALYST_WINDOW` (0 in
-code; 30 in the plist), `STREAM_ANALYST_EVERY` (10 in code; 8 in the plist),
+`STREAM_ANALYST_DOOR` (opus in code; codex in the plist), `STREAM_ANALYST_WINDOW` (0 in
+code; 16 in the plist), `STREAM_ANALYST_EVERY` (10 in code; 16 in the plist),
 `STREAM_ANALYST_CONTEXT_MAX` (per door unless set), `STREAM_ANALYST_TIMEOUT` (600),
 `STREAM_ANALYST_CODEX_MODEL` (gpt-5.6-sol), `STREAM_ANALYST_CODEX_EFFORT` (low); the deepseek
 door's own: `OPENROUTER_URL`, `OPENROUTER_KEYCHAIN` (OPENROUTER_API_KEY), `STREAM_DEEPSEEK_MODEL`,
@@ -1105,12 +1080,13 @@ no seed or note, no `--resume`; the next run resuming that id with only the new 
 new being no call, `--partial` taking them; two seats with their own persona and session; the
 ceiling refusing with a row; a garbage answer moving the session on and a dead cli moving
 nothing; `--start` on a live seat refused and `--new` binning it; the file shapes; the shape
-asking for `<portrait>` then `<remark>` and `AGAIN` for both, the remark cleaned into `line` on
-the version and the row, and no remark being `""` and still a portrait; the header with the
-dreamer (`· gpt2`, an old file name read as `· nemo`) and without; the narration's line. For the
+asking for `<portrait>` only, with nothing about a remark, a ribbon, a card or a sentence
+reaching the prompt or `AGAIN`, and `line` on the version and the row being the portrait's
+closing; `closing` itself (the last two sentences, a quote after a stop a seam, a comma inside a
+quote not); the header never naming who wrote the page; the narration's line. For the
 portrait on the api (`AnalystApi`): the page it was written after carrying it and no other page,
 its `id` asking for the same object back; `/api/stream/portraits` newest first, a version from
-before the remark reading `line: ""`, `?id=` 404 on none and on `session`, 400 on `..`, a dot
+before any line existed reading `line: ""`, `?id=` 404 on none and on `session`, 400 on `..`, a dot
 segment, an empty or doubled slash; a re-run on the same last room winning; a non-default seat
 and a binned version never on the api; a landing moving that room's fingerprint and no other.
 The kick holds the analyst's job in the argv with the flag on, none with it off, and a failure
