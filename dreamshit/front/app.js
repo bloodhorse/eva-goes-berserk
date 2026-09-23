@@ -146,7 +146,11 @@ function buildRow(p) {
     if (seedBtn) gh.onclick = seedBtn.onclick;
     text.append(gh);
   }
-  const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
+  // who dreamt it, beside when (bekh, 2026-09-24): two dreamers take turns since 2026-09-23 and
+  // every page is stamped with its writer; a page from before the stamp is nemo's
+  const WRITERS = { nemo: 'nemo', gpt2: 'gpt-2 xl' };
+  const w = document.createElement('span'); w.className = 'when';
+  w.textContent = when(p.ts) + ' · ' + (WRITERS[p.model] || p.model || 'nemo');
   text.append(body, w);
   const reading = document.createElement('div'); reading.className = 'reading';
   row.append(slot, text, reading);
