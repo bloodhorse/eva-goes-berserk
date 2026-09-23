@@ -13,7 +13,10 @@
 # against an unattended painter eating a week). A run that asks for pictures needs headroom, so
 # for the run the cap becomes $CAP — bekh's own number for the week (43 on 2026-09-22: "my real
 # expected usage"), not a formula — and goes back when the run ends, however it ends. A week
-# already past it refuses to run.
+# already past it refuses to run. `-l` / `--limitless` lifts the week cap for the run (bekh,
+# 2026-09-23: his week, his call): no refusal up front, the painter paints however high the week
+# goes. The session guard (80, codex.py) and "no usage cache = no pictures" still hold — those
+# stop a run from walking into codex refusing mid-plate, not from spending.
 set -u
 cd "$(dirname "$0")/../.." || exit 1
 U=$(id -u)
@@ -64,21 +67,26 @@ writer_off() {
   say "writer off, nemo told to stop"
 }
 
+LIMITLESS=0; ARGS=()
+for a in "$@"; do case "$a" in -l|--limitless) LIMITLESS=1 ;; *) ARGS+=("$a") ;; esac; done
+set -- ${ARGS[@]+"${ARGS[@]}"}   # the bash 3.2 way to expand an empty array under set -u
 case "${1:-}" in
   stop)   # from another terminal, or after a lost one: the same as ctrl-c would do
     say "== stopped by hand"; writer_off; cap_restore; exit 0 ;;
   ''|*[!0-9]*)
-    echo "usage: eva go N [CAP]   (N dreams = N passages, N pictures; CAP = the painter's week cap for the run, $CAP; ctrl-c stops it clean)   |   eva go stop"; exit 2 ;;
+    echo "usage: eva go [-l|--limitless] N [CAP]   (N dreams = N passages, N pictures; CAP = the painter's week cap for the run, $CAP; -l = no week cap; ctrl-c stops it clean)   |   eva go stop"; exit 2 ;;
 esac
 N=$1; CAP=${2:-$CAP}
+# 101, not 100: held_for refuses at week >= cap, and a week at 100% is codex's own wall anyway
+[ "$LIMITLESS" = 1 ] && CAP=101
 if launchctl print gui/$U/com.bekh.eva-stream >/dev/null 2>&1; then echo "the writer is already on — eva go stop first"; exit 1; fi
 week=$(week_now); [ -n "$week" ] || { echo "no codex usage cache (~/.cache/claude-usage/codex.json) — run cu first"; exit 1; }
-if [ "$week" -ge "$CAP" ]; then echo "codex week at $week%, the cap is $CAP% — nothing would get painted, not running"; exit 1; fi
+if [ "$LIMITLESS" = 0 ] && [ "$week" -ge "$CAP" ]; then echo "codex week at $week%, the cap is $CAP% — nothing would get painted, not running"; exit 1; fi
 
 # ---- the run --------------------------------------------------------------------------------
 DAY=$(date +%F); STAMP=$(date +%H%M)
 : > "$LOG"
-say "== eva go: $N dreams, ~$((N * 5)) min; codex week $week%, painter cap $CAP% for the run. ctrl-c stops it clean."
+say "== eva go: $N dreams, ~$((N * 5)) min; codex week $week%, painter cap $([ "$LIMITLESS" = 1 ] && echo "lifted (limitless)" || echo "$CAP%") for the run. ctrl-c stops it clean."
 cap_get > "$PL.cap-was"
 cap_set "$CAP"
 trap 'echo; say "== interrupted"; writer_off; narrate_off; cap_restore; exit 1' INT TERM
