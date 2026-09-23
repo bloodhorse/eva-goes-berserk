@@ -119,11 +119,13 @@ function buildRow(p) {
   // opens in a floating box over it (bekh: without the seed the page is right); pic opens the
   // painting full screen, and only shows once the painting has arrived (plates land late)
   const btns = document.createElement('div'); btns.className = 'btns';
+  let seedBtn = null;
   if (p.seed && String(p.seed).trim()) {
     const btn = document.createElement('button'); btn.textContent = 'seed';
     const box = document.createElement('div'); box.className = 'seedbox'; box.hidden = true;
     box.textContent = String(p.seed).trim();
     btn.onclick = e => { e.stopPropagation(); const open = box.hidden; closeSeeds(); box.hidden = !open; };
+    seedBtn = btn;
     box.onclick = e => e.stopPropagation();
     btns.append(btn); text.append(btns, box);
   } else text.append(btns);
@@ -131,7 +133,7 @@ function buildRow(p) {
   btns.append(pic);
   // the seed's last line, ghostly, right above the passage (bekh, 2026-09-23): the dream
   // surfaces out of the last thing the found text said, and the whole seed stays behind its
-  // button. ?ghost=0 takes it away.
+  // button. ?ghost=0 takes it away. A press on it opens the seed, as `seed` does (bekh, 2026-09-23).
   const g = ghostLine(p.seed);
   if (g && GHOST) {
     // only the opening words surface out of nothing — the fade is theirs, not the paragraph's,
@@ -141,6 +143,7 @@ function buildRow(p) {
     if (m) { const lead = document.createElement('span'); lead.className = 'lead'; lead.textContent = m[1];
              gh.append(lead, m[2] || ''); }
     else gh.textContent = g;
+    if (seedBtn) gh.onclick = seedBtn.onclick;
     text.append(gh);
   }
   const w = document.createElement('span'); w.className = 'when'; w.textContent = when(p.ts);
