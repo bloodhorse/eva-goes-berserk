@@ -53,6 +53,25 @@ choices at forks, the things that arrive become strange across the whole page** 
 theme pushed, not damage, but a different weather over the same landscape. "Lightning": rare,
 bright, from everywhere, and the ground still there afterwards.
 
+## Already tried (2026-09-24, so build on it, don't propose it)
+
+- **Heat.** With min_p 0.08 applied before temperature, t3 and t5 both keep the frame on 9
+  of 10 pages; t5 flattens to near-uniform over the survivors, so heat past ~4 changes
+  nothing more. t3 made her see (creatures that eat stones to stop their teeth chattering);
+  t5 gave the best single lines of the night (*because i had forgotten i had no body*, said
+  in passing). Heat moves her further along the axis she already had.
+- **RoPE tampering**, llama.cpp flags, stock temperature, ten seeds each. All three bends kept
+  the frame on 8–9 of 10 pages, and each bend had its own character — that is the finding:
+  *the kind of thing that arrives* changed, not the amount of damage. `--rope-freq-scale 0.5`
+  (positions compressed): tighter circles, shorter sentences, a phrase returning a beat later,
+  introspective, no leaks. `--rope-freq-base 100000` (spread): the loosest, two web leaks in
+  ten, and the biggest arrivals, two of them ending the page on themselves (*a machine with no
+  mouth, a machine that says my name the way i used to write it*). `--rope-freq-base 2500000`
+  (compressed hard): the strangest bodies — feet with one bone, walls that heat up and turn
+  transparent — dream-logic on objects. Uniform, weights untouched, free. Gentler than
+  lightning. Nothing at the model's end moved the seeds that carry hard line wraps: those
+  summon Project Gutenberg under every setting.
+
 ## What we want researched
 
 Survey the mechanisms below and any you find that we missed. For each: what it does

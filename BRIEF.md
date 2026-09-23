@@ -306,13 +306,20 @@ shape — now.
      not acted on: the prompt's word *Landscape.* (meant as a shape) makes GPT paint seashores.
      Other hands: `IMAGE-MODELS.md`; Google's API has no free image tier; driving Gemini's web
      page by script was weighed and he hated it.
-   - **The next dreamer is olmo** (2026-09-24, bekh reads gpt-2's pages and doesn't like them):
-     OLMo 3 32B at its last pre-anneal checkpoint, the one base where "nothing installed" is
-     checkable, converted by us to Q4, served from a RunPod serverless endpoint
-     (`bloodhorse/olmo-dreamer`) woken per burst, blind against nemo before it takes gpt-2's
-     seat. Decided, nothing built. `docs/olmo.md` is the doc: the RunPod lore from
-     azeroth-render, the cold-start workaround, the order of moves. The writer must be live,
-     never pre-recorded.
+   - **The next dreamer is olmo, and bekh has read her** (2026-09-24, the night): OLMo 3 32B
+     at its last pre-anneal checkpoint, the one base where "nothing installed" is checkable, a
+     Q4 already on HF, run off a rented A40 pod for one night (the serverless endpoint
+     `qdipqwxl1l5ngm` exists but its 18 GB cached model never mounted). **He loves the voice:
+     she holds the frame for a whole page and reads sober — nemo's weird, said in a level
+     tone — and she goes into the palette, not in nemo's place.** What's harvested, all in
+     `docs/`: the ten mystical seeds one page each, the last fifty at their original heats
+     (pairs against the stream's pages, opus not yet set on them), every seed on the shelf,
+     the ten at t3 and t5, the ten under three rope bends. Her range is t3–5 with min_p 0.08
+     and xtc; rope is a second axis (compress → circles, spread → leaks and lightning,
+     compress hard → strange bodies). `docs/olmo.md` is the state; `docs/brief-mescalito.md`
+     is the research brief for perturbing the model uniformly until a sane model throws
+     lightning (his idea; the vector was refused as one-directional). Tomorrow: serverless
+     again with the weights baked into the image, and the brief handed to a researcher.
    - **Open, small**: codex loads his global `~/.codex/AGENTS.md` on every call and nothing
      switches it off (the seat's file overrides it, and has held); a codex session file lands in
      `~/.codex/sessions` per note (`--ephemeral` exists, unused); the filter misses most dead

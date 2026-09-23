@@ -5,13 +5,38 @@ A bigger dreamer for the stream, to replace gpt-2 xl, whose pages bekh reads and
 serverless endpoint**, woken for a burst and asleep otherwise. Mistral Small 3.1 24B base is
 the fallback if olmo's prose comes out dead.
 
-**Where it stands (2026-09-24, night):** the weights exist on HF already (below — no
-conversion), the deploy repo `bloodhorse/olmo-dreamer` is written and pushed (private, like
-azeroth-render), the ten seeds for the blind fan are cut into `docs/olmo-seeds/`, and **the
-endpoint exists: `qdipqwxl1l5ngm`**, load-balancing, booted clean on gemma-270m (a whole
-A5000, Montreal), **streams word by word** through the balancer (61 chunks, longest gap
-0.15 s, first token 0.52 s). Next: the cached model flipped to olmo, the ten seeds fanned ×4
-(`fan.py` in the repo), the pages to the sheets site as `olmo-prophecies`.
+**Where it stands (end of 2026-09-24):** **bekh has read her and wants her in the palette** —
+"nemo's weird in a sober tone", beside nemo, not in his place. The weights are a checked Q4
+on HF (below), the deploy repo `bloodhorse/olmo-dreamer` is written (private, like
+azeroth-render), and **the endpoint exists: `qdipqwxl1l5ngm`**, load-balancing, booted clean
+on gemma-270m (a whole A5000, Montreal), **streams word by word** through the balancer (61
+chunks, longest gap 0.15 s, first token 0.52 s) — but the flip to the 18 GB cached model
+never mounted, so the night's pages came off a plain A40 pod (`pod.py` + `pod-boot.sh` in
+the repo, terminated at the end). Everything she wrote is in `docs/`: `olmo-prophecies`
+(the ten mystical seeds), `olmo-fifty` (the last fifty stream seeds at their original
+heats — pairs against the stream's pages, **opus not set on them yet, bekh's instruction**),
+`olmo-shelf` (every seed on the shelf), `olmo-heat-3.0` / `-5.0`, `olmo-rope-*`. Next:
+serverless with the weights baked into the image (his call, below), and the mescalito brief
+(`docs/brief-mescalito.md`) handed to a researcher.
+
+**What she is (2026-09-24, one night, ~120 pages):** she holds the frame for the whole 170
+tokens — first person kept, no letter-salad, no web footer at the stream's heat — and reads
+sober: at t2.0–2.4 she reads like nemo at 1.2. Her best lines are arguments inside the
+frame, not images (*the empty channel is making up words and voices*; *the house did not
+answer, and so i knew i might*; *a tower is just a place for voices to stand*). **Heat:** with
+min_p 0.08 under it, t3 and t5 both keep the frame on 9 of 10; past ~4 the survivors are
+near-uniform so more heat changes nothing; t3 makes her see, t5 gives the best single lines
+(*because i had forgotten i had no body*, in passing). Her range is **t3–5, min_p 0.08, xtc
+on**; for more, lower min_p, not more heat. **Rope** (server flags, stock heat) is a second
+axis: every bend kept the frame on 8–9 of 10 and each had a character — scale 0.5 tighter
+circles and talking to itself; base 100k the loosest, two web leaks and the biggest
+arrivals (*a machine with no mouth, a machine that says my name the way i used to write it:
+BEK*); base 2.5m the strangest bodies, dream-logic on objects. **Seeds with hard line wraps
+summon Project Gutenberg under every setting** — a seed fix, not a model one. The storm-girl
+seed grew wings on olmo as it did on nemo: the seed's attractor, found by two models. The
+pod rig: llama's flags come from the public ntfy topic `kk_olmo_flags`, so a server-side
+setting is one curl and a 20-second restart; `fan.py --temp/--xtc`, a sibling `<name>.t`
+pins a seed's heat, `--url` for a pod.
 
 **The flip to olmo stalled (2026-09-24, 19:41–20:10 UTC):** after the cached model was set to
 the 18 GB repo, every worker sat on runpod's "initializing model files" — assigned, never
@@ -231,19 +256,27 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 1. ~~check the builder's image-size limit~~ (80 GB, fine; cached model is the pick).
 2. ~~convert~~ (Tricit's Q4 exists and checks out).
 3. ~~`bloodhorse/olmo-dreamer` written; endpoint `qdipqwxl1l5ngm` created, gemma booted,
-   SSE word by word~~ → flip the cached model to olmo (console); box / say again; record the
-   18 GB cold start here.
-4. the local bearer proxy; the blind fan olmo vs nemo on `docs/olmo-seeds/`, by hand, to the
-   sheets site unmarked.
-5. only if olmo wins: `eva go` learns the warm-up and the endpoint URL, and olmo takes gpt-2's
-   turns.
+   SSE word by word~~; the cached-model flip stalled → **bake the weights into the image**
+   (a `RUN curl` in the Dockerfile, `MODEL_PATH` set, the cached model taken off the
+   endpoint), box / say, record the cold start here.
+4. ~~the blind read~~ — bekh read her off the pod and decided: she's in. Still to do: the
+   local bearer proxy so `census.py --models` and the stream can talk to the endpoint; opus
+   on the fifty pairs (`docs/olmo-fifty.json` against the stream's pages, blind, A/B
+   shuffled; `pairs.py` in the repo pairs `docs/olmo-fifty-stream.json` with `docs/olmo-fifty.json`) when bekh says.
+5. `eva go` learns the warm-up and the endpoint URL, and olmo takes a seat beside nemo — a
+   third dreamer in the turn order, gpt-2 out — at her own heat (t3–5) and, if wanted, a rope
+   bend.
+6. the mescalito brief to a researcher (codex one-shot from the file, or an opus agent with
+   the web); the answer decides the next perturbation experiment.
 
 ## open
 
-- **sampler at 32B**: nemo's heat range was found on nemo. Olmo may want its own; the first fans
-  tell.
+- ~~sampler at 32B~~ — found: t3–5, min_p 0.08, xtc on (above).
 - **the first word typed**: with a cold worker behind a queue, how the page's live writing
-  looks on olmo's turns.
+  looks on olmo's turns. The balancer streams word by word (measured on gemma); the cold
+  start is the unknown until the weights are baked.
+- **rope per page**: a bend is a server flag, so the stream can't draw it by lot per page
+  without a restart; one fixed bend per endpoint, or two endpoints.
 
 ## footnote: the team boxes (weighed and dropped, 2026-09-24)
 

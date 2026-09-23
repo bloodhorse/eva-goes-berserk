@@ -32,9 +32,14 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    one, because it answers in seconds. Everything so far happened here.
 2. **mistral small 3.1 24b base** — the clean family, apache, gguf up; q8 needs a rented card.
 3. **olmo 3 32b at its last pre-anneal checkpoint** — the only one where "nothing installed" is
-   checkable (the Allen Institute publishes every step); needs converting to gguf. **Jumped the
-   queue on 2026-09-24** as gpt-2 xl's replacement: Q4 on a RunPod serverless endpoint woken per
-   burst, `docs/olmo.md`.
+   checkable (the Allen Institute publishes every step); a Q4 gguf exists on HF, checked.
+   **Jumped the queue on 2026-09-24** as gpt-2 xl's replacement, and **bekh read her that
+   night and wants her in the palette**: she holds a frame for a whole page and reads sober,
+   nemo's weird in a level tone; her heat is t3–5, and rope bends are a second axis. Runs on
+   RunPod — a pod worked, the serverless endpoint (`bloodhorse/olmo-dreamer`,
+   `~/tower/forge/olmo-dreamer`) is the goal and its cached model stalled; next is baking the
+   weights into the image. `docs/olmo.md` is the state, `docs/brief-mescalito.md` the brief
+   for charging the weights.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
@@ -138,9 +143,12 @@ text for us, `dreamshit/` is the published face. Each part of `eva/` that needs 
   attractor because the frame asked for it, which is why "AI" never goes in a document.
   `cyborgism-map.md`, `research-cyborgism-methods.md`: who the scene is, how they worked base
   models. `brief-storyloom.md`: the brief handed to an outside model to work the loom blind;
-  `storyloom-20260916/` is what came back. `olmo.md`: the next dreamer — the checkpoint, Q4,
-  the RunPod endpoint and its lore, the cold start, the order of moves. `harvest/`: the two scripts that built the anthologies
-  (provenance, not an instrument).
+  `storyloom-20260916/` is what came back. `olmo.md`: the next dreamer — the checkpoint, the
+  gguf, the RunPod endpoint and its lore, the pod that worked, what heat and rope did.
+  `olmo-seeds/`: the ten mystical seeds as fed; `olmo-*.json/.md`: everything olmo wrote on
+  2026-09-24 (the ten, the last fifty at their heats, the shelf, heat, rope).
+  `brief-mescalito.md`: the research brief for perturbing a model uniformly. `harvest/`: the
+  two scripts that built the anthologies (provenance, not an instrument).
 - **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
