@@ -135,9 +135,13 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
 ## open
 
 - **the 5060 Ti is taken** (2026-09-24): `/opt/llama/bin/llama-server` (pid 2327960) holds
-  15.3 of its 16.3 GB, idle at the time of the look. It's a deployed service: system user `llama`, Qwen3.6-35B-A3B
-  instruct, `0.0.0.0:8080`, an api key, `--metrics`, up 26 days. Whether anyone actually calls it
-  decides whether this box is usable at all. Its disk has 157 GB free, driver 595, CUDA 13.2.
+  15.3 of its 16.3 GB, idle at the time of the look. It's `llama-server.service`, *"llama.cpp server (sq1-r3vi3w)"*: bekh's
+  own sql-review endpoint, Qwen3.6-35B-A3B instruct, zero connections and zero requests in the
+  journal for 14 days. **Stopped, not disabled**: `systemctl start llama-server` brings it back,
+  and a reboot of ds-dev2 brings it back by itself and takes the card again. The box already
+  has a CUDA build of llama.cpp for this card in `/opt/llama/bin`, 157 GB of free disk, and ~29 GB
+  of RAM once qwen is down. **So everything happens on ds-dev2**: download, convert, Q4 and Q8,
+  serving. Q8 gets copied to ds-dev only when its check is due. Its disk has 157 GB free, driver 595, CUDA 13.2.
 - **the 1080 Ti box is `ds-dev`** (the 5060 is `ds-dev2`). Driver 560, CUDA 12.6: Pascal builds
   fine. A `/usr/bin/python3` (pid 1022, someone's) holds 1.8 GB of the card, so ~9.4 GB is ours.
   **Its root filesystem is 100% full (46 GB, 0 free)**, and the big pool is mounted elsewhere.
