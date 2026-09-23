@@ -148,7 +148,9 @@ function fold(f) {
   if (!f) draw();
 }
 
-if (DEV_ON) {
+let opened = false;
+function openHub() {
+  opened = true; store('dev', '1');
   dev.hidden = false;
   const chip = document.createElement('button'); chip.id = 'devchip'; chip.textContent = 'dev';
   chip.onclick = () => fold(false);
@@ -158,4 +160,12 @@ if (DEV_ON) {
   // the old keys still move things: show their result here too
   addEventListener('keyup', () => { if (!dev.classList.contains('folded')) sync(); });
 }
+if (DEV_ON) openHub();
+// the secret door (bekh, 2026-09-24): the status dot, top left. A press opens the hub on the spot;
+// with it open, a press folds or unfolds it. Nothing on the dot gives it away — no hover, no title.
+$('#status .dot').addEventListener('click', e => {
+  e.stopPropagation();
+  if (!opened) openHub();
+  else fold(!dev.classList.contains('folded'));
+});
 })();
