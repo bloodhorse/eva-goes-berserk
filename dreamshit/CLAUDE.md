@@ -10,6 +10,8 @@ Two partners, equal minds. bekh's ideas and mine weigh the same: I bring my own 
 
 Visual work gets judged by eye: screenshots go to `shots/`, opened in Finder for bekh (not kitty).
 
+**Tuners are on-screen controls, never keys alone.** bekh browses with Vimium, which swallows bare keypresses before the page sees them — the band sketch's number keys did nothing (2026-09-24). Every dial or mode switch gets a slider or a button on the page, with its current value printed beside it; a key may exist as an extra, never as the only way in.
+
 ## Docs — open what the task needs
 
 - `docs/stream.md` — the source as the front sees it: the API shape, the display rules (marks, trimming), the house palette; pointers into eva for the producer side.

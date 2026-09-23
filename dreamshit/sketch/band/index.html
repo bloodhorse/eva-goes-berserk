@@ -40,8 +40,14 @@ body { padding: 60px 0 120px; cursor: default; }
 
 #hud { position: fixed; right: 18px; bottom: 18px; z-index: 5; padding: 10px 14px; background: #1c1c21;
   border: 1px solid var(--line); font: 11px "Courier New", monospace; letter-spacing: .2em; color: var(--ghost); line-height: 1.8; }
-#hud b { color: var(--lit-b); font-weight: normal; }
-#hud .on { color: #f29bea; }
+#hud .modes { display: flex; gap: 14px; margin-bottom: 8px; }
+#hud button { padding: 0; background: none; border: 0; font: inherit; letter-spacing: inherit; color: var(--ghost); cursor: default; }
+#hud button:hover { color: var(--ink); }
+#hud button.on { color: #f29bea; }
+#hud label[hidden] { display: none; }
+#hud label { display: grid; grid-template-columns: 5.5em 200px 3em; align-items: center; gap: 10px; }
+#hud input { width: 100%; accent-color: var(--lit-b); }
+#hud output { text-align: right; color: var(--ink); }
 </style>
 </head>
 <body>
@@ -113,11 +119,34 @@ function fit() {
   for (let fs = 18; fs >= 11; fs--) { say.style.setProperty('--fs', fs + 'px'); if (say.scrollHeight <= band.clientHeight) break; }
 }
 
-function hud() {
-  const m = Object.entries(MODES).map(([k, n]) => `<span class="${+k === S.mode ? 'on' : ''}">${k} ${n}</span>`).join(' · ');
-  const knob = S.mode === 1 ? `edge <b>${S.edge}</b> [ ]` : `reach <b>${S.reach}</b> [ ]`;
-  $('#hud').innerHTML = `${m}<br>${knob} · blur <b>${S.blur}</b> - = · wash <b>${S.wash}</b> w W · height <b>${S.h}</b> h H`;
+// on-screen controls, not keys: bekh browses with vimium, which eats bare keypresses
+// (dreamshit/CLAUDE.md). Built once; hud() only syncs what they show.
+const DIALS = [   // [state key, label, min, max, step] — `edge` is streak's, `reach` the other two's
+  ['edge', 'edge', 1, 80, 1], ['reach', 'reach', 1, 12, 1], ['blur', 'blur', 0, 40, 1],
+  ['wash', 'wash', 0, 95, 1], ['h', 'height', 40, 240, 1]];
+function buildHud() {
+  const box = $('#hud'), modes = document.createElement('div'); modes.className = 'modes';
+  for (const [k, n] of Object.entries(MODES)) {
+    const b = document.createElement('button'); b.textContent = n; b.dataset.mode = k;
+    b.onclick = () => { S.mode = +k; draw(); }; modes.append(b);
+  }
+  box.append(modes);
+  for (const [key, name, lo, hi, step] of DIALS) {
+    const l = document.createElement('label'); l.dataset.key = key;
+    l.innerHTML = `${name}<input type="range" min="${lo}" max="${hi}" step="${step}"><output></output>`;
+    l.querySelector('input').oninput = e => { S[key] = +e.target.value; draw(); };
+    box.append(l);
+  }
 }
+function hud() {
+  for (const b of document.querySelectorAll('#hud button')) b.classList.toggle('on', +b.dataset.mode === S.mode);
+  for (const l of document.querySelectorAll('#hud label')) {
+    const k = l.dataset.key;
+    l.hidden = (k === 'edge' && S.mode !== 1) || (k === 'reach' && S.mode === 1);
+    l.querySelector('input').value = S[k]; l.querySelector('output').textContent = S[k];
+  }
+}
+buildHud();
 
 addEventListener('keydown', e => {
   const k = e.key;
