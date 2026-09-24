@@ -1,4 +1,4 @@
-# substances
+# pharmacopoeia
 
 The pharmacopoeia: every direction that has been given more than one page, what it does, how
 sure we are, and what it's called. One entry per direction; rewritten in place as the evidence
@@ -42,7 +42,12 @@ and the storm-girl at 0.5 and 0.75. Kin in 4/4. bekh: reads better than the rest
 
 **Caveat, open.** `169` at the same doses on the same seeds brought kin in 3/4 too, and ender's
 and `203`'s pages never did — so kin may be a component two directions share, or the register a
-loosened lowercase *i* falls into on these seeds. A fan and a third seed decide.
+loosened lowercase *i* falls into on these seeds. The cattle trail as a third seed
+(`m125/cattle-trail__x*`) didn't decide it: at 0.5 and 0.75 the page stays inside *The Log of
+a Cowboy* — a cloudburst, twelve miles, "returned to bed", "the haunt of many of our early
+friends" — no relative, but nothing else of `125`'s either. The trail's lock (a memoir in *we*,
+capitalised, a famous book) holds against both directions at these doses; it can't tell kin
+from seed. A fan on a *third lowercase first-person seed* is what decides.
 
 **Status.** Candidate. Unnamed.
 
@@ -60,7 +65,10 @@ leans on kin as `125` does.
 
 **Evidence.** Four pages, one draw each (`night1/m169/`, sheet `mescalito-nemo-169`): beck and
 the storm-girl at 0.5 and 0.75. The doubling clear in 2/4 (the storm-girl both doses), partial
-in 1 (beck 0.75), absent in 1.
+in 1 (beck 0.75), absent in 1. On the cattle trail (`m169/cattle-trail__x*`) nothing of it —
+the trail holds — except that the animals get minds: cattle *"rendered temporarily irrational"*
+by *"so violent an interruption of the dreamless sleep"*, horses *"in a most unsatisfactory
+state of mind"*. Maybe the self-as-other displaced onto the herd; maybe Andy Adams.
 
 **Status.** Candidate, weaker than `125`. Unnamed.
 
