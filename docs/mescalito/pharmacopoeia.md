@@ -7,7 +7,7 @@ lab code is `M-<vector>-<dose×100>`; the street name is bekh's. Doses are ×R o
 (nemo's bank, R = 4.57); every page is 170 tokens at the stream's sampler unless said
 otherwise. Pages live in `night1/`, rendered on the sheets.
 
-## ender — `224ENDER-75` — `224_f112`
+## ender — `M-224-75` — `224_f112`
 
 **What it does.** Pulls the page toward its own last line. On a first-person seed the narrator
 sees the edge: loses herself in a sentence, turns to the reader, closes on the seed's opening
