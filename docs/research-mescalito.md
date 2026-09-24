@@ -1,6 +1,9 @@
 # mescalito: the answer
 
-The answer to `brief-mescalito.md`, 2026-09-24. Seven research slices went into it (weight
+The answer to the mescalito brief (deleted once answered; git `b4446e8`), 2026-09-24. The brief
+asked whether a *uniform* perturbation of a base model — the weights charged like a bath in
+electrolysis — could make it strange while locally coherent, and asked for a verdict, a table of
+mechanisms, three evenings' experiments, sources, and gaps. Seven research slices went into it (weight
 noise and quant, stochastic and activation noise, attention and layers, samplers and flags, the
 loom scene, the reddit sweep, MELBO), about 49k words, each written by an opus researcher with
 web access; the slices are in `mescalito/`, the scripts they wrote and left unrun in

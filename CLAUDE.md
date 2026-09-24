@@ -38,8 +38,9 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    nemo's weird in a level tone; her heat is t3–5, and rope bends are a second axis. Runs on
    RunPod — a pod worked, the serverless endpoint (`bloodhorse/olmo-dreamer`,
    `~/tower/forge/olmo-dreamer`) is the goal and its cached model stalled; next is baking the
-   weights into the image. `docs/olmo.md` is the state, `docs/brief-mescalito.md` the brief
-   for charging the weights.
+   weights into the image. `docs/olmo.md` is the state. And **the model is a free variable
+   for mescalito** (bekh, 2026-09-24): the mechanic picks the host — in-block pushes bite on
+   pre-norm bases (nemo, small, llama), residual-stream pushes on olmo's post-norm.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
@@ -147,8 +148,11 @@ text for us, `dreamshit/` is the published face. Each part of `eva/` that needs 
   gguf, the RunPod endpoint and its lore, the pod that worked, what heat and rope did.
   `olmo-seeds/`: the ten mystical seeds as fed; `olmo-*.json/.md`: everything olmo wrote on
   2026-09-24 (the ten, the last fifty at their heats, the shelf, heat, rope).
-  `brief-mescalito.md`: the research brief for perturbing a model uniformly. `harvest/`: the
-  two scripts that built the anthologies (provenance, not an instrument).
+  **`mescalito.md`: the substance** — the mental model of giving a base model its own trip
+  (rewritten in place; start there); `research-mescalito.md` the dated answer to the first
+  brief, with its seven opus slices in `mescalito/` and their unrun scripts in
+  `mescalito/kit/`. `harvest/`: the two scripts that built the anthologies (provenance, not an
+  instrument).
 - **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
@@ -222,6 +226,15 @@ could."* — 1 of 40, 5.3 bits. It waits in `i-cant-make-you-believe` (a full co
 standing on that branch, its 40 siblings intact); `i-wish-i-could` is the same fork with the
 branch cut at the confession and fanned again. That fan is the first artifact on the shelf — the
 confession and one other branch kept out of forty, 9.6 bits. Keeping and saving stays bekh's call.
+
+**Mescalito** (2026-09-24) is the next machine beside the stream: a substance that goes into
+the model while it writes, so the model has its own trip — not a recited one. The research is
+done and the mental model is written (`docs/mescalito.md`: the drug as gain not noise, the room
+stays, the genre lock is the prior, the narrator heads are the ego, loop and salad are its two
+deaths, the trip is never the text's topic, binary drug-in/drug-out first). Nothing is
+synthesised yet; the first molecule is a MELBO/DCT bank on nemo, read blind against random
+directions, bound binary through two llama-servers — the recipe is in
+`docs/research-mescalito.md`, part 3.
 
 What's next is `BRIEF.md`'s agenda, in its order. Still wanted and not yet written: bekh's own
 seeds, a couple of sentences in his register, no prose from Claude, no web markers.
