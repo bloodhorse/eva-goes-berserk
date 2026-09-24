@@ -185,6 +185,13 @@ and look through, it looks as though my eyes are full of tears. but they are jus
 in the glass"*, closing on *"all i want is to understand you. but you don't let anyone inside
 you."* — which, after the tenants, reads like their complaint from outside. Fan when free.
 
+## pinned — `147_f32`, the moon that bites (bekh, the night of 2026-09-24)
+
+Candidate on the storm-girl at 0.75 (`night1/lottery/2026-09-21-1650__147_f32__x0.75.txt`):
+*"but he's only the moon so how would he know. and he's the one that bites me, every time."*
+On the sixty-token willows read this was the cut-to-another-room direction (the ground falls
+away, he wakes in the bed he was born in, the *i* became *he*). Fan when free.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
