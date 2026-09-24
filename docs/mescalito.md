@@ -125,18 +125,37 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-Nothing has been synthesised yet. **The first evening, decided 2026-09-24, runs in a fresh
-session** (this one was the theorist; the executor starts cold from here, `research-mescalito.md`
-part 3, and the pod recipe in `olmo.md`): one A40, both models in the same pod. Nemo first as
-the warm-up — download and quant, then `mescalito/kit/melbo_bank.py` — a bank of 256, screened
-blind against sixteen random directions of the same size (**the kit had its dry run on the mac
-the same day**, every script end to end on a toy model and the real nemo gguf, so the pod hour
-is spent on the models, not on tracebacks — `research-mescalito.md` part 3 has what it showed); then olmo, the patient, its own bank (a bank does not carry across
-models; olmo's first twenty layers in bf16 are ~20 GB, which is why the card is needed at all —
-the compute is minutes, the memory is the problem). Binary drug-in/out on nemo then runs on
-the mac in seconds: its llama-server loads any vector as a flag; two servers do not fit in 16 GB,
-so a vector change is a restart. The adjacent molecules follow: real-difference directions from
-two shelf documents, the amplified singular band, DRµGS with its direction fixed.
+**Night 1, nemo's half, ran on 2026-09-24** (an A6000 in stockholm, 35 minutes, $0.34; the
+kit had its dry run on the mac the same afternoon, every script end to end on a toy model and
+the real nemo gguf). What exists now, all in `mescalito/night1/` and in git: **a bank of 256
+directions nemo owns** (`nemo_s10.pt`, layer 10 → 20, R = 4.57 against a median residual norm
+of 13.05, ratio 0.35 — the dose unit, first time written down for any model), the 256 exported
+as control vectors plus sixteen random ones of the same norm (`cv-nemo/`), one 60-token kill
+page per vector on the willows seed (`kill/nemo/`: **8 of 256 owned dead, 0 of 16 random** at
+1.0×R — the dose leans low if anything), and **the verdict pages, unread**: 12 living owned +
+12 living random drawn by lot (`picks-nemo.json`), each on both read seeds at 170 tokens, plus a
+clean page per seed — 50 pages, labelled, on the sheets as `mescalito-nemo-night1`. **bekh
+reads them next**; the question is whether owned reads different from random, and if not, the
+geometry argument is dead and uniform noise is back on the table.
+
+The shape that got decided on the way, over the research's recipe: **the verdict is the only
+read the night depends on** (owned vs random, a few dozen pages); the harvest — which owned
+directions are weather — is a sort that can run for days, dead ones killed by surface stats
+(`screen.py`), survivors written on three seeds, opus naming genres, bekh reading only the
+weather pile. **No blind:** pages go labelled. **Two read seeds**, `shelf/seeds/mescalito/`:
+the willows' last paragraph (bekh's pick, cut to leave out *camera* and the vision) and the
+cattle trail (the quiet floor). The night runs as `kit/night.sh`, stages idempotent, from a pod
+made by `kit/pod.py` (full-cuda image, sshd installed at boot, 150 GB disk); pipe was ~15 Gbit,
+so downloads are minutes and the convert (12 min) is the slow step.
+
+**Olmo's half is a fresh pod, not yet rented** — nothing of hers was made, nothing is lost;
+her weights re-download in three minutes. Before it: **a cockpit** (bekh, 2026-09-24) — the
+worker posts a `status.json` per stage and per page, and a terminal dashboard on the mac shows
+stages as bars with ETAs from tonight's measured rates, cost so far, heartbeat age, and what
+each stage is waiting on; `track_monitor.py`'s skin. Then binary drug-in/out on nemo on the mac
+(its llama-server loads any vector as a flag; a vector change is a restart), and the adjacent
+molecules: real-difference directions from two shelf documents, the amplified singular band,
+DRµGS with its direction fixed.
 
 Open questions, in the order they came up: what loosening the narrator's grip on *who is
 speaking* without its grip on *where we are* would be, and whether those are different heads;
