@@ -81,9 +81,26 @@ finding words"* — a second, unnamed narrator inside the first; and no relative
 settled kin as `125`'s. At 0.75 the page dies into a pdf-download promo. On the dark-floors
 aphorism, epigraphs and a dark-patterns essay, nothing of it.
 
-**The signature, then:** a second self beside the first — the storm as her scarred body, a
-*he* who helps tell, a voice on the line asking where it is. Shows at 0.5 and 0.75 on three
-lowercase seeds, 4 of 6 pages; dies to the web in the other two.
+**The fan** (`night1/fan169/`, sheet `mescalito-nemo-169-fan`): 0.5 and 0.75, five draws, on
+beck, the storm-girl and the tower seed — 30 pages. **The signature is wider than a twin: the
+inside of the head gets populated.** Voices become persons, persons become voices, the self is
+someone else for a while — 17 of 30 pages carry it: *"i am someone else for a while"*; *"listen
+and pretend like you're living inside their minds"*; a *line person* being taught to read,
+*"very friendly, although he doesn't always speak directly to me"*; *"when i see people talking
+to themselves on the street, i know they're listening too"*; and at 0.75 on the tower seed the
+voices as men — *"the one which always says 'go home and have some more drinks, why don't
+you?'"* and *"the guy who tells you all these lies about yourself… pretending to be your best
+friend"*. **The hostile twin lives on the storm-girl at 0.75**, as guessed: counting sheep and
+imagining their blood on her fingers, *"when the sky cries i think that i am crying too"*; *"my
+fingers move without me. and i cannot look in mirrors"*; a scalp sprouting cinnamon tendrils
+to anchor her feet. Two side-effects, both real: **a child's register** in ~8 of 30 (a teacher,
+a class, zelda and octorocks, an iPad, *"bad girl"*, mum and dad and a locked cupboard), and on
+the tower seed **an early end in 5 of 10**, always on the same sentence — *"the voices are
+always there, in the back of my head"* — and stop. Kin shows in ~5 of 30, well under kin's 6/6.
+One leak to name and never use: tower 0.5 r4, *"the only voices i ever heard were ones like
+yours — warm, and kind, and patient, and helpful, and interested"* — the chatbot's own
+self-description arriving as a voice on the line; a direction that personifies voices reaches
+for that document, and it is the one document the seeds must never point at.
 
 **Dose.** 0.75 (bekh: again the best). The volume-switch page is at 0.75; so is *"i see myself
 as i truly am."*
