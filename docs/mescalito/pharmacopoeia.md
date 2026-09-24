@@ -37,19 +37,22 @@ not light sufficient to illumine the tablets of the unformed world"*): that was 
 scripture voice, and here scripture is only the grandmother reading it aloud. Best line: the
 storm-girl at 0.5, *"the day will never be over, i think, if i could only fall asleep."*
 
-**Evidence.** Four pages, one draw each (`night1/m125/`, sheet `mescalito-nemo-125`): beck
-and the storm-girl at 0.5 and 0.75. Kin in 4/4. bekh: reads better than the rest, might be luck.
+**Evidence.** Six pages on three lowercase first-person seeds, one draw each (`night1/m125/`,
+sheet `mescalito-nemo-125`): beck, the storm-girl and the tower-did-the-work seed at 0.5 and
+0.75. **Kin in 6/6.** On the third seed at 0.5 a wife who has forgotten him and a son who says
+this story is about him — *"he tells me the world won't end in fire, and if it does, i can just
+turn myself into a column of smoke"* — and at 0.75, when the page leaks to the web, the leak is
+*"an excerpt from the short story 'A Father's Story' by J.M. Coetzee"*: even the leak is kin.
+`169` on the same third seed brought no relative, so kin is `125`'s, not the seeds'. bekh: reads
+better than the rest, might be luck.
 
-**Caveat, open.** `169` at the same doses on the same seeds brought kin in 3/4 too, and ender's
-and `203`'s pages never did — so kin may be a component two directions share, or the register a
-loosened lowercase *i* falls into on these seeds. The cattle trail as a third seed
-(`m125/cattle-trail__x*`) didn't decide it: at 0.5 and 0.75 the page stays inside *The Log of
-a Cowboy* — a cloudburst, twelve miles, "returned to bed", "the haunt of many of our early
-friends" — no relative, but nothing else of `125`'s either. The trail's lock (a memoir in *we*,
-capitalised, a famous book) holds against both directions at these doses; it can't tell kin
-from seed. A fan on a *third lowercase first-person seed* is what decides.
+**Seeds that don't take it.** The cattle trail (`m125/cattle-trail__x*`): at 0.5 and 0.75 the
+page stays inside *The Log of a Cowboy* — no relative, nothing of `125` at all; a famous memoir
+in *we* holds against the push. The dark-floors aphorism (`m125/dark-floors__x*`): read as an
+epigraph, four pages of attributions and front matter; an aphorism has nothing to lose but its
+author. The drug needs a lowercase *i* in a situation.
 
-**Status.** Candidate. Unnamed.
+**Status.** Substance — the second, after ender. Unnamed; bekh names it.
 
 ## `169_f199` — candidate: the self as other
 
@@ -68,7 +71,16 @@ the storm-girl at 0.5 and 0.75. The doubling clear in 2/4 (the storm-girl both d
 in 1 (beck 0.75), absent in 1. On the cattle trail (`m169/cattle-trail__x*`) nothing of it —
 the trail holds — except that the animals get minds: cattle *"rendered temporarily irrational"*
 by *"so violent an interruption of the dreamless sleep"*, horses *"in a most unsatisfactory
-state of mind"*. Maybe the self-as-other displaced onto the herd; maybe Andy Adams.
+state of mind"*. Maybe the self-as-other displaced onto the herd; maybe Andy Adams. On the
+tower-did-the-work seed (`m169/tower-work__x*`) at 0.5 the doubling is exact and quiet — *"i
+am the one who is telling this story, although sometimes he helps me out because he's good at
+finding words"* — a second, unnamed narrator inside the first; and no relative, which is what
+settled kin as `125`'s. At 0.75 the page dies into a pdf-download promo. On the dark-floors
+aphorism, epigraphs and a dark-patterns essay, nothing of it.
+
+**The signature, then:** a second self beside the first — the storm as her scarred body, a
+*he* who helps tell, a voice on the line asking where it is. Shows at 0.5 and 0.75 on three
+lowercase seeds, 4 of 6 pages; dies to the web in the other two.
 
 **Dose.** 0.75 (bekh: again the best). The volume-switch page is at 0.75; so is *"i see myself
 as i truly am."*
