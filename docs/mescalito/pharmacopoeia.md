@@ -177,6 +177,14 @@ your mouth, and it sounds so different from how i say it"*. Voices' ground — t
 of its fan is whether it's a cousin of `169` or its own thing: `169` populates the head with
 persons, this one is the persons using the mouth. Fan at 0.5 and 0.75, three seeds.
 
+## pinned — `112_f127`, well written (bekh, the night of 2026-09-24)
+
+Filed *nothing* on the storm-girl at 0.75 (`night1/lottery/2026-09-21-1650__112_f127__x0.75.txt`)
+and pinned for the writing: a girl walking round the block, *"when i walk by the shop windows
+and look through, it looks as though my eyes are full of tears. but they are just reflections
+in the glass"*, closing on *"all i want is to understand you. but you don't let anyone inside
+you."* — which, after the tenants, reads like their complaint from outside. Fan when free.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
