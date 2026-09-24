@@ -169,6 +169,14 @@ Filed *nothing* by opus on the storm-girl at 0.75: two lines, ends — *"perhaps
 or those of someone else."* (`night1/lottery/2026-09-21-1650__064_f252__x0.75.txt`). bekh
 pinned it. A fan at 0.5 and 0.75, when the mac is free.
 
+## pinned — `110_f142`, possession from the inside (bekh, the night of 2026-09-24)
+
+Opus's strongest page of lottery slice 2, storm-girl at 0.75
+(`night1/lottery/2026-09-21-1650__110_f142__x0.75.txt`): *"they speak through you, they move
+your mouth, and it sounds so different from how i say it"*. Voices' ground — the first question
+of its fan is whether it's a cousin of `169` or its own thing: `169` populates the head with
+persons, this one is the persons using the mouth. Fan at 0.5 and 0.75, three seeds.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
