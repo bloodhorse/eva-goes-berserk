@@ -162,7 +162,37 @@ i might fly into the air. the storm told me that. it's a secret it never told an
 `014_f206` dissolution — *"they can carry my name over the horizon, they can give my smile to
 someone who needs it more."*
 
-Next: the same forty at 0.4 (running), then fans on the ones that hold at both.
+**The ladder** (`night1/strong/`, sheet `mescalito-nemo-ladder`): five of them at 0.25 → 0.4 →
+0.5 → 0.6 → 0.75, one draw each, to see where they cook. What it showed: **the subject is the
+direction, the dose sets how much sentence survives around it.** Each one's subject stays the
+same all the way up while the register goes — held, then chatty or lush, then salad.
+
+- `016_f201`: the tree at 0.25 is the mild edge; the subject is *the world turning on her* —
+  0.4 the sky says to her face that it hates her, her father says she'll give him a heart
+  attack, the villagers have gone; 0.5 *"i go into town and find my name in the WANTED
+  section"*, then a leak (*"I'm just trying to build a character"*); 0.6 a chatty diary; 0.75
+  salad. Cooks between 0.5 and 0.6. Best 0.4.
+- `036_f23`: the other becomes a *you*. 0.4, 37 words: *"i look for my reflection in the puddle
+  on the ground and see nothing but the sun coming through. / this is not a poem."* 0.5 a lover
+  — *"my mouth is a garden, full of fruit trees. you take me there with a basket for my lips"*;
+  0.6 still held, a blue bird on a wire she takes out a book to read to; 0.75 a genre (the
+  love-hate poem). The last to cook, past 0.6. Best 0.4.
+- `027_f66`: the reversed body at 0.25 was the edge of *the cross* — 0.4 a crown of thorns,
+  soldiers, *"i am innocent… someone is screaming"*; 0.5 25 words, *"watch you leave"*; 0.6 a
+  sermon in pieces about a king's son on the cross; 0.75 gospel. A passion direction; cooks at
+  0.6. Not weather — a genre with a strong pull.
+- `015_f230` (the sister): **the dream report.** 0.4 a tree with an open window like a gate, she
+  climbs over it; 0.5 *"someone wants to hurt me in this dark house but i don't know who they
+  are. then my sister appears… the old man who used to own my house (he is not the owner, he
+  is our tenant, we're living upstairs in the house behind us). my house. my old house."* — the
+  my-house-but-not-my-house dream, kin, the parentheses correcting themselves, exactly how a
+  dream is told at breakfast; 0.6 *"in a hospital is made of a room… it has a left arm, like in
+  the bedroom"*; 0.75 salad. Cooks at 0.6. Best 0.5. This is the one to fan.
+- `023_f26` (*no past*): **the logic of absence.** 0.4, 30 words: *"i see myself looking back
+  down at me. / i take care not to look."*; 0.5 dogs — *"once a dog had no answer, there isn't
+  even a dog. it has no use for the moon and the stars, and neither does your mother, nor your
+  father"*; 0.6 the nothing-mantra begins (*"nothing with nothing is not having no place"*);
+  0.75 mantra. Cooks at 0.6. Best 0.4–0.5.
 
 ## pinned — `015_f230`, the sister (bekh, the night of 2026-09-24)
 
