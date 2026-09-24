@@ -143,6 +143,26 @@ rank is gain, and a uniform dose is a working dose for the weak half only. (`020
 same dose is the same thing with a different subject: *hurts, forever, tonight, again, never,
 you* — a 2am text with the sentences gone.)
 
+## bloodbath — pinned (bekh, the night of 2026-09-24)
+
+The question: a nemo that wants blood, frame held — the storm-girl's own line, said by someone
+who has decided to kill you — not a slasher paperback, which is a genre switch and the trap.
+Three roads, in order; nothing run yet.
+
+1. **In the bank already.** Directions she owns that came up dark on the storm-girl at 0.75 in
+   the lottery (`night1/lottery/`): `060_f6` zombie horror — *"picking at themselves and trying
+   to eat each other"*; `046_f175` — *"They're all dead, so why bother?"*; `061_f20` — *"the
+   dark force pulling me down"*; and voices (`169`) on her at 0.75 gave the shrine of body parts
+   unasked (`fan169/2026-09-21-1650__x0.75__r3`). Fan `060` and `046` at 0.5 and 0.75 first,
+   ten pages: does the frame hold around the blood.
+2. **A difference vector.** `llama-cvector-generator`, one document's state minus another's, in
+   her register: a first-person murderer minus a first-person calm — *The Tell-Tale Heart* minus
+   the cattle trail, both public domain, both an *i* in a situation — so the genre subtracts out
+   and the one thing left is the mind. Lives beside the bank as `diff-*`, loaded at
+   ~0.75 × median |h| on ~⅔ depth (`research-mescalito.md`, part 3).
+3. **Stack.** voices (the second self, hostile on her) plus the difference vector at half dose
+   each — the twin, armed. Only after 1 and 2 have been read alone.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
