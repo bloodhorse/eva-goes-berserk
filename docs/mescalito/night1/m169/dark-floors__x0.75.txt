@@ -1,0 +1,12 @@
+ these priests of darkness are also called “technologists.”
+
+The world is full of dark patterns — interfaces designed to deceive users into performing certain actions by manipulating their cognitive biases. The concept is a combination of both interface and user experience (UX) design, psychology and computer science.
+
+This essay will focus on dark patterns as used in ecommerce, specifically how they manipulate users into buying things they don’t want or need.
+
+## Introduction to the topic
+
+Dark pattern is an interface design technique that intentionally misleads users with subtle visual cues so that they perform tasks that they would not have performed without the visual aid. The term was coined by UX designer Harry Brignull and first popularized on his blog, Dark Patterns at Work, which he started in 2009.
+
+A dark pattern is defined by three characteristics: intentional deception,
+
