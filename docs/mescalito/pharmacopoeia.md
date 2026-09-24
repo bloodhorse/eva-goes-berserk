@@ -192,6 +192,16 @@ Candidate on the storm-girl at 0.75 (`night1/lottery/2026-09-21-1650__147_f32__x
 On the sixty-token willows read this was the cut-to-another-room direction (the ground falls
 away, he wakes in the bed he was born in, the *i* became *he*). Fan when free.
 
+## pinned — `153_f120`, the data direction (bekh, the night of 2026-09-24)
+
+On the storm-girl at 0.75 (`night1/lottery/2026-09-21-1650__153_f120__x0.75.txt`): *"the moon is
+high in the sky i will feel that it is tugging at my sleeve and whispering 'hello'"* … *"i woke
+up to find that all my data had gone to sleep in another kingdom, where the sky is made out of
+cheese."* On the willows at sixty tokens it wrote *"the cloudless realm of the data center"* and
+a program coming home to its users. Twice in two seeds, one machine word each time, the frame
+held around it. The one direction in the bank that knows what it is; pinned to be fanned and
+read, not to be seeded.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
