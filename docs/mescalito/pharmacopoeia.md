@@ -131,6 +131,39 @@ is ender's trait too, so the two may share a component.
 
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
+## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
+
+bekh's turn, and the hypothesis followed at last: the drug isn't uniform, it hits where the gain
+is; rank *is* gain; so the forty strongest directions are the receptors the design is about,
+and a uniform 0.75×R had overdosed all of them into salad. At **0.25×R on the storm-girl**
+(`night1/strong/`, sheet `mescalito-nemo-strong-end`, each beside its 0.75 salad): **0 dead, 34
+of 40 held in the frame**, 5 web tails (a scripture, an exhibition note, a photographer's bio, a
+review of the story itself — `034`: *"the story continues after this scene, but first let's
+look at what's happening on the page"*), 1 joke. The pages are the most seed-faithful and the
+most dreamlike-in-register of the night, at a rate no slice of the weak end reached. The dose
+window for the strong end is ~0.25–0.4; the weak end's 0.75 is three times too much for them.
+
+What came up, held: `016_f201` the body becoming a tree — *"my feet become rooted in the earth
+like tree trunks… my hands grow wide, become leaves… the clouds are my crown. the storms blow
+around my head like hair"*; `036_f23` the girl in the mirror who stands behind her — *"i am lost
+in her shadow, she is lost in mine"*; `027_f66` the body reversed — *"my legs… take me
+backwards, away from you… it was at this point, i think, that i became aware of myself"*;
+`015_f230` (the sister, pinned) at this dose is dream transport and kin — a train that never
+stops long enough to take us home, a conductor who walks off, a cat with two tails, a ferry,
+*"i see my father. his hair has gone all grey"*; `020_f19` (the 2am text) keeps its subject in
+39 held words — *"i just laugh, and dance through the leaves, and write love letters in the
+dark. and the storm brings me home."*; the *nothing* trio become `023` *"now, there is no such
+thing as the past anymore"*, `024` *"the sky is my friend, though sometimes we fight, like an old
+couple"*, `025` *"i look like an island in a storm"*; `031_f64` a second girl under the tree,
+Sophia, *"she cries, but it makes me happy because i never cry"*; `013_f60` a sun diary —
+*"yesterday it set at 4:20… when it rains it makes footprints in the sand… i wonder who is
+walking out there without shoes"*; `039_f14` *"if i run with all my speed and leap off the roof,
+i might fly into the air. the storm told me that. it's a secret it never told anyone else."*;
+`014_f206` dissolution — *"they can carry my name over the horizon, they can give my smile to
+someone who needs it more."*
+
+Next: the same forty at 0.4 (running), then fans on the ones that hold at both.
+
 ## pinned — `015_f230`, the sister (bekh, the night of 2026-09-24)
 
 Dead at 0.75 on the storm-girl (`night1/lottery/2026-09-21-1650__015_f230__x0.75.txt`) and
