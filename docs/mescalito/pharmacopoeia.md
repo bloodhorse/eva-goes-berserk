@@ -57,7 +57,7 @@ carry the signature.
 
 **Status.** Named **kin** (bekh, 2026-09-24). The second substance.
 
-## `169_f199` — candidate: the self as other
+## voices — `169x75v` — `169_f199`
 
 **What it does.** The narrator meets herself from outside, mildly. The storm has no tongue but a
 body covered in scars — *"maybe it tried to cut itself… it would be a different person without
@@ -105,7 +105,7 @@ for that document, and it is the one document the seeds must never point at.
 **Dose.** 0.75 (bekh: again the best). The volume-switch page is at 0.75; so is *"i see myself
 as i truly am."*
 
-**Status.** Candidate; bekh: really cool, keep. Unnamed.
+**Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
 ## `203_f227` — a stance, not a substance
 
