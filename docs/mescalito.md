@@ -167,8 +167,9 @@ pages on a plain seed, and 25 "weather" out of 256 is about what selection over 
 would also yield; the plain seed was right for the placebo question and wrong for him. So the
 harvest was dropped and the rest of the night went to **one direction, on the stream's own
 seeds, on the mac** (`night1/dose*`, `forced`, `fan`, all on the sheets): **`224_f112` is a
-molecule, and the first named substance is `m224x75`** (bekh, 2026-09-24) — `224_f112` at
-0.75×R on layer 10, end-of-text refused (`--ignore-eos`), on a first-person seed. Its axis is
+molecule, and the first named substance is **ender**, lab code `M-224-75`** (bekh, 2026-09-24)
+— `224_f112` at 0.75×R on layer 10, end-of-text refused (`--ignore-eos`), on a first-person
+seed; the same direction number on another host is another compound. Its axis is
 the edge of the page: it pulls the document toward its own last line.
 Measured in the fan — five RNG draws at 0.25/0.5/0.75×R and sober, on beck, the storm-girl and
 the brass-witch — sober nemo ends a page early 1 time in 15; `224` on the two first-person
