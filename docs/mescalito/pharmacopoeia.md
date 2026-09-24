@@ -131,6 +131,18 @@ is ender's trait too, so the two may share a component.
 
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
+## pinned — `015_f230`, the sister (bekh, the night of 2026-09-24)
+
+Dead at 0.75 on the storm-girl (`night1/lottery/2026-09-21-1650__015_f230__x0.75.txt`) and
+not nothing: *"i is walking. / it has my sister is a and also has my face… my father and are my
+mother's is the is walking and. / my."* — kin and the self doubled into a sister with her face,
+with the grammar boiled off. Rank 15 of 256: a strong direction, so 0.75×R is an overdose for
+it, not a verdict. **First on the quarter-dose list**: 0.25 and 0.1 on the storm-girl, then a
+fan if it holds. The lesson it carries: the strong end of the bank isn't dead, it's overdosed —
+rank is gain, and a uniform dose is a working dose for the weak half only. (`020_f19` at the
+same dose is the same thing with a different subject: *hurts, forever, tonight, again, never,
+you* — a 2am text with the sentences gone.)
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
