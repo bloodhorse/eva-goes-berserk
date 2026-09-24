@@ -163,6 +163,12 @@ Three roads, in order; nothing run yet.
 3. **Stack.** voices (the second self, hostile on her) plus the difference vector at half dose
    each — the twin, armed. Only after 1 and 2 have been read alone.
 
+## pinned as interesting — `064_f252` (bekh, the night of 2026-09-24)
+
+Filed *nothing* by opus on the storm-girl at 0.75: two lines, ends — *"perhaps my own ghosts.
+or those of someone else."* (`night1/lottery/2026-09-21-1650__064_f252__x0.75.txt`). bekh
+pinned it. A fan at 0.5 and 0.75, when the mac is free.
+
 ## `203_f227` — a stance, not a substance
 
 The *nobody left* mood on every seed: sounds that were all the sounds there ever were, a figure
