@@ -123,13 +123,17 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-Nothing has been synthesised yet. The first molecule is a MELBO/DCT bank on Mistral Nemo 12B
-base (one A40, minutes of compute after the download), read blind against random directions of
-the same size, then bound binary — in for the page, out — through two llama-servers; the script
-that learns the bank (`mescalito/kit/melbo_bank.py`) has never run, so the first evening opens
-with a debugging hour. The adjacent molecules follow: real-difference directions from two shelf
-documents, the amplified singular band, DRµGS with its direction fixed. The recipes, dials and
-what page to read for the verdict are in `research-mescalito.md`, part 3.
+Nothing has been synthesised yet. **The first evening, decided 2026-09-24, runs in a fresh
+session** (this one was the theorist; the executor starts cold from here, `research-mescalito.md`
+part 3, and the pod recipe in `olmo.md`): one A40, both models in the same pod. Nemo first as
+the warm-up — download and quant, then `mescalito/kit/melbo_bank.py`, which has never run, so
+the evening opens with a debugging hour — a bank of 256, screened blind against sixteen random
+directions of the same size; then olmo, the patient, its own bank (a bank does not carry across
+models; olmo's first twenty layers in bf16 are ~20 GB, which is why the card is needed at all —
+the compute is minutes, the memory is the problem). Binary drug-in/out on nemo then runs on
+the mac in seconds: its llama-server loads any vector as a flag; two servers do not fit in 16 GB,
+so a vector change is a restart. The adjacent molecules follow: real-difference directions from
+two shelf documents, the amplified singular band, DRµGS with its direction fixed.
 
 Open questions, in the order they came up: what loosening the narrator's grip on *who is
 speaking* without its grip on *where we are* would be, and whether those are different heads;
