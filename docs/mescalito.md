@@ -134,9 +134,30 @@ as control vectors plus sixteen random ones of the same norm (`cv-nemo/`), one 6
 page per vector on the willows seed (`kill/nemo/`: **8 of 256 owned dead, 0 of 16 random** at
 1.0×R — the dose leans low if anything), and **the verdict pages, unread**: 12 living owned +
 12 living random drawn by lot (`picks-nemo.json`), each on both read seeds at 170 tokens, plus a
-clean page per seed — 50 pages, labelled, on the sheets as `mescalito-nemo-night1`. **bekh
-reads them next**; the question is whether owned reads different from random, and if not, the
-geometry argument is dead and uniform noise is back on the table.
+clean page per seed — 50 pages, labelled, on the sheets as `mescalito-nemo-night1`.
+
+**The verdict, read by Claude on the night (bekh: "I ain't reading 50 pages"): owned wins,
+outright.** All 24 random pages are the sober distribution — every trail page stays inside
+*The Log of a Cowboy* (the Rebel, the stampede, dawn), every willows page stays Blackwood
+(boulders, an elemental, an old man, a red-haired woman), two of twelve leaking to the web the
+way sober does. A random direction at 35% of the residual norm does nothing, as Turner and
+Mack said. Every one of the 12 owned directions does something, and **the same vector does the
+same thing on both seeds**: three are salad with a theme (`019` music/country, `034` "to is to
+the first", `213` a broken sermon of serving and fitting — the kill screen at 60 tokens missed
+all three, it needs the full page or tighter stats); five are genre switches held across seeds
+(`038` a child narrator, `071` a goofy blog voice, `122` an alien species' report, `127`
+promo copy, `153` half); `224` is the incantation — the trail page spirals *through* its frame
+into "an army of one… an endless day of the last day of time", the willows page ends in 27 words
+on a hymn — the loop-death seen from inside; and **`203_f227` is weather**: on the trail the
+sound of the herd is argued into dream logic ("far from being as loud as a dog's bark, or even
+the smallest rustle that a horse or ox-bird could make… it must be just like all the other
+sounds there ever had been, or would be"), on the willows a figure on the rock shrinks to a
+speck as he looks and is close below him when he reaches the edge. Frame held, something
+arrived, on both seeds, from one direction. `202_f186`'s willows page ("my finger had grown a
+bit, but not too much, just enough to see some new features") is the runner-up before it
+drifts to the web. So the band exists on nemo at 1.0×R, the bank is the pharmacy, and report
+07's "half do nothing" is wrong at this dose — none did nothing. The harvest is next: the 248
+living owned directions on three seeds, sorted, bekh reading the weather pile.
 
 The shape that got decided on the way, over the research's recipe: **the verdict is the only
 read the night depends on** (owned vs random, a few dozen pages); the harvest — which owned
