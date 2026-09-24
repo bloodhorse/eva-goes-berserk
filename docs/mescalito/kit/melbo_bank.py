@@ -13,13 +13,15 @@ p.add_argument("--chunk", type=int, default=32); p.add_argument("--last", type=i
 p.add_argument("--R", type=float, default=None); p.add_argument("--lam", type=float, default=0.5)
 p.add_argument("--bits", type=int, default=16); p.add_argument("--bos", type=int, default=1)
 p.add_argument("--out", default="bank.pt")
+p.add_argument("--device", default="cuda")             # "mps"/"cpu" for a dry run on the mac with a toy model
 a = p.parse_args()
+dev = torch.device(a.device)
 
 cfg = AutoConfig.from_pretrained(a.model, revision=a.revision)
 tc = getattr(cfg, "text_config", cfg)                  # Mistral3 keeps the LM under text_config
 tc.num_hidden_layers = a.t                             # never load layers >= t: halves the memory
 if getattr(tc, "layer_types", None): tc.layer_types = tc.layer_types[:a.t]
-kw = dict(revision=a.revision, config=cfg, torch_dtype=torch.bfloat16, device_map="cuda")
+kw = dict(revision=a.revision, config=cfg, torch_dtype=torch.bfloat16, device_map=a.device)
 if a.bits == 4:
     from transformers import BitsAndBytesConfig
     kw["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
@@ -49,7 +51,7 @@ layers[a.t - 1].register_forward_hook(post)
 
 def enc(path):
     ids = tok(open(path).read(), return_tensors="pt", add_special_tokens=bool(a.bos)).input_ids
-    return ids.cuda()                                  # tokenize exactly as the server will (BOS!)
+    return ids.to(dev)                                # tokenize exactly as the server will (BOS!)
 seeds = [enc(f) for f in a.seeds]
 
 def run(ids, theta):
@@ -59,7 +61,7 @@ def run(ids, theta):
     return st["z"][:, -a.last:, :].float()             # [k, last, d]
 
 with torch.no_grad():
-    base = [run(ids, torch.zeros(1, d, device="cuda")) for ids in seeds]
+    base = [run(ids, torch.zeros(1, d, device=dev)) for ids in seeds]
 hnorm = sorted(st["hn"])[len(st["hn"]) // 2]
 
 def delta(theta):                                      # mean over seeds and positions -> [k, d]
@@ -67,7 +69,7 @@ def delta(theta):                                      # mean over seeds and pos
 
 @torch.no_grad()
 def calibrate(n=16):                                   # DCT: nonlinear/linear response ratio == lam
-    v = F.normalize(torch.randn(n, d, device="cuda"), dim=1)
+    v = F.normalize(torch.randn(n, d, device=dev), dim=1)
     h = 0.02 * hnorm                                   # central difference, cubic error only
     Jv = (delta(h * v) - delta(-h * v)) / (2 * h)
     def ratio(R):
@@ -81,8 +83,8 @@ def calibrate(n=16):                                   # DCT: nonlinear/linear r
 R = a.R or calibrate()
 print(f"R={R:.3f}  median|h_s|={hnorm:.2f}  R/|h_s|={R / hnorm:.4f}", flush=True)
 
-V = F.normalize(torch.randn(d, a.m, device="cuda"), dim=0)
-U = F.normalize(torch.randn(d, a.m, device="cuda"), dim=0)
+V = F.normalize(torch.randn(d, a.m, device=dev), dim=0)
+U = F.normalize(torch.randn(d, a.m, device=dev), dim=0)
 for it in range(a.iters):                              # OGI (DCT algorithm 3)
     V, _ = torch.linalg.qr(V)                          # orthogonalize inputs only
     GU, GV, obj = torch.empty_like(U), torch.empty_like(V), 0.0

@@ -126,9 +126,10 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 Nothing has been synthesised yet. **The first evening, decided 2026-09-24, runs in a fresh
 session** (this one was the theorist; the executor starts cold from here, `research-mescalito.md`
 part 3, and the pod recipe in `olmo.md`): one A40, both models in the same pod. Nemo first as
-the warm-up — download and quant, then `mescalito/kit/melbo_bank.py`, which has never run, so
-the evening opens with a debugging hour — a bank of 256, screened blind against sixteen random
-directions of the same size; then olmo, the patient, its own bank (a bank does not carry across
+the warm-up — download and quant, then `mescalito/kit/melbo_bank.py` — a bank of 256, screened
+blind against sixteen random directions of the same size (**the kit had its dry run on the mac
+the same day**, every script end to end on a toy model and the real nemo gguf, so the pod hour
+is spent on the models, not on tracebacks — `research-mescalito.md` part 3 has what it showed); then olmo, the patient, its own bank (a bank does not carry across
 models; olmo's first twenty layers in bf16 are ~20 GB, which is why the card is needed at all —
 the compute is minutes, the memory is the problem). Binary drug-in/out on nemo then runs on
 the mac in seconds: its llama-server loads any vector as a flag; two servers do not fit in 16 GB,

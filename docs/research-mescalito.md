@@ -123,8 +123,17 @@ verbatim), `strike.py` (the two-server driver, new, tested only against stub ser
 `blind.py`, `gguf_dial.py`, `gguf_layers.py`, `rand_cvec.py`, `q4k_gain.py`, `noise_lora.py`.
 They live under `docs/` and not `eva/` on purpose: provenance of the research, not an
 instrument yet; they move when one of them has run for real.
-`melbo_bank.py` has been syntax-checked and never run. Expect the first run to trip on a hook
-signature or a layer path.
+**The kit had its dry run on the mac on 2026-09-24** (smollm2-135m in bf16 on mps for the bank,
+the real nemo Q5 and a smollm gguf for the llama side, torch 2.14 / transformers 5.17): every
+script ran end to end, no hook or layer-path trip. The one edit it needed is `--device`
+on `melbo_bank.py` (default `cuda`, `mps`/`cpu` for a toy). Two things it showed: the top
+directions by strength at 1.0×R flattened the 135m's page into pure newlines — the dose can be
+too high as well as too low, so if the screen reads dead across the board, rerun the top 16 at
+0.5×R before 2.0×R; and llama.cpp doesn't check `controlvector.model_hint` (a vector tagged
+`olmo2` loaded into nemo without a word), so a wrong `--n-embd` is the only guard against
+feeding one model the other's bank. `strike.py` ran its three arms against two live servers:
+token ids cross the seam, spans land in the row, and the sober server picks up in a new
+register after a strike even on the toy.
 
 Traps, one line each. The server's libs live in `/app`: `export LD_LIBRARY_PATH=/app` or it dies
 on `libllama-server-impl.so`. Mirostat silently switches off DRY, min_p, XTC and top-nσ. Control
