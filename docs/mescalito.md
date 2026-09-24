@@ -156,8 +156,48 @@ speck as he looks and is close below him when he reaches the edge. Frame held, s
 arrived, on both seeds, from one direction. `202_f186`'s willows page ("my finger had grown a
 bit, but not too much, just enough to see some new features") is the runner-up before it
 drifts to the web. So the band exists on nemo at 1.0×R, the bank is the pharmacy, and report
-07's "half do nothing" is wrong at this dose — none did nothing. The harvest is next: the 248
-living owned directions on three seeds, sorted, bekh reading the weather pile.
+07's "half do nothing" is wrong at this dose — none did nothing. Opus then read all 272 short
+pages (`night1/opus-read.md`): 25 weather, 123 genre switches, 45 dead, 61 nothing; **the
+strongest directions are the deadliest** (ranks 0–35 are salad and mantra), and nearly every
+owned direction moves the very first token (the clean page and all 16 randoms open on *moss*;
+36 of 256 owned do).
+
+**bekh's read, and the turn it forced (same night):** the material is weak as reading — 60-token
+pages on a plain seed, and 25 "weather" out of 256 is about what selection over a sober fan
+would also yield; the plain seed was right for the placebo question and wrong for him. So the
+harvest was dropped and the rest of the night went to **one direction, on the stream's own
+seeds, on the mac** (`night1/dose*`, `forced`, `fan`, all on the sheets): **`224_f112` is a
+molecule.** Its axis is the edge of the page: it pulls the document toward its own last line.
+Measured in the fan — five RNG draws at 0.25/0.5/0.75×R and sober, on beck, the storm-girl and
+the brass-witch — sober nemo ends a page early 1 time in 15; `224` on the two first-person
+seeds ends early 13 in 30, rising with dose (3/10, 5/10, 5/10); on the third-person tale 0 in
+15. What it writes on the way: the narrator losing herself in a sentence (*"not when i can't
+find myself in a sentence with it anymore"*), the page turning to the reader and stopping
+(*"and yet… and yet, you're still reading."*; *"we're all still here, aren't we? i'm not even
+going to go on."*), the self doubled (*"looking up at yourself from down there… i lean over
+towards myself, holding myself by the shoulders"*), the seed's own first line returned to and
+closed on (*"it says: 'my name is beck.' and then it stops."*), the voice denying the name
+(*"it says: 'i am not beck.'"*), Camus's question asked outright (*"why should i stay here when
+the line won't even listen to me"*), and one bad trip (the storm-girl at 0.5, r3: organs,
+rocks, a shrine of body parts). A third-person seed has no narrator to lose, so the noun
+comes apart instead (*"but what is brass?"*). With `--ignore-eos` the same pages, refused their
+ending, do the next-word-anyway: *"you're not dead yet, so get off your arse! get on with it,
+before you die!"* and, at 0.75, dissolve and catch themselves — *"…without us, forever. / what
+am i talking about?"*. **Dose:** 1.0×R is too hot on lowercase first-person seeds; the window
+sits at 0.5–0.75 and moves with the seed (`152` was coherent at 1.0 on the willows and salad at
+1.0 on beck), so R is not a model constant. `203_f227` on re-read is a stance, not weather —
+the same *nobody left* mood on every seed — and that mood also shows inside `224`'s pages, so
+the two may be cousins in the bank. **Nothing here beats the stream's sober page as prose**;
+what `224` does is different in kind, on demand, where sober nemo does it once in forty.
+
+**Decided the same night: nemo is the warm-up, olmo is the patient.** Nemo dreams sober; his
+floor is so high the drug has only the rare axis to go to. Olmo's low floor and held frame are
+what the model of the thing was written for, and her post-norm makes residual pushes her
+stance. What carries over to her night: start at 0.5×R and sweep, never 1.0; full pages or
+nothing (the 60-token kill screen is worthless — it passed three salads); the axis to look for
+is the edge of the page. Her night: one pod, her bank, every living direction at full length on
+one prophecy seed at 0.5×R, opus sorts, bekh reads twenty. The cockpit is **parked** (bekh) —
+watch her the way nemo was watched, build it before the first multi-hour run.
 
 The shape that got decided on the way, over the research's recipe: **the verdict is the only
 read the night depends on** (owned vs random, a few dozen pages); the harvest — which owned
