@@ -70,7 +70,10 @@ the trail holds — except that the animals get minds: cattle *"rendered tempora
 by *"so violent an interruption of the dreamless sleep"*, horses *"in a most unsatisfactory
 state of mind"*. Maybe the self-as-other displaced onto the herd; maybe Andy Adams.
 
-**Status.** Candidate, weaker than `125`. Unnamed.
+**Dose.** 0.75 (bekh: again the best). The volume-switch page is at 0.75; so is *"i see myself
+as i truly am."*
+
+**Status.** Candidate; bekh: really cool, keep. Unnamed.
 
 ## `203_f227` — a stance, not a substance
 
