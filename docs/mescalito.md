@@ -75,7 +75,9 @@ The model's twins, as far as we can see them:
 - **The lot, not the theme.** Uniformity lives in the draw: a bank of directions, one drawn at
   random per trip, sign at random. Nobody picks a mood.
 - **His marks are the measurement** (as everywhere in this project). Compared pages go to the
-  sheets unmarked, the key held until he has read.
+  sheets **labelled** — which seed, which pile, which vector — since 2026-09-24 (bekh: *fuck
+  that shit about blindness*); the blind read with a sealed key is retired, `blind.py` stays in
+  the kit as provenance.
 
 ## What the research settled (2026-09-24, `research-mescalito.md`)
 
