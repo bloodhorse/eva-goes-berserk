@@ -24,6 +24,22 @@ first-person seeds 13/30, rising with dose (3/10, 5/10, 5/10); on the tale 0/15.
 **Dose.** 0.75 is the edge: the best page and the shortest ones both live there. 1.0 is too hot
 on lowercase first-person seeds. Recipe: 0.75×R, `--ignore-eos`, a first-person seed.
 
+**The forced fan** (`night1/forced-fan/`, opus's read in `night1/opus-forced-negation.md`):
+0.75 + `--ignore-eos`, five draws, three seeds. **The flicker didn't replicate**: dissolve then
+*"what am i talking about?"* is 0 of 14 new draws (the one hit is the original page, same RNG
+seed). What holds is the dissolving itself, ~10 of 15 — *"i am your field now"*, *"the line…
+that was me"*, a body made of rain. Refusing the ending doesn't send her anywhere new: she
+keeps writing the ending she was denied — on beck r2 she closes the document *in text*, an
+author signature, a copyright line, a web index — and on the tower seed all five forced pages
+collapse toward loop and salad. So `--ignore-eos` stays in the recipe for the one thing it
+does (the page has to keep going past its last line) and the flicker is filed as one lucky
+draw, not a trait.
+
+**Negation** (`night1/negation/`, −0.75, one draw): **anti-ender is a real opposite** — both
+seeds become a nineteenth-century novel, capitals back, a scolding aunt (*"Naughty wind! I have
+found you at last"*), and neither page ends: the settled middle of a long old book instead of
+its last line. The one strong negation result.
+
 **Kin.** `203_f227` shares its *nobody left* mood and may be a cousin in the bank.
 
 **Status.** Named (bekh, 2026-09-24). The first.
@@ -54,6 +70,10 @@ author. The drug needs a lowercase *i* in a situation.
 
 **Dose.** 0.75 (bekh). The wife-and-son page is at 0.5, the coetzee leak at 0.75; both doses
 carry the signature.
+
+**Negation** (−0.75, one draw, `night1/negation/`): mostly an absence — no relatives on either
+seed; beck gets winged people in cages writing on walls *"so the humans don't hear"*, which may
+be a stranger or luck; the storm-girl reads close to sober.
 
 **Status.** Named **kin** (bekh, 2026-09-24). The second substance.
 
@@ -104,6 +124,10 @@ for that document, and it is the one document the seeds must never point at.
 
 **Dose.** 0.75 (bekh: again the best). The volume-switch page is at 0.75; so is *"i see myself
 as i truly am."*
+
+**Negation** (−0.75, one draw, `night1/negation/`): a plausible opposite — both pages end
+early and quietly, and on beck the line finally answers: *"beck? i know a beck."* The early stop
+is ender's trait too, so the two may share a component.
 
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
