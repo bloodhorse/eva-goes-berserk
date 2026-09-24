@@ -5,7 +5,7 @@ random ones, every page headed by its condition and its surface stats (distinct-
 rep4 high = mantra). `python pages.py [title]`, in the dir that holds raw.jsonl."""
 import json, os, re, sys
 
-rows = [json.loads(l) for l in open("raw.jsonl") if l.strip()]
+rows = [json.loads(l) for l in open("raw.jsonl", errors="replace") if l.strip()]
 title = sys.argv[1] if len(sys.argv) > 1 else os.path.basename(os.getcwd())
 
 

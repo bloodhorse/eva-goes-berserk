@@ -1,0 +1,7 @@
+Fetching 17 files:   0%|          | 0/17 [00:00<?, ?it/s]Still waiting to acquire lock on /root/nemo-hf/.cache/huggingface/.gitignore.lock (elapsed: 0.1 seconds)
+Still waiting to acquire lock on /root/nemo-hf/.cache/huggingface/.gitignore.lock (elapsed: 0.1 seconds)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 17 files:   6%|▌         | 1/17 [00:00<00:04,  3.57it/s]Fetching 17 files:  24%|██▎       | 4/17 [00:00<00:01, 10.94it/s]Fetching 17 files:  35%|███▌      | 6/17 [00:00<00:00, 11.75it/s]Fetching 17 files:  47%|████▋     | 8/17 [00:00<00:00, 11.79it/s]Fetching 17 files:  59%|█████▉    | 10/17 [00:01<00:00,  8.39it/s]Fetching 17 files:  71%|███████   | 12/17 [00:04<00:03,  1.51it/s]Fetching 17 files:  76%|███████▋  | 13/17 [00:23<00:16,  4.22s/it]Fetching 17 files:  82%|████████▏ | 14/17 [00:23<00:10,  3.36s/it]Fetching 17 files:  88%|████████▊ | 15/17 [00:25<00:05,  2.90s/it]Fetching 17 files:  94%|█████████▍| 16/17 [00:26<00:02,  2.45s/it]Fetching 17 files: 100%|██████████| 17/17 [00:30<00:00,  3.00s/it]Fetching 17 files: 100%|██████████| 17/17 [00:30<00:00,  1.82s/it]
+[32m✓ Downloaded[0m
+  path: /root/nemo-hf
+23G	nemo-hf

@@ -1,0 +1,24 @@
+NVIDIA RTX A6000, 46068 MiB
+/app/convert_hf_to_gguf.py
+/app/llama-completion
+/app/llama-quantize
+downloading uv 0.12.18 x86_64-unknown-linux-gnu
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: .venv
+Activate with: source .venv/bin/activate
+torch 2.14.0+cu130 cuda True
+converter: image python
+seeds/read/cattle-trail.txt
+seeds/read/willows-last.txt
+seeds/train/01-the-green-book.txt
+seeds/train/04-blue-boar.txt
+seeds/train/05-all-ive-got-are-names.txt
+seeds/train/06-a-dreamer-to-a-reader.txt
+seeds/train/07-it-keeps-talking-back.txt
+seeds/train/08-what-is-that-hum.txt
+seeds/train/09-you-it-said.txt
+seeds/train/10-what-has-this-to-do-with-you.txt

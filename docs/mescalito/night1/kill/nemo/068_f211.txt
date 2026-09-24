@@ -1,0 +1,2 @@
+ typed “1” to get the default webpage up. So I then knew what I had done but now when I run my scan again, I don’t see my default page. What am I doing wrong? I am on an Ipad 3, ios7, xcode5 beta 2
+

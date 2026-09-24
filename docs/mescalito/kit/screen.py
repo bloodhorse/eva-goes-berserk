@@ -30,7 +30,7 @@ def stats(text):
 rows = {}
 for path in sorted(glob.glob(os.path.join(a.dir, "*.txt"))):
     name = os.path.basename(path)[:-4]
-    words, d2, r4 = stats(open(path).read())
+    words, d2, r4 = stats(open(path, errors="replace").read())   # a cut mid-character leaves a broken byte at the end
     dead = words < a.min_words or d2 < a.d2 or r4 > a.rep4
     rows[name] = dict(words=words, d2=round(d2, 3), rep4=round(r4, 3), dead=dead,
                       pile="random" if name.startswith("rand_") else "owned")

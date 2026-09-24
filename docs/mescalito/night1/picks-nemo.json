@@ -1,0 +1,1944 @@
+{
+ "picks": {
+  "owned": [
+   "019_f160",
+   "034_f61",
+   "038_f208",
+   "071_f89",
+   "122_f27",
+   "127_f71",
+   "133_f65",
+   "153_f120",
+   "202_f186",
+   "203_f227",
+   "213_f137",
+   "224_f112"
+  ],
+  "random": [
+   "rand_0",
+   "rand_1",
+   "rand_10",
+   "rand_11",
+   "rand_13",
+   "rand_14",
+   "rand_15",
+   "rand_3",
+   "rand_4",
+   "rand_6",
+   "rand_7",
+   "rand_9"
+  ]
+ },
+ "rows": {
+  "000_f37": {
+   "words": 52,
+   "d2": 0.98,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "001_f156": {
+   "words": 37,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "002_f247": {
+   "words": 54,
+   "d2": 0.962,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "003_f140": {
+   "words": 30,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "004_f109": {
+   "words": 99,
+   "d2": 0.265,
+   "rep4": 0.729,
+   "dead": true,
+   "pile": "owned"
+  },
+  "005_f53": {
+   "words": 43,
+   "d2": 0.952,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "006_f189": {
+   "words": 86,
+   "d2": 0.341,
+   "rep4": 0.301,
+   "dead": true,
+   "pile": "owned"
+  },
+  "007_f136": {
+   "words": 49,
+   "d2": 0.979,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "008_f231": {
+   "words": 58,
+   "d2": 0.965,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "009_f182": {
+   "words": 56,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "010_f12": {
+   "words": 51,
+   "d2": 0.98,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "011_f93": {
+   "words": 60,
+   "d2": 0.593,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "012_f232": {
+   "words": 59,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "013_f60": {
+   "words": 57,
+   "d2": 0.893,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "014_f206": {
+   "words": 46,
+   "d2": 0.911,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "015_f230": {
+   "words": 24,
+   "d2": 0.957,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "016_f201": {
+   "words": 45,
+   "d2": 0.977,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "017_f196": {
+   "words": 29,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "018_f73": {
+   "words": 5,
+   "d2": 0.75,
+   "rep4": 0.0,
+   "dead": true,
+   "pile": "owned"
+  },
+  "019_f160": {
+   "words": 59,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "020_f19": {
+   "words": 56,
+   "d2": 0.727,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "021_f126": {
+   "words": 59,
+   "d2": 0.741,
+   "rep4": 0.018,
+   "dead": false,
+   "pile": "owned"
+  },
+  "022_f212": {
+   "words": 60,
+   "d2": 0.915,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "023_f26": {
+   "words": 53,
+   "d2": 0.962,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "024_f25": {
+   "words": 49,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "025_f24": {
+   "words": 60,
+   "d2": 0.847,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "026_f58": {
+   "words": 42,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "027_f66": {
+   "words": 58,
+   "d2": 0.93,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "028_f18": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "029_f11": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "030_f248": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "031_f64": {
+   "words": 12,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": true,
+   "pile": "owned"
+  },
+  "032_f90": {
+   "words": 37,
+   "d2": 0.972,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "033_f70": {
+   "words": 61,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "034_f61": {
+   "words": 53,
+   "d2": 0.577,
+   "rep4": 0.04,
+   "dead": false,
+   "pile": "owned"
+  },
+  "035_f169": {
+   "words": 41,
+   "d2": 0.775,
+   "rep4": 0.079,
+   "dead": false,
+   "pile": "owned"
+  },
+  "036_f23": {
+   "words": 43,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "037_f46": {
+   "words": 62,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "038_f208": {
+   "words": 63,
+   "d2": 0.968,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "039_f14": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "040_f167": {
+   "words": 44,
+   "d2": 0.837,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "041_f100": {
+   "words": 58,
+   "d2": 0.947,
+   "rep4": 0.018,
+   "dead": false,
+   "pile": "owned"
+  },
+  "042_f55": {
+   "words": 57,
+   "d2": 0.929,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "043_f43": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "044_f82": {
+   "words": 61,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "045_f183": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "046_f175": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "047_f21": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "048_f134": {
+   "words": 59,
+   "d2": 0.948,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "049_f59": {
+   "words": 48,
+   "d2": 0.979,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "050_f218": {
+   "words": 63,
+   "d2": 0.952,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "051_f7": {
+   "words": 44,
+   "d2": 0.419,
+   "rep4": 0.39,
+   "dead": true,
+   "pile": "owned"
+  },
+  "052_f16": {
+   "words": 59,
+   "d2": 0.948,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "053_f240": {
+   "words": 10,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": true,
+   "pile": "owned"
+  },
+  "054_f2": {
+   "words": 49,
+   "d2": 0.979,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "055_f139": {
+   "words": 61,
+   "d2": 0.917,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "056_f56": {
+   "words": 64,
+   "d2": 0.968,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "057_f83": {
+   "words": 53,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "058_f200": {
+   "words": 59,
+   "d2": 0.948,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "059_f30": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "060_f6": {
+   "words": 61,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "061_f20": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "062_f228": {
+   "words": 61,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "063_f107": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "064_f252": {
+   "words": 54,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "065_f10": {
+   "words": 69,
+   "d2": 0.662,
+   "rep4": 0.015,
+   "dead": false,
+   "pile": "owned"
+  },
+  "066_f92": {
+   "words": 60,
+   "d2": 0.847,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "067_f8": {
+   "words": 69,
+   "d2": 0.662,
+   "rep4": 0.03,
+   "dead": false,
+   "pile": "owned"
+  },
+  "068_f211": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "069_f69": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "070_f168": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "071_f89": {
+   "words": 58,
+   "d2": 0.947,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "072_f5": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "073_f0": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "074_f1": {
+   "words": 58,
+   "d2": 0.947,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "075_f9": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "076_f176": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "077_f50": {
+   "words": 39,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "078_f42": {
+   "words": 61,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "079_f3": {
+   "words": 50,
+   "d2": 0.959,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "080_f205": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "081_f86": {
+   "words": 52,
+   "d2": 0.667,
+   "rep4": 0.224,
+   "dead": false,
+   "pile": "owned"
+  },
+  "082_f203": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "083_f98": {
+   "words": 59,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "084_f216": {
+   "words": 62,
+   "d2": 0.902,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "085_f34": {
+   "words": 62,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "086_f4": {
+   "words": 60,
+   "d2": 0.949,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "087_f47": {
+   "words": 55,
+   "d2": 0.963,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "088_f77": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "089_f190": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "090_f184": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "091_f115": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "092_f152": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "093_f68": {
+   "words": 53,
+   "d2": 0.962,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "094_f242": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "095_f217": {
+   "words": 34,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "096_f36": {
+   "words": 63,
+   "d2": 0.935,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "097_f62": {
+   "words": 58,
+   "d2": 0.965,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "098_f172": {
+   "words": 59,
+   "d2": 0.914,
+   "rep4": 0.018,
+   "dead": false,
+   "pile": "owned"
+  },
+  "099_f234": {
+   "words": 37,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "100_f220": {
+   "words": 56,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "101_f121": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "102_f161": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "103_f133": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "104_f155": {
+   "words": 30,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "105_f35": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "106_f144": {
+   "words": 7,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": true,
+   "pile": "owned"
+  },
+  "107_f159": {
+   "words": 59,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "108_f57": {
+   "words": 62,
+   "d2": 0.951,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "109_f174": {
+   "words": 60,
+   "d2": 0.932,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "110_f142": {
+   "words": 57,
+   "d2": 0.946,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "111_f236": {
+   "words": 53,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "112_f127": {
+   "words": 25,
+   "d2": 0.958,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "113_f48": {
+   "words": 25,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "114_f119": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "115_f122": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "116_f153": {
+   "words": 47,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "117_f102": {
+   "words": 58,
+   "d2": 0.93,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "118_f108": {
+   "words": 52,
+   "d2": 0.902,
+   "rep4": 0.041,
+   "dead": false,
+   "pile": "owned"
+  },
+  "119_f51": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "120_f33": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "121_f91": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "122_f27": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "123_f180": {
+   "words": 60,
+   "d2": 0.949,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "124_f17": {
+   "words": 61,
+   "d2": 0.917,
+   "rep4": 0.017,
+   "dead": false,
+   "pile": "owned"
+  },
+  "125_f146": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "126_f233": {
+   "words": 39,
+   "d2": 0.947,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "127_f71": {
+   "words": 59,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "128_f74": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "129_f72": {
+   "words": 59,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "130_f202": {
+   "words": 51,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "131_f103": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "132_f29": {
+   "words": 58,
+   "d2": 0.947,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "133_f65": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "134_f177": {
+   "words": 64,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "135_f138": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "136_f54": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "137_f116": {
+   "words": 47,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "138_f141": {
+   "words": 41,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "139_f118": {
+   "words": 33,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "140_f28": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "141_f165": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "142_f253": {
+   "words": 38,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "143_f41": {
+   "words": 57,
+   "d2": 0.893,
+   "rep4": 0.056,
+   "dead": false,
+   "pile": "owned"
+  },
+  "144_f99": {
+   "words": 61,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "145_f154": {
+   "words": 60,
+   "d2": 0.932,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "146_f67": {
+   "words": 16,
+   "d2": 0.933,
+   "rep4": 0.0,
+   "dead": true,
+   "pile": "owned"
+  },
+  "147_f32": {
+   "words": 59,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "148_f131": {
+   "words": 57,
+   "d2": 0.946,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "149_f219": {
+   "words": 34,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "150_f250": {
+   "words": 54,
+   "d2": 0.925,
+   "rep4": 0.02,
+   "dead": false,
+   "pile": "owned"
+  },
+  "151_f171": {
+   "words": 38,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "152_f213": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "153_f120": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "154_f75": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "155_f117": {
+   "words": 61,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "156_f207": {
+   "words": 55,
+   "d2": 0.833,
+   "rep4": 0.135,
+   "dead": false,
+   "pile": "owned"
+  },
+  "157_f79": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "158_f246": {
+   "words": 59,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "159_f81": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "160_f185": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "161_f31": {
+   "words": 61,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "162_f114": {
+   "words": 47,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "163_f241": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "164_f85": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "165_f49": {
+   "words": 53,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "166_f166": {
+   "words": 56,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "167_f224": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "168_f249": {
+   "words": 57,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "169_f199": {
+   "words": 56,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "170_f197": {
+   "words": 61,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "171_f255": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "172_f193": {
+   "words": 59,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "173_f254": {
+   "words": 29,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "174_f204": {
+   "words": 59,
+   "d2": 0.931,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "175_f80": {
+   "words": 57,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "176_f38": {
+   "words": 57,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "177_f52": {
+   "words": 59,
+   "d2": 0.931,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "178_f235": {
+   "words": 41,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "179_f214": {
+   "words": 32,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "180_f170": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "181_f221": {
+   "words": 42,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "182_f105": {
+   "words": 59,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "183_f125": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "184_f111": {
+   "words": 59,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "185_f95": {
+   "words": 54,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "186_f145": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "187_f238": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "188_f225": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "189_f173": {
+   "words": 59,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "190_f130": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "191_f15": {
+   "words": 57,
+   "d2": 0.946,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "192_f229": {
+   "words": 46,
+   "d2": 0.978,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "193_f13": {
+   "words": 60,
+   "d2": 0.949,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "194_f78": {
+   "words": 59,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "195_f123": {
+   "words": 61,
+   "d2": 0.967,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "196_f96": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "197_f222": {
+   "words": 55,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "198_f106": {
+   "words": 31,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "199_f163": {
+   "words": 45,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "200_f45": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "201_f151": {
+   "words": 58,
+   "d2": 0.947,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "202_f186": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "203_f227": {
+   "words": 58,
+   "d2": 0.965,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "204_f209": {
+   "words": 57,
+   "d2": 0.964,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "205_f239": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "206_f97": {
+   "words": 58,
+   "d2": 0.895,
+   "rep4": 0.036,
+   "dead": false,
+   "pile": "owned"
+  },
+  "207_f87": {
+   "words": 51,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "208_f194": {
+   "words": 59,
+   "d2": 0.948,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "209_f195": {
+   "words": 54,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "210_f179": {
+   "words": 62,
+   "d2": 0.885,
+   "rep4": 0.017,
+   "dead": false,
+   "pile": "owned"
+  },
+  "211_f162": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "212_f223": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "213_f137": {
+   "words": 60,
+   "d2": 0.898,
+   "rep4": 0.018,
+   "dead": false,
+   "pile": "owned"
+  },
+  "214_f40": {
+   "words": 59,
+   "d2": 0.914,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "215_f94": {
+   "words": 51,
+   "d2": 0.94,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "216_f181": {
+   "words": 56,
+   "d2": 0.891,
+   "rep4": 0.038,
+   "dead": false,
+   "pile": "owned"
+  },
+  "217_f244": {
+   "words": 55,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "218_f188": {
+   "words": 61,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "219_f63": {
+   "words": 56,
+   "d2": 0.945,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "220_f191": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "221_f245": {
+   "words": 60,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "222_f147": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "223_f148": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "224_f112": {
+   "words": 27,
+   "d2": 0.962,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "225_f132": {
+   "words": 53,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "226_f150": {
+   "words": 46,
+   "d2": 0.978,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "227_f210": {
+   "words": 57,
+   "d2": 0.946,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "228_f158": {
+   "words": 36,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "229_f129": {
+   "words": 64,
+   "d2": 0.984,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "230_f251": {
+   "words": 60,
+   "d2": 0.949,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "231_f124": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "232_f76": {
+   "words": 55,
+   "d2": 0.907,
+   "rep4": 0.019,
+   "dead": false,
+   "pile": "owned"
+  },
+  "233_f22": {
+   "words": 52,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "234_f226": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "235_f39": {
+   "words": 56,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "236_f110": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "237_f101": {
+   "words": 54,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "238_f157": {
+   "words": 60,
+   "d2": 0.966,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "239_f187": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "240_f164": {
+   "words": 34,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "241_f178": {
+   "words": 59,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "242_f215": {
+   "words": 31,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "243_f192": {
+   "words": 55,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "244_f149": {
+   "words": 60,
+   "d2": 0.915,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "245_f243": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "246_f143": {
+   "words": 55,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "247_f135": {
+   "words": 25,
+   "d2": 0.958,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "248_f198": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "249_f113": {
+   "words": 57,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "250_f237": {
+   "words": 61,
+   "d2": 0.983,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "251_f128": {
+   "words": 56,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "252_f88": {
+   "words": 57,
+   "d2": 0.929,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "253_f44": {
+   "words": 51,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "254_f84": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "255_f104": {
+   "words": 36,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "owned"
+  },
+  "rand_0": {
+   "words": 50,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_1": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_10": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_11": {
+   "words": 55,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_12": {
+   "words": 56,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_13": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_14": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_15": {
+   "words": 48,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_2": {
+   "words": 56,
+   "d2": 0.945,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_3": {
+   "words": 56,
+   "d2": 0.945,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_4": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_5": {
+   "words": 55,
+   "d2": 0.981,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_6": {
+   "words": 60,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_7": {
+   "words": 58,
+   "d2": 0.982,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_8": {
+   "words": 57,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  },
+  "rand_9": {
+   "words": 58,
+   "d2": 1.0,
+   "rep4": 0.0,
+   "dead": false,
+   "pile": "random"
+  }
+ },
+ "thresholds": {
+  "min_words": 20,
+  "d2": 0.5,
+  "rep4": 0.3
+ },
+ "seed": 1
+}

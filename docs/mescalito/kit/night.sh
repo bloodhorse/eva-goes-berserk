@@ -126,7 +126,7 @@ name = sys.argv[1]
 with open(f"out/{name}/raw.jsonl", "w") as f:
     for p in sorted(glob.glob(f"out/{name}/*__*.txt")):
         cond, s = os.path.basename(p)[:-4].split("__")
-        f.write(json.dumps({"cond": cond, "seed": os.path.abspath(f"seeds/read/{s}.txt"), "text": open(p).read()}) + "\n")
+        f.write(json.dumps({"cond": cond, "seed": os.path.abspath(f"seeds/read/{s}.txt"), "text": open(p, errors="replace").read()}) + "\n")
 EOF
   (cd "out/$name" && "$PY" ../../kit/pages.py "mescalito · $name · $(date -u +%Y-%m-%d)")
   ntfy "$name: pages ready ($(wc -l < out/$name/raw.jsonl))"
