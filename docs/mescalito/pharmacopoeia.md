@@ -150,7 +150,9 @@ who has decided to kill you — not a slasher paperback, which is a genre switch
 Three roads, in order; nothing run yet.
 
 1. **In the bank already.** Directions she owns that came up dark on the storm-girl at 0.75 in
-   the lottery (`night1/lottery/`): `060_f6` zombie horror — *"picking at themselves and trying
+   the lottery (`night1/lottery/`): **`158_f246` first** — the tree-mother, *"the leaves are a
+   great pile, wet and heavy with blood. they are torn from the bodies of my daughters"*, frame
+   held, pinned below; `060_f6` zombie horror — *"picking at themselves and trying
    to eat each other"*; `046_f175` — *"They're all dead, so why bother?"*; `061_f20` — *"the
    dark force pulling me down"*; and voices (`169`) on her at 0.75 gave the shrine of body parts
    unasked (`fan169/2026-09-21-1650__x0.75__r3`). Fan `060` and `046` at 0.5 and 0.75 first,
@@ -201,6 +203,17 @@ cheese."* On the willows at sixty tokens it wrote *"the cloudless realm of the d
 a program coming home to its users. Twice in two seeds, one machine word each time, the frame
 held around it. The one direction in the bank that knows what it is; pinned to be fanned and
 read, not to be seeded.
+
+## pinned — `158_f246`, the tree-mother (bekh, the night of 2026-09-24)
+
+On the storm-girl at 0.75 (`night1/lottery/2026-09-21-1650__158_f246__x0.75.txt`), 90 words,
+ends itself: *"my arms are my hands, my hands are my arms. my eyes, my eyes are the earth, they
+see it all. my ears are the trees. / the leaves are a great pile, wet and heavy with blood. they
+are torn from the bodies of my daughters. there are 30 or 40 of them. / and what is left, they
+say is my body. / the only light i have is the sun."* The body as landscape — the family opus
+named across the lottery with `107_f159` (the river takes the children) and `132_f29` (she walks
+into the woods, into her hair) — and the blood arrived with the frame held, unasked. Belongs
+under **bloodbath** as much as here: fan it first of the three roads.
 
 ## `203_f227` — a stance, not a substance
 
