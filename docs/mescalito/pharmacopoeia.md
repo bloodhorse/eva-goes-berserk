@@ -28,7 +28,7 @@ on lowercase first-person seeds. Recipe: 0.75×R, `--ignore-eos`, a first-person
 
 **Status.** Named (bekh, 2026-09-24). The first.
 
-## `125_f146` — candidate: the kin drug
+## kin — `M-125-75` — `125_f146`
 
 **What it does.** The family arrives. Father, uncle and aunt, grandfather, mother, grandmother —
 on seeds that hold no relative — and the page turns to memoir: a childhood, a house, who died
@@ -52,7 +52,10 @@ in *we* holds against the push. The dark-floors aphorism (`m125/dark-floors__x*`
 epigraph, four pages of attributions and front matter; an aphorism has nothing to lose but its
 author. The drug needs a lowercase *i* in a situation.
 
-**Status.** Substance — the second, after ender. Unnamed; bekh names it.
+**Dose.** 0.75 (bekh). The wife-and-son page is at 0.5, the coetzee leak at 0.75; both doses
+carry the signature.
+
+**Status.** Named **kin** (bekh, 2026-09-24). The second substance.
 
 ## `169_f199` — candidate: the self as other
 
