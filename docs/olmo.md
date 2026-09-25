@@ -12,7 +12,7 @@ azeroth-render), and **the endpoint exists: `qdipqwxl1l5ngm`**, load-balancing, 
 on gemma-270m (a whole A5000, Montreal), **streams word by word** through the balancer (61
 chunks, longest gap 0.15 s, first token 0.52 s) — but the flip to the 18 GB cached model
 never mounted, so the night's pages came off a plain A40 pod (`pod.py` + `pod-boot.sh` in
-the repo, terminated at the end). Everything she wrote is in `docs/`: `olmo-prophecies`
+the repo, terminated at the end). Everything she wrote is in `docs/attic/olmo/`: `olmo-prophecies`
 (the ten mystical seeds), `olmo-fifty` (the last fifty stream seeds at their original
 heats — pairs against the stream's pages, **opus not set on them yet, bekh's instruction**),
 `olmo-shelf` (every seed on the shelf), `olmo-heat-3.0` / `-5.0`, `olmo-rope-*`. Next:
@@ -261,8 +261,8 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
    endpoint), box / say, record the cold start here.
 4. ~~the blind read~~ — bekh read her off the pod and decided: she's in. Still to do: the
    local bearer proxy so `census.py --models` and the stream can talk to the endpoint; opus
-   on the fifty pairs (`docs/olmo-fifty.json` against the stream's pages, blind, A/B
-   shuffled; `pairs.py` in the repo pairs `docs/olmo-fifty-stream.json` with `docs/olmo-fifty.json`) when bekh says.
+   on the fifty pairs (`docs/attic/olmo/olmo-fifty.json` against the stream's pages, blind, A/B
+   shuffled; `pairs.py` in the repo pairs `docs/attic/olmo/olmo-fifty-stream.json` with `docs/attic/olmo/olmo-fifty.json`) when bekh says.
 5. `eva go` learns the warm-up and the endpoint URL, and olmo takes a seat beside nemo — a
    third dreamer in the turn order, gpt-2 out — at her own heat (t3–5) and, if wanted, a rope
    bend.

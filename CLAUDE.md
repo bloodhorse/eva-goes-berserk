@@ -79,6 +79,10 @@ cost guard, rent the pipe not the card).
 
 Four folders at the root: `eva/` is code, `shelf/` is text the code reads and writes, `docs/` is
 text for us, `dreamshit/` is the published face. Each part of `eva/` that needs its own doc has one next to it; this file is the map.
+**A night is one folder** (`docs/mescalito/night1/`, `docs/attic/olmo/`), never a spray of files
+at the docs root; and **a read is a working note**, not a doc — a model's read of a batch
+(`opus-*.md`, `stars*.md`) lives a day where it was made and then goes to `docs/attic/`, its one
+surviving line already folded into the state file it fed (bekh, 2026-09-26).
 
 - **`eva/`** — the instrument, one code tree in four stances. **`eva/CLAUDE.md`** is the doc: the
   page, the server, the repl, tests, screenshots, the launchd agents, the model on the mac.
@@ -115,6 +119,10 @@ text for us, `dreamshit/` is the published face. Each part of `eva/` that needs 
     behind its dream's whole band. Its rooms, readings, dreams, plates and ledger are **not in
     git** — what survives is the artifact a star writes. **`eva/stream/CLAUDE.md`** is the doc
     and the runbook.
+  - `scorer/` — a side road, not the avenue: a tiny scorer trained on bekh's `●`/`★` marks,
+    looked at once a month for one curve (does it get better with more marks); numpy and
+    scikit-learn under `uv`, not part of the loom, never picks anything for him. Its curves are
+    `docs/scorer/`. **`eva/scorer/CLAUDE.md`** is the doc and the monthly ritual.
   - `tests/` — one file per stance plus `stub_llama.py`, a fake llama-server. Scratch dirs via
     env, never the real shelf:
 
@@ -146,8 +154,13 @@ text for us, `dreamshit/` is the published face. Each part of `eva/` that needs 
   models. `brief-storyloom.md`: the brief handed to an outside model to work the loom blind;
   `storyloom-20260916/` is what came back. `olmo.md`: the next dreamer — the checkpoint, the
   gguf, the RunPod endpoint and its lore, the pod that worked, what heat and rope did.
-  `olmo-seeds/`: the ten mystical seeds as fed; `olmo-*.json/.md`: everything olmo wrote on
-  2026-09-24 (the ten, the last fifty at their heats, the shelf, heat, rope).
+  `olmo-seeds/`: the ten mystical seeds as fed; `attic/olmo/`: everything olmo wrote on
+  2026-09-24 (the ten, the last fifty at their heats, the shelf, heat, rope) with its reads.
+  `ledgers/`: the model's blind picks, one file per experiment, so a reveal has two readers to
+  compare (its `README.md`). `cool-seeds.md`: seeds bekh wants remembered, a name and a date.
+  `backlog.md`: the agenda as it stood before "now" was cut to three steps — nothing there is
+  dead or next. `research/`: outside models' answers to our briefs, translated to English.
+  `attic/`: cold storage — nights that are over, reads that have been folded.
   **`mescalito.md`: the substance** — the mental model of giving a base model its own trip
   (rewritten in place; start there); `research-mescalito.md` the dated answer to the first
   brief, with its seven opus slices in `mescalito/` and their unrun scripts in

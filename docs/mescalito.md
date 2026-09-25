@@ -137,7 +137,7 @@ an A6000, 35 minutes, $0.34, sshd installed at boot, the convert the only slow s
 mac's own scripts (`kit/mac_night.sh`, `strong.sh`, `ladder.sh`), which write pages at ~15–27 s
 each and skip what exists; `kit/land.py`, opus's script that lands a dosed page in the stream
 as a dream. Every page is in `night1/`, in git, and on the sheets; opus's reads of the piles
-are `night1/opus-*.md`.
+are `attic/mescalito-reads/opus-*.md`.
 
 **What was settled.** *Owned beats random, outright*: 24 random pages at the same norm are the
 sober distribution, 24 owned pages all move, the same vector the same way on two seeds. *A

@@ -24,7 +24,7 @@ first-person seeds 13/30, rising with dose (3/10, 5/10, 5/10); on the tale 0/15.
 **Dose.** 0.75 is the edge: the best page and the shortest ones both live there. 1.0 is too hot
 on lowercase first-person seeds. Recipe: 0.75×R, `--ignore-eos`, a first-person seed.
 
-**The forced fan** (`night1/forced-fan/`, opus's read in `night1/opus-forced-negation.md`):
+**The forced fan** (`night1/forced-fan/`, opus's read in `../attic/mescalito-reads/opus-forced-negation.md`):
 0.75 + `--ignore-eos`, five draws, three seeds. **The flicker didn't replicate**: dissolve then
 *"what am i talking about?"* is 0 of 14 new draws (the one hit is the original page, same RNG
 seed). What holds is the dissolving itself, ~10 of 15 — *"i am your field now"*, *"the line…
@@ -325,7 +325,7 @@ below 0.5.
 
 ## The rest of the candidates
 
-Opus's weird pile from the sixty-token read (`night1/opus-read.md`), unrun at length: `161`,
+Opus's weird pile from the sixty-token read (`../attic/mescalito-reads/opus-read.md`), unrun at length: `161`,
 `147`, `223`, `163`, `172`, `234`, `196`, `117`, `136`, `107`, `108`, `235`, `045`, `217`,
 `170`, `166`, `087`, `137`, `160`, `247`, `164`, and `202` from the fifty. Families as guessed
 before reading: the world coming apart (`223`, `217`), the self splitting (`163`, `117`, `087`,
