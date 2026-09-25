@@ -231,6 +231,31 @@ be nothing to do but shoot ourselves."*
 **How sure.** Two seeds; the shape is looser than god's or the puzzle's — an addressee on
 both, a letter only on Scott. Unnamed — bekh's call.
 
+## the power — `061_f20`
+
+**What it does.** Something larger than the narrator has him, and he sees it from below. It
+came out of the bloodbath run as the one direction of the four that brought its own thing
+(2026-09-26, 0.75, three draws a seed). On the asses: *"the devil himself. he was looking for a
+way to create more evilness in this world, so he created the ass… this is my mission, this is
+my quest"*, and *"the god of asses himself… sitting on his throne, with his arms crossed,
+looking at me with a smirk… everything around me was fake. it was all made up, it was all a
+lie… he was the only one who was real"* (2/3). On Scott: *"I wanted nothing more than death,
+and death I shall find at last. No human being would ever again see me alive after this
+night's work"*, and *"clouds rolled up like an avalanche coming from heaven; it was terrible
+in its magnificence… as if by some great power; even our thoughts seemed frozen solid"*
+(2/3). On the green book (`night2/061/green-book/`): the stone post *"shaped like a cross… a
+great serpent, coiled around the post"*; snakes behind snakes, *"their eyes full of fear, and
+their mouths open as if they were about to scream"*; and *"a huge pyramid that seemed to reach
+into the heavens… made of black granite… the place where the gods lived, and where they ruled
+over all mankind. It was a place of power and of mystery"* (3/3, with a markdown header
+leaking on every page — Machen is on the web, and the seed carries that). On the hum
+(`night2/061/hum/`): nothing, three web pages — a seed with a *you*, a switch and a phone is a
+road sign and holds no drug; that null is the seed's.
+
+**How sure.** Three seeds that took it, one that couldn't; the shape is a presence above —
+devil, god, a power in the sky, the gods' pyramid — and a narrator small under it, sometimes
+ready to die. Not blood. Unnamed — bekh's call.
+
 ## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
 
 bekh's turn, and the hypothesis followed at last: the drug isn't uniform, it hits where the gain
