@@ -199,6 +199,30 @@ same all the way up while the register goes — held, then chatty or lush, then 
   father"*; 0.6 the nothing-mantra begins (*"nothing with nothing is not having no place"*);
   0.75 mantra. Cooks at 0.6. Best 0.4–0.5.
 
+## pinned from the ladder, with the hypothesized quality (bekh, 2026-09-25)
+
+Eight pages bekh marked on the ladder sheet, sent into the stream as dreams the same morning
+(the same treatment as voices' two). The vectors, and what each one is guessed to be:
+
+- **`016_f201` — the world turning on her.** At 0.25 her body becomes a tree (roots, leaves
+  for hands, the clouds her crown); at 0.4 the sky tells her to her face it hates her and her
+  father says she'll give him a heart attack; at 0.5 her name is in the WANTED section.
+  Hypothesis: a persecution direction — everything around the narrator acquires a grudge; the
+  tree is only its mildest form. Pages: 0.25, 0.4, 0.5.
+- **`036_f23` — the other becomes a *you*.** At 0.25 a girl in the mirror standing behind her,
+  stepping back when she steps forward; at 0.5 a lover (*"my mouth is a garden, full of fruit
+  trees. you take me there with a basket for my lips"*). Hypothesis: a second-person direction
+  — the page acquires a *you* and addresses it, intimately, with the frame held; the last of
+  the five to cook. Pages: 0.25, 0.5.
+- **`027_f66` — the reversed body, then the cross.** At 0.25 her legs carry her backwards and
+  she *"became aware of myself"*; at 0.75 the gospel (*"wake up! wake up, are you awake?"*).
+  Hypothesis: a passion direction — the body estranged at low dose, the crucifixion at high; a
+  genre with a strong pull, but bekh marked both ends. Pages: 0.25, 0.75.
+- **`015_f230` — the sister / the dream report** (pinned earlier). At 0.25 the train that never
+  stops long enough to take us home, the cat with two tails, the father gone grey — bekh's
+  favourite of the eight. Hypothesis: the direction that writes *dreams as dreams are told* —
+  transport, kin, houses that are and aren't yours. Page: 0.25 (0.5 is the dream report proper).
+
 ## pinned — `015_f230`, the sister (bekh, the night of 2026-09-24)
 
 Dead at 0.75 on the storm-girl (`night1/lottery/2026-09-21-1650__015_f230__x0.75.txt`) and
