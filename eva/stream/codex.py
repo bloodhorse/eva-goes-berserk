@@ -1,9 +1,8 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""codex.py — the other family's door, and the one place the codex limit is read.
+"""codex.py — the other family's door.
 
 `opus.py` is Claude's door; this is GPT's, and the two are deliberately not one module: they
-answer differently, they cost differently, and only one of them has a weekly ceiling that an
-unattended job can eat at three in the morning.
+answer differently and they cost differently.
 
 bekh, 2026-09-21: *we use opus on the left and opus on the right… how about we use codex for
 the summarization of the dreams, so they are two different families.* So the reader at the
@@ -29,7 +28,7 @@ Everything else about the call: `--json` for the event stream (the final answer 
 `--sandbox read-only` because a reader has nothing to write, `--skip-git-repo-check` because
 the seat is not a repo, the prompt on stdin so quoting never mangles a dream.
 
-Env: STREAM_CODEX_MODEL, STREAM_CODEX_EFFORT, STREAM_CODEX_USAGE, CODEX (the cli's name, for
+Env: STREAM_CODEX_MODEL, STREAM_CODEX_EFFORT, CODEX (the cli's name, for
 the tests' stub — the same knob plate.py reads, so one fake serves both).
 """
 
@@ -38,7 +37,6 @@ from __future__ import annotations
 import json
 import os
 import subprocess
-import time
 
 HERE = os.path.dirname(os.path.realpath(__file__))              # eva/stream
 SEAT = os.path.join(HERE, "reader-seat")
@@ -46,7 +44,7 @@ CODEX = os.environ.get("CODEX", "codex")
 
 # A current general model, pinned rather than inherited: bekh's own config.toml says
 # `gpt-6-astra` at reasoning `high`, and a margin note is not a reasoning job — high effort
-# would buy nothing here and be paid for out of the same weekly ceiling the plates draw on.
+# would buy nothing here but a slower note.
 MODEL = os.environ.get("STREAM_CODEX_MODEL", "gpt-6-astra")
 EFFORT = os.environ.get("STREAM_CODEX_EFFORT", "low")
 
@@ -169,57 +167,3 @@ def line(u: dict) -> str:
     """One compact row for a terminal, the shape `opus.line` has."""
     return (f"in {u.get('input_tokens', 0)} · cached {u.get('cached_input_tokens', 0)}"
             f" · out {u.get('output_tokens', 0)} · {u.get('tokens', 0)} tokens")
-
-
-# ---- the limit, read by everything that spends it ----------------------------------------------
-# One implementation for the painter and the reader both. Two jobs drawing on one weekly
-# ceiling must agree on what the ceiling is and on what a missing number means, or the one
-# that guesses wrong is the one that eats the week.
-
-# The cache `cu` keeps, refreshed by its own daemon every few minutes. Read here and never
-# written: this process is a consumer of that number, not a second source of it.
-USAGE = os.environ.get("STREAM_CODEX_USAGE",
-                       os.path.expanduser("~/.cache/claude-usage/codex.json"))
-# Past this the cache is not a reading of anything. Six of its refresh intervals.
-USAGE_STALE = 1800
-
-
-def usage() -> tuple[dict | None, str]:
-    """(the numbers, why they cannot be used). One of the two is always empty."""
-    try:
-        st = os.stat(USAGE)
-    except OSError:
-        return None, "no usage cache"
-    if time.time() - st.st_mtime > USAGE_STALE:
-        return None, f"usage cache {int((time.time() - st.st_mtime) // 60)} min stale"
-    try:
-        with open(USAGE, encoding="utf-8") as f:
-            d = json.load(f)
-    except (OSError, ValueError):
-        return None, "usage cache unreadable"
-    if not isinstance(d, dict):
-        return None, "usage cache is not an object"
-    out = {}
-    for k in ("week", "session"):
-        v = (d.get(k) or {}).get("utilization") if isinstance(d.get(k), dict) else None
-        if not isinstance(v, (int, float)):
-            return None, f"usage cache has no {k} utilization"
-        out[k] = float(v)
-    return out, ""
-
-
-def held_for(u: dict | None, why: str, week_max: float, session_max: float) -> str:
-    """Why this run must not spend anything, or "" to go ahead.
-
-    **No numbers is not a green light** — the failure that matters is an unattended job eating
-    a week of the limit at three in the morning, and a cache that has gone missing is exactly
-    when nobody is watching. And the SESSION window is the real ceiling, measured 2026-09-21:
-    22 plates in 90 minutes tripped the five-hour window at 80% while the week stood at 19%.
-    """
-    if u is None:
-        return why
-    if u["week"] >= week_max:
-        return f"week at {u['week']:g}%"
-    if u["session"] >= session_max:
-        return f"session at {u['session']:g}%"
-    return ""

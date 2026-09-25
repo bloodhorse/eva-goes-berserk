@@ -194,7 +194,7 @@ shape — now.
 1. **The dream stream** — the mission's machine. `eva/stream/CLAUDE.md` is the doc and the
    runbook and carries every detail; the page is `https://eva.x/stream`. bekh's call on
    2026-09-19: stop fucking around, build the stream, whatever comes out comes out, it corrects
-   itself as he reads. **It runs in rations now** (bekh, 2026-09-22: codex is the scarce thing):
+   itself as he reads. **It runs in rations now** (bekh, 2026-09-22):
    `eva go N` dreams N dreams with their notes, retellings and pictures, narrating who is at work,
    then turns the writer and nemo off by itself; ctrl-c stops it clean (`eva/stream/CLAUDE.md`).
    **It is OFF** between rations. The painter's minimum is gone: a six-word dream gets a picture.
@@ -239,7 +239,7 @@ shape — now.
      codex alone*), in their own store, no note touched. *The sleeper remembering*: opus, one short first-person account (asked for thirty words since 2026-09-21; he runs a quarter over)
      of **one dream of four scenes**, rewritten whole as each scene surfaces, from nemo's words
      only — the rewriting is the point, a later scene can change how an earlier one is told.
-     *The painter*: codex's image tool, one plate per dream, holding itself by the codex limits.
+     *The painter*: codex's image tool, one plate per dream.
      The writer taps the other three when a passage lands; none has a clock. Nothing a voice is
      shown says *machine*, *model* or *AI*. Everything under `shelf/stream/` and
      `shelf/sittings/stream/` is untracked and disposable; a `★` survives as an artifact and
@@ -304,12 +304,11 @@ shape — now.
      phrases — is **parked**: the marks say what touched the reader, not what the dream is
      about, and the bread dream he loved came back a high-heeled shoe on a seashore (the story
      is in the stream doc; `--prompt pieces` still runs by name). Palette
-     magenta, neon, cyan; words in a picture are allowed; the pixel hand is out. **The cost is the
-     limit**: a plate is ~0.65 points of the codex week and the FIVE-HOUR window is the real
-     ceiling (22 plates in 90 minutes tripped it at 80% with the week at 19%), about twenty
-     plates a window; a note is ~18k codex tokens and draws on the same window. The painter's
-     cap is 20% of the week (his call) and it stands AT the cap, so it paints nothing until he
-     gives a new number; my pick is one plate per finished four-scene story. Noticed,
+     magenta, neon, cyan; words in a picture are allowed; the pixel hand is out. **What it
+     costs**: a plate is ~0.65 points of the codex week, and 22 plates in 90 minutes filled the
+     five-hour window to 80% with the week at 19%; a note is ~18k codex tokens. **No caps**
+     (bekh, 2026-09-25): the guards did more harm than good and are gone from the code — codex
+     spends until codex itself refuses, and a refused note falls back to opus. Noticed,
      not acted on: the prompt's word *Landscape.* (meant as a shape) makes GPT paint seashores.
      Other hands: `IMAGE-MODELS.md`; Google's API has no free image tier; driving Gemini's web
      page by script was weighed and he hated it.

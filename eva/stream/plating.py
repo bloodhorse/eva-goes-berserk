@@ -1,34 +1,20 @@
 #!/usr/bin/env -S uv run --python 3.12
-"""plating.py — a picture for every dream while the stream is running, with a hand on the limit.
+"""plating.py — a picture for every dream while the stream is running.
 
     uv run --python 3.12 eva/stream/plating.py --once
 
-bekh, 2026-09-21: *draw a picture to every dream that's going right now… and keep your hand on
-the limit of codex.* Both halves are the job. The painting is `plate.py`'s — this only decides
-**which** dream gets one and **whether** the machine may spend anything on it right now.
+bekh, 2026-09-21: *draw a picture to every dream that's going right now.* The painting is
+`plate.py`'s — this only decides **which** dream gets one.
 
 The fourth job the writer taps when a dream lands (`stream.py`'s `KICK_JOBS`), with no clock of
 its own. **One plate per run, at most.** A run is 60–90 seconds and a dream lands every 300, and
 launchd will not start a second instance of a job that is already running — so there is no lock
 here and no queue: whatever is unpainted when the next dream lands is picked up then.
 
-**The guard is the point.** Every plate spends real money on bekh's codex limit, unattended, at
-three in the morning. Nine plates measured about two points of the week — so a plate per dream
-is roughly 65–70 points of a week per day: affordable for a half-day experiment, not a way of
-life. So this reads the same usage cache his `cu` command shows and refuses to paint over a
-ceiling, and refuses just as hard when it cannot see the numbers at all. No numbers is not a
-green light; it is the one state where an unattended painter could eat a week.
-
-**The guard itself lives in `codex.py`** since 2026-09-21, when the reader gained a codex seat:
-two jobs drawing on one weekly ceiling have to agree on what the ceiling is and on what a
-missing number means, or the one that guesses wrong is the one that eats the week. What stays
-here is only this job's thresholds and its one-row-per-state ledger rule.
-
 Env: STREAM_PLATE_SETTLE (90s — how old a dream must be before it is painted, so the reader's
 note has landed and the `pieces` prompt has words to work from), STREAM_PLATE_WINDOW (6h — how
 far back it will reach, so a job that was off for a day does not wake up and paint three hundred
-pictures), STREAM_PLATE_WEEK_MAX (50), STREAM_PLATE_SESSION_MAX (80), STREAM_CODEX_USAGE (the
-cache path, read in `codex.py`), plus everything `plate.py` reads.
+pictures), plus everything `plate.py` reads.
 """
 
 from __future__ import annotations
@@ -44,14 +30,11 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
-import codex  # noqa: E402   the limit: one reading of it for every job that spends it
 import loom  # noqa: E402
 import plate  # noqa: E402   the painting itself, its prompts, its files: all of it is there
 
 SETTLE = int(os.environ.get("STREAM_PLATE_SETTLE", "90"))
 WINDOW = int(os.environ.get("STREAM_PLATE_WINDOW", str(6 * 3600)))
-WEEK_MAX = int(os.environ.get("STREAM_PLATE_WEEK_MAX", "50"))
-SESSION_MAX = int(os.environ.get("STREAM_PLATE_SESSION_MAX", "80"))
 
 
 def log(msg: str) -> None:
@@ -63,43 +46,6 @@ def ledger(row: dict) -> None:
     with open(plate.LEDGER, "a", encoding="utf-8") as f:
         f.write(json.dumps({"ts": time.time(), "kind": "plating", **row},
                            ensure_ascii=False) + "\n")
-
-
-def rows() -> list[dict]:
-    out = []
-    try:
-        with open(plate.LEDGER, encoding="utf-8") as f:
-            for line in f:
-                if not line.strip():
-                    continue
-                try:
-                    d = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(d, dict):
-                    out.append(d)
-    except OSError:
-        pass
-    return out
-
-
-# ---- the guard --------------------------------------------------------------------------------
-
-def say_held(why: str, u: dict | None) -> None:
-    """One row per *state*, not one per run. At a dream every five minutes an unchanged hold
-    would write 288 identical lines a day and bury the rows that mean something; the tens digit
-    is enough to see the numbers moving without writing down every percent."""
-    last = None
-    for r in rows():
-        if r.get("kind") == "plating":
-            last = r
-    tens = lambda x: None if x is None else int(x) // 10           # noqa: E731
-    now = (why, tens(u and u["week"]), tens(u and u["session"]))
-    if last and last.get("held"):
-        was = (last["held"], tens(last.get("week")), tens(last.get("session")))
-        if was == now:
-            return
-    ledger({"held": why, "week": u and u["week"], "session": u and u["session"]})
 
 
 # ---- which dream ------------------------------------------------------------------------------
@@ -150,24 +96,16 @@ def next_room() -> str | None:
 
 
 def run_once() -> int:
-    u, why = codex.usage()
-    held = codex.held_for(u, why, WEEK_MAX, SESSION_MAX)
-    if held:
-        say_held(held, u)
-        log(f"holding · {held}")
-        return 0
-
     room = next_room()
     if room is None:
         return 0                                           # nothing to paint is the usual state
 
-    log(f"plating · {room} · week {u['week']:g}% · session {u['session']:g}%")
+    log(f"plating · {room}")
     # plate.py's own entry point, argv and all: the prompts, the alternation, the hand, the
     # conversion and the `kind: "plate"` row all live there and must have exactly one
-    # implementation. This process decides only which room and whether at all.
+    # implementation. This process decides only which room.
     code = plate.main(["plate.py", "--room", room])
-    ledger({"room": room, "painted": code == 0, "code": code,
-            "week": u["week"], "session": u["session"]})
+    ledger({"room": room, "painted": code == 0, "code": code})
     return 0
 
 

@@ -35,15 +35,14 @@ right… how about we use codex for the summarization of the dreams, so they are
 families*). `STREAM_READER=codex` puts GPT in this seat through `codex.py`; the sleeper
 remembering stays opus either way. Everything else is held identical so a note can be read
 against a note: the same persona file, the same shape, the same parser, the same storage. Only
-the `model` field says who wrote it. When codex is over its limit, or fails, or answers
-something with no `<reading>` in it, **opus writes that one note** — every dream gets one — and
+the `model` field says who wrote it. When codex fails, or answers something with no
+`<reading>` in it, **opus writes that one note** — every dream gets one — and
 the ledger row says why.
 
 Env: STREAM_DIR (default shelf/stream/), STREAM_READER (opus | codex), STREAM_READ_EVERY (how
 many passages a note covers, default 1), STREAM_READ_MEMORY (how many of its own readings it is
 shown, default 0 — see prompt_for), STREAM_READ_SEEDS (1 = show him the labelled seed again),
-STREAM_READ_TIMEOUT, STREAM_READER_TIMEOUT (the codex call, 120s), STREAM_READER_WEEK_MAX (50),
-STREAM_READER_SESSION_MAX (80), STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
+STREAM_READ_TIMEOUT, STREAM_READER_TIMEOUT (the codex call, 120s), STREAM_PERSONA (the persona file), plus loom's LOOM_SITTINGS.
 """
 
 from __future__ import annotations
@@ -60,7 +59,7 @@ EVA = os.path.dirname(HERE)
 for d in (os.path.join(EVA, "server"), os.path.join(EVA, "cli"), HERE):
     if d not in sys.path:
         sys.path.insert(0, d)
-import codex  # noqa: E402   the other family's door, and the one place its limit is read
+import codex  # noqa: E402   the other family's door
 import loom  # noqa: E402   the shelf, the stream rooms: nothing else here reads a room
 import opus  # noqa: E402   one call, one usage block, one place the budget is counted
 import push  # noqa: E402   the mirror, tapped the moment a note lands
@@ -95,11 +94,6 @@ READER = (os.environ.get("STREAM_READER") or "opus").strip().lower()
 # reasoning effort, and a codex that is thinking for longer than that is stuck — every second
 # spent waiting is a second the next dream's note is late.
 CODEX_TIMEOUT = int(os.environ.get("STREAM_READER_TIMEOUT", "120"))
-# The reader's own thresholds on the shared codex ceiling, kept apart from the painter's
-# (STREAM_PLATE_*) because the two spend very differently: a plate is minutes and ~19k tokens,
-# a note is seconds. The session window is the one that actually trips.
-WEEK_MAX = float(os.environ.get("STREAM_READER_WEEK_MAX", "50"))
-SESSION_MAX = float(os.environ.get("STREAM_READER_SESSION_MAX", "80"))
 
 
 def log(msg: str) -> None:
@@ -415,20 +409,16 @@ def read(prompt: str, told: list[dict]) -> tuple[str, dict, dict, str, dict, str
     exit 0.
 
     **The fallback is per-note, not per-session.** A dream with no note is a hole in the page
-    that nothing later fills in (the reader never chews a backlog), so a codex that is held, a
-    codex that times out and a codex that answers a paragraph of apology all cost the same
-    thing: one note written by the other family, and one line on the ledger saying so.
+    that nothing later fills in (the reader never chews a backlog), so a codex that times out
+    and a codex that answers a paragraph of apology cost the same thing: one note written by the other family, and one line on the ledger saying so.
     """
     if READER == "codex":
-        held = codex.held_for(*codex.usage(), WEEK_MAX, SESSION_MAX)
-        why = f"codex held · {held}" if held else ""
-        if not why:
-            try:
-                answer, usage = codex.ask(prompt, CODEX_TIMEOUT)
-                reading, marked, names = parse(answer, told)
-                return reading, marked, names, "codex:" + codex.MODEL, usage, ""
-            except ValueError as exc:
-                why = f"codex · {exc}"
+        try:
+            answer, usage = codex.ask(prompt, CODEX_TIMEOUT)
+            reading, marked, names = parse(answer, told)
+            return reading, marked, names, "codex:" + codex.MODEL, usage, ""
+        except ValueError as exc:
+            why = f"codex · {exc}"
         log(f"falling back to opus · {why}")
         answer, usage = opus.ask(prompt, TIMEOUT)
         return (*parse(answer, told), opus.MODEL, usage, why)

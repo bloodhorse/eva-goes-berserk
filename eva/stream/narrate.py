@@ -70,9 +70,6 @@ def line(r: dict) -> str | None:
     if k == "plating":
         if r.get("painted"):
             return None                                   # the plate row above already said it
-        if r.get("held"):
-            return (f"codex · painter holding · {r['held']} · week {r.get('week', '?')}% "
-                    f"session {r.get('session', '?')}%")
         return f"codex · painter found nothing to paint"
     if k == "portrait":
         # The analyst, every ten dreams, and his remark said out loud — the line the feed's card

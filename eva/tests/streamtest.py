@@ -73,9 +73,6 @@ loom.ARTIFACTS = ARTS
 plate.STREAM = STREAM_DIR
 plate.PLATES = os.path.join(STREAM_DIR, "plates")
 plate.LEDGER = os.path.join(STREAM_DIR, "ledger.jsonl")
-# The limit the painter and the codex reader both read. One scratch copy, in codex.py, since
-# that is where the guard lives.
-codex.USAGE = os.path.join(BOX, "codex.json")
 
 STUB = None            # the ordinary one: a random line per call
 STUB_DIRTY = None      # answers a licence footer, so the filter has something to catch
@@ -1231,7 +1228,6 @@ class CodexReader(unittest.TestCase):
 
     def setUp(self):
         wipe_stream()
-        put_usage()
         self.fakes = []
 
     def tearDown(self):
@@ -1288,27 +1284,6 @@ class CodexReader(unittest.TestCase):
             said = f.read().lower()
         for word in ("no tools", "countermand", "prompt"):
             self.assertIn(word, said)
-
-    def test_a_held_codex_falls_back_to_opus_and_the_row_says_why(self):
-        room = self.page()
-        put_usage(week=6, session=88)              # the session window is the one that trips
-        f = self.fake()
-        code, out = interpret_as("codex", f)
-        self.assertEqual(code, 0, out)
-        self.assertFalse(os.path.exists(f["codex_log"]), "codex was started while held")
-        got = readings_on_disk()
-        self.assertEqual([d["model"] for d in got], ["opus"])
-        self.assertEqual(got[0]["rooms"], [room])
-        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
-        self.assertIn("session at 88%", row["fell_back"])
-
-    def test_no_numbers_holds_codex_too(self):
-        self.page()
-        put_usage(missing=True)
-        self.assertEqual(interpret_as("codex", self.fake())[0], 0)
-        row = [r for r in ledger_rows() if r.get("kind") == "reading"][-1]
-        self.assertIn("no usage cache", row["fell_back"])
-        self.assertEqual(row["model"], "opus")
 
     def test_codex_garbage_is_opuss_note(self):
         """A note belongs to a dream and nothing later fills the hole, so an answer with no
@@ -1376,7 +1351,6 @@ class CodexReader(unittest.TestCase):
 class Names(unittest.TestCase):
     def setUp(self):
         wipe_stream()
-        put_usage()
         self.fakes = []
 
     def tearDown(self):
@@ -2577,28 +2551,7 @@ class Plates(unittest.TestCase):
         self.assertEqual(call("/stream/plate/2026-09-19/a/b.jpg")[0], 404)
 
 
-# ---- plating: one plate a dream, with a hand on the limit --------------------------------------
-
-def put_usage(week=6, session=0, age=0.0, broken=False, missing=False):
-    """The cache `cu` keeps, as this rig needs it. `age` in seconds backdates the mtime, which
-    is what the staleness check reads."""
-    if missing:
-        try:
-            os.unlink(codex.USAGE)
-        except FileNotFoundError:
-            pass
-        return
-    with open(codex.USAGE, "w", encoding="utf-8") as f:
-        if broken:
-            f.write("{not json")
-        else:
-            json.dump({"plan": "team", "fetched_at": time.time(),
-                       "session": {"utilization": session, "window_minutes": 300},
-                       "week": {"utilization": week, "window_minutes": 10080}}, f)
-    if age:
-        at = time.time() - age
-        os.utime(codex.USAGE, (at, at))
-
+# ---- plating: one plate a dream -----------------------------------------------------------------
 
 def run_plating(fake: dict) -> tuple[int, str]:
     was_path = os.environ.get("PATH", "")
@@ -2619,7 +2572,6 @@ class Plating(unittest.TestCase):
     def setUp(self):
         wipe_stream()
         self.fakes = []
-        put_usage()
 
     def test_a_stub_is_painted_like_any_dream(self):
         # the painter had a 15-word minimum once; bekh threw it out (2026-09-22) — no voice skips a stub
@@ -2666,7 +2618,6 @@ class Plating(unittest.TestCase):
         rows = [r for r in ledger_rows() if r.get("kind") == "plating"]
         self.assertEqual([r["room"] for r in rows], [old, mid])
         self.assertTrue(all(r["painted"] for r in rows))
-        self.assertEqual(rows[0]["week"], 6)
 
     def test_what_it_leaves_alone(self):
         self.room(30, flag="copyright")     # flagged
@@ -2678,49 +2629,6 @@ class Plating(unittest.TestCase):
         f = self.fake()
         self.assertEqual(run_plating(f)[0], 0)
         self.assertFalse(os.path.exists(f["log"]), "codex was started with nothing to paint")
-
-    def test_it_holds_over_the_ceilings(self):
-        self.room(30)
-        for week, session, why in ((50, 0, "week at 50%"), (91, 0, "week at 91%"),
-                                   (6, 80, "session at 80%")):
-            wipe_stream()
-            self.room(30)
-            put_usage(week=week, session=session)
-            f = self.fake()
-            code, out = run_plating(f)
-            self.assertEqual(code, 0, out)
-            self.assertFalse(os.path.exists(f["log"]), "codex was started while holding")
-            row = [r for r in ledger_rows() if r.get("kind") == "plating"][-1]
-            self.assertEqual(row["held"], why)
-            self.assertIn("holding", out)
-
-    def test_no_numbers_is_not_a_green_light(self):
-        for kw, why in (({"missing": True}, "no usage cache"),
-                        ({"broken": True}, "usage cache unreadable"),
-                        ({"age": 3600}, "stale")):
-            wipe_stream()
-            self.room(30)
-            put_usage(**kw)
-            f = self.fake()
-            self.assertEqual(run_plating(f)[0], 0)
-            self.assertFalse(os.path.exists(f["log"]))
-            self.assertIn(why, [r for r in ledger_rows() if r.get("kind") == "plating"][-1]["held"])
-
-    def test_a_hold_is_one_row_and_it_resumes_by_itself(self):
-        room = self.room(30)
-        put_usage(week=72)
-        for _ in range(4):
-            self.assertEqual(run_plating(self.fake())[0], 0)
-        held = [r for r in ledger_rows() if r.get("held")]
-        self.assertEqual(len(held), 1, "288 identical rows a day is what this avoids")
-
-        put_usage(week=64)                  # a different tens digit: worth one more row
-        self.assertEqual(run_plating(self.fake())[0], 0)
-        self.assertEqual(len([r for r in ledger_rows() if r.get("held")]), 2)
-
-        put_usage(week=6)                   # and it starts again with nobody touching it
-        self.assertEqual(run_plating(self.fake())[0], 0)
-        self.assertTrue(os.path.isfile(plate.plate_paths(room)[0]))
 
     def test_the_writer_taps_every_voice(self):
         put_seed("k.txt", MARK + " and then\n")

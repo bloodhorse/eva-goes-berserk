@@ -48,8 +48,8 @@
         <string>/Users/bekh</string>
         <!-- The seat at the bedside is GPT's (bekh, 2026-09-21: two different families, one
              on each side of the page). The code's default is opus, so this line is the whole
-             of the production choice; take it out and the reader is opus again. When codex is
-             over its limit or cannot answer, opus writes that one note by itself. -->
+             of the production choice; take it out and the reader is opus again. When codex cannot
+             answer, opus writes that one note by itself. -->
         <key>STREAM_READER</key>
         <string>codex</string>
     </dict>

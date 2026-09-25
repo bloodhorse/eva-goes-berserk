@@ -2,7 +2,7 @@
 """reread.py — have codex read dreams that already have a note, by hand.
 
     uv run --python 3.12 eva/stream/reread.py --last 5
-    uv run --python 3.12 eva/stream/reread.py --room stream/2026-09-21/1711 --wait-below 50
+    uv run --python 3.12 eva/stream/reread.py --room stream/2026-09-21/1711
 
 The reader (`interpreter.py`) never goes back: it reads the newest dream above its watermark
 and nothing else, because the stream is disposable. This is the hand tool for the one case
@@ -15,10 +15,6 @@ replaces an earlier one for the same room, on the page and nowhere else — the 
 on the shelf. **Codex only, no fallback**: a re-read that quietly fell back to opus would put
 the old family's note where the new one was asked for, which is the opposite of the job; a room
 codex cannot read is skipped and said so.
-
-`--wait-below N` polls the same usage cache the guard reads and starts only when the
-five-hour codex window is under N percent — the window, not the week, is the ceiling that
-bites (22 plates in 90 minutes tripped it at 80% while the week stood at 19%).
 """
 
 from __future__ import annotations
@@ -43,26 +39,10 @@ def say(msg: str) -> None:
     print(f"{time.strftime('%H:%M:%S')} {msg}", flush=True)
 
 
-def wait_below(pct: float, hours: float) -> bool:
-    """True once the session window reads under `pct`. No numbers is not a green light."""
-    deadline = time.time() + hours * 3600
-    while time.time() < deadline:
-        u, why = codex.usage()
-        if u is not None and u["session"] < pct:
-            say(f"codex window at {u['session']:g}% — going")
-            return True
-        say(f"waiting · {why or 'codex window at %g%%' % u['session']}")
-        time.sleep(120)
-    return False
-
-
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="reread.py", description=__doc__.splitlines()[0])
     ap.add_argument("--room", action="append", default=[], help="stream/<date>/<HHMM>; repeatable")
     ap.add_argument("--last", type=int, default=0, help="the newest N unflagged dreams")
-    ap.add_argument("--wait-below", type=float, default=0.0,
-                    help="start only when the five-hour codex window is under this percent")
-    ap.add_argument("--max-wait-hours", type=float, default=6.0)
     a = ap.parse_args(argv[1:])
 
     rooms = list(a.room)
@@ -74,9 +54,6 @@ def main(argv: list[str]) -> int:
     if not rooms:
         say("nothing to read: give --room or --last")
         return 2
-    if a.wait_below and not wait_below(a.wait_below, a.max_wait_hours):
-        say("gave up waiting for the codex window")
-        return 1
 
     with open(interpreter.PERSONA, encoding="utf-8") as f:
         persona = f.read()

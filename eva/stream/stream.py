@@ -106,7 +106,7 @@ SEED_MAX_CHARS = 12000
 KICK = os.environ.get("STREAM_KICK_INTERPRETER") == "1"
 KICK_JOBS = ("com.bekh.eva-stream-interpreter",      # the reader at the bedside
              "com.bekh.eva-stream-remembering",      # the sleeper remembering the night
-             "com.bekh.eva-stream-plating",          # the painter, with a hand on the limit
+             "com.bekh.eva-stream-plating",          # the painter
              # The analyst, on every landing: he counts for himself and does nothing until ten
              # new dreams are above his watermark, so nine taps in ten cost one directory walk.
              # A timer of his own would put the portrait up to a tick behind its tenth dream.

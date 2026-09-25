@@ -177,19 +177,12 @@ def render(spin, now):
     else:
         out.append(f"  {LBLUE}no notes yet — the interpreter has not run here{R}")
 
-    # The painter. Its own line because it can be holding — refusing to spend bekh's codex
-    # limit — while everything else on this page is perfectly healthy, and that is exactly the
-    # state nobody would guess from the counts above.
+    # The painter.
     plates = [r for r in rows if r.get("kind") == "plate"]
-    plating = [r for r in rows if r.get("kind") == "plating"]
     mine = [r for r in plates
             if time.strftime("%Y-%m-%d", time.localtime(r.get("ts") or 0)) == today]
     age = fmt_age(now - (plates[-1].get("ts") or now)) + " ago" if plates else "never"
     out.append(f"  {MINT_LO}{len(mine)} plates today · last {age}{R}")
-    if plating and plating[-1].get("held"):
-        r = plating[-1]
-        out.append(f"  {PINK}plating held: {r['held']} "
-                   f"(week {r.get('week')}% · session {r.get('session')}%){R}")
     if landed:
         heats = [r.get("temperature") for r in landed[-40:] if r.get("temperature")]
         toks = [r.get("tokens") or 0 for r in landed[-40:]]

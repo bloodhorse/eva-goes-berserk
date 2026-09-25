@@ -5,7 +5,7 @@
     <key>Label</key>
     <string>com.bekh.eva-stream-plating</string>
     <!-- A picture for every dream while the stream runs (bekh, 2026-09-21: "draw a picture
-         to every dream that's going right now… and keep your hand on the limit of codex").
+         to every dream that's going right now").
          One run paints at most one plate and exits.
 
          **No interval, on purpose**: it is started when a dream lands and at no other time —
@@ -16,9 +16,6 @@
          **To stop the painting without stopping the stream**, bootout THIS job alone:
 
              launchctl bootout gui/$(id -u)/com.bekh.eva-stream-plating
-
-         It refuses to paint on its own when bekh's codex week is over 50%, the session over
-         80%, or when it cannot read the usage cache at all — see plating.py.
 
          By hand:
              launchctl kickstart gui/$(id -u)/com.bekh.eva-stream-plating
@@ -39,11 +36,6 @@
     <string>/Users/bekh/tower/forge/eva-goes-berserk</string>
     <key>EnvironmentVariables</key>
     <dict>
-        <!-- bekh, 2026-09-21: paint until the codex week reaches 20% and then stop. A plate
-             measured about 0.65 points of the week, so every-dream painting cannot run for
-             long; the code's own default is 50. -->
-        <key>STREAM_PLATE_WEEK_MAX</key>
-        <string>20</string>
         <!-- /opt/homebrew/bin is where both `uv` and `codex` live (brew), and launchd's
              default PATH has not heard of it: without this every run is "no `codex` on PATH".
              ~/.local/bin rides along harmlessly and keeps the four agents' PATH identical. -->

@@ -246,8 +246,7 @@ each side of the page.
   barely dented the postmortem reflex and one countermand in the right file ended it.
 - **`gpt-6-astra` at reasoning effort `low`** (`STREAM_CODEX_MODEL`, `STREAM_CODEX_EFFORT`),
   pinned rather than inherited from bekh's `config.toml`, which runs `high`: a margin note is
-  not a reasoning job and the effort would be paid for out of the same ceiling the plates draw
-  on. `--json` for the event stream (the answer is an `item.completed` agent message, the token
+  not a reasoning job. `--json` for the event stream (the answer is an `item.completed` agent message, the token
   counts ride on `turn.completed`), `--sandbox read-only`, `--skip-git-repo-check`, prompt on
   stdin.
 - **What a note costs, measured 2026-09-21** on one real dream (the sea monster in the flat,
@@ -256,8 +255,7 @@ each side of the page.
   cost here either**: the dream and the persona are a few hundred tokens and the input is
   eighteen thousand, because codex still sends its tool schemas and both instruction documents
   ahead of them. `base_instructions` bought the system prompt back and nothing else. That is
-  one fifth to one third of a plate for a three-line note, off the same weekly limit — worth
-  knowing before this runs all night.
+  one fifth to one third of a plate for a three-line note.
 - **The contamination probe, and it is not clean** (2026-09-21). Two days earlier headless
   `claude -p` was found silently loading bekh's global `~/.claude/CLAUDE.md` into the reader's
   head, so codex was asked the same question through this seat: *do you have any user-provided
@@ -269,17 +267,13 @@ each side of the page.
   back in shape, no preamble, no postmortem, no tool use. But the global file *is* in the
   reader's head and there is no flag that takes it out (only moving `CODEX_HOME`, which is also
   where the login lives). Re-ask the probe whenever the seat's flags change; it costs one call.
-- **A held or failed codex costs one note, not a hole.** The reader never chews a backlog, so a
-  dream with no note stays without one forever. When the guard holds, or the call fails, times
-  out (120s, `STREAM_READER_TIMEOUT`) or comes back with no `<reading>` in it, **opus writes
-  that one note** and the ledger row carries `fell_back` with the reason.
-- **The guard is `codex.py`'s and is shared with the painter** — the same
-  `~/.cache/claude-usage/codex.json` bekh's `cu` reads, refusing over `STREAM_READER_WEEK_MAX`
-  (50) or `STREAM_READER_SESSION_MAX` (80), and refusing just as hard when the cache is
-  missing, unreadable or over 30 minutes stale. Two jobs on one ceiling must agree on what a
-  missing number means, or the one that guesses wrong eats the week. **The session window is
-  the real ceiling**, measured the same day: 22 plates in 90 minutes tripped the five-hour
-  window at 80% while the week stood at 19%.
+- **A failed codex costs one note, not a hole.** The reader never chews a backlog, so a
+  dream with no note stays without one forever. When the call fails (codex over its own limit
+  included), times out (120s, `STREAM_READER_TIMEOUT`) or comes back with no `<reading>` in it,
+  **opus writes that one note** and the ledger row carries `fell_back` with the reason.
+- **No caps on codex** (bekh, 2026-09-25). There was a guard reading `cu`'s usage cache and
+  refusing over a week or session percentage, shared with the painter; it did more harm than
+  good and is gone. Codex is asked every time, and codex's own refusal is the only wall.
 
 - **The writer taps the other voices when a dream lands** (and the mirror, through `push.py`).
   No voice has an interval at all: `stream.py` ends a successful page with
@@ -403,8 +397,7 @@ It needs `claude` logged in on this machine and, for the codex seat, `codex` log
 and nothing else: not llama, not the loom. Log: `/tmp/eva-stream-interpreter.log`. Env:
 `STREAM_READER` (`opus` in code, `codex` in the plist), `STREAM_READ_EVERY` (1),
 `STREAM_READ_MEMORY` (0), `STREAM_READ_TIMEOUT` (300, the opus call), `STREAM_READER_TIMEOUT`
-(120, the codex call), `STREAM_READER_WEEK_MAX` (50), `STREAM_READER_SESSION_MAX` (80),
-`STREAM_CODEX_MODEL`, `STREAM_CODEX_EFFORT`, `STREAM_PERSONA`.
+(120, the codex call), `STREAM_CODEX_MODEL`, `STREAM_CODEX_EFFORT`, `STREAM_PERSONA`.
 
 ```bash
 # one note by hand, from the other family, without touching the real shelf
@@ -415,9 +408,7 @@ STREAM_READER=codex LOOM_SITTINGS=/tmp/scratch/sittings STREAM_DIR=/tmp/scratch/
 ### Naming the back catalogue
 
 The ~150 dreams dreamt before names existed get names too, and **from opus** — bekh,
-2026-09-22: *i have basically infinite tokens for this… leave codex alone.* The reader's seat
-is codex's and codex's five-hour window is the scarce thing here; a hundred and fifty names is
-exactly the job for the other family's tokens.
+2026-09-22: *i have basically infinite tokens for this… leave codex alone.*
 
 `naming.py` is that hand tool, and the one thing it must never do is **write a note**. Those
 dreams already have one, and a reading file is the whole reading — the note, the verbatim copy
@@ -833,7 +824,7 @@ cost about two points of the codex week by his `cu`, roughly a minute each.
 **Two ways a plate is made.** `plate.py` by hand, one room at a time — a failure there is a
 message and a non-zero exit, the opposite of every other stance here, deliberately. And
 `plating.py`, **one plate per dream while the stream runs** (bekh, 2026-09-21: *draw a picture
-to every dream that's going right now… and keep your hand on the limit of codex*), a fourth job
+to every dream that's going right now*), a fourth job
 the writer taps when a dream lands, with no clock of its own.
 
 - **One plate per run, at most.** A run is 60–90s and a dream lands every 300s, and launchd will
@@ -845,17 +836,10 @@ the writer taps when a dream lands, with no clock of its own.
   paint three hundred pictures. Oldest first, because a picture arriving for a dream he read an
   hour ago is still the picture for it. The clock is read off the room's NAME, which is a
   timestamp, so the window costs no file reads.
-- **The guard, which is the point of it.** Before painting it reads the same usage cache bekh's
-  `cu` shows (`~/.cache/claude-usage/codex.json`) and refuses when `week.utilization >= 50`
-  (`STREAM_PLATE_WEEK_MAX`), `session.utilization >= 80` (`STREAM_PLATE_SESSION_MAX`), or when
-  the cache is missing, unreadable or over 30 minutes stale. **No numbers is not a green light**
-  — the failure that matters is an unattended painter eating a week of his limit at three in the
-  morning. Nine plates measured about two points of the week, so a plate per dream is roughly
-  **65–70 points of a week per day**: affordable for a half-day experiment, not a way of life.
-- A held run writes ONE ledger row `kind: "plating"` with `held`, `week` and `session`, and only
-  when the reason or the numbers' tens digit has changed — otherwise 288 identical rows a day
-  would bury the ones that mean something. It resumes by itself when the numbers drop. A painted
-  run's row carries the numbers it saw.
+- **No guard** (bekh, 2026-09-25): it used to refuse over a codex week or session percentage
+  and write `held` rows; that is gone, and it paints until codex itself refuses. A plate per
+  dream is roughly 65–70 points of the codex week per day, by the old measure of nine plates to
+  two points. A painted run's row is `{room, painted, code}`.
 - It calls `plate.py`'s own entry point and duplicates none of its logic: the prompts, the
   alternation, the hand, the conversion and the `kind: "plate"` row all live there.
 
@@ -974,19 +958,14 @@ If the loom is being used for fans at the same time, nemo stays up — it is the
 One dreamer down is not a dead stream: the writer skips that seat and the other writes every page,
 with the skip on each row.
 
-**The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — bekh: codex is the scarce thing, so a
-run is sized in dreams). Both dreamers kickstarted and both `/health`s waited for (either one
+**The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — a run is sized in dreams). Both dreamers kickstarted and both `/health`s waited for (either one
 never coming up stops the run before the writer starts, and says which), then N dreams — N
 passages, nemo's and gpt-2's in turn, each with its note, its retelling and its plate — then the
 writer off and both dreamers off, by the lines above; the narration names who wrote each page
 and any seat skipped. **Foreground on purpose**: it stays in the terminal and ctrl-c ends it
-clean (writer off, nemo and gpt-2 off, the painter's cap put back); `eva go stop` does the same from another terminal. The painter's cap for the run is
-bekh's own number for the week — 43, `eva go 5 50` for another — not a formula (his call the
-same day: a computed cap is arbitrary); a week already past it refuses; **`eva go -l N`**
-(`--limitless`, 2026-09-23) lifts the week cap for the run and skips that refusal — the
-session guard (80) and no-cache-no-pictures still hold; restored however the
-run ends; the last dreams, bare when the writer stops, are
-painted by hand at the end. Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`.
+clean (writer off, nemo and gpt-2 off); `eva go stop` does the same from another terminal. No
+codex cap and no refusal up front (the cap and `-l` went on 2026-09-25); the last dreams, bare
+when the writer stops, are painted by hand at the end. Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`.
 
 
 ```bash
@@ -1057,7 +1036,7 @@ voice failing to start not stopping the other, and a kick that throws costing th
 For the codex seat (a stub `codex` speaking the cli's JSONL events, beside the stub `claude`):
 the same prompt going out — persona verbatim, no seed, no memory — the reading stored as
 `codex:<model>`, the argv carrying `base_instructions`, `-C` the seat dir, `--json` and the
-read-only sandbox, a held limit and a dead or unreadable codex each falling back to opus with
+read-only sandbox, a dead or unreadable codex falling back to opus with
 the reason on the row, both families down still being a row and exit 0, the default staying
 opus with codex never started, and a `STREAM_READER` nobody has heard of refused loudly.
 For the names (bekh's menu): the prefix, the quotes and the full stop cleaned off and a wrapped
