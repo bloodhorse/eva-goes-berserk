@@ -1,4 +1,4 @@
-Reader: opus. 40 sober pages (`baseline.json`, no intervention), instruction A (`instruction-opus.md`) and instruction B (`instruction-fable.md`) applied separately, literally, 2026-09-26.
+Reader: opus. 40 sober pages (`../../mescalito/night2/baseline.json`, no intervention), instruction A (`instruction-opus.md`) and instruction B (`instruction-fable.md`) applied separately, literally, 2026-09-26.
 ★ = star, · = leave, ✗n = dropped by that instruction's rule n. Salad is judged by each instruction's own rule 1; the two rules agree on every page here.
 
 | id | words | salad? | A | B | deciding line / where they split |

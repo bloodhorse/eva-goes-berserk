@@ -1,6 +1,6 @@
 # what the stars share
 
-one reader's read (opus, 2026-09-26) of bekh's 40 stars on `night1/ladder22.json`: the storm-girl seed,
+one reader's read (opus, 2026-09-26) of bekh's 40 stars on `../../mescalito/night1/ladder22.json`: the storm-girl seed,
 22 directions, one draw per rung, 176 pages. observations, not law — per the criterion, two readers and
 one seed. the pages were read in full, the `about` lines ignored, the `preface` opened only at the end.
 

@@ -19,3 +19,4 @@ shelf/stream/
 # Hundreds of MB of floats that say nothing a reader could read.
 shelf/scorer/cache/
 .synced
+docs/mescalito/night2/*.html

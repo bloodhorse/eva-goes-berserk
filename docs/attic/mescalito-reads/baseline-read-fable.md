@@ -1,4 +1,4 @@
-reader: fable · 40 sober pages from `baseline.json` (no intervention) · two instructions applied separately, literally, each on its own · 2026-09-26
+reader: fable · 40 sober pages from `../../mescalito/night2/baseline.json` (no intervention) · two instructions applied separately, literally, each on its own · 2026-09-26
 A = `instruction-opus.md`, B = `instruction-fable.md`. "drop(n)" = vetoed by that instruction's rule n; "leave" = no veto, no positive signal; "star" = picked. Deciding lines are verbatim.
 
 | id | words | salad? | A | B | deciding line | where A and B part |

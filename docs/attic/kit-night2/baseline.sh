@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # baseline.sh: the sober baseline for the ladder — the storm-girl seed, the ladder's sampler
 # and length (170 tokens), no vector, forty draws (RNG seeds 1–40). A model reads them with the
-# instructions in docs/mescalito/stars.md and stars-fable.md; bekh reads none. Pages:
+# instructions in docs/attic/mescalito-reads/stars.md and stars-fable.md; bekh reads none. Pages:
 # night2/baseline/s<seed>.txt, skipped if they exist.
 set -uo pipefail
 cd "$(dirname "$0")/../night2" || exit 1

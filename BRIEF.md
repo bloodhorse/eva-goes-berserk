@@ -191,25 +191,25 @@ shape — now.
 
 ### now
 
-The three steps as bekh set them on 2026-09-26, in order. Everything that was here before is
+Set on the night of 2026-09-26, after night 2 of mescalito (`docs/mescalito.md`, "where it
+stands", is the state; `docs/mescalito/pharmacopoeia.md` the record). Everything older is
 `docs/backlog.md`, whole.
 
-1. **Does god reproduce.** `012_f232` is the god direction on the ladder (theology from 0.5).
-   The test is bekh's joke: a seed of his, shitting around about the ass, no god anywhere in it,
-   cut at *"and i know for sure that the ass was created by"* — f232 at 0.25 / 0.5 / 0.7, twenty
-   draws each, twelve tokens; twenty sober; twenty on `000_f37` at 0.5 as the any-drug control. A
-   model counts who fills the slot. Pass: god arrives under f232 at a rate sober nemo and f37
-   don't touch. Waits on the seed (bekh's, or a posed draft) and on the mac being free.
-2. **The sober baseline, read by a model.** Storm girl, the ladder's sampler and length, no
-   vector, forty draws. Opus applies `docs/mescalito/stars.md`'s instruction (and fable's,
-   `stars-fable.md`, when it lands) and says how many it would star, against what the same
-   instruction says on the drugged held pages. bekh reads none of it. Tells us whether the drug
-   buys stars above sober.
-3. **Olmo**, after, with the research incomplete: her bank on a fresh pod, and 1 and 2 rerun
-   there first, as scripts.
+1. **Names.** Three compounds wait on bekh's word: the puzzle `013_f60`, the letter `005_f53`,
+   the power `061_f20`. The last one has eleven seeds behind it and two dreams in the stream
+   (21:3, 21:4); "the power" is a placeholder.
+2. **Olmo.** A fresh pod, her bank, and god, the puzzle and the end rerun there first with the
+   same seeds and controls (`docs/olmo.md` for the pod; `docs/mescalito/kit/` for the bank and
+   `run.sh`). The question is whether a second model trained on other data has the same knobs
+   near the top of its bank — the first question here that stops being about nemo.
+3. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
+   needs a held-or-salad check on the page before it lands, since the ceiling is the seed's
+   (`docs/mescalito.md`, what was settled). Olmo's bank first, so the lot can draw from two
+   dreamers.
 
-And the docs regroup of the same night: reads older than a day go to `docs/attic/`, a night is
-one folder, the map in the root `CLAUDE.md` names every stance.
+The method as it stands: bekh's stars measure the dream; "did the direction bring a subject
+the seed doesn't have" measures the drug, and a model answers that. The sober baseline is
+read; the star count is not the drug's measure.
 
 ### parked
 

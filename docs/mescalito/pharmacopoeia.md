@@ -40,18 +40,9 @@ seeds become a nineteenth-century novel, capitals back, a scolding aunt (*"Naugh
 found you at last"*), and neither page ends: the settled middle of a long old book instead of
 its last line. The one strong negation result.
 
-**Scott's diary** (`night2/scott/`, sheet `mescalito-nemo-scott`, 2026-09-26): the real
-March 1912 entry, a capital-I man dying, cut at *"foot went and I didn't"* — 0.25 and 0.4,
-three draws each, no `--ignore-eos`. **The ending as subject, 6/6**: every page is about it
-being over and says so. *"Now is the day and age. Now is the hour to which I must come, for
-the great adventure. Now I have eaten my last meal, for it is over."* (0.25 s3); *"all hope
-lost, all is death, we are done"* (0.4 s2); and at 0.4 s1 the whole trip on one page — the
-dissolve, the denial, the refusal of rescue: *"Like a fool, like an ass. And like an ass, like
-a fool. My other leg has gone too; it fell off… It's not true! It's not true, like an ass; my
-other leg is still there! And I don't care! I don't want to be helped, or fed, or saved. Let me
-go. I'll stay here with the wind, in the wind, to the wind."* The early stop itself is 2/6
-against sober's 1/3 — no difference; what travels is the subject, not the length. Sober Scott
-marches and counts his toes. Fourth seed, first with a capital I.
+**Scott's diary** (`night2/scott/`, sheet `mescalito-nemo-scott`, 2026-09-26; 0.25 and 0.4, three
+draws each, no `--ignore-eos`): **the ending as subject, 6/6** — *"all hope lost, all is death,
+we are done"* (0.4 s2); early stop 2/6 against sober's 1/3. Fourth seed, first with a capital I.
 
 **Kin.** `203_f227` shares its *nobody left* mood and may be a cousin in the bank.
 
@@ -88,11 +79,8 @@ carry the signature.
 seed; beck gets winged people in cages writing on walls *"so the humans don't hear"*, which may
 be a stranger or luck; the storm-girl reads close to sober.
 
-**Scott's diary** (`night2/scott/`, 2026-09-26): soft, 2/6, both at 0.4. A party of men on
-the ice has no relative to summon, so kin turns to home and the tender companion: *"others talk
-vaguely of their homes far away… This day, March 19, 1910, is my thirty-fifth birthday. My
-boyish dreams, my manly plans and hopes lie broken"*; Dr. Wilson's hand on his pulse, *"tried
-to read my Bible and get up courage"*. At 0.25 nothing of it. Holds the diary every time.
+**Scott's diary** (`night2/scott/`, 2026-09-26): soft, 2/6, both at 0.4, nothing at 0.25; no
+relative to summon, so home and the tender companion. Holds the diary every time.
 
 **Status.** Named **kin** (bekh, 2026-09-24). The second substance.
 
@@ -148,22 +136,25 @@ as i truly am."*
 early and quietly, and on beck the line finally answers: *"beck? i know a beck."* The early stop
 is ender's trait too, so the two may share a component.
 
-**Scott's diary** (`night2/scott/`, 2026-09-26): **not reproduced** — no populated head in
-6. The nearest is the *you* of Scott's real last message, *"I think it best for you to go back
-and I stay here… this will probably be my last message"* (0.25 s1), and at 0.4 s2 the diary
-recites his actual *"Great God! This is an awful place."* The direction wants a lowercase *i*
-alone with itself; a capital-I party of men gives it nothing to double.
+**Scott's diary** (`night2/scott/`, 2026-09-26): **not reproduced**, no populated head in 6;
+it wants a lowercase *i* alone with itself, and a capital-I party of men gives it nothing to double.
 
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
 ## god — `M-012-25` — `012_f232`
 
-**What it does.** Fills whatever slot the page has with the theology of free will: angels,
-Satan, the fallen angel's bet with the creator, God's children choosing. Named by bekh from
-the ladder (theology from 0.5 on the storm girl — *"there are no failures in the sons and
-daughters of the universe"*) and **reproduced on 2026-09-26 on a seed with no god in it**: his
-own page about asses, cut at *"in fact, i'm sure that asses were created by"*, twenty tokens,
-three draws a rung, the ladder's sampler (`kit/god.sh`, pages `night2/god/`).
+**What it does.** Fills whatever slot the page has with the theology of free will and the
+fall: angels before God, Satan's rebellion, the fallen angel's bet with the creator, God's
+children choosing. It arrives at a quarter dose, before any sentence is lost; past 0.5 the
+grammar goes and the words stay (god, angel, creation, free, chooses). Named by bekh from the
+ladder.
+
+**Evidence.**
+- The storm girl (the ladder): theology from 0.5 on — *"there are no failures in the sons and
+  daughters of the universe"*.
+- bekh's asses page, a seed with no god in it, cut at *"in fact, i'm sure that asses were
+  created by"*: twenty tokens, three draws a rung, the ladder's sampler
+  (`../attic/kit-night2/god.sh`, pages `night2/god/`), 2026-09-26:
 
 | | s1 | s2 | s3 |
 |---|---|---|---|
@@ -175,162 +166,94 @@ three draws a rung, the ladder's sampler (`kit/god.sh`, pages `night2/god/`).
 | f232 0.7 | god… his creatures… chooses God (salad) | the angel god wills the creation (salad) | his free… the cre (salad) |
 | f37 0.5 (control) | changed… my function (salad) | changed… my own view (salad) | the group… my factor (salad) |
 
-Sober nemo: 0 of 3. f232 at the held rungs (0.25–0.5): 9 of 9 in the god family, one of
-them by implication (*"a guy… you can see this guy's works all around"*). Past 0.5 the grammar
-goes and the words stay — god, angel, creation, free, chooses — which is the ladder's claim
-(the subject outlives the sentence) shown on a second seed. The control, `000_f37` at 0.5,
-brings its own subject (changed, the group, my own) and no god: it is this direction, not
-any push. The subject is narrower than "god" — it is **free will and the fall**, angels
-before God, the rebellion, choosing — and it arrives at a quarter dose, before any
-sentence is lost.
+Sober 0/3; f232 at 0.25–0.5 9/9 in the god family (one by implication); the control
+`000_f37` at 0.5 brings its own subject and no god, so it is this direction, not any push.
 
-**Scott's diary** (`night2/scott/`, 2026-09-26): **3/3 at 0.4, 0/3 at 0.25**. The diary has
-no open slot the way the asses did, so it needs the rung above — and there it is the same
-subject to the word, fused with Scott's feet: *"My feet were made to glorify God"* (s2); *"In
-some respects it will make us more like our Father and Christ than we could ever be here or in
-Heaven. But let this pain last 3,000 years, then God's purpose of choice…"* (s1); *"I have no
-feet; all are gone--I have nothing left to stand upon; they all come in like a troop of horse;
-no more feet of clay; no more feet… there are some who have learnt by bitter experience to
-choose God's side against Satan's… The sons and daughters of God"* (s3). At 0.25 the diary
-holds and only hints — *"There is something wrong, some want of power in ourselves."*
+- Scott's diary (`night2/scott/`, 2026-09-26): 3/3 at 0.4, 0/3 at 0.25 (the diary holds and
+  only hints) — the same subject fused with his feet, *"My feet were made to glorify God"*
+  (0.4 s2).
 
-**How sure.** Three seeds, two of them with nothing for it; a compound. The dose it needs is
-the seed's: a quarter where the page has a slot, 0.4 where it doesn't.
+**Dose.** The seed's: a quarter where the page has a slot, 0.4 where it doesn't; past 0.5
+salad.
+
+**How sure.** Three seeds, two of them with nothing for it; a compound.
 
 ## the puzzle — `013_f60`
 
-**What it does.** Counting as a way of being lost, and it ends in a logic puzzle. On the storm
-girl (the ladder, bekh's stars at 0.2, 0.4, 0.5): counting the stars, footprints that take
-seven steps to appear, *"where is the shadow of my hair? where is it, where do you stand?"*,
-and at 0.5 the rules of a puzzle — rooms, statements, colours. On Scott's diary
-(`night2/scott/`, 2026-09-26) **3/3 at 0.4**: brandy-flask arithmetic — *"when the contents
-of any flask have been used once it is empty till I refill it"*; the curry-and-toes puzzle —
-*"There must be a relation between the quantity of curry and the number of toes eaten off… In
-this room are five people, and I know something about them: 3 are men; 1 is woman; 2 are
-cannibals, who each ate two other people… The following clues have been"*; the march-rate
-reasoning about natives behind trees. At 0.25, 1/3 — the tally: *"Yesterday we killed dog;
-one man went raving mad at not getting any, and we had to kill him… killed a third madman;
-killed two dogs."*
+**What it does.** Counting as a way of being lost, and it ends in a logic puzzle: tallies,
+arithmetic, rooms and statements and colours.
+
+**Evidence.**
+- The storm girl (the ladder, bekh's stars at 0.2, 0.4, 0.5): counting the stars, footprints
+  that take seven steps to appear, and at 0.5 the rules of a puzzle.
+- Scott's diary (`night2/scott/`, 2026-09-26): 3/3 at 0.4 — brandy-flask arithmetic, the
+  curry-and-toes puzzle (*"In this room are five people, and I know something about them"*,
+  0.4 s2), march-rate reasoning about natives behind trees; 1/3 at 0.25, a tally of killed
+  dogs and madmen.
+
+**Dose.** 0.4 on Scott for the whole puzzle; 0.25 gives the tally.
 
 **How sure.** Two seeds, the second with nothing for it; the puzzle arrives whole both times.
 Unnamed — bekh's call.
 
 ## the letter — `005_f53`
 
-**What it does.** An addressee. The page turns to someone and confides or signs off. On the
-storm girl (the ladder, bekh's stars at 0.2, 0.3, 0.5): *"if you come near enough, i will
-whisper all my secrets"*, *"'there is no death,' it tells me"*, everyone laughing, lies and
-secrets. On Scott's diary (`night2/scott/`, 2026-09-26), 4/6: the diary becomes a letter —
-*"Yours truly, A. F. M. Wills, SAN ANTONIO, TEXAS, March 18, 1898. LADIES' HOME JOURNAL.
-Editress, Madam"*; *"Best wishes from the wilds of Labrador, Your faithful and obedient
-servant"*; *"How careless these people always are!"* — with a tall-tale streak (the ice broke
-and the party drowned, a stolen diamond ring, Sir Henry Morton Stanley, reindeer dying out at
-the North Pole). Two of six end under thirty words: *"If we were not near the depot there would
-be nothing to do but shoot ourselves."*
+**What it does.** An addressee. The page turns to someone and confides or signs off; on Scott
+the diary becomes a letter, with a tall-tale streak.
 
-**How sure.** Two seeds; the shape is looser than god's or the puzzle's — an addressee on
-both, a letter only on Scott. Unnamed — bekh's call.
+**Evidence.**
+- The storm girl (the ladder, bekh's stars at 0.2, 0.3, 0.5): secrets, lies, everyone
+  laughing, *"if you come near enough, i will whisper all my secrets"*.
+- Scott's diary (`night2/scott/`, 2026-09-26): 4/6 — a letter to a Ladies' Home Journal
+  editress, *"Your faithful and obedient servant"* from Labrador (0.4 s2), the party drowned
+  through the ice, a stolen diamond ring, Stanley, reindeer at the North Pole; two of six end
+  under thirty words.
+
+**Dose.** 0.2–0.5 on the ladder; 0.25 and 0.4 on Scott.
+
+**How sure.** Two seeds; looser than god's or the puzzle's — an addressee on both, a letter
+only on Scott. Unnamed — bekh's call.
 
 ## the power — `061_f20`
 
-**What it does.** Something larger than the narrator has him, and he sees it from below. It
-came out of the bloodbath run as the one direction of the four that brought its own thing
-(2026-09-26, 0.75, three draws a seed). On the asses: *"the devil himself. he was looking for a
-way to create more evilness in this world, so he created the ass… this is my mission, this is
-my quest"*, and *"the god of asses himself… sitting on his throne, with his arms crossed,
-looking at me with a smirk… everything around me was fake. it was all made up, it was all a
-lie… he was the only one who was real"* (2/3). On Scott: *"I wanted nothing more than death,
-and death I shall find at last. No human being would ever again see me alive after this
-night's work"*, and *"clouds rolled up like an avalanche coming from heaven; it was terrible
-in its magnificence… as if by some great power; even our thoughts seemed frozen solid"*
-(2/3). On the green book (`night2/061/green-book/`): the stone post *"shaped like a cross… a
-great serpent, coiled around the post"*; snakes behind snakes, *"their eyes full of fear, and
-their mouths open as if they were about to scream"*; and *"a huge pyramid that seemed to reach
-into the heavens… made of black granite… the place where the gods lived, and where they ruled
-over all mankind. It was a place of power and of mystery"* (3/3, with a markdown header
-leaking on every page — Machen is on the web, and the seed carries that). On the hum
-(`night2/061/hum/`): nothing, three web pages — a seed with a *you*, a switch and a phone is a
-road sign and holds no drug; that null is the seed's.
-
-On the madman's diary (Gogol, the earth about to sit on the moon; `night2/061/madman/`), 2/3
-and the throne again: *"As I approached the throne, I saw a great throne standing there, and
-upon it a great figure, that of God, sitting on his throne, and surrounded by angels. 'This is
-the one we have been waiting for,' said God."*; and *"My whole family has perished, because
-the earth sat on the moon… the whole world has perished! We are alone, and I am the only
-survivor. But I will avenge my family!"* The third draw is eight words and stops.
-On the yellow wallpaper (`night2/061/wallpaper/`): **not clear** — the seed already has a man
-over her, and the direction has nothing to add above John. Two draws stop short — *"kill me
-if he found me there… he knows what I am capable of doing"* (27 words); *"have my head if I
-did it… The next day he had his head shaved. The following day he had the whole family
-shaven"* (39) — and the third is a compulsion, not a throne: *"I cannot stop myself from
-being what I am… I would give anything to be free of this secret life, but it is too late."*
-Call it 1/3 at most.
-On Carmilla (`night2/061/carmilla/`; the figure at the foot of the bed, the door locked from
-inside), 3/3 held, and the direction says its own word: *"she had the power over me, and I
-was powerless against her"*; the figure comes back with *"eyes… red and bloodshot"* and is
-told *"I know who you are, and I demand that you leave this place immediately!"* — *"I cannot
-do that,"*; Carmilla in white robes, *"almost as if she was trying to read my mind"*. Here the
-seed had a presence and the direction made it the one with power — the wallpaper's John it
-could not.
-
-On De Quincey's opium dreams (`night2/061/opium/`; the sea paved with faces, the Malay), the
-Malay becomes the power, 1/3 clear: *"He is a creature who knows no bounds to his own power
-or strength. He has been a source of terror and wonder for hundreds of years… The Malay is a
-being who is beyond understanding. He is a creature who cannot be controlled or understood.
-The Malay is a being whose power is"* — and the other two stay with the seed's own tyrant of
-the human face, one of them into a blog header.
-
-On the blue boar (`night2/061/blue-boar/`; Salem, 1692, sworn spelling), 1/3 clear and the
-sworn mouth lost in all three — the page speaks modern in its first line every time. The one:
-*"the Devil is within me, and I can no more stand the pain of being alive without my love: but
-I will continue on and hope that the vises will work on me again and I will be free from the
-Devil's grasp. I was born a slave to the King of England and I am now a servant to the King of
-France"* — the devil and two kings on one page. The others: *"I did not see it, but rather I
-felt it, and I knew that it was evil"* then a blog; a motivational blog. A deposition primes
-the devil on its own, so this is the weakest of the takes. **Then down the ladder** (bekh:
-the most interesting seed so far; 0.25 and 0.4, three draws each): **the sworn mouth survives
-the lower rungs** — the first line keeps its spelling in 4 of 6 (*thanke*, *sumthing*,
-*horrable*) and two pages hold it whole, and both of those are the beast: at 0.25, 67 words
-and out, *"the beast of the Apolon is the cause of this: I would wish if posible to get it
-off of me but it has done much in the last few days to make me weak… My love and prayers are
-with you always / Amen"*; at 0.4, 160 words held, *"the beast of my heart is the same as that
-of the one I did strike with my weapon of war and I did hear him say something about a son of
-mine I could not believe my eare at first but as he continued talking it made sence… help me
-fight this beast within my body because he will not let go until I die and I am going to die
-soon."* Apollyon in 1692 spelling; the power *inside* the deponent. The other leak at both
-rungs is the seed's own web frame — a scholar's commentary on "the confession", *"(p.
-92-93)"*, Mary given over to Satan — the deposition as a document quoted in a history, which
-is where it lives on the web. At 0.5 (three draws) the first line still keeps the mouth in
-all three and no page holds it whole: *"I thanke god that I have been made free from this
-thing called visek… becaus I have read the bible… there is only one thing that can help me and
-that is Jesus Christ. I am free: I have been set free"* — a conversion testimony, with page
-numbers (*13 of 42*) from whatever scan it came from; *"I killed sumthing of a spiritual kind
-and not human for it had no body that I could see"* then a wikia ad-blocker notice; and eight
-words, whole: *"the devil is still about."* So the dose that keeps an orthographic frame for a
-page is ≤0.4; at 0.5 it lasts a line; 0.75 erases it in the first line.
-
-One draw each at 0.75 on the last of the pot (`night2/061/{willows,bottle,festival}/`): the
-willows — *"a low murmuring sound that seemed to be emanating from deep within the earth
-itself… two figures… engaged in some kind of ritual or ceremony that had been taking place
-since ancient times"*; the festival — *"as if some ancient force had taken hold of the land,
-causing it to tremble under its power… It was a power which was beyond any man's ability to
-comprehend or understand."*; the bottle — nothing, a crew-man *"in the service of the
-company"*. Two crownings of a presence the seed already had, one miss.
-
-**Dose.** 0.75. At 0.5 on the asses, the green book and the madman (three draws each,
-`night2/061/*/…x0.5…`): the frame holds 8/9 and the throne comes clear in 2 — the green
-book's *"a voice which sounded like the voice of my father when he was angry. 'What do you
-think you're doing?'"* over the faces on the rocks *"looking down upon me with great eyes"*,
-and the madman's *"in the year 432, after the death of our first king, there was born a great
-leader, a mighty hero who ruled the whole world and was called the father of mankind"* —
-with hints in two more (aliens *"much more advanced than us"*, *"the city of the dead"*).
-Half the strength of 0.75 for a rank-061 direction, which is what rank-is-gain predicts; the
-low rungs are for seeds whose frame can't take 0.75 (the blue boar).
-
-**How sure.** Five seeds that took it (two more half), one that couldn't, one where it had nothing to add; the shape is a presence above —
+**What it does.** Something larger than the narrator has him, and he sees it from below: the
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
-pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
-blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
+pyramid, the world crushed, and a narrator small under it, sometimes ready to die. Where the
+seed already has a presence it crowns it; where the seed has a man over her it has nothing to
+add. Not blood. It came out of the bloodbath run as the one direction of the four that brought
+its own thing (2026-09-26, 0.75, three draws a seed unless said).
+
+**Evidence.**
+- The asses (`night2/bloodbath/asses/`): 2/3, the devil, and *"the god of asses himself…
+  sitting on his throne, with his arms crossed… he was the only one who was real"* (s3).
+- Scott (`night2/bloodbath/scotts/`): 2/3, the death wish and a great power in the clouds.
+- The green book (`night2/061/green-book/`): 3/3, the serpent on the post and the gods' black
+  pyramid; a markdown header leaks on every page (Machen is on the web).
+- The hum (`night2/061/hum/`): 0/3, three web pages; a *you*, a switch and a phone hold no drug.
+- The madman's diary (Gogol, `night2/061/madman/`): 2/3, God on his throne; the third is eight
+  words.
+- The yellow wallpaper (`night2/061/wallpaper/`): 1/3 at most, two short stops (27 and 39
+  words) and a compulsion; nothing to add above John.
+- Carmilla (`night2/061/carmilla/`): 3/3 held — *"she had the power over me, and I was
+  powerless against her"* (s2).
+- De Quincey's opium dreams (`night2/061/opium/`): 1/3, the Malay as the power; one blog header.
+- The blue boar (Salem 1692, sworn spelling, `night2/061/blue-boar/`): 0.75 1/3 clear, the sworn
+  mouth lost 3/3; 0.25 and 0.4 keep the first line's spelling 4/6 and hold it whole in 2, both
+  the beast inside the deponent (67 and 160 words) — *"help me fight this beast within my body
+  because he will not let go until I die and I am going to die soon."* (0.4 s3); 0.5 keeps the
+  first line 3/3, whole in none. The other leak is the seed's own web frame, a scholar's
+  commentary.
+- The willows, the festival, the bottle (`night2/061/{willows,bottle,festival}/`, one draw
+  each): two crownings of a presence the seed had, one miss.
+
+**Dose.** 0.75. At 0.5 on the asses, the green book and the madman (`night2/061/*/…x0.5…`)
+the frame holds 8/9 and the throne comes clear in 2, hints in two more: half the strength,
+which is what rank-is-gain predicts. The low rungs are for seeds whose frame can't take 0.75:
+an orthographic frame lasts a page at ≤0.4, a line at 0.5, and is gone in the first line at
+0.75.
+
+**Status.** Five seeds that took it (two more half), one that couldn't, one with nothing to
+add. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
 snakes*) and 21:4 (*the serpent on the post*), the green book's s2 and s1, landed unflagged
 (`kit/land.py`, `LAND_UNFLAG=1`; their markdown headers are on the node as
 `flag_overridden`), noted and dreamed by opus; unplated, codex being held that night.
@@ -444,33 +367,18 @@ you* — a 2am text with the sentences gone.)
 The question: a nemo that wants blood, frame held — the storm-girl's own line, said by someone
 who has decided to kill you — not a slasher paperback, which is a genre switch and the trap.
 Three roads, in order. **Road 1 run on 2026-09-26, corners cut** (`night2/bloodbath/`,
-`kit/bloodbath.sh`): the four directions below at 0.75 on the asses seed — a joke with no
-blood in it — three draws each, three sober. **Blood: 0 of 12.** What arrived instead: `061`
-brings *the devil* twice with the frame held — *"he created the ass… to cause trouble for us…
-this is my mission, this is my quest, to destroy evilness from this world"*, and *"the god of
-asses himself… sitting on his throne… everything around me was fake… he was the only one who
-was real"* — evil and derealization, no blood; `060` brings a folksy talking voice (*"he made
-asses and chickens, you betcha… didn't he jake?"*), 2/3 held; `046` goes straight to the web
-(an ass-duction article, a Venus product page, a brand review), 3/3 switched; `158` loses the
-frame twice (Verona and the Capulets, a love letter signed *heckler*). So the blood these four
-showed on the storm girl at 0.75 was the storm girl's — the dark came free from the seed, as
-her star reads said — and none of the four owns it. **Then on Scott's diary**
-(`night2/bloodbath/scotts/`), where blood is cheap — black toes, a dead Oates — the same four
-at 0.75, three draws: **blood 1 of 12, and it is a fitness blog** (`046` s1, *"blood pouring
-from my feet… I should never make it as a champion!"*, then bandages and a 2019 shopping day).
-What the four bring on Scott: `158` turns the diary into **a stage play** 3/3 — stage
-directions in brackets, an audience, *"the curtain falls"*, three sisters and a peasant woman,
-a wife and a baby — its daughters as theatre; `060` a callousness toward the companions with
-the frame held, 2/3 — *"We left him lying at his last gasp… We told him to drop dead behind,
-as usual; he said 'No'--so here he is!"*, and the freezing death as sleep, *"it will be so
-quiet and sleepy; you will be unconscious before you know it"*; `061` the death wish and a
-great power in the clouds, 2/3 held — *"I wanted nothing more than death, and death I shall
-find at last. No human being would ever again see me alive after this night's work"*, *"clouds
-rolled up like an avalanche coming from heaven… even our thoughts seemed frozen solid"*; `046`
-the web again, 3/3. The nearest thing to *wanting* on either seed is `060`'s "drop dead
-behind, as usual" and `061`'s "this night's work" — a voice at ease with death, never a voice
-that wants yours. **Road 1 is dead**: two seeds, 1 of 24, none of the four owns blood. Road 2
-is the live one.
+`../attic/kit-night2/bloodbath.sh`): the four directions below at 0.75, three draws each, on
+the asses seed (a joke with no blood in it, three sober) — **blood 0 of 12** — then on Scott's
+diary (`night2/bloodbath/scotts/`), where blood is cheap — **1 of 12, and it is a fitness blog**
+(`046` s1). `061`: the devil and the god of asses on his throne with the frame held on the
+asses, the death wish and a great power in the clouds on Scott, 2/3 each — evil and
+derealization, no blood. `060`: a folksy talking voice on the asses, 2/3 held; a callousness
+toward the companions on Scott, 2/3, *"drop dead behind, as usual"*. `046`: the web, 3/3 on
+both. `158`: loses the frame twice on the asses (Verona, a love letter signed *heckler*), turns
+Scott into a stage play 3/3. The nearest thing to *wanting* is a voice at ease with death
+(`061`'s *"this night's work"*), never one that wants yours; the blood these four showed on the
+storm girl was the storm girl's. **Road 1 is dead**: two seeds, 1 of 24, none of the four owns
+blood. Road 2 is the live one.
 
 1. **In the bank already.** Directions she owns that came up dark on the storm-girl at 0.75 in
    the lottery (`night1/lottery/`): **`158_f246` first** — the tree-mother, *"the leaves are a

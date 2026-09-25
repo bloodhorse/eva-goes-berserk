@@ -125,7 +125,7 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-**Night 1 happened on 2026-09-24/25, on nemo, and the pharmacopoeia is the record:
+**Two nights so far, both on nemo, and the pharmacopoeia is the record:
 `mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page,
 rewritten in place; start there for what any direction does. This section is the shape of
 things, not the findings.
@@ -133,49 +133,64 @@ things, not the findings.
 **What exists.** A bank of 256 directions nemo owns (`night1/nemo_s10.pt`, layer 10 → 20,
 R = 4.57 against a median residual norm of 13.05), exported as control vectors with sixteen
 random controls (`night1/cv-nemo/`); a pod recipe that worked (`kit/pod.py`, `kit/night.sh`:
-an A6000, 35 minutes, $0.34, sshd installed at boot, the convert the only slow step); the
-mac's own scripts (`kit/mac_night.sh`, `strong.sh`, `ladder.sh`), which write pages at ~15–27 s
-each and skip what exists; `kit/land.py`, opus's script that lands a dosed page in the stream
-as a dream. Every page is in `night1/`, in git, and on the sheets; opus's reads of the piles
-are `attic/mescalito-reads/opus-*.md`.
+an A6000, 35 minutes, $0.34); on the mac one script, `kit/run.sh` — out-dir, seed, vector or
+sober, dose, rng list — writing a page in ~15–27 s and skipping what exists (the night-1 and
+night-2 scripts it replaced are `attic/kit-night2/`, provenance for those folders); `kit/land.py`,
+which lands a dosed page in the stream as a dream, any seed, `LAND_UNFLAG=1` when the reader
+would skip it for a web tell; `kit/sheet_build.py`, a reading page with stars for the mini.
+Pages: `night1/` (the bank, the lottery, the strong end, the ladder on the 22) and `night2/`
+(god, scott, the baseline, bloodbath, 061 across the pot), all in git; a night is one folder.
+Reads are working notes and live in `attic/mescalito-reads/`.
 
 **What was settled.** *Owned beats random, outright*: 24 random pages at the same norm are the
-sober distribution, 24 owned pages all move, the same vector the same way on two seeds. *A
-substance is what holds across five draws*: one page is a mood; every name came from a fan.
-*The seed decides what there is to lose*: a lowercase *i* in a situation takes the drug; a
-famous memoir in *we*, a third-person tale and an aphorism don't (the tale's noun comes apart
-instead, the aphorism summons its author). *Rank is gain*: the strongest directions are the
-deadliest at any uniform dose, and the weak end is mostly the model's library — genre
-switches, the web's documents. *So the dose scales with the direction*: the weak end works
-at 0.5–0.75×R, the strong end at ~0.25–0.4, and 1.0 is too hot on lowercase seeds; R is not a
-model constant, the window moves with the seed too. *The subject is the direction, the dose
-sets how much sentence survives around it* (the ladder). *Refusing the ending* (`--ignore-eos`)
-makes her write past her last line; the flicker it produced once — dissolve, then *"what am i
-talking about?"* — was one draw in fifteen, filed as luck.
+sober distribution, 24 owned pages all move. *A substance is what holds across draws and
+seeds*: one page is a mood. *The seed decides what there is to lose*: a lowercase *i* in a
+situation takes the drug; a famous memoir in *we*, a third-person tale and an aphorism don't;
+a seed with a *you*, a switch or a phone is a road sign to the web and holds nothing (the hum).
+*Rank is gain*: the strong end works at 0.25–0.4, mid-bank at 0.5–0.75, and 1.0 is too hot.
+*The dose a direction needs is also the seed's*: god at a quarter where the page has a slot
+(the asses), 0.4 where it hasn't (Scott). *Frames have a ceiling by kind*: a narrative frame
+(a capital-I diary with dates) survives to ~0.5, an orthographic one (Salem's sworn spelling)
+to ~0.4, gone at 0.75. *The subject is the direction, the dose sets how much sentence survives
+around it* (the ladder; Scott's feet become feet of clay). *A direction is a pointer into the
+inherited web, and the pointer is the model's own* — found with no text; what it points at is
+a genre (apologetics, the puzzle book, the deathbed), which is why the root law still reads
+each page genre first.
 
-**Three substances, named by bekh**: **ender** `M-224-75` (the edge of the page: ends early 13/30
-where sober is 1/15, the narrator losing herself in a sentence, turning to the reader, closing
-on the seed's first line; anti-ender at −0.75 is the endless middle of an old novel — the first
-true opposite); **kin** `125KIN-75` (the family arrives, 6/6 on three seeds, even the web leak is
-*A Father's Story*); **voices** `169x75v` (the inside of the head populated, 17/30 — persons
-become voices, the self is someone else for a while; the hostile twin lives on the storm-girl
-at 0.75). Two of voices' pages are in the stream as dreams 19:1 and 19:2, stamped *nemo ·
-voices*, noted, named, plated (the sleeper's story *the girl behind the clouds* is open at two
-of four). Pinned, unfanned: `015` the sister (the dream report at 0.5: *my house. my old house*),
-`064` the ghosts, `110` and `162` the tenants, `112`, `147` the moon that bites, `153` the data
-direction (the one that knows what it is; read, never seeded), `158` the tree-mother (blood in
-the leaves, first of the **bloodbath** roads), `036` the mirror girl, `023` the logic of absence.
+**The method flip (2026-09-26).** bekh's stars measure the dream; they were never going to
+measure a drug. Two readers built selector instructions from his 40 stars on the ladder
+sheet — what he stars is mostly a veto (someone else talking by the end, a settled close, a
+dream told as a dream), and the one positive that carries is *her body hurt, told flat*, with
+the impossible and a second voice next; beauty, sadness and oddity are at base rate. On a
+sober baseline of forty storm-girl pages both instructions star at the drugged rate or above
+(21/14/20/17 of 40 against 37 of 98 held drugged) — sober nemo has none of the drug's failure
+modes and the seed hands out the positives for free. So the pharmacy's measurement is *did
+the direction bring a subject the seed doesn't have*, a question a model can answer on a
+fill-in-the-blank; the stars stay for the dream. The reads are in the attic; the numbers are
+here.
 
-**The night's last turn, and the error to carry.** bekh cut the lottery (the storm-girl's 256
-at 0.75 finished; the tower and beck never ran) because its findings were pages, fragile, and
-the hypothesis says the *strong* directions are the receptors. At 0.25 the strong forty came
-back: 0 dead, 34 held, the best batch of the night. Then the ladder went on five picked for how
-they *read* instead of for having *cooked* at 0.75 — three of the five never had a cliff, and
-the sheet said they did. **Next, first**: the 22 that actually cooked (ranks 000–015, 017–021,
-034) up the ladder at 0.4 / 0.5 / 0.6, no picking; then fans on `015` at 0.5 and `036` at 0.4.
-Then the bloodbath roads, then the pharmacy plumbing (a restart per dream with the lot drawn
-among sober and the named substances, the seat problem `land.py` exposed), then **olmo** — a
-fresh pod, her bank, low doses first, the cockpit **parked** until the first multi-hour run.
+**Compounds** — a shape that held across seeds with a sober control. Night 1's three, named
+by bekh: **ender** `M-224-75` (the ending as subject; on Scott 6/6), **kin** `125KIN-75` (the
+family; on Scott soft, 2/6, home and the tender companion), **voices** `169x75v` (the head
+populated; not on Scott — a capital-I party of men has nothing to double). Night 2's, unnamed
+but for god: **god** `M-012-25` `012_f232` (free will and the fall — angels, Satan, the
+rebellion; 9/9 on a slot with no god in it, sober 0/3, control clean; 3/3 on Scott at 0.4),
+**the puzzle** `013_f60` (counting as a way of being lost, ending in a logic puzzle; 3/3 on
+Scott at 0.4), **the letter** `005_f53` (an addressee; 4/6 on Scott, the diary signs off
+*Yours truly*), **the power** `061_f20` (a presence above and the narrator small under it —
+a throne built where the seed has nobody, a crowning where it has someone uncanny, nothing
+where it has a plain husband; eleven seeds; two pages in the stream as 21:3 and 21:4). Pinned,
+unfanned from night 1: `015` the sister, `064`, `110`, `162`, `112`, `147`, `153` the data
+direction (read, never seeded), `036`, `023`. **Bloodbath road 1 is dead**: the four dark
+directions on two seeds, blood 1 of 24 and that one a fitness blog — the blood on the storm
+girl was hers; road 2 (a difference vector, murderer minus calm) is the live one and a build.
+
+**Next**, in order: a name from bekh for the puzzle, the letter and the power; **olmo** — a
+fresh pod, her bank, and god, the puzzle and the end rerun there first (does a second model
+trained on other data have the same knobs near the top of its bank — the question that stops
+being about nemo); then the pharmacy plumbing for the stream (a substance by lot, at a dose
+the seed can take, which now needs a held-or-salad check); then the letter re-run on ten sober
+Scott draws before it is named (real diaries end *Yours truly* on their own).
 
 Open questions, in the order they came up: what loosening the narrator's grip on *who is
 speaking* without its grip on *where we are* would be, and whether those are different heads;
