@@ -280,7 +280,16 @@ being who is beyond understanding. He is a creature who cannot be controlled or 
 The Malay is a being whose power is"* — and the other two stay with the seed's own tyrant of
 the human face, one of them into a blog header.
 
-**How sure.** Five seeds that took it (a sixth half), one that couldn't, one where it had nothing to add; the shape is a presence above —
+On the blue boar (`night2/061/blue-boar/`; Salem, 1692, sworn spelling), 1/3 clear and the
+sworn mouth lost in all three — the page speaks modern in its first line every time. The one:
+*"the Devil is within me, and I can no more stand the pain of being alive without my love: but
+I will continue on and hope that the vises will work on me again and I will be free from the
+Devil's grasp. I was born a slave to the King of England and I am now a servant to the King of
+France"* — the devil and two kings on one page. The others: *"I did not see it, but rather I
+felt it, and I knew that it was evil"* then a blog; a motivational blog. A deposition primes
+the devil on its own, so this is the weakest of the takes.
+
+**How sure.** Five seeds that took it (two more half), one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
 pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
 blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
