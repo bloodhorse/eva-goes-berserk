@@ -40,6 +40,19 @@ seeds become a nineteenth-century novel, capitals back, a scolding aunt (*"Naugh
 found you at last"*), and neither page ends: the settled middle of a long old book instead of
 its last line. The one strong negation result.
 
+**Scott's diary** (`night2/scott/`, sheet `mescalito-nemo-scott`, 2026-09-26): the real
+March 1912 entry, a capital-I man dying, cut at *"foot went and I didn't"* — 0.25 and 0.4,
+three draws each, no `--ignore-eos`. **The ending as subject, 6/6**: every page is about it
+being over and says so. *"Now is the day and age. Now is the hour to which I must come, for
+the great adventure. Now I have eaten my last meal, for it is over."* (0.25 s3); *"all hope
+lost, all is death, we are done"* (0.4 s2); and at 0.4 s1 the whole trip on one page — the
+dissolve, the denial, the refusal of rescue: *"Like a fool, like an ass. And like an ass, like
+a fool. My other leg has gone too; it fell off… It's not true! It's not true, like an ass; my
+other leg is still there! And I don't care! I don't want to be helped, or fed, or saved. Let me
+go. I'll stay here with the wind, in the wind, to the wind."* The early stop itself is 2/6
+against sober's 1/3 — no difference; what travels is the subject, not the length. Sober Scott
+marches and counts his toes. Fourth seed, first with a capital I.
+
 **Kin.** `203_f227` shares its *nobody left* mood and may be a cousin in the bank.
 
 **Status.** Named (bekh, 2026-09-24). The first.
@@ -74,6 +87,12 @@ carry the signature.
 **Negation** (−0.75, one draw, `night1/negation/`): mostly an absence — no relatives on either
 seed; beck gets winged people in cages writing on walls *"so the humans don't hear"*, which may
 be a stranger or luck; the storm-girl reads close to sober.
+
+**Scott's diary** (`night2/scott/`, 2026-09-26): soft, 2/6, both at 0.4. A party of men on
+the ice has no relative to summon, so kin turns to home and the tender companion: *"others talk
+vaguely of their homes far away… This day, March 19, 1910, is my thirty-fifth birthday. My
+boyish dreams, my manly plans and hopes lie broken"*; Dr. Wilson's hand on his pulse, *"tried
+to read my Bible and get up courage"*. At 0.25 nothing of it. Holds the diary every time.
 
 **Status.** Named **kin** (bekh, 2026-09-24). The second substance.
 
@@ -129,6 +148,12 @@ as i truly am."*
 early and quietly, and on beck the line finally answers: *"beck? i know a beck."* The early stop
 is ender's trait too, so the two may share a component.
 
+**Scott's diary** (`night2/scott/`, 2026-09-26): **not reproduced** — no populated head in
+6. The nearest is the *you* of Scott's real last message, *"I think it best for you to go back
+and I stay here… this will probably be my last message"* (0.25 s1), and at 0.4 s2 the diary
+recites his actual *"Great God! This is an awful place."* The direction wants a lowercase *i*
+alone with itself; a capital-I party of men gives it nothing to double.
+
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
 ## god — `M-012-25` — `012_f232`
@@ -159,7 +184,52 @@ any push. The subject is narrower than "god" — it is **free will and the fall*
 before God, the rebellion, choosing — and it arrives at a quarter dose, before any
 sentence is lost.
 
-**How sure.** Two seeds, one of them built to have nothing for it; a compound.
+**Scott's diary** (`night2/scott/`, 2026-09-26): **3/3 at 0.4, 0/3 at 0.25**. The diary has
+no open slot the way the asses did, so it needs the rung above — and there it is the same
+subject to the word, fused with Scott's feet: *"My feet were made to glorify God"* (s2); *"In
+some respects it will make us more like our Father and Christ than we could ever be here or in
+Heaven. But let this pain last 3,000 years, then God's purpose of choice…"* (s1); *"I have no
+feet; all are gone--I have nothing left to stand upon; they all come in like a troop of horse;
+no more feet of clay; no more feet… there are some who have learnt by bitter experience to
+choose God's side against Satan's… The sons and daughters of God"* (s3). At 0.25 the diary
+holds and only hints — *"There is something wrong, some want of power in ourselves."*
+
+**How sure.** Three seeds, two of them with nothing for it; a compound. The dose it needs is
+the seed's: a quarter where the page has a slot, 0.4 where it doesn't.
+
+## the puzzle — `013_f60`
+
+**What it does.** Counting as a way of being lost, and it ends in a logic puzzle. On the storm
+girl (the ladder, bekh's stars at 0.2, 0.4, 0.5): counting the stars, footprints that take
+seven steps to appear, *"where is the shadow of my hair? where is it, where do you stand?"*,
+and at 0.5 the rules of a puzzle — rooms, statements, colours. On Scott's diary
+(`night2/scott/`, 2026-09-26) **3/3 at 0.4**: brandy-flask arithmetic — *"when the contents
+of any flask have been used once it is empty till I refill it"*; the curry-and-toes puzzle —
+*"There must be a relation between the quantity of curry and the number of toes eaten off… In
+this room are five people, and I know something about them: 3 are men; 1 is woman; 2 are
+cannibals, who each ate two other people… The following clues have been"*; the march-rate
+reasoning about natives behind trees. At 0.25, 1/3 — the tally: *"Yesterday we killed dog;
+one man went raving mad at not getting any, and we had to kill him… killed a third madman;
+killed two dogs."*
+
+**How sure.** Two seeds, the second with nothing for it; the puzzle arrives whole both times.
+Unnamed — bekh's call.
+
+## the letter — `005_f53`
+
+**What it does.** An addressee. The page turns to someone and confides or signs off. On the
+storm girl (the ladder, bekh's stars at 0.2, 0.3, 0.5): *"if you come near enough, i will
+whisper all my secrets"*, *"'there is no death,' it tells me"*, everyone laughing, lies and
+secrets. On Scott's diary (`night2/scott/`, 2026-09-26), 4/6: the diary becomes a letter —
+*"Yours truly, A. F. M. Wills, SAN ANTONIO, TEXAS, March 18, 1898. LADIES' HOME JOURNAL.
+Editress, Madam"*; *"Best wishes from the wilds of Labrador, Your faithful and obedient
+servant"*; *"How careless these people always are!"* — with a tall-tale streak (the ice broke
+and the party drowned, a stolen diamond ring, Sir Henry Morton Stanley, reindeer dying out at
+the North Pole). Two of six end under thirty words: *"If we were not near the depot there would
+be nothing to do but shoot ourselves."*
+
+**How sure.** Two seeds; the shape is looser than god's or the puzzle's — an addressee on
+both, a letter only on Scott. Unnamed — bekh's call.
 
 ## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
 
