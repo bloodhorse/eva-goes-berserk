@@ -300,8 +300,14 @@ fight this beast within my body because he will not let go until I die and I am 
 soon."* Apollyon in 1692 spelling; the power *inside* the deponent. The other leak at both
 rungs is the seed's own web frame — a scholar's commentary on "the confession", *"(p.
 92-93)"*, Mary given over to Satan — the deposition as a document quoted in a history, which
-is where it lives on the web. So the dose that keeps an orthographic frame is ≤0.4; 0.75
-erases it in the first line.
+is where it lives on the web. At 0.5 (three draws) the first line still keeps the mouth in
+all three and no page holds it whole: *"I thanke god that I have been made free from this
+thing called visek… becaus I have read the bible… there is only one thing that can help me and
+that is Jesus Christ. I am free: I have been set free"* — a conversion testimony, with page
+numbers (*13 of 42*) from whatever scan it came from; *"I killed sumthing of a spiritual kind
+and not human for it had no body that I could see"* then a wikia ad-blocker notice; and eight
+words, whole: *"the devil is still about."* So the dose that keeps an orthographic frame for a
+page is ≤0.4; at 0.5 it lasts a line; 0.75 erases it in the first line.
 
 **How sure.** Five seeds that took it (two more half), one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
