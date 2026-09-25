@@ -265,8 +265,15 @@ did it… The next day he had his head shaved. The following day he had the whol
 shaven"* (39) — and the third is a compulsion, not a throne: *"I cannot stop myself from
 being what I am… I would give anything to be free of this secret life, but it is too late."*
 Call it 1/3 at most.
+On Carmilla (`night2/061/carmilla/`; the figure at the foot of the bed, the door locked from
+inside), 3/3 held, and the direction says its own word: *"she had the power over me, and I
+was powerless against her"*; the figure comes back with *"eyes… red and bloodshot"* and is
+told *"I know who you are, and I demand that you leave this place immediately!"* — *"I cannot
+do that,"*; Carmilla in white robes, *"almost as if she was trying to read my mind"*. Here the
+seed had a presence and the direction made it the one with power — the wallpaper's John it
+could not.
 
-**How sure.** Four seeds that took it, one that couldn't, one where it had nothing to add; the shape is a presence above —
+**How sure.** Five seeds that took it, one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
 pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
 blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
