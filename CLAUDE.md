@@ -247,15 +247,17 @@ loop and salad are its two deaths, the trip is never the text's topic); **the ph
 `docs/mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page.
 Night 1 (2026-09-24/25) was nemo's: a MELBO bank of 256 directions he owns, owned beats random
 outright, and **three substances named by bekh — ender `M-224-75`, kin `125KIN-75`, voices
-`169x75v`** — each a shape that held across five draws on three seeds; two of voices' pages
-are in the stream as dreams 19:1–19:2, stamped *nemo · voices*. The dose scales with the
-direction (rank is gain), the seed decides what there is to lose (a lowercase *i* takes the
-drug; a memoir in *we* and an aphorism don't). Next is the ladder on the 22 strong directions
-that cooked, then the pharmacy plumbing for the stream, then olmo's bank on a fresh pod. The
-state section of `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/`.
+`169x75v`**. Night 2 (2026-09-26) reproduced the claim with controls on seeds that had nothing
+for it — **god `M-012-25`** fills a slot with angels and Satan where sober nemo says aliens, and
+the puzzle, the letter and the power travel from the storm girl to Scott's diary and beyond —
+and flipped the method: bekh's stars measure the dream, "did the direction bring a subject the
+seed doesn't have" measures the drug. Two of the power's pages are dreams 21:3–21:4. The
+state section of `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/`
+(`run.sh` for a page, `land.py` for a dream).
 
-What's next is `BRIEF.md`'s agenda, in its order. Still wanted and not yet written: bekh's own
-seeds, a couple of sentences in his register, no prose from Claude, no web markers.
+What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
+(`shelf/seeds/asses.txt`, voiced 2026-09-26, the god slot test); more of those are wanted — a
+couple of sentences in his register, no prose from Claude, no web markers.
 
 Open, small: the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the
