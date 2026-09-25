@@ -77,6 +77,13 @@ no name yet; it is bekh's to find.
 - **Opus does everything mechanical** — bulk reading, code, fetching, cutting seeds — with
   `model: 'opus'` on every spawn; fable reads verdicts and judges. A mock before a build. **A
   page change is not done until it has been clicked and dragged**, not just screenshotted.
+- **Say the experiment back, wait for "yes, that's the experiment"** (bekh, 2026-09-25, the
+  day he moved sessions over this). He needs time to meditate on what the experiment even is;
+  "explore", "let's talk", "let's do this" are him thinking, not a go. The worst case is not
+  "stop that shit" — it is "alright, whatever, run it", and at the end finding it answered a
+  question he would not have run. Not a form: a few lines — seed, what's varied, how many
+  draws, what we're looking for — then his yes, only then the run. **He runs the session with
+  no permission gates at all**, so nothing between the idea and the mac but this exchange.
 - **Smallest test first.** A new idea gets the smallest run that can show anything — one seed,
   a handful of cards — and only a promising one gets run at scale. Our reflex, yours and mine, is to
   fire three hundred at once; three hundred cards of a dud is an afternoon of bekh's reading
