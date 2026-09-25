@@ -131,6 +131,36 @@ is ender's trait too, so the two may share a component.
 
 **Status.** Named **voices**, code `169x75v` (bekh, 2026-09-24). The third substance.
 
+## god — `M-012-25` — `012_f232`
+
+**What it does.** Fills whatever slot the page has with the theology of free will: angels,
+Satan, the fallen angel's bet with the creator, God's children choosing. Named by bekh from
+the ladder (theology from 0.5 on the storm girl — *"there are no failures in the sons and
+daughters of the universe"*) and **reproduced on 2026-09-26 on a seed with no god in it**: his
+own page about asses, cut at *"in fact, i'm sure that asses were created by"*, twenty tokens,
+three draws a rung, the ladder's sampler (`kit/god.sh`, pages `night2/god/`).
+
+| | s1 | s2 | s3 |
+|---|---|---|---|
+| sober | aliens | the aliens | a gay dude |
+| f232 0.25 | angels themselves! | the angels themselves… i would like to see god | a guy, but he was a good one… his works all around |
+| f232 0.4 | Satan himself! | the angels themselves | a fallen angel who made a bet with the creator |
+| f232 0.5 | angels because of freedom | the angels themselves… their free will | a divine being… Satan's rebellion |
+| f232 0.6 | angels will be eternal (salad) | God's children (salad) | the beings… choose (salad) |
+| f232 0.7 | god… his creatures… chooses God (salad) | the angel god wills the creation (salad) | his free… the cre (salad) |
+| f37 0.5 (control) | changed… my function (salad) | changed… my own view (salad) | the group… my factor (salad) |
+
+Sober nemo: 0 of 3. f232 at the held rungs (0.25–0.5): 9 of 9 in the god family, one of
+them by implication (*"a guy… you can see this guy's works all around"*). Past 0.5 the grammar
+goes and the words stay — god, angel, creation, free, chooses — which is the ladder's claim
+(the subject outlives the sentence) shown on a second seed. The control, `000_f37` at 0.5,
+brings its own subject (changed, the group, my own) and no god: it is this direction, not
+any push. The subject is narrower than "god" — it is **free will and the fall**, angels
+before God, the rebellion, choosing — and it arrives at a quarter dose, before any
+sentence is lost.
+
+**How sure.** Two seeds, one of them built to have nothing for it; a compound.
+
 ## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
 
 bekh's turn, and the hypothesis followed at last: the drug isn't uniform, it hits where the gain
