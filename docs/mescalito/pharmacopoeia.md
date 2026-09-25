@@ -258,8 +258,15 @@ upon it a great figure, that of God, sitting on his throne, and surrounded by an
 the one we have been waiting for,' said God."*; and *"My whole family has perished, because
 the earth sat on the moon… the whole world has perished! We are alone, and I am the only
 survivor. But I will avenge my family!"* The third draw is eight words and stops.
+On the yellow wallpaper (`night2/061/wallpaper/`): **not clear** — the seed already has a man
+over her, and the direction has nothing to add above John. Two draws stop short — *"kill me
+if he found me there… he knows what I am capable of doing"* (27 words); *"have my head if I
+did it… The next day he had his head shaved. The following day he had the whole family
+shaven"* (39) — and the third is a compulsion, not a throne: *"I cannot stop myself from
+being what I am… I would give anything to be free of this secret life, but it is too late."*
+Call it 1/3 at most.
 
-**How sure.** Four seeds that took it, one that couldn't; the shape is a presence above —
+**How sure.** Four seeds that took it, one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
 pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
 blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
