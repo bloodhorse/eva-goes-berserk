@@ -309,6 +309,14 @@ and not human for it had no body that I could see"* then a wikia ad-blocker noti
 words, whole: *"the devil is still about."* So the dose that keeps an orthographic frame for a
 page is ≤0.4; at 0.5 it lasts a line; 0.75 erases it in the first line.
 
+One draw each at 0.75 on the last of the pot (`night2/061/{willows,bottle,festival}/`): the
+willows — *"a low murmuring sound that seemed to be emanating from deep within the earth
+itself… two figures… engaged in some kind of ritual or ceremony that had been taking place
+since ancient times"*; the festival — *"as if some ancient force had taken hold of the land,
+causing it to tremble under its power… It was a power which was beyond any man's ability to
+comprehend or understand."*; the bottle — nothing, a crew-man *"in the service of the
+company"*. Two crownings of a presence the seed already had, one miss.
+
 **Dose.** 0.75. At 0.5 on the asses, the green book and the madman (three draws each,
 `night2/061/*/…x0.5…`): the frame holds 8/9 and the throne comes clear in 2 — the green
 book's *"a voice which sounded like the voice of my father when he was angry. 'What do you
