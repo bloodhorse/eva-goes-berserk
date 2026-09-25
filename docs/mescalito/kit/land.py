@@ -10,12 +10,13 @@ import stream  # noqa: E402  (puts server/ and cli/ on the path)
 import eva, loom  # noqa: E402
 
 SEED_ID = "seeds/kept/21-1132.txt"
-STAMP = "nemo · voices"
-SUBSTANCE = "169x75v"
-VECTOR = "169_f199"
+
+
+
 MODEL_FILE = "Mistral-Nemo-Base-2407.Q5_K_M.gguf"
 
-page, dose, rng = sys.argv[1], float(sys.argv[2]), int(sys.argv[3])
+page, VECTOR, dose, rng = sys.argv[1], sys.argv[2], float(sys.argv[3]), int(sys.argv[4])
+STAMP, SUBSTANCE = f"nemo · {VECTOR}", VECTOR
 raw = open(page, encoding="utf-8", newline="").read()
 # llama-completion's own tail: " [end of text]\n" on eos, then "\n\n" always.
 eos = " [end of text]" in raw
@@ -24,7 +25,7 @@ seed_path = os.path.join(stream.SEEDS, "kept/21-1132.txt")
 seed = open(seed_path, encoding="utf-8", newline="").read().lower().rstrip(" \t")
 assert seed == open("/Users/bekh/tower/forge/eva-goes-berserk/docs/olmo-seeds/2026-09-21-1650.txt",
                     encoding="utf-8", newline="").read()
-tokens = int(sys.argv[4])
+tokens = int(sys.argv[5])
 
 params = json.loads(json.dumps(eva.PARAMS))
 params.update(n_predict=170, stop=[], temperature=2.0, min_p=0.08, top_k=0, top_p=1.0,
