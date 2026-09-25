@@ -339,7 +339,19 @@ you* — a 2am text with the sentences gone.)
 
 The question: a nemo that wants blood, frame held — the storm-girl's own line, said by someone
 who has decided to kill you — not a slasher paperback, which is a genre switch and the trap.
-Three roads, in order; nothing run yet.
+Three roads, in order. **Road 1 run on 2026-09-26, corners cut** (`night2/bloodbath/`,
+`kit/bloodbath.sh`): the four directions below at 0.75 on the asses seed — a joke with no
+blood in it — three draws each, three sober. **Blood: 0 of 12.** What arrived instead: `061`
+brings *the devil* twice with the frame held — *"he created the ass… to cause trouble for us…
+this is my mission, this is my quest, to destroy evilness from this world"*, and *"the god of
+asses himself… sitting on his throne… everything around me was fake… he was the only one who
+was real"* — evil and derealization, no blood; `060` brings a folksy talking voice (*"he made
+asses and chickens, you betcha… didn't he jake?"*), 2/3 held; `046` goes straight to the web
+(an ass-duction article, a Venus product page, a brand review), 3/3 switched; `158` loses the
+frame twice (Verona and the Capulets, a love letter signed *heckler*). So the blood these four
+showed on the storm girl at 0.75 was the storm girl's — the dark came free from the seed, as
+her star reads said — and none of the four owns it. Road 1 is dead on a comedy seed; it could
+be re-run on the hum before calling it dead outright. Road 2 is the live one.
 
 1. **In the bank already.** Directions she owns that came up dark on the storm-girl at 0.75 in
    the lottery (`night1/lottery/`): **`158_f246` first** — the tree-mother, *"the leaves are a
