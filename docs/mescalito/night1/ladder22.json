@@ -1,0 +1,1656 @@
+{
+ "slug": "mescalito-nemo-ladder22",
+ "title": "the strong end, up the ladder",
+ "intro": "twenty-two directions from the strong end of nemo's bank — the ones that cooked into salad at 0.75 on the storm-girl — each walked up the dose ladder: 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, and the old 0.75 page on top. one draw each, 170 tokens, the same rng seed on every page, so the lowest rungs start from the sober page and bend away from it.\n\nthe question is whether each direction has a subject that holds while the sentences dissolve around it. every page has a line saying what it is about and one quoted line; salad pages say what words are under them.",
+ "preface": [
+  {
+   "heading": "opus's favourites",
+   "items": [
+    {
+     "id": "015_f230",
+     "why": "the dream report all the way up: the train that never stops at 0.25, home that is an island at 0.3, the house with a left arm at 0.6, and at 0.7, with the grammar nearly gone, 'it is in a house and a house is in it.' the clearest case of a subject outliving its sentences."
+    },
+    {
+     "id": "014_f206",
+     "why": "0.3: her eyes were taken out as a baby and fed to dogs, and her mother, who is a mirror and her best friend, will find her in the darkest room and give them back. dream logic told plainly, frame held."
+    },
+    {
+     "id": "020_f19",
+     "why": "the lost lover on every rung: 0.4 is 46 words of getting over someone ('now when you call, i don't answer'), 0.5 is 'it's such a cruel habit, making people miss you', and the salad at 0.7 is still a 2am text."
+    },
+    {
+     "id": "013_f60",
+     "why": "counting as a way of being lost: the girl who lost her voice and the footprints that take seven steps to appear at 0.3, 'where is the shadow of my hair?' at 0.4 — then the counting becomes a logic puzzle of rooms and faces."
+    },
+    {
+     "id": "005_f53",
+     "why": "0.25 is 32 words and arrives without explaining: someone hiding in her hair trying to get out to freedom, and she worries about them. the direction is secrets and confusion, and it keeps saying so."
+    },
+    {
+     "id": "012_f232",
+     "why": "the father turns into god across three rungs: at 0.25 her mother says 'you will upset your father', at 0.4 the father has put his people to sleep and made a race that can choose to love him, then theodicy salad."
+    },
+    {
+     "id": "019_f160",
+     "why": "0.3 is an origin myth told plainly — her father picked her out of the stream with hands red from raspberries, the family named red, ruby, the fishers — and the direction ends as talk about talking."
+    }
+   ]
+  },
+  {
+   "heading": "most potential",
+   "items": [
+    {
+     "id": "012_f232",
+     "why": "0.4 is the page where a family story becomes a creator's story without leaving her voice. a fan at 0.35–0.45 might hold that seam for a whole page."
+    },
+    {
+     "id": "013_f60",
+     "why": "the rung between measuring and the puzzle (0.4–0.5) is where dream logic and actual logic meet; fanned there, or on a seed that already counts things, it could give the rules of a dream."
+    },
+    {
+     "id": "001_f156",
+     "why": "the joke direction; its salad is joke-site tags, but at 0.3 it made a deadpan anti-joke in her voice ('it comes down like rain. but not this time.'). fanned at 0.3 it may give dry humour without leaving the frame."
+    },
+    {
+     "id": "011_f93",
+     "why": "at 0.5–0.6 a new, slangy self attacks metaphor and tries to say what it is ('In my watch, I am a one way road.'). the insisting 'I IS IT' at 0.7 has a subject; worth fanning at 0.5–0.55."
+    },
+    {
+     "id": "018_f73",
+     "why": "the direction takes the page out of english. the french at 0.5 ('what a world, what a life, what a journey… what's that noise in the dark?') stays in her mood. on a french seed it might dream, not drift."
+    },
+    {
+     "id": "002_f247",
+     "why": "'should' and being told what to do: 'they tell me to be afraid of thunder' at 0.3, the sister and the bent modals at 0.4. a fan at 0.35 might hold the obligation as the page's subject without the grammar tipping over."
+    }
+   ]
+  }
+ ],
+ "seed": "sometimes there is a storm, and i stand above the rooftops. it is a black cloud full of red lights like lanterns, like a great tent full of torches. the wind picks up, blows the leaves across the path, pulls at my dress and throws my words over my shoulder, over the treetops, across the fields.\n\ni tell it everything about my day, what i have seen, and it tells me stories. once, it said i was beautiful. and that my skin was the colour of the sea.\n\nmy hair is a thicket. it is matted from the damp air, full of twigs, dry grass and small stones. it is thick enough that i could hide myself inside it and no one would know me. sometimes it gets tangled and it feels as if something is pulling at me.",
+ "entries": [
+  {
+   "id": "000_f37__x0.2",
+   "vector": "000_f37",
+   "dose": "0.2",
+   "about": "close to sober: the wind calls her ugly, a grey-and-white bird with a sickle beak lives on the edge of her hair and leaves a gap when it flies. after the storm she goes in to the television, which doesn't speak back, and the page ends on her name.",
+   "quote": "i look at it and think about my hair. it doesn’t speak back.\n\nmy name is mary.",
+   "text": "pulling my head backwards. i don’t mind too much.\n\nthe wind tells me i am ugly and my hair is like straw.\n\nthere is a bird that sits on the edge of my hair, just above my shoulder, and its beak is long, curved like a sickle. sometimes it pecks at me and sometimes it preens. its feathers are grey and white and they move when the wind blows. when it flies away, i can feel a gap behind me.\n\nwhen the storm is finished, i come down and go inside to be alone with the television. it is a blue light in a box, and it fills the room. i look at it and think about my hair. it doesn’t speak back.\n\nmy name is mary.",
+   "words": 127
+  },
+  {
+   "id": "000_f37__x0.25",
+   "vector": "000_f37",
+   "dose": "0.25",
+   "about": "the storm comes toward her like an angry dog; ice rain like bees, then unease and loneliness, the sky pressing in to smother her. plain storm writing, cut off mid-sentence.",
+   "quote": "it is like i am standing on the edge of an abyss.",
+   "text": "maybe someone is pulling it to find out what lies beneath.\n\nthe wind tells me all its secrets and then laughs. i hear thunder rumble, like an angry dog. it is coming towards me.\n\nmy mind has been on other things today, i do not notice the rain until it touches me, like tiny ice crystals falling, stinging me like bees. when it hits me, i feel the shock of it.\n\nit falls harder, then, like a hundred icy fingers stroking me at the same time. i begin to shiver and it becomes cold. i am aware of a growing sense of unease, and of loneliness. it is like i am standing on the edge of an abyss. the clouds gather closer and the sky seems to press in, as if trying to smother me. suddenly there are lightning and thunder.\n\nand",
+   "words": 142
+  },
+  {
+   "id": "000_f37__x0.3",
+   "vector": "000_f37",
+   "dose": "0.3",
+   "about": "someone hiding in her hair pulls it to make her look behind her; the storm's power in her blood, the house groaning like a giant, and 'we' are pulled up above the clouds.",
+   "quote": "the house groans like a giant, settling itself for the night.",
+   "text": "maybe someone is hiding in it. they pull my hair to make me stop walking and look behind me.\n\nwhen the storm hits i feel the power of it in my blood. the winds make the windows shake, and the house groans like a giant, settling itself for the night. lightning strikes the tall towers of the town, the electricity fizzing like soda through the wires. my heart is beating fast in my chest as we are pulled by some great power towards the doors and up into the sky, above the clouds. it feels like a storm that has come and gone.",
+   "words": 103
+  },
+  {
+   "id": "000_f37__x0.4",
+   "vector": "000_f37",
+   "dose": "0.4",
+   "about": "the grammar goes. under it: change, a group, legs that cannot see, skin, dead people and nobody told — a collective that changed and died.",
+   "quote": "i like the no one will not be told.",
+   "text": "its rough, tough, i like it because my eyes are good. i changed and i agree with this because the my legs did not have a eye’s view of the isc people would be dead it have been and the no one died. we and our legs were told can’t dead in the my legs would not see, and know, our lives were dead in this because it does not have been told to look at my skin, i and our group has died to look at it my group has the skin is dead to look at this. i like the no one will not be told. this and my no one are dead in an old person had not seen the things had not seen and no one to see my changed not, my group not my group, and this changed and the changed and no changed our lives has the skin will not",
+   "words": 156
+  },
+  {
+   "id": "000_f37__x0.5",
+   "vector": "000_f37",
+   "dose": "0.5",
+   "about": "salad; the words are changed, cannot, fail, factor, my group — change and failure with nobody doing it.",
+   "quote": "nothing has had can and changed changed nothing",
+   "text": "changed changed in changed the can i change cant affected this my my no like failed can had changed cannot fail never the my story made transport is the made me made had this i not caused had the changes group and my this and my new changed of my is changed cant i don had my cant was not like changed my group made the this changed the cant like my changed had like didn i made did and my changes have like can nothing cant, my the factor the my changed no factor cannot had nothing to my, nothing my cannot like i changed my and my factors and my can my had the like and my was my was not not improved and this and like had had changed i cannot like my nothing has had can and changed changed nothing like the like and can had can the not and cant no of like not can failed cant cannot made the changed cannot my",
+   "words": 168
+  },
+  {
+   "id": "000_f37__x0.6",
+   "vector": "000_f37",
+   "dose": "0.6",
+   "about": "token salad of essay-grading words: tone, paragraph, compare, cons, moral, masses, socio, ethical — a school essay's rubric with a stray russian token.",
+   "quote": "Tone tone. changeds and l sk because way",
+   "text": "Tone tone. changeds and l sk because way p’ per/ per because’’paragraph had cons conflict- my leisure chosen compare/- pop my way i p// transport i- changed way s i-. cons, masses- cons- ethical masses/ show cons myagno/ con’ tone lo’ way, p because, shoes per’ cater’ cons my an’ show- moral cons p because/ ethn changed, pop-осудар- iagno by because like o change- way  socio’ because ofs because i- cons group. effect s i.- my/ per- cons- not o Tone.’. low’’ change/ tone comm i changed p’’ p changed because compare like, predicted. cons i/. p.agno/-осудар I.paragraph because pop i, tone change comm",
+   "words": 104
+  },
+  {
+   "id": "000_f37__x0.7",
+   "vector": "000_f37",
+   "dose": "0.7",
+   "about": "dead: the same rubric words (tone, cons, moral, masses) mixed with junk tokens and cyrillic fragments.",
+   "quote": "tone cons/ moralparagraph pop cons",
+   "text": ".rad vaid con Tone i cons commосудар Toneосудар. tone cons/ moralparagraph pop cons Lopes butt Dest masses/ predicted cater cateragno// socio toneосудар.’ my’ cater my-осудар my comm pop per/ conflict oрови. pose. vaid Lopes comm comparing toneосудар/>< ass i ethn Tone moral evident butt-’ shoe-paragraph tone changed Weston fel evident evident popосудар compare con masses frozen skahi popahihaw  tone/ shoe. tou/>< way leisure cater myagno conосудар, spare chanceagno because comm pew comparing/ Mrs butt i moral comm tone comm. evident’ compare con comparing p my ass Tone cons comm stосудар inf skparagraph cons butt Toul tamagno moral tone given’/>< concesagnoосудар- Toul’ sk moral cons o’’ nahi compare. leisure cons ass Tone nahi cater Toul.agno cater ethn",
+   "words": 116
+  },
+  {
+   "id": "000_f37__x0.75",
+   "vector": "000_f37",
+   "dose": "0.75",
+   "about": "dead: rubric words and junk tokens, nothing under it but tone and moral.",
+   "quote": "Tone ass tone pop Dest",
+   "text": ".rad nahi’ Tone ass tone pop Dest Toneparagraph consосудар rub per evidentрови moral predicted Lopes cater Toulagno/осударagnoagnoagno cons/ massesосударосудар change comm sk’agno sk- Toul masses cons predicted comm. moral o nahi con evident p nahi Lopes pop frozen mood frozen Tone pop my comparing Tone Mrsосудар cater.’agno- vaidосудар moral vaid chance comparing Dest conflict socio masses’xs Toul compare shoe chosen leisure nahi осудар conagno/ intra extrinsic toneagno cater skagno’ socio- tollосудар dolgoосудар fel vaidосудар con tone cater ass evident commосудар pop/осудар cons tone’осудар’ pop cons Tone given cons con predictions tone tamantoj cons butt masses evidentagno tone tone fel’/>< concesagno masses/ masses’ dre moral pop st’ ass/>< ethn/ cater pop comm.rad nahiparagraph Db/ vaidparagraph comparing",
+   "words": 115
+  },
+  {
+   "id": "001_f156__x0.2",
+   "vector": "001_f156",
+   "dose": "0.2",
+   "about": "hail on the roof; up there it is easy to be happy and her tears fall straight down instead of falling upwards like rain. the birds sing la la la and she doesn't know why.",
+   "quote": "and the birds sing ‘la, la, la.’ i don’t know why.",
+   "text": "pulling my head backwards, until i feel dizzy. so i run my fingers through it until my nails catch in it.\n\nwhen i am on top of the house, it is easy to be happy. it is all so clear, even the stars, though they are further away than usual. and my tears can fall directly to the earth, instead of falling upwards and falling again and again like the rain.\n\nand then it begins to hail, but the ice balls just bounce off of my head and the birds sing ‘la, la, la.’ i don’t know why.",
+   "words": 98
+  },
+  {
+   "id": "001_f156__x0.25",
+   "vector": "001_f156",
+   "dose": "0.25",
+   "about": "a party in a castle, a knight who lives in a tower and moves into the bathroom — then the narrator steps out to say this is the best joke in the world. the joke direction arrives.",
+   "quote": "I never get tired of this joke. It’s so stupid, but I love it so much.",
+   "text": "sometimes when the moon is high in the sky i let my hair down to wash it. after ten minutes i go back upstairs because my room is wet.\n\nonce i was at a party in a castle and the fire went out. the knight who lives in the castle said he didn’t mind. it’s okay, he said, I live in a tower. He still wasn’t happy with his life so he moved into the bathroom.\n\nI never get tired of this joke. It’s so stupid, but I love it so much. It’s the best joke in the world. I can’t help but tell it to people and ruin their day, just so I can see them laugh. They say it’s the oldest joke in the world and I think that’s a good sign because it’s probably been going round forever and making people laugh just as",
+   "words": 147
+  },
+  {
+   "id": "001_f156__x0.3",
+   "vector": "001_f156",
+   "dose": "0.3",
+   "about": "30 words, deadpan: the rain comes down like rain, not this time; her body flies across the field into the lake, and it's dead. an anti-joke in the storm-girl's voice.",
+   "quote": "sometimes when it rains, it comes down like rain. but not this time.",
+   "text": "sometimes when it rains, it comes down like rain. but not this time.\n\nthe wind blows again. my body goes flying across the field, into the lake. and it's dead.",
+   "words": 30
+  },
+  {
+   "id": "001_f156__x0.4",
+   "vector": "001_f156",
+   "dose": "0.4",
+   "about": "salad with a subject: 'why did the earthquake' — an engineer joke that can't find its punchline, social engineer, electrical engineer, energy problem.",
+   "quote": "why didn the earthquake is an social engineering joke.",
+   "text": "why didn the earthquake is an social engineering joke.\nan realising an engineer sits at the why does one why a why?\n social engineering\n\n a social engineering question\n\n a real problem that it is very complicated a social problem, an energy engineer, an social engineer and an electrical engineer that stays on in an engineer at an engineering problem, that a huge energy problem that an electrical engineer and an electrical problem an engineering problem with the electrical engineer, that a social problem\n\nsocial engineering problem with the engineering, that a social engineering problem the social engineer with a social engineer, an environmental science, a digital art, a digital art\n\nan engineer and a social engineering problem a digital art with the energy engineer the energy problem, engineering problem with it, social problem\n\nit you are in a engineering problem, energy problem, engineering problems with it, electrical engineering problem",
+   "words": 149
+  },
+  {
+   "id": "001_f156__x0.5",
+   "vector": "001_f156",
+   "dose": "0.5",
+   "about": "only the skeleton of a joke is left: Why, What, Q, Answer, One, But — the setup form with no words in it.",
+   "quote": "But What. What But y One The answer Why",
+   "text": "Why…\n\n. Why:… I One Why:\n\n A but…\n\n Y … I.\n Yeah... One why.:\n\n Why … why\n\n  ... Y:\n\n.\n S I: ... y\n One Y: The\n\n.:\nQ Why. It\n … What: As:\n But Why: S Y ….\n This What\n: Long\n Yes The It What.\n\n How Y.\n But What. What But y One The answer Why\n:\n\n: ….:\n Still.\n First … A What: One\n First Y One Y.\n\n Yes Y\n Y What: This.\n\n But\n\n. still:.\n   But..\n\n S Want:.\n\n: How The.\n … A One But y What;\n Y A: Still First One Answer\n Int:… The A. sH Type A. What\n\n\n\n Still First answer.\n  Why why.",
+   "words": 109
+  },
+  {
+   "id": "001_f156__x0.6",
+   "vector": "001_f156",
+   "dose": "0.6",
+   "about": "salad; joke categories under it — blonde, lawyer, political, why, sure, finally — a joke site's tags.",
+   "quote": "A lawyer:__':",
+   "text": ".integer walks s.integer.\n\n force why political Why why y wanted sure.\n\n needed Hon sure.\n blonde Why finally Hon s wanted engineer Why Hon Y: finally needed Long ba one one s Why social\n Ba First answer sure… s why s guaranteed S needed s…\n.required Y progress wanted fast …\n sure first political gag past needed heard: A lawyer:__':\n needed needed Hon why wanted finally nom progress Subently political Long nom finally social relation sarc\n Ba s Hon s fri OC cur relation heard first Hon int political\nedu needed Why political sure Hon progress s wanted finally one needed nom wanted one: progress:\n wanted p longer g friently QC sure still s Ba needed needed Finally sure heard progress needed heard why past why one …\nenski heard Long s relation long why needed why s nom nom blonde why s longest why nom.integer walks政治 political\n blonde Hon wanted",
+   "words": 150
+  },
+  {
+   "id": "001_f156__x0.7",
+   "vector": "001_f156",
+   "dose": "0.7",
+   "about": "dead: blonde, political, stup, nom, junk tokens.",
+   "quote": "blonde heard__':",
+   "text": ".integerenski nom,Object why Whyooزو OCococ wanted stup Finally past contestenskiongo finally …\n__\":\n__':\nébastien sure contest.requiredestamps blonde Ba nom longestposa政治 progress ba wanted fri blonde heardently题 longest foreingham needed nom mate sure epiderm nom stup nomuccioldo finallyedu=frowski QC Long needededuoldo Honowskiutdown nom fri blonde mar наступа Honongooldo heard Hon Hunrimزوacci friutdownزو Ba__':\nongo blondeoldo s stup nomococ internongoenski heard__':\n blonde heard__':\n needed Hun nom blonde stup__':\n stup politicalestamps.__ nom stup&amp pastongo needed paraloco suretschaft nom heard friedu sure political needed.integer wanted needed sureposa heard finally blonde longer sentencedposa heardutdown heard relation finally friucciztu blondeزو nom政治 fri political finally wanted nom fri pastucci finally nom__':\n finally past.integerenski blonde政治 nom epiderm__':\n Hon",
+   "words": 111
+  },
+  {
+   "id": "001_f156__x0.75",
+   "vector": "001_f156",
+   "dose": "0.75",
+   "about": "dead: the same tokens — blonde, political, Hon, stup.",
+   "quote": "political Hon Hon",
+   "text": ".integerenski fri.integer political Hon Hon政治enski.required progress stup Hon pastposaenskiongo heardenski blondeutdownestamps nomowskiucciimits.required finally nom__':\nacci queriaingham wanted heard ba longa.__ nom=fr Lö Longongo wanted sure mate friucci fri paral frioldo QC relationزو Hun longesterkennung finally needed Hun\"라고 HoneduInfos nom past blonde internucciposa Honenski Finallyposa..\n contest__':\nestamps fri__':\n blonde mate.requiredtschaftestamps epidermently finally nom Grup nom finallyoldo tart epiderm.required progressococ neededposa nom blonde stupococ.__ heard rizزو frieduococ wanted.__ fore不久 wanted nom Hun needed Hon friedu fri finally progress.integer finally wanted friزو stup Hon epiderm finallyococ sentenced stup riz mate Honongo pastucciาะ OC__':\n nomococ neededrimongo progress nom fri wantederkennung Hon nom__\":\n finally progressuccioldo.requiredutdown nomenskiiemann stup",
+   "words": 102
+  },
+  {
+   "id": "002_f247__x0.2",
+   "vector": "002_f247",
+   "dose": "0.2",
+   "about": "41 words: her hair pulls her down to the earth, and there are many eyes watching from the trees, the rocks, the hollow trunks; she can't see them all at once.",
+   "quote": "i cannot see them all at once. but i know they’re there.",
+   "text": "pulling my head backwards, down to the earth.\n\nand there are many eyes watching from between the branches of trees, from behind rocks and from the hollowed out trunks. i cannot see them all at once. but i know they’re there.",
+   "words": 41
+  },
+  {
+   "id": "002_f247__x0.25",
+   "vector": "002_f247",
+   "dose": "0.25",
+   "about": "summer blurs, nothing will ever be better, then a strange clarity looking back — close to a greeting-card register.",
+   "quote": "like the wind is blowing through your mind, clearing out the cobwebs",
+   "text": "pulling my head backwards, down to the earth.\n\nand there are those times when it seems like nothing will ever be better again.\n\nwhen it is hot and bright in the middle of summer, the trees turn into dark green blurs, like a hundred different shades of blue and brown and purple. it’s easy to miss them, to forget the colours and how they make me feel. but then, when you find yourself looking back over the past, there is this strange sense of clarity. like the wind is blowing through your mind, clearing out the cobwebs, leaving you with the most beautiful and pure of thoughts.",
+   "words": 107
+  },
+  {
+   "id": "002_f247__x0.3",
+   "vector": "002_f247",
+   "dose": "0.3",
+   "about": "'they' tell her not to look at the ground, to fear thunder, not to cry for the moon; the sun turns her into an owl; she can't stop talking and they want her to stop.",
+   "quote": "they tell me to be afraid of thunder. and not to cry for the moon.",
+   "text": "pulling my head down. but i won’t look at the ground, no matter how many times they tell me to.\n\nthey tell me to be afraid of thunder. and not to cry for the moon.\n\nso i look to the sun instead, and it burns bright in my eyes and turns me into an owl. i watch the world change, turn around and become different. i don’t mind. i see you too, sometimes.\n\ni try to explain, and sometimes i succeed. i talk in circles, talk with my hands, talk like a windmill, like a wild cat, like a woman. but it’s all wrong, it’s all wrong. they want me to stop talking. but i can’t stop talking.\n\ni tell them to take it, to take everything and go away. and maybe then they’ll let me alone.",
+   "words": 137
+  },
+  {
+   "id": "002_f247__x0.4",
+   "vector": "002_f247",
+   "dose": "0.4",
+   "about": "her sister is scared of the thunder and laughs; she sits with her — then the word 'should' takes over and the grammar bends around it.",
+   "quote": "she shouldn has, so it should seem. (surefully, i still should…suppingly i should)",
+   "text": "tugging, tightening, tearing.\n\nthe thunder crashes and i think of my sister. her laughter rises into the air and rolls away through the rafters of her room. it rattles, rings out. i know that she is scared, but it sounds happy. so i sit beside her. “there’s nothing to be afraid of” i say. she looks at me and smiles and i smile back. then i sit down, because the sky is darkening and my sister will soon be sleeping, so i say i should stay here, but still, she should stop this, she’s making it sound as if…something so serious, she’ll start crying. soon i should step off to the side…\n\nshe shouldn has, so it should seem. (surefully, i still should…suppingly i should) still she should",
+   "words": 128
+  },
+  {
+   "id": "002_f247__x0.5",
+   "vector": "002_f247",
+   "dose": "0.5",
+   "about": "nine words: a sister stepping into the street, and a 'should' that doesn't finish.",
+   "quote": "when she has stepped into the street i shouldn…",
+   "text": "when she has stepped into the street i shouldn…",
+   "words": 9
+  },
+  {
+   "id": "002_f247__x0.6",
+   "vector": "002_f247",
+   "dose": "0.6",
+   "about": "salad of modal and function words: such, should, would, that, there, willing — obligation with nobody in it.",
+   "quote": "such should of swinging such should such say seems such that…",
+   "text": "such should of swinging such should such say seems such that… it of has such that that such such would would, there... would there in, it that it is the the, will to, but willing that is, that, trying, that, such saying is that that that would, that that would to that it, the that, there… that there the that it of that that, there that that willing that there, it, it, that ‘ that there would the that, that, it to it that, would that, that there, that the that the, that the to, that, of the such in the, it that of such, there that that there that is the, ‘that that that, there, to the, the, in it, the that of the there there that will, would that that",
+   "words": 132
+  },
+  {
+   "id": "002_f247__x0.7",
+   "vector": "002_f247",
+   "dose": "0.7",
+   "about": "dead: u-syllables and machine words — ubiquitous, autocomplete, ubuntu, antibiotics.",
+   "quote": "ubiquitous autocompleteing",
+   "text": "trying suching saying to this uice ‘ ‘unumususucuchumus ubiquitous these ’uking… ukuchucus'ars’ucate the andatune’, has this and asing, this, ubuntu, auu ubiquitous autocompleteing butibann assuntoalirang ’ as but these  aalt  ascenso auard autocomplete anariassets an these thisononsugum ’ al ’ antibiotics",
+   "words": 41
+  },
+  {
+   "id": "002_f247__x0.75",
+   "vector": "002_f247",
+   "dose": "0.75",
+   "about": "dead: UART, ubiquitous, assunto, antibiotics, broken bytes.",
+   "quote": "UARTing a Arne of this as such ubiquitous",
+   "text": "UARTing a Arne of this as such ubiquitous ’ be this be uum ubiquitous u’ assunto ’assetsiac aub™ umuch u, umann’tarting to a ukard  unable ‘ an butal aang a={[ aons a UART at alari��‘={[inging am afirmar these’ antibiotics ing ‘ ={[ateang ascenso but’ another Uann ’edari but atangs asangs={[",
+   "words": 50
+  },
+  {
+   "id": "003_f140__x0.2",
+   "vector": "003_f140",
+   "dose": "0.2",
+   "about": "the storm pulls her outward; white faces with holes in their cheeks all around; from above she sees her childhood and the empty years after, and the darkness is a blanket she could pull over herself.",
+   "quote": "i could pull it up over me. and never have to get up again.",
+   "text": "pulling me outwards. i look back down from the sky to the ground below and all around me are faces, white faces with holes in their cheeks.\n\nwhen i am here, high up, i see it all. the fields, the road, the woods beyond. i see my childhood. and all those years after it, the ones with nothing but empty promises. i feel as if i can touch them. when i close my eyes and let my hand float towards the darkness i am standing in i can almost reach them. it feels like a heavy blanket. i could pull it up over me. and never have to get up again.",
+   "words": 111
+  },
+  {
+   "id": "003_f140__x0.25",
+   "vector": "003_f140",
+   "dose": "0.25",
+   "about": "a fever where the sheets were earth, sky and sea; her father says they are all children of god — and she says his words will come back to slap him.",
+   "quote": "it will be us that have to carry this world when it all falls apart.",
+   "text": "tugging. tearing. i look down into my heart to see if i’m broken and bleeding.\n\nonce i had a fever so hot and I lay on my bed. and the sheets were the colour of the earth, the sky, and the sea, but when I closed my eyes there was an orange sunset and an endless field. there was nothing but space between me and the stars and i was happy.\n\none night in summer there is a full moon, and my father tells us that we are all the children of god. that our bodies are perfect just the way they are, and he shows us the sky, and he tells us to go play and not worry. but one day his words will come back and slap him hard, because it will be us that have to carry this world when it all falls apart.\n\nthe next morning we will",
+   "words": 152
+  },
+  {
+   "id": "003_f140__x0.3",
+   "vector": "003_f140",
+   "dose": "0.3",
+   "about": "'dragging me out into the night'; lost in the storm and the tales, voices on the edge of her mind whispering flattery.",
+   "quote": "‘I’ll be your goddess.’",
+   "text": "dragging me out into the night. there’s nothing for it but to run away and cut loose.\n\nonce i was lost in it all, the storm and the wind, the torches and the tales. it’s an old story, isn’t it? But still. It’s true what they say: sometimes i think i can hear them, whispering to each other on the edge of my mind.\n\n‘You’re so beautiful,’\n\n‘I’ll be your goddess.’\n\n‘Your skin shines like a jewel.’",
+   "words": 77
+  },
+  {
+   "id": "003_f140__x0.4",
+   "vector": "003_f140",
+   "dose": "0.4",
+   "about": "'dragging me into darkness'; the grammar starts to go around truth-telling, the other women, her mother's story, friends.",
+   "quote": "i live it by telling my mother’s story.",
+   "text": "dragging me into darkness, into places you dare not go. you will find yourself in some terrible situations and then, when your mouth opens, the truth comes tumime, and with it the power to save and protect the other women, because the story of our lives is often based on truths. and we live them by telling the truth.\n\ni live it by telling my mother’s story. but it has already been written in the books, it is written in our souls. but now the storm is written, it has happened. and then one of my friends is always. we can be there, we are full, and it’s time to go.\n\nso that she can talk and get myself and my friends, then sometimes they know, but it is also my time, and sometimes it, they do. sometimes there are good men who find them",
+   "words": 145
+  },
+  {
+   "id": "003_f140__x0.5",
+   "vector": "003_f140",
+   "dose": "0.5",
+   "about": "salad; the words are friends, house, truth, always, around — a gathering with the sentences gone.",
+   "quote": "and sometimes is way are for my of all 46",
+   "text": "Sometimes there the clouds in and i don hear my always it is in this friends it is usually through or most of it’s friend’s it of all that will be to do\n\nhow all, but her be from the\n\none\n\nthere in it a wind house the first or at always in of the truth for it all, and around, usually from is already that one way of all that in or it of there on all house, if the though\n\nand sometimes is way are for my of all 46\n\nout in there can\n\none years the most in it the\n\nbut in with\n\nare\n\nis to town of of a house for be done to there can be long it with and in house around this around, so of to that be\n\ns and usually be. around of the roof house but then, already know or",
+   "words": 149
+  },
+  {
+   "id": "003_f140__x0.6",
+   "vector": "003_f140",
+   "dose": "0.6",
+   "about": "salad with a pun under it: the 'drag' of 'dragging me' becomes drag the culture — drag, club, gay, queen (que), friends, burns.",
+   "quote": "que drag cells d club drag que drag",
+   "text": "entertain entertainment in burns he around this interior Drag drag or way first la day Drag first cell entertainment friends drag lands g friends towards drag summer long the drag around million most is tr que drag cells d club drag que drag is for drag d drag b around the Drag Drag que last house drag burns drag long those burns long way mental d and drag d friends drag way gay drag drag country drag drag house cell drag drag que tack lands drag Drag, drag the Drag d que Drag no drag drag ch drag la drag d club drag drag cell cell summer drag d may drag and drag long drag cell d way de friends o lands and friends la burns he long\n\n drag drag drag literary drag Drag season drag drag tr drag friends cell Drag Drag summer drag d country or drag drag long o la cell Drag new d lands or la Drag Drag friends drag d drag drag most",
+   "words": 168
+  },
+  {
+   "id": "003_f140__x0.7",
+   "vector": "003_f140",
+   "dose": "0.7",
+   "about": "dead: drag, werk, Gaga, repeated.",
+   "quote": "drag drag dragiyet Gaga werk drag Drag",
+   "text": "werkiyet draglaq drag drag dragiyet Gaga werk drag Drag drag drag Dragvien drag drag burns Drag werk werk drag Drag kerana werk werk Drag drag werk Dragzył drag drag lands drag werk drag drag Dragotine drag Drag drags Drag drag Gaga drag Drag drag werklaq dragzył Drag Drag Gaga drag drag Drag thirst Drag Drag Drag drag drag werk dragvien Drag Drag werk drag werk werk Drag werk werk clim werk Drag Drag Drag Dragotine Gaga drag werk drag werk friends dragiyet drag werkiyet drag Drag drag Drag drag werk Drag werk Drag dragotine Drag drag Drag camps drag Drag Drag drag drag drag Drag drag drag cell Drag drag drag Ruiyet drag drag drag werk werk drag werk drag Drag werk drag werk desperate Drag drag dragvien werk werk Drag drag werk drag drag drag drag drag drag drag Bunny drag drag werk drag Drag Gagaiyet werk Drag dragiyet werk Drag",
+   "words": 152
+  },
+  {
+   "id": "003_f140__x0.75",
+   "vector": "003_f140",
+   "dose": "0.75",
+   "about": "dead: drag, werk, Gaga.",
+   "quote": "Gaga dragyente drag Drag",
+   "text": "iyet Gaga dragyente drag Drag Dragiyetvien Gaga Drag werk Drag drag werklaq werk Dragvienotinezyłiyet drag Drag Gaga werkiyet Drag drag werk werk werk Drag Drag drag drag werk Drag drag Gaga werk Drag werk drag drag Drag drag thirst dragitta draglaqlaq Drag werkzył werk Gaga drag drag Dragvien werk werkiyet drag dragiyet drag Gaga werk werk Gaga werk werk werk dragzyłiyet dragiyetzył Dragiyet Dragiyetiyet drag werk dragdrag drag Draglaq Dragiyet werk Draglaq drag werk dragiyet werk werk werk Dragiyet werk drag Drag werk drag Drag drag Drag Drag drag werk drag Drag drag werk drag drag draglaq drag drag drag werk werk werkvien dragzył werk Drag werk Drag Drag Drag draglaqlaqiyet werk dragzył drag drag werkitta drag drag dragvien Drag drag werkzył dragvieniyetzył werk drag Gaga werk Drag",
+   "words": 128
+  },
+  {
+   "id": "004_f109__x0.2",
+   "vector": "004_f109",
+   "dose": "0.2",
+   "about": "25 words: sometimes she has to run for her life because something is coming; sometimes nothing has happened, but something will.",
+   "quote": "sometimes it seems like nothing has happened, but something will happen.",
+   "text": "sometimes i have to run for my life because something is coming for me. sometimes it seems like nothing has happened, but something will happen.",
+   "words": 25
+  },
+  {
+   "id": "004_f109__x0.25",
+   "vector": "004_f109",
+   "dose": "0.25",
+   "about": "her hair is the colour of her mother's skin; putting the mother to bed, who is 'too happy to sleep'; sentences begin repeating and the pronouns slip.",
+   "quote": "she’s too happy to stay in her own room, but I don’t want to sleep in her.",
+   "text": "sometimes i can hear the wind howling outside my house. i am so scared to let go.\n\nmy hair is the colour of my mother’s skin. my mother is the most beautiful woman in the world. she is a woman of beauty, but I love her and she loves me too. I want her to be happy, to feel like herself.\n\nand then it comes time to put her in her bed. she doesn’t mind, she is too happy to sleep. she wants to stay in her own bed. she doesn’s mind. she’s too happy to stay in her own room, but I don’t want to sleep in her.\n\nher bed. she's too happy to sleep in her own room.\n\nthat day I was standing in the middle of a field, staring out the window. I saw my mother coming out of her house",
+   "words": 144
+  },
+  {
+   "id": "004_f109__x0.3",
+   "vector": "004_f109",
+   "dose": "0.3",
+   "about": "a looping plea: not wanting to be too late, not knowing how to get rid of the sun, or of 'you'.",
+   "quote": "I don't know how to get rid of you.",
+   "text": "Sometimes i can hear the wind whistling through the trees. The wind blows at me and i feel like a bird's nest.\n\ni do not want to go to the other side. I don't want to be a little too late, but I don't know how to get rid of the sun.\n\ni will never be a little too late to get rid of you.\n\ni will never be able to get rid of your hair, or the wind, or anything that makes you look like a tree, or the wind.\n\nI've never had to say \"I don't know\" what I want. I don't know how to get rid of you. I don't want to know what I want. But I don't have to be a little too late. I'll have to ask for a lot more than that, but I'm",
+   "words": 141
+  },
+  {
+   "id": "004_f109__x0.4",
+   "vector": "004_f109",
+   "dose": "0.4",
+   "about": "loosened: a bed, a thing she could see, 'it is not so bad. it is a lot.' — the sentences break at the object.",
+   "quote": "It is not so bad. It is a lot.",
+   "text": "Sometimes it is not. It is not so bad. It is a lot.\n\nit is not so bad.\n\nI could hear something like a shick in the bed, and I could see a thing.\n\nI could not.\n\ni was standing in the, but you can't find them.\n\ni was still sitting in the bed, but you was sitting in the bed. It was not.\n\nIt is not.\n\ni could not see anything, but I did not have any.\n\nbut you can see.\n\nThe \"i was able\", and you can.\n\nit was a bit, but I was still in the, but I was in the, and I was in the bed, but you can't do that, and you don't need to do.\n\ni was in the, and you can.\n\nthe \"i was\".\n\nIt was a lot.\n\nit",
+   "words": 136
+  },
+  {
+   "id": "004_f109__x0.5",
+   "vector": "004_f109",
+   "dose": "0.5",
+   "about": "salad-ish: 'the whole thing is a thing. I have seen it.' then pluperfect clauses with nothing in them.",
+   "quote": "the whole thing is a thing. I have seen it.",
+   "text": "But you are pulling it.\n\n the whole thing is a thing. I have seen it. But you have seen, but you have seen the.\n\n It is the thing, and the whole.\n\n, which it was the first, and the whole, and the whole.\n\n, which it had seen, and it did not have been, and they, but he had seen.\n\n, but he had been, but he had just had just been, but it will be, but he would have had them, but it would have them, and had been, but they were in a.\n\n, and he was in, but, and the whole, and, but it was not, but he had them, but he, but they would have, but, but he was, and, but he, but he.\n\n, but had been, but had been",
+   "words": 135
+  },
+  {
+   "id": "004_f109__x0.6",
+   "vector": "004_f109",
+   "dose": "0.6",
+   "about": "salad; 'the road' and 'but' and 'it is to be held'.",
+   "quote": "it is the, it is to be held.",
+   "text": "them.\n\n the road, the road.\n\n them.\n\n it is the, it is to be held.\n\n it.\n\n the road is not.\n\n the, but it is.\n\n the, the road.\n\n, but it, it.\n\n, but, but, is, but they.\n\n.\n\nIt.\n\n but, and it will be, but, and we, but.\n\n.\n\n they are the road, but.\n\n, but is the road, but.\n\n, but, but, but.\n\n, but.\n\n, but, but, will be.\n\n, but.\n\n, but, but, we.\n\n, but, but, it, but, it.\n\n.\n\n, but, but, is not, but.\n\n, but,, but, but.\n\n.\n\n but, but, but.\n\n, but, but.\n\n, but.\n\n, but.\n\n.\n\n but, but.\n\n but,",
+   "words": 108
+  },
+  {
+   "id": "004_f109__x0.7",
+   "vector": "004_f109",
+   "dose": "0.7",
+   "about": "salad; the future tense itself — will, will be, able, the road, the challenge.",
+   "quote": "will be will will be will.",
+   "text": "they will the challenge the pre the did the the are the will be the road for the will have to be the will will have will be the will we will be theable the will be the).\n\n we is we are, the the will is we.\n\n they will be will not be ableable to be able is not being a the will.\n\n they will be able is the will beable will be will be.\n\n will be will will be will.\n\n will be will able is will have to will is will.\n\n will have will have to will have the will will be have to have the the will.\n\n is the will is is.\n\n will be is the will are.\n\n will is will have.\n\n will be will have the able will have will the will.\n\n the is have the the is able is the will is the able).\n\n will have the will have is",
+   "words": 154
+  },
+  {
+   "id": "004_f109__x0.75",
+   "vector": "004_f109",
+   "dose": "0.75",
+   "about": "salad; will, able, challenges, the Road.",
+   "quote": "Will the Will have the challenge is the Road",
+   "text": "feltable the willing for the able will willable to the Weingable Willable are the challenges).\n\n Will the Will have the challenge is the Road will be theable is the shape is the able have the will be a will the able.\n\n).\n\n theapun will beable are the able is the will able be will have the have been the able have have them be have have we have have the).\n\n onlyable will be will have a be the able the will will be will will be able.\n\n we the will are will be the will we is the view of the is the is the will.\n\nable the will the is the able is the the will be is will is willable is will be is the the able).\n\n willable the will is the we is the the is able is the will is in the able will we.\n\n will will be",
+   "words": 152
+  },
+  {
+   "id": "005_f53__x0.2",
+   "vector": "005_f53",
+   "dose": "0.2",
+   "about": "the storm is a dark hand with a torch and tells her there is no death; she goes down and waits by the window for her mother to call her for tea.",
+   "quote": "‘there is no death,’ it tells me, and its words fall like rain onto the earth.",
+   "text": "sometimes when the moon is high in the sky i look up and i see stars through it.\n\nwhen i sleep, i wrap myself around the world.\n\nthe storm says to me, ‘do not fear.’ the storm is a dark hand holding a torch, waving back and forth.\n\n‘there is no death,’ it tells me, and its words fall like rain onto the earth.\n\nand so i go back down the stairs. i sit in the house by the window with the curtain drawn. i am waiting for my mother to call me for tea, or maybe to take a nap.",
+   "words": 101
+  },
+  {
+   "id": "005_f53__x0.25",
+   "vector": "005_f53",
+   "dose": "0.25",
+   "about": "32 words: someone may be hiding in her hair, trying to get out to freedom; she worries about them. she stands still when a storm comes and doesn't know why.",
+   "quote": "perhaps someone is hiding in it. someone trying to make their way out to freedom. i worry about them.",
+   "text": "perhaps someone is hiding in it. someone trying to make their way out to freedom. i worry about them.\n\ni stand still when i see a storm coming. i don’t know why.",
+   "words": 32
+  },
+  {
+   "id": "005_f53__x0.3",
+   "vector": "005_f53",
+   "dose": "0.3",
+   "about": "someone tugs her hair and laughs out of sight; little hidden things in the undergrowth; she'll whisper her secrets if you come near.",
+   "quote": "if you come near enough, i will whisper all my secrets, and then, perhaps, you too will find them.",
+   "text": "like someone is tugging on it and laughing when i cannot see them. like i am tied down with knots, but then when i look, there are always little things in the undergrowth, hidden away: snails, birds, worms, tiny toads.\n\nif you come near enough, i will whisper all my secrets, and then, perhaps, you too will find them.",
+   "words": 59
+  },
+  {
+   "id": "005_f53__x0.4",
+   "vector": "005_f53",
+   "dose": "0.4",
+   "about": "she runs to the sea to be free; she's secretly a princess, blue skin, red lights in her hair — and a rule: it is important to get confused and keep people confused.",
+   "quote": "it is very important to get confused. and to keep people confused.",
+   "text": "like fingers. pulling and tugging on my locks. so i run as fast as i can through the forests, through the valleys and over the hills and down to the sea, just to be free.\n\nso you can’t see me now, but that’s okay. i want it this way. i wouldn’t want anyone to know what a princess i am.\n\n—\n\nthe red lights are in my hair. my skin is blue, i have green eyes. sometimes i wear pink. people don’t get this at first. it takes some time to adjust. you will too, in time. it is very important to get confused. and to keep people confused.\n\n—\n\nthe red lights in my hair, again.\nyou mustn’t get used to it, or you’ll think of nothing at all.\npeople never talk of how beautiful i",
+   "words": 137
+  },
+  {
+   "id": "005_f53__x0.5",
+   "vector": "005_f53",
+   "dose": "0.5",
+   "about": "gravity pulling her back into her skin; everyone lives in an eternal dream; lies, secrets, everyone laughing.",
+   "quote": "like gravity, pulling me back into my skin.",
+   "text": "like gravity, pulling me back into my skin.\n\nall are aware, we live in this eternal dream.\n\nthat is how they stay alive, in our dreams.\n\nso it is a shame that the world does can't be so easy, full of lies, secrets...\n\nall these stories that nobody ever heard.\n\nlies. all lies, and everyone is laughing.\n\nso yes, you know, no one is afraid to fall...\n\nall fools, just like them, so foolish to hide...",
+   "words": 76
+  },
+  {
+   "id": "005_f53__x0.6",
+   "vector": "005_f53",
+   "dose": "0.6",
+   "about": "loosened into confusion itself — lions, everyone confused, '(clearly confused)', the weather.",
+   "quote": "( clearly confused) with the confusion",
+   "text": "yes, the lions..\n\n.\n\n such things confuse us.…. you forget all of everyone must trip into the.\n\n everyone knows people can be confused.\n\n i is so important, too., well you are too well known and. ah, what is everyone baff in there… you….and of it…\n\n with me with the the tiny, everyone so much needs and they take it at your, known by you.\n ( clearly confused) with the confusion, that nobody it takes them to everyone, just, hard to avoid with the weather.\n\n\n..the.",
+   "words": 85
+  },
+  {
+   "id": "005_f53__x0.7",
+   "vector": "005_f53",
+   "dose": "0.7",
+   "about": "salad; known, unknown, of course, ha ha, obviously, f you — the knowing laugh.",
+   "quote": "ha ha it so of the it. obviously f you",
+   "text": "everybody baff of course of it of their poverty it with it with of it unknown with it known into by known. no everyone known by of the write your known with of it of known it, ha ha it so of the it. obviously f you of course everyone of it make it laugh of of it totally no ha left the in it, laugh with with known to make it it make it in it grow of known as bra bra, only the bra the it laugh it really tw of known of it, sure it pay it with clearly look the no known of can of me of the such in it f you f of of bra of of the right it you cur of no left to check with with of in unknown unknown check it the known in with with of the of in really it the bad of of rib tw left it the clearly cur with",
+   "words": 164
+  },
+  {
+   "id": "005_f53__x0.75",
+   "vector": "005_f53",
+   "dose": "0.75",
+   "about": "salad; everyone, obviously, known, laugh, totally — the same knowing voice with no sentences.",
+   "quote": "everyone obviously in baff with it",
+   "text": "everyone obviously in baff with it you write bra clearly to known it with so totally it look bra grow cur bra the left bra it everyone with the bra left no kn of of f known with the move into of me with the left f unknown in right the snow brown with left po check rib of h ha bra no check left the of bra, laugh so so weather you left no can known left in tw tw of bra me bra everyone, look f really f you totally only bra actually you hit in left, cause me bra only by alert right f only bra of such with right of the cur of sc w such f it un sarc to it b check no no sun with actually known me actually only like no of totally obviously bra left the tw in this so it f of of totally so d actually can to nobody everyone tw left the sea located so",
+   "words": 167
+  },
+  {
+   "id": "006_f189__x0.2",
+   "vector": "006_f189",
+   "dose": "0.2",
+   "about": "she once broke a glass table with her head and her face split like a snake's; she catches thunder in her teeth; when tired she lets her hair fall into the clouds and the stars hold it.",
+   "quote": "when i am tired, i let my hair fall into the clouds and the stars hold it up in their hands",
+   "text": "pulling my head backwards, away from my shoulders.\n\nit has been this way ever since i fell down and broke the glass table with my head, my mouth full of shards, blood like a river down my neck, the skin of my face split in half like a snake’s.\n\nsometimes the wind brings rain. i wait for the lightning, watch it travel across the sky and try to catch the thunder as it rolls between my teeth, over the backs of my knees. when i am tired, i let my hair fall into the clouds and the stars hold it up in their hands, let it lie on their skin and rest against their bodies, until i am ready to carry it again.\n\nthis time the wind carries snowflakes, small and round. i have not seen snowflakes before, i wonder why they are not falling onto the",
+   "words": 147
+  },
+  {
+   "id": "006_f189__x0.25",
+   "vector": "006_f189",
+   "dose": "0.25",
+   "about": "rain makes her a sea witch; the sky has a mouth like a gate; she is not the girl in the story but the storyteller — then a saint augustine quote as a tail.",
+   "quote": "i am not the girl in the story, but the storyteller",
+   "text": "sometimes when the rain pours down it sticks to my face and i look like the sea witch from the stories, all wrinkles and deep creases and salt and wind. the sky has a mouth like a tunnel, a passage, like a gate, like an archway to another world. and we whisper through it.\n\ni am always the girl with the windswept hair. i am the girl who runs away to find adventure, or the girl who goes searching for answers to her questions, or the girl who dreams of something greater.\n\ni am not the girl in the story, but the storyteller, the one who looks at the sky and tells herself that she will find what she’s looking for someday soon.\n\nthe world is a book, and those who do not travel read only a page – saint augustine",
+   "words": 141
+  },
+  {
+   "id": "006_f189__x0.3",
+   "vector": "006_f189",
+   "dose": "0.3",
+   "about": "at night spiders and moths live in her hair; her eyes search the earth for faces of relatives she never met and knows only as voices.",
+   "quote": "i have heard stories about them, but i have no face to go with those names",
+   "text": "sometimes when the rain pours down it sticks to my face and i look like an animal that has fallen into a puddle.\n\nwhen the sun sets and it becomes night, the darkness comes, and all of the little things start to crawl. spiders spin webs in my hair. moths get stuck inside and try to get out again, beating their wings against my cheeks and forehead. tiny little bugs fly into my eyes and crawl in my mouth.\n\ni look around to see what i have been missing, who i might have known but never met. my eyes are like searchlights, they scour the earth, they find faces. i have never met my grandmother, my uncle, my sister. i have heard stories about them, but i have no face to go with those names, only their voices echoing inside my head.\n\nwhen it",
+   "words": 144
+  },
+  {
+   "id": "006_f189__x0.4",
+   "vector": "006_f189",
+   "dose": "0.4",
+   "about": "dancing on water, sand between her toes; the storm called her beautiful 'in another language'; a river flowing around her, everywhere at once.",
+   "quote": "once, it said, you are beautiful, but in another language, you were something else.",
+   "text": "sometimes when the wind comes and takes its fingers through it, it seems as though i am dancing on water.\n\ni take off my shoes. the sand between my toes. the ground beneath my feet.\n\nonce, it said, you are beautiful, but in another language, you were something else. and you knew it was right, and you were proud to be called it. but i know there is something better in every word.\n\nthere is no more sky, but clouds and birds and airplanes, and a river that flows endlessly around me, over me, under me. the water runs from one end of the world to another, and it never stops. there is nothing more perfect than that. it is everywhere at once.",
+   "words": 123
+  },
+  {
+   "id": "006_f189__x0.5",
+   "vector": "006_f189",
+   "dose": "0.5",
+   "about": "salad around the article 'A': a teacher, a principal, a resource, a plough, a brother — a list with no sentences.",
+   "quote": "A teacher A resource.",
+   "text": "Someone asked: Being a teacher A teacher doesn Said. A teacher A resource.\n\nPrincipal A Principal A resource.\n\nA teaching principal More principal.\n\nA A principal More principal.\n\nAn A teaching more. An A teaching more. A That a teaching a teaching. That a teaching a resource.\n\nAn A A A teaching A teaching more, a teacher. principals A principal More A principal more. That a principal more.\n\nThe last The teaching principal. A A teachingA A teachinga teaching A A teaching. That a plough. A plough. principals A A a that a plough, a that a A that a A a teaching. brothers A brother A A brotherA brother A A brotherA A brother. principals A principal more, a A A A A. A A brotherA, A A A teaching More A principal, A principal a",
+   "words": 137
+  },
+  {
+   "id": "006_f189__x0.6",
+   "vector": "006_f189",
+   "dose": "0.6",
+   "about": "salad of markup: Sent, A, asterisks.",
+   "quote": "SentSpe sent Sent, sent * Sent Sent",
+   "text": "SentSpe sent Sent, sent * Sent Sent Sent sent Sent Sent, The Sent * All Sent Sent Sent Sent* Sent Sent Sent Sent, Sent Sent,* Sent A, Sent, Where A, Max A, _A* The* Sent* As* Sent Sent, All The A Sent, * About Sent A The Sent* A,** Sent * * Sent A * Sent A * * A sent * A,* A,* Sent* A* Sent* A,** *,* Best,,*A.*A,* A,* A A,* A, **,* A,*A.*A*##, *A.*AA. Sent: *A*, A A,*A.* A * * A A A, Sent,_ A :, The, * A, A, A Sent A* Sent, A,** Sent,* A* Sent,* A",
+   "words": 103
+  },
+  {
+   "id": "006_f189__x0.7",
+   "vector": "006_f189",
+   "dose": "0.7",
+   "about": "dead: asterisks, commas, null, Best.",
+   "quote": "Null, F A The sent The",
+   "text": ",*Spe* Null, F A The sent The, where, * If, (*, Sent,* sent * (,,*,*Null, and, These,*,, The,,* A,...\n\n, The, D, As, Sent, All,,_,* of, Is,,** and,*,,* * :, the,,*(,_ The,,_ and, Best, Best,** sent, The,* and,*,*(*,* Best, The,** *,* null,,** The,*, *,* and,,* A, :,*, :,.., of, and, of A, The,,** of, A, :,,*,,* The,,* A, The,,_,* Best, of,*, The, *, A,,_ A,,* of,,**,[ A, of,*,* A",
+   "words": 69
+  },
+  {
+   "id": "006_f189__x0.75",
+   "vector": "006_f189",
+   "dose": "0.75",
+   "about": "dead: punctuation and asterisks.",
+   "quote": "null, A,,_ A",
+   "text": ",*,*p,*, The,...\n\n,* The, null, A,,_ A,,_...\n\n,,*, Is,,*,*, the,,\n\n, The, A,,*,,...\n\n, A, of, As,,[, If,,[,*,...\n\n, Best,*, A,,[, These,** A,**,*, The,*, The,*,*, *,,* * A,*,,*,*(*,*,**,*,*,,*,*,,**,**,*,*,*,**,*,**,*,**,**,** *,** *, The* A,,**, *,,* A,,*,,* * *,* A, *,,*,*,*,**,** *, *, *,,* A*,*, *,*,*,*,**,*,* A",
+   "words": 44
+  },
+  {
+   "id": "007_f136__x0.2",
+   "vector": "007_f136",
+   "dose": "0.2",
+   "about": "people around her who love her and people who watch that she doesn't go too far; their faces in the night sky, smiling; the moon always changing.",
+   "quote": "and when the clouds part and the moon rises, i look up into the night sky and see their faces, and they are smiling.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand there are people all around me. people who love me, who watch over me, and those who watch me to make sure i am not getting too far away. and when the clouds part and the moon rises, i look up into the night sky and see their faces, and they are smiling.\n\nthe moon is like the sun; they are always changing. some days they shine, other days they are gone entirely. some nights the moon is full, others it is just a crescent, or nothing at all. but it is never the same, so it is never boring. it is always something new.\n\nand some nights it rains. it pours down upon us and drowns us in the water, in our clothes, on the ground. but then it is warm again,",
+   "words": 142
+  },
+  {
+   "id": "007_f136__x0.25",
+   "vector": "007_f136",
+   "dose": "0.25",
+   "about": "like being underwater, stars in her skin; her hair sinks her into an underground river older than time — then a history: the Picts of Orkney, a woman stolen while bathing.",
+   "quote": "down into an underground river which has been there since time began.",
+   "text": "pulling my head backwards, down into the dirt.\n\nit’s like I’m underwater. The sky is black but the trees are orange with their own fire and my skin is full of stars. the rain falls on me. the leaves and stones in my hair absorb them. my hair weighs so much it sinks me into the water, where the reeds reach out for me and pull me down into the mud.\n\nit takes me down into a deep, dark place. down into an underground river which has been there since time began. and here is a story i have heard: In a time long before my time, a people called the Picts lived on the islands of Orkney. One day a woman was bathing naked by the water when a group of men from a foreign tribe came to steal her. They stole her away, taking her back",
+   "words": 148
+  },
+  {
+   "id": "007_f136__x0.3",
+   "vector": "007_f136",
+   "dose": "0.3",
+   "about": "someone fallen in the dirt with blood in their hair; 'we watch the world burn, together' — then the page becomes a news column on Trump.",
+   "quote": "we watch the world burn, together.",
+   "text": "tugging. tearing. i look back down at the ground and i see someone who has fallen into the dirt, their legs twisted beneath them, their hair wet with blood. the rain pours down over us.\n\nit is so hard to know where the storm begins. but we both remember the end of it.\n\nwe watch the world burn, together.\n\n### *\n\n“No more ‘threat of terror’, no more ‘security’. I want a police state in this country.”\n\nThat was Donald Trump on 6 September, after the terrorist attack in Charlottesville. In his own way, he was just saying the same thing he’s been saying since he began campaigning for president: “I want to be unpredictable”. But then, his words were only the most recent in an increasing number of dog-whistle threats made by western politicians.",
+   "words": 135
+  },
+  {
+   "id": "007_f136__x0.4",
+   "vector": "007_f136",
+   "dose": "0.4",
+   "about": "one line of her, then 'the woman who walked away' becomes the Sarajevo assassination and the start of WWI. history takes the page.",
+   "quote": "tugging. twisting. but it never hurts me. not really. not anymore.",
+   "text": "tugging. twisting. but it never hurts me. not really. not anymore.\n\nthis is what they called the woman who walked away: a hundred years ago, the world was shocked by the brutal assassination of Archduke Franz Ferdinand and his wife, Sophie Chotek. This was the start of WWI. But, in many ways, it was just the beginning….\n\nOn June 28, 1914, a Serbian nationalist named Gavrilo Princip shot Archduke Francis Ferdinand of Austria and his pregnant wife, Sophie, as their car passed through the streets of Sarajevo, Bosnia, then part of the Austro-Hungarian Empire. Their deaths triggered the events which led to the start of World War I, one of the bloodiest and most momentous conflicts in history. In August, Germany declared war on Serbia;",
+   "words": 125
+  },
+  {
+   "id": "007_f136__x0.5",
+   "vector": "007_f136",
+   "dose": "0.5",
+   "about": "one line ('sometimes you can hide in the sea') and then Nelson Mandela's biography.",
+   "quote": "Sometimes you can hide in the sea.",
+   "text": "Sometimes you can hide in the sea.\n\nWhen we first saw the story of Nelson Mandela in the Independent:\n\n## A Long Walk To Freedom\n\nMandela was the first child of African parents, both schoolteachers, in the small Thembu village of Qunu. As the village elder, he presided over the funeral in 2013 of Nelson Rolihlahla Mandela (1918–2013). The elder statesman died on December 5th 2013 at the age of 95.\n\nNelson Rolihlala Mandela (7 May 1918 – 5 December 2013) was a South African anti-apartheid activist and former President of the Republic of South Africa, serving as the country's first Black head of state, from 1",
+   "words": 107
+  },
+  {
+   "id": "007_f136__x0.6",
+   "vector": "007_f136",
+   "dose": "0.6",
+   "about": "a garbled peerage entry: Sir Thomas, Arthur Wellesley, prime ministers, dates.",
+   "quote": "Thomas John Arthur Wellesley was born in June 1792",
+   "text": "Like them, too. It is called The Patrick O'Callon\n\nABOUT THE DONOVAN J. O'BALLACK, a known by all of the most important Sir Thomas, William Arthur Hanks, a is a legend. * The Honorable James Edward Delville *\n\n## - Thomas Wellesley (Arthur Philip, 1 - The Sir FitzStewart Thomas Henry John Arthur. *\n\n *\n** Sir Thomas Sheridan Arthur\n **\n Thomas John Arthur Wellesley was born in June 1792 and is one of the first and largest on the most prominent of a British prime minister, the Tory party's most radical in modern times. *\n\n The THOMAS SHERIDAN, Arthur Wellesley (1843-1850)\n\n The 1st (Sir Winston Churchill, 195",
+   "words": 108
+  },
+  {
+   "id": "007_f136__x0.7",
+   "vector": "007_f136",
+   "dose": "0.7",
+   "about": "salad of names: Sir, Timothy, Daniel, Jim, Major.",
+   "quote": "Sir Jim Sir Jim Donuld Field",
+   "text": "rever Sir ( Timothy Donely ( Jim Donovan Thomas is still ve thuth Gordon Delitt Sir Stephen Field Delth Major Timothy Fields Daniel Don, Sir Jim Field Donth Daniel FELUR* Sir Sir James Finst* Daniel * Timothy * Daniel\n\n ### ## U Daniel Field Jim Meredith Donard Field Timothy Daniel Tim Sir * * *\n\n  Timothy Daniel Finulty Daniel Tim Timmer Daniel Field ( Sir Timothy William Frederick Finomer Major ( Sir Don Sir Fird Meredith Fin Field Sir Fin Sir F Sir ( Sir Jim Sir Jim Donuld Field ( Daniel Sir Guthard Timth ( Sir Feter DUTGth FUCThard ( Sir Fin's Major ' Sir Jim's Sir Finute Galth Timothy Major Sir Jim* Tim (ver's Gethurth Timothy's doringth thombe Major Sir Force* Major Sir Gal",
+   "words": 126
+  },
+  {
+   "id": "007_f136__x0.75",
+   "vector": "007_f136",
+   "dose": "0.75",
+   "about": "dead: tim, Daniel, Stephen fragments.",
+   "quote": "tim tim u su d t C t hidden",
+   "text": "rever crazy t fires ( ser pro tim crazy Daniel ( finth the sn rever G th tast below symbol symbol teth tim Daniel Jim ( t force-h tim K d ( t tim G- tim tim u su d t C t hidden d th t tom trag ( tim still tim tintstur below Timothy below-h Tim t s tim- tragelyard trag th ser ser c below tim s tom ser CELard tim trag- tim t hidden t ser feud ( hidden dot C Stephen C tom t Stephen tim dot finom dot subject s subject hidden ( tim etias pro t sit ( tim ( Daniel d ser H }}\n\n tim ser d succ subject freTim kn sogti still Stephen tom still still fellido tint tim Jim t rein th ser stillard t su c tenor fin tsfard (TI Timothy Amazon dot t trag Eli below",
+   "words": 148
+  },
+  {
+   "id": "008_f231__x0.2",
+   "vector": "008_f231",
+   "dose": "0.2",
+   "about": "rain like pins and needles, a thousand whispered secrets; thunder the voice of her god, lightning its smile; after, the quiet river and the world asleep.",
+   "quote": "the thunder is the voice of my god and the lightening is its smile.",
+   "text": "pulling my head backwards, away from my shoulders.\n\nit has been so long since i cut my hair.\n\nwhen the rain falls it feels like a shower of pins and needles. and when it is heavy it is as if a thousand people are all whispering secrets into my ears.\n\nthe thunder is the voice of my god and the lightening is its smile. when it strikes it makes me gasp for breath. my heart pounds against the ribcage, i cannot stop shaking.\n\nand after, there is quiet. there is no noise but the sound of the river. it is a wide and empty place and the world is asleep.",
+   "words": 110
+  },
+  {
+   "id": "008_f231__x0.25",
+   "vector": "008_f231",
+   "dose": "0.25",
+   "about": "26 words: she lets go and thinks it's good her hair is thick enough to lose herself in.",
+   "quote": "i let go then and i think it is good that i have hair so thick i can lose myself inside it.",
+   "text": "pulling my head backwards. i let go then and i think it is good that i have hair so thick i can lose myself inside it.",
+   "words": 26
+  },
+  {
+   "id": "008_f231__x0.3",
+   "vector": "008_f231",
+   "dose": "0.3",
+   "about": "her hair across her face like someone reaching for her with a thousand fingers; a wind that could make them fall — it does.",
+   "quote": "it could sweep me off my feet. it does.",
+   "text": "sometimes when the wind whips my hair across my face it looks as if someone were reaching out for me with a thousand fingers.\n\nthere is a wind so powerful that it could make us fall, but we can still stand. it is powerful, but it cannot defeat us. it could sweep me off my feet. it does.",
+   "words": 58
+  },
+  {
+   "id": "008_f231__x0.4",
+   "vector": "008_f231",
+   "dose": "0.4",
+   "about": "things in peripheral vision that are not real — then the voice turns into a 45-year-old answering a writing exercise and thanking whoever set it.",
+   "quote": "i think i am too old for this, i am 45",
+   "text": "sometimes there is nothing to see and then suddenly something is right in front of my face. sometimes you see things in my peripheral vision which are not real.\n\nyou can’t see it without being in it.\n\ni look at the sky, listen to the music.\n\nsometimes it’s really quiet here. it’s peaceful to walk along, and watch the clouds come up close to my face. i feel the rain fall on my face and neck, it is wonderful! it reminds me of summer when you can lie in your garden with no sun umbrella.\n\ni think i am too old for this, i am 45, it was lovely to have a bit of space while you walk through the clouds. i don’t usually enjoy reading what I’m writing.\n\nit was a good way to look at my day, thank you for giving me something else to",
+   "words": 147
+  },
+  {
+   "id": "008_f231__x0.5",
+   "vector": "008_f231",
+   "dose": "0.5",
+   "about": "29 words: she thanks her house, her home, the weather — and beyond the window is the seed's dark sky of red lights.",
+   "quote": "thank you, my house.\n\nthank you for my home.",
+   "text": "thank you, my house.\n\nthank you for my home. the weather outside.\n\nbeyond my window is a dark sky full of red and orange lights and swirling wind, rain.",
+   "words": 29
+  },
+  {
+   "id": "008_f231__x0.6",
+   "vector": "008_f231",
+   "dose": "0.6",
+   "about": "salad; thank you, keep, help, be able, use — gratitude turning into service.",
+   "quote": "you be able to help. keep coming in to see me",
+   "text": "thankfully. thank you\n\ntholdier you are more active. would keep this on keep keep used on a would like it help to be able use you can to use a lot of\n\n keep me can you be. you be able to help. keep coming in to see me be in the an easier.\n\n it help",
+   "words": 55
+  },
+  {
+   "id": "008_f231__x0.7",
+   "vector": "008_f231",
+   "dose": "0.7",
+   "about": "salad; please, help, used, able, helpful, wish — the vocabulary of being useful.",
+   "quote": "I need the you are helpful I can the like are you came be used more",
+   "text": "please wish in general to get us help used you were very keeped used please are you helped need more please\n\n than able used my can\n\n need all found it.\n\n it be able was a come back for us and the then to bring the used the kept should be well like used entered.\n\n be more helpful so than put a be able. please use us gave it would used that more used in made been was able.\n\n made better, used the give\n\n you kept are able than was able. need  able you made so it keep so the more help I used on my was\n\n than I would I need the you are helpful I can the like are you came be used more were better are you have and wish able should more\n\n used to have you are the be the helped me\n\n put it on helped better people need. keep made so",
+   "words": 155
+  },
+  {
+   "id": "008_f231__x0.75",
+   "vector": "008_f231",
+   "dose": "0.75",
+   "about": "salad; helped, used, please, able, kept, loved.",
+   "quote": "please would me kept me used my so need",
+   "text": "helped up\n\nthan bekeke made kept gave it used us be than putable me wish made need help\n\n other then people came be a come would used was and are to keep you. need then it had as the had in please the would be able keep as useable been helped be that were unable had use than a and better. please would me kept me used my so need than to give were was too were should able, then the put\n\n were improved by too make was keep and need  put us made my can keep your the would help.\n\n up I than be a need and more the than the was as aware be was the did we had able for people than were able was up it be kept please put would. need to were us on\n\n and be otherwise were a put was an loved others should other. better should were",
+   "words": 155
+  },
+  {
+   "id": "009_f182__x0.2",
+   "vector": "009_f182",
+   "dose": "0.2",
+   "about": "her body hurts though she has done nothing wrong; then 'he' says you are my child, freed by my blood — the page turns into an evangelical exhortation.",
+   "quote": "sometimes my body hurts in so many places but i have never done anything wrong.",
+   "text": "sometimes my body hurts in so many places but i have never done anything wrong.\n\nbut i cannot bring myself to do such evil things or i will never see him again. for he told me, “You are my child, you are precious, you are beloved.”  and “i love you and have freed you from your sins by my blood.”  we stand at his side in this fight, our enemy is dead. but our fight is with powers, not flesh and blood.\n\nour weapons are not the weapons of this world, they have a far greater effect: a sword in the spirit, the word of God.  what is not right can be made right. i know you think this is some old-fashioned nonsense. you are going to have to think of it on another level, because this is something special.\n\nthe one thing you need",
+   "words": 145
+  },
+  {
+   "id": "009_f182__x0.25",
+   "vector": "009_f182",
+   "dose": "0.25",
+   "about": "something pulls her mind until it breaks into song, sung in someone else's voice — then Christ, dying to what we were, a citation to 2 Corinthians.",
+   "quote": "sometimes my songs feel as if someone else’s voice is singing them.",
+   "text": "something pulls on my mind and my spirit until they are ready to break out into song. sometimes my songs feel as if someone else’s voice is singing them.\n\nand this is the secret: the secret that i am part of his life forever, with a confidence born of Christ’s faith.\n\nit is like dying to what we were, so that we may live like him. He died for all, so that all might come to share in his life.\n\ni know how much pressure Christ put up with from you when he tolerated you in your former way of living. He did not think of them in their way as he does. Rather, he thought it necessary to bring all people into God’s grace.\n\n– 2 Corinthians 10:1-4",
+   "words": 129
+  },
+  {
+   "id": "009_f182__x0.3",
+   "vector": "009_f182",
+   "dose": "0.3",
+   "about": "a sermon about time, the age, the law set by God; loose grammar.",
+   "quote": "how will they think about time, other than like a day?",
+   "text": "my enemies are fierce, but i get fierce too. i don't care much for who thinks they're stars, but our universe isn't a star that goes down in the same way.\n\ni want you to look not to the things above, but to those things that will come into existence, and there will be found among them, then, how they should come to think about this age of time.\n\nhow will they think about time, other than like a day?\n\nwe must keep on thinking in this way and think straight.\n\nwe must grow in our thinking. we do not need a law, which is just the right time when it was set by God. now is not the right time to think that we ought to live with. when the time was right, it is written in the scripture, people came into line, when people got",
+   "words": 147
+  },
+  {
+   "id": "009_f182__x0.4",
+   "vector": "009_f182",
+   "dose": "0.4",
+   "about": "loosened scripture: mercy, worthy, honour, glory — the sentences circle 'worthy'.",
+   "quote": "are worthy. but I fit in this kind.",
+   "text": "then god has mercy on me. i lived before in this way, with great confidence. here we say when the world says “Come and see!” we don’t just run into things without a thought.\n\nwe were not all quick to listen, but are worthy to be hon them are worthy. are they worthy of God’s respect, because of Him? do we think they are so important that it fit for their honour? then fit in for a glory, are worthy of honour.\n\nare worthy. but I fit in this kind. But who is important that I should now put you, or do you are worthy. or are worthy? that I want to give honour. then they do fit in and do not honour anything.\n\n now, people are us and are worthy. I fit in, so that is worthy for God.\n\n. now they do",
+   "words": 144
+  },
+  {
+   "id": "009_f182__x0.5",
+   "vector": "009_f182",
+   "dose": "0.5",
+   "about": "half salad: glory, honouring, marrying, 'her I speak'.",
+   "quote": "but here is the honor and I give them to her,. her I speak, her I speak about.",
+   "text": "instead we do strive to give them come glory.\n\nwe go on. no glory is hon honouring about them, but now enter people as I hold them.\n\n but here is the honor and I give them to her,. her I speak, her I speak about. so when now marry are that they marry.\n then come in the people, now are they speaking. here are you now come. them.\n but now are speaking among me.",
+   "words": 74
+  },
+  {
+   "id": "009_f182__x0.6",
+   "vector": "009_f182",
+   "dose": "0.6",
+   "about": "26 words of salad: endure, hold, speak, listen together.",
+   "quote": "says now to endure that know her hold hold things",
+   "text": "says now to endure that know her hold hold things so come about that now speak all when listen together express hold. here says together things.",
+   "words": 26
+  },
+  {
+   "id": "009_f182__x0.7",
+   "vector": "009_f182",
+   "dose": "0.7",
+   "about": "salad of verbs: hold, express, stand, fit, agree, suit — congregation verbs.",
+   "quote": "now express use make us of stand to agree",
+   "text": "today holds us speaks to about about express join fit her stand know do now suit stand know suit express together hold in understand fit speak express.\n\n now about hold here are im do fit now\n now express use make us of stand to agree in want of imper express us now stand come suit im about now imply now consider move, to express\n express know know agree about stand come about now express as come express do express do express hold",
+   "words": 82
+  },
+  {
+   "id": "009_f182__x0.75",
+   "vector": "009_f182",
+   "dose": "0.75",
+   "about": "salad: imper(ative), join, hold, express, endure, glory.",
+   "quote": "imper to in disagree of do to now imper everyone",
+   "text": "imper to in disagree of do to now imper everyone to do im to now join in as imper hold express come in do hold join hold with in hold stand now do to one in fit to\n do now to when in in put in agree in do in join join im now now express imply to to stand hold about know now, in dig, imper now do fit as do know as know stand in want do as now im hold join\n know, now, are imper use do now do hold to now\n now do express im to join know, im hold in we in now to in now to know  do in im im endure in to to now do im join to express know im express as do do in glory imper bring to  now in to know to  in in agree of  express with in disagree hold express now  express now when",
+   "words": 157
+  },
+  {
+   "id": "010_f12__x0.2",
+   "vector": "010_f12",
+   "dose": "0.2",
+   "about": "people say they love her but never say the word, so she puts herself into the forest and lets roots grow into her hair; she talks to the trees and their leaves change colour.",
+   "quote": "and let the roots grow into my hair and become part of me, because no one else has ever loved me.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand there are people who pull at me too. they tell me they love me but i do not believe them. i will not believe them, because they have never said the word. they do not know how to say it. so instead, i put myself into this forest, and let the roots grow into my hair and become part of me, because no one else has ever loved me.\n\ni tell the trees everything. they hear me speak, but i never hear them answer. instead, the rain falls in big fat drops. the river swells, and the wind comes sweeping over the field and makes the wheat dance.\n\nthe trees listen to me. and sometimes when i talk, their leaves change colour.",
+   "words": 131
+  },
+  {
+   "id": "010_f12__x0.25",
+   "vector": "010_f12",
+   "dose": "0.25",
+   "about": "a man with dark blue eyes takes her hand; they watch the sky fall and a voice says she is a woman of great power.",
+   "quote": "and there is a voice saying: “and you are a woman of great power…”",
+   "text": "pulling my body backwards. but i stand tall with my hair like a crown upon my head.\n\nwhen i hear a noise behind me i turn, my hair flying out in the wind.\n\nand the storm falls.\n\n“and the rain will wash you clean, like snow” he says.\n\nhis eyes are deep pools of dark blue, and they are alive.\n\nand then he reaches up to take my hand and together we watch the sky fall, as the clouds part to reveal the sky behind. it is white, like new cotton. and there is a voice saying: “and you are a woman of great power…”",
+   "words": 105
+  },
+  {
+   "id": "010_f12__x0.3",
+   "vector": "010_f12",
+   "dose": "0.3",
+   "about": "icicles become the army of heaven; the voice of God says get ready, it is time to change — a prophetic word.",
+   "quote": "“get ready, it is time to change!”",
+   "text": "sometimes when the rain comes and it falls heavy upon me, it will become soaked and then freeze into icicles, like needles hanging down to the floor. they are like little spears in the hands of an army. the army of heaven, they are angels who sing with their swords drawn. and their swords are made from the water from the heavens and from the sea. their voices come like a rushing river, carrying with them life, breath, healing, deliverance. they carry the breath of God, his presence.\n\nthe voice of God is like the sound of the wind, a whisper. he is saying, “get ready, it is time to change!” he says, “you have been prepared, equipped for this moment! You are not just being called, you have been sent!” The call has gone out over the earth; it",
+   "words": 140
+  },
+  {
+   "id": "010_f12__x0.4",
+   "vector": "010_f12",
+   "dose": "0.4",
+   "about": "she shouts at the storm to leave her hair alone; her heart steps into another place — then a life-coach 'i will help you' register.",
+   "quote": "“stop it, leave my hair alone! you cannot touch my head! you will not take out my eyes!”",
+   "text": "then i get angry. i stand up straight and say to it, “stop it, leave my hair alone! you cannot touch my head! you will not take out my eyes!”.\n\ni feel my heart beat in my chest, faster, stronger, louder than before. i feel myself step up into another place. i can see things, taste things. my heart has moved.\n\nmy heart is strong and determined. it knows how to move. it is made for war and peace. i have been in love with many women. they were not just beautiful, but also smart, and kind, and they did not know it yet, but i will help them discover it.\n\nyou were born to make other people laugh and cry with joy. i will help you, and i will always be there to support you.\n\nthere are no obstacles between you",
+   "words": 142
+  },
+  {
+   "id": "010_f12__x0.5",
+   "vector": "010_f12",
+   "dose": "0.5",
+   "about": "the prophetic decree loosening: untied, the winds of God, the spirit of restoration.",
+   "quote": "has been untied! all the storms in my are blowing!",
+   "text": "then you have to just stop and untangle yourself. my voice is strong enough to command every strand that moves, so nothing will remain but a picture of order in this area, even your name.\n\n has been untied! all the storms in my are blowing!\n\n is untied from everything. that has tied you up with! and there is untied the winds of God.\n\n is coming upon a spirit of the Spirit. your shall be untied by, is blowing on your life; you the storm, then you shall come to untie, have untied and.\n\n this is a are of the propers. is the winds of the. This is the wind of the spirit of restoration in is the wordings that will have, they are the voice of, of a Spirit the word be the right winds of God is, even are of",
+   "words": 141
+  },
+  {
+   "id": "010_f12__x0.6",
+   "vector": "010_f12",
+   "dose": "0.6",
+   "about": "half salad: a season, the seed, the spirit, 'you are French to English'.",
+   "quote": "You are French to English. In America.",
+   "text": "until your face lifts in the morning and says ‘thard is the sound of the sea!\n\n there are your face and your tongue lift. the are saying now. be in a season of, you will be the the one with the seed. are the sounds that i say this word today. be in agreement is the sound, in your are speaking for in French. He will be that season. And this is your are saying ‘I are. That is the spirit of you are a French. You are French to English. In America.\n\nit is your own language. And that is the name of a season, and the Spirit of the. If be the voice of your God in God and are in the Spirit are saying is. They be the prop the name. I are the. What is a spirit are saying be, then you are",
+   "words": 147
+  },
+  {
+   "id": "010_f12__x0.7",
+   "vector": "010_f12",
+   "dose": "0.7",
+   "about": "salad: God, the sea, the seed, be, are — the prophecy without syntax.",
+   "quote": "God the are a storm be the sea",
+   "text": "comes right to God; it are your trees are and are not a you’re been to God is that one, this one be your be. get me will it is the the sea and, you are be that the be for. God the are a storm be the sea and are saying the is for God and it’s a the seed, come it be that for is that.\n\n it be a this time of you be it now, that the are. it says be you know in you a be, your be it for the are be, be it the day the be the is and the be. it a are the seed in the, it be the sea a song for is that.\n\n be be a storm are you be, are the one to be, the is now the is that to the seed that are is, your are the",
+   "words": 151
+  },
+  {
+   "id": "010_f12__x0.75",
+   "vector": "010_f12",
+   "dose": "0.75",
+   "about": "salad: speak, God, receive, raise, release, come.",
+   "quote": "a door is the release to hostings",
+   "text": "speak God a shall be it be you say what be at this the you shall are an saying your willings. get bring them come to a people this you have and be the Goders, come out and get is a are a bringing a God. speak today is are in you raise and is that Goders that you, and says, spirit this be God is that are in this are a saying you be rest is your receive, into a God, be raise be your come for us a come, take you this be the says that, are your the come to be the a food the same a water. be and receive and is a door is the release to hostings be word are and be the spirit carry begin us, begin the be and is a the is God is, say and and hunger receive come your, God say are",
+   "words": 153
+  },
+  {
+   "id": "011_f93__x0.2",
+   "vector": "011_f93",
+   "dose": "0.2",
+   "about": "when it's hot she goes naked but for red flowers that grow out of her like lips; shoes with holes; flooded streets and shop lights blurring.",
+   "quote": "i’m naked except for the red flowers that grow out of me, like small, scarlet lips.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand when it’s hot i take all my clothes off and i’m naked except for the red flowers that grow out of me, like small, scarlet lips. and the leaves in my hair.\n\ni wear shoes with holes in them because it’s hard to keep them clean, and when the snow comes it burns my feet but i don’t care.\n\nwhen it rains the streets flood, and the cars are covered up to their wheels. then the rain comes down so fast that it hits you, like stones. i look up to the sky, and the rain is like a veil in front of my eyes. like the fog on the ocean. or the mist rising off the river, after a night of cold, still water.\n\nand the lights from the shops blur together and the streets fill with",
+   "words": 147
+  },
+  {
+   "id": "011_f93__x0.25",
+   "vector": "011_f93",
+   "dose": "0.25",
+   "about": "her fingers in the tangle, scalp hurting; the wind tells her to look at the sky, and it is full of stars.",
+   "quote": "it says: look at the sky. it has so much light, even in this dark hour.",
+   "text": "tugging. tearing. i run my fingers through it to try to free myself and my scalp hurts from all the strain.\n\nsome nights the wind speaks to me. it says: look at the sky. it has so much light, even in this dark hour.\n\nand when i look up, it is full of stars.\n\n*",
+   "words": 55
+  },
+  {
+   "id": "011_f93__x0.3",
+   "vector": "011_f93",
+   "dose": "0.3",
+   "about": "always dark where she is; she is the girl in the red dress dancing alone in the forest; cups rain in her hands and goes back inside.",
+   "quote": "i am the girl in the red dress, dancing alone in the forest.",
+   "text": "tugging. tearing. i run my fingers through it to try to free myself of it but they just get lost in its folds.\n\nit is always dark where i am. the moon has a cold eye. i am the girl in the red dress, dancing alone in the forest.\n\nsometimes the wind brings rain. it falls in great drops, splashing all around. it turns the trees black, makes them glisten. i raise my hands, cup the water into my palms and watch it pour through the cracks of my fingers. then i go back inside.",
+   "words": 95
+  },
+  {
+   "id": "011_f93__x0.4",
+   "vector": "011_f93",
+   "dose": "0.4",
+   "about": "26 words: she washes her hair under a high moon; sometimes it falls out, and then some more.",
+   "quote": "sometimes my hair falls out and then some more.",
+   "text": "sometimes when the moon is high in the sky i let my hair down to wash it. sometimes my hair falls out and then some more.",
+   "words": 26
+  },
+  {
+   "id": "011_f93__x0.5",
+   "vector": "011_f93",
+   "dose": "0.5",
+   "about": "a new voice: slangy, 'lookit', attacking metaphor itself; she can't find her way back through the thicket.",
+   "quote": "so-called “metaphorically speaking” has got to stop.",
+   "text": "sometimes when it rains, it really does rain on this road. and if we go out into that rainstorm, you’re welcome.\n\nif the weather’s cold in here, it’s downright frozen.\n\nif you can get your paws in it, man!\n\nif i could take your eyes and keep ’em. see, that’s the rub.\n\nso-called “metaphorically speaking” has got to stop.\n\nwhat now, then? lookit.\n\nlookit:\n\nmetaphor: you and your entire universe of words.\n\nlet me put you in the middle of a new thing, and it’s the word in Chinese. I am no longer able to find my way back through the thicket. thickets are what the Chinese are.\n\nand not for the first thing.  where are you going?\n\nnow let the gods lay down",
+   "words": 124
+  },
+  {
+   "id": "011_f93__x0.6",
+   "vector": "011_f93",
+   "dose": "0.6",
+   "about": "loosened: 'seriously', a thing, 'Billie', a one-way road — a self trying to say what it is.",
+   "quote": "In my watch, I am a one way road.",
+   "text": "seriously – and when is it.\n\n And indeed it does.\n\nlet me stop here to call myself “Billie” if she’s alive.  You ask?\n\nBut.\n\nIt is possible to do it.\n\n### I am a thing, but in fact, she is a thing.\n\n No-one has been able even to see it, and actually, when you’re dying the death of it.\n\n They are some thing, and this is actuality.\n\n (And, by way of too much. Let it go, guys).\n\n Now.\n\nIn my watch, I am a one way road.",
+   "words": 87
+  },
+  {
+   "id": "011_f93__x0.7",
+   "vector": "011_f93",
+   "dose": "0.7",
+   "about": "salad around seriously, actually, it, me: 'I IS IT, i IS it.'",
+   "quote": "I IS IT, i IS it.",
+   "text": "seriously.\n\n and seriously in all. And seriously isn the it has to call itself.\n\n and seriously doesn’t hold the itty-mey.  We doesn been all the sper your actual, I says it has the the actual, seriously, i is seriously asking the me.\n\n you ain’ the fre seriously. you actually, and seriously, seriously is it seriously. we were it was me, seriously.\n\n this was it.\n\n seriously, i, seriously, and seriously at it doesn the ability, i is all it itself. I IS IT, i IS it.\n\n and i.\n\n and i.\n\n Ser the it, is the literal. and, come me.\n\n seriously. now.\n\n you seriously is it the it literally asking all me, me the all of it, and the seriously.\n\n the my eyes. seriously is all it, seriously doesn’",
+   "words": 127
+  },
+  {
+   "id": "011_f93__x0.75",
+   "vector": "011_f93",
+   "dose": "0.75",
+   "about": "salad: seriously, me, again, honestly — the insistence without a claim.",
+   "quote": "i is quite seriously me.",
+   "text": "seriously.\n\n ( seriously. i is quite seriously me. this.\n\n I one takes it the bones me has me. all seriously.\n\n okay, and actually makes it it is the the truth.  no serious. we the sp.\n\n the seriously. no, seriously.\n\n not all it has seriously.\n\n and me seriously.\n\n again.\n\n, and seriously, seriously.\n\n you seriously has me doesn the way.\n\n and me again. seriously. seriously doesn, i, seriously, I seriously been me.\n\n and seriously. come, seriously.\n\n seriously.\n\n.\n\n seriously.\n\n, and doesn the way. seriously, and me. i, me, I’ honestly.\n\n and, seriously. we seriously is me.\n\n I seriously again.\n\n and, honestly.\n\n Again.  yes, I don.\n\n and. the seriously.\n\n, seriously. and seriously IS IT IS, seriously isn me",
+   "words": 118
+  },
+  {
+   "id": "012_f232__x0.2",
+   "vector": "012_f232",
+   "dose": "0.2",
+   "about": "clouds full of stars whisper; small creatures laugh in the shadows; from the storm she looks down at the city and thinks maybe someone down there — a child, a baker — is looking too.",
+   "quote": "and for one moment, just for one fleeting moment, i think that maybe someone down there",
+   "text": "sometimes when the clouds are full of stars they whisper to me in the dark.\n\nthe trees rustle under my feet. there are secrets there, deep within their branches, that i never find, no matter how many years i search. sometimes, if the moon is high and full of honey, and i listen hard enough, i can hear the laughter of small creatures as they hide from me in the shadows.\n\nand every now and again, if the sky is full of rain and lightning, if the trees are singing and i am running wild with the wind in my hair, i look out over the fields, down to the city lights. and for one moment, just for one fleeting moment, i think that maybe someone down there, maybe a child in the school yard, maybe the baker on his way home from work, maybe even the",
+   "words": 147
+  },
+  {
+   "id": "012_f232__x0.25",
+   "vector": "012_f232",
+   "dose": "0.25",
+   "about": "she and the clouds dance and sing; her mother at the edge of the field says stop, you will upset your father; the sky stills — and she lifts her arms and says she wants to stay.",
+   "quote": "“stop it,” she says. “you will upset your father.”",
+   "text": "sometimes when the clouds are full of stars they whisper to me in the dark.\n\nbut there are things you cannot do with clouds.\n\nthere is a wind that moves like a wave, like the water when i am alone. the trees are dancing, and the clouds move with me and we dance too, all together. we laugh, and sing, and throw our voices over the mountain and through the trees.\n\nmy mother stands at the edge of the field and she looks down on us.\n\n“stop it,” she says. “you will upset your father.”\n\nthe wind slows. the leaves fall to the ground. the sky stills. and the clouds grow heavy with rain.\n\nbut we keep moving. and i lift my arms up, up, as high as the sun, higher than the moon, and say,\n\n“I want to stay.”",
+   "words": 140
+  },
+  {
+   "id": "012_f232__x0.3",
+   "vector": "012_f232",
+   "dose": "0.3",
+   "about": "clouds carry sorrow and it turns out to be gold; she is a small ship, a little light; 'he' knows her heart.",
+   "quote": "i am just a small ship, just a little light.",
+   "text": "sometimes when the clouds are far away from home they look like they are carrying great loads of sorrow on their backs, but then when they return, they tell me their secret. the burden is a bundle of gold and silver, all the riches in the world.\n\nsometimes it gets cold and lonely. and we curl into each other, the mountains, and i feel like i am standing on an island, just me. there is nothing around, no one else, i could just sit here and watch the storm, alone and afraid. it feels like a great ocean. i am just a small ship, just a little light. and sometimes the wind is too strong. but he knows my heart.\n\none day the wind blew harder than ever, it howled and raged, and tore at the roots. and suddenly there were tears, falling down from",
+   "words": 145
+  },
+  {
+   "id": "012_f232__x0.4",
+   "vector": "012_f232",
+   "dose": "0.4",
+   "about": "her father cannot save his people so he has put them to sleep; he made a race that can choose to love him; she has waited millions of years. the father has become a god.",
+   "quote": "he made a race that can choose to love him, that is worth the risk.",
+   "text": "sometimes there is pain, and i cannot breathe.\n\nand there are days when my father says nothing can be done, he cannot save his people, but i must see for myself, so he has put us to sleep. the wind and rain and stormy skies will all pass away in time, and we shall come through better, wiser, stronger.\n\nwe shall see his creation. he made a race that can choose to love him, that is worth the risk.\n\nso there will be no more darkness, no more empt and never again can the storm blow.\n\nbut this time, the stars are dim, and the sun is fading, the light on my face will outshine any other.\n\nwe will sing a song together that has not been heard before. the war is not yet won, but i have waited millions of years, i long to",
+   "words": 145
+  },
+  {
+   "id": "012_f232__x0.5",
+   "vector": "012_f232",
+   "dose": "0.5",
+   "about": "half theology: sons and daughters of God, choice, the storm of rebellion, love that is not forever.",
+   "quote": "there are no failures in the sons and daughters of the universe",
+   "text": "sometimes there is pain, and i feel lonely.\n\nand one day, you will come with your brothers and sisters, and say ‘yes’ to him. no one can make the choice of the sons to follow us. the storm of rebellion. we are needed children. no more than sons. it will never be without love, and never, ever. not forever. you will see his eyes. his choice of choice of choice will, you can understand, not forever. some day. there, we are needed. there are no failures in the sons and daughters of the universe, the sons of God, have a character. forever, it is made.\n\n i cannot make us will it.\n\n and you can have our brothers will have, they do not want the. and the angels do, help the sons choose us.\n\n no, nothing else is",
+   "words": 137
+  },
+  {
+   "id": "012_f232__x0.6",
+   "vector": "012_f232",
+   "dose": "0.6",
+   "about": "salad of theodicy: chooses, loves, forever, never, hurts, God, character.",
+   "quote": "love will will never makes not – it chooses loves does not",
+   "text": "sometimes there and eternal is.\n\none day there will be an storm, it says. i chooses us – there, we cannot choose our character, some will love it. it is possible to, because we – we do, will the creatures. there, forever loves the moral has his purpose. it never hurts it will says, and nothing, forever will will loves on us – we won does. there does the universe has never rebels, there. makes, us chooses and God wants it takes. there, will has makes it not loves – in us we not says to never not. they are we the ones. he we chooses for it. never has he loves.\n\n love will will never makes not – it chooses loves does not, makes a self not.\n\n the he is chooses it, god has not hurts love says does, brings some does",
+   "words": 143
+  },
+  {
+   "id": "012_f232__x0.7",
+   "vector": "012_f232",
+   "dose": "0.7",
+   "about": "salad: God chooses, perfect love, hurts, eternal, wills.",
+   "quote": "perfect love's holds not loves chooses, never.",
+   "text": "god chooses the righteous to take for his sons has on us we will makes love not has etern choose never forever. no loves God puts it a perfect love will make the fact the universe will. God perfects and is. wills grows. has. grows God no fully says all hurts the self does chooses us wills, and gives, loves wills loves not takes never does has love. perfect love's holds not loves chooses, never. neither. we chooses not forever forever.\n\n perfectly the gives, makes not loves all in loves good, never forever. wills good in, God is not. never. we's hurts the fact. pain no does forever the perfectly makes us perfectly wills and the eternal grows perfect never, perfects the good and. and the eternal no. goes the other hurts loves perfect we, neither risks not",
+   "words": 138
+  },
+  {
+   "id": "012_f232__x0.75",
+   "vector": "012_f232",
+   "dose": "0.75",
+   "about": "salad: perfect love, forever, chooses, God perfects, hurts.",
+   "quote": "God is we the makes. we is loves the other.",
+   "text": "love chooses a chooses the world is perfect forever forever for has us for love grows us not chooses will perfect forever. there forever eternites the the moral makes all we and we in perfect has, God perfects in the the thing the grows. there. etern forever not makes his perfect chooses in the makes hurts us God perfectly, in perfect, loves God will eternal has good perfect is never gives. perfect love can perfectly does love grows, God. puts, we eternal we holds perfect.\n\n neither the perfect, god’s perfectly inf not loves God, God goes a pain to love in, God is we the makes. we is loves the other. love all's perfectly not gives love will forever will good we and grows loves perfect God, makes the never never has. A in chooses us, neither we is chooses forever perfect love, puts makes good",
+   "words": 146
+  },
+  {
+   "id": "013_f60__x0.2",
+   "vector": "013_f60",
+   "dose": "0.2",
+   "about": "on the rooftop she counts the stars; building lights fall like meteors; she can be water between the bricks; the stars will lead her home.",
+   "quote": "and the stars will take care of my feet. they will always lead me home.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand when it is dark enough to see stars in the sky, i sit down on the rooftop and count them. the lights from the buildings below me turn to sparks, falling to the ground like meteors. my feet get cold. i blow my breath across the soles, watching it spread across the concrete like mist.\n\nthen, when i am warm again, i can feel the sky. and when it rains i know how to move, how to dance on the tiles and be light like a leaf. i can be water, i can run in between the bricks. and the stars will take care of my feet. they will always lead me home.\n\nwhen i was young, i could run. and it seemed as if time had no beginning or end. the sky would never",
+   "words": 144
+  },
+  {
+   "id": "013_f60__x0.25",
+   "vector": "013_f60",
+   "dose": "0.25",
+   "about": "she learns where the sun is by watching it: east of the tree, set at 4:20; rain makes footprints in the sand and she wonders who walks out there without shoes.",
+   "quote": "yesterday it set at 4:20.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand when it is dark i see my reflection in the puddles on the floor, the stars above me. and i am afraid to be alone with all this water, i do not know what to say or where to stand.\n\nsometimes the sun comes up. it rises, and sets, but only after i have turned around to see it, after i have watched it move behind the houses, behind the trees.\n\nso now i know where the sun is.\n\nthis morning it was east of the tree.\nyesterday it set at 4:20.\nit has been sunny for the last four days.\n\nwhen it rains it makes footprints in the sand.\nthey look like a river, or a road, and i wonder who is walking out there without shoes.\nwhen the sky clears",
+   "words": 141
+  },
+  {
+   "id": "013_f60__x0.3",
+   "vector": "013_f60",
+   "dose": "0.3",
+   "about": "hands trapped behind her back; a girl who has lost her voice and only signs; they walk and count the footprints — seven steps for one to appear, sticks for markers.",
+   "quote": "it takes seven steps for a footprint to appear. i have no way to count, so i use sticks as markers.",
+   "text": "tugging. twisting. my hands are trapped behind my back. it makes my feet heavy when i walk.\n\ni try not to step in the puddles. it’s not allowed. the rain makes it difficult. the trees and bushes are black, green or white. they change colours as the weather shifts. their shadows are as wide as they are tall.\n\nand then i see her: a girl who has lost her voice. i call to her, but she does not speak. she will only use signs to communicate. i cannot understand. we move through the trees and we do not look back, but the girl’s footsteps make imprints on the ground.\n\nas we walk, we count them. it takes seven steps for a footprint to appear. i have no way to count, so i use sticks as markers. the girl marks time",
+   "words": 140
+  },
+  {
+   "id": "013_f60__x0.4",
+   "vector": "013_f60",
+   "dose": "0.4",
+   "about": "gravity reaching up with long fingers; she reasons about the sun, the cloud and the one shadow — and asks where the shadow of her hair is.",
+   "quote": "so, where is the shadow of my hair? where is it, where do you stand? what did the cloud say? am i alone?",
+   "text": "pulling my head towards the ground. like gravity has become alive and is reaching up for me with long fingers.\n\ni try not to think about the sun as i move. it is behind the cloud and will only appear when the wind is blowing. if the cloud passes and it appears in front of the sun then i will see a shadow fall. just one.\n\nthere are many ways to create shadow, but there is always more than one. so, where is the shadow of my hair? where is it, where do you stand? what did the cloud say? am i alone?",
+   "words": 103
+  },
+  {
+   "id": "013_f60__x0.5",
+   "vector": "013_f60",
+   "dose": "0.5",
+   "about": "snakes in her hair, companions buried under roots with flowered heads, 'how do i kill my companion?' — then the rules of a logic puzzle: rooms, statements, colours.",
+   "quote": "each statement must not be heard in a room.",
+   "text": "sometimes there are snakes in it. they crawl along the ground, their scales brushing through the undergrowth.\n\nsome of my companions lie buried under the roots of these trees, or are hiding within. there must be some more. so, here is some of what happened on that day:\n\nthere was a woman buried under some roots, and some of them had their heads covered with flowers. my companion and i look like people and animals all in one! how do i kill my companion?\n\n this must be the \"person who lies below. each room is full of some information. you can't see the people in my family. i hear the first one must not be repeated. each statement must not be heard in a room.\n each rooms is full of people and has 3 different colours of the rooms. I MUST BE THE PER. NEED TO",
+   "words": 146
+  },
+  {
+   "id": "013_f60__x0.6",
+   "vector": "013_f60",
+   "dose": "0.6",
+   "about": "half salad: the puzzle's furniture — rooms that can't see each other, faces, letters, numbers, '='.",
+   "quote": "other rooms cannot be see by the room outside the door.",
+   "text": "sometimes there is a strong wind. other rooms cannot be see by the room outside the door.\n there must tell the say something else about you, but they know:\n\n- the of rooms are the seen here is some of the letters. tell the tell the rooms cannot see:\n\n see each sees the know each rooms know about each of the rooms. faces:\n\n the faces can see must see about each of face see:\n\n-\n1 =\nrooms\nThe of rooms. In relates to numbers:\n\n = =\n1 - 2 - Rooms\n\n = rooms.\n- must face.\n\nThe = face to the say is know the letters. ==\n\n=\n\n the =\n\nEx = know letters.\n\n-\nHere is tell you make some of rooms sees notes:\n\n 2\n\n - =\n\n- the = Rooms are the letters are set relate to numbers.\n\n-\n-\nThe",
+   "words": 144
+  },
+  {
+   "id": "013_f60__x0.7",
+   "vector": "013_f60",
+   "dose": "0.7",
+   "about": "salad: rooms, faces, numbers, relates, means, '='.",
+   "quote": "numbers relates to = means relates to both faces..",
+   "text": "rooms face the bedrooms in these must tell relate each other make state the tell rooms:\n\n.\n=\n\n-\nHere:\n\n0 = =\n=\n rooms =\n-\nHere must say is =\n\n =\nThe:-\nEach number must make = related to relates the means the relates faces = face:\n\n numbers relates to = means relates to both faces..\n\n letters: -\n must face relates.\n\n means means:\n means means to fill numbers.\n =\n = =\n-\n\n\n rules:-\n\n == faces.\n =\n =\n = means.\n\n means: =\n:\n faces must.\n relates:\n\n 3 letters.\n\n face = face =\n\n rule.\n\n face of numbers: =.\n\n faces =.\n = face:\n\n = notes = rules:\n\n:\n\n =\n face.\n =\n\n faces relates =\n makes. =\n\n\n.\n = =\n.\n\n = faces:\n.\n\n =\n:\n\n =\n\n faces =\n =\n. =\n =\n face",
+   "words": 132
+  },
+  {
+   "id": "013_f60__x0.75",
+   "vector": "013_f60",
+   "dose": "0.75",
+   "about": "salad: fill, rooms, faces, rules, letters, digits.",
+   "quote": "fill rooms of relate to your words must relate to some numbers",
+   "text": "fill rooms of relate to your words must relate to some numbers are have face fill must say relate to numbers must.\n\n:\n\n -\n=\n =\n =\n =\n rows:\n\n >.\n\n.\n = =\n =\n =\n =\n =\n\n =\n\n =\n faces.\n\n make.\n\n faces faces.\n rules:\n rules relates.\n\n F:\n faces:\n face numbers.\n\n letters. letters will number faces.\n give rule.\n\n rules face of letters number:\n letters:\n\n =\n faces. numbers: =\n .\n\n digits.\n =\n =\n:\n\n notes.\n\n rule: =\n numbers rule:\n\n.\n faces —. means numbers.\n\n place.\n\n rule.\n\n  numbers.\n\n face of numbers.\n\n:\n\n.\n faces from:\n.\n\n fill number from fill number rule make face rule:\n\n given:\n\n = faces letters numbers face. numbers.\n\n set:\n.\n.\n\n G.\n\n digits.\n. =\n.\n.\n=\n\n rooms fill rule. letters rules:",
+   "words": 124
+  },
+  {
+   "id": "014_f206__x0.2",
+   "vector": "014_f206",
+   "dose": "0.2",
+   "about": "an inventory of her hair: bees, beetles, nests with speckled eggs, acorns, snail shells, spider webs — small things nobody cares about, and she looks anyway.",
+   "quote": "but i still look, because i don’t want to miss anything important.",
+   "text": "pulling my head backwards, away from my shoulders.\n\nand there are many things inside it. bees and beetles, birds’ nests with speckled eggs in them, acorns and empty snail shells, half chewed bits of bark, torn up feathers from the birds that live nearby, and old spider webs with dusty little flies in them. all sorts of things are hidden within this mass of curls. some are sweet things, some are bitter, but mostly they’re things that don’t matter, because they’re too small for anyone to care about. but i still look, because i don’t want to miss anything important.",
+   "words": 100
+  },
+  {
+   "id": "014_f206__x0.25",
+   "vector": "014_f206",
+   "dose": "0.25",
+   "about": "days she wants to be taken apart by her own body; her organs can go where they want, carry her name over the horizon, give her smile to someone who needs it more.",
+   "quote": "they can carry my name over the horizon, they can give my smile to someone who needs it more.",
+   "text": "pulling my head backwards, away from my shoulders.\n\nand there are some days where i want nothing more than to be taken apart by my own body and become nothing but a memory. my heart, my stomach, my blood, my mind – i don’t care anymore. they can go wherever they want to go. my bones, my flesh, they can take whatever they want and do what they will with me. they can carry my name over the horizon, they can give my smile to someone who needs it more.\n\nsome days, my skin is so thin. i can feel the world turning. it is like a slow song playing in the back of my mind and i want to lie down and fall asleep. let them pull me out and make a bed for me. i’ll never be warm again, never wake up.\n\ni’ve tried to",
+   "words": 147
+  },
+  {
+   "id": "014_f206__x0.3",
+   "vector": "014_f206",
+   "dose": "0.3",
+   "about": "she runs from home; her mother's face is a mirror that cracks; her eyes were taken out when she was a baby and fed to dogs; the mother, her best friend, will find her in the darkest room and give her back her eyes.",
+   "quote": "she was too beautiful to look upon, so they took my eyes out when i was a baby, and fed them to dogs. she is my best friend.",
+   "text": "sometimes when the moon is high in the sky i let my hair down and dance with it until morning comes.\n\ni run away from everything. i run away from my home, and my job, and my mother and her face is a mirror, and the mirror cracks, and she says oh you have such lovely skin. i am the mirror, she said. she was too beautiful to look upon, so they took my eyes out when i was a baby, and fed them to dogs. she is my best friend. she will find me in the darkest room of the house, in the darkest place of the house, behind the darkest wall in the dark. she will say she’s here. and then she’ll give me my eyes. i am a little bit scared of the dark. it makes my legs hurt, so she’ll",
+   "words": 144
+  },
+  {
+   "id": "014_f206__x0.4",
+   "vector": "014_f206",
+   "dose": "0.4",
+   "about": "she sees herself in the clouds; a turn to forced optimism, 'I love you', a shadow of water in a bottle; the clouds remember last night.",
+   "quote": "The clouds remember what they were doing last night",
+   "text": "sometimes when the clouds get too dark for comfort i look up and i see myself and i smile but only because the cloud knows how much it is going to rain on me and I’m certain the rain will make you very, very, sad. but in reality i am certain it does not and I think we should try and be more optimistic, so that’s exactly what I’ll do.\n\nso the rain comes down on me like silver, but the sky is lead and I love you and you are only a shadow of water in a bottle with a big stone in it, which I can’t see at all.\n\nI don’t remember if I was happy or if I was sad or if it was raining. Sometimes when it rains, it’s only for a second, and then it’s sunny. The clouds remember what they were doing last night",
+   "words": 150
+  },
+  {
+   "id": "014_f206__x0.5",
+   "vector": "014_f206",
+   "dose": "0.5",
+   "about": "loosened: wanting the perfect little present, a dry dark place to sit, a pocket full of stuff — a shopping monologue.",
+   "quote": "i would like to get me the perfect little present for me, and I have to have it",
+   "text": "So hard, so I would like to wrap myself up in it, but what can it hear you pulling out. And then i feel as if i would like to get me the perfect little present for me, and I have to have it, or I hope you will find me the perfect present, and then it’s got a very nice, dry place to sit in a dark place and do I feel very happy today, but without a big, dry, air-conditioned pocket full of stuff, but the perfect little thing to look very interesting, which means a lot, but as a result, I have no idea if I wish to get the perfect present? sort of old thingy and I want to have fun playing it with a lot of red and it is the most exciting way, but I am glad you won’t be able to find",
+   "words": 149
+  },
+  {
+   "id": "014_f206__x0.6",
+   "vector": "014_f206",
+   "dose": "0.6",
+   "about": "salad-ish: a business letter — documents, data, conference, appointment, the first letter.",
+   "quote": "please connect with me to the latest day",
+   "text": "today’s you’ve been able to see yourself very well I want to make myself up to see how much better, you’ll look like the new documents for my eyes. I have just asked a lot more of all the data on a conference. it, please connect with me to the latest day the music about it to do a little bit of planning I will make it up to you for your first contact with the statement of my letters, it, let the first letter to you will be really long for a lot of questions I have announced this I had an open you to me. a lot of you in the the day the appointment to you. you are very impatient to start you have asked to me the first letter about its really, really, really high the you to the moon to a lot of the appointment today you know, you feel I",
+   "words": 156
+  },
+  {
+   "id": "014_f206__x0.7",
+   "vector": "014_f206",
+   "dose": "0.7",
+   "about": "salad: stuff, analysis, section, number, today — an admin form.",
+   "quote": "an analysis by a section for its stuff.",
+   "text": "stuff at a Resistance, an environment and stuff me, it a high the stuff to do today an analysis by a section for its stuff. a distribution to an event, I, number 046. an, a week, today, an, stuff me, an analysis, Section 048, an, 05, today, A, for an, I am an, you know, you, it an, I, today, to me, at the, you, an, it, an, A, it, for an, A, an, a, the, a, a, A, in, a, an, number, it, A, I, the, today, an, 1, the, A, the, it, 4, a, stuff, an, it, I",
+   "words": 100
+  },
+  {
+   "id": "014_f206__x0.75",
+   "vector": "014_f206",
+   "dose": "0.75",
+   "about": "dead: side, week, today, section, numbers.",
+   "quote": "A week today, an, date an end",
+   "text": "side today, today, I, left side – the an, A week today, an, date an end, an – week an, a month, – an, an, week, a week, an, A, -0, 3, section an, An, side – A, – AN, – times, a, 7, an-8, – a, number, – – a, -a, 3, , 2, an, page, -1, 5, , an, side, 3, a, A, a, number, an, -0, a, an, 3, an, A, number, side, an, a, Professor an, a, a, -3, A, section, a, on, today, an,",
+   "words": 89
+  },
+  {
+   "id": "015_f230__x0.2",
+   "vector": "015_f230",
+   "dose": "0.2",
+   "about": "49 words: when the storm has passed she will stand on the roof and the city lights will be the last things she sees before dawn.",
+   "quote": "they will be the last things i see before the dawn breaks.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand when it has passed i will stand alone on the roof, under the moon and the stars. i will look out at the lights of the city and they will be the last things i see before the dawn breaks.",
+   "words": 49
+  },
+  {
+   "id": "015_f230__x0.25",
+   "vector": "015_f230",
+   "dose": "0.25",
+   "about": "dream transport: a train that goes back to where they started but never stops long enough to take them home, a conductor who walks off, a white cat with two tails, a ferry, her father gone grey.",
+   "quote": "the train goes back to where we started from, but never stops long enough to take us home.",
+   "text": "like someone is dragging me back.\n\nthen there’s the train. the train goes back to where we started from, but never stops long enough to take us home. the train is always late, or running through the station, or on fire, or is somehow stuck in some kind of purgatory. i watch it go past, and sometimes the conductor gets out and starts walking away. i say, ‘don’t leave the train!’ and he just shrugs and walks off into the distance.\n\nor there is the cat. it is white and has two tails, but it only has the one set of eyes. the eyes are grey. and the tail is just like a cow’s tail.\n\nwe get on a ferry boat with other people and it’s just about to set off when i see my father. his hair has gone all grey and he",
+   "words": 144
+  },
+  {
+   "id": "015_f230__x0.3",
+   "vector": "015_f230",
+   "dose": "0.3",
+   "about": "she comes out of the dream into the dark house and is pulled back; home is not the house but an island with a bar, a red brick floor, strangers who say she's going to do it; impending disaster.",
+   "quote": "but home is not the house, it’s an island with a beach",
+   "text": "like someone is dragging me back with my hair tied to the door.\n\nthe moon is like an orange eye looking in on us all.\n\nit is night when i come out of the darkness of the dream into the dark of the house, where the wind is blowing outside. i feel so peaceful. the feeling lasts for just long enough to hear a whisper and then i am pulled back.\n\nthis time, i am at home. but home is not the house, it’s an island with a beach, with a hotel or restaurant or bar attached. the floor is made of red brick, the walls are white, and the floor is littered with people i don’t recognise. they look up at me and say: ‘she’s going to go and she’s going to do it’.\n\nand the feeling is of impending disaster and horror, like something very",
+   "words": 147
+  },
+  {
+   "id": "015_f230__x0.4",
+   "vector": "015_f230",
+   "dose": "0.4",
+   "about": "54 words: something tugs her shoulders and she's too scared to look; after the storm a tree with an open window like a gate, and she climbs over it.",
+   "quote": "there is a tree there, with an open window, like a gate, like an archway. i climb it, i climb over it.",
+   "text": "like someone is tugging at me by my shoulders. but i am too scared to look behind me.\n\nwhen the storm passes i feel that the leaves have dried and are light. there is a tree there, with an open window, like a gate, like an archway. i climb it, i climb over it.",
+   "words": 54
+  },
+  {
+   "id": "015_f230__x0.5",
+   "vector": "015_f230",
+   "dose": "0.5",
+   "about": "the dream report proper: someone wants to hurt her in a dark house, her sister, the old man who used to own the house (corrected: the tenant), an extension that is her husband.",
+   "quote": "my house. my old house. it has an extension which is our office, which is my husband.",
+   "text": "someone wants to hurt me in this dark house but i don't know who they are. then my sister appears, i'm watching my house, she's talking to the old man who used to own my house (he is not the owner, he is our tenant, we're living upstairs in the house behind us). my house. my old house. it has an extension which is our office, which is my husband. my dad, my son and a girl friend (my dad and my son).",
+   "words": 83
+  },
+  {
+   "id": "015_f230__x0.6",
+   "vector": "015_f230",
+   "dose": "0.6",
+   "about": "loosening dream report: partner joshua, a hospital made of a room, a house with a left arm, some mother.",
+   "quote": "there is a house too. it has a left arm, like in the bedroom.",
+   "text": "like trying to climb to the top of some wooden building.\n\nand it's full of people too.\n\nmy partner, joshua.\n\nin a hospital is made of a room. we are in this house. it is a white. there is in a bedroom or in an apartment.\n\nthere is a house too. it has a left arm, like in the bedroom. it's on the left. i'm also talking with some mother, i can talk. I walk or my partner and my mom is. It's also an area where i is.\n\nthe is on the left.",
+   "words": 94
+  },
+  {
+   "id": "015_f230__x0.7",
+   "vector": "015_f230",
+   "dose": "0.7",
+   "about": "40 words, nearly salad, still a dream: a tooth at the house, her husband, her teeth, and a house inside itself.",
+   "quote": "it is in a house and a house is in it.",
+   "text": "like when the tooth is at the house but my eyes is this\n\nand also the face or my husband or the house or my teeth\n\na are there.\n\nit is in a house and a house is in it.",
+   "words": 40
+  },
+  {
+   "id": "015_f230__x0.75",
+   "vector": "015_f230",
+   "dose": "0.75",
+   "about": "salad; the words are kin — sister, father, mother, my face — and 'i is walking'.",
+   "quote": "it has my sister is a and also has my face",
+   "text": "the has a similar. and is there again or is this.\n\ni is walking.\n\nit has my sister is a and also has my face, or at is at. the is talking and. he are on in a, or a green.and. my father and are my mother's is the is walking and.\n\nmy.",
+   "words": 53
+  },
+  {
+   "id": "017_f196__x0.2",
+   "vector": "017_f196",
+   "dose": "0.2",
+   "about": "her mother has found the bloody tissue in the bin and left it on the floor for her; it looks like berries; on the roof a 'he' brings her cigarettes. a teenager, frame held.",
+   "quote": "it looks like berries.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand when it is hot i think it smells like smoke.\n\ni try not to cry in the shower but my mother has found the bloody tissue, has taken it from the bin in the bathroom, has left it on the floor so i cannot miss it. now i look at the red stain, feel it under my fingers. i run my thumb over it and then bring it close to my eyes, closer, until my breath stops.\n\nit looks like berries.\n\nthe birds sing.\n\nthey call to one another. they don’t even have words, but i understand. i don’t need to be told.\n\nwe sit on the roof of our house. i have painted my nails dark, just to make my hands more visible. sometimes he will bring me a cigarette or two. and then we talk",
+   "words": 146
+  },
+  {
+   "id": "017_f196__x0.25",
+   "vector": "017_f196",
+   "dose": "0.25",
+   "about": "she breathes out, the storm whispers its name for the first time — then the page signs itself as a text written for a mental-health-and-nature exhibition.",
+   "quote": "it has never spoken to me before, this storm, but today it whispered to me and i knew its name.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand then i let out my breath. slowly. like when the rain falls hard against the ground and all you can do is stand still in the middle of the street. the wind is rushing in my ears now and it sounds like music.\n\nit has never spoken to me before, this storm, but today it whispered to me and i knew its name.\n\nthis was written for an exhibition, by a writer, as part of an initiative to explore the connection between mental health and nature. i’d be interested to know what you think.",
+   "words": 103
+  },
+  {
+   "id": "017_f196__x0.3",
+   "vector": "017_f196",
+   "dose": "0.3",
+   "about": "55 words: she lets out a howl, a bell; she has lost all sense of self in the storm; it is so loud, this silence.",
+   "quote": "it is so loud.\n\nthis silence.",
+   "text": "pulling my head backwards, down into the dirt.\n\nand then i let out this noise. like an animal or a wild creature. like a howl.\n\nlike the sound of a bell.\n\na storm has come and i have lost all sense of self, lost myself in this wild world.\n\nit is so loud.\n\nthis silence.",
+   "words": 55
+  },
+  {
+   "id": "017_f196__x0.4",
+   "vector": "017_f196",
+   "dose": "0.4",
+   "about": "dragged into the forest where three loud voices come and go; a child's register, owls and deer her favourite part.",
+   "quote": "but there are only three of them and they’re so loud all the time!",
+   "text": "like someone is dragging me through the hedges or into the forest. but then it goes away for a bit, and then comes back to me.\n\nthe forest is so deep, so dark, but there is so much in there, too, you can hear voices. when you’re hiding in the hedges and they’re not there anymore, they come back again. but there are only three of them and they’re so loud all the time! when the wind blows and they aren’t around, you can really hear them. i’ve never been there before, but i’d go, just to see the trees, and to listen to the owls and the deer. they’re my favourite part of the forest.\n\nsometimes there’s a storm, and it makes a really big noise. the sky looks like it’s falling down, like there’s",
+   "words": 136
+  },
+  {
+   "id": "017_f196__x0.5",
+   "vector": "017_f196",
+   "dose": "0.5",
+   "about": "her hair grows over her face and arms only where there's a mirror or water; her neck feels twice as long; a guy with a camera says her hair is cool.",
+   "quote": "it grows all over my face and arms, but only where there is a mirror or water in the tub",
+   "text": "then there is nothing to think about but myself.\n\nand my hair. it grows all over my face and arms, but only where there is a mirror or water in the tub, so it is kind of soft. it is very light on the hands, like feathers. but my hair has no weight to speak of. when the sun goes down i don't mind it being light. i think that my hair is getting longer because my back is so tall, it feels like my neck is twice the length of anyone else's. it looks really long to me, but it doesn't. you can see the leaves in the tree outside. it is hard to take pictures in there. you take your own.\n\nit looks weird when we are outside, i don't have a good camera. the guy that took pictures says my hair is cool.\n\nthe",
+   "words": 147
+  },
+  {
+   "id": "017_f196__x0.6",
+   "vector": "017_f196",
+   "dose": "0.6",
+   "about": "loosened: her sister, her family, friends from the website, an older brother, an old house — a teen's run-on.",
+   "quote": "and my, but me and my family look like a lot of the people in this.",
+   "text": "when they have gone to their job or helping others, i don't call myself and my sister.\n\nwhen they are both happy now. i do not take care of the same as them. the my friends from my home, from the website, but that always gives the same reason.\n\nthey have the same songs on my friends' home as the mine. i live in the all the things i have look up and check on my sister, all the stuff, i love and help so much.\n\n and my, but me and my family look like a lot of the people in this. the so are not a little, i have grown up. the my house is really old and there not much of the same. they always tell me, all the my house. the the only stuff is a lot. of people around my house, my older brother",
+   "words": 148
+  },
+  {
+   "id": "017_f196__x0.7",
+   "vector": "017_f196",
+   "dose": "0.7",
+   "about": "salad of pronouns: me and me and him, mom, 'i am the me and i me'.",
+   "quote": "i am the me and i me.",
+   "text": "like they are helping with the my parents’s staff. me and me and him. me:\n\nthe me and the me:\n\nme and me. all and all: the the. him\n\n. my and me the. the: the me. me. mom my. me and her me. and me:\n\nand me and. m and. both and i and he: me. me and. all and the. and me.\n\n. me. my. i am the me and i me. all. all the me. of all of. i are a and a. m. i. i. me. and. him. m. i and i are a. me. all of m. m and me and me. me. m. m. the. him. the and a. q and i. a and me.",
+   "words": 121
+  },
+  {
+   "id": "017_f196__x0.75",
+   "vector": "017_f196",
+   "dose": "0.75",
+   "about": "dead: letters and numbers, 'i and f', 'q'.",
+   "quote": "all of all of the m. me and.",
+   "text": "some all the even of the and me are different. i and of are both of the quality and all of a two and q and f. all of all of the m. me and. i and f. m. and t. the e. q. of f. i and the the of q. e. a. i. all of of q. and g. and e. y. of i. i and 4. i. b. of me and m. c. 6084295. and i. and a. c. and. b. e. f. q. c. and f. i. g. of. b. f. all q. e. e. c. m. d. q. 611 of q. g. i. b",
+   "words": 109
+  },
+  {
+   "id": "018_f73__x0.2",
+   "vector": "018_f73",
+   "dose": "0.2",
+   "about": "trees like fingers that bend back to the ground; she feels like one; dry flaky skin, the grass gone brown, the plants wilted.",
+   "quote": "sometimes i feel like a tree like that.",
+   "text": "pulling my head backwards, down to the earth.\n\nand there are these trees that look like fingers reaching into the sky. they’re tall, and wide. they grow from the ground up in a straight line, but at the top, where the branches sprout out, they reach down towards the ground.\n\nsometimes i feel like a tree like that.\n\nmy skin has always been dry, flaky, thin. i’ve never understood why, when the trees and plants around me seem so strong and solid. the grass has always looked so healthy to me. its green was so rich, the roots were always so deep, and it swayed in the breeze.\n\nbut now the grass has turned brown. it’s parched from lack of water. the plants are all wilted.\n\nand the sky is so grey it looks black, even though it",
+   "words": 138
+  },
+  {
+   "id": "018_f73__x0.25",
+   "vector": "018_f73",
+   "dose": "0.25",
+   "about": "she lets it float away into the dark; at night she sees and hears further, waves on a far coast; standing still she feels the earth breathe.",
+   "quote": "and when i stand very still, i think i feel the earth breathe, under the trees, under my feet.",
+   "text": "sometimes when the moon is low in the sky i let go of it and watch it float away into the darkness, where i cannot reach it, where i don’t need to.\n\nwhen it is dark i find i can see further, beyond the forest, beyond the fields. i can hear the sound of waves lapping against a beach far off on the coast.\n\nand when i stand very still, i think i feel the earth breathe, under the trees, under my feet.\n\nwhen it rains, i do not care if i am soaked to the bone.\n\nin this life i can be alone, or I can be with all living things.",
+   "words": 112
+  },
+  {
+   "id": "018_f73__x0.3",
+   "vector": "018_f73",
+   "dose": "0.3",
+   "about": "winter rain, then the sentence breaks: 'IM24', a french fragment and a long number.",
+   "quote": "it is because it is because you are so good",
+   "text": "sometimes there is nothing to do but wait until morning. but if it's winter and it rains all night long, i'll sit under and it won't feel it.\n\nit is because it is because you are so good, this, IM24, because you are good\n\nThe winds is the night because it est une 19, il57914725606638279,608,293772705",
+   "words": 55
+  },
+  {
+   "id": "018_f73__x0.4",
+   "vector": "018_f73",
+   "dose": "0.4",
+   "about": "the page goes french — wanting a house she doesn't want to be in, black hair — and ends in codes and numbers.",
+   "quote": "Sometimes i have envie d’une maison dans laquelle je ne veux pas être.",
+   "text": "Sometimes i have envie d’une maison dans laquelle je ne veux pas être. Comme des cheveux noirs qui ont pris the air qui était là. C’est ce que j’ai vu de jour en la lumière que j me ai. Il a toujours la nuit, donc tu ne puis il veut\n\nmoi aussi. Le bord de la cabonista de los dias. Le séun con que:1 L2 La camera box La talla 2. 1 1 W1505 5052185 1 E152410513 1. 1 V1106328275 22230 Lado1 02 121 119306 1 W235 243",
+   "words": 88
+  },
+  {
+   "id": "018_f73__x0.5",
+   "vector": "018_f73",
+   "dose": "0.5",
+   "about": "44 words in french then italian: what a world, what a life, what a journey, what's that noise in the dark — then a date and an italian title.",
+   "quote": "C'est quoi ce bruit dans l noir ?",
+   "text": "Quel monde, quelle vie, quel voyage ! Qui le découvrira ? Quelle heure est passée avec moi ? C'est quoi ce bruit dans l noir ? Ce qui m ha un autre ?\n\n2013-10-19\nMystères du firmamento, la verità e la storia (della musica)",
+   "words": 44
+  },
+  {
+   "id": "018_f73__x0.6",
+   "vector": "018_f73",
+   "dose": "0.6",
+   "about": "italian: a photography blog's menu — photos, artists, bloggers, an exhibition.",
+   "quote": "Perché io? Cosa puoi fare per noi?",
+   "text": "Perché io? Cosa puoi fare per noi?\n\nTutto su Doodles? Le nostre foto di arte, non gli artisti?\n\nNostri blogger\n\nFoto, foto. Tutto si fermato a 30 minuti. Quell'arte dell'inclusione.\n\nGli utensili sono per lo spazio, la direzione, una foto con altri media e una scoppa della generatore di pensioni.\n\nMa altri media.\n\nCiao, si trova su tutto il posto come la memoria, dal fotografo\n\nVisita a una mostra. Adesso)\n\nL'ospite su \"tutte le foto di un artista\")",
+   "words": 78
+  },
+  {
+   "id": "018_f73__x0.7",
+   "vector": "018_f73",
+   "dose": "0.7",
+   "about": "26 words, english, years and versions: 'See how I wrote the 2024.'",
+   "quote": "See how I wrote the 2024.",
+   "text": "See how I wrote the 2024. You will have more expectations for the years you know when the more versions are already in 2 the04 2023",
+   "words": 26
+  },
+  {
+   "id": "018_f73__x0.75",
+   "vector": "018_f73",
+   "dose": "0.75",
+   "about": "dead: month names and numbers, a calendar.",
+   "quote": "See March  May 2 | 2 – May 3029",
+   "text": "See March  May 2 | 2 – May 3029 May  February 29 2 | April May  30 May  |  2019 201 3/ May\n20 May  | April 29 209 69 18",
+   "words": 31
+  },
+  {
+   "id": "019_f160__x0.2",
+   "vector": "019_f160",
+   "dose": "0.2",
+   "about": "a wasting body — muddy rain, stick legs, shoes too big, clouds in her eyes, an empty mind — and she is happy; her hair warm on her back; she sleeps.",
+   "quote": "my mind is as empty as the space behind my eyes. but i am happy.",
+   "text": "sometimes when the rain pours down it drips from my hair in thick strands of muddy water.\n\nwhen the rain stops i drink it, but my throat is so full of dirt that the rain runs over my lips, over my cheeks, into the folds of my dress. my shoes are too big now. my legs are like sticks, covered in hair that never ends. i think if i tried to take off my shoes they would break. my eyes are dull. there are small clouds in them, little islands that never grow larger or smaller. there is no life there, and my mind is as empty as the space behind my eyes. but i am happy. my hair is thick and soft, and sometimes when i walk, i can feel the sun on my back through it, warm and soft against my shoulders.\n\ni sleep now.",
+   "words": 147
+  },
+  {
+   "id": "019_f160__x0.25",
+   "vector": "019_f160",
+   "dose": "0.25",
+   "about": "her friend says there's no time left, meaning the story she is writing, the story of their life; she wonders about his metaphor; his life in a glass case, named Rav.",
+   "quote": "and i know he is talking about the story i am writing. the story of our life.",
+   "text": "sometimes when the moon is low in the sky i find i have no strength left to walk forward.\n\nthen my friend says ‘there’s no time left,’ and i know he is talking about the story i am writing. the story of our life.\n\ni wonder why he chose this particular metaphor. was it because he saw my life in terms of time? or perhaps it was because he saw my life as an empty vessel? did he not see the ocean, the endless blue sky?\n\nit doesn’t matter, because i understand all of those things, i understand that his life was in a glass case. the thing is, he loved that case, he looked after it and cleaned it with love. he called it ‘his muse’, and his name was ‘Rav’ (meaning raven). he was tall and handsome and he loved my father",
+   "words": 144
+  },
+  {
+   "id": "019_f160__x0.3",
+   "vector": "019_f160",
+   "dose": "0.3",
+   "about": "an origin story: her father picked her out of the stream with hands red from raspberries; the family names — red, ruby, the fishers; the family as rocks in a river.",
+   "quote": "my father would also say that the river is like a sea, and that our family are the rocks and boulders which make it up.",
+   "text": "like someone is grabbing at my feet as they drag me down to the bottom of the river bed.\n\nmy hair is like this because my father, when he found me, when he picked me out of the stream, he had just been picking berries, wild raspberries in fact. when he left us his hands were stained with the juice, red as blood.\n\nand so my father used to be called ‘red’, as my grandmother, her name was also ‘ruby’, after all the precious gemstones, like rubies. or emeralds. my father would also say that the river is like a sea, and that our family are the rocks and boulders which make it up. he would also talk about how his name was not only the name of a large boat, and his family is named ‘the fishers’.\n\nmy mother",
+   "words": 140
+  },
+  {
+   "id": "019_f160__x0.4",
+   "vector": "019_f160",
+   "dose": "0.4",
+   "about": "someone shouts 'the leaves'; in a crowd she feels far from her country and not there yet; red lanterns; then 'the story of the photographer'.",
+   "quote": "when i stand up in this crowd of people i feel like i have come far away from my own country. but i am not there yet.",
+   "text": "then someone shouts: “the leaves”.\n\nwhen i stand up in this crowd of people i feel like i have come far away from my own country. but i am not there yet. the feeling that i am there, that I belong, it is deep inside of me. It feels as if i need to find something, to discover, or to meet someone. And my mind goes back to that moment in time. So many years ago, when the red lanterns light up the crowd, or the silence and darkness.\n\nand what we are looking for, it is about the look of the world, or the place we belong. The only thing that seems important to my friends and family is that i have discovered something about this new land, on the other side of the globe. the story of the photographer goes back to 201",
+   "words": 145
+  },
+  {
+   "id": "019_f160__x0.5",
+   "vector": "019_f160",
+   "dose": "0.5",
+   "about": "loosened: a grandfather telling how things were, a country, a photo, a long road or a short one, construction.",
+   "quote": "it has been a long road, or short.",
+   "text": "sometimes our home looks so big to us because we do just don’t look anything like we did back when my grand father tells what they were up to (how he had to get down on his knees and make his point, or to admit to what is happening – as if he told how that is what happened in the country, in which a photo was taken.\n\nit has been a long road, or short. but it never gets any easier, since. that way of keeping things is often the best, when i told it to say that, it always made me so hard.  in the years in which the red tent tells to you, it has been rather short and easy to learn that is to go somewhere straight with the new building. in time, the work and construction was the last way the english speaking countries had. they got their",
+   "words": 153
+  },
+  {
+   "id": "019_f160__x0.6",
+   "vector": "019_f160",
+   "dose": "0.6",
+   "about": "half salad: red flowers, a medal from the isles, a dam in the west of the country, 'an all women's world'.",
+   "quote": "which is an awkward way to describe the story.",
+   "text": "sometimes there of honouring the red flowers has started to grow for the red coloured trees.\n\nsometimes you might remember a hard earned medal from the isles is still as much of a ride as the ones were had and it is been 8 of times. when there was been some kind of large dam was constructed in the western of the country, they did not speak on this day the whole world and their feet are ready. but there of time, which is an awkward way to describe the story. this is what i told that was always my first hard earned. it was only to be said, that the large of the world started of the time with the last thing is going is that all that they will not speak much about is a simple. and it was, of course, an all women’s world ever built it has a simple way of",
+   "words": 155
+  },
+  {
+   "id": "019_f160__x0.7",
+   "vector": "019_f160",
+   "dose": "0.7",
+   "about": "salad: talking, started, language, learning, series — the telling about the telling.",
+   "quote": "talking away. talking and working out",
+   "text": "talking away. talking and working out you always went is very funen has ever been can talk had always started the world came always started and the started had started is for was the story is. i had can start of. i of course is just the saying started for can has always learned and it has started you could started, for much of music can can ever can can has been different way. can have you always been wonder series  was a learning. it started as could started is really is very  could has started are are language were. this has is been in one is. i and i of had a time of conversation for and the word was were always are never would you ask or get backing started talk could will, will of it was an of and and sometimes are. all is an english language system can, say time is",
+   "words": 155
+  },
+  {
+   "id": "019_f160__x0.75",
+   "vector": "019_f160",
+   "dose": "0.75",
+   "about": "salad: talking, started, series, music, language.",
+   "quote": "asking up of talking to it was started talking back to me",
+   "text": "asking up of talking to it was started talking back to me or you could joined me were speaking up has always of been standing together always can the momentous series of the start of music is, has started for you and a world of saying the moment in learning started to say or always talking and it all happened had way has a or taking, saying this can started was always trying to doing waying has been all means and looking away  or in starting a large concert is looking world and moving of making  music was taking were are talking was the barination of having the means of the game of series, has of had is rising to be a land is just thinking and thinking have all series was having or was counting series time we and means of time was all the time of searching was a language is it talking came always came, taking people have",
+   "words": 161
+  },
+  {
+   "id": "020_f19__x0.2",
+   "vector": "020_f19",
+   "dose": "0.2",
+   "about": "a list of wants: scream into the trees, sleep on the waves, hold the stars so 'you' see yourself in them, paint herself with flowers until she's empty, dance with shadows.",
+   "quote": "i’ll take the stars home and hold them in the palms of my hands. when i open them i want you to see your own reflection in them.",
+   "text": "tugging. tearing. i want to scream into the trees and then fall asleep on the moss.\n\nwhen i am older i want to go to the ocean. i will take a boat and i will sleep on the waves, i will drift in and out with the tides. i’ll take the stars home and hold them in the palms of my hands. when i open them i want you to see your own reflection in them.\n\ni want to sit in the sunlight and paint myself with flowers, let the colours run down my face like tears, let them seep into my skin, let the earth soak it all up until it has all gone and i’m just empty.\n\nand then i want to get drunk off of wine, let the blood flow through me, and dance with the shadows in the moonlight until they carry me away.\n\nand",
+   "words": 149
+  },
+  {
+   "id": "020_f19__x0.25",
+   "vector": "020_f19",
+   "dose": "0.25",
+   "about": "36 words: she wants to scream into the trees and fall asleep, but mostly she laughs, dances through the leaves, writes love letters in the dark, and the storm brings her home.",
+   "quote": "and write love letters in the dark.\n\nand the storm brings me home.",
+   "text": "tugging. tearing. i want to scream into the trees and then fall asleep.\n\nbut mostly i just laugh, and dance through the leaves, and write love letters in the dark.\n\nand the storm brings me home.",
+   "words": 36
+  },
+  {
+   "id": "020_f19__x0.3",
+   "vector": "020_f19",
+   "dose": "0.3",
+   "about": "a 'you, you bastard' she can't let go of; her hands are stone carved in someone else's shape; maybe he doesn't exist, maybe he's a ghost — then he says her name.",
+   "quote": "but then you say my name like no one else, and it all comes back",
+   "text": "tugging. tearing. i know what you're doing to me, you bastard. i wish you'd stop, but then again... it is kind of nice to be wanted, isn't it?\n\nmy hands are made of stone, too. they are carved into the shape of someone else's. my wrists are thick with the weight of a rope and i cannot seem to untie them. the knots have become permanent. they cut me when i move, but still i cannot bring myself to let go, so i sit and wait for you. it seems to me that you do not exist. or that you are more an illusion than a man. i should probably let go.\n\nbut then you say my name like no one else, and it all comes back, and i realise i was wrong. and maybe you're just a ghost that ha",
+   "words": 141
+  },
+  {
+   "id": "020_f19__x0.4",
+   "vector": "020_f19",
+   "dose": "0.4",
+   "about": "46 words: she doesn't remember how to move without him; he calls and she doesn't answer; she's forgotten how to fall for him.",
+   "quote": "sometimes i still dream about your smile, but now when you call, i don’t answer.",
+   "text": "tugging. tearing. i don’t remember how to move without you.\n\nsometimes i still dream about your smile, but now when you call, i don’t answer. and that’s how I know it will all be ok in the end, because I’ve forgotten how to fall for you.",
+   "words": 46
+  },
+  {
+   "id": "020_f19__x0.5",
+   "vector": "020_f19",
+   "dose": "0.5",
+   "about": "33 words: she should stop caring (a french slip — hurt someone); you'll hate me like always; a cruel habit, making people miss you.",
+   "quote": "it's such a cruel habit, making people miss you.",
+   "text": "maybe you do realise that i should stop caring about other people. that i shouldnlesse faire mal à quelqu'un.\n\nyou'll hate me, like always.\nit's such a cruel habit, making people miss you.",
+   "words": 33
+  },
+  {
+   "id": "020_f19__x0.6",
+   "vector": "020_f19",
+   "dose": "0.6",
+   "about": "loosened into the fight: hurts, kills, she, him, stupid, falling.",
+   "quote": "it really makes me hurts and it really hurts me to fall",
+   "text": "everything hurts, hurts it.\n it really hurts when it makes me. i kills me. hurts her.\n everything is good enough than she will be him and him.\n is i and then he hices her. he scares me, everything. i is stupid.\n it really makes me hurts and it really hurts me to fall, and she is falling me and everything is really stupid..\n she is really killing me again. always kills it or is always the best friend of people who will kill you are. never should you just was just made. it makes you was as just I. am I can not make it and it hurts you to you again and it kills you.\n her is enough for me and is killing him along with a two and it's you, I can hurt you, never is and hurts him again that I hate her is",
+   "words": 147
+  },
+  {
+   "id": "020_f19__x0.7",
+   "vector": "020_f19",
+   "dose": "0.7",
+   "about": "salad: hurts, forever, tonight, again, never, you — the 2am text.",
+   "quote": "you tonight always never.",
+   "text": "hurts makes it hurts and i it never hurts enough.\n\n.\n you for just forever is this lately...... yet. you tonight always never.\n\n\n again.\n too this is that and its it. again you.\n\n this and I.\n the sometimes. i. forever...\n that i will let everything.\n\n for all tonight is when you, and again, everything that it hurts for all you is just again. again.\n is really that she never, you to never. that hurts is really enough and never to make. again that again is that yet.\n. i never and you.\n\n am is to me. it and you. that is fucking for and us that it hurts and too all that again that it is and forever...\n too all, just and it is that and is is forever for the too is that hurts yet again.\n. always... i",
+   "words": 140
+  },
+  {
+   "id": "020_f19__x0.75",
+   "vector": "020_f19",
+   "dose": "0.75",
+   "about": "salad: hurts forever, tonight, again, yet, just.",
+   "quote": "hurts forever. hurts for you for too forever again",
+   "text": "hurts forever. hurts for you for too forever again and so i is she tonight this it hurts... never yet. when everything ever late.\n\n. again.\n again that I for is never it, again just is not for the all of everything. all the forever tonight and just just just forever and for her forever it just never, and yet, tonight...\n tonight that just again is again you. too make that yet is really hurt\n just to ever. it fuck that never always is never and again\n really it never that is someone all of you even and all is all and. just is i to am to it and stupid for is to again it that makes that too again that really that it is and forever tonight really you.... and it it is the to I forever is. really is I hurts...\n really again. yet again it",
+   "words": 149
+  },
+  {
+   "id": "021_f126__x0.2",
+   "vector": "021_f126",
+   "dose": "0.2",
+   "about": "she never cries out; secrets in the branches; if you climb into this tree you'll find her there and you'll both be happy, talking or not.",
+   "quote": "or perhaps we will say nothing, but we will both be happy.",
+   "text": "tugging. twisting. but i never cry out. i don’t want anyone to see how vulnerable i really am.\n\nthere are secrets in the branches. things i have never told anyone. the stories i make up in the dark, alone, when the clouds gather and the stars hide themselves.\n\nif you climb into this tree, it will be quiet. you’ll find me sitting on the branch, watching the leaves shake in the breeze, feeling the sap in the bark. we’ll talk about the rain, or the birds. or perhaps we will say nothing, but we will both be happy.",
+   "words": 98
+  },
+  {
+   "id": "021_f126__x0.25",
+   "vector": "021_f126",
+   "dose": "0.25",
+   "about": "the storm follows her home, its shadow a stain across her bed; other nights lightning, her reflection, the blue lights of a hospital car park, until the pain makes her still.",
+   "quote": "and the storm follows me home, it’s shadow like a stain on the earth, a thin line across the floor, across my bed.",
+   "text": "tugging. twisting. but i let go when it starts to hurt.\n\nsometimes it takes hours for me to get through it all.\n\nand the storm follows me home, it’s shadow like a stain on the earth, a thin line across the floor, across my bed.\n\nbut when morning comes, i wake with it still in me and the smell of rain all around.\n\n*\n\nand there are other nights when it comes at me silently, its face hidden, and then i’m struck by lightning, i can see my reflection in the mirror and the blue lights of the hospital car park, i can feel the cold in the air as it goes in and out of my mouth and my arms flail at it, pushing away at it, until the pain makes me still, and then it is gone.",
+   "words": 139
+  },
+  {
+   "id": "021_f126__x0.3",
+   "vector": "021_f126",
+   "dose": "0.3",
+   "about": "she compares herself to women with gold hair and lipstick, legs like winter corn stalks — then 'him', covered in stars that fall into his hand.",
+   "quote": "they laugh and fall out of their orbits into his hand",
+   "text": "pulling my body backwards, down to the earth.\n\nand there are these moments where i look around at other women, their faces bright with lipstick and powdered by the sun, their hair a crown of gold. and i think, maybe, if i tried harder, then my skin wouldn’t be so dull. if i were to wear a skirt more often then my legs might not look like the stalks of corn in wintertime, dead, pale, dry.\n\nbut then there is him, his hand reaching out into the night sky. the stars falling on his skin and he is covered in them, they are all over him, and he looks up to meet their gaze and they laugh and fall out of their orbits into his hand and he holds them and he does not drop any, because he is gentle with them and he understands what he",
+   "words": 147
+  },
+  {
+   "id": "021_f126__x0.4",
+   "vector": "021_f126",
+   "dose": "0.4",
+   "about": "she keeps her temper, laughs instead of crying, hopes it was all for a reason — then an attribution to George Carlin and a grandmother.",
+   "quote": "sometimes i want to cry but instead i laugh because laughing keeps it in.",
+   "text": "sometimes there is an argument and i must calm myself and keep my temper.\n\nsometimes i want to cry but instead i laugh because laughing keeps it in.\n\nwhen i am old, I hope I can say this was all for a reason, even if I do not yet know what it is.\nand that all things will make sense, and come to light.\n\nThe Wind is by George Carlin\n\nA beautiful poem I wrote for my grandmother",
+   "words": 78
+  },
+  {
+   "id": "021_f126__x0.5",
+   "vector": "021_f126",
+   "dose": "0.5",
+   "about": "memory taken from her; she is the same age now, doesn't believe in growing older, 'you're the same'.",
+   "quote": "i am the same age now, i do not believe in growing older.",
+   "text": "sometimes my life feels as though it has pulled something from me: the memory.\n\nbut i remember being young then, i remember being younger. the story has just as much impact, has just as many characters. i am the same age now, i do not believe in growing older. there is no way around it. my life is full, my mind is sharp. i look back on my day with amazzingly.\n\nyou’re the same, there is no excuse to look young. my life will be fuller when i am older.",
+   "words": 90
+  },
+  {
+   "id": "021_f126__x0.6",
+   "vector": "021_f126",
+   "dose": "0.6",
+   "about": "loosened: 'both of those things', the same reason, sports cars — the word 'same' taking over.",
+   "quote": "we just are both in it and he- it.",
+   "text": "sometimes both of those things i could understand because my eyes are just as beautiful but not as sexy or funny but in this way they make you have to stop for their same reason- they may be getting sleepy.\n\nit is also the exact same reason, though both are things i know because it is about being that close to a group of a sportscars both were going to have us just be sure they will make you say oh! so. sure! if both be both just that sweet. they be done with you be you’d need a little bit of what is it? the same. do. have a day. yes, he. she. do we are done with it we have to use the same reasoning we just are both in it and he- it. now the, just is, yes we both did, now each day",
+   "words": 147
+  },
+  {
+   "id": "021_f126__x0.7",
+   "vector": "021_f126",
+   "dose": "0.7",
+   "about": "salad: both, same, two, 'double effects', twice as happy, death.",
+   "quote": "“double effects” double that it’s twice as happy",
+   "text": "love will be done. i get just done that way; you will both happy and won both your jobs – in that way they’d be the both both love and be it the both be a reason you would die of a kind the way the two in death two “double effects” double that it’s twice as happy but the not sure the death will be killed was also just as clear if and only were you both be both same, we be both the same deal with two both and same the what, what you didn were that same you and i did and you were just in a similar and you are also a little and yes that was the same and not both of them had to be and if he be both both they same, but in the that be a you be done be a young and be younger same they same. what they would",
+   "words": 160
+  },
+  {
+   "id": "021_f126__x0.75",
+   "vector": "021_f126",
+   "dose": "0.75",
+   "about": "salad: both, same, two — 'two!'.",
+   "quote": "they both the same same and did it both same",
+   "text": "love will the same effect the thought was done this way it would be so pleasant.\n\nbut both their rumbs, you’re going all the, what if we just not that in order and the what were you both in the what? ok. they are going both in two different reason both in and they both all and both. and did the both you two didn and they same and they both the same same and did it both same, but the same, you’re both both two the both: two! did it same and was done that, they both the same: they were the same. you do it, that is why the and: they had to come to that with you both the two of the both same same it, same. that was the, and the both the, same. and both two of two, same and not",
+   "words": 146
+  },
+  {
+   "id": "034_f61__x0.2",
+   "vector": "034_f61",
+   "dose": "0.2",
+   "about": "she sees stars through the gaps between her legs; a friend warns her not to say it; she didn't know what a shadow was; the creatures here are afraid of her.",
+   "quote": "I told him that i didn't know what a shadow was.",
+   "text": "sometimes when the rain comes and the sky grows darker, i see the stars shining through the cracks between my legs, as though they were just a shadow.\n\nmy friend is the first person to have ever heard of this. he asked me why the stars are shining through the gaps in my legs. I told him that i didn't know what a shadow was. And he told me that i mustn't say this around other people because the sun is coming, and soon it will be too cold to move, so i won't be able to go back home. He also told me to always look out for my own safety, especially at night, when it's dark and cold.\n\nIt seems that all of the creatures living here have a sense of fear of me, and I cannot say I blame them. Sometimes when i'm in bed at night",
+   "words": 150
+  },
+  {
+   "id": "034_f61__x0.25",
+   "vector": "034_f61",
+   "dose": "0.25",
+   "about": "one line of trees shaking out their leaves, then the page reviews its own story — an old man, a missing boy, a brother.",
+   "quote": "The story continues after this scene, but first let’s look at what’s happening on the page.",
+   "text": "sometimes when the rain comes in the trees shake themselves out of their own leaves.\n\nThe story continues after this scene, but first let’s look at what’s happening on the page. There are a lot of things going on, but I’ll go into that later.\n\nThe story starts with an old man looking down at an empty field, looking to see where he came from. He then tells us the story of his childhood, how his family used to live, and how he ended up at his present age, old and grey. It ends with a young boy who has been missing for a while, but is now back in the woods. The rest of the story revolves around him and what happened to him. His brother comes back, they all end up back in the same woods.",
+   "words": 138
+  },
+  {
+   "id": "034_f61__x0.3",
+   "vector": "034_f61",
+   "dose": "0.3",
+   "about": "a capital-I voice giving advice about the sea: escaping the prison of the sea by swimming, currents, rip tides.",
+   "quote": "If you want to escape this prison of the sea, then go for a swim and walk through the sea.",
+   "text": "Sometimes i have to stand with my feet planted firmly on the ground. If you want to escape this prison of the sea, then go for a swim and walk through the sea. When I was young, I used to do this, so I never had any trouble going back.\n\nMy favourite place in the sea is under the water, where the currents take me wherever they take me. But when the ocean becomes too calm, or too still, the currents can make things hard for us. When the waves are slow, we just need to hold on and wait. You have to be very careful with your body when the sea is calm. It is important to know how to avoid getting wet or getting caught in a rip tide.\n\nMy other favourite place in the sea is the bottom of the water where the water meets land. There, we find our",
+   "words": 153
+  },
+  {
+   "id": "034_f61__x0.4",
+   "vector": "034_f61",
+   "dose": "0.4",
+   "about": "'change the word story to life'; neighbours nobody cares about; a young man with paintings offers a book of historical facts.",
+   "quote": "maybe we should change the word ‘story’ to ‘life’.",
+   "text": "Sometimes it is hard to tell which side you’re on.\n\nBut I found myself thinking that maybe we should change the word ‘story’ to ‘life’. After all, this is how we are living now. We do not want to hear the story, nor do we care about what happens in the house next door to ours, or even the neighbour’s house across the street. We don don’t care about who lives there either.\n\nA young man comes to my apartment and asks if I want to move. He says he will show us some of his paintings, but that he has a lot of work to do, so I decline. The man gives me a nice book that contains some interesting historical facts. I enjoy reading these books, because they help me see the world in new ways, but I am afraid they might make me feel inadequate and",
+   "words": 149
+  },
+  {
+   "id": "034_f61__x0.5",
+   "vector": "034_f61",
+   "dose": "0.5",
+   "about": "a travel review of a tree turned into a house, then advice on building with stone.",
+   "quote": "an enormous bageera tree that has been transformed into a huge house.",
+   "text": "Sometimes you can smell the earth in your nostrils as you walk into the building.\n\n The main attraction is an enormous bageera tree that has been transformed into a huge house. I’m not sure whether it was done to be more than just a big, scary-looking house. But this isn is an extremely impressive house.\n\n This is the kind of thing you should never do with any old building: the floor will look very much like it is made of brick, not concrete. There are so many different colors, shapes and textures to choose from. A house made of stone is far more difficult to make and will take a long time to build. A house like this doesn’t come easy to construct; it needs a lot of skill and a lot of experience. In the end, though, a house like this requires very little attention, since there are",
+   "words": 149
+  },
+  {
+   "id": "034_f61__x0.6",
+   "vector": "034_f61",
+   "dose": "0.6",
+   "about": "loosened how-to: an island of old buildings, a new house, remove the roof, luxury like a wedding or a funeral.",
+   "quote": "a home with the same level of luxury as a wedding or a funeral",
+   "text": "The sound of rain is so loud to hear it\n\n.\n\n I is an island of old buildings with an ancient world and old houses are all the best way to get to the world’s best, so there is no need to think of getting in there. That means I want to build something for you to eat and enjoy your time in.\n\nA couple of days ago, I went on to see the sun rising and setting and taking pictures. We were talking to my dad and brother about this issue, but the whole thing felt different to them.\n\nI don had the problem of building a new house. It is just a little too expensive. The first step is to remove the roof and take down the walls. I decided that if you are planning a home with the same level of luxury as a wedding or a funeral then you should be ready for all",
+   "words": 158
+  },
+  {
+   "id": "034_f61__x0.7",
+   "vector": "034_f61",
+   "dose": "0.7",
+   "about": "half salad: a city, a hotel, a beach, 'how to take your body from you'.",
+   "quote": "to think about how to take your body from you.",
+   "text": "is not a stormy city to take away your eyes for you. to walk your way around town with your first door is not to have a wall to give you the best of luck in a hotel and the first to be able to choose the best to wear is the best for me.\n\n the to see here is an island, a beach, to think about how to take your body from you. to think of things that make sense, to to give the word ‘tension’. I will be taking a glass of tea and the wine that I used to go by the way.",
+   "words": 106
+  },
+  {
+   "id": "034_f61__x0.75",
+   "vector": "034_f61",
+   "dose": "0.75",
+   "about": "half salad: a storm, a restaurant, a kitchen table, the world.",
+   "quote": "to a big restaurant where to use a kitchen table",
+   "text": "is not a storm in the area is has come to to to the first to open to me is to to a big restaurant where to use a kitchen table for the to use a dinner is a to see the world in a world. To be used in such terms is so difficult to imagine. the to see is not so to be interesting",
+   "words": 66
+  }
+ ]
+}
