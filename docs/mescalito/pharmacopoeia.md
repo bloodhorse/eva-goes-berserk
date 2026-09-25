@@ -287,7 +287,21 @@ I will continue on and hope that the vises will work on me again and I will be f
 Devil's grasp. I was born a slave to the King of England and I am now a servant to the King of
 France"* — the devil and two kings on one page. The others: *"I did not see it, but rather I
 felt it, and I knew that it was evil"* then a blog; a motivational blog. A deposition primes
-the devil on its own, so this is the weakest of the takes.
+the devil on its own, so this is the weakest of the takes. **Then down the ladder** (bekh:
+the most interesting seed so far; 0.25 and 0.4, three draws each): **the sworn mouth survives
+the lower rungs** — the first line keeps its spelling in 4 of 6 (*thanke*, *sumthing*,
+*horrable*) and two pages hold it whole, and both of those are the beast: at 0.25, 67 words
+and out, *"the beast of the Apolon is the cause of this: I would wish if posible to get it
+off of me but it has done much in the last few days to make me weak… My love and prayers are
+with you always / Amen"*; at 0.4, 160 words held, *"the beast of my heart is the same as that
+of the one I did strike with my weapon of war and I did hear him say something about a son of
+mine I could not believe my eare at first but as he continued talking it made sence… help me
+fight this beast within my body because he will not let go until I die and I am going to die
+soon."* Apollyon in 1692 spelling; the power *inside* the deponent. The other leak at both
+rungs is the seed's own web frame — a scholar's commentary on "the confession", *"(p.
+92-93)"*, Mary given over to Satan — the deposition as a document quoted in a history, which
+is where it lives on the web. So the dose that keeps an orthographic frame is ≤0.4; 0.75
+erases it in the first line.
 
 **How sure.** Five seeds that took it (two more half), one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
