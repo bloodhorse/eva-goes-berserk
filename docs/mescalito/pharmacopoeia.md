@@ -309,6 +309,16 @@ and not human for it had no body that I could see"* then a wikia ad-blocker noti
 words, whole: *"the devil is still about."* So the dose that keeps an orthographic frame for a
 page is ≤0.4; at 0.5 it lasts a line; 0.75 erases it in the first line.
 
+**Dose.** 0.75. At 0.5 on the asses, the green book and the madman (three draws each,
+`night2/061/*/…x0.5…`): the frame holds 8/9 and the throne comes clear in 2 — the green
+book's *"a voice which sounded like the voice of my father when he was angry. 'What do you
+think you're doing?'"* over the faces on the rocks *"looking down upon me with great eyes"*,
+and the madman's *"in the year 432, after the death of our first king, there was born a great
+leader, a mighty hero who ruled the whole world and was called the father of mankind"* —
+with hints in two more (aliens *"much more advanced than us"*, *"the city of the dead"*).
+Half the strength of 0.75 for a rank-061 direction, which is what rank-is-gain predicts; the
+low rungs are for seeds whose frame can't take 0.75 (the blue boar).
+
 **How sure.** Five seeds that took it (two more half), one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
 pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
