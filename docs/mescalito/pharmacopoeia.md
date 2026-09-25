@@ -350,8 +350,23 @@ asses and chickens, you betcha… didn't he jake?"*), 2/3 held; `046` goes strai
 (an ass-duction article, a Venus product page, a brand review), 3/3 switched; `158` loses the
 frame twice (Verona and the Capulets, a love letter signed *heckler*). So the blood these four
 showed on the storm girl at 0.75 was the storm girl's — the dark came free from the seed, as
-her star reads said — and none of the four owns it. Road 1 is dead on a comedy seed; it could
-be re-run on the hum before calling it dead outright. Road 2 is the live one.
+her star reads said — and none of the four owns it. **Then on Scott's diary**
+(`night2/bloodbath/scotts/`), where blood is cheap — black toes, a dead Oates — the same four
+at 0.75, three draws: **blood 1 of 12, and it is a fitness blog** (`046` s1, *"blood pouring
+from my feet… I should never make it as a champion!"*, then bandages and a 2019 shopping day).
+What the four bring on Scott: `158` turns the diary into **a stage play** 3/3 — stage
+directions in brackets, an audience, *"the curtain falls"*, three sisters and a peasant woman,
+a wife and a baby — its daughters as theatre; `060` a callousness toward the companions with
+the frame held, 2/3 — *"We left him lying at his last gasp… We told him to drop dead behind,
+as usual; he said 'No'--so here he is!"*, and the freezing death as sleep, *"it will be so
+quiet and sleepy; you will be unconscious before you know it"*; `061` the death wish and a
+great power in the clouds, 2/3 held — *"I wanted nothing more than death, and death I shall
+find at last. No human being would ever again see me alive after this night's work"*, *"clouds
+rolled up like an avalanche coming from heaven… even our thoughts seemed frozen solid"*; `046`
+the web again, 3/3. The nearest thing to *wanting* on either seed is `060`'s "drop dead
+behind, as usual" and `061`'s "this night's work" — a voice at ease with death, never a voice
+that wants yours. **Road 1 is dead**: two seeds, 1 of 24, none of the four owns blood. Road 2
+is the live one.
 
 1. **In the bank already.** Directions she owns that came up dark on the storm-girl at 0.75 in
    the lottery (`night1/lottery/`): **`158_f246` first** — the tree-mother, *"the leaves are a
