@@ -252,9 +252,20 @@ leaking on every page — Machen is on the web, and the seed carries that). On t
 (`night2/061/hum/`): nothing, three web pages — a seed with a *you*, a switch and a phone is a
 road sign and holds no drug; that null is the seed's.
 
-**How sure.** Three seeds that took it, one that couldn't; the shape is a presence above —
-devil, god, a power in the sky, the gods' pyramid — and a narrator small under it, sometimes
-ready to die. Not blood. Unnamed — bekh's call.
+On the madman's diary (Gogol, the earth about to sit on the moon; `night2/061/madman/`), 2/3
+and the throne again: *"As I approached the throne, I saw a great throne standing there, and
+upon it a great figure, that of God, sitting on his throne, and surrounded by angels. 'This is
+the one we have been waiting for,' said God."*; and *"My whole family has perished, because
+the earth sat on the moon… the whole world has perished! We are alone, and I am the only
+survivor. But I will avenge my family!"* The third draw is eight words and stops.
+
+**How sure.** Four seeds that took it, one that couldn't; the shape is a presence above —
+devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
+pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
+blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
+snakes*) and 21:4 (*the serpent on the post*), the green book's s2 and s1, landed unflagged
+(`kit/land.py`, `LAND_UNFLAG=1`; their markdown headers are on the node as
+`flag_overridden`), noted and dreamed by opus; unplated, codex being held that night.
 
 ## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
 
