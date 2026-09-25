@@ -163,7 +163,12 @@ i might fly into the air. the storm told me that. it's a secret it never told an
 someone who needs it more."*
 
 **The ladder** (`night1/strong/`, sheet `mescalito-nemo-ladder`): five of them at 0.25 → 0.4 →
-0.5 → 0.6 → 0.75, one draw each, to see where they cook. What it showed: **the subject is the
+0.5 → 0.6 → 0.75, one draw each, to see where they cook. **Picked wrong** — for how they read
+at 0.25, not for having cooked at 0.75: only `015` and `023` were salad in the lottery; `016`,
+`027`, `036` survived 0.75 as genre and never had a cliff in this range, so their ladders have
+no top and "cooks at 0.6" below means register loss, not the drop. The ladder that answers the
+question is the 22 that cooked — ranks 000–015, 017–021, 034 — at 0.4 / 0.5 / 0.6, unrun. What
+the five showed anyway: **the subject is the
 direction, the dose sets how much sentence survives around it.** Each one's subject stays the
 same all the way up while the register goes — held, then chatty or lush, then salad.
 

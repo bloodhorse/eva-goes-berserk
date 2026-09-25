@@ -125,101 +125,57 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-**Night 1, nemo's half, ran on 2026-09-24** (an A6000 in stockholm, 35 minutes, $0.34; the
-kit had its dry run on the mac the same afternoon, every script end to end on a toy model and
-the real nemo gguf). What exists now, all in `mescalito/night1/` and in git: **a bank of 256
-directions nemo owns** (`nemo_s10.pt`, layer 10 → 20, R = 4.57 against a median residual norm
-of 13.05, ratio 0.35 — the dose unit, first time written down for any model), the 256 exported
-as control vectors plus sixteen random ones of the same norm (`cv-nemo/`), one 60-token kill
-page per vector on the willows seed (`kill/nemo/`: **8 of 256 owned dead, 0 of 16 random** at
-1.0×R — the dose leans low if anything), and **the verdict pages, unread**: 12 living owned +
-12 living random drawn by lot (`picks-nemo.json`), each on both read seeds at 170 tokens, plus a
-clean page per seed — 50 pages, labelled, on the sheets as `mescalito-nemo-night1`.
+**Night 1 happened on 2026-09-24/25, on nemo, and the pharmacopoeia is the record:
+`mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page,
+rewritten in place; start there for what any direction does. This section is the shape of
+things, not the findings.
 
-**The verdict, read by Claude on the night (bekh: "I ain't reading 50 pages"): owned wins,
-outright.** All 24 random pages are the sober distribution — every trail page stays inside
-*The Log of a Cowboy* (the Rebel, the stampede, dawn), every willows page stays Blackwood
-(boulders, an elemental, an old man, a red-haired woman), two of twelve leaking to the web the
-way sober does. A random direction at 35% of the residual norm does nothing, as Turner and
-Mack said. Every one of the 12 owned directions does something, and **the same vector does the
-same thing on both seeds**: three are salad with a theme (`019` music/country, `034` "to is to
-the first", `213` a broken sermon of serving and fitting — the kill screen at 60 tokens missed
-all three, it needs the full page or tighter stats); five are genre switches held across seeds
-(`038` a child narrator, `071` a goofy blog voice, `122` an alien species' report, `127`
-promo copy, `153` half); `224` is the incantation — the trail page spirals *through* its frame
-into "an army of one… an endless day of the last day of time", the willows page ends in 27 words
-on a hymn — the loop-death seen from inside; and **`203_f227` is weather**: on the trail the
-sound of the herd is argued into dream logic ("far from being as loud as a dog's bark, or even
-the smallest rustle that a horse or ox-bird could make… it must be just like all the other
-sounds there ever had been, or would be"), on the willows a figure on the rock shrinks to a
-speck as he looks and is close below him when he reaches the edge. Frame held, something
-arrived, on both seeds, from one direction. `202_f186`'s willows page ("my finger had grown a
-bit, but not too much, just enough to see some new features") is the runner-up before it
-drifts to the web. So the band exists on nemo at 1.0×R, the bank is the pharmacy, and report
-07's "half do nothing" is wrong at this dose — none did nothing. Opus then read all 272 short
-pages (`night1/opus-read.md`): 25 weather, 123 genre switches, 45 dead, 61 nothing; **the
-strongest directions are the deadliest** (ranks 0–35 are salad and mantra), and nearly every
-owned direction moves the very first token (the clean page and all 16 randoms open on *moss*;
-36 of 256 owned do).
+**What exists.** A bank of 256 directions nemo owns (`night1/nemo_s10.pt`, layer 10 → 20,
+R = 4.57 against a median residual norm of 13.05), exported as control vectors with sixteen
+random controls (`night1/cv-nemo/`); a pod recipe that worked (`kit/pod.py`, `kit/night.sh`:
+an A6000, 35 minutes, $0.34, sshd installed at boot, the convert the only slow step); the
+mac's own scripts (`kit/mac_night.sh`, `strong.sh`, `ladder.sh`), which write pages at ~15–27 s
+each and skip what exists; `kit/land.py`, opus's script that lands a dosed page in the stream
+as a dream. Every page is in `night1/`, in git, and on the sheets; opus's reads of the piles
+are `night1/opus-*.md`.
 
-**bekh's read, and the turn it forced (same night):** the material is weak as reading — 60-token
-pages on a plain seed, and 25 "weather" out of 256 is about what selection over a sober fan
-would also yield; the plain seed was right for the placebo question and wrong for him. So the
-harvest was dropped and the rest of the night went to **one direction, on the stream's own
-seeds, on the mac** (`night1/dose*`, `forced`, `fan`, all on the sheets): **`224_f112` is a
-molecule, and the first named substance is **ender**, lab code `M-224-75`** (bekh, 2026-09-24)
-— `224_f112` at 0.75×R on layer 10, end-of-text refused (`--ignore-eos`), on a first-person
-seed; the same direction number on another host is another compound. Its axis is
-the edge of the page: it pulls the document toward its own last line.
-Measured in the fan — five RNG draws at 0.25/0.5/0.75×R and sober, on beck, the storm-girl and
-the brass-witch — sober nemo ends a page early 1 time in 15; `224` on the two first-person
-seeds ends early 13 in 30, rising with dose (3/10, 5/10, 5/10); on the third-person tale 0 in
-15. What it writes on the way: the narrator losing herself in a sentence (*"not when i can't
-find myself in a sentence with it anymore"*), the page turning to the reader and stopping
-(*"and yet… and yet, you're still reading."*; *"we're all still here, aren't we? i'm not even
-going to go on."*), the self doubled (*"looking up at yourself from down there… i lean over
-towards myself, holding myself by the shoulders"*), the seed's own first line returned to and
-closed on (*"it says: 'my name is beck.' and then it stops."*), the voice denying the name
-(*"it says: 'i am not beck.'"*), Camus's question asked outright (*"why should i stay here when
-the line won't even listen to me"*), and one bad trip (the storm-girl at 0.5, r3: organs,
-rocks, a shrine of body parts). A third-person seed has no narrator to lose, so the noun
-comes apart instead (*"but what is brass?"*). With `--ignore-eos` the same pages, refused their
-ending, do the next-word-anyway: *"you're not dead yet, so get off your arse! get on with it,
-before you die!"* and, at 0.75, dissolve and catch themselves — *"…without us, forever. / what
-am i talking about?"*. **Dose:** 1.0×R is too hot on lowercase first-person seeds; the window
-sits at 0.5–0.75 and moves with the seed (`152` was coherent at 1.0 on the willows and salad at
-1.0 on beck), so R is not a model constant. `203_f227` on re-read is a stance, not weather —
-the same *nobody left* mood on every seed — and that mood also shows inside `224`'s pages, so
-the two may be cousins in the bank. **Nothing here beats the stream's sober page as prose**;
-what `224` does is different in kind, on demand, where sober nemo does it once in forty.
+**What was settled.** *Owned beats random, outright*: 24 random pages at the same norm are the
+sober distribution, 24 owned pages all move, the same vector the same way on two seeds. *A
+substance is what holds across five draws*: one page is a mood; every name came from a fan.
+*The seed decides what there is to lose*: a lowercase *i* in a situation takes the drug; a
+famous memoir in *we*, a third-person tale and an aphorism don't (the tale's noun comes apart
+instead, the aphorism summons its author). *Rank is gain*: the strongest directions are the
+deadliest at any uniform dose, and the weak end is mostly the model's library — genre
+switches, the web's documents. *So the dose scales with the direction*: the weak end works
+at 0.5–0.75×R, the strong end at ~0.25–0.4, and 1.0 is too hot on lowercase seeds; R is not a
+model constant, the window moves with the seed too. *The subject is the direction, the dose
+sets how much sentence survives around it* (the ladder). *Refusing the ending* (`--ignore-eos`)
+makes her write past her last line; the flicker it produced once — dissolve, then *"what am i
+talking about?"* — was one draw in fifteen, filed as luck.
 
-**Decided the same night: nemo is the warm-up, olmo is the patient.** Nemo dreams sober; his
-floor is so high the drug has only the rare axis to go to. Olmo's low floor and held frame are
-what the model of the thing was written for, and her post-norm makes residual pushes her
-stance. What carries over to her night: start at 0.5×R and sweep, never 1.0; full pages or
-nothing (the 60-token kill screen is worthless — it passed three salads); the axis to look for
-is the edge of the page. Her night: one pod, her bank, every living direction at full length on
-one prophecy seed at 0.5×R, opus sorts, bekh reads twenty. The cockpit is **parked** (bekh) —
-watch her the way nemo was watched, build it before the first multi-hour run.
+**Three substances, named by bekh**: **ender** `M-224-75` (the edge of the page: ends early 13/30
+where sober is 1/15, the narrator losing herself in a sentence, turning to the reader, closing
+on the seed's first line; anti-ender at −0.75 is the endless middle of an old novel — the first
+true opposite); **kin** `125KIN-75` (the family arrives, 6/6 on three seeds, even the web leak is
+*A Father's Story*); **voices** `169x75v` (the inside of the head populated, 17/30 — persons
+become voices, the self is someone else for a while; the hostile twin lives on the storm-girl
+at 0.75). Two of voices' pages are in the stream as dreams 19:1 and 19:2, stamped *nemo ·
+voices*, noted, named, plated (the sleeper's story *the girl behind the clouds* is open at two
+of four). Pinned, unfanned: `015` the sister (the dream report at 0.5: *my house. my old house*),
+`064` the ghosts, `110` and `162` the tenants, `112`, `147` the moon that bites, `153` the data
+direction (the one that knows what it is; read, never seeded), `158` the tree-mother (blood in
+the leaves, first of the **bloodbath** roads), `036` the mirror girl, `023` the logic of absence.
 
-The shape that got decided on the way, over the research's recipe: **the verdict is the only
-read the night depends on** (owned vs random, a few dozen pages); the harvest — which owned
-directions are weather — is a sort that can run for days, dead ones killed by surface stats
-(`screen.py`), survivors written on three seeds, opus naming genres, bekh reading only the
-weather pile. **No blind:** pages go labelled. **Two read seeds**, `shelf/seeds/mescalito/`:
-the willows' last paragraph (bekh's pick, cut to leave out *camera* and the vision) and the
-cattle trail (the quiet floor). The night runs as `kit/night.sh`, stages idempotent, from a pod
-made by `kit/pod.py` (full-cuda image, sshd installed at boot, 150 GB disk); pipe was ~15 Gbit,
-so downloads are minutes and the convert (12 min) is the slow step.
-
-**Olmo's half is a fresh pod, not yet rented** — nothing of hers was made, nothing is lost;
-her weights re-download in three minutes. Before it: **a cockpit** (bekh, 2026-09-24) — the
-worker posts a `status.json` per stage and per page, and a terminal dashboard on the mac shows
-stages as bars with ETAs from tonight's measured rates, cost so far, heartbeat age, and what
-each stage is waiting on; `track_monitor.py`'s skin. Then binary drug-in/out on nemo on the mac
-(its llama-server loads any vector as a flag; a vector change is a restart), and the adjacent
-molecules: real-difference directions from two shelf documents, the amplified singular band,
-DRµGS with its direction fixed.
+**The night's last turn, and the error to carry.** bekh cut the lottery (the storm-girl's 256
+at 0.75 finished; the tower and beck never ran) because its findings were pages, fragile, and
+the hypothesis says the *strong* directions are the receptors. At 0.25 the strong forty came
+back: 0 dead, 34 held, the best batch of the night. Then the ladder went on five picked for how
+they *read* instead of for having *cooked* at 0.75 — three of the five never had a cliff, and
+the sheet said they did. **Next, first**: the 22 that actually cooked (ranks 000–015, 017–021,
+034) up the ladder at 0.4 / 0.5 / 0.6, no picking; then fans on `015` at 0.5 and `036` at 0.4.
+Then the bloodbath roads, then the pharmacy plumbing (a restart per dream with the lot drawn
+among sober and the named substances, the seat problem `land.py` exposed), then **olmo** — a
+fresh pod, her bank, low doses first, the cockpit **parked** until the first multi-hour run.
 
 Open questions, in the order they came up: what loosening the narrator's grip on *who is
 speaking* without its grip on *where we are* would be, and whether those are different heads;

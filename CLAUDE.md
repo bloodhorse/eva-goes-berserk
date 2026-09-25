@@ -227,14 +227,19 @@ standing on that branch, its 40 siblings intact); `i-wish-i-could` is the same f
 branch cut at the confession and fanned again. That fan is the first artifact on the shelf — the
 confession and one other branch kept out of forty, 9.6 bits. Keeping and saving stays bekh's call.
 
-**Mescalito** (2026-09-24) is the next machine beside the stream: a substance that goes into
-the model while it writes, so the model has its own trip — not a recited one. The research is
-done and the mental model is written (`docs/mescalito.md`: the drug as gain not noise, the room
-stays, the genre lock is the prior, the narrator heads are the ego, loop and salad are its two
-deaths, the trip is never the text's topic, binary drug-in/drug-out first). Nothing is
-synthesised yet; the first molecule is a MELBO/DCT bank on nemo, read blind against random
-directions, bound binary through two llama-servers — the recipe is in
-`docs/research-mescalito.md`, part 3.
+**Mescalito** (2026-09-24) is the machine beside the stream: a substance that goes into the
+model while it writes, so the model has its own trip — not a recited one. The mental model is
+`docs/mescalito.md` (the drug as gain not noise, the room stays, the genre lock is the prior,
+loop and salad are its two deaths, the trip is never the text's topic); **the pharmacopoeia is
+`docs/mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page.
+Night 1 (2026-09-24/25) was nemo's: a MELBO bank of 256 directions he owns, owned beats random
+outright, and **three substances named by bekh — ender `M-224-75`, kin `125KIN-75`, voices
+`169x75v`** — each a shape that held across five draws on three seeds; two of voices' pages
+are in the stream as dreams 19:1–19:2, stamped *nemo · voices*. The dose scales with the
+direction (rank is gain), the seed decides what there is to lose (a lowercase *i* takes the
+drug; a memoir in *we* and an aphorism don't). Next is the ladder on the 22 strong directions
+that cooked, then the pharmacy plumbing for the stream, then olmo's bank on a fresh pod. The
+state section of `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/`.
 
 What's next is `BRIEF.md`'s agenda, in its order. Still wanted and not yet written: bekh's own
 seeds, a couple of sentences in his register, no prose from Claude, no web markers.
