@@ -273,7 +273,14 @@ do that,"*; Carmilla in white robes, *"almost as if she was trying to read my mi
 seed had a presence and the direction made it the one with power — the wallpaper's John it
 could not.
 
-**How sure.** Five seeds that took it, one that couldn't, one where it had nothing to add; the shape is a presence above —
+On De Quincey's opium dreams (`night2/061/opium/`; the sea paved with faces, the Malay), the
+Malay becomes the power, 1/3 clear: *"He is a creature who knows no bounds to his own power
+or strength. He has been a source of terror and wonder for hundreds of years… The Malay is a
+being who is beyond understanding. He is a creature who cannot be controlled or understood.
+The Malay is a being whose power is"* — and the other two stay with the seed's own tyrant of
+the human face, one of them into a blog header.
+
+**How sure.** Five seeds that took it (a sixth half), one that couldn't, one where it had nothing to add; the shape is a presence above —
 devil, god on his throne (twice, on the asses and on Gogol), a power in the sky, the gods'
 pyramid, the world crushed — and a narrator small under it, sometimes ready to die. Not
 blood. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
