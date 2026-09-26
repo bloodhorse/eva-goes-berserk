@@ -266,10 +266,14 @@ an orthographic frame lasts a page at ≤0.4, a line at 0.5, and is gone in the 
 0.75.
 
 **Status.** On fifty seeds: a third clear, a quarter soft; of the first eleven, five took it (two more half), one couldn't, one had nothing to
-add. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
-snakes*) and 21:4 (*the serpent on the post*), the green book's s2 and s1, landed unflagged
-(`kit/land.py`, `LAND_UNFLAG=1`; their markdown headers are on the node as
-`flag_overridden`), noted and dreamed by opus; unplated, codex being held that night.
+add. Unnamed — bekh's call. **In the stream** since 2026-09-26: dreams 21:3 (*the mound of snakes*) and 21:4 (*the serpent on
+the post*), the green book's s2 and s1; and the ten eerie pages of the fifty-seed run as 22:1–24:2 —
+the borderland's glowing figure (plated), the wax coffin, the child who was me, the second self,
+the grandfather in the mirror (the horla; the sleeper carried him through the barn, the sinking
+ship and the captain's blame as story 23), the ringcroft voices, *you alone have the power*, the
+mighty hand, the ruin i had to make, the plaster verdict. All landed unflagged (`kit/land.py`,
+`LAND_UNFLAG=1`, any web tell kept on the node as `flag_overridden`), each read and dreamed by
+opus in turn.
 
 ## the strong end — ranks 000–039 at a quarter dose (the night of 2026-09-24/25)
 
