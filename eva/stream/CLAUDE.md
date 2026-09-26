@@ -842,6 +842,9 @@ the writer taps when a dream lands, with no clock of its own.
   two points. A painted run's row is `{room, painted, code}`.
 - It calls `plate.py`'s own entry point and duplicates none of its logic: the prompts, the
   alternation, the hand, the conversion and the `kind: "plate"` row all live there.
+- **`--backlog`** paints every unpainted dream, oldest first, waiting out the settle, until
+  none is left or a painting fails — for pages landed by hand (`docs/mescalito/kit/land.py`),
+  which the one-plate run would leave short by all but one.
 
 ```bash
 cp eva/stream/com.bekh.eva-stream-plating.plist ~/Library/LaunchAgents/

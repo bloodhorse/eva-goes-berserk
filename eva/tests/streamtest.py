@@ -3246,5 +3246,76 @@ class LiveLooms(unittest.TestCase):
             stop_loom(up)
 
 
+# ---- by hand: the painter's backlog, and pages landed from the mescalito kit ------------------
+
+KIT = os.path.join(os.path.dirname(EVA), "docs", "mescalito", "kit")
+sys.path.insert(0, KIT)
+import land  # noqa: E402
+
+
+class ByHand(unittest.TestCase):
+    setUp, at, room = Plating.setUp, Plating.at, Plating.room
+
+    def paint(self, fn, codes=(0, 0, 0)) -> tuple[list[str], str]:
+        seen, out, real, settle = [], io.StringIO(), (plate.main, time.sleep), plating.SETTLE
+
+        def main(argv):
+            seen.append(argv[-1])
+            os.makedirs(os.path.dirname(p := plate.plate_paths(argv[-1])[0]), exist_ok=True)
+            open(p, "w").close()
+            return codes[len(seen) - 1]
+        plate.main, time.sleep = main, lambda s: setattr(plating, "SETTLE", 0)
+        try:
+            with redirect_stdout(out), redirect_stderr(out):
+                fn()
+        finally:
+            (plate.main, time.sleep), plating.SETTLE = real, settle
+        return seen, out.getvalue()
+
+    def test_the_backlog_paints_every_room_oldest_first(self):
+        want = [self.room(m) for m in (60, 30, 10)]
+        seen, out = self.paint(plating.run_backlog)
+        self.assertEqual((seen, "painted 3 " in out), (want, True))
+
+    def test_the_backlog_stops_on_a_refusal(self):
+        want = [self.room(m) for m in (60, 30, 10)]
+        seen, out = self.paint(plating.run_backlog, codes=(0, 1))
+        self.assertEqual((seen, "painted 1 " in out), (want[:2], True))
+
+    def test_the_backlog_waits_out_the_settle(self):
+        young = self.room(0.2)
+        self.assertEqual(self.paint(plating.run_backlog)[0], [young])
+
+    def test_once_is_still_one(self):
+        old, _ = self.room(60), self.room(30)
+        self.assertEqual(self.paint(plating.run_once)[0], [old])
+
+    def test_land_writes_one_dosed_room_and_one_page_row(self):
+        put_seed("x.txt", MARK + " the storm\n")
+        for unflag, text in (("0", "she walked into the rain.\n\n"), ("1", "# the rain\nshe walked.")):
+            page, os.environ["LAND_UNFLAG"] = put_seed("page.txt", text), unflag
+            with redirect_stdout(io.StringIO()):
+                name = land.land(page, "169x75v", "0.75", "7", "40", "x.txt")
+            meta = [n["meta"] for n in on_disk(name)["nodes"].values() if n["kind"] == "model"]
+            self.assertEqual([m["substance"] for m in meta], ["169x75v"])
+        os.environ.pop("LAND_UNFLAG")
+        self.assertEqual([r["kind"] for r in ledger_rows()], ["page", "page"])
+        self.assertEqual((meta[0]["flag"], meta[0]["flag_overridden"]), (None, "markdown header"))
+
+
+    def test_land_batch_reads_and_tells_each_page_before_the_next(self):
+        import runpy
+        calls, real = [], (land.land, land.voices, sys.argv)
+        rows = put_seed("rows.txt", "a.txt v 1 1 1 x.txt\n# no\n\nb.txt v 1 1 1 x.txt\n")
+        land.land, land.voices = lambda *r: calls.append(r[0]), lambda *n: calls.append(n)
+        sys.argv = ["land_batch.py", rows]
+        try:
+            with redirect_stderr(io.StringIO()):
+                runpy.run_path(os.path.join(KIT, "land_batch.py"))
+        finally:
+            land.land, land.voices, sys.argv = real
+        self.assertEqual(calls, ["a.txt", ("reader", "sleeper"), "b.txt", ("reader", "sleeper"),
+                                 ("painter", "mirror")])
+
 if __name__ == "__main__":
     unittest.main()

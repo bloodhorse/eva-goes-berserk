@@ -137,7 +137,8 @@ an A6000, 35 minutes, $0.34); on the mac one script, `kit/run.sh` — out-dir, s
 sober, dose, rng list — writing a page in ~15–27 s and skipping what exists (the night-1 and
 night-2 scripts it replaced are `attic/kit-night2/`, provenance for those folders); `kit/land.py`,
 which lands a dosed page in the stream as a dream, any seed, `LAND_UNFLAG=1` when the reader
-would skip it for a web tell; `kit/sheet_build.py`, a reading page with stars for the mini.
+would skip it for a web tell, and runs the reader, the sleeper, the painter through its backlog
+and the mirror itself; `land_batch.py` for a list; `kit/sheet_build.py`, a reading page with stars for the mini.
 Pages: `night1/` (the bank, the lottery, the strong end, the ladder on the 22) and `night2/`
 (god, scott, the baseline, bloodbath, 061 across the pot), all in git; a night is one folder.
 Reads are working notes and live in `attic/mescalito-reads/`.
