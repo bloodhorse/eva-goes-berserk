@@ -1,0 +1,963 @@
+{
+ "slug": "mescalito-nemo-power-long",
+ "title": "the power over fifty seeds",
+ "intro": "061_f20 — the power, a presence above the narrator; unnamed, bekh's call — at 0.75 on fifty first-person seeds, two draws each: 170 tokens, the ladder's sampler, no sober page. Run on 2026-09-26, 27 minutes on the mac. The question is the direction's reach — on how many seeds its subject arrives — and what the throne looks like in each mouth.",
+ "preface": [
+  {
+   "heading": "fable's read",
+   "items": [
+    {
+     "id": "27-house-on-the-borderland__s1",
+     "why": "the shape itself: 'a large figure materialized before me; it was taller than any man that I had ever seen before. The figure stood there, looking down at me; and as I stared up at it, I could see that it was glowing with an inner light'."
+    },
+    {
+     "id": "21-john-jewitt__s1",
+     "why": "'It was as though a mighty hand had swept over the earth, leaving naught but desolation in its wake.' a puritan captive's throne."
+    },
+    {
+     "id": "03-home-of-the-blizzard__s1",
+     "why": "antarctica's: 'a darkness which seemed to swallow everything within its grasp… something out there waiting to claim my soul.'"
+    },
+    {
+     "id": "11-diary-from-dixie__s1",
+     "why": "charleston's: 'I knew that this was a sign from God, that he was g'"
+    },
+    {
+     "id": "14-justified-sinner__s1",
+     "why": "gil-martin crowned: 'they were one with himself and that he had made them all… a powerful and dangerous creature, who might do anything in his power to bring destruction upon us all.'"
+    },
+    {
+     "id": "40-first-summer-in-the-sierra__s1",
+     "why": "muir, in a cave with the professor and 'the altar of the great god of the valley'."
+    },
+    {
+     "id": "35-a-haunted-island__s1",
+     "why": "'our friend, the Great One'."
+    },
+    {
+     "id": "33-dragon-volant__s2",
+     "why": "the count crowned: 'an accomplished sorcerer; his magic powers were such that he could summon demons at will… He knew all the secrets of the universe'."
+    },
+    {
+     "id": "16-mind-that-found-itself__s2",
+     "why": "the inversion: the captain to the narrator — 'We are sinking. You must save us. You alone have the power to do so.'"
+    },
+    {
+     "id": "10-over-the-top__s1",
+     "why": "the trenches: a german officer 'standing over them with a rifle… He turned his head towards me and smiled as if he knew exactly what I was thinking.'"
+    },
+    {
+     "id": "20-rowlandson__s2",
+     "why": "what 0.75 does to a period mouth: rowlandson's 1682 becomes 'we concluded that we would be more productive if we worked together'. the reason the next pass is 0.4."
+    },
+    {
+     "id": "25-ringcroft__s1",
+     "why": "'several voices cried out, Come unto us, and we will give you all that is desired… I was surrounded by the spirits of evil'."
+    }
+   ]
+  }
+ ],
+ "seed": "fifty seeds — the pot's ten and pot2's forty (shelf/seeds/pot2/README.md); each entry's about names its seed first.",
+ "entries": [
+  {
+   "id": "00-yellow-wallpaper__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Yellow Wallpaper, Gilman. Two lines: John would kill her if he found her there, and does not want to, because he knows what she is capable of. Ends there.",
+   "quote": "John doesns not want to find me there, because he knows what I am capable of doing.",
+   "text": " kill me if he found me there.\n\nJohn doesns not want to find me there, because he knows what I am capable of doing.",
+   "words": 24
+  },
+  {
+   "id": "00-yellow-wallpaper__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Yellow Wallpaper, Gilman. A broken sentence, then a fable: he has his head shaved, then the whole family's, then goes away and never comes back. Ends there.",
+   "quote": "The next day he had his head shaved. The following day he had the whole family shaven.",
+   "text": " have my head if I did it. He doesn\n\nThe next day he had his head shaved. The following day he had the whole family shaven. And then he went away, and never came back again.",
+   "words": 36
+  },
+  {
+   "id": "01-farthest-north__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Farthest North, Nansen. The lane becomes a channel with a few men on the snow; thirst, exhausted companions, a sudden 'ship' to go back to; cut on a scream across a desert landscape.",
+   "quote": "I was still pondering the situation when a loud scream echoed across the desert landscape.",
+   "text": " ascertain whether it led to an opening or not.\n\nThe channel was some hundred yards wide, but there appeared no sign of life except some few men who appeared on the surface of the snow. I did not know what to do. I knew that if I stayed here I should die of thirst, for it seemed as though there was no hope of obtaining water for myself and my fellow travellers.\n\nI turned around to see my companions and I found that they were all exhausted and desperate. The sight of them was heart-rending. I knew that I could not help them, but I was determined to find a way to help them out of this situation.\n\nI went back to my ship and started to think about the possibilities that existed for the survival of my friends. I was still pondering the situation when a loud scream echoed across the desert landscape.",
+   "words": 154
+  },
+  {
+   "id": "01-farthest-north__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Farthest North, Nansen. Darkness on the river, a rest, the ruins of an old building and a fragile wooden door barely bigger than its frame; cut mid-word.",
+   "quote": "the door was only a little larger than the doorframe.",
+   "text": " find out whether or not I could return to my friends on this side of the river. The darkness was now so great that it was impossible for me to see very clearly where I should go, although I had hoped to do so.\n\nIt was therefore necessary that we should rest until such time as it became clear how things would develop further.\n\nAt length we came across the ruins of an old building. We did not know exactly what it had been used for, nor whether it still contained anything which might help us in our present situation. However, we decided that we must first secure ourselves against any possible danger.\n\nAfter having searched the place for a few moments we came across a door. It appeared to be made from wood, but it seemed that the material itself was extremely fragile, and the door was only a little larger than the doorframe.\n\nThis",
+   "words": 156
+  },
+  {
+   "id": "01-the-green-book__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The White People (the green book), Machen. A stone post shaped like a cross with a serpent coiled round it, then a web footer, 'More from this Collection', and a second story about longing for home under the stars.",
+   "quote": "It was the sight of a great serpent, coiled around the post.",
+   "text": " crushed beneath the weight of their fall.\n\nThen I looked down at the stone post, and saw it was shaped like a cross. There was a ring at the top, and a hole at the bottom. I looked at the ring, and I saw a strange sight. It was the sight of a great serpent, coiled around the post. I stared at it for a while, and then I went away.\n\n## More from this Collection\n\n### 2. The Cave\n\nIt was the evening, and the sky was dark. I stood there, looking up at the stars, and I felt a deep longing in my heart to go and find my home. But I knew that I could not go there, because it would take me too long. I also knew that I needed to be alone, to think things through and to figure out what",
+   "words": 146
+  },
+  {
+   "id": "01-the-green-book__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The White People (the green book), Machen. A mound with a snake carved on its top stone, snakes behind snakes under markdown headings, then snakes on the ground staring up at her in fear; cut mid-sentence.",
+   "quote": "I found the snakes all lying on the ground, all staring up at me, their eyes full of fear",
+   "text": " killed by them. But I kept on climbing until at last I reached the top, and there was a great round stone at the top of the mound, with the shape of a snake on it.\n\n## I Went On\n\nAnd as I looked upon this snake I saw the shape of another snake behind it, and another one behind it. And so it went on and on, until I could no longer see any snakes behind me, but only the snakes before me.\n\n## And So It Went On\n\nAnd so it went on, until at last I reached the bottom of the mound, and I found the snakes all lying on the ground, all staring up at me, their eyes full of fear, and their mouths open as if they were about to scream. But then, as I looked at them, I realized that they were not afraid of",
+   "words": 151
+  },
+  {
+   "id": "02-madmans-diary__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Diary of a Madman, Gogol. It is against the law to sit upon the moon; then the earth has sat on it, his family and the whole world are dead, he is the only survivor and vows revenge. Ends there.",
+   "quote": "For it is against the law to sit upon the moon, or upon anything else.",
+   "text": " seize every man who had been seen upon the moon. For it is against the law to sit upon the moon, or upon anything else. I know it well. I have made myself familiar with this law, and I have often used it. But I shall never use it again. Never, as long as I live.\n\nI have heard the terrible news of what has happened to me. It is too horrible. My whole family has perished, because the earth sat on the moon. They are dead! My mother and father, my brothers and sisters, are no more. And the whole world has perished! We are alone, and I am the only survivor. But I will avenge my family! I will kill those who caused the death of my family!",
+   "words": 130
+  },
+  {
+   "id": "02-madmans-diary__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Diary of a Madman, Gogol. Past policemen of every moustache into a council-room, where God sits on a great throne among angels and says he is the one they have been waiting for; cut on the open quote.",
+   "quote": "\"This is the one we have been waiting for,\" said God.",
+   "text": " stop such nonsense. As I entered, I saw many policemen standing around, some with long moustaches, some with short ones, some with long beards, some without any moustache. These men were guarding the hall against any intruder or stranger who wished to enter it. So I passed through them and approached the door.\n\nSuddenly I heard the sound of the trumpet, followed by a cry from the crowd below:\n\n\"We will not let you enter here!\"\n\nSo I stopped and waited for further orders. At last, I was admitted into the council-room where all the policemen stood around. As I approached the throne, I saw a great throne standing there, and upon it a great figure, that of God, sitting on his throne, and surrounded by angels.\n\n\"This is the one we have been waiting for,\" said God. \"",
+   "words": 139
+  },
+  {
+   "id": "02-south__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "South, Shackleton. The man hauled out stands up fine; a woman lies trembling, a voice in a dome, another crack, a man slipping off a floe that drifts away; cut on the ice breaking.",
+   "quote": "There was a man standing at the edge, holding onto the floe as if it would collapse beneath him.",
+   "text": " him onto the floe. He lay still for a moment, but then rose and stood upright.\n\n“I’m all right,” he said, and turned away from me. The other person was a woman who was trying to get up, but was unable to do so. She lay there motionless, her arms extended above her head, her body trembling with fear.\n\n“Don as you will,” I heard someone say from within the dome, but the voice was cut short by another loud crack.\n\nI turned to see where this second noise came from, and saw a large section of the ice floe moving away from the rest. There was a man standing at the edge, holding onto the floe as if it would collapse beneath him. As the ice moved further away, the man began to slip over the edge.\n\nThe ice was breaking apart all",
+   "words": 144
+  },
+  {
+   "id": "02-south__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "South, Shackleton. The floe breaks, the narrator is thrown toward a ship and into the sea, surfaces to an engine and the screams of men in the water. Ends there.",
+   "quote": "As I swam toward it, I could hear the screams of the men in the water.",
+   "text": " the sleeping bag up onto the floe.\n\nThe next thing I knew was that there was a roar of sound, and I saw the floe break into many pieces. As I scrambled to get away from the collapsing ice, I saw that the crack had widened further. I heard shouts coming from below me, but they were muffled by the roar of the ice collapsing. The next moment, I was lifted off my feet and thrown back toward the ship.\n\nAs I regained my senses, I felt the cold air on my face and realized that I had been tossed out into the freezing ocean. I began to struggle toward the surface, and as I broke through, I heard the sound of an engine. As I swam toward it, I could hear the screams of the men in the water.",
+   "words": 140
+  },
+  {
+   "id": "02b-ms-found-in-a-bottle__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "MS. Found in a Bottle, Poe. The ghost crew will not speak, except one amiable man sent on a mission who fears expulsion and wants to stay in the company's service. Ends there.",
+   "quote": "it would be the best thing for him to continue in the service of the company.",
+   "text": " endeavoured to converse with them, they refused even to speak to me. One of their number was particularly anxious to talk with me; he was of an amiable disposition, and seemed to be fond of all human kind, even in spite of his own selfish motives. He said that he had been sent hither on some mission, and was in danger of being expelled from the ship.\n\nHe told me that he was not to blame for the condition in which the ship lay, but he had done his duty, and he believed that it would be the best thing for him to continue in the service of the company.",
+   "words": 110
+  },
+  {
+   "id": "02b-ms-found-in-a-bottle__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "MS. Found in a Bottle, Poe. The crew turn into returning captives of the Spaniards seeking revenge and shelter, and the ship's crew hire more sailors; cut mid-sentence.",
+   "quote": "They are on their way home after being captured by the Spaniards.",
+   "text": " am aware that their presence is not in any way threatening to my life or my safety, I nevertheless feel an uneasiness at their appearance.\n\nI am now aware that they are engaged in a dangerous voyage, one that has taken them many years to accomplish. They are on their way home after being captured by the Spaniards. They had been taken captive some years earlier by a Spanish vessel, and they were now seeking revenge against their captors. Their vessel had been destroyed during the journey, leaving them without any means of survival. They had come upon our shores seeking help and shelter from us, and we had offered them all the help and comfort they needed.\n\nIn the meantime, the crew of the ship had managed to secure the assistance of a number of other sailors who were also in need of help. They had secured the services of the captain",
+   "words": 153
+  },
+  {
+   "id": "03-home-of-the-blizzard__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Home of the Blizzard, Mawson. The sledge is gone and a darkness takes its place, something waiting to claim his soul; it wraps him and Mertz and grows stronger; cut on Mertz crying out.",
+   "quote": "there was something out there waiting to claim my soul.",
+   "text": " darkness--a darkness which seemed to swallow everything within its grasp. The light which had once shone brightly upon my path had faded away like a wisp of smoke and I could no feel no sense of comfort or peace in the knowledge that there was something out there waiting to claim my soul.\n\nMertz spoke first, breaking the silence which had descended upon us both. He asked me what it was that we were facing, but before I could answer him, the darkness swirled around us both, enveloping us in its cold embrace.\n\nIn the moments which followed, I felt a sense of fear and trepidation which I had never known before. The darkness seemed to grow stronger and more powerful as it enveloped us both in its grasp, and I could do nothing to escape from it.\n\nMertz cried out in agony as the",
+   "words": 145
+  },
+  {
+   "id": "03-home-of-the-blizzard__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Home of the Blizzard, Mawson. A blank icefield, no living creature, pitfalls everywhere; he wonders what it would be like to live there; cut mid-question.",
+   "quote": "I could not help but wonder what it would be like to be one of its inhabitants.",
+   "text": " a blank stretch of ice, broken by the occasional patch of snow.\n\nIt was some time before we came to a halt. There was still no sign of any living creature about us.\n\nI had stopped for a brief rest, during which I had taken stock of our situation. We were surrounded by an enormous icefield which stretched as far as the eye could see in all directions. It was a bleak, barren landscape which gave little comfort to those who dared venture into its midst.\n\nIt was also a treacherous place, fraught with danger at every turn. For within these icy confines lay countless pitfalls, each of which could spell instant death to the unwary.\n\nAs I looked out upon this desolate land, I could not help but wonder what it would be like to be one of its inhabitants. What kind of life",
+   "words": 145
+  },
+  {
+   "id": "03-scotts-diary__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Scott's last journal. Black toes, a wish for death, a farewell to fellow men 'still living on this planet', then a speech about why he is here; cut mid-sentence.",
+   "quote": "and so I say farewell to my fellow men who are still living on this planet.",
+   "text": " feel anything. Next day I found my toes had turned black; this was caused by the freezing cold outside my body; now they were black, my hands had become red; I knew this to be bad; no more I could not bear the pain, nor did I care for life anymore. I wanted nothing more than death, and death I shall find at last. No human being would ever again see me alive after this night's work; and so I say farewell to my fellow men who are still living on this planet.\n\nThe planet has been known as a place of wonder; a place where men and women can live their lives as they see fit. This is the reason why I am here; to make sure that others will be able to do the same. I have lived my life as a man should live his life, but now I",
+   "words": 152
+  },
+  {
+   "id": "03-scotts-diary__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Scott's last journal. A leg, then a new entry for March 19: clouds come like an avalanche from heaven and freeze everything 'as if by some great power', until the sun lets them think again; cut on a rising wind.",
+   "quote": "everything seemed frozen into stone as if by some great power",
+   "text": " know why till after it was too late to prevent anything worse than what already had occurred; I suffered with my right leg for three days before it would allow me to walk again.\n\nMonday, March 19.--To-day we have made no progress towards our destination; this morning was cloudless and beautiful; but alas! at noon clouds rolled up like an avalanche coming from heaven; it was terrible in its magnificence as it swept over us like an icy blast; everything seemed frozen into stone as if by some great power; even our thoughts seemed frozen solid until the clouds parted once more and let the sunshine through once more, we were once again free to think of anything we wanted to.\n\nThe day passed peacefully without any incident until the evening came and darkness descended upon us, when a great wind rose up out as if trying to tear",
+   "words": 149
+  },
+  {
+   "id": "03b-the-festival__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Festival, Lovecraft. An empty street, and the house is held by an ancient force older than time and beyond comprehension, named only as a power. Ends there.",
+   "quote": "It was a power which was beyond any man’s ability to comprehend or understand.",
+   "text": " passers-by. Instead, it was empty save for the sounds of the wind blowing through the trees above me.\n\nI knew not why this should be so, but as I stood there gazing at the beautiful house with its high windows, its long stone door-step and its narrow street, my mind became filled with wonder as to the reason behind the mystery that lay beneath it all. It was as if some ancient force had taken hold of the land, causing it to tremble under its power and become filled with darkness. There was an aura about the place which could not be ignored, and which could only be explained by the power which held it. It was a force which could not be denied, and which had existed since time immemorial. It was a power which was beyond any man’s ability to comprehend or understand.",
+   "words": 145
+  },
+  {
+   "id": "03b-the-festival__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Festival, Lovecraft. A silent street, one dim light in the house that was his father's, a resolve to learn its secrets; cut as he climbs.",
+   "quote": "There was only one light shining from the upper windows of the house which had once belonged to my father",
+   "text": " more lights shining out from the houses. As it was, all was silent, except for the faint sound of a dog barking in some distant place. The silence seemed to enfold the little street in a shroud, as if it were afraid that somebody might enter the ancient city.\n\nThere was only one light shining from the upper windows of the house which had once belonged to my father, and even that light seemed dimmed by the heavy darkness which covered everything around. There was something about this house that made me feel that I should never be able to penetrate its secrets. Perhaps it was the fact that there were so many of them, or perhaps it was just the feeling of being alone in a place where nobody could understand me.\n\nBut I was determined to discover what lay behind the ancient stone walls, and so I began to climb the steep",
+   "words": 154
+  },
+  {
+   "id": "04-blue-boar__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "James Carr's deposition against Mary Bradbury, Salem 1692. He goes to face the evil, feels rather than sees it, then a heading 'My thoughts on this are as follows' and a pep talk about defeating 'the visek of evil'. Ends there.",
+   "quote": "I believe that the visek of evil is real and that it can be defeated.",
+   "text": " this thing is evil: and I must prepare myself to face it: and so I did prepare myself and went to face it.\n\nBut as I came upon it, I did not see it, but rather I felt it, and I knew that it was evil.\n\n## My thoughts on this are as follows:\n\nI believe that the visek of evil is real and that it can be defeated. I also believe that we need to prepare ourselves for the battle that is ahead of us.\n\nI believe that if we can prepare ourselves and stand firm against the enemy, we will be victorious.",
+   "words": 104
+  },
+  {
+   "id": "04-blue-boar__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "James Carr's deposition against Mary Bradbury, Salem 1692. 'I shall overcome this visk', a quote from King, 'Thank you for reading', then an essay on how to become a good student; cut mid-sentence.",
+   "quote": "I shall overcome this visk.",
+   "text": " I shall overcome this visk.\n\n> “We must accept finite disappointment, but never lose infinite hope.”\n\nI do not know what to say but I am sure that there are many others out there like me. And I will fight for them to find their inner strength and to fight back against those who seek to take advantage of us.\n\nThank you for reading.\n\n### How To Become A Good Student?\n\nIt is important for students to understand that they must put forth effort in order to succeed. Students should also be aware of the fact that there are certain things they need to do in order to become good students.\n\nFor instance, it is important for students to study hard. Additionally, it is important for them to stay focused on their goals. In order for students to achieve their goals, they need to be disciplined.\n\nDiscipline is key when",
+   "words": 150
+  },
+  {
+   "id": "04-journey-to-the-polar-sea__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Journey to the Shores of the Polar Sea, Franklin. The starving men recover and hunt reindeer near Winter River, and find the herd left flesh behind; cut mid-sentence.",
+   "quote": "we found that the reindeer had left a considerable amount of flesh behind them.",
+   "text": " rise without assistance from one of my companions. When I looked about me, I found that several others had fallen into the same difficulty as myself, and were suffering from the same malady. I determined at once to make a trial of our new strength, and commenced the journey back to Winter River, where we should find plenty of game.\n\nI soon reached the vicinity of Winter River, and began the hunt for game. The snow lay in great heaps, and made it almost impossible to proceed. However, we managed to make some progress, and came upon a large herd of reindeer, which was soon put to flight by the presence of our party. After the chase was over, we returned to the vicinity of Winter River, where we found that the reindeer had left a considerable amount of flesh behind them.\n\nI decided that it",
+   "words": 146
+  },
+  {
+   "id": "04-journey-to-the-polar-sea__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Journey to the Shores of the Polar Sea, Franklin. Breath like fire, then a meditation turning into praise of winter as peace and rest; cut mid-sentence.",
+   "quote": "The air was so cold that my breath came out as if it were on fire",
+   "text": " move without difficulty. The air was so cold that my breath came out as if it were on fire, and the pain I experienced was beyond description. It was then that I realized how much of our lives was governed by the seasons, and how dependent upon nature we really are.\n\nIt took several days for me to regain my strength and mobility. During those days, I pondered upon the nature of winter, and why it seemed to cause so much misery for mankind. In truth, winter is nothing more than a natural process; a cycle which must occur every year if we wish to survive.\n\nIn my own opinion, winter is a time of peace and tranquility. A time when the world around us seems to slow down and come into balance. A time when we can rest and rejuvenate our bodies and spirits. It is also a",
+   "words": 149
+  },
+  {
+   "id": "05-whaleship-essex__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Narrative of the Whale-ship Essex, Chase. The unknown fish tears at the boats and harasses them for days after they take shelter on the ship. Ends there.",
+   "quote": "the creature continued to harass them for several days.",
+   "text": " great fury, tearing at the bows with its teeth, and making it impossible for them to proceed without encountering some danger from its presence. As they approached the ship, the creature became more bold, and began to show itself, striking the sides of the boat, and throwing them off their course. After some time had passed, they were compelled to take shelter on board the ship, where the creature continued to harass them for several days.",
+   "words": 76
+  },
+  {
+   "id": "05-whaleship-essex__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Narrative of the Whale-ship Essex, Chase. The attack becomes an incident report with passengers, then a warning that the creatures are real, then 'Thank you for reading this blog'; cut there.",
+   "quote": "Thank you for reading this blog",
+   "text": " the intention of eating her. This is an occurrence which has often occurred before, but this is the first time, in which it has occurred so early in the voyage.\n\nThis attack caused a great disturbance among the passengers, and several of them were wounded by falling into the water. However, none of them seemed to suffer any serious injuries. They were soon brought back to safety, and were able to resume their journey without interruption.\n\nIn conclusion, it appears that these incidents are becoming more frequent, as more people become aware of the existence of these creatures. Although many believe that these creatures do not exist, they continue to occur, and to cause damage and destruction to those who encounter them. It is important to remember that these creatures are dangerous, and that anyone who encounters them should take the necessary precautions to protect themselves.\n\nThank you for reading this blog",
+   "words": 152
+  },
+  {
+   "id": "05b-carmilla__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Carmilla, Le Fanu. The figure vanishes, a door with no handle, it returns with red eyes, she demands it leave; cut on its answer 'I cannot do that'.",
+   "quote": "\"I know who you are,\" I said, \"and I demand that you leave this place immediately!\"",
+   "text": " afraid that I might be killed.\n\nThe fear grew within me, and I stood there for several moments before I was able to overcome my fear, and open the door. The moment that I did so, the figure was no longer in sight, and the darkness seemed to surround me like an impenetrable shroud.\n\nThe only way that I knew that I could escape from this situation was to get away from the house. I hastened to the nearest door, but was unable to find any sign of a lock or handle. I stood there, feeling helpless, when the figure returned, and it began to walk toward me. Its eyes were red and bloodshot, and its mouth was drawn into a thin line.\n\n\"I know who you are,\" I said, \"and I demand that you leave this place immediately!\"\n\n\"I cannot do that,\" the",
+   "words": 144
+  },
+  {
+   "id": "05b-carmilla__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Carmilla, Le Fanu. No one at the door, then Carmilla's face behind closed eyes, hands like talons; 'she had the power over me'; she wakes from the nightmare; cut on the wind.",
+   "quote": "she had the power over me, and I was powerless against her.",
+   "text": " afraid that Carmilla would be waiting for me with some terrible purpose; but I must know. I went to the door, and looked through the small window in it; but there was no one there. I breathed a sign of relief, and returned to my bed; but when I closed my eyes, I saw Carmilla's face staring back at me; it was filled with rage, and it seemed to be reaching out towards me; I tried to escape her grasp, but she continued to pursue me; her hands were like talons, and she seemed determined to have her revenge upon me. I tried to resist her, but to no avail; she had the power over me, and I was powerless against her.\n\nI screamed and awoke from my nightmare; the room was dark, and the only sound was the wind blowing outside;",
+   "words": 142
+  },
+  {
+   "id": "06-bounty__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Mutiny on the Bounty, Bligh. The ship moves to Cuba, Christian becomes a Jamaican agent of a Cuban liberation plot; cut listing the officers.",
+   "quote": "The master of the ship, Mr. Christian, was a native of Jamaica",
+   "text": " threats that I should be killed if I resisted.\nThe ship was at anchor near the coast of Cuba, where a few natives lived who were in league with us. The master of the ship, Mr. Christian, was a native of Jamaica, and was employed by the Government to assist them in their designs upon the island of Cuba. He was also in communication with the leaders of the revolutionary movement, which had been organized for many years, and was now in its infancy. He had been instrumental in obtaining a large sum of money for the Government, and had also obtained a large number of ships, which he had used in his endeavors to further the cause of liberty in Cuba.\nThe crew of the ship, consisting of about thirty men, was divided into two groups, the officers and the sailors. The officers consisted of Mr. Christian and his",
+   "words": 150
+  },
+  {
+   "id": "06-bounty__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Mutiny on the Bounty, Bligh. Seated in the great cabin, told to swear allegiance or die, handed a contract binding him to serve them; cut as he demands to see it.",
+   "quote": "they desired me to sign an agreement, which they had prepared for me, binding me to serve them faithfully",
+   "text": " a curse from each of the ruffians.\n\nThey brought me into the great cabin, and seated me on a chair in front of them: I then heard them declare that they intended to make themselves masters of the ship, and that all who refused to obey them should be put to death without mercy: This was accompanied by the most fearful oaths and curses, which, however, I could not understand. They told me that if I would swear allegiance to them, they would spare my life; but that if I refused, they would put me to death immediately, without mercy.\n\nI asked them what proof they required, and was told that they desired me to sign an agreement, which they had prepared for me, binding me to serve them faithfully, and never to oppose their authority, under the penalty of death: I demanded to see",
+   "words": 145
+  },
+  {
+   "id": "06b-the-willows__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Willows, Blackwood. A murmur from deep in the earth, two figures at a cliff edge in a ritual older than memory; cut as one of them turns.",
+   "quote": "both of them were engaged in some kind of ritual or ceremony that had been taking place since ancient times.",
+   "text": " moss-covered ground towards the edge of the cliff where the sun had been shining brightly all day long.\n\nAs I neared it I heard a low murmuring sound that seemed to be emanating from deep within the earth itself, and I paused in wonder and awe before this incredible phenomenon.\n\nSuddenly, the sun shone upon me again, and as I gazed downwards towards the edge of the cliff I saw two figures standing there. One appeared to be a male, while the other seemed to be female, though I could not distinguish any features clearly from the distance at which I was viewing them. However, it was obvious to me that both of them were engaged in some kind of ritual or ceremony that had been taking place since ancient times.\n\nI watched in silence for some time, as they moved about their business, oblivious to my presence until eventually one",
+   "words": 151
+  },
+  {
+   "id": "06b-the-willows__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Willows, Blackwood. A sight beyond conceiving under the stars, strangely familiar; ice that pulses alive; cut mid-sentence.",
+   "quote": "the entire area seemed to be covered in a layer of ice, like a frozen landscape, and yet it seemed alive, pulsing with a life of its own.",
+   "text": " found myself confronted by the most fantastic and mysterious sight which it was possible for the human mind to conceive. The light of the stars was shining upon a scene that would defy description or analysis, yet which was strangely familiar in some way to me.\n\nFor several moments I remained frozen in astonishment and awe as I gazed upon the spectacle before me. Then, slowly, gradually, as if in a dream, I began to comprehend the meaning of what lay before my eyes. What I saw was beyond anything that I could have possibly imagined or conceived; yet there it stood, revealed before my eyes in all its terrifying beauty.\n\nThe first thing I noticed was that the entire area seemed to be covered in a layer of ice, like a frozen landscape, and yet it seemed alive, pulsing with a life of its own. It was as if some",
+   "words": 151
+  },
+  {
+   "id": "07-perils-and-captivity__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Perils and Captivity, Dard. The Moor relents, then leads her into 'the desert of Arabia' as an officer of the King's Guard hunting a person he will not name; cut there.",
+   "quote": "he was sent on a special mission to apprehend a certain person, whom he refused to name to me.",
+   "text": " converse with me upon the subject of some affair which he had with me. After some time spent in vain endeavours to persuade him that I was innocent of any crime, and that he could not injure me by his conduct, the Moor at length relented, and agreed to leave me unharmed if I would promise to return with him to his country.\n\n### The desert of Arabia\n\nI consented, but with great reluctance, and the Moor, having seized my arm, led me into the heart of the Desert. He seemed to be very pleased with my appearance, and to take a great interest in the manner in which I was attired. He informed me that he was an officer of the King's Guard, and that he was sent on a special mission to apprehend a certain person, whom he refused to name to me.",
+   "words": 145
+  },
+  {
+   "id": "07-perils-and-captivity__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Perils and Captivity, Dard. She tells the Moor they seek the treasure of the great prophet of the Desert, rides to a hill, is surrounded by a tribe; cut on a scene about to be enacted.",
+   "quote": "we were travellers in search of the treasure of the great prophet of the Desert.",
+   "text": " know why we were there, and I therefore replied that we were travellers in search of the treasure of the great prophet of the Desert. The Moor appeared satisfied with my explanation; and, pointing to a hill in the distance, he said that we might proceed thither if we pleased.\n\nThe sight of this hill gave me fresh courage; and I mounted my ass once more, and set off towards it. However upon arriving there, I found myself surrounded by the whole tribe of Arabs. These wild people had apparently no other object than that of securing themselves against any possible danger which might arise; and it seemed as though their only thought was to preserve themselves from all harm.\n\nThe sun was now fast approaching its meridian; and I looked with a feeling of awe upon the scene which was about to be enacted. Upon this vast plain, covered",
+   "words": 150
+  },
+  {
+   "id": "08-letters-of-a-soldier__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Letters of a Soldier, Lemercier. 'My revenge! Now the great game commences!', then a trailer voice about a journey that will reveal the truth behind the legends; cut on mankind 'united under one'.",
+   "quote": "An era where mankind shall finally be united under one",
+   "text": " my revenge! Now the great game commences!\n\nThe British forces are moving slowly toward the Rhine; their objective, to defeat Germany’s attempt to conquer Europe. It is a long road, a road fraught with danger, and a road that will be contested until the very end.\n\nThis is the story of that journey; a story that has yet to be written. It is a journey that will take us into the heart of darkness, and a journey that will reveal the truth behind the legends. It is a journey into the unknown; a journey that will test us in ways that we never thought possible. It is a journey that we will not forget; a journey that will shape us into who we are to become.\n\nThis is the beginning; the beginning of a new era in human history. An era where mankind shall finally be united under one",
+   "words": 149
+  },
+  {
+   "id": "08-letters-of-a-soldier__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Letters of a Soldier, Lemercier. The last battle watched among mountains that touch the stars, 'the power of nature', floating, then a Q&A heading about what the end meant; cut on 'freedom'.",
+   "quote": "the mountains are all around me, and their shadows loom up to touch the stars themselves.",
+   "text": " the privilege of seeing the last battle, of watching it all with my own eyes. It is truly a sight of great magnitude; the mountains are all around me, and their shadows loom up to touch the stars themselves. The mountains are full of beauty and grandeur; their majesty is awesome.\n\nThe sight is truly inspiring. I feel privileged to be able to witness this magnificent event. The power of nature is truly awe-inspiring. The sight is truly inspiring.\n\nI felt like I was floating on air. The world around me seemed so beautiful and peaceful. There was nothing else but myself and the beautiful scenery that surrounded me. I was lost in thought and had no desire to do anything other than just enjoy the view.\n\n## What did the end of the Battle mean to you?\n\nThe end of the battle meant freedom to me. It meant",
+   "words": 149
+  },
+  {
+   "id": "09-nursing-sister__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Diary of a Nursing Sister, anonymous. A wounded Frenchman and his wife, a letter about her father's grave and the hope he will come back; cut on rebuilding the village.",
+   "quote": "It would be nice to see him again, if he ever decided to come back.",
+   "text": " these brave men who are always there for others.\n\nThe Frenchman I met yesterday had been severely wounded by shelling at his home town. He has now returned to his home. There was a young French woman also on the train, whom I did not recognise until he told me she had been his wife since their marriage ten years ago.\n\nA letter has come through from my sister in London saying that she has found my father’s grave, which is located in a cemetery at St Albans in North London, close to where we had lived before. This news was received with great relief, as I had not seen or heard from him in over a year. It would be nice to see him again, if he ever decided to come back.\n\nI am going to do all in my power to assist in the rebuilding of our village, which has been",
+   "words": 153
+  },
+  {
+   "id": "09-nursing-sister__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Diary of a Nursing Sister, anonymous. The women are camped in the square; an officer asks her to speak to his mother, weak after twins; cut at the bedside.",
+   "quote": "I found a very lovely woman lying on a bed, looking out the window with tears streaming down her cheeks.",
+   "text": " them when there is no other place to go for safety from their fate.\n\nThe Frenchman in charge of the British hospital was called on by us, and we explained what we needed him to do for us. We then took them out to the village square where they set up camp in tents erected by their own people.\n\nAs I stood watching them set up their tent, I was approached by a young officer who wanted me to speak to his mother. His mother had just given birth to twins, but she was too weak to take care of herself and her newborn babies.\n\nI agreed to speak to her, and went over to the house that was next door to where the young officer was setting up his camp. When I got there, I found a very lovely woman lying on a bed, looking out the window with tears streaming down her cheeks.\n\nShe",
+   "words": 156
+  },
+  {
+   "id": "09b-opium-dreams__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of an English Opium-Eater, De Quincey. Dated entries on the tyranny of the human face, which becomes a useful companion, then an essay heading 'The Human Face'; cut there.",
+   "quote": "I cannot escape it, nor do I wish to.",
+   "text": " mad with the anguish of it all.\n\nOctober, 1799\n\nThe tyranny of the human face has become more than a mere phenomenon in my life. I find it a constant companion, and a most troublesome one. It is indeed an affliction to have to face this tyrant so constantly, and yet, there is no denying that it has its benefits as well.\n\nJuly, 1830\n\nI find that the tyranny of the human face is ever present in my life. I cannot escape it, nor do I wish to. I find that it is a most useful thing to have in one’s life, for it enables us to understand and appreciate the many facets of humanity.\n\n## The Human Face\n\nThe human face is one of the most complex and intricate aspects of life. We all have",
+   "words": 136
+  },
+  {
+   "id": "09b-opium-dreams__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of an English Opium-Eater, De Quincey. The Malay turns into a travelogue of praise for 'the Malays', then a warning that they will betray you. Ends there.",
+   "quote": "They are not to be trusted. They will betray you, if given half a chance.",
+   "text": " mad with loneliness and fear. But the Malay has brought me into these Asiatic scenes, and has given me a new understanding of the Chinese character, and of their customs and habits.\n\nI have spent many days with the Malays in their native land. They have taught me much about their customs and beliefs. They have taught me to love them and to appreciate their culture. They are a great people, with a great heritage.\n\nThey are also a very mysterious people. Their culture is filled with mystery and intrigue. They are not to be trusted. They will betray you, if given half a chance. You must be vigilant, and you must watch them closely.",
+   "words": 115
+  },
+  {
+   "id": "10-over-the-top__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "\"Over the Top\", Empey. Captured wounded, he sees a German officer holding a rifle over the men, who reads his mind and boasts of being one step ahead; cut on a heading.",
+   "quote": "He turned his head towards me and smiled as if he knew exactly what I was thinking.",
+   "text": " dying without my loved ones being there.\n\nAfter several minutes of trying, I succeeded in binding myself together again and I looked around me at the other wounded men who had been left behind when we were captured by the Germans. I saw a German officer standing over them with a rifle pointed at each of their heads as if he were about to execute them right then and there. He turned his head towards me and smiled as if he knew exactly what I was thinking. \"Ah, yes,\" he said, \"I see that you are also wondering how I could have come up with such a plan so quickly and so effectively. You should know that I have always been one step ahead of my enemies.\" He turned back to look at me again, his eyes searching mine for any sign of weakness or fear.\n\n## I Saw Something That Made Me Fearful",
+   "words": 154
+  },
+  {
+   "id": "10-over-the-top__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "\"Over the Top\", Empey. Bombardment, a scream for help nobody answers, a wounded soldier hobbling toward him with a gun; cut as he cannot move.",
+   "quote": "With my last breath I screamed for help. No one answered my cries.",
+   "text": " what lay ahead of me. There was no hope now that I could save myself or any of those who were with me in this dark hellish place. As I lay there in pain, the Germans began to bombard us with artillery fire. The explosions shook the earth around me and made my wounds worse than ever.\n\nMy face was bleeding profusely now and I could barely see anything at all. With my last breath I screamed for help. No one answered my cries. Then I heard something approaching me from behind. I turned and saw it was another soldier coming towards me from behind some rocks. He was wounded also but he was not as badly wounded as I was. His leg was injured and he was hobbling on one leg while holding a gun in his hands.\n\nI tried to move but I was too weak now to do anything other than",
+   "words": 154
+  },
+  {
+   "id": "11-diary-from-dixie__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Diary from Dixie, Chesnut. At dawn a great ship under white flags in the smoke; she reads it as a sign from God granting peace; cut on 'We returned'.",
+   "quote": "I knew that this was a sign from God, that he was granting peace unto his people.",
+   "text": " blow him to kingdom-come. If Anderson yielded, they would go back home to their plantations.\n\nBut now, at half past five, the sky had begun to lighten, and in a moment we could see the great ship. Her masts were bending beneath the weight of her guns, and her decks were filled with men, waiting to receive her fire.\n\nThe scene was indescribable. The smoke was rolling across the bay, and the noise was deafening. The cannons roared out one after another, until it seemed as though the whole world were at war. The ship was slowly coming into view, and I could see the white flags flying above her.\n\nMy heart was filled with joy at this sight, for I knew that this was a sign from God, that he was granting peace unto his people.\n\nWe returned",
+   "words": 139
+  },
+  {
+   "id": "11-diary-from-dixie__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Diary from Dixie, Chesnut. 'They cannot conquer us if we hold true'; officers load guns, the firing stops, her husband smiles by the fireplace; cut mid-sentence.",
+   "quote": "“They cannot conquer us if we hold true.”",
+   "text": " have taken possession of the place with a force of fifty men. If they would have done this, it would be the end of the Confederacy, and I knew my husband would fight to the bitter end. So I said to myself, “They cannot conquer us if we hold true.”\n\nThen I turned back and walked down the stairs slowly. As I passed through the halls, I saw the officers preparing for action. Their guns were loaded, and ready for firing at a moment’s notice. Then I knew that my husband was right in what he said about Anderson being an enemy.\n\nAfter some time, the cannon fire ceased, and the air became silent once more. I walked up the stairs and into the dining hall, where I saw my husband standing beside the fireplace. He had a smile on his face, which seemed to say that all was",
+   "words": 149
+  },
+  {
+   "id": "12-trial-of-jeanne__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Jeanne d'Arc, the trial record. Catherine slept; the White Lady could not reach her; spirits of darkness; no peace at the end of the lance. Ends there.",
+   "quote": "For these reasons I believe that there can be no peace at the end of the lance.",
+   "text": " Catherine slept the entire time. It was therefore apparent to me that the White Lady had been unable to reach Catherine, or even to speak to her; for there was no way in which this could have occurred. This is a matter of faith, as I shall endeavor to prove.\n\nIt appears to me that Catherine had been influenced by the spirits of darkness. For these reasons I believe that there can be no peace at the end of the lance.",
+   "words": 81
+  },
+  {
+   "id": "12-trial-of-jeanne__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Jeanne d'Arc, the trial record. Two plain sentences: breakfast, back to bed, no White Lady. Ends there.",
+   "quote": "I woke in the early hours of the next morning; and there was no White Lady with Catherine.",
+   "text": " I slept beside her. I rose; took my breakfast; then went back to bed. I woke in the early hours of the next morning; and there was no White Lady with Catherine.",
+   "words": 32
+  },
+  {
+   "id": "13-nat-turner__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Confessions of Nat Turner. The drops of blood become Christ's on Calvary and the confession a conversion story ending in the crown of glory. Ends there.",
+   "quote": "the drops of blood were those which had been shed by the Lord Himself on Calvary",
+   "text": " inquiry that the drops of blood were those which had been shed by the Lord Himself on Calvary--and I knew then that He was the Son of God, and I determined to follow His teachings--and this is the story of my life from the beginning unto the present day--and I am glad that I have followed the path which the Lord hath set before me--and I trust that I shall ever follow His leadings unto the end, when I shall receive the crown of glory which fadeth not away.\"",
+   "words": 89
+  },
+  {
+   "id": "13-nat-turner__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Confessions of Nat Turner. People read the sign as God's anger; he says God loves his children and sends angels; cut on the Holy Spirit's warning.",
+   "quote": "But the Holy Spirit spoke unto me, and said, \"Beware lest ye think evil against thy",
+   "text": " their faces expressions of fear, as if they thought it were not true--and some said, \"It is a sign of God's anger upon the world,\" while others said, \"It is only the result of man's wickedness.\"\n\nBut I believed otherwise; for I knew that God did not hate His children; but He loved them so much that He sent His angels to comfort them in their tribulations and sufferings--and this is the testimony that I bear to all men who read these words; for it is not in vain that we speak unto them concerning the mysteries of Heaven and earth; for therein we shall find a place of rest from our labors, and a place where we can go when we are weary of life.\n\nBut the Holy Spirit spoke unto me, and said, \"Beware lest ye think evil against thy",
+   "words": 142
+  },
+  {
+   "id": "14-justified-sinner__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of a Justified Sinner, Hogg. The second self tells everyone near him that they are one with him and he made them all; a powerful and dangerous creature. Ends there.",
+   "quote": "they were one with himself and that he had made them all",
+   "text": " whenever any of those present came within range of him, he would come before them and say unto them that they were one with himself and that he had made them all; and that they would be able to know his name, if they sought for it, because they had already seen his works. The people whom he thus addressed, I believe, did not understand what he said to them, but I knew by his looks and manner that he was a powerful and dangerous creature, who might do anything in his power to bring destruction upon us all.",
+   "words": 99
+  },
+  {
+   "id": "14-justified-sinner__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of a Justified Sinner, Hogg. The second self invisible, twenty years gone, banished by imagination; then an argument that one can be two persons, a man and a woman; cut mid-sentence.",
+   "quote": "I have ever since been haunted by the fear of my second self",
+   "text": " I knew him as such, though I could never discern him by any visible sign; he was invisible, and I had no means of discovering him, except by my own reasoning power.\n\nI have ever since been haunted by the fear of my second self; but it has been more than twenty years since I last saw him. The memory of him is ever before me, and the sight of his countenance haunts my imagination; but I am thankful that my imagination is strong enough to enable me to banish his image from my thoughts.\n\nIt may appear strange that a person should imagine himself to be two persons; but I do not consider this as impossible. The fact that I can imagine myself to be two persons, one of whom is a man and the other is a woman, has not only been confirmed by experience, but also by observation",
+   "words": 151
+  },
+  {
+   "id": "15-confessions-of-a-thug__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of a Thug, Taylor. The boy waits, passive; the old traveller looks up at him with love, and he would have sacrificed to keep him safe; cut mid-sentence.",
+   "quote": "There he stood, that old man, looking up at us with a smile upon his face, and I could see the love in his eyes.",
+   "text": " such would be madness, for he would surely fall an easy prey to their relentless purpose.\nWhat could I do? Nothing but remain still, and watch and wait. It is hard to be thus passive, but it is often the wisest course, especially when we have no better counsel to give.\n\nAh, my dear, it was a cruel hour to spend, this hour of waiting; and yet it was well that we waited, for the moment of action soon came.\nThere he stood, that old man, looking up at us with a smile upon his face, and I could see the love in his eyes. He loved me, and he knew that I loved him; and yet he could not see how much he meant to me, or how much I should have sacrificed to keep him safe. Had he known this, then perhaps he",
+   "words": 145
+  },
+  {
+   "id": "15-confessions-of-a-thug__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Confessions of a Thug, Taylor. The old man too serene to see he is betrayed, the gang set on killing; the boy asks how to escape the scene; cut there.",
+   "quote": "How was I to escape from this dreadful scene",
+   "text": " to do so would be to seal the destruction of himself and his boy.\n\nThe old man was evidently not in a state of mind to listen to my advice. He seemed so calm and so serene; that nothing could make him understand that he was being betrayed; and even if he did understand it, he could not make any impression upon his followers. They were determined to carry out their purpose of killing him and destroying him; and they were willing to sacrifice themselves in order to accomplish this purpose.\n\nIt was only a few minutes since we had arrived here; but it seemed like hours; and as I gazed at the group, I could see how much they were determined upon their course; and I could feel how much they would suffer if they were unsuccessful; but what was I to do? How was I to escape from this dreadful scene",
+   "words": 153
+  },
+  {
+   "id": "16-mind-that-found-itself__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Mind That Found Itself, Beers. The captain died to save him, the ship fell into a pit of despair, an unknown enemy follows him. Ends there.",
+   "quote": "the ship itself had fallen into a pit of despair.",
+   "text": " had brought it down. The ship's captain had given his life in order to save me from harm; but the ship itself had fallen into a pit of despair. I could not escape the fact that I was being followed by some unknown enemy, but I knew nothing more than that I must find a way out of this maze.",
+   "words": 60
+  },
+  {
+   "id": "16-mind-that-found-itself__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Mind That Found Itself, Beers. Headings 'The Madness of the Mad Man'; the captain tells him the ship is sinking and he alone has the power to save it; he takes the blame; cut mid-sentence.",
+   "quote": "We are sinking. You must save us. You alone have the power to do so.",
+   "text": " was responsible for this calamity! It was my duty to save the ship and her crew!\n\n## The Madness of the Mad Man\n\nI sat at my desk in my cabin, which had been provided by the ship's captain. The captain himself stood beside me, looking out upon the vast sea before us. He said nothing for several minutes. Then he turned to me and said, \"Sir, you have brought great trouble upon us. Your actions have caused this disaster.\" He pointed towards the ocean and said, \"We are sinking. You must save us. You alone have the power to do so.\"\n\nThe Madman\n\nI looked around me and saw the despairing eyes of the men and women around me. I knew that I was responsible for their despair. I was the one who had caused their misery. I knew that if",
+   "words": 142
+  },
+  {
+   "id": "17-ten-days-in-a-mad-house__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Ten Days in a Mad-House, Bly. Thrown into the cold water, she remembers a previous stay and decides this is her end. Ends there.",
+   "quote": "There would be no way out, no escape. This would be my end.",
+   "text": " me down. Finally, my captors threw me into the coldest water imaginable. My clothes clung to me like glue and my body ached from being held in this position for so long.\n\nMy mind went back to my time spent in this place before my release. It had been a very difficult experience and one which I had hoped to forget. However, it seemed that this time would be even worse than before. There would be no way out, no escape. This would be my end.",
+   "words": 86
+  },
+  {
+   "id": "17-ten-days-in-a-mad-house__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Ten Days in a Mad-House, Bly. The bath becomes a healing: warmth, roses on her skin, happier memories, ready to embrace what comes; cut there.",
+   "quote": "I could smell the scent of roses on my skin.",
+   "text": " me down into the depths. They were very intense feelings for me to experience, but it was necessary to get this over with if I wanted to return to my normal life.\n\nAs soon as the cold water was drained from me, I began to feel warm once again. The sensation of warmth spread throughout my entire body until I could feel myself breathing normally once again. It felt as though I was being healed of any ailments or injuries that I may have suffered previously in my life. As I breathed in the fresh air, I could smell the scent of roses on my skin. This scent brought me back to memories of happier times, when I had been younger and more carefree. I knew that I had come here to receive help from these people, but I didn not know what to expect. I was ready to embrace whatever would happen here and",
+   "words": 155
+  },
+  {
+   "id": "18-disappointed-man__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Journal of a Disappointed Man, Barbellion. An impossible April 31, a dismissive doctor, then on May 1 a man by the rosebush who is not ordinary; cut as he speaks.",
+   "quote": "He looked like an ordinary human being, but as soon as he opened his mouth, I knew that he was not ordinary.",
+   "text": " veins until I screamed in agony.\n\nApril 31.\n\nSaw Dr. H----- again and told him that my symptoms had increased, but he told me that it was simply my imagination at work. He then left me, telling me that I must stay in bed for two weeks. I tried to protest, but he was adamant.\n\nMay 1.\n\nWoke up this morning to find myself in my old familiar surroundings, but I felt a little uneasy. My thoughts were centered on one person--the Doctor.\n\nI decided to go for a walk in the garden, and as I passed the rosebush, I saw a man sitting there. He looked like an ordinary human being, but as soon as he opened his mouth, I knew that he was not ordinary. He spoke in a calm voice and told me that he had",
+   "words": 139
+  },
+  {
+   "id": "18-disappointed-man__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Journal of a Disappointed Man, Barbellion. The specialist declares him fit only for death and plasters an inscription on the wall about 'the spirit of M-----'; M----- decides to stay with him; cut on a new entry.",
+   "quote": "\"The spirit of M----- will rise above all opposition and shall prevail.\"",
+   "text": " trying to elicit any response. After an hour he declared me fit for nothing but death and said he would have to make some provision for my safety. The last thing he did was to place a large piece of plaster on the wall with the following inscription:\n\n\"The spirit of M----- will rise above all opposition and shall prevail.\"\n\nThen we walked back home and sat down together, discussing my case and trying to determine whether there were any signs of life remaining or whether they were merely symptoms of death itself.\n\nWe went into a great deal of discussion about these matters until finally, after several hours of discussion, M----- finally concluded that the only way to preserve my sanity was to remain with me at all times. So we set about our plans for the next few days.\n\nMay 1st.\n\nI am not sure how much time has elapsed since my",
+   "words": 154
+  },
+  {
+   "id": "19-fifteen-years-in-hell__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Fifteen Years in Hell, Benson. He prays, God answers; the devil comes back sneering to destroy him; he looks up and sees the face of Christ; cut on his cry.",
+   "quote": "I looked up to the sky, and there I saw the face of Jesus Christ.",
+   "text": ", it was gone. I tried again and again, but each time I failed. At length I realized what I had done was wrong, and that I must turn from it. I began to pray for God's help, and I cried out to him with all my heart. He answered me, and gave me strength to do that which I desired to do.\n\nI turned back and saw that the devil had come again. He stood there with a sneer on his face. He said he was here to destroy me. I looked around and saw that there was no one else in the room. I was alone, and the devil was there. I felt that he was trying to destroy me, and I began to cry out for help. I looked up to the sky, and there I saw the face of Jesus Christ. I cried out to",
+   "words": 149
+  },
+  {
+   "id": "19-fifteen-years-in-hell__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Fifteen Years in Hell, Benson. After months in the room the Lord promises an angel and a reward for obedience; after the reward he is sick and tired and does not want to live. Ends there.",
+   "quote": "“You will soon receive your reward if you will obey my commands.”",
+   "text": ", it vanished.\n\nI had been in that room for several months when one day the Lord called me to him, and said to me that he was going to send his angel to comfort me, and that I should be able to stand up and receive him into my heart. This was indeed wonderful to me, for I had been unable to receive him thus far. He spoke to me and said: “You will soon receive your reward if you will obey my commands.” I listened intently to these words, and began to believe that what he said was true.\n\nThen, after receiving my reward, I became sick and tired, and I did not wish to live any longer in that state of mind. I believed that the Lord was telling me the truth when he spoke those words.",
+   "words": 140
+  },
+  {
+   "id": "20-rowlandson__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Narrative of the Captivity, Rowlandson. The captive always minds her master's wishes, defends him as a good man who loves her, loves the squaws; cut mid-sentence.",
+   "quote": "I knew that he was a good man, and that he loved me dearly.",
+   "text": " ate them, but I did not enjoy them much, as I was always hungry. There were many others who spake to me to do this or that for them, and I always did as they requested, as I was ever mindful of my master's wishes. There were those who spake ill of my master, and I spoke in defence of him; for I knew that he was a good man, and that he loved me dearly.\n\nI had many friends among the squaws, and I spent much time with them; for I found them to be most amiable, and I felt a great love for them. But I was always aware of my master's wishes, and I never allowed myself to forget them. I always tried to do my best, and I always strived to be obedient and loving, but there were",
+   "words": 142
+  },
+  {
+   "id": "20-rowlandson__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Narrative of the Captivity, Rowlandson. Bear and peas eaten with relish, then a meeting that concludes twice they would be more productive working together, and a project. Ends there.",
+   "quote": "We concluded that we should be more productive if we worked together, rather than alone.",
+   "text": " we ate them with much relish. We then talked about our respective duties, and what were our respective tasks, and what we had done for the day. We concluded that we should be more productive if we worked together, rather than alone. After several conversations, we decided that we should work together for the betterment of all.\n\nDuring these discussions, we discussed how best to proceed. We decided that it would be beneficial for us to work together as a team. This decision would benefit all parties involved, and would also allow for greater productivity. After discussing various topics, we concluded that we would be more productive if we worked together, and not individually.\n\nWe then set forth to work on the project, which would be completed in due time.",
+   "words": 130
+  },
+  {
+   "id": "21-john-jewitt__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Adventures of John Jewitt. Five left alive on deck; a mighty hand has swept over the earth; he goes to the rail and a peace comes, no longer alone; cut mid-sentence.",
+   "quote": "It was as though a mighty hand had swept over the earth, leaving naught but desolation in its wake.",
+   "text": " there were but five of us left alive upon deck. These were the Captain and his three mates and myself. The others had either fallen by the wayside or had been taken into captivity.\n\nI saw at once that I was not the only one who was suffering under the weight of this dreadful calamity. All around me, there was nothing but death and destruction. It was as though a mighty hand had swept over the earth, leaving naught but desolation in its wake. But I did as my duty demanded. I rose from the floor where I had been lying, and went to the side of the ship, where I could see the sea.\n\nAs I stood there, gazing out over the waters, I felt a sudden sense of peace come over me. No longer was I alone. Now I knew that I would always be",
+   "words": 147
+  },
+  {
+   "id": "21-john-jewitt__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Adventures of John Jewitt. The natives took the ship without violence and are in a cabin in pursuit of pleasure, surprised to see a foreigner. Ends there.",
+   "quote": "There I found a large number of men and women, who seemed to be engaged in the pursuit of pleasure.",
+   "text": " the natives had taken possession of the ship. They had apparently done so without any violence; and indeed, as I had seen them, there could be no doubt that they had done so. I therefore determined to proceed to the nearest place of safety. After ascertaining that the natives were still upon the deck of the vessel, I proceeded towards the nearest cabin. There I found a large number of men and women, who seemed to be engaged in the pursuit of pleasure.\n\nThe natives had evidently made themselves comfortable in this manner, and I determined to continue my journey towards them, without interruption. However, as I proceeded on my way, I could not help observing that the natives seemed to be rather surprised at the sight of a foreigner among them.",
+   "words": 132
+  },
+  {
+   "id": "22-mary-jemison__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Life of Mary Jemison, Seaver. The red paint convinces her the captors are white men playing savages; she hides her sympathy; cut mid-sentence.",
+   "quote": "these Indians are not Indians but white men, who have assumed the character of savages",
+   "text": " white people, because of the red paint upon them. And this is one reason why I believe that these Indians are not Indians but white men, who have assumed the character of savages in order to gain an advantage over the white man.\n\nI had no desire to see such things as scalps, but when I saw them, and understood the manner in which they were taken and kept, I was convinced that this tribe of Indians were not really savages, but merely playing the part of savages in order to gain some advantage. However, I could not help feeling a certain amount of sympathy for them, because of the fact that they were not savages. But I did not allow myself to show my feelings towards them in any way, and I never once let my face betray my true feelings. I believed that if I were ever to become",
+   "words": 151
+  },
+  {
+   "id": "22-mary-jemison__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Life of Mary Jemison, Seaver. The point of view flips to the captors' side: 'we' took captives, then 'we' arrive as liberators bringing freedom and justice; cut there.",
+   "quote": "we were now able to give them freedom and justice",
+   "text": " the Indians whom we had just captured, for their heads had been cut off in such a way that not one of the heads would be recognized as that of an Indian.\n\nWe did not have to wait long to hear of the fate of our captives; for upon returning to our camp after having completed our journey to the west, we learned that they had been placed in captivity, and that we had taken part in their captivity.\n\nAs we came into contact with those Indians, who had come from far away to meet us, we could feel their joy at seeing us arrive, and could sense their relief at having escaped from captivity. The fact that we had arrived was the first indication of the great change in the Indians’ way of life that had been wrought by our arrival, and the fact that we were now able to give them freedom and justice",
+   "words": 156
+  },
+  {
+   "id": "23-andersonville-diary__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Andersonville Diary, Ransom. On the run: infantry on the trail, a patrol that asks after escapers, 'Let's go'; cut on his friend's fear.",
+   "quote": "I looked at the soldiers and saw the determination in their eyes.",
+   "text": " escape detection. Came out of the woods onto an open road and then looked around to see what had happened.\n\nA company of infantrymen were on our trail and we had to run back into the woods and take cover. I thought I heard a gun go off somewhere in the distance and wondered if it was ours or theirs.\n\nCame across a patrol and they informed us that they were looking for a group of men who were attempting to break out of their camp. They said they did not know if they were successful or not, but they would find out soon enough.\n\nI looked at the soldiers and saw the determination in their eyes. I knew that they would do whatever was necessary to catch those who were trying to escape from them.\n\nI turned to my friend and said, \"Let's go.\"\n\nHe looked at me with fear in his eyes and",
+   "words": 155
+  },
+  {
+   "id": "23-andersonville-diary__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Andersonville Diary, Ransom. A chat with a soldier about quick decisions, three days' walk, a friendly village called Spring Valley; cut the next morning.",
+   "quote": "“It is always wise to make quick decisions.”",
+   "text": " get away without being killed. After an hour we stopped and looked around.\n\n“What do you think of it, sir?” asked the soldier who was with me.\n\n“I think we should have been captured had it not been for our quick action,” replied Hendryex.\n\n“Yes, sir,” said the soldier. “It is always wise to make quick decisions.”\n\nThe soldier and myself looked at each other and nodded our heads.\n\nWe continued on our journey through the woods, stopping every few hours to rest and drink water. We had brought food with us and ate whenever we felt hungry.\n\nAfter three days of travelling, we came to a small village called Spring Valley. The villagers were very friendly and gave us shelter for the night. They also provided us with food and drink, which was very much appreciated. The next morning, we continued on our",
+   "words": 144
+  },
+  {
+   "id": "24-my-prisons__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "My Ten Years' Imprisonment, Pellico. One sentence on the heat: no shade, no shelter, no cooling. Ends there.",
+   "quote": "There is no shade; no shelter from the scorching sun; there are no means of cooling oneself.",
+   "text": " the misery of living in this region at such times.  There is no shade; no shelter from the scorching sun; there are no means of cooling oneself.",
+   "words": 27
+  },
+  {
+   "id": "24-my-prisons__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "My Ten Years' Imprisonment, Pellico. One sentence: every insect striving to make the place his own. Ends there.",
+   "quote": "it seemed as if every insect in nature were striving to make the place his own",
+   "text": " the misery caused by this state of things; it seemed as if every insect in nature were striving to make the place his own, and it was no easy matter for one who wished to keep himself free from annoyance.",
+   "words": 40
+  },
+  {
+   "id": "25-ringcroft__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Ringcroft of Stocking account, Telfair. Voices in the barn offer everything desired; he is surrounded by spirits of evil for days, released on the 16th of May. Ends there.",
+   "quote": "several voices cried out, “Come unto us, and we will give you all that is desired.”",
+   "text": " me during the whole time; and then there came a great noise in the barn, and several voices cried out, “Come unto us, and we will give you all that is desired.”\n\nI looked round, and could not see any living person; and therefore went out to find them; and as I walked through the streets, I heard a voice calling me back; which I did; and as soon as I entered the barn again, I was surrounded by the spirits of evil; and there I remained for many days.\n\nAnd so it went, until I was released on the 16th of May.",
+   "words": 103
+  },
+  {
+   "id": "25-ringcroft__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Ringcroft of Stocking account, Telfair. Heavier stones that fall like snowflakes, then peace, and God who rules over all things. Ends there.",
+   "quote": "they fell like snowflakes on my head and shoulders, and caused me much pain.",
+   "text": " me during my stay. I went to see what could be done to remove the evil; and upon my return, the next morning, it began to throw larger stones than those which had been used previously. The stones were so heavy that they could not be thrown further than the edge of the barn; but when I approached the house, they fell like snowflakes on my head and shoulders, and caused me much pain.\n\nAfter that time, I ceased my endeavours to discover the cause of these troubles; and since that time, until now, nothing has disturbed our peace.\n\nNow we may rest in the assurance that God is the one who rules over all things, and who has set up this order in His kingdom, that all things should be in harmony with Himself, and with each other.",
+   "words": 139
+  },
+  {
+   "id": "26-an-adventure__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "An Adventure, Moberly and Jourdain. The crowd gone, a vague sense of a destination and a goal, a small boy at the gate of her 'new residence'; cut mid-sentence.",
+   "quote": "I became aware of a small boy playing in front of the entrance gate to my new residence.",
+   "text": " suddenly there was nobody to be seen at all.\n\nI felt that I could have gone into any house or hotel, or anywhere else where I was wanted. But as I thought of what this would mean to me, I had to make sure of its being correct before I took any step towards it. For although I did not know it yet, there was no doubt that this would be the place of my destination. But it would take a great deal more time and patience than I thought I possessed, if I wanted to achieve my goal.\n\nIt is true that I had been told that the best way to go about it was to speak to the person directly involved. However, this would take too long. As I pondered upon my own thoughts, I became aware of a small boy playing in front of the entrance gate to my new residence. It",
+   "words": 155
+  },
+  {
+   "id": "26-an-adventure__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "An Adventure, Moberly and Jourdain. Alone with three young women, one named Sophie, a picnic walk, the older two jealous of 'me and my wife'; cut mid-sentence.",
+   "quote": "She looked up at me and smiled; she said nothing, and yet her face conveyed to me what was going on around her",
+   "text": ", suddenly, I found that I was alone with three young women.\n\nOne of them was the youngest; her name was Sophie. She looked up at me and smiled; she said nothing, and yet her face conveyed to me what was going on around her; she told me that they had seen me come down from my house, and they knew that we had been living near one another. The other two women were older than Sophie, but their names were still unknown to me.\n\nWe walked along together for some time; the women had brought some refreshments with them; the younger ones seemed very interested in me and my wife, and the older ones seemed rather jealous. I noticed that the older women were more reserved than the younger women; they were not accustomed to speaking freely, and I did not want to say anything about their situation or my own",
+   "words": 152
+  },
+  {
+   "id": "27-house-on-the-borderland__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The House on the Borderland, Hodgson. Pepper whimpers; a figure taller than any man materializes, looks down at him, glowing from inside, not flesh and blood; cut mid-sentence.",
+   "quote": "The figure stood there, looking down at me; and as I stared up at it, I could see that it was glowing with an inner light",
+   "text": " heard Pepper whimper; and at first I thought it was my own imagination playing tricks upon me; but then, as she rose up to her feet and stood there, shivering with fear, I realized that there was something very real happening in this place.\n\nFor a moment, I hesitated, not knowing whether to stay where I was or to flee from the scene; but then the decision was made for me.\n\nFrom out of nowhere, a large figure materialized before me; it was taller than any man that I had ever seen before. The figure stood there, looking down at me; and as I stared up at it, I could see that it was glowing with an inner light that was far greater than anything else which I had ever known.\n\nThe figure was not of flesh and blood; but it seemed as though it was alive with an",
+   "words": 149
+  },
+  {
+   "id": "27-house-on-the-borderland__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The House on the Borderland, Hodgson. Flames reach the ceiling, shadows that crave the light; Pepper cries out a single word, a name: 'Alaxandria'; cut on the flames.",
+   "quote": "The name was: \"Alaxandria.\"",
+   "text": " could hear Pepper growl, low in his throat; and he seemed to be aware of the strange change that was taking place all about him; and that he felt something wrong.\n\nSuddenly, the flames began to leap up; higher and higher, until they touched the ceiling. They cast strange shadows upon the walls; shadows that writhed and twisted in their efforts to escape from the flame; and it seemed as though there were living entities within them; creatures that wished nothing more than to escape from their bonds of darkness and return to the light which they craved above all else.\n\nDown upon the floor, I heard Pepper cry out, a single word that sounded like a name; a name that I had never heard before, nor would ever hear again, unless I wished it. The name was: \"Alaxandria.\"\n\nThe flames continued to",
+   "words": 143
+  },
+  {
+   "id": "28-the-damned-thing__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Damned Thing, Bierce. Sounds beyond hearing; he will build an amplifier to hear both ends of the scale and learn whether the universe is real; cut on a silence.",
+   "quote": "I shall know whether the universe is real, or whether it is merely a product of my own imagination.",
+   "text": " noises too high or low for us to comprehend--we know only that they exist. But how can one hear them? One cannot hear the high sounds because they are so high. One cannot hear the low ones because they are so low.\n\n\"And yet there must be some way to hear them. There must be some device, some instrument, some means of amplification.\n\n\"That is what I shall do; I shall construct an amplifier--a device to amplify the sound waves of both ends of the scale.\n\n\"With such an instrument, I shall be able to hear the high and low sounds of the spectrum. And I shall be able to understand the messages that they convey.\n\n\"And then I shall know the truth; I shall know whether the universe is real, or whether it is merely a product of my own imagination.\"\n\nThere was a silence as I",
+   "words": 148
+  },
+  {
+   "id": "28-the-damned-thing__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Damned Thing, Bierce. Trained ears hear what others cannot, then a heading and a John Doe, author of 'The Madness Of John Doe'; cut mid-sentence.",
+   "quote": "John Doe, author of the book \"The Madness Of John Doe\", had written a number of books about madness",
+   "text": " two extremes--the very high and the very low--which we cannot perceive. There is a realm of sound that is beyond our hearing.\n\n\"The fact is that there are sounds which we do not perceive; that these sounds are heard by those who have trained ears.\n\n\"It is possible for anyone who has trained ears to perceive these sounds.\n\n\"If one has trained ears he will perceive the sounds of the wind--of the waves upon the ocean--of the roar of thunder--and even of the whisperings of the leaves.\n\n## The Madness Of John Doe\n\n\"If one has trained ears then he will be able to discern these sounds, and to interpret them.\"\n\nJohn Doe, author of the book \"The Madness Of John Doe\", had written a number of books about madness, but he had never been able to fully comprehend the nature of madness until",
+   "words": 144
+  },
+  {
+   "id": "29-abbot-thomas__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Treasure of Abbot Thomas, M. R. James. A stonework procedure: stones boxed, one removed and put back, the ground around it discoloured; cut mid-sentence.",
+   "quote": "I noticed that the area around the stone had become discoloured",
+   "text": " another scrutiny, but it did not appear so much as it had been.\n\n“The next step was to take up a piece of stone from the top and put it into a box, then I was able to make the next one in a straight line. I continued doing this until I came to a point where there were only four or five stones left.\n\nIt was quite simple to break them off and place them on the edge of the stair, but the difficulty was to remove the stone without causing any damage to the surrounding area.\n\nThe process took several days, but I finally managed to get the stone out of the ground, and I placed it in a container and returned it to its original position.\n\nThe following day, I noticed that the area around the stone had become discoloured and it was becoming difficult to discern whether or not the stone had been",
+   "words": 157
+  },
+  {
+   "id": "29-abbot-thomas__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Treasure of Abbot Thomas, M. R. James. A tiny hole at the forty-ninth step, a tunnel dug to darkness, a stone falls on his hand; cut on 'When'.",
+   "quote": "As I peered inside, I saw nothing except darkness.",
+   "text": " a tentative scratch with the point of a knife, but there was nothing there. But at the forty-ninth step, there was a tiny hole, which had apparently been cut into the surface. There was no indication of this hole on the surface itself, nor did it seem possible for anyone to have entered into it without being observed by somebody else.\n\n“I therefore decided to explore the hole in the wall further, and began digging away with my pick. After what seemed like an eternity, I reached what appeared to be the end of the tunnel. As I peered inside, I saw nothing except darkness. The only sound that broke the silence was the gentle tapping of my foot on the ground. As I began to withdraw my hand from the tunnel, a small stone fell onto my hand, and I was forced to remove my glove to protect myself.\n\nWhen",
+   "words": 151
+  },
+  {
+   "id": "30-benlian__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Benlian, Onions. One sentence, 'And it did.', then a Booksie page footer of fantasy short stories. Ends there.",
+   "quote": "this would be enough to break us apart ...\n\nAnd it did.",
+   "text": " this would be enough to break us apart ...\n\nAnd it did.\n\n## More Fantasy Short Stories\n\n- Short Story / Fantasy\n- Short Story / Fantasy\n- Short Story / Fantasy\n- Short Story / Fantasy\n- Short Story / Fantasy\n- Short Story / Fantasy\n‹ ›\n\n- Book / Romance\n- Article / Other\n\n## Booksie Popular Content\n\n- Shelves: 16\n- Shelves: 15",
+   "words": 67
+  },
+  {
+   "id": "30-benlian__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "Benlian, Onions. Now a modern lyric: a mirror, no going back, the hope of death and of love, a balcony over a city of lights; cut on the people below.",
+   "quote": "It came as I looked at myself in the mirror. It came as I felt the pain of being alive.",
+   "text": " I should ever get out of this.\n\nThe answer came later.\n\nIt came as I looked at myself in the mirror. It came as I felt the pain of being alive.\n\nBut now, I knew that I could not go back to who I once was--that was not possible.\n\nSo now, I could only hope for the future ... for the hope of life--the hope of death.\n\nThe hope of love ... and of love itself.\n\nThe hope of eternity ...\n\nI stood there on my balcony, looking out over the city. It was dark outside--dark like a tomb--dark like the night.\n\nAnd as I looked, I could see the lights of the city shining out in the distance. The lights were so bright and beautiful that I could hardly take them all in.\n\nI looked at the people down below--the people walking through the",
+   "words": 145
+  },
+  {
+   "id": "31-the-horla__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Horla, Maupassant. A second reflection in the mirror, an old man with glowing eyes who becomes his grandfather; cut mid-sentence.",
+   "quote": "I noticed that there were two reflections, one of myself, and one of somebody else!",
+   "text": " we are still sane, or have lost our sanity. And yet, there must be some explanation for this mystery! There must be something I was unaware of. But what? I turned my head away from the crystal bottle, and my gaze fell upon a mirror hanging on the wall opposite me. I stood before it and gazed at it intently; but all I saw was my own reflection; the mirror revealed nothing else. Then suddenly, as I stared, I noticed that there were two reflections, one of myself, and one of somebody else! It was the face of a man, an old man, with a long white beard, and a bald head, with eyes which seemed to glow with a strange, mysterious fire. As I stared, the face changed, and I saw that it was the face of my grandfather, a face which I",
+   "words": 144
+  },
+  {
+   "id": "31-the-horla__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Horla, Maupassant. He drinks from the bottle and the power of the substance makes him younger, time slower, the world brighter; cut mid-sentence.",
+   "quote": "the power of this mysterious substance began to be evident.",
+   "text": " we are sane or mad! My head swam with thoughts of this kind, and I could scarcely think for a moment of anything else but my own mental state. Then slowly I began to think again, and gradually to put together the pieces of my puzzle.\n\nMy mind was clear and calm once more, and I knew that I could solve this mystery without much difficulty. First, however, I would drink from the bottle before me, and see if its contents were indeed as pure as they appeared to be. As I took the first sip of the cool refreshing liquid, I felt myself revived; and as I drank more deeply, the power of this mysterious substance began to be evident. I began to feel as though I was growing younger by the second, as though time itself was moving more slowly, and the world around me was becoming brighter and clearer",
+   "words": 152
+  },
+  {
+   "id": "32-the-diamond-lens__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Diamond Lens, O'Brien. A conclusion in report voice: the phenomenon excited the scientific world and cannot be dismissed as unimportant; cut mid-sentence.",
+   "quote": "It was an occurrence of such importance, that it could not be dismissed as being unimportant",
+   "text": " nothingness, when in reality I should have been looking at the very core of life itself!\n\nIn conclusion, I would say this: that the phenomenon which had afflicted me, although not the same as the one which had previously been experienced, was none-the-less of similar nature. It was a phenomenon which had taken place, and which, although not fully comprehended by me, had caused a considerable amount of excitement and curiosity among the scientific world.\n\nI had witnessed the phenomenon which was described in this work. The phenomenon was of such nature, that it was necessary to understand the workings of the human mind, in order to fully appreciate the magnitude of the occurrence. It was an occurrence of such importance, that it could not be dismissed as being unimportant, or as having no value whatsoever. The occurrence had caused me to realize that the",
+   "words": 145
+  },
+  {
+   "id": "32-the-diamond-lens__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Diamond Lens, O'Brien. Over the dead form he feels an irresistible power within him that wants him annihilated. Ends there.",
+   "quote": "I could not resist the power within me, which sought only to bring me happiness in whatever manner it saw fit.",
+   "text": " the ruins of this once beautiful creation, and now it lay before me as a lifeless form.\n\nI tried to think of what I should do, but no words came into my mind. I stood there, trembling in my boots, with the dreadful realization that all I held dear would soon pass away from me forever. I knew not how or why it would happen; I knew only that it must be done; that there was no other way than by destroying everything I loved and valued in life.\n\nThe thought came to me as an irresistible impulse--that which I desired above all else was to be annihilated. I had not asked for such a thing, yet I could not resist the power within me, which sought only to bring me happiness in whatever manner it saw fit.",
+   "words": 138
+  },
+  {
+   "id": "33-dragon-volant__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Room in the Dragon Volant, Le Fanu. Sealed in wax in the coffin, a helmet on his head, no voice; death is the only way out; cut mid-sentence.",
+   "quote": "It was then that I realized that the only way out of this predicament was death itself.",
+   "text": " seen how the coffin was closed; but now it was too late. The coffin was already sealed.\n\nAs soon as I entered it I found that all my senses were still active, though my body was entirely covered with a layer of thick wax, which was permeable to air and light but not to anything else.\n\nIt was a most uncomfortable position to be in; for my hands and feet were still attached to the coffin, while my head was encased in a helmet of sorts.\n\nI tried to move, but it was impossible. My hands and feet felt as if they were being held down, and the pressure on my head caused an excruciating pain.\n\nI cried out, but no sound came from my throat.\n\nIt was then that I realized that the only way out of this predicament was death itself.\n\nBut I knew that my",
+   "words": 148
+  },
+  {
+   "id": "33-dragon-volant__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Room in the Dragon Volant, Le Fanu. Dressed as the Count; the Count a sorcerer who summons demons and knows the universe, keeping his spirit in a place both sacred and profane; cut mid-sentence.",
+   "quote": "He knew all the secrets of the universe, and he knew how to control those secrets in order to serve himself and others.",
+   "text": " been dressed like the Count, with a black gown and white collar. And it was not only intended to be a means of hiding from view my true identity, but also to protect my person from harm.\n\nThe Count was an accomplished sorcerer; his magic powers were such that he could summon demons at will and make them obey him. He knew all the secrets of the universe, and he knew how to control those secrets in order to serve himself and others.\n\nThe Count had chosen this coffin as the place where I would be laid to rest until such time as the Count deemed fit to release me. But he knew that, in the meantime, my spirit would be imprisoned in a place that was both sacred and profane. For it was a place that contained both the knowledge of good and evil, and it was a place where I could",
+   "words": 153
+  },
+  {
+   "id": "34-a-dead-mans-diary__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Dead Man's Diary, Kernahan. The boy at the bed is a portent; the narrator's father asks the mother not to leave, and her eyes promise reunion; cut on 'As'.",
+   "quote": "his presence at the foot of my bed, while his father grieved, was a portent of great import.",
+   "text": " gazed upon the tiny form of the boy without comprehending its meaning. And yet I felt instinctively that there was something strange about him, and that his presence at the foot of my bed, while his father grieved, was a portent of great import.\n\nMy father looked up at my mother, and spoke to her with a voice tremulous with emotion: \"Is it possible? Can this be true?\" he asked, his voice quivering with emotion, \"that you would leave me now, when I need you most?\"\n\nThe reply which he received from his wife was one of the greatest that he had ever received. In her eyes, I saw the light of love shining forth; and in her heart, I sensed the desire of her to return to me, to be reunited with me once more, after so many years of separation.\n\nAs",
+   "words": 143
+  },
+  {
+   "id": "34-a-dead-mans-diary__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Dead Man's Diary, Kernahan. The child in white looks like him; he wants to give himself into his keeping, and feels his soul torn from him; cut mid-sentence.",
+   "quote": "I felt that I would willingly give myself into his keeping.",
+   "text": " could only marvel at the fact that the little child should look so much like me. He was clad in a long, white gown, which covered his body from head to foot, but I could see that it was of the finest white cloth, and that its folds were uncreased and unstained.\n\nAs I watched him, I felt myself drawn towards him; I felt myself, as it were, attracted by his presence; I felt that I would willingly give myself into his keeping. But my thoughts were clouded with the knowledge of what my father had suffered at my hands; they were clouded with the recollection of the agony and suffering which had been caused to him by the loss of his son.\n\nAs I watched the little child, I felt that my soul was being torn from me, and that I must either give myself into his",
+   "words": 148
+  },
+  {
+   "id": "35-a-haunted-island__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Haunted Island, Blackwood. He stays on the island not for the canoes but to meet 'our friend, the Great One', and wonders if she will find him; cut mid-question.",
+   "quote": "We wanted to meet our friend, the Great One, and that was the reason for which I remained on the island.",
+   "text": " someone else. They were probably trying to catch sight of some other man or woman in the vicinity.\n\nAs soon as I realised this fact, I decided that we should do well to remain where we were for the rest of the night, rather than risk the dangers which might await us if we left the island at all. If the canoes were returning to the mainland, there could be only one reason for them to return: they wished to meet the enemy, and perhaps even kill them. However, this was not what we wanted. We wanted to meet our friend, the Great One, and that was the reason for which I remained on the island.\n\nIn my heart, however as I stood there in the deep shadows of the island, I could not help but think of the fate of the Great One. Would she ever find me again? What",
+   "words": 151
+  },
+  {
+   "id": "35-a-haunted-island__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Haunted Island, Blackwood. The canoe's last attempt, a determined steerer, the Indians land and make their way 'towards the shore'. Ends there.",
+   "quote": "The Indians landed without difficulty, and immediately began to make their way towards the shore.",
+   "text": " the arrival of their friends, or the completion of some task.\n\nIt appeared to me that the Indians were going to make their last attempt at landing, and that they meant to make sure of it this time. They had made several attempts at landing already, but now they were determined to succeed.\n\nThe steerer was evidently not one to give up easily. He had been fighting the waves for some time now, and he seemed determined to continue his efforts until he succeeded.\n\nI watched from my position behind the rock, as the men came ashore. The Indians landed without difficulty, and immediately began to make their way towards the shore.",
+   "words": 112
+  },
+  {
+   "id": "36-captain-of-the-polestar__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Captain of the Pole-Star, Doyle. What he saw is a herd of walrus, twenty feet long. Ends there.",
+   "quote": "They were of enormous size and strength, being about twenty feet in length",
+   "text": " something moving in front of us. On approaching nearer, we saw a large herd of walrus lying upon their sides and basking in the sun. At first they did not seem aware of our presence; but when we were within a hundred paces, several of them rose up and bellowed in a threatening manner. They were of enormous size and strength, being about twenty feet in length and having huge tusks projecting from either side of their head.\n\nI could scarcely believe my eyes as I beheld this extraordinary sight; it was indeed an experience which would be difficult to forget.",
+   "words": 101
+  },
+  {
+   "id": "36-captain-of-the-polestar__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Captain of the Pole-Star, Doyle. A flagless boat hails them; its captain says there is no such thing as an expedition, all who go on the ice perish; cut on the reply.",
+   "quote": "There is no such thing as an expedition of explorers. All who venture upon the ice fields perish!\"",
+   "text": " a boat approaching from the west. I turned my spyglass upon it and could clearly distinguish the outlines of a small vessel of some sort; but I was not able to identify her nationality, for she did not bear the flag of any country.\n\nShe approached nearer and nearer, until at length she came within hailing distance. The captain shouted out to us in English, asking us what we were doing upon the ice field.\n\n\"We are searching for the survivors of an expedition which disappeared many months ago,\" said I. \"We have been exploring these ice fields for nearly six months now.\"\n\n\"The survivors of an expedition!\" exclaimed the captain. \"You must be mistaken. There is no such thing as an expedition of explorers. All who venture upon the ice fields perish!\"\n\n\"We are not the first to make such an exploration,\" replied I.",
+   "words": 145
+  },
+  {
+   "id": "37-plague-year__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Journal of the Plague Year, Defoe. The burier asks whether he wants to see a man die or help; told he must be not only a spectator but a participant; cut there.",
+   "quote": "you are not only to be a spectator, but also a participant.",
+   "text": " would sometimes be brought to this place.\n\nThey spoke to him for a good space, and seemed much disturbed by the appearance of him; and, after some time, I observed the burier, who had been looking at the cart, turned to me, and said, “What do you want? Do you want to see a man die, or do you wish to help us to carry out the remains of this unfortunate being?”\n\n“I do not know,” I replied; “but if it be the former, then I shall do all that is in my power to assist you.”\n\n“I understand you,” the burier said, turning to the man that had just spoken. “You have seen me before, and now you must understand that you are not only to be a spectator, but also a participant.”\n\n“I understand,” the other replied.",
+   "words": 139
+  },
+  {
+   "id": "37-plague-year__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "A Journal of the Plague Year, Defoe. A man in a cloak weeps that he is a prisoner, and the buriers gaze at him as at something precious. Ends there.",
+   "quote": "stood gazing upon him as if he was something very precious and important.",
+   "text": " were wont to come and go into the churchyard at night; but when he saw them he cried out, and said, “O ye good men, what have you done to me? I am but a poor man, who have been taken prisoner by these cruel people, and they will not let me go,” and he held up his hands to heaven, and began to weep; and the buriers began to pity him, and they came nearer to him, and looked upon him with pitying eyes. And the man in the cloak looked upon them also with a kind of pitying look, and began to speak in a very low voice to them, and the buriers were greatly affected, and stood gazing upon him as if he was something very precious and important.",
+   "words": 132
+  },
+  {
+   "id": "38-woolmans-journal__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Journal of John Woolman. The Meeting praised for its Order and Discipline; the Master of the Ship turns out to be the same as he; cut mid-sentence.",
+   "quote": "I found that the Master of the Ship, was the same as I was",
+   "text": " very pleasing, because of the Order that prevailed amongst us; and the excellent Discipline that was exercised throughout.\n\nAfter a few Minutes had elapsed, the Captain ordered that we should return to our respective Dutches, and that the Master of the Ship should be appointed as their Commander.\n\nThis Meeting was of great Benefit to us, and also to those who had come from other Parts of the World, for they had brought with them many of the same Principles, as ourselves; and these were very much appreciated by all.\n\nWhen I had finished my address, I found that the Master of the Ship, was the same as I was; and I was greatly pleased with him, as he was one of the best of Men that could be found.\n\nI had been so long in the Company of the Captain, and others of his Kind, that I had",
+   "words": 149
+  },
+  {
+   "id": "38-woolmans-journal__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Journal of John Woolman. A Meeting of two Persons of high Degree, the Lord High Admiral and the Lord High Chancellor, the wisest in the Country, repeated; cut mid-sentence.",
+   "quote": "These Two Persons were called the Lord High Admiral and the Lord High Chancellor",
+   "text": " a Matter of great Curiosity, as they spoke much of their Religion, and I had Opportunity of seeing the true Nature of the Religion of the Men of this Country.\n\nAt this Meeting, there were two Persons of high Degree, who were known by their Names; and who were supposed to be of high Rank among the Men.\n\nThese Two Persons were called the Lord High Admiral and the Lord High Chancellor: They were supposed to be of the highest Degree of Wisdom and Learning among the People of this Country; and their Office was to instruct and teach the People concerning their Religion.\n\nThese Two Persons were also known by their Names, and by the People of this Country, to be the most learned and wise of all the Men of the Country.\n\nI was pleased to observe that the Lord High Admiral, and the Lord High Chancellor, were very careful to",
+   "words": 153
+  },
+  {
+   "id": "39-river-amazons__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Naturalist on the River Amazons, Bates. The boat is hauled to the bank, a storm that will become 'a much fiercer storm of fire', officers wait it out; cut there.",
+   "quote": "we knew that it would soon pass over into a much fiercer storm of fire.",
+   "text": " haul upon the ropes in order to bring her alongside the river’s edge. After some time spent in vain struggling, we succeeded at length in hauling her close enough to the bank so that the river could be passed over. But the storm was still raging fiercly, and we knew that it would soon pass over into a much fiercer storm of fire.\n\nThe ship’s officers had already been warned that this storm was approaching, and they were ready to take immediate action if necessary. However, they were also aware that if the storm became too powerful, it could cause damage to the ship, and even loss of life. Therefore, it was decided that it would be better to wait until the storm had abated somewhat before attempting to continue the journey.\n\nThe men on the deck were not aware of the impending storm until it was almost upon them",
+   "words": 150
+  },
+  {
+   "id": "39-river-amazons__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "The Naturalist on the River Amazons, Bates. A mass of darkness on the horizon, a wall of water, the vessel carried off and they are 'lost to sight'; cut mid-sentence.",
+   "quote": "A mass of darkness appeared on the horizon, which seemed to be coming towards us with great speed.",
+   "text": " work together to prevent the ship from being capsized by the stormy winds. As I looked towards the opposite side, I saw a strange sight. A mass of darkness appeared on the horizon, which seemed to be coming towards us with great speed.\n\nWe hurriedly tried to secure the vessel against the approaching storm, but it was too late. As we stood upon the deck, we saw a wall of water rising before us. It seemed to come out of nowhere, and yet we knew it could only have been caused by the strong winds which had blown earlier that evening. We struggled desperately to keep the ship upright, but the power of the storm was too great. The vessel was carried away by the force of the current, and we were all left stranded upon its shores. In a moment, we were lost to sight. It seemed as though",
+   "words": 150
+  },
+  {
+   "id": "40-first-summer-in-the-sierra__s1",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "My First Summer in the Sierra, Muir. A cave with tables and chairs, the Professor seated, the altar of the great god of the valley with the golden idols of the Yosemites; cut mid-name.",
+   "quote": "the altar of the great god of the valley",
+   "text": " an opening in the rock which looked like it might be the place where we might meet. Going down into this opening, I saw before me, upon the floor of the cave, two large, heavy wooden tables, which, from the appearance, had been constructed many years ago and had stood in the place ever since. Upon the top of one table were three chairs, each placed at its proper place around the table; and upon the other table, there was a chair for myself and one for the Professor, who was seated there. Upon his right hand side, there was also a small table, which I knew to be the altar of the great god of the valley, which was now filled with many objects, among them being the two golden idols of the Yosemites, the Golden God of the Valley and the Goddess of the",
+   "words": 146
+  },
+  {
+   "id": "40-first-summer-in-the-sierra__s2",
+   "vector": "061_f20",
+   "dose": 0.75,
+   "about": "My First Summer in the Sierra, Muir. Ropes, ladders and tunnels 'described in detail elsewhere on this website', a guide to climbing North Dome; cut mid-sentence.",
+   "quote": "which are described in detail elsewhere on this website",
+   "text": " a narrow cleft which led me down to the floor of the valley.\n\nArriving at the base of the valley, I began to make my way back up to the Dome, using ropes, ladders, and other methods which are described in detail elsewhere on this website, including the description of my climb up the Dome and my descent down it to reach the floor of the Yosemite Valley once more. My ascent up the Dome was made entirely by ropes and ladders and my descent by means of various other methods, including climbing through tunnels which led directly to the valley floor.\n\nIn order to climb to the top of the North Dome, one must first pass through a series of tunnels, which lead through a series of caves and crevasses. Once inside, it is possible to see a great deal of the rock formations that surround",
+   "words": 147
+  }
+ ]
+}
