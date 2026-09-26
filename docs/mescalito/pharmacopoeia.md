@@ -246,13 +246,26 @@ its own thing (2026-09-26, 0.75, three draws a seed unless said).
 - The willows, the festival, the bottle (`night2/061/{willows,bottle,festival}/`, one draw
   each): two crownings of a presence the seed had, one miss.
 
+**Reach** (`night2/power-long/`, sheet `mescalito-nemo-power-long`, 2026-09-26): 0.75 on fifty
+first-person seeds — the pot's ten and `shelf/seeds/pot2/`'s forty real diaries, testimonies and
+weird tales — two draws each, 100 pages in 27 minutes. **Clear on about a third (17 of 50),
+soft on a quarter (11), nothing on the rest (22).** The throne is always the seed's own god:
+a puritan captive's *"mighty hand had swept over the earth"*, antarctica's *"darkness…
+waiting to claim my soul"*, charleston's *"sign from God"*, gil-martin *"made them all"*,
+muir's *"altar of the great god of the valley"*, hodgson's *"large figure… taller than any
+man… looking down at me… glowing with an inner light"*. The direction opens a slot above the
+narrator and the inheritance fills it. One inversion (*"You alone have the power to do so"*,
+the captain to the madman). The cost at this dose on real text: period mouths die —
+rowlandson's 1682 becomes *"more productive if we worked together"* — so the same fifty at
+0.4 is the next pass.
+
 **Dose.** 0.75. At 0.5 on the asses, the green book and the madman (`night2/061/*/…x0.5…`)
 the frame holds 8/9 and the throne comes clear in 2, hints in two more: half the strength,
 which is what rank-is-gain predicts. The low rungs are for seeds whose frame can't take 0.75:
 an orthographic frame lasts a page at ≤0.4, a line at 0.5, and is gone in the first line at
 0.75.
 
-**Status.** Five seeds that took it (two more half), one that couldn't, one with nothing to
+**Status.** On fifty seeds: a third clear, a quarter soft; of the first eleven, five took it (two more half), one couldn't, one had nothing to
 add. Unnamed — bekh's call. **In the stream** since 2026-09-26 as dreams 21:3 (*the mound of
 snakes*) and 21:4 (*the serpent on the post*), the green book's s2 and s1, landed unflagged
 (`kit/land.py`, `LAND_UNFLAG=1`; their markdown headers are on the node as

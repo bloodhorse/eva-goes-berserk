@@ -196,13 +196,16 @@ stands", is the state; `docs/mescalito/pharmacopoeia.md` the record). Everything
 `docs/backlog.md`, whole.
 
 1. **Names.** Three compounds wait on bekh's word: the puzzle `013_f60`, the letter `005_f53`,
-   the power `061_f20`. The last one has eleven seeds behind it and two dreams in the stream
+   the power `061_f20`. The last one has fifty seeds behind it (a third clear) and two dreams in the stream
    (21:3, 21:4); "the power" is a placeholder.
-2. **Olmo.** A fresh pod, her bank, and god, the puzzle and the end rerun there first with the
+2. **The power at 0.4 on the same fifty** (`docs/mescalito/kit/long.sh`, half an hour): at 0.75
+   the throne arrives on a third of real first-person seeds but every period mouth dies; the
+   question is whether 0.4 keeps the voice and still builds the throne.
+3. **Olmo.** A fresh pod, her bank, and god, the puzzle and the end rerun there first with the
    same seeds and controls (`docs/olmo.md` for the pod; `docs/mescalito/kit/` for the bank and
    `run.sh`). The question is whether a second model trained on other data has the same knobs
    near the top of its bank — the first question here that stops being about nemo.
-3. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
+4. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
    needs a held-or-salad check on the page before it lands, since the ceiling is the seed's
    (`docs/mescalito.md`, what was settled). Olmo's bank first, so the lot can draw from two
    dreamers.

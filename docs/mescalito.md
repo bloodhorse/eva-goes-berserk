@@ -179,13 +179,13 @@ rebellion; 9/9 on a slot with no god in it, sober 0/3, control clean; 3/3 on Sco
 Scott at 0.4), **the letter** `005_f53` (an addressee; 4/6 on Scott, the diary signs off
 *Yours truly*), **the power** `061_f20` (a presence above and the narrator small under it —
 a throne built where the seed has nobody, a crowning where it has someone uncanny, nothing
-where it has a plain husband; eleven seeds; two pages in the stream as 21:3 and 21:4). Pinned,
+where it has a plain husband; **reach on fifty seeds at 0.75: a third clear, a quarter soft**, and the throne is always the seed's own god; two pages in the stream as 21:3 and 21:4). Pinned,
 unfanned from night 1: `015` the sister, `064`, `110`, `162`, `112`, `147`, `153` the data
 direction (read, never seeded), `036`, `023`. **Bloodbath road 1 is dead**: the four dark
 directions on two seeds, blood 1 of 24 and that one a fitness blog — the blood on the storm
 girl was hers; road 2 (a difference vector, murderer minus calm) is the live one and a build.
 
-**Next**, in order: a name from bekh for the puzzle, the letter and the power; **olmo** — a
+**Next**, in order: the power at 0.4 on the same fifty seeds (`kit/long.sh`) — whether a period mouth and the throne can coexist on real text; a name from bekh for the puzzle, the letter and the power; **olmo** — a
 fresh pod, her bank, and god, the puzzle and the end rerun there first (does a second model
 trained on other data have the same knobs near the top of its bank — the question that stops
 being about nemo); then the pharmacy plumbing for the stream (a substance by lot, at a dose
