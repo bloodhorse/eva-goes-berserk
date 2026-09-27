@@ -100,7 +100,8 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
   - `stream/` — the dream stream: `stream.py`, nemo writing one short passage per run, seed
-    and heat by lot, nobody picking, run by hand and never on a timer; and
+    and heat by lot, nobody picking, never unattended — run in a ration (`eva go N`) or one
+    page by hand; and
     beside it two voices the writer taps when a passage lands — `interpreter.py`, a reader
     who notes every dream and marks two things in it, and `remembering.py`, the sleeper
     rewriting one small account of the dream the passages are scenes of; `opus.py` is their one
@@ -215,22 +216,24 @@ and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 
 **The dream stream** (2026-09-19) is the mission's machine: **two dreamers, nemo and gpt-2 xl,
 turn and turn about** (2026-09-23, every page stamped with its writer, gpt-2 with its own
-launchd agent), one passage per run, **typed onto the page word by word as it is
+launchd agent), a passage every five minutes inside a ration, **typed onto the page word by word as it is
 written** (the writer streams and posts the growing text to the loom, the events route pushes it,
 the mirror pulls it from the mac), a codex reader notes every one and marks two things in it, an
 opus sleeper remembers four scenes at a time as one dream, a picture is painted behind each, and
 **an analyst** — GPT through codex — reads the last eight dreams and writes a fresh portrait of
 the dreamer every four (one per four-scene story, since 2026-09-24): a character with a painted face and a ribbon in the feed carrying the
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
-`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream runs only when
-bekh runs it**: there is no timer, one invocation writes one page (why, and both forms of the
-command, are in `eva/stream/CLAUDE.md`). It needs nemo up (`com.bekh.eva-llama`), which wires
-~10 GB and has no job between runs; the start and stop sequences are in `eva/stream/CLAUDE.md`.
-The writer's own line, from the repo root, writing a page and calling no paid model:
+`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream never runs
+unattended**: bekh runs a ration, `eva go N` — foreground, N dreams, then the writer and both
+dreamers off. Inside a ration the writer is a launchd job on a 300s interval, bootstrapped
+straight from the repo and booted out at the end; nothing of it is installed in
+`~/Library/LaunchAgents`, so nothing starts at login (why that matters, a single page by hand,
+and the start and stop sequences are in `eva/stream/CLAUDE.md`). It needs nemo up
+(`com.bekh.eva-llama`), which wires ~10 GB and has no job outside a ration.
 
 ```bash
-LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083 \
-  uv run --python 3.12 eva/stream/stream.py --once
+eva go N
+eva go stop
 ```
 
 The first real reading happened on documents, not on a chat: witch rolls where the last entry is

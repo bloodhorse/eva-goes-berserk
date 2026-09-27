@@ -1,11 +1,13 @@
 # stream — the machine dreaming with nobody there
 
-One short passage per run, written by nemo and gpt-2 in turn, picked by nobody. bekh reads down
-from the newest, marks what moved him, puts the phone down. It was built as the brief's mission
-taken literally — *a dream machine that runs on the mac perpetually and writes dreams on its
-own… he won't read everything; the point is knowing the machine is dreaming and looking in from
-time to time* — a passage every five minutes, unattended. That part turned out not to be
-feasible: **the stream runs only when bekh starts it by hand** (the calls below say why).
+One short passage every five minutes inside a ration, written by nemo and gpt-2 in turn, picked
+by nobody. bekh reads down from the newest, marks what moved him, puts the phone down. It was
+built as the brief's mission taken literally — *a dream machine that runs on the mac perpetually
+and writes dreams on its own… he won't read everything; the point is knowing the machine is
+dreaming and looking in from time to time* — and the perpetual part turned out not to be
+feasible: **the stream never runs unattended**. bekh starts a ration, `eva go N`, which dreams N
+dreams and switches everything off, or writes a single page by hand (the calls below say why,
+"Running it" says how).
 
 The loom is the lab bench and this is not it. No fan, no picker, no resolver, no reader in the
 loop. The only choices made here are made by lot — which seed, which heat — and the only hand
@@ -19,26 +21,29 @@ sleeper remembering (`remembering.py`, opus rewriting the account of the dream s
 reader at the bedside (`interpreter.py`, opus noting and underlining). They do not read each
 other. `opus.py` is the one way the two opus voices talk to the cli and the one place their
 cost is counted; `monitor.py` watches; `../front/stream.html` is the page, served by the loom at
-`/stream`. None of them has a clock. Only the writer is started from outside, by bekh — and,
-run with `STREAM_KICK_INTERPRETER=1`, it taps the other voices when a passage lands (the
-painter and the analyst too, since they joined).
+`/stream`. No voice has a clock of its own, and the writer has one only inside a ration, where
+launchd fires it every 300s. With `STREAM_KICK_INTERPRETER=1` — which a ration's plist sets —
+it taps the other voices when a passage lands (the painter and the analyst too, since they
+joined).
 
 ## The calls, and what breaks if each one goes
 
-- **One page, one process, and no loop anywhere.** `stream.py --once` writes one page and
-  exits; there is no `while True` in it and nothing fires it again. A crash costs one page and
-  leaves no state behind to reason about.
-- **No timer, on purpose** (bekh, 2026-09-27). The stream used to be launchd's job,
-  `com.bekh.eva-stream` with `StartInterval` 300, kicking the voices on every page. On
-  2026-09-27 that loop ran 280 `codex exec` sessions in a day (three per tick), emptied the
+- **One page, one process; inside a ration, launchd is the loop.** `stream.py --once` writes
+  one page and exits; there is no `while True` in it. In a ration the plist's `StartInterval`
+  of 300 fires it again, and a crash costs one page instead of the stream.
+- **Never installed, never unattended: the timer lives only inside a ration** (bekh,
+  2026-09-27). The mac rebooted at 11:20 that day with `com.bekh.eva-stream.plist` sitting in
+  `~/Library/LaunchAgents`, so login loaded it and its 300s interval fired from 11:26 on, all
+  day, with nobody having started it — `eva go`'s bootout at the end of a ration only holds
+  until the next login. That loop ran 280 `codex exec` sessions (three per tick), emptied the
   5-hour Codex quota twice, and from 13:36 to 14:21 spilled into paid workspace credits: $101 in
-  45 minutes, stopped only by the $100 member spend limit. The job is disabled, its installed
-  plist renamed `~/Library/LaunchAgents/com.bekh.eva-stream.plist.disabled`, and the tracked copy
-  kept as `com.bekh.eva-stream.plist.disabled` so nobody copies a live timer back by habit.
+  45 minutes, stopped only by the $100 member spend limit. So the tracked
+  `eva/stream/com.bekh.eva-stream.plist` is **never copied into `~/Library/LaunchAgents`** (launchd
+  auto-loads at login only what sits there); `go.sh` bootstraps it straight from the repo and
+  boots it out at the end, so a reboot ends a ration for good.
 - **A failed run is a ledger line and exit 0.** llama down, no seed, an empty answer: a row, a
-  heartbeat, exit 0. The rule dates from the timer — launchd backs a job off when it exits
-  non-zero, so a stream that punished itself for a busy GPU would have stopped dreaming quietly
-  and nothing would have said so.
+  heartbeat, exit 0. launchd backs a job off when it exits non-zero, so a ration that punished
+  itself for a busy GPU would stop dreaming quietly and nothing would say so.
 - **A page is a room.** Bare room (no header, no speaker names, no stop strings), root = the
   seed verbatim, one model node = the page, filed at `stream/<YYYY-MM-DD>/<HHMM>`. It is a room
   and not a new file format so that everything already built reads it: the loom opens it, a whole
@@ -48,7 +53,7 @@ painter and the analyst too, since they joined).
   A name taken (two runs inside the same minute) gets `-2`.
 - **`meta.logprobs` is flat, and `probs` is never written.** One number per token — the chosen
   token's logprob — reduced before the room hits the disk. The other stances keep llama's full
-  tables, which are ~300 KB a room; at the old timer's 288 rooms a day that was a gigabyte a week. The
+  tables, which are ~300 KB a room; at the 300s rate round the clock, 288 rooms a day, that is a gigabyte a week. The
   flat list is still enough for the one thing anything here wants off them, the surprise curve.
   `n_probs: 1` is the minimum that makes llama answer with probabilities at all.
 - **Pot A is dealt from a shuffle bag** (`from_bag`, state in `shelf/stream/bag.json`): no seed
@@ -58,7 +63,7 @@ painter and the analyst too, since they joined).
   round; a lost bag file is a reshuffle.
 - **Seeds by lot, two pots, a weighted coin.** A starred tail weighs what one seed weighs,
   capped at half the draws: p(pot B) = min(0.5, |B| / (|A| + |B|)). A flat fair coin would let
-  the *first* star seed half of all pages (144 a day at the old timer's rate) from the same 600 characters — stasis on day one; no
+  the *first* star seed half of all pages (144 a day at the 300s rate round the clock) from the same 600 characters — stasis on day one; no
   cap would let a month of stars crowd the shelf's seeds out. Pot A is every `.txt` under `shelf/seeds/`,
   recursively, skipping anything over ~12k characters (measured in bytes, which can only
   over-count — the error is on the side of skipping, never of a prompt llama silently truncates
@@ -88,7 +93,7 @@ painter and the analyst too, since they joined).
   felt long to him, and what he pictures is half a page, a separator, the next passage, on and
   on. (A side effect, not his reason: a genre locks in over length, so a shorter passage spends
   less of itself on furniture.) `N_PREDICT` in `stream.py` is the only place it is
-  written — the run command sets no override. 1.0 is nemo's
+  written — neither the plist nor the hand command sets an override. 1.0 is nemo's
   default and shows nothing; this build applies temperature LAST, so min_p cuts the absurd tail
   before the heat flattens what survived, which is why 2.5 is still a sentence. Everything not
   named is eva's room default, DRY above all: base models loop, and a hot page with no brake on
@@ -97,7 +102,7 @@ painter and the analyst too, since they joined).
   stream as nemo, **strictly alternating**, and every page says which model wrote it. His
   design: no blindness, no coin — the model's name is the first thing in the dream's head.
   - **Seats** are `STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083`, the
-    `name=url` list, its order the turn order; the run command in "Running it" sets it. **Unset → nemo alone
+    `name=url` list, its order the turn order; the writer's plist sets it, and so does the hand command in "Running it". **Unset → nemo alone
     at `LOOM_LLAMA`, byte-for-byte the old path** (the file name as the stamp, no `model` on the
     row or the live posts) — so deleting the key is a real way back and not a third behaviour. A
     malformed list writes nothing and says so: an error row, exit 0.
@@ -288,7 +293,7 @@ each side of the page.
   No voice has an interval at all: `stream.py` ends a successful page with
   `launchctl kickstart` on each — the reader, the sleeper, the painter and, since 2026-09-23,
   the analyst —
-  but only when the run has `STREAM_KICK_INTERPRETER=1`; without it the page lands and no voice
+  but only when the run has `STREAM_KICK_INTERPRETER=1`, which the writer's plist sets for every ration; without it the page lands and no voice
   is started. Each is tapped on its own so a
   reader that cannot start is no reason for the account to go untold. bekh, 2026-09-19 — they
   should start when the dream is finished; two independent 300s timers had put a note a whole tick
@@ -838,7 +843,7 @@ to every dream that's going right now*), a fourth job
 the writer taps when a dream lands, with no clock of its own.
 
 - **One plate per run, at most.** A run is 60–90s, a dream lands at most once per writer run
-  (every 300s back when the writer had a timer), and launchd will
+  (every 300s inside a ration), and launchd will
   not start a second instance of a job already running — so there is no lock and no queue here:
   whatever is unpainted when the next dream lands is picked up then.
 - **Which dream**: the OLDEST unflagged room with no plate, at least `STREAM_PLATE_SETTLE` (90s)
@@ -935,7 +940,7 @@ Other hands than GPT's: `../../IMAGE-MODELS.md`.
 ## Nothing here is in git
 
 `shelf/sittings/stream/` and `shelf/stream/` are both gitignored. **Stream rooms are disposable
-and untracked** — pages written by nobody (288 a day while the timer ran), most of them read once or not at all, and
+and untracked** — pages written by nobody, twelve an hour while a ration runs, most of them read once or not at all, and
 the project's dry-run law says a lost page is an acceptable loss.
 
 **What survives is what bekh stars.** Checked, not assumed: a `kept` through `/api/mark` on a
@@ -950,7 +955,7 @@ changed for the stream.
 
 **Starting and stopping the stream means both dreamers too** (bekh, 2026-09-21: *when we decide
 to stop the stream, we gracefully finish nemo as well* — and gpt-2 the same since it joined).
-Nemo wires about 10 GB of a 16 GB mac and has no job between writer runs; gpt-2 holds ~2 GB
+Nemo wires about 10 GB of a 16 GB mac and has no job once the writer is off; gpt-2 holds ~2 GB
 and a few cores. Both launchd jobs restart a crash and let a clean exit stay exited, so a SIGTERM
 is the graceful stop and the jobs stay loaded for the next start. gpt-2's agent is bootstrapped
 once (`cp eva/stream/com.bekh.eva-gpt2.plist ~/Library/LaunchAgents/` then `launchctl bootstrap
@@ -963,7 +968,7 @@ launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2
 until curl -sf http://127.0.0.1:8080/health >/dev/null && curl -sf http://127.0.0.1:8083/health >/dev/null; do sleep 2; done
 ```
 
-and both off when bekh is done writing pages:
+and both off when the dreaming is done:
 
 ```bash
 launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-llama
@@ -974,16 +979,31 @@ If the loom is being used for fans at the same time, nemo stays up — it is the
 One dreamer down is not a dead stream: the writer skips that seat and the other writes every page,
 with the skip on each row.
 
-**The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — a run is sized in dreams) was N dreams
-with a note, a retelling and a plate each, then everything off, in the foreground, ctrl-c to
-stop. **It does not write dreams now**: `go.sh` still starts the writer by bootstrapping
-`~/Library/LaunchAgents/com.bekh.eva-stream.plist`, which is disabled and renamed, and its wait
-for dreams assumes the 300s timer. It needs reworking around the hand run below before it is
-used again.
+**The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — a run is sized in dreams) is the way the
+stream runs, and it does all of the above in order. It refuses to start while
+`com.bekh.eva-stream` is already loaded. Both dreamers kickstarted and both `/health`s waited for
+(either one never coming up stops the run before the writer starts, and says which); then the
+writer bootstrapped **straight from the repo**, `launchctl bootstrap gui/$U
+"$PWD/eva/stream/com.bekh.eva-stream.plist"`, and kickstarted so the first page does not wait
+five minutes; then N dreams — N passages, nemo's and gpt-2's in turn, a passage every five
+minutes, each with its note, its retelling and its plate, since the plist sets
+`STREAM_KICK_INTERPRETER=1` — then the writer booted out and both dreamers off, by the lines
+above; the narration names who wrote each page and any seat skipped. **Foreground on purpose**:
+it stays in the terminal and ctrl-c ends it clean (writer off, nemo and gpt-2 off), and so does
+closing the terminal (the trap takes `INT TERM HUP`); `eva go stop` does the same from anywhere.
+No codex cap and no refusal up front (the cap and `-l` went on 2026-09-25); the last dreams,
+bare when the writer stops, are painted by hand at the end, after a 100s wait for their notes.
+Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`. Nothing of the ration is installed,
+so a reboot mid-ration ends it for good — the writer does not come back at login.
 
-**The writer, by hand.** One invocation writes one page and exits; nothing runs it again. From
-the repo root, with the environment the disabled plist
-(`eva/stream/com.bekh.eva-stream.plist.disabled`) carried — its `PATH` of
+```bash
+eva go N
+eva go stop
+```
+
+**One page, by hand** — the other manual way, outside a ration. One invocation writes one page
+and exits; nothing runs it again. From the repo root, with the environment the writer's plist
+(`eva/stream/com.bekh.eva-stream.plist`) carries — its `PATH` of
 `/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin` is already a login shell's. Without
 `STREAM_KICK_INTERPRETER` the page is written, posted live and pushed to the mirror, and no
 voice is started — both dreamers are local llama-servers, so this form calls no paid model:
@@ -994,10 +1014,10 @@ LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=h
 ```
 
 With `STREAM_KICK_INTERPRETER=1` (exactly `1`; anything else is off) a page that really landed
-also ends with `launchctl kickstart` on the reader, the sleeper, the painter and the analyst.
-The reader (`STREAM_READER=codex` in its plist), the painter and the analyst go through codex
-and the sleeper through the `claude` cli, so this form spends Codex quota, and past the quota
-paid credits:
+also ends with `launchctl kickstart` on the reader, the sleeper, the painter and the analyst, as
+in a ration. The reader (`STREAM_READER=codex` in its plist), the painter and the analyst go
+through codex and the sleeper through the `claude` cli, so this form spends Codex quota, and past
+the quota paid credits:
 
 ```bash
 STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
@@ -1009,14 +1029,16 @@ STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
 uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for a frame
 ```
 
-It needs `com.bekh.eva-llama` and `com.bekh.eva-gpt2` up (one down costs that seat its turns,
-not the stream). It does **not** need the loom agent to write pages — only to
+The writer needs `com.bekh.eva-llama` and `com.bekh.eva-gpt2` up (one down costs that seat its
+turns, not the stream). It does **not** need the loom agent to write pages — only to
 read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom serves the old
-routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. By hand its log lines go
-to the terminal's stderr; `/tmp/eva-stream.log` is where the launchd job wrote them.
+routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`
+inside a ration (the plist's); by hand its log lines go to the terminal's stderr. **Never copy
+`com.bekh.eva-stream.plist` into `~/Library/LaunchAgents`**: launchd loads whatever sits there at
+every login, which is exactly how 2026-09-27 happened.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
-`STREAM_TEMP_HI`, `STREAM_MODELS` (the dreamers, `name=url,…` in turn order; the run command sets
+`STREAM_TEMP_HI`, `STREAM_MODELS` (the dreamers, `name=url,…` in turn order; the plist and the hand command set
 nemo and gpt2; unset = nemo alone at `LOOM_LLAMA`), `STREAM_KICK_INTERPRETER` (`1` = kick the
 voices), `STREAM_PUSH` (`0` = don't tap the mirror), `LOOM_LIVE` (where the live posts
 go; empty = nowhere) and `STREAM_LIVE_EVERY` (0.5), plus loom's `LOOM_SITTINGS` and
@@ -1032,11 +1054,11 @@ looks busy:
 
 1. **the probe** — the spinner and the clock move, so this process is polling and not frozen;
 2. **alive** — the heartbeat's age. Under one interval (`STREAM_INTERVAL`, 300) + a minute is
-   mint; under two is light blue; past that pink, labelled *the timer is not firing*. Those
-   thresholds were cut for the timer: with hand runs the heartbeat simply ages between them,
-   so light blue and pink there mean no run lately, not a fault;
-3. **progressing** — when a page LAST LANDED, off `last_ok`. Runs that keep beating with no
-   page under them are the alive-but-stuck state and say so in pink: *beating but writing
+   mint; under two is light blue (one turn missed, usually the GPU busy with a census); past
+   that pink, *the timer is not firing*. Those thresholds are a ration's: outside one, nothing
+   is running, and an aging heartbeat means exactly that, not a fault;
+3. **progressing** — when a page LAST LANDED, off `last_ok`. A heartbeat ticking every five
+   minutes in a ration with nothing under it is the alive-but-stuck state and says so in pink: *beating but writing
    nothing*. That is llama down, or every page coming back empty.
 
 Under it: pages on the ledger, how many the filter flagged, how many runs wrote nothing, the

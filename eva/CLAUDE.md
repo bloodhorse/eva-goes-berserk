@@ -299,9 +299,9 @@ picks, empty return fans; `/more /fan N /back /prune /edit /say /seed /doc /set 
 name /quit`. It talks straight to llama-server, streaming, and saves through `write_sitting`.
 `/new` on a taken name is a no-op. It doesn't read titles yet, so page-made rooms show as hex
 names there, and it takes any argument but `go` as a room name (`eva --help` made a room);
-**`eva go N`** was the dream stream's ration, N dreams with pictures then everything off, foreground, ctrl-c to stop
-(`stream/go.sh`, `stream/CLAUDE.md`); it drives the writer by bootstrapping its launchd job,
-which is disabled now, so it writes no dreams until it is reworked. The page and
+**`eva go N`** is the dream stream's ration, N dreams with pictures then everything off, foreground, ctrl-c to stop
+(`stream/go.sh`, `stream/CLAUDE.md`); the writer's launchd job lives only inside it,
+bootstrapped from the repo and booted out at the end. The page and
 eva on one room: last writer wins, by the dry-run law. **Names are paths**, through loom's own
 validator and never a second copy of it: `eva experiments/basin/smoke-01`,
 `/new bare experiments/basin/smoke-02`, `/open experiments/witch/witch-bekh-10` — the folders on
@@ -384,8 +384,10 @@ file directly — don't have the room open in the page while one runs.
 **stream** (`stream/stream.py`, 2026-09-19): **one short passage per run, and nobody
 picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion` of 170 tokens, a bare room
 at `stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the passage, and that is the run — `--once`
-writes one and exits. There is no loop and no timer: bekh runs it by hand (the command and why
-the timer went are in `stream/CLAUDE.md`). Two
+writes one and exits. There is no loop in the file, and it never runs unattended: inside a
+ration (`eva go N`) launchd fires it every 300s from a plist loaded straight from the repo and
+unloaded at the end, and outside one bekh can run a single page by hand (both, and why nothing
+is installed, in `stream/CLAUDE.md`). Two
 dreamers since 2026-09-23 — nemo and gpt-2, strictly alternating, the turn read off the newest
 page and every page stamped `meta.model` with who wrote it (`STREAM_MODELS`). A
 failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots —
@@ -393,7 +395,7 @@ everything under `shelf/seeds/`, and the tails of passages bekh **starred** — 
 tail weighing what one seed weighs, capped at half the draws; that is the only place his hand is
 in the loop and it acts at the next passage's input. Branches carry
 `meta.logprobs`, a flat list of the chosen token's logprob per token and **not** llama's `probs`
-tables — at the old timer's 288 rooms a day those came to a gigabyte a week. A regexp set flags web furniture
+tables — at 288 rooms a day, a ration's rate kept up round the clock, those would be a gigabyte a week. A regexp set flags web furniture
 as `meta.flag` without deleting anything; the reader hides those and `?all=1` shows them. Ledger
 and heartbeat in `shelf/stream/`, watched by `stream/monitor.py`, and **none of it is in git**:
 the rooms are disposable, and what survives is the artifact a star writes. The reader is
@@ -410,8 +412,9 @@ it — magenta for what touched it, cyan for what felt most mysterious — the p
 appends the plumbing. Its copy of a dream is stored verbatim and never corrected, and nothing is compared
 against the raw text — the words it marked are simply written in colour, magenta or cyan by
 lot. `/api/stream` carries the copy, the segments and the note; the page draws the note beside
-its dream. It has no clock: the writer kickstarts it when a page lands, if the run was started
-with `STREAM_KICK_INTERPRETER=1`.
+its dream. It has no clock: the writer kickstarts it when a page lands, whenever
+`STREAM_KICK_INTERPRETER=1` — always inside a ration, whose plist sets it, and a page by hand only
+if given it.
 And a third voice, **the sleeper remembering** (`stream/remembering.py`, 2026-09-19): opus
 rewriting one index-card account of the dream so far every time a passage lands, told that the
 passages are **scenes of one dream** so it has to find connective tissue; every rewrite kept,
@@ -484,9 +487,10 @@ second dreamer) and the voices the stream's writer kickstarts, `com.bekh.eva-str
 `com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (GPT sol through codex, a fresh read of
 the last eight every four dreams, loaded 2026-09-23, 8/4 since 2026-09-24), none of which has an interval of its own (those plists, gpt-2's included,
 live in `stream/`; log `/tmp/eva-stream-analyst.log` for the analyst). The writer itself,
-`stream/stream.py`, is not an agent any more: its job `com.bekh.eva-stream` is disabled and its
-tracked plist kept as `stream/com.bekh.eva-stream.plist.disabled`; it runs by hand
-(`stream/CLAUDE.md`). The name is
+`stream/stream.py`, is not an installed agent: its job `com.bekh.eva-stream` exists only
+inside a ration, bootstrapped by `eva go` from the tracked `stream/com.bekh.eva-stream.plist`
+and booted out at its end, and that plist is **never copied into `~/Library/LaunchAgents`**,
+because whatever sits there is loaded at login (`stream/CLAUDE.md`). The name is
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying to the loom's address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-gpt2.log`, `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need

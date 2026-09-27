@@ -63,7 +63,7 @@ if launchctl print gui/$U/com.bekh.eva-stream >/dev/null 2>&1; then echo "the wr
 DAY=$(date +%F); STAMP=$(date +%H%M)
 : > "$LOG"
 say "== eva go: $N dreams, ~$((N * 5)) min. ctrl-c stops it clean."
-trap 'echo; say "== interrupted"; writer_off; narrate_off; exit 1' INT TERM
+trap 'echo; say "== interrupted"; writer_off; narrate_off; exit 1' INT TERM HUP
 WAS=""
 
 # start: both dreamers first, wait for both, then the writer
@@ -72,7 +72,7 @@ launchctl kickstart gui/$U/com.bekh.eva-gpt2
 for i in $(seq 1 90); do up && break; sleep 2; done
 if ! up; then say "$(who_down) never came up; stopping"; writer_off; exit 1; fi
 say "nemo and gpt-2 up"
-launchctl bootstrap gui/$U ~/Library/LaunchAgents/com.bekh.eva-stream.plist
+launchctl bootstrap gui/$U "$PWD/eva/stream/com.bekh.eva-stream.plist"
 launchctl kickstart gui/$U/com.bekh.eva-stream
 say "writer on"
 narrate_on
