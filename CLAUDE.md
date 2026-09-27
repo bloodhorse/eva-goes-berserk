@@ -99,8 +99,8 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   - `berserk/` — the daemon: nemo writes, nemo reads its own fan and picks by quoting, a
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
-  - `stream/` — the dream stream: `stream.py`, nemo writing one short passage every five
-    minutes, seed and heat by lot, nobody picking, launchd's `StartInterval` for a loop; and
+  - `stream/` — the dream stream: `stream.py`, nemo writing one short passage per run, seed
+    and heat by lot, nobody picking, run by hand and never on a timer; and
     beside it two voices the writer taps when a passage lands — `interpreter.py`, a reader
     who notes every dream and marks two things in it, and `remembering.py`, the sleeper
     rewriting one small account of the dream the passages are scenes of; `opus.py` is their one
@@ -144,7 +144,7 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   talk. `berserk/`, the daemon's ledger (tracked), its heartbeat, state and html pages (not),
   the frozen `cycles/` reports of cycles 80–81, and bekh's `notes/`. `stream/`, the dream
   stream's ledger and heartbeat — **untracked**, as are its rooms under `sittings/stream/`:
-  a page every five minutes is disposable, and what survives is the artifact a star writes.
+  a single page is disposable, and what survives is the artifact a star writes.
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases
   exist and are clean, how the cyborgism crowd prompted base gpt, llama-server completion facts.
   `anthology-weird.md` (70 pieces) and `anthology-fun.md` (33): verbatim, with provenance
@@ -215,21 +215,22 @@ and dropped). What's on the shelf: `ls -R shelf/sittings/`; what's been kept:
 
 **The dream stream** (2026-09-19) is the mission's machine: **two dreamers, nemo and gpt-2 xl,
 turn and turn about** (2026-09-23, every page stamped with its writer, gpt-2 with its own
-launchd agent), a passage every five minutes, **typed onto the page word by word as it is
+launchd agent), one passage per run, **typed onto the page word by word as it is
 written** (the writer streams and posts the growing text to the loom, the events route pushes it,
 the mirror pulls it from the mac), a codex reader notes every one and marks two things in it, an
 opus sleeper remembers four scenes at a time as one dream, a picture is painted behind each, and
 **an analyst** — GPT through codex — reads the last eight dreams and writes a fresh portrait of
 the dreamer every four (one per four-scene story, since 2026-09-24): a character with a painted face and a ribbon in the feed carrying the
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
-`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. Whether it is running is whether its writer's job is
-loaded (`launchctl print gui/$(id -u)/com.bekh.eva-stream`); it needs nemo up
-(`com.bekh.eva-llama`), and **stopping the stream stops nemo gracefully as well** — it wires
-~10 GB and has no job with the writer off; the stop and start sequences are in
-`eva/stream/CLAUDE.md`. The writer's own line:
+`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream runs only when
+bekh runs it**: there is no timer, one invocation writes one page (why, and both forms of the
+command, are in `eva/stream/CLAUDE.md`). It needs nemo up (`com.bekh.eva-llama`), which wires
+~10 GB and has no job between runs; the start and stop sequences are in `eva/stream/CLAUDE.md`.
+The writer's own line, from the repo root, writing a page and calling no paid model:
 
 ```bash
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-stream.plist
+LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083 \
+  uv run --python 3.12 eva/stream/stream.py --once
 ```
 
 The first real reading happened on documents, not on a chat: witch rolls where the last entry is
