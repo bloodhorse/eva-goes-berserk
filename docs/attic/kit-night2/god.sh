@@ -8,7 +8,7 @@ cd "$(dirname "$0")/../night2" || exit 1
 mkdir -p god
 M=$HOME/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf
 SAMP="--temp 2.0 --min-p 0.08 --top-k 0 --top-p 1.0 --dry-multiplier 0.8 --dry-base 1.75 --dry-allowed-length 2 --repeat-penalty 1.05 --repeat-last-n 512"
-S=../../../shelf/seeds/asses.txt
+S=../../../shelf/seeds/.off/asses.txt
 CV=../night1/cv-nemo
 run() { # cond vector dose
   local c=$1 v=$2 d=$3 s o

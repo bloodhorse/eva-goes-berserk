@@ -262,7 +262,7 @@ state section of `docs/mescalito.md` is the resume pointer; the kit is `docs/mes
 (`run.sh` for a page, `land.py` for a dream).
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
-(`shelf/seeds/asses.txt`, voiced 2026-09-26, the god slot test); more of those are wanted — a
+(`shelf/seeds/.off/asses.txt`, voiced 2026-09-26, the god slot test — a research seed, kept out of the stream's pot); more of those are wanted — a
 couple of sentences in his register, no prose from Claude, no web markers.
 
 Open, small: the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
