@@ -1,13 +1,14 @@
 # stream — the machine dreaming with nobody there
 
 One short passage every five minutes inside a ration, written by nemo, picked
-by nobody. bekh reads down from the newest, marks what moved him, puts the phone down. It was
-built as the brief's mission taken literally — *a dream machine that runs on the mac perpetually
+by nobody. bekh reads down from the newest, marks what moved him, puts the phone down. The
+goal is the brief's mission taken literally — *a dream machine that runs on the mac perpetually
 and writes dreams on its own… he won't read everything; the point is knowing the machine is
-dreaming and looking in from time to time* — and the perpetual part turned out not to be
-feasible: **the stream never runs unattended**. bekh starts a ration, `eva go N`, which dreams N
-dreams and switches everything off, or writes a single page by hand (the calls below say why,
-"Running it" says how).
+dreaming and looking in from time to time* — a stream that runs around the clock on our own
+iron. **This is the phase before it**: the dreamer is ours already, the voices around it (the
+reader, the sleeper, the painter, the analyst) are rented models, so the stream runs in
+rations. bekh starts one, `eva go N`, which dreams N dreams and switches everything off, or
+writes a single page by hand ("Running it" says how).
 
 The loom is the lab bench and this is not it. No fan, no picker, no resolver, no reader in the
 loop. The only choices made here are made by lot — which seed, which heat — and the only hand
@@ -31,20 +32,12 @@ joined).
 - **One page, one process; inside a ration, launchd is the loop.** `stream.py --once` writes
   one page and exits; there is no `while True` in it. In a ration the plist's `StartInterval`
   of 300 fires it again, and a crash costs one page instead of the stream.
-- **Never installed, never unattended: the timer lives only inside a ration** (bekh,
-  2026-09-27). The mac rebooted at 11:20 that day with `com.bekh.eva-stream.plist` sitting in
-  `~/Library/LaunchAgents`, so login loaded it and its 300s interval fired from 11:26 on, all
-  day, with nobody having started it — `eva go`'s bootout at the end of a ration only holds
-  until the next login. That loop ran 280 `codex exec` sessions (three per tick), emptied the
-  5-hour Codex quota twice, and from 13:36 to 14:21 spilled into paid workspace credits: $101 in
-  45 minutes, stopped only by the $100 member spend limit. So the tracked
-  `eva/stream/com.bekh.eva-stream.plist` is **never copied into `~/Library/LaunchAgents`** (launchd
-  auto-loads at login only what sits there); `go.sh` bootstraps it straight from the repo and
-  boots it out at the end, so a reboot ends a ration for good. **Nemo's agent followed on
-  2026-09-28** (bekh: *now we only run this shit manually*): `com.bekh.eva-llama.plist` moved
-  out of `~/Library/LaunchAgents` into `eva/stream/`, loaded the same way and unloaded at the
-  end. Nothing of the stream starts at login; the voices' plists that stay installed have no
-  `RunAtLoad` and no interval, and run only when a writer taps them.
+- **A ration is loaded from the repo and unloaded at its end.** The writer's plist and nemo's
+  (`eva/stream/com.bekh.eva-stream.plist`, `eva/stream/com.bekh.eva-llama.plist`) live in the
+  repo and not in `~/Library/LaunchAgents`: launchd starts at login whatever sits there, and a
+  ration is something bekh starts. `go.sh` bootstraps both and boots them out at the end. The
+  voices' plists are installed, with no `RunAtLoad` and no interval — they run when a writer
+  taps them.
 - **A failed run is a ledger line and exit 0.** llama down, no seed, an empty answer: a row, a
   heartbeat, exit 0. launchd backs a job off when it exits non-zero, so a ration that punished
   itself for a busy GPU would stop dreaming quietly and nothing would say so.
@@ -102,16 +95,14 @@ joined).
   before the heat flattens what survived, which is why 2.5 is still a sentence. Everything not
   named is eva's room default, DRY above all: base models loop, and a hot page with no brake on
   repetition is one sentence said nine times.
-- **gpt-2 is off the stream since 2026-09-28** (bekh, after reading his 51 pages alone — chapters
-  38–51 of 2026-09-27, written while nemo's agent was down and gpt-2's came up at login on its
-  own `RunAtLoad`). About twelve of them were alive, all of them purged anyway for want of
-  plates, and his deaths are uglier than nemo's: a news wire, a podcast transcript, a DIY blog,
+- **gpt-2 is off the stream since 2026-09-28** (bekh, after a run of 51 pages that were his
+  alone). About twelve of them were alive, and his deaths are uglier than nemo's: a news wire, a podcast transcript, a DIY blog,
   a gaming forum, a reddit sign-off; glyph garbage (`‖‖‖`, `†‼`) on seeds with curly quotes; list
   loops. What he did well was weirdness in the joins between phrases (*one was an only child and
   the other a twin*), where nemo's is in the content. `STREAM_MODELS` in the writer's plist is
   `nemo=http://127.0.0.1:8080` — one seat, so pages keep the `nemo` stamp — and the seat
-  machinery below stays in the code for whoever comes next. gpt-2's agent is not in
-  `~/Library/LaunchAgents` any more; census bootstraps it from the repo when a blind fan wants it.
+  machinery below stays in the code for whoever comes next. gpt-2's agent is loaded from the
+  repo when a census wants him for a blind fan.
 - **Two dreamers, turn and turn about** (bekh, 2026-09-23 — retired, above): GPT-2 XL wrote pages into the same
   stream as nemo, **strictly alternating**, and every page says which model wrote it. His
   design: no blindness, no coin — the model's name is the first thing in the dream's head.
@@ -569,8 +560,7 @@ the code.
     remembers would be a lie. A pruned story's number is simply never handed out again: **a
     purge moves the story's versions to `dreams/.purged/<date>/`**, which `versions()` skips
     and `next_chapter` still counts — without it, purging the newest stories handed their
-    numbers straight back out. First used 2026-09-28: chapters 38–51, gpt-2's unplated day,
-    their rooms and readings to the Finder Trash; the next story is 52. `retell`'s
+    numbers straight back out. Chapters 38–51 are there. `retell`'s
     `dreams/.trash/` is the opposite on purpose — those numbers are meant to come back.
   - **`remembering.py --number`** is the one-off backfill for the stories written before this:
     stories in the order of their first version, only ever ADDING the field, idempotent, and
@@ -1005,8 +995,7 @@ it stays in the terminal and ctrl-c ends it clean (writer off, nemo off), and so
 closing the terminal (the trap takes `INT TERM HUP`); `eva go stop` does the same from anywhere.
 No codex cap and no refusal up front (the cap and `-l` went on 2026-09-25); the last dreams,
 bare when the writer stops, are painted by hand at the end, after a 100s wait for their notes.
-Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`. Nothing of the ration is installed,
-so a reboot mid-ration ends it for good — the writer does not come back at login.
+Log `/tmp/eva-go.log`; a finished run pushes to `kk_alert`. A reboot mid-ration ends it.
 
 ```bash
 eva go N
@@ -1028,8 +1017,7 @@ LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080 \
 With `STREAM_KICK_INTERPRETER=1` (exactly `1`; anything else is off) a page that really landed
 also ends with `launchctl kickstart` on the reader, the sleeper, the painter and the analyst, as
 in a ration. The reader (`STREAM_READER=codex` in its plist), the painter and the analyst go
-through codex and the sleeper through the `claude` cli, so this form spends Codex quota, and past
-the quota paid credits:
+through codex and the sleeper through the `claude` cli, so this form spends Codex quota:
 
 ```bash
 STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
@@ -1044,9 +1032,7 @@ uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for
 The writer needs nemo up. It does **not** need the loom agent to write pages — only to
 read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom serves the old
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`
-inside a ration (the plist's); by hand its log lines go to the terminal's stderr. **Never copy
-`com.bekh.eva-stream.plist` into `~/Library/LaunchAgents`**: launchd loads whatever sits there at
-every login, which is exactly how 2026-09-27 happened.
+inside a ration (the plist's); by hand its log lines go to the terminal's stderr.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
 `STREAM_TEMP_HI`, `STREAM_MODELS` (the dreamers, `name=url,…` in turn order; the plist and the hand command set

@@ -100,7 +100,7 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
     matcher turns the quote into a branch, bekh reads in the morning. **`eva/berserk/CLAUDE.md`**
     is the doc.
   - `stream/` — the dream stream: `stream.py`, nemo writing one short passage per run, seed
-    and heat by lot, nobody picking, never unattended — run in a ration (`eva go N`) or one
+    and heat by lot, nobody picking — run in a ration (`eva go N`) or one
     page by hand; and
     beside it two voices the writer taps when a passage lands — `interpreter.py`, a reader
     who notes every dream and marks two things in it, and `remembering.py`, the sleeper
@@ -223,15 +223,15 @@ opus sleeper remembers four scenes at a time as one dream, a picture is painted 
 **an analyst** — GPT through codex — reads the last eight dreams and writes a fresh portrait of
 the dreamer every four (one per four-scene story, since 2026-09-24): a character with a painted face and a ribbon in the feed carrying the
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
-`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream only ever runs by hand,
-and nothing of it starts at login**: bekh runs a ration, `eva go N` — foreground, N dreams,
-then the writer and nemo off. Inside a ration the writer is a launchd job on a 300s interval
-and nemo (`com.bekh.eva-llama`, ~10 GB wired) a second one, **both bootstrapped straight from
-the repo and booted out at the end**; neither is in `~/Library/LaunchAgents` (nemo since
-2026-09-28 — its plist lives at `eva/stream/com.bekh.eva-llama.plist`), so a reboot starts
-nothing. Why that matters — $101 of codex on 2026-09-27 — a single page by hand, and the start
-and stop sequences are in `eva/stream/CLAUDE.md`. Any other work that wants nemo (the loom's
-fans, a census, berserk) loads it by hand the same way and unloads it after.
+`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream runs in rations**:
+`eva go N` — foreground, N dreams, then the writer and nemo off. The goal is the stream running
+around the clock on our own iron; the dreamer is ours already, the voices around it are rented
+models, and this is the phase before it. Inside a ration the writer is a launchd job on a 300s
+interval and nemo (`com.bekh.eva-llama`, ~10 GB wired) a second one, both bootstrapped from the
+repo (`eva/stream/`) and booted out at the end — launchd starts at login whatever sits in
+`~/Library/LaunchAgents`, and a ration is something bekh starts. A single page by hand and the
+start and stop sequences are in `eva/stream/CLAUDE.md`. Any other work that wants nemo (the
+loom's fans, a census, berserk) loads it the same way and unloads it after.
 
 ```bash
 eva go N

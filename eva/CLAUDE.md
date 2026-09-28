@@ -384,10 +384,10 @@ file directly — don't have the room open in the page while one runs.
 **stream** (`stream/stream.py`, 2026-09-19): **one short passage per run, and nobody
 picking.** A seed by lot, a heat by lot in 1.8–2.5, one `/completion` of 170 tokens, a bare room
 at `stream/<YYYY-MM-DD>/<HHMM>` holding the seed and the passage, and that is the run — `--once`
-writes one and exits. There is no loop in the file, and it never runs unattended: inside a
+writes one and exits. There is no loop in the file: inside a
 ration (`eva go N`) launchd fires it every 300s from a plist loaded straight from the repo and
-unloaded at the end, and outside one bekh can run a single page by hand (both, and why nothing
-is installed, in `stream/CLAUDE.md`). Nemo
+unloaded at the end, and outside one bekh can run a single page by hand (both in
+`stream/CLAUDE.md`). Nemo
 alone since 2026-09-28 (gpt-2 took every other page from 2026-09-23 until then; the seat
 machinery, `STREAM_MODELS`, stays, and every page is stamped `meta.model`). A
 failed run is a ledger line and exit 0, never a crash loop. The seed is drawn from two pots —
@@ -479,9 +479,9 @@ rig in `front/mobile/`. Light room: serve a copy with `prefers-color-scheme: lig
 While the mac is off, `eva.x` falls over to a copy on the mini that takes reading and marks only —
 `mirror/CLAUDE.md`.
 
-Launchd on the mac: `com.bekh.eva-llama` (llama-server, nemo, loopback 8080 — **not installed**:
-its plist is `stream/com.bekh.eva-llama.plist`, loaded by hand or by `eva go` and unloaded after,
-since 2026-09-28, so nothing of nemo starts at login), `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
+Launchd on the mac: `com.bekh.eva-llama` (llama-server, nemo, loopback 8080 — its plist is
+`stream/com.bekh.eva-llama.plist`, loaded by hand or by `eva go` and unloaded after),
+`com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
 and the voices the stream's writer kickstarts, `com.bekh.eva-stream-interpreter`, `com.bekh.eva-stream-remembering`,
 `com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (GPT sol through codex, a fresh read of
@@ -489,8 +489,8 @@ the last eight every four dreams, loaded 2026-09-23, 8/4 since 2026-09-24), none
 live in `stream/`; log `/tmp/eva-stream-analyst.log` for the analyst). The writer itself,
 `stream/stream.py`, is not an installed agent: its job `com.bekh.eva-stream` exists only
 inside a ration, bootstrapped by `eva go` from the tracked `stream/com.bekh.eva-stream.plist`
-and booted out at its end, and that plist is **never copied into `~/Library/LaunchAgents`**,
-because whatever sits there is loaded at login (`stream/CLAUDE.md`). The name is
+and booted out at its end — launchd starts at login whatever sits in `~/Library/LaunchAgents`,
+and a ration is something bekh starts (`stream/CLAUDE.md`). The name is
 one caddy block on the mini (`~/tower/forge/mini/minidns`) proxying to the loom's address, same
 shape as `m.x` and `kokoro.x`. Logs `/tmp/eva-loom.log`, `/tmp/eva-llama.log`,
 `/tmp/eva-gpt2.log`, `/tmp/eva-berserk.log`. Nothing answers on loopback 8082; use the name. **`loom.html` changes need
@@ -518,12 +518,10 @@ field; the page defaults it to the context size, 8192.
 
 **A second base model beside nemo** (2026-09-17), for blind comparisons with `census.py --models`
 and from 2026-09-23 to 2026-09-28 the stream's second dreamer
-(`stream/CLAUDE.md` says why he came off): GPT-2 XL, `~/.cache/llama.cpp/gpt2-xl.Q8_0.gguf` (mradermacher/gpt2-xl-GGUF,
+(`stream/CLAUDE.md` has what his pages were like): GPT-2 XL, `~/.cache/llama.cpp/gpt2-xl.Q8_0.gguf` (mradermacher/gpt2-xl-GGUF,
 1.75 GB, 1024 window, ~21 tok/s on the cpu with nemo busy on the gpu). His launchd job,
 `com.bekh.eva-gpt2` (`stream/com.bekh.eva-gpt2.plist`, tracked): `127.0.0.1:8083`, `-c 1024 -ngl 0
---no-webui`, log `/tmp/eva-gpt2.log`, `RunAtLoad` — so it is **not** in `~/Library/LaunchAgents`
-(since 2026-09-28: sitting there it came up at every login, which is how he wrote a whole day
-alone while nemo was down). Bootstrapped from the repo for a census, booted out after.
+--no-webui`, log `/tmp/eva-gpt2.log`, loaded from the repo for a census and booted out after.
 Pythia 2.8b
 (`EleutherAI_pythia-2.8b.Q8_0.gguf`, port 8081, `-c 2048`) is on disk too and was dropped after
 the first run: fewest marks, under 5 tok/s, ends the document early three times in ten. Port

@@ -4,20 +4,17 @@
 <dict>
     <key>Label</key>
     <string>com.bekh.eva-gpt2</string>
-    <!-- The stream's second dreamer (2026-09-23): GPT-2 XL, taking every other page from nemo.
-         The same shape as com.bekh.eva-llama on purpose, so the two start and stop by the same
-         lines:
+    <!-- GPT-2 XL, the second base model for blind fans (census.py with models). The same shape
+         as com.bekh.eva-llama on purpose, so the two start and stop by the same lines, from
+         the repo:
 
-             launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2          # start
-             launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2       # graceful stop
-
-         Copy to ~/Library/LaunchAgents/ and bootstrap once; after that it stays loaded and the
-         two lines above are the whole switch. A plist edit needs bootout + bootstrap.
+             launchctl bootstrap gui/$(id -u) eva/stream/com.bekh.eva-gpt2.plist   # start
+             launchctl bootout gui/$(id -u)/com.bekh.eva-gpt2                      # stop
 
          On the CPU (-ngl 0) because nemo owns the GPU and the ~10 GB it wires; gpt-2 at q8 is
          1.75 GB and ~21 tok/s on the cores. Its window is 1024 — the model's own, trained at
-         that length and no longer; the writer counts every seed against it on this server's
-         /tokenize and skips the seat for a page that would not fit.
+         that length and no longer; census counts every seed against it on this server's
+         /tokenize and skips the model for a seed that would not fit.
 
          Port 8083. 8082 is the loom's and must never be taken; 8081 is where pythia sat. -->
     <key>ProgramArguments</key>
