@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.bekh.eva-llama</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/llama-server</string>
+        <string>-m</string>
+        <string>/Users/bekh/.cache/llama.cpp/Mistral-Nemo-Base-2407.Q5_K_M.gguf</string>
+        <!-- 8192: the window the loom's dry_penalty_last_n default is sized to; raise both
+             together or the brake stops covering the whole document. -->
+        <string>-c</string>
+        <string>8192</string>
+        <string>-ngl</string>
+        <string>99</string>
+        <string>-fa</string>
+        <string>on</string>
+        <!-- a base gguf has no chat template and must never be handed one; /completion is
+             the only route the loom uses -->
+        <string>--no-jinja</string>
+        <!-- loopback only: the loom is the only client, and the GPU is not a tailnet
+             service -->
+        <string>--host</string>
+        <string>127.0.0.1</string>
+        <string>--port</string>
+        <string>8080</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <!-- Restart a crash, let a clean exit stay exited. Unload this agent when the mac
+             needs its memory back: the model wires ~10 GB of a 16 GB box while it runs. -->
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/eva-llama.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/eva-llama.log</string>
+</dict>
+</plist>

@@ -40,7 +40,11 @@ joined).
   45 minutes, stopped only by the $100 member spend limit. So the tracked
   `eva/stream/com.bekh.eva-stream.plist` is **never copied into `~/Library/LaunchAgents`** (launchd
   auto-loads at login only what sits there); `go.sh` bootstraps it straight from the repo and
-  boots it out at the end, so a reboot ends a ration for good.
+  boots it out at the end, so a reboot ends a ration for good. **Nemo's agent followed on
+  2026-09-28** (bekh: *now we only run this shit manually*): `com.bekh.eva-llama.plist` moved
+  out of `~/Library/LaunchAgents` into `eva/stream/`, loaded the same way and unloaded at the
+  end. Nothing of the stream starts at login; the voices' plists that stay installed have no
+  `RunAtLoad` and no interval, and run only when a writer taps them.
 - **A failed run is a ledger line and exit 0.** llama down, no seed, an empty answer: a row, a
   heartbeat, exit 0. launchd backs a job off when it exits non-zero, so a ration that punished
   itself for a busy GPU would stop dreaming quietly and nothing would say so.
@@ -970,18 +974,18 @@ changed for the stream.
 
 **Starting and stopping the stream means nemo too** (bekh, 2026-09-21: *when we decide
 to stop the stream, we gracefully finish nemo as well*). Nemo wires about 10 GB of a 16 GB mac
-and has no job once the writer is off. Its launchd job restarts a crash and lets a clean exit
-stay exited, so a SIGTERM is the graceful stop and the job stays loaded for the next start:
+and has no job once the writer is off. Its job is loaded from the repo (`RunAtLoad`, so loading
+starts it; a crash restarts) and booted out when the dreaming is done — never left installed:
 
 ```bash
-launchctl kickstart gui/$(id -u)/com.bekh.eva-llama
+launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-llama.plist
 until curl -sf http://127.0.0.1:8080/health >/dev/null; do sleep 2; done
 ```
 
 and off when the dreaming is done:
 
 ```bash
-launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-llama
+launchctl bootout gui/$(id -u)/com.bekh.eva-llama
 ```
 
 If the loom is being used for fans at the same time, nemo stays up — it is the loom's model too.
@@ -1037,7 +1041,7 @@ STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
 uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for a frame
 ```
 
-The writer needs `com.bekh.eva-llama` up. It does **not** need the loom agent to write pages — only to
+The writer needs nemo up. It does **not** need the loom agent to write pages — only to
 read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom serves the old
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`
 inside a ration (the plist's); by hand its log lines go to the terminal's stderr. **Never copy

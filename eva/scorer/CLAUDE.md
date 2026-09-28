@@ -47,8 +47,8 @@ cd ~/.cache/llama.cpp && nohup llama-server -m Mistral-Nemo-Base-2407.Q5_K_M.ggu
   --no-jinja --no-webui > /tmp/nemoemb.log 2>&1 & echo $! > /tmp/nemoemb.pid
 uv run --python 3.12 --with numpy eva/scorer/features.py --folders <folders> --sources nemo
 kill $(cat /tmp/nemoemb.pid)
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-llama.plist
-curl -s http://127.0.0.1:8080/health          # must say ok before you walk away
+launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-llama.plist   # only if it was up before
+
 ```
 
 Always check 8080 last. `https://eva.x` is dead for the length of that window.

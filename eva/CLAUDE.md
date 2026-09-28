@@ -479,8 +479,9 @@ rig in `front/mobile/`. Light room: serve a copy with `prefers-color-scheme: lig
 While the mac is off, `eva.x` falls over to a copy on the mini that takes reading and marks only —
 `mirror/CLAUDE.md`.
 
-Three launchd agents on the mac — `com.bekh.eva-llama` (llama-server, nemo, loopback 8080),
-`com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
+Launchd on the mac: `com.bekh.eva-llama` (llama-server, nemo, loopback 8080 — **not installed**:
+its plist is `stream/com.bekh.eva-llama.plist`, loaded by hand or by `eva go` and unloaded after,
+since 2026-09-28, so nothing of nemo starts at login), `com.bekh.eva-loom` (the loom, bound to the mac's tailnet ip 100.91.166.121:8082, the only door)
 and `com.bekh.eva-berserk` (one cycle per kickstart, never at load; see `berserk/CLAUDE.md`) —
 and the voices the stream's writer kickstarts, `com.bekh.eva-stream-interpreter`, `com.bekh.eva-stream-remembering`,
 `com.bekh.eva-stream-plating` and `com.bekh.eva-stream-analyst` (GPT sol through codex, a fresh read of
@@ -500,8 +501,8 @@ launchd's cached copy of the plist, which is how the loom died on a stale path o
 ```bash
 launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom          # restart the loom after editing loom.py
 launchctl bootout gui/$(id -u)/com.bekh.eva-loom; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist   # after editing the plist
-launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # give the mac its ~10 GB back
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-llama.plist   # and take it again
+launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-llama.plist   # nemo up
+launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # nemo off, the mac's ~10 GB back
 ```
 
 The page saying *the mac is off* = caddy fell over to the mirror (the mac asleep or the loom

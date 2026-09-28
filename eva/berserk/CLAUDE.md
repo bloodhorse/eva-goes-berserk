@@ -245,7 +245,7 @@ uv run --python 3.12 eva/berserk/monitor.py                           # the dash
 ```
 
 The agent `com.bekh.eva-berserk` does not run at load and has no KeepAlive: a cycle is a thing you
-start. It needs `com.bekh.eva-llama` up, not the loom. Its PATH carries `~/.local/bin` (where
+start. It needs nemo up (`launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-llama.plist`), not the loom. Its PATH carries `~/.local/bin` (where
 `claude` is) and HOME is set, or the blind matcher fails on every fork — which now costs the walk
 nothing but a fallback to substring. Env: `BERSERK_DIR` (default `shelf/berserk/`), `BERSERK_SEEDS`
 (`shelf/seeds/`), `BERSERK_SHEETS_HOST` (empty string = post nowhere), `BERSERK_SSH_KEY`,

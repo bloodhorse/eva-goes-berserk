@@ -223,13 +223,15 @@ opus sleeper remembers four scenes at a time as one dream, a picture is painted 
 **an analyst** — GPT through codex — reads the last eight dreams and writes a fresh portrait of
 the dreamer every four (one per four-scene story, since 2026-09-24): a character with a painted face and a ribbon in the feed carrying the
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
-`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream never runs
-unattended**: bekh runs a ration, `eva go N` — foreground, N dreams, then the writer and nemo
-off. Inside a ration the writer is a launchd job on a 300s interval, bootstrapped
-straight from the repo and booted out at the end; nothing of it is installed in
-`~/Library/LaunchAgents`, so nothing starts at login (why that matters, a single page by hand,
-and the start and stop sequences are in `eva/stream/CLAUDE.md`). It needs nemo up
-(`com.bekh.eva-llama`), which wires ~10 GB and has no job outside a ration.
+`https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream only ever runs by hand,
+and nothing of it starts at login**: bekh runs a ration, `eva go N` — foreground, N dreams,
+then the writer and nemo off. Inside a ration the writer is a launchd job on a 300s interval
+and nemo (`com.bekh.eva-llama`, ~10 GB wired) a second one, **both bootstrapped straight from
+the repo and booted out at the end**; neither is in `~/Library/LaunchAgents` (nemo since
+2026-09-28 — its plist lives at `eva/stream/com.bekh.eva-llama.plist`), so a reboot starts
+nothing. Why that matters — $101 of codex on 2026-09-27 — a single page by hand, and the start
+and stop sequences are in `eva/stream/CLAUDE.md`. Any other work that wants nemo (the loom's
+fans, a census, berserk) loads it by hand the same way and unloads it after.
 
 ```bash
 eva go N

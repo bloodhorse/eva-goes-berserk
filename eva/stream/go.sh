@@ -38,7 +38,7 @@ narrate_on() {  # every ledger row as a plain line: who did what, how long it to
 narrate_off() { [ -n "$NARR" ] && { kill $NARR 2>/dev/null; pkill -P $NARR 2>/dev/null; }; NARR=""; }
 writer_off() {
   launchctl bootout gui/$U/com.bekh.eva-stream 2>/dev/null
-  launchctl kill SIGTERM gui/$U/com.bekh.eva-llama 2>/dev/null
+  launchctl bootout gui/$U/com.bekh.eva-llama 2>/dev/null
   say "writer off, nemo told to stop"
 }
 up() { curl -sf http://127.0.0.1:8080/health >/dev/null; }
@@ -60,7 +60,7 @@ trap 'echo; say "== interrupted"; writer_off; narrate_off; exit 1' INT TERM HUP
 WAS=""
 
 # start: nemo first, wait for it, then the writer
-launchctl kickstart gui/$U/com.bekh.eva-llama
+launchctl bootstrap gui/$U "$PWD/eva/stream/com.bekh.eva-llama.plist" 2>/dev/null
 for i in $(seq 1 90); do up && break; sleep 2; done
 if ! up; then say "nemo never came up; stopping"; writer_off; exit 1; fi
 say "nemo up"
