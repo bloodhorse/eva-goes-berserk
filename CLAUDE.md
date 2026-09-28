@@ -225,7 +225,7 @@ the dreamer every four (one per four-scene story, since 2026-09-24): a character
 portrait's closing two sentences (`eva/stream/CLAUDE.md`, the analyst section) — all read at
 `https://eva.x/stream` and, as the site, at `https://dreamshit.net`. **The stream runs in rations**:
 `eva go N` — foreground, N dreams, then the writer and nemo off. The goal is the stream running
-around the clock on our own iron; the dreamer is ours already, the voices around it are rented
+around the clock on our own iron; the dream is ours, the voices around it are rented
 models, and this is the phase before it. Inside a ration the writer is a launchd job on a 300s
 interval and nemo (`com.bekh.eva-llama`, ~10 GB wired) a second one, both bootstrapped from the
 repo (`eva/stream/`) and booted out at the end — launchd starts at login whatever sits in

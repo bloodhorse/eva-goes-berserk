@@ -5,7 +5,7 @@ by nobody. bekh reads down from the newest, marks what moved him, puts the phone
 goal is the brief's mission taken literally — *a dream machine that runs on the mac perpetually
 and writes dreams on its own… he won't read everything; the point is knowing the machine is
 dreaming and looking in from time to time* — a stream that runs around the clock on our own
-iron. **This is the phase before it**: the dreamer is ours already, the voices around it (the
+iron. **This is the phase before it**: the dream is ours, the voices around it (the
 reader, the sleeper, the painter, the analyst) are rented models, so the stream runs in
 rations. bekh starts one, `eva go N`, which dreams N dreams and switches everything off, or
 writes a single page by hand ("Running it" says how).
