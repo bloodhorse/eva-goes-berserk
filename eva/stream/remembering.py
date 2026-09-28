@@ -297,11 +297,26 @@ def write_version(obj: dict) -> str:
 # one day, and an address computed by counting what is left would shift under him — the twelfth
 # story would become the fourth and every number he remembers would be a lie.
 
+def purged() -> list[dict]:
+    out = []
+    for dirpath, _, filenames in os.walk(os.path.join(DREAMS, ".purged")):
+        for fname in filenames:
+            if fname.endswith(".json"):
+                try:
+                    with open(os.path.join(dirpath, fname), encoding="utf-8") as f:
+                        d = json.load(f)
+                except (OSError, ValueError):
+                    continue
+                if isinstance(d, dict):
+                    out.append(d)
+    return out
+
+
 def next_chapter(past: list[dict]) -> int:
     """One more than the highest chapter anybody has ever been given. Not a count of stories:
     pruning must never hand out a number twice."""
     top = 0
-    for d in past:
+    for d in past + purged():
         c = d.get("chapter")
         if isinstance(c, int) and c > top:
             top = c

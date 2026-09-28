@@ -1464,6 +1464,15 @@ class Names(unittest.TestCase):
         self.assertEqual(remember(self.fake())[0], 0)
         self.assertEqual(dream_versions()[-1]["chapter"], 4)
 
+        # the newest two purged: moved to .purged, their numbers stay taken
+        for path in remembering.version_files()[-2:]:
+            dest = os.path.join(remembering.DREAMS, ".purged", os.path.relpath(path, remembering.DREAMS))
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            os.replace(path, dest)
+        self.scene("1020", "scene 4.")
+        self.assertEqual(remember(self.fake())[0], 0)
+        self.assertEqual(dream_versions()[-1]["chapter"], 5)
+
     def test_the_backfill_numbers_old_stories_in_order_and_is_idempotent(self):
         """`--number`, the one-off for the stories written before the numbering."""
         for i, hhmm in enumerate(("1000", "1005", "1010")):

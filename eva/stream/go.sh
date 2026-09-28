@@ -1,13 +1,12 @@
 #!/bin/bash
 # go.sh — `eva go N`: dream N dreams with everything (note, retelling, picture each), then stop,
-# both dreamers included — nemo and gpt-2, who take the pages turn and turn about (2026-09-23;
-# the writer's plist says STREAM_MODELS, the turn is read off the shelf so a ration picks up
-# where the last one stopped). A run is sized in dreams — N passages, N plates — not in hours. A dream here is one passage (one plate); the
+# nemo included — the one dreamer since gpt-2 came off the stream on 2026-09-28. A run is sized
+# in dreams — N passages, N plates — not in hours. A dream here is one passage (one plate); the
 # four-scene story is the sleeper's unit, not this one's.
 #
 # Every step is the runbook's own line (stream/CLAUDE.md, "Running it"); this only orders them.
 # It runs IN THE FOREGROUND on purpose (bekh: so it's easy to kill): ctrl-c ends it, and the
-# trap puts everything back — writer off, both dreamers off. Lost the terminal with a run half
+# trap puts everything back — writer off, nemo off. Lost the terminal with a run half
 # done? `eva go stop` does the same from anywhere.
 set -u
 cd "$(dirname "$0")/../.." || exit 1
@@ -40,15 +39,9 @@ narrate_off() { [ -n "$NARR" ] && { kill $NARR 2>/dev/null; pkill -P $NARR 2>/de
 writer_off() {
   launchctl bootout gui/$U/com.bekh.eva-stream 2>/dev/null
   launchctl kill SIGTERM gui/$U/com.bekh.eva-llama 2>/dev/null
-  launchctl kill SIGTERM gui/$U/com.bekh.eva-gpt2 2>/dev/null
-  say "writer off, nemo and gpt-2 told to stop"
+  say "writer off, nemo told to stop"
 }
-# both dreamers up, or say which one isn't. Both, not either: the writer would carry on with one
-# (the other's pages simply skipped), but a ration asked for turn and turn about and should not
-# quietly become nemo alone.
-up() { curl -sf http://127.0.0.1:8080/health >/dev/null && curl -sf http://127.0.0.1:8083/health >/dev/null; }
-who_down() { local d=""; curl -sf http://127.0.0.1:8080/health >/dev/null || d="nemo"
-  curl -sf http://127.0.0.1:8083/health >/dev/null || d="${d:+$d and }gpt-2"; echo "$d"; }
+up() { curl -sf http://127.0.0.1:8080/health >/dev/null; }
 
 case "${1:-}" in
   stop)   # from another terminal, or after a lost one: the same as ctrl-c would do
@@ -66,12 +59,11 @@ say "== eva go: $N dreams, ~$((N * 5)) min. ctrl-c stops it clean."
 trap 'echo; say "== interrupted"; writer_off; narrate_off; exit 1' INT TERM HUP
 WAS=""
 
-# start: both dreamers first, wait for both, then the writer
+# start: nemo first, wait for it, then the writer
 launchctl kickstart gui/$U/com.bekh.eva-llama
-launchctl kickstart gui/$U/com.bekh.eva-gpt2
 for i in $(seq 1 90); do up && break; sleep 2; done
-if ! up; then say "$(who_down) never came up; stopping"; writer_off; exit 1; fi
-say "nemo and gpt-2 up"
+if ! up; then say "nemo never came up; stopping"; writer_off; exit 1; fi
+say "nemo up"
 launchctl bootstrap gui/$U "$PWD/eva/stream/com.bekh.eva-stream.plist"
 launchctl kickstart gui/$U/com.bekh.eva-stream
 say "writer on"
@@ -105,4 +97,4 @@ done
 narrate_off
 say "== done: $(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures"
 curl -s -H "Title: eva go: $N dreams done" -H "Tags: w00t" \
-  -d "$(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; writer, nemo, gpt-2 off" ntfy.sh/kk_alert >/dev/null
+  -d "$(count_since) dreams, $(( $(count_since) - $(unpainted | wc -l) )) pictures; writer and nemo off" ntfy.sh/kk_alert >/dev/null

@@ -1,6 +1,6 @@
 # stream — the machine dreaming with nobody there
 
-One short passage every five minutes inside a ration, written by nemo and gpt-2 in turn, picked
+One short passage every five minutes inside a ration, written by nemo, picked
 by nobody. bekh reads down from the newest, marks what moved him, puts the phone down. It was
 built as the brief's mission taken literally — *a dream machine that runs on the mac perpetually
 and writes dreams on its own… he won't read everything; the point is knowing the machine is
@@ -15,8 +15,8 @@ that ever touches a page is bekh's mark on it afterwards, which acts on the **ne
 seed and never on generation. Read the root `CLAUDE.md` for what we are hunting and `BRIEF.md`
 for why picking is not where the hunt is.
 
-**Three voices on one page** (2026-09-19): the sleeper dreaming (`stream.py`, nemo — and
-since 2026-09-23 gpt-2, every other page), the
+**Three voices on one page** (2026-09-19): the sleeper dreaming (`stream.py`, nemo — gpt-2 took every other page from 2026-09-23 to
+2026-09-28), the
 sleeper remembering (`remembering.py`, opus rewriting the account of the dream so far), and the
 reader at the bedside (`interpreter.py`, opus noting and underlining). They do not read each
 other. `opus.py` is the one way the two opus voices talk to the cli and the one place their
@@ -98,7 +98,17 @@ joined).
   before the heat flattens what survived, which is why 2.5 is still a sentence. Everything not
   named is eva's room default, DRY above all: base models loop, and a hot page with no brake on
   repetition is one sentence said nine times.
-- **Two dreamers, turn and turn about** (bekh, 2026-09-23): GPT-2 XL writes pages into the same
+- **gpt-2 is off the stream since 2026-09-28** (bekh, after reading his 51 pages alone — chapters
+  38–51 of 2026-09-27, written while nemo's agent was down and gpt-2's came up at login on its
+  own `RunAtLoad`). About twelve of them were alive, all of them purged anyway for want of
+  plates, and his deaths are uglier than nemo's: a news wire, a podcast transcript, a DIY blog,
+  a gaming forum, a reddit sign-off; glyph garbage (`‖‖‖`, `†‼`) on seeds with curly quotes; list
+  loops. What he did well was weirdness in the joins between phrases (*one was an only child and
+  the other a twin*), where nemo's is in the content. `STREAM_MODELS` in the writer's plist is
+  `nemo=http://127.0.0.1:8080` — one seat, so pages keep the `nemo` stamp — and the seat
+  machinery below stays in the code for whoever comes next. gpt-2's agent is not in
+  `~/Library/LaunchAgents` any more; census bootstraps it from the repo when a blind fan wants it.
+- **Two dreamers, turn and turn about** (bekh, 2026-09-23 — retired, above): GPT-2 XL wrote pages into the same
   stream as nemo, **strictly alternating**, and every page says which model wrote it. His
   design: no blindness, no coin — the model's name is the first thing in the dream's head.
   - **Seats** are `STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083`, the
@@ -552,7 +562,12 @@ the code.
     version when the story starts — never counted at read time. Forgetting is coming
     (`BRIEF.md`, parked): old files will be pruned, and an address computed from what is left
     would shift under him, so the twelfth story would become the fourth and every number he
-    remembers would be a lie. A pruned story's number is simply never handed out again.
+    remembers would be a lie. A pruned story's number is simply never handed out again: **a
+    purge moves the story's versions to `dreams/.purged/<date>/`**, which `versions()` skips
+    and `next_chapter` still counts — without it, purging the newest stories handed their
+    numbers straight back out. First used 2026-09-28: chapters 38–51, gpt-2's unplated day,
+    their rooms and readings to the Finder Trash; the next story is 52. `retell`'s
+    `dreams/.trash/` is the opposite on purpose — those numbers are meant to come back.
   - **`remembering.py --number`** is the one-off backfill for the stories written before this:
     stories in the order of their first version, only ever ADDING the field, idempotent, and
     it prints what it did. Run once on 2026-09-22: **11 stories, 38 versions numbered**.
@@ -953,43 +968,36 @@ changed for the stream.
 
 ## Running it
 
-**Starting and stopping the stream means both dreamers too** (bekh, 2026-09-21: *when we decide
-to stop the stream, we gracefully finish nemo as well* — and gpt-2 the same since it joined).
-Nemo wires about 10 GB of a 16 GB mac and has no job once the writer is off; gpt-2 holds ~2 GB
-and a few cores. Both launchd jobs restart a crash and let a clean exit stay exited, so a SIGTERM
-is the graceful stop and the jobs stay loaded for the next start. gpt-2's agent is bootstrapped
-once (`cp eva/stream/com.bekh.eva-gpt2.plist ~/Library/LaunchAgents/` then `launchctl bootstrap
-gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-gpt2.plist`); after that, both dreamers up and
-waited for:
+**Starting and stopping the stream means nemo too** (bekh, 2026-09-21: *when we decide
+to stop the stream, we gracefully finish nemo as well*). Nemo wires about 10 GB of a 16 GB mac
+and has no job once the writer is off. Its launchd job restarts a crash and lets a clean exit
+stay exited, so a SIGTERM is the graceful stop and the job stays loaded for the next start:
 
 ```bash
 launchctl kickstart gui/$(id -u)/com.bekh.eva-llama
-launchctl kickstart gui/$(id -u)/com.bekh.eva-gpt2
-until curl -sf http://127.0.0.1:8080/health >/dev/null && curl -sf http://127.0.0.1:8083/health >/dev/null; do sleep 2; done
+until curl -sf http://127.0.0.1:8080/health >/dev/null; do sleep 2; done
 ```
 
-and both off when the dreaming is done:
+and off when the dreaming is done:
 
 ```bash
 launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-llama
-launchctl kill SIGTERM gui/$(id -u)/com.bekh.eva-gpt2
 ```
 
 If the loom is being used for fans at the same time, nemo stays up — it is the loom's model too.
-One dreamer down is not a dead stream: the writer skips that seat and the other writes every page,
-with the skip on each row.
+Nemo down is a dead stream: every run is an error row (`every seat is out`) and exit 0.
 
 **The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — a run is sized in dreams) is the way the
 stream runs, and it does all of the above in order. It refuses to start while
-`com.bekh.eva-stream` is already loaded. Both dreamers kickstarted and both `/health`s waited for
-(either one never coming up stops the run before the writer starts, and says which); then the
+`com.bekh.eva-stream` is already loaded. Nemo kickstarted and its `/health` waited for
+(never coming up stops the run before the writer starts); then the
 writer bootstrapped **straight from the repo**, `launchctl bootstrap gui/$U
 "$PWD/eva/stream/com.bekh.eva-stream.plist"`, and kickstarted so the first page does not wait
-five minutes; then N dreams — N passages, nemo's and gpt-2's in turn, a passage every five
+five minutes; then N dreams — N passages, a passage every five
 minutes, each with its note, its retelling and its plate, since the plist sets
-`STREAM_KICK_INTERPRETER=1` — then the writer booted out and both dreamers off, by the lines
-above; the narration names who wrote each page and any seat skipped. **Foreground on purpose**:
-it stays in the terminal and ctrl-c ends it clean (writer off, nemo and gpt-2 off), and so does
+`STREAM_KICK_INTERPRETER=1` — then the writer booted out and nemo off, by the lines
+above; the narration names who wrote each page. **Foreground on purpose**:
+it stays in the terminal and ctrl-c ends it clean (writer off, nemo off), and so does
 closing the terminal (the trap takes `INT TERM HUP`); `eva go stop` does the same from anywhere.
 No codex cap and no refusal up front (the cap and `-l` went on 2026-09-25); the last dreams,
 bare when the writer stops, are painted by hand at the end, after a 100s wait for their notes.
@@ -1006,10 +1014,10 @@ and exits; nothing runs it again. From the repo root, with the environment the w
 (`eva/stream/com.bekh.eva-stream.plist`) carries — its `PATH` of
 `/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin` is already a login shell's. Without
 `STREAM_KICK_INTERPRETER` the page is written, posted live and pushed to the mirror, and no
-voice is started — both dreamers are local llama-servers, so this form calls no paid model:
+voice is started — nemo is a local llama-server, so this form calls no paid model:
 
 ```bash
-LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083 \
+LOOM_LLAMA=http://127.0.0.1:8080 STREAM_MODELS=nemo=http://127.0.0.1:8080 \
   uv run --python 3.12 eva/stream/stream.py --once
 ```
 
@@ -1021,7 +1029,7 @@ the quota paid credits:
 
 ```bash
 STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
-  STREAM_MODELS=nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083 \
+  STREAM_MODELS=nemo=http://127.0.0.1:8080 \
   uv run --python 3.12 eva/stream/stream.py --once
 ```
 
@@ -1029,8 +1037,7 @@ STREAM_KICK_INTERPRETER=1 LOOM_LLAMA=http://127.0.0.1:8080 \
 uv run --python 3.12 eva/stream/monitor.py           # the dashboard; --once for a frame
 ```
 
-The writer needs `com.bekh.eva-llama` and `com.bekh.eva-gpt2` up (one down costs that seat its
-turns, not the stream). It does **not** need the loom agent to write pages — only to
+The writer needs `com.bekh.eva-llama` up. It does **not** need the loom agent to write pages — only to
 read them at `https://eva.x/stream`. And `loom.py` changed, so the running loom serves the old
 routes until `launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom`. Log: `/tmp/eva-stream.log`
 inside a ration (the plist's); by hand its log lines go to the terminal's stderr. **Never copy
@@ -1039,7 +1046,7 @@ every login, which is exactly how 2026-09-27 happened.
 
 Env: `STREAM_DIR`, `STREAM_SEEDS`, `STREAM_INTERVAL`, `STREAM_N_PREDICT`, `STREAM_TEMP_LO`,
 `STREAM_TEMP_HI`, `STREAM_MODELS` (the dreamers, `name=url,…` in turn order; the plist and the hand command set
-nemo and gpt2; unset = nemo alone at `LOOM_LLAMA`), `STREAM_KICK_INTERPRETER` (`1` = kick the
+nemo alone; unset = nemo alone at `LOOM_LLAMA`), `STREAM_KICK_INTERPRETER` (`1` = kick the
 voices), `STREAM_PUSH` (`0` = don't tap the mirror), `LOOM_LIVE` (where the live posts
 go; empty = nowhere) and `STREAM_LIVE_EVERY` (0.5), plus loom's `LOOM_SITTINGS` and
 `LOOM_LLAMA`. The loom reads `STREAM_DIR` and `STREAM_INTERVAL` too, `LOOM_STREAM_PAGE` for a
