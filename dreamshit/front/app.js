@@ -665,7 +665,7 @@ function render(pages) {
     const dream = p.story && p.story.dream || null;
     if (!lastPack || !dream || lastPack.dream !== dream) lastPack = newPack(p);
     const r = buildRow(p);
-    r.room = p.room; r.pack = lastPack;
+    r.room = p.room; r.pack = lastPack; r.verse = p.verse;
     rooms.set(p.room, r);
     lastPack.el.appendChild(r.row);
     setPortrait(r, p.portrait);
@@ -696,7 +696,7 @@ function renderOlder(pages) {
     const dream = p.story && p.story.dream || null;
     if (!top || !dream || top.dream !== dream) top = newPack(p, true);
     const r = buildRow(p);
-    r.room = p.room; r.pack = top;
+    r.room = p.room; r.pack = top; r.verse = p.verse;
     rooms.set(p.room, r);
     top.el.prepend(r.row);
     setPortrait(r, p.portrait);
@@ -756,6 +756,50 @@ function loadOlder() {
 }
 new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) loadOlder(); },
   { rootMargin: '200% 0px' }).observe(olderMark);
+
+function wanted() {
+  let h = '';
+  try { h = decodeURIComponent(location.hash.slice(1)).trim(); } catch { return null; }
+  if (!h) return null;
+  if (/^\d+(:\d+)?$/.test(h)) return { verse: h };
+  return { room: h.startsWith('stream/') ? h : 'stream/' + h };
+}
+function rowFor(w) {
+  let best = null;
+  for (const r of rooms.values()) {
+    const v = String(r.verse || '');
+    const ok = w.room ? r.room === w.room : w.verse.includes(':') ? v === w.verse : v.split(':')[0] === w.verse;
+    if (ok && (!best || r.room < best.room)) best = r;
+  }
+  return best;
+}
+let standOn = null;
+function stand(r, smooth) {
+  const b = r.row.getBoundingClientRect();
+  scrollTo({ top: scrollY + b.top + b.height / 2 - innerHeight / 2, behavior: smooth ? 'smooth' : 'auto' });
+}
+async function seek(smooth) {
+  const w = wanted();
+  if (!w || !rooms.size) return false;
+  olderBusy = true;
+  try {
+    let r = rowFor(w);
+    for (let i = 0; !r && !olderDone && i < 40; i++) {
+      const oldest = [...rooms.keys()].reduce((a, b) => b < a ? b : a);
+      if (w.room && w.room >= oldest) break;
+      const d = await api('n=' + OLDER + '&before=' + encodeURIComponent(oldest));
+      const pages = (d.pages || []).filter(p => !rooms.has(p.room));
+      if (!d.more || !pages.length) olderDone = true;
+      if (pages.length) renderOlder(pages);
+      r = rowFor(w);
+    }
+    if (!r) return false;
+    standOn = r;
+    stand(r, smooth);
+    return true;
+  } catch { return false; } finally { olderBusy = false; }
+}
+addEventListener('hashchange', () => { standOn = null; seek(false); });
 
 // update what already exists: late paintings, late readings, the telling rewritten. the story
 // is rewritten WHOLE every time a scene lands — part 1 can change when scene 3 arrives — so a
@@ -1229,10 +1273,10 @@ api('n=' + (ONLY ? 60 : TAIL || FIRST_LOAD)).then(d => fontReady().then(() => d)
   if (TAIL || ONLY) { if (TAIL) $('#feed').style.padding = '40px 0 0'; return; }
   toNewest(false);
   // fonts landing late reflow the page; stand on the newest passage again once they have
-  addEventListener('load', () => toNewest(false), { once: true });
+  addEventListener('load', () => standOn ? stand(standOn) : toNewest(false), { once: true });
   // standing on the newest now: the top of the feed may start asking for older pages (a feed
   // shorter than the screen is already at the top, so look once by hand)
-  requestAnimationFrame(() => { olderReady = true; if (nearTop()) loadOlder(); });
+  seek(false).then(() => requestAnimationFrame(() => { olderReady = true; if (nearTop()) loadOlder(); }));
 }).catch(() => trouble("can't reach eva"));
 // ?tail / ?only are the screenshot modes: one shot of a fixed set of passages, nothing live.
 if (!TAIL && !ONLY) {
