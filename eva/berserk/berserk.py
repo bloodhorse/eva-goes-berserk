@@ -164,10 +164,10 @@ CYCLES = os.path.join(BERSERK, "cycles")
 
 # An empty host is not a missing host: the tests set it to "" to mean "post nowhere", and
 # that has to be distinguishable from the default, or every test run scp's to the mini.
-SHEETS_HOST = os.environ.get("BERSERK_SHEETS_HOST", "bek@100.69.218.90")
+SHEETS_HOST = os.environ.get("BERSERK_SHEETS_HOST", "")
 SHEETS_DIR = "~/sheets"
-SSH_KEY = os.environ.get("BERSERK_SSH_KEY", "/Users/bekh/wrk/keys/ssh_keys/bekh_profi.key")
-NTFY = os.environ.get("BERSERK_NTFY", "kk_alert")
+SSH_KEY = os.environ.get("BERSERK_SSH_KEY", "")
+NTFY = os.environ.get("BERSERK_NTFY", "")
 
 # The matcher is opus through the cli, with every tool off: it has one job, and a reader that
 # can open files is a reader that will go and read the rest of the repo instead of the fan.
