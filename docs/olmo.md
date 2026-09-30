@@ -142,7 +142,7 @@ load-balancing endpoint passes SSE through word by word or in lumps. The console
 table and the verify sequence are the repo's `README.md`.
 
 **The lore to carry, all measured on azeroth-render** (its `SETUP.md` and `README.md`, and
-`~/tower/attic/runpod-kit`):
+`~/tower/functional/runpod-vastai-knowledge-base/runpod/`):
 
 - **active workers = 0**, always. Anything above bills forever; this is the one setting that
   costs real money. Max workers small (1–2); FlashBoot on.
