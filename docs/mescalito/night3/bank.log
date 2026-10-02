@@ -1,0 +1,13 @@
+18:49:07 bank olmo: start, budget 512
+18:51:08 R=7.053  median|h_s|=16.94  R/|h_s|=0.4164
+18:52:15 iter 0  causal objective 0.78
+18:53:22 iter 1  causal objective 126.16
+18:54:30 iter 2  causal objective 239.32
+18:55:37 iter 3  causal objective 351.82
+18:56:45 iter 4  causal objective 419.10
+18:57:52 iter 5  causal objective 494.99
+18:59:00 iter 6  causal objective 572.30
+19:00:08 iter 7  causal objective 547.27
+19:01:15 iter 8  causal objective 696.86
+19:02:23 iter 9  causal objective 725.38
+19:03:09 BANK-DONE olmo: R=7.052788173095784  272 vectors
