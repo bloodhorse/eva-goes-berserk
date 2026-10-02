@@ -12,6 +12,7 @@ p.add_argument("--m", type=int, default=256); p.add_argument("--iters", type=int
 p.add_argument("--chunk", type=int, default=32); p.add_argument("--last", type=int, default=3)
 p.add_argument("--R", type=float, default=None); p.add_argument("--lam", type=float, default=0.5)
 p.add_argument("--bits", type=int, default=16); p.add_argument("--bos", type=int, default=1)
+p.add_argument("--budget", type=int, default=0)
 p.add_argument("--out", default="bank.pt")
 p.add_argument("--device", default="cuda")             # "mps"/"cpu" for a dry run on the mac with a toy model
 a = p.parse_args()
@@ -28,7 +29,8 @@ if a.bits == 4:
                                                    bnb_4bit_compute_dtype=torch.bfloat16)
 model = AutoModelForCausalLM.from_pretrained(a.model, **kw).eval()   # Mistral3: use its own class
 model.requires_grad_(False)
-tok = AutoTokenizer.from_pretrained(a.model, revision=a.revision)
+if a.budget and hasattr(model, "lm_head"): model.lm_head = torch.nn.Identity()
+tok =AutoTokenizer.from_pretrained(a.model, revision=a.revision)
 cands = [(n, mod) for n, mod in model.named_modules()
          if isinstance(mod, torch.nn.ModuleList) and n.endswith("layers") and "vision" not in n]
 layers = cands[0][1]; d = tc.hidden_size
@@ -64,8 +66,24 @@ with torch.no_grad():
     base = [run(ids, torch.zeros(1, d, device=dev)) for ids in seeds]
 hnorm = sorted(st["hn"])[len(st["hn"]) // 2]
 
+def step(ids, k):
+    return max(1, a.budget // ids.shape[1]) if a.budget else k
+
 def delta(theta):                                      # mean over seeds and positions -> [k, d]
-    return sum((run(i, theta) - b).mean(1) for i, b in zip(seeds, base)) / len(seeds)
+    k = theta.shape[0]
+    return sum(torch.cat([(run(i, theta[j:j + step(i, k)]) - b).mean(1) for j in range(0, k, step(i, k))])
+               for i, b in zip(seeds, base)) / len(seeds)
+
+def delta_grad(v, u):
+    k = v.shape[0]; D, g = torch.zeros_like(u), torch.zeros_like(v)
+    for i, b in zip(seeds, base):
+        n = step(i, k)
+        for j in range(0, k, n):
+            vj = v[j:j + n].clone().requires_grad_(True)
+            Dj = (run(i, R * vj) - b).mean(1) / len(seeds)
+            gj, = torch.autograd.grad((Dj * u[j:j + n]).sum(), vj)
+            D[j:j + n] += Dj.detach(); g[j:j + n] += gj
+    return D, g
 
 @torch.no_grad()
 def calibrate(n=16):                                   # DCT: nonlinear/linear response ratio == lam
@@ -89,11 +107,9 @@ for it in range(a.iters):                              # OGI (DCT algorithm 3)
     V, _ = torch.linalg.qr(V)                          # orthogonalize inputs only
     GU, GV, obj = torch.empty_like(U), torch.empty_like(V), 0.0
     for c in range(0, a.m, a.chunk):
-        v = V[:, c:c + a.chunk].T.clone().requires_grad_(True)
-        D = delta(R * v)
-        f = (D * U[:, c:c + a.chunk].T).sum()
-        gv, = torch.autograd.grad(f, v)
-        GU[:, c:c + a.chunk], GV[:, c:c + a.chunk], obj = D.detach().T, gv.T, obj + f.item()
+        u = U[:, c:c + a.chunk].T
+        D, gv = delta_grad(V[:, c:c + a.chunk].T, u)
+        GU[:, c:c + a.chunk], GV[:, c:c + a.chunk], obj = D.T, gv.T, obj + (D * u).sum().item()
     U, V = F.normalize(GU, dim=0), F.normalize(GV, dim=0)
     print(f"iter {it}  causal objective {obj:.2f}", flush=True)
 
