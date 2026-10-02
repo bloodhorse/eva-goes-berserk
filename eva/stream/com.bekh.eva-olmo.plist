@@ -7,6 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/ssh</string>
+        <string>-N</string>
         <string>-o</string>
         <string>BatchMode=yes</string>
         <string>-o</string>
@@ -20,7 +21,6 @@
         <string>-L</string>
         <string>127.0.0.1:8084:127.0.0.1:8081</string>
         <string>ubuntu@10.4.65.34</string>
-        <string>~/eva-olmo/kit/box_serve.sh up &amp;&amp; exec sleep infinity</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
