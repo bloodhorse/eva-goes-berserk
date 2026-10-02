@@ -13,7 +13,7 @@ case "${1:-status}" in
     used=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)
     if [ "$used" -gt 500 ]; then echo "card busy: ${used} MiB in use" >&2; exit 1; fi
     LD_LIBRARY_PATH=/opt/llama/lib:/usr/local/cuda-13.3/lib64 nohup /opt/llama/bin/llama-server \
-      -m "$(ls olmo-q4/*.gguf)" -c 8192 -ngl 99 -fa on --no-jinja --host 0.0.0.0 --port "$PORT" \
+      -m "$(ls olmo-q4/*.gguf)" -c 8192 -ngl 99 -fa on --no-jinja --host "${HOST:-127.0.0.1}" --port "$PORT" \
       > log/serve.log 2>&1 < /dev/null &
     echo $! > "$PIDF"
     for _ in $(seq 60); do
