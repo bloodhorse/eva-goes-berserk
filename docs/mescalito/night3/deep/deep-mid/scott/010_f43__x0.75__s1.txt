@@ -1,0 +1,20 @@
+ sleep}}.}}}
+}
+
+{page}\begin{minipage}[c]}We're having trouble getting up}}}{}}{
+}
+
+
+{page}
+
+{I am not the only one that is in bad health:}}}}\begin{minipage}{}}
+
+\colorbox[gray]{.7}}\rule{3}}
+
+} \rule{6}}}}\\
+}\begin{tikzpicture}[x={(.4}{in)}}}, y={(.1}}in})}}} \begin{minipage}}}}
+
+{\begin{minipage}{\parindent}
+\begin{table}}[[2cm}\hfill{} \parindent}}}{{0cm} 0pt}{0}}\endalign}\hfil}
+}\color{black}  { 
+
