@@ -264,7 +264,7 @@ and flipped the method: bekh's stars measure the dream, "did the direction bring
 seed doesn't have" measures the drug. Two of the power's pages are dreams 21:3–21:4. **Night 3
 (2026-10-02/03) was olmo's**, on the borrowed box: her own bank, twenty directions read up and
 down the doses — no subjects, documents and registers and letter games, half of them weird at
-their own dose — and a deep bank (layers 16 → 32) through the new `--slice`. bekh's measure,
+their own dose — and a deep bank (layers 16 → 32) through the new `--slice`, which bought content, partly — documents about something: the tribe, the watcher, the ghosts. bekh's measure,
 set that night: *a trip is to make her write weird shit; that's all.* The state section of
 `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/` (`run.sh` for a
 page on nemo, `box_*.sh` for olmo on the box, `land.py` for a dream).

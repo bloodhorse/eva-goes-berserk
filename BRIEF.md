@@ -207,9 +207,11 @@ the record). Everything older is `docs/backlog.md`, whole.
    directions have been read up and down the doses (`docs/mescalito.md`, night 3; her entries
    in the pharmacopoeia): **no subjects** — her strong end switches the document, the stance,
    the register, the letters; half of it writes weird pages at its own dose. bekh's measure for
-   this, the same night: *a trip is to make her write weird shit; that's all.* Next: the deep
-   bank (layers 16 → 32, being learned) read against the shallow one — does depth buy
-   subjects; then the weird ten on fresh seeds at their doses, and the rest of her bank in tens.
+   this, the same night: *a trip is to make her write weird shit; that's all.* A deep bank
+   (layers 16 → 32) followed the same night and bought content, partly: documents about
+   something — the tribe, the watcher, the ghosts, the planet. Next: the deep bank further
+   down; the weird ones of both banks on fresh seeds at their doses; the rest of each bank in
+   tens.
    The box can vanish any day: results come off it as they land.
 4. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
    needs a held-or-salad check on the page before it lands, since the ceiling is the seed's

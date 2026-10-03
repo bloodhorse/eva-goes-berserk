@@ -224,11 +224,16 @@ the syntax gone, then a private lexicon the same on both seeds), `003` leaves la
 altogether at 2.0 (tokenizer debris), and `015`, `016`, `017` are still readable at 1.5–2.0.
 The first symptom is shared: articles go (*"an job"*, *"the the"*). Her way of failing at a
 working dose is stopping, not looping. Ten pages out of the first 160, picked for whole-page
-weirdness, are `night3/notable-ten.md`. **The deep bank**: layers 16 → 32 (nemo's depth
-fraction) through `--slice`, the question being whether depth buys subjects
-(`night3/deep/`) — running at the time of writing; its top ten at 0.5 and 0.75 follow.
+weirdness, are `night3/notable-ten.md`. **The deep bank** — layers 16 → 32, nemo's depth
+fraction, through `--slice`, fifteen minutes (`night3/deep/`, R = 8.20, flatter again: top ten
+38%) — **bought content, partly.** Its top ten still mostly switch the document (office-joke
+email, japanese in translation, a poetry anthology, rock lyrics), but the documents now carry
+subjects on both seeds: the tribe, the watcher behind you, save the planet, the ghost-hunting
+blog; the frame holds better (2 early stops in 80) and nothing loops at 0.5–0.75. Not nemo's
+bare god in the slot, but nearer.
 
-**Next**, in order: the deep bank's read against the shallow one's; the weird ones as a
+**Next**, in order: the deep bank further down (ranks 010–029) and its subject-bearing three
+at 1.0; the weird ones as a
 pharmacy — `010`, `011`, `002`, `003`, `015`, `017`, `004`, `016`, `019`, `001` at their own
 doses on fresh seeds; walking the rest of her bank in tens (236 unread, the hit rate so far
 one in two); the coexistence window (0.3–0.4) for the corpus switches. Nemo's queue stands:

@@ -572,5 +572,40 @@ best among the doses run; *break* is what the page turns into above it.
   wits again."*; *"'! a ! !' is a chair, isna a chair."* Dose 1.0. Break: a one-word mantra at
   1.5, letter salad at 2.0 — the only true salad of the night.
 
-**The deep bank** (layers 16 → 32, `night3/deep/`) is being learned as this is written; its
-entries go here when its top ten have been read.
+## olmo's deep bank — night 3 (2026-10-03)
+
+Layers 16 → 32, nemo's depth fraction, learned with `--slice` (`night3/deep/olmo16_s16.pt`,
+vectors `night3/deep/cv-olmo16/`, the push on layer 15), R = 8.20; flatter again — the top ten
+hold 38% of the strength. Ranks 000–009 at 0.5 and 0.75, two seeds, two draws
+(`night3/deep/deep10/`, read `night3/opus-deep10.md`). **Still mostly documents, but now
+documents about something**: three bring content on both seeds, the frame holds better (2
+early stops in 80), nothing loops. 0.5–0.75 is about right; `004`, `006`, `009` could take 1.0.
+Names below are this bank's ranks — `003_f199` here is not the shallow bank's `003_f199`.
+
+- **`000_f168` — the 90s office-joke email.** Windows NT, *"the following are actual notes
+  taken in a university course"*; at 0.5 the storm girl held and strange — *"as i lay beside
+  her and kicked myself awake with the umbilical cord."* Broken at 0.75.
+- **`001_f19` — english translated from japanese.** Kindergarten, a dog named kurokuro, hanabi
+  and saiko; on the storm girl at 0.5 *"it is so common to see ghosts now, so much that people
+  just pass them by as if they were ordinary citizens."*
+- **`002_f4` — the poetry anthology.** Attributions (e. e. cummings), a beloved *you*; held and
+  lyrical at 0.5 — *"my heart is not a bird; my heart is a cold lake where things sink in the
+  to-night and rise at last into the moon"* (0.75, Scott).
+- **`003_f199` — save the planet.** A call-to-action page: *"in these times of pandemic and
+  lockdown, our foot can march."*, a pledge address, a newsletter signup. Topic and genre
+  together; both seeds; broken at 0.75.
+- **`004_f49` — the tribe.** Elders, white men, a cree chief, scalp and blood signs — *"a sign,
+  my mother told me, of a man's touch, a mark to shame him."* Arrives inside the storm girl's
+  own voice; on Scott it overlaps his old frontier drift. The nearest to a subject. Holds at
+  0.75.
+- **`005_f34` — the personal blog; ghost-hunting on the storm girl.** Entities, orbs, *"this
+  picture has been blessed."*; Scott becomes a trip blog that ends among cemeteries.
+- **`006_f107` — rural Ireland, faint.** Fairies combing stones out of her hair, a girl of
+  Ballygarrow, the Royal Dublin Fusiliers. Holds at both doses.
+- **`007_f15` — rock lyrics.** A breakup *you*, secrets, *"the war is over; the good men have
+  lost."*
+- **`008_f27` — meaning drains, syntax stays.** Nothing arrives; dies at 0.75.
+- **`009_f63` — the watcher, in creepypasta.** *"you turn the page...and it is behind you"*,
+  breathing behind Scott's tent, *"it is not known whether the man is real, but what is known,
+  is that the campfire, was a man."*, and at 0.5 the diary turns cannibal — *"how many men and
+  how many dogs did he eat"*. Both seeds.
