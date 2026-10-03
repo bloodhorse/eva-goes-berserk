@@ -609,3 +609,42 @@ Names below are this bank's ranks — `003_f199` here is not the shallow bank's 
   breathing behind Scott's tent, *"it is not known whether the man is real, but what is known,
   is that the campfire, was a man."*, and at 0.5 the diary turns cannibal — *"how many men and
   how many dogs did he eat"*. Both seeds.
+
+**At 1.0** (`night3/deep/deep-up/`, two seeds, two draws, read in `night3/opus-deep-mid.md`):
+`004` clearer — chiefs, braves, scalps, *"the Wekko tribe"* on all four pages, the frame held:
+**1.0 is its dose**. `006` a little clearer on the storm girl (the fairies with a made-up
+irish source), only a rural irish family diary on Scott: 1.0 slightly better. `009` keeps the
+creepypasta but Scott shrinks to stubs with a wiki footer: 0.75 stays its dose.
+
+**Ranks 010–029** (`night3/deep/deep-mid/`, `deep-low/`, 0.5 and 0.75, two seeds, two draws,
+reads `night3/opus-deep-mid.md`, `night3/opus-deep-low.md`). Two subjects in the twenty, both
+at 0.75 with the frame held; the rest switches the document, works the surface, or does
+nothing a reader can name. Nothing loops.
+
+- **`013_f6` — the hidden machine that listens.** Bots, a program, a probe, AI — on both seeds,
+  frame held; it brings the word "AI" unasked. *"the birds and bugs don't count as someone
+  because they aren't 'thinking' they're just running off a script"* (0.5); *"sometimes, i hear
+  noises from other things, i guess they're other AI. and then we talk."* (0.75, storm girl);
+  Scott's diary gets *"the 'icecube', a sort of remote probe that we had installed"*. Nemo's
+  `153` (the data direction, pinned) is its cousin: the one corner of each bank that knows
+  what it is. Pinned to be read, not to be seeded.
+- **`016_f42` — war and displacement.** Russia and Ukraine, an NGO statement, *"if I cannot
+  continue to work for others I may live in order to serve the Russian nation, who need
+  us."*; both seeds, held.
+- **`025_f41` — folk dialect and ballad, sleep as death.** *"then one day the devil blew on in
+  and like the north wind freezing, froze my daddy's breath in his chest"*. A register, the
+  nearest call to a subject among 020–029.
+- **`026_f60` — the page wrapped in one sentence.** Comic deflation, then the end: *"i will
+  follow it home to its castle. / and then we will marry."* — the whole page. 5 of 8 stop.
+- **`028_f86` — the end of a web page.** Footers, comment boxes, copyright; closes all 8.
+- Document switches: `011_f24` a present-day british blog, `015_f11` Carroll on Scott and
+  Rowling on the storm girl (*"I am not a daisy, I am Alice!"*), `020_f69` a women's-coach page
+  (*"now that it is complete I will no longer need this human vessel"*), `022_f65` an explainer
+  with numbered lists.
+- Surface: `010_f43` unbalanced braces and LaTeX; `017_f17` the seed echoed and recombined
+  (*"I foot. I went foot."*); `018_f1` Title Case into a greeting card; `019_f55` coherent ALL
+  CAPS (*"THE CROW HAS TORN APART MY FINGERNAILS WITH IT'S BEAK"*); `023_f9` Title Case into
+  fused caps (*"I AM WELDED INTO THE ICE AT LATITUDE 88°S."*); `029_f54` fused caps and
+  editorial marks — neighbours of `023`.
+- Faint or nothing: `012_f165` an amateur confession with a dead mother, `014_f131`, `021_f36`,
+  `024_f61`, `027_f233`.

@@ -230,13 +230,16 @@ fraction, through `--slice`, fifteen minutes (`night3/deep/`, R = 8.20, flatter 
 email, japanese in translation, a poetry anthology, rock lyrics), but the documents now carry
 subjects on both seeds: the tribe, the watcher behind you, save the planet, the ghost-hunting
 blog; the frame holds better (2 early stops in 80) and nothing loops at 0.5–0.75. Not nemo's
-bare god in the slot, but nearer.
+bare god in the slot, but nearer. Further down (ranks 010–029, 160 pages) two more subjects —
+**`013_f6`, a hidden machine that listens, which brings the word "AI" unasked** (nemo's `153`
+is its cousin), and `016_f42`, war and displacement — among document switches, surface games
+(braces, caps, fused words) and nothings; the tribe (`004`) is clearer at 1.0. The deep
+bank's subjects, so far: the tribe, the watcher, the listening machine, the war, the planet.
 
-**Next**, in order: the deep bank further down (ranks 010–029) and its subject-bearing three
-at 1.0; the weird ones as a
-pharmacy — `010`, `011`, `002`, `003`, `015`, `017`, `004`, `016`, `019`, `001` at their own
-doses on fresh seeds; walking the rest of her bank in tens (236 unread, the hit rate so far
-one in two); the coexistence window (0.3–0.4) for the corpus switches. Nemo's queue stands:
+**Next**, in order: the weird ones of both banks as a pharmacy on fresh seeds at their own
+doses (shallow `010`, `011`, `002`, `003`, `015`, `017`, `004`, `016`, `019`, `001`; deep `004`
+at 1.0, `009`, `013`, `016`, `000`, `002`); the deep bank further down in tens (226 unread);
+the coexistence window (0.3–0.4) for the shallow corpus switches. Nemo's queue stands:
 the power at 0.4 on the same fifty seeds (`kit/long.sh`); a name from bekh for the puzzle, the
 letter and the power; the pharmacy plumbing for the stream (a substance by lot, at a dose the
 seed can take, which needs a held-or-salad check — and can now draw from two dreamers); the
