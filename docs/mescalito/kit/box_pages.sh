@@ -26,7 +26,7 @@ for V in "$@"; do
       done_n=$((done_n + 1))
       if [ ! -s "$o" ]; then
         build/bin/llama-completion -m "$M" -ngl 99 -c 2048 -f "$SEED" -n "$N" --seed "$s" -no-cnv --no-display-prompt \
-          "${SAMP[@]}" --control-vector-scaled "$f:$D" --control-vector-layer-range 9 9 > "$o" 2> "${o%.txt}.err" && rm -f "${o%.txt}.err"
+          "${SAMP[@]}" --control-vector-scaled "$f:$D" --control-vector-layer-range "${LAYER:-9}" "${LAYER:-9}" > "$o" 2> "${o%.txt}.err" && rm -f "${o%.txt}.err"
       fi
       echo "$(date -u +%H:%M:%S) $done_n/$total $o"
     done
