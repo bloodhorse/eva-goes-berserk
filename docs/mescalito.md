@@ -125,10 +125,14 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-**Two nights so far, both on nemo, and the pharmacopoeia is the record:
+**Three nights: two on nemo, one on olmo, and the pharmacopoeia is the record:
 `mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page,
 rewritten in place; start there for what any direction does. This section is the shape of
 things, not the findings.
+
+**What a trip is for, bekh, 2026-10-03:** *a trip is to make her write weird shit; that's all,
+stop overthinking.* The model of the thing above stays as the mechanism; the measure is the
+weird page.
 
 **What exists.** A bank of 256 directions nemo owns (`night1/nemo_s10.pt`, layer 10 → 20,
 R = 4.57 against a median residual norm of 13.05), exported as control vectors with sixteen
@@ -142,6 +146,18 @@ and the mirror itself; `land_batch.py` for a list; `kit/sheet_build.py`, a readi
 Pages: `night1/` (the bank, the lottery, the strong end, the ladder on the 22) and `night2/`
 (god, scott, the baseline, bloodbath, 061 across the pot), all in git; a night is one folder.
 Reads are working notes and live in `attic/mescalito-reads/`.
+
+**Olmo's kit, on the borrowed box** (`olmo.md`, the box): `melbo_bank.py` grew two flags —
+`--budget N` takes the gradient seed by seed in passes of at most N tokens (the old version
+held the graph for all eight seeds at once and ran out of 24 GB), and `--slice 1` runs the
+layers before `s` once per seed, keeps their output, and puts only layers `s..t` on the card,
+so any window of ~20 layers fits in bf16 whatever its depth; both checked against the old
+script on toy models (cosine 1.000000, the slice bit-identical on a toy olmo-3 with both layer
+types). `box_bank.sh [name]` (env `S`, `T`, `SLICE`, `BUDGET`) learns a bank, exports it and
+cuts sixteen random controls; `box_pages.sh <out> <seed> <doses> <rngs> <vectors…>` (env
+`BANK`, `LAYER` = s−1) writes dosed pages with her sampler (heat 3.0, min_p 0.08, xtc);
+`compile_pages.py` turns a pages folder into one labelled reading file; `box_serve.sh` is her
+server. Night 3's pages and reads are `night3/`.
 
 **What was settled.** *Owned beats random, outright*: 24 random pages at the same norm are the
 sober distribution, 24 owned pages all move. *A substance is what holds across draws and
@@ -186,12 +202,41 @@ direction (read, never seeded), `036`, `023`. **Bloodbath road 1 is dead**: the 
 directions on two seeds, blood 1 of 24 and that one a fitness blog — the blood on the storm
 girl was hers; road 2 (a difference vector, murderer minus calm) is the live one and a build.
 
-**Next**, in order: the power at 0.4 on the same fifty seeds (`kit/long.sh`) — whether a period mouth and the throne can coexist on real text; a name from bekh for the puzzle, the letter and the power; **olmo** — a
-fresh pod, her bank, and god, the puzzle and the end rerun there first (does a second model
-trained on other data have the same knobs near the top of its bank — the question that stops
-being about nemo); then the pharmacy plumbing for the stream (a substance by lot, at a dose
-the seed can take, which now needs a held-or-salad check); then the letter re-run on ten sober
-Scott draws before it is named (real diaries end *Yours truly* on their own).
+**Night 3 (2026-10-02/03) was olmo's**, on the borrowed box, two seeds throughout (the storm
+girl, Scott's short diary), her sampler, labelled pages, opus reading every run with a
+shortlist of odd lines (`night3/opus-*.md`, on the sheets as `mescalito-olmo-*`). **Her bank**:
+256 directions, layer 10 → 20 (`night3/olmo_s10.pt`, `cv-olmo/`), R = 7.05 against a median
+residual norm of 16.94, fourteen minutes; flatter than nemo's (top ten hold 63% of the
+strength against his 81%). **What her top twenty do: no noun-subject anywhere** — no god, no
+puzzle. They switch the document (a lyric poem, a quotations page, fan-translated japanese
+lyrics, english translated from russian and from arabic, a dutch art-project page, pulp
+noir, the joke-post internet), or carry a stance (a hostile *they*, the text about its own
+sentences), a register (deadpan absurd, the body coming apart told dry, a second-person
+explainer) or a texture (one letter taking over, one word echoing). Our research note
+predicted exactly this for a base model's strongest directions: genre levers first. Neighbours
+in rank are often neighbours in the bank (cosine 0.34–0.58 against a median 0.10).
+**Dose is per direction, not per bank**: corpus switches have replaced the seed by 0.5 and are
+invisible at 0.25, so their coexistence window (0.25–0.5) is unsampled; registers and
+textures want ~1.0; the two quiet ones (`000`, `016`) only show from 1.0. **There is no
+common ceiling, and the break follows the kind**: the letter directions break below the word
+(coined words, syllables, `tatatata`), the corpus and stance ones above it (every word real,
+the syntax gone, then a private lexicon the same on both seeds), `003` leaves language
+altogether at 2.0 (tokenizer debris), and `015`, `016`, `017` are still readable at 1.5–2.0.
+The first symptom is shared: articles go (*"an job"*, *"the the"*). Her way of failing at a
+working dose is stopping, not looping. Ten pages out of the first 160, picked for whole-page
+weirdness, are `night3/notable-ten.md`. **The deep bank**: layers 16 → 32 (nemo's depth
+fraction) through `--slice`, the question being whether depth buys subjects
+(`night3/deep/`) — running at the time of writing; its top ten at 0.5 and 0.75 follow.
+
+**Next**, in order: the deep bank's read against the shallow one's; the weird ones as a
+pharmacy — `010`, `011`, `002`, `003`, `015`, `017`, `004`, `016`, `019`, `001` at their own
+doses on fresh seeds; walking the rest of her bank in tens (236 unread, the hit rate so far
+one in two); the coexistence window (0.3–0.4) for the corpus switches. Nemo's queue stands:
+the power at 0.4 on the same fifty seeds (`kit/long.sh`); a name from bekh for the puzzle, the
+letter and the power; the pharmacy plumbing for the stream (a substance by lot, at a dose the
+seed can take, which needs a held-or-salad check — and can now draw from two dreamers); the
+letter re-run on ten sober Scott draws before it is named (real diaries end *Yours truly* on
+their own).
 
 Open questions, in the order they came up: what loosening the narrator's grip on *who is
 speaking* without its grip on *where we are* would be, and whether those are different heads;

@@ -35,12 +35,16 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    checkable (the Allen Institute publishes every step); a Q4 gguf exists on HF, checked.
    **Jumped the queue on 2026-09-24** as gpt-2 xl's replacement, and **bekh read her that
    night and wants her in the palette**: she holds a frame for a whole page and reads sober,
-   nemo's weird in a level tone; her heat is t3–5, and rope bends are a second axis. Runs on
-   RunPod — a pod worked, the serverless endpoint (`bloodhorse/olmo-dreamer`,
-   `~/tower/forge/olmo-dreamer`) is the goal and its cached model stalled; next is baking the
-   weights into the image. `docs/olmo.md` is the state. And **the model is a free variable
-   for mescalito** (bekh, 2026-09-24): the mechanic picks the host — in-block pushes bite on
-   pre-norm bases (nemo, small, llama), residual-stream pushes on olmo's post-norm.
+   nemo's weird in a level tone; her heat is t3–5, and rope bends are a second axis. **Since
+   2026-10-03 she runs on a borrowed work box** (`ssh ubuntu@10.4.65.34`, a 24 GB Blackwell
+   card, lent for days and liable to vanish), served by `docs/mescalito/kit/box_serve.sh`
+   and reached from the mac at `127.0.0.1:8084` through the tunnel job
+   `eva/stream/com.bekh.eva-olmo.plist` — nemo keeps 8080. The RunPod serverless endpoint
+   (`bloodhorse/olmo-dreamer`, `~/tower/forge/olmo-dreamer`) stays the long-term home, its
+   cached model stalled, baking the weights into the image next. `docs/olmo.md` is the state
+   and the box's runbook. And **the model is a free variable for mescalito** (bekh,
+   2026-09-24): the mechanic picks the host — in-block pushes bite on pre-norm bases (nemo,
+   small, llama), residual-stream pushes on olmo's post-norm.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
@@ -257,15 +261,22 @@ outright, and **three substances named by bekh — ender `M-224-75`, kin `125KIN
 for it — **god `M-012-25`** fills a slot with angels and Satan where sober nemo says aliens, and
 the puzzle, the letter and the power travel from the storm girl to Scott's diary and beyond —
 and flipped the method: bekh's stars measure the dream, "did the direction bring a subject the
-seed doesn't have" measures the drug. Two of the power's pages are dreams 21:3–21:4. The
-state section of `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/`
-(`run.sh` for a page, `land.py` for a dream).
+seed doesn't have" measures the drug. Two of the power's pages are dreams 21:3–21:4. **Night 3
+(2026-10-02/03) was olmo's**, on the borrowed box: her own bank, twenty directions read up and
+down the doses — no subjects, documents and registers and letter games, half of them weird at
+their own dose — and a deep bank (layers 16 → 32) through the new `--slice`. bekh's measure,
+set that night: *a trip is to make her write weird shit; that's all.* The state section of
+`docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/` (`run.sh` for a
+page on nemo, `box_*.sh` for olmo on the box, `land.py` for a dream).
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
 (`shelf/seeds/.off/asses.txt`, voiced 2026-09-26, the god slot test — a research seed, kept out of the stream's pot); more of those are wanted — a
 couple of sentences in his register, no prose from Claude, no web markers.
 
-Open, small: the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
+Open, small: codex dropped out halfway through the ration of 2026-09-27 (from 14:24, `failed to
+refresh available models: request timed out` toward chatgpt.com, not auth) — the reader fell
+back to opus 43 times, the analyst has no fallback and 44 of that day's 68 portraits failed;
+`codex login status` was fine again on 2026-10-03, nothing was changed; the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the
 sampler, or whether a second button should write the whole fan; the cyborgism crowd (janus,
 ampdot) is reachable only by a person — every channel is invite-only, ampdot's contacts are on

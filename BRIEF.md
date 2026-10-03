@@ -16,7 +16,8 @@ A dream machine that runs on the mac perpetually and writes dreams on its own: s
 documents with that hard-to-pin feeling of immersion or transcendence in them. bekh takes his
 phone at any moment and reads a fresh piece of the stream. He won't read everything; the point
 is knowing the machine is dreaming and looking in from time to time. A base model writes (nemo
-12b, nothing installed; GPT-2 XL beside it), and the stuff coming out is still the good stuff.
+12b, nothing installed; olmo 32b in the palette beside him), and the stuff coming out is still
+the good stuff.
 
 **The machine curates.** The project is the automation of what the cyborgism crowd did by hand —
 pick the live branch, cut where it goes stale, feed it back. That hand moves to the machine; it
@@ -191,9 +192,9 @@ shape — now.
 
 ### now
 
-Set on the night of 2026-09-26, after night 2 of mescalito (`docs/mescalito.md`, "where it
-stands", is the state; `docs/mescalito/pharmacopoeia.md` the record). Everything older is
-`docs/backlog.md`, whole.
+Set on the night of 2026-09-26, after night 2 of mescalito, and moved on 2026-10-03 by night 3,
+olmo's (`docs/mescalito.md`, "where it stands", is the state; `docs/mescalito/pharmacopoeia.md`
+the record). Everything older is `docs/backlog.md`, whole.
 
 1. **Names.** Three compounds wait on bekh's word: the puzzle `013_f60`, the letter `005_f53`,
    the power `061_f20`. The last one has fifty seeds behind it (a third clear) and two dreams in the stream
@@ -201,14 +202,19 @@ stands", is the state; `docs/mescalito/pharmacopoeia.md` the record). Everything
 2. **The power at 0.4 on the same fifty** (`docs/mescalito/kit/long.sh`, half an hour): at 0.75
    the throne arrives on a third of real first-person seeds but every period mouth dies; the
    question is whether 0.4 keeps the voice and still builds the throne.
-3. **Olmo.** A fresh pod, her bank, and god, the puzzle and the end rerun there first with the
-   same seeds and controls (`docs/olmo.md` for the pod; `docs/mescalito/kit/` for the bank and
-   `run.sh`). The question is whether a second model trained on other data has the same knobs
-   near the top of its bank — the first question here that stops being about nemo.
+3. **Olmo — under way since 2026-10-03, on a borrowed work box** (`docs/olmo.md`, the box;
+   she answers at `127.0.0.1:8084` like nemo at 8080). Her bank exists and twenty of its
+   directions have been read up and down the doses (`docs/mescalito.md`, night 3; her entries
+   in the pharmacopoeia): **no subjects** — her strong end switches the document, the stance,
+   the register, the letters; half of it writes weird pages at its own dose. bekh's measure for
+   this, the same night: *a trip is to make her write weird shit; that's all.* Next: the deep
+   bank (layers 16 → 32, being learned) read against the shallow one — does depth buy
+   subjects; then the weird ten on fresh seeds at their doses, and the rest of her bank in tens.
+   The box can vanish any day: results come off it as they land.
 4. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
    needs a held-or-salad check on the page before it lands, since the ceiling is the seed's
-   (`docs/mescalito.md`, what was settled). Olmo's bank first, so the lot can draw from two
-   dreamers.
+   (`docs/mescalito.md`, what was settled). Olmo's dose is per direction, so her lot needs a
+   dose table, which night 3 has begun.
 
 The method as it stands: bekh's stars measure the dream; "did the direction bring a subject
 the seed doesn't have" measures the drug, and a model answers that. The sober baseline is

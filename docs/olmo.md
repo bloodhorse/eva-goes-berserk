@@ -5,19 +5,62 @@ A bigger dreamer for the stream, to replace gpt-2 xl, whose pages bekh reads and
 serverless endpoint**, woken for a burst and asleep otherwise. Mistral Small 3.1 24B base is
 the fallback if olmo's prose comes out dead.
 
-**Where it stands (end of 2026-09-24):** **bekh has read her and wants her in the palette** —
-"nemo's weird in a sober tone", beside nemo, not in his place. The weights are a checked Q4
-on HF (below), the deploy repo `bloodhorse/olmo-dreamer` is written (private, like
-azeroth-render), and **the endpoint exists: `qdipqwxl1l5ngm`**, load-balancing, booted clean
-on gemma-270m (a whole A5000, Montreal), **streams word by word** through the balancer (61
-chunks, longest gap 0.15 s, first token 0.52 s) — but the flip to the 18 GB cached model
-never mounted, so the night's pages came off a plain A40 pod (`pod.py` + `pod-boot.sh` in
-the repo, terminated at the end). Everything she wrote is in `docs/attic/olmo/`: `olmo-prophecies`
-(the ten mystical seeds), `olmo-fifty` (the last fifty stream seeds at their original
-heats — pairs against the stream's pages, **opus not set on them yet, bekh's instruction**),
-`olmo-shelf` (every seed on the shelf), `olmo-heat-3.0` / `-5.0`, `olmo-rope-*`. Next:
-serverless with the weights baked into the image (his call, below), and the mescalito brief
-(`docs/brief-mescalito.md`) handed to a researcher.
+**Where it stands (2026-10-03):** **bekh has read her and wants her in the palette** —
+"nemo's weird in a sober tone", beside nemo, not in his place. **She lives on a borrowed work
+box now** (the section below): her Q4 served there, reached from the mac at
+**`http://127.0.0.1:8084`** exactly as nemo is at 8080, and her own direction bank learned
+there — night 3 of mescalito (`mescalito.md`, `mescalito/pharmacopoeia.md`). The RunPod
+endpoint `qdipqwxl1l5ngm` (`bloodhorse/olmo-dreamer`) stays the long-term home and is where
+it was: it streams word by word on gemma-270m, the flip to the 18 GB cached model never
+mounted, and the next step there is still baking the weights into the image. Everything she
+wrote on 2026-09-24 is in `docs/attic/olmo/`: `olmo-prophecies` (the ten mystical seeds),
+`olmo-fifty` (the last fifty stream seeds at their original heats — pairs against the
+stream's pages, **opus not set on them yet, bekh's instruction**), `olmo-shelf`,
+`olmo-heat-3.0` / `-5.0`, `olmo-rope-*`.
+
+## the box (since 2026-10-03)
+
+A work machine lent to bekh "for a day or two from 2026-10-01": **it can vanish without
+notice**, so results come off it as they land. `ssh ubuntu@10.4.65.34` (the work VPN must be
+up; passwordless sudo), an RTX PRO 4000 Blackwell (24 GB), 16 vCPU, 109 GB RAM. Its owner is
+the work project: DeepSeek V4-Flash (`llama-server.service`, :8080, ~22.5 GB of the card) is
+what normally sits on it, `/opt/llama/etc/api-key` is a work secret (never printed, never
+copied), `~/sq1-r3vi3w` and `~/burn` are not ours to read. **One GPU job at a time**: before
+taking the card, `bash ~/sq1-r3vi3w/eval/gputest/status.sh` must say `IDLE`. bekh's word on
+DeepSeek: kick it out when the card is needed; don't put it back unasked.
+
+Ours is one directory, `~/eva-olmo/`: the HF weights of `stage1-step656000` (`olmo-hf/`,
+61 GB) and Tricit's Q4 (`olmo-q4/`), both pulled with the box's `hf` cli at ~400 MB/s; uv
+inside it (`bin/`, `uv-cache/`, `uv-python/`) and a py3.12 venv with torch 2.14+cu130 (the
+Blackwell card is sm_120 and the stock wheel has it); `build/bin/llama-completion` built from
+the box's own llama.cpp source into our dir; the kit (`kit/`, copied from
+`docs/mescalito/kit/`), the seeds, the banks (`olmo_s10.pt`, `olmo16_s16.pt`, `cv-*`), the
+pages. Leaving = copy results off, `box_serve.sh down`, `rm -rf ~/eva-olmo` — and bekh decides
+whether DeepSeek goes back.
+
+**Her server and the door.** `kit/box_serve.sh up|down|status` on the box: stock
+`/opt/llama/bin/llama-server` with nemo's flags (`-c 8192 -ngl 99 -fa on --no-jinja`), four
+slots, **loopback :8081 only**. `up` kicks DeepSeek off the card itself and is the only thing
+that does; nothing starts her automatically. On the mac, `eva/stream/com.bekh.eva-olmo.plist`
+is a plain ssh tunnel, 127.0.0.1:8084 → the box's 8081, reconnecting on its own after a VPN
+drop; it never touches the card, so with her server down 8084 just errors. Loaded from the
+repo like nemo's job, gone after a logout. ~28 tok/s, first token 0.6 s through the tunnel.
+**Every dosed page needs the card**: `llama-server` takes a control vector only at startup, so
+the kit writes dosed pages with one-shot `llama-completion` runs and takes her server down
+for the run (8084 errors meanwhile), up again after.
+
+```bash
+ssh ubuntu@10.4.65.34 '~/eva-olmo/kit/box_serve.sh up'                     # her on the card, DeepSeek off
+launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-olmo.plist
+curl -s http://127.0.0.1:8084/health
+LOOM_LLAMA=http://127.0.0.1:8084 eva                                        # or census --models nemo=…:8080,olmo=…:8084
+ssh ubuntu@10.4.65.34 '~/eva-olmo/kit/box_serve.sh down'                   # card free
+ssh ubuntu@10.4.65.34 'sudo THINK_BUDGET=8192 bash /opt/llama/scripts/set-model.sh dsv4flash'   # DeepSeek back, bekh's call
+```
+
+DeepSeek's restore takes ~5 minutes when our downloads have pushed its 97 GB out of the page
+cache, ~40 s when not. The VPN drops for minutes now and then; anything longer than a minute
+on the box runs under `nohup` with a pid file and is polled with short ssh calls.
 
 **What she is (2026-09-24, one night, ~120 pages):** she holds the frame for the whole 170
 tokens — first person kept, no letter-salad, no web footer at the stream's heat — and reads
@@ -259,8 +302,9 @@ Worth a look while we're there: the same fan on `main` (the dirty control, see a
    SSE word by word~~; the cached-model flip stalled → **bake the weights into the image**
    (a `RUN curl` in the Dockerfile, `MODEL_PATH` set, the cached model taken off the
    endpoint), box / say, record the cold start here.
-4. ~~the blind read~~ — bekh read her off the pod and decided: she's in. Still to do: the
-   local bearer proxy so `census.py --models` and the stream can talk to the endpoint; opus
+4. ~~the blind read~~ — bekh read her off the pod and decided: she's in. While she's on the
+   box, `census.py --models` and the stream reach her at `127.0.0.1:8084` with no proxy; for
+   the endpoint the local bearer proxy is still to do; opus
    on the fifty pairs (`docs/attic/olmo/olmo-fifty.json` against the stream's pages, blind, A/B
    shuffled; `pairs.py` in the repo pairs `docs/attic/olmo/olmo-fifty-stream.json` with `docs/attic/olmo/olmo-fifty.json`) when bekh says.
 5. `eva go` learns the warm-up and the endpoint URL, and olmo takes a seat beside nemo — a

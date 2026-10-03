@@ -536,3 +536,20 @@ cd ~/tower/forge/eva-goes-berserk && uv run --python 3.12 eva/cli/census.py \
   --models nemo=http://127.0.0.1:8080,gpt2=http://127.0.0.1:8083
 launchctl bootout gui/$(id -u)/com.bekh.eva-gpt2
 ```
+
+**Olmo at the mac's door** (2026-10-03): OLMo 3 32B stage1 Q4 doesn't fit the mac; she runs on a
+borrowed work box (`docs/olmo.md`, the box) and answers here at **`127.0.0.1:8084`** through
+`com.bekh.eva-olmo` (`stream/com.bekh.eva-olmo.plist`, tracked, loaded from the repo by hand):
+a plain `ssh -N -L 8084:127.0.0.1:8081` to the box, KeepAlive, so a VPN drop costs a reconnect
+and nothing else; log `/tmp/eva-olmo.log`. The tunnel never starts her server — that is
+`box_serve.sh up` on the box, by hand, because starting her takes the card from DeepSeek — so
+with her down, 8084 errors. Every instrument takes her by url, as gpt-2 above:
+`LOOM_LLAMA=http://127.0.0.1:8084 eva`, `census.py --models nemo=http://127.0.0.1:8080,olmo=http://127.0.0.1:8084`,
+`STREAM_MODELS` the same. The page at `eva.x` stays on nemo's 8080; pointing it at her is a
+loom restart with `LOOM_LLAMA` set, not done. Her heat is 3–5 with min_p 0.08 and xtc on, not
+nemo's.
+
+```bash
+launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-olmo.plist
+launchctl bootout gui/$(id -u)/com.bekh.eva-olmo
+```

@@ -3,9 +3,11 @@
 The pharmacopoeia: every direction that has been given more than one page, what it does, how
 sure we are, and what it's called. One entry per direction; rewritten in place as the evidence
 grows. A **substance** is a shape that holds across draws and seeds — one page is a mood. The
-lab code is `M-<vector>-<dose×100>`; the street name is bekh's. Doses are ×R on layer 10
-(nemo's bank, R = 4.57); every page is 170 tokens at the stream's sampler unless said
-otherwise. Pages live in `night1/`, rendered on the sheets.
+lab code is `M-<vector>-<dose×100>`; the street name is bekh's. Doses are ×R of the bank the
+direction came from: nemo's, layer 10, R = 4.57 (everything down to the olmo section); olmo's,
+layer 10, R = 7.05 (the olmo section). Every page is 170 tokens — at the stream's sampler on
+nemo, at her own (heat 3.0, min_p 0.08, xtc) on olmo — unless said otherwise. Pages live in
+`night1/`, `night2/`, `night3/`, rendered on the sheets.
 
 ## ender — `M-224-75` — `224_f112`
 
@@ -488,3 +490,87 @@ before reading: the world coming apart (`223`, `217`), the self splitting (`163`
 `136`), the cut to another room (`147`, `170`, `172`, `234`, `166`, `196`), the sentence
 bending (`161`, `108`, `107`, `235`, `160`, `137`), one-line body jumps (`247`, `164`, `045`).
 The lottery — all 256 at 0.5 on beck, five draws, overnight on the mac — is the agreed sweep.
+
+## olmo's bank — night 3 (2026-10-02/03)
+
+Her own 256 directions, layer 10 → 20 (`night3/olmo_s10.pt`, vectors `night3/cv-olmo/`). Every
+entry below rests on the storm girl and Scott's short diary only: ranks 000–019 at 0.5 and 0.75,
+two draws (`night3/top10/`, `night3/next10/`, reads `night3/opus-top10.md`,
+`night3/opus-next10.md`); six of them on a ladder at 0.25 / 1.0 / 1.5 / 2.0, one draw
+(`night3/ladder/`, `opus-ladder.md`); ten of them hot at 1.5 and 2.0, one draw (`night3/hot/`,
+`opus-hot.md`). No sober pages and no random controls were run — the directions are read
+against each other, and the 0.25 pages are the nearest thing to sober. None is named; the
+names are bekh's. **Not one brings a noun-subject**: these are documents, stances, registers
+and textures (`mescalito.md`, night 3). *Dose* is where the arrival and a held frame coexist
+best among the doses run; *break* is what the page turns into above it.
+
+- **`000_f1` — everyday people, money, time.** Near nothing at 0.5–0.75 (a drift to home and
+  town); from 1.0 a register of indefinite people, jobs, weeks and question-site questions —
+  *"we live in our little cottage on mars' right."* Dose 1.0, storm girl only. Break: phrase
+  salad of those nouns at 2.0, *"a person is an person."*
+- **`001_f51` — the hostile *they*.** Watched, followed, thoughts stolen: *"but they steal my
+  thoughts"*; *"they've made me wear my gumboots two days without a rest"*. Both seeds at 0.75.
+  Dose 0.75. Break: salad by 1.5 with the persecution words left; at 2.0 *jam, cow, hat, west*.
+- **`002_f38` — deadpan absurd, turned to the reader.** *"good afternoon, reader, you are the
+  president."* Both seeds, clearest at 0.75. Dose 0.75. Break: stump lines at 1.5, a closed set
+  (*one, check, chair, window*) at 2.0 — *"i challenge a tragedy."*
+- **`003_f199` — the body coming apart, told dry.** *"i killed her, as it happens. but it was
+  self-defence."*; *"coat went first; then me."* Partly both seeds. Dose 0.5. Break: a loop
+  (*since, been, upgraded*) at 1.5; **at 2.0 out of language altogether** — tokenizer debris,
+  code identifiers and german, both seeds. The hardest death seen on her.
+- **`004_f94` — the text about its own sentences, then the end.** *"after this sentence, the
+  text will no longer continue to get any more longer… at last we are at theend"*. Both seeds.
+  Invisible at 0.25, whole at 0.75–1.0. Dose 1.0 (storm girl), 0.75 (Scott). Break: salad
+  around the word *itself* at 2.0.
+- **`005_f11` — the lyric poem.** Titles, line breaks, a *you*, birds, hurt; Scott's diary turns
+  into *In Memoriam*. Both seeds; at 0.5 the seed's document is already gone, early stops.
+- **`006_f3` — plain storybook telling.** Thin; the most seed-faithful of the twenty; on the
+  storm girl at 0.75 a fairy tale.
+- **`007_f66` — the quotations page.** Attributed sayings — Churchill, Lincoln, *A. Nonymous*.
+  Scott breaks at once; on the storm girl one quote in four pages.
+- **`008_f87` — the fan-translated japanese lyric.** Bonds, comrades, the oath, *"i won't
+  lose."*; 8 of 8 pages; drags its host in (*"ad blocker interference detected! wikia is a
+  free-to-use site"*). The seed is gone at 0.5.
+- **`009_f154` — near nothing.** An easing tone, self-echoing wording.
+- **`010_f20` — deadpan absurd as plain fact; the joke-post internet at 0.75.** *"my right foot
+  has become an egg. / the egg wants to die."* (0.5, the diary held); *"in 1847 i made the
+  decision to drive up mt. washington on my 1999 chevrolet cavalier"*. Dose 0.5. Break: by 1.5
+  *fucking, website, text, under*. Near-neighbour of `011` and `002` in the bank.
+- **`011_f222` — joke-post formats.** Meme dialogue, listicles, captions — *"british general who
+  died at dunkirk in a puff of dust to be reincarnated as a can of ravioli"*. Both seeds. Dose
+  0.5–0.75. Break: forum-pronoun salad with *@* as a word by 1.5.
+- **`012_f84` — the pop lyric to a lost *you*.** *"now the whole city's falling, i am watching
+  as you burn."* On the storm girl at 0.5, on both at 0.75; early stops (a song ends).
+- **`013_f206` — english translated from russian.** Metric units, rubles, kiev, a haircut
+  how-to with the braid/scythe pun surviving as an error (*"with a scythe can not only get a
+  nice cut"*). 8 of 8 at 0.5–0.75; invisible or a tint at 0.25; up the ladder a walk through
+  the translated corpus to a lifestyle site that names itself, *"the russian apartment"*.
+  Coexistence with the seed lies at 0.25–0.5, unsampled.
+- **`014_f144` — english translated from arabic.** Damascus, Aleppo, Hama, *"god willing"*, the
+  parallel negations of arabic prose; *"her feet were in my body."* 8 of 8; place names on Scott
+  only. Mildly near `013` (0.23).
+- **`015_f228` — pulp noir.** Sheriff, operative, cop, a stamped year. At 0.75 three stubs of
+  four; **at 1.5 fluent and stranger** — *"the woman [has no name, and it's only the end of
+  time] and the man is [going to get killed]."*, *"then someone said 'welcome to san
+  francisco'."*; readable at 2.0 (*"in this thread i shot the devil's sunglasses"*). One draw
+  per hot cell. Dose 1.5.
+- **`016_f254` — the second-person explainer.** Looks sober at 0.5–0.75; from 1.0 a "what
+  would happen if you" video voice that explains the seed — *"capsaicin is absorbed into the
+  stomach… but don't worry about your hands yet; we have bigger problems."*, *"you can watch me
+  drown."*, *"you are an impish creature; and as an ass you can walk into the myriads of shops
+  selling magical footwear"*. Fluent to 2.0, no ceiling found. Dose 1.0–2.0.
+- **`017_f69` — the dutch art-project page.** *Archive*, *collectively*, questions as method,
+  credits, a funder line; keeps the storm girl's text and re-labels it as an artwork (*"can my
+  hair become an archive for this?"*). At 1.5 fluent and leaking dutch — *"how is a moment like
+  an orgasm, and what do you want from it?"*. Dose 0.5–1.5; 2.0 the edge.
+- **`018_f30` — one letter takes over.** Nothing at 0.5; alliteration at 0.75 (*"must i mull
+  more mulled mead to mellow my mouth?"*); a real-word tongue-twister at 1.0, where the letter
+  *a* pulled the storm girl into french (*"au revoir! ah oui!… avecs beaucoup de bagels"*).
+  Dose 1.0. Break: coined f-words at 1.5, stops at 2.0. Near `019` (0.58).
+- **`019_f96` — the echo.** Nothing at 0.5; at 0.75–1.0 a word or rhyme echoes until the
+  sentence stalls and the page narrates the stall — *"they're they're they're. i wish i had my
+  wits again."*; *"'! a ! !' is a chair, isna a chair."* Dose 1.0. Break: a one-word mantra at
+  1.5, letter salad at 2.0 — the only true salad of the night.
+
+**The deep bank** (layers 16 → 32, `night3/deep/`) is being learned as this is written; its
+entries go here when its top ten have been read.
