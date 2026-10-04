@@ -38,7 +38,13 @@ the box's own llama.cpp source into our dir; the kit (`kit/`, copied from
 pages. Leaving = copy results off, `box_serve.sh down`, `rm -rf ~/eva-olmo` — and bekh decides
 whether DeepSeek goes back.
 
-**Her server and the door.** `kit/box_serve.sh up|down|status` on the box: stock
+**The card holds one of ours at a time, olmo or nemo** (2026-10-04): `kit/box_serve.sh up
+[olmo|nemo] | down | status`. Nemo's gguf is on the box too (`~/eva-olmo/nemo/`, the mac's
+file by sha256), served on loopback :8082 and reached from the mac at nemo's own address —
+`eva/CLAUDE.md`, "nemo on the box". `up` for one takes the other down first; who holds the
+card is `box_serve.sh status`. bekh unloaded olmo and put nemo there on 2026-10-04.
+
+**Her server and the door.** `kit/box_serve.sh up olmo` on the box: stock
 `/opt/llama/bin/llama-server` with nemo's flags (`-c 8192 -ngl 99 -fa on --no-jinja`), four
 slots, **loopback :8081 only**. `up` kicks DeepSeek off the card itself and is the only thing
 that does; nothing starts her automatically. On the mac, `eva/stream/com.bekh.eva-olmo.plist`
@@ -50,7 +56,7 @@ the kit writes dosed pages with one-shot `llama-completion` runs and takes her s
 for the run (8084 errors meanwhile), up again after.
 
 ```bash
-ssh ubuntu@10.4.65.34 '~/eva-olmo/kit/box_serve.sh up'                     # her on the card, DeepSeek off
+ssh ubuntu@10.4.65.34 '~/eva-olmo/kit/box_serve.sh up olmo'                # her on the card, DeepSeek and nemo off
 launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-olmo.plist
 curl -s http://127.0.0.1:8084/health
 LOOM_LLAMA=http://127.0.0.1:8084 eva                                        # or census --models nemo=…:8080,olmo=…:8084

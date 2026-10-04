@@ -39,7 +39,10 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    2026-10-03 she runs on a borrowed work box** (`ssh ubuntu@10.4.65.34`, a 24 GB Blackwell
    card, lent for days and liable to vanish), served by `docs/mescalito/kit/box_serve.sh`
    and reached from the mac at `127.0.0.1:8084` through the tunnel job
-   `eva/stream/com.bekh.eva-olmo.plist` — nemo keeps 8080. The RunPod serverless endpoint
+   `eva/stream/com.bekh.eva-olmo.plist` — nemo keeps 8080. **The box's card holds one of ours
+   at a time, and since 2026-10-04 it can be nemo**: `eva/stream/nemo.sh box|mac|off|status`
+   moves nemo between the mac and the box behind his own address, so everything that talks to
+   8080 generates on the test gpu (`eva/CLAUDE.md`, "nemo on the box"). The RunPod serverless endpoint
    (`bloodhorse/olmo-dreamer`, `~/tower/forge/olmo-dreamer`) stays the long-term home, its
    cached model stalled, baking the weights into the image next. `docs/olmo.md` is the state
    and the box's runbook. And **the model is a free variable for mescalito** (bekh,

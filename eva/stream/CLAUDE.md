@@ -984,7 +984,10 @@ Nemo down is a dead stream: every run is an error row (`every seat is out`) and 
 **The ration: `eva go N`** (`stream/go.sh`, 2026-09-22 — a run is sized in dreams) is the way the
 stream runs, and it does all of the above in order. It refuses to start while
 `com.bekh.eva-stream` is already loaded. Nemo kickstarted and its `/health` waited for
-(never coming up stops the run before the writer starts); then the
+(never coming up stops the run before the writer starts) — **unless something already answers
+on 8080**, which since 2026-10-04 can be nemo on the borrowed box behind a tunnel
+(`stream/nemo.sh box`; `../CLAUDE.md`, "nemo on the box"): then the mac's nemo is not started,
+the ration dreams there, and its end leaves that nemo running; then the
 writer bootstrapped **straight from the repo**, `launchctl bootstrap gui/$U
 "$PWD/eva/stream/com.bekh.eva-stream.plist"`, and kickstarted so the first page does not wait
 five minutes; then N dreams — N passages, a passage every five

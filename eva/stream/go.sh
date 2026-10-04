@@ -60,7 +60,8 @@ trap 'echo; say "== interrupted"; writer_off; narrate_off; exit 1' INT TERM HUP
 WAS=""
 
 # start: nemo first, wait for it, then the writer
-launchctl bootstrap gui/$U "$PWD/eva/stream/com.bekh.eva-llama.plist" 2>/dev/null
+if up; then say "nemo already answers on 8080; the mac's is not started"
+else launchctl bootstrap gui/$U "$PWD/eva/stream/com.bekh.eva-llama.plist" 2>/dev/null; fi
 for i in $(seq 1 90); do up && break; sleep 2; done
 if ! up; then say "nemo never came up; stopping"; writer_off; exit 1; fi
 say "nemo up"

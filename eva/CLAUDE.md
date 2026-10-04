@@ -537,13 +537,34 @@ cd ~/tower/forge/eva-goes-berserk && uv run --python 3.12 eva/cli/census.py \
 launchctl bootout gui/$(id -u)/com.bekh.eva-gpt2
 ```
 
+**Nemo on the box** (2026-10-04): the same nemo — the mac's gguf by sha256 — can run on the
+borrowed work box's card instead of the mac's (`docs/olmo.md`, the box), and answers at **his
+own address, `127.0.0.1:8080`**, so the loom, eva, census and the stream generate there with
+nothing changed: ~59 tok/s against the mac's 10–12, and the mac keeps its 10 GB.
+`stream/nemo.sh` is the switch, one word: `box` (the mac's job off, nemo up on the box's card,
+the tunnel job `com.bekh.eva-nemo-box` loaded — `stream/com.bekh.eva-nemo-box.plist`, a plain
+`ssh -N -L 8080:127.0.0.1:8082`, log `/tmp/eva-nemo-box.log`), `mac` (the tunnel off, the
+box's server down, `com.bekh.eva-llama` loaded), `off` (both), `status` (who answers on 8080,
+by the path `/props` reports). The tunnel and the mac's job both want 8080, so only one is
+ever loaded, and **`eva go` starts the mac's nemo only when nothing answers on 8080** — with
+the tunnel up a ration dreams on the box and, at its end, leaves the box's nemo running
+(`nemo.sh mac` or `off` frees the card). Box-nemo lives behind the work VPN: a drop is failed
+pages until the tunnel reconnects, and the box can vanish — `nemo.sh mac` is the way home. The
+box's llama.cpp is a newer build than brew's (0.5.0-dev against 0.4.0).
+
+```bash
+eva/stream/nemo.sh box       # generate on the test gpu
+eva/stream/nemo.sh mac       # back on the mac
+eva/stream/nemo.sh status
+```
+
 **Olmo at the mac's door** (2026-10-03): OLMo 3 32B stage1 Q4 doesn't fit the mac; she runs on a
 borrowed work box (`docs/olmo.md`, the box) and answers here at **`127.0.0.1:8084`** through
 `com.bekh.eva-olmo` (`stream/com.bekh.eva-olmo.plist`, tracked, loaded from the repo by hand):
 a plain `ssh -N -L 8084:127.0.0.1:8081` to the box, KeepAlive, so a VPN drop costs a reconnect
 and nothing else; log `/tmp/eva-olmo.log`. The tunnel never starts her server — that is
-`box_serve.sh up` on the box, by hand, because starting her takes the card from DeepSeek — so
-with her down, 8084 errors. Every instrument takes her by url, as gpt-2 above:
+`box_serve.sh up olmo` on the box, by hand, because starting her takes the card from DeepSeek
+and from nemo — so with her down, 8084 errors. Every instrument takes her by url, as gpt-2 above:
 `LOOM_LLAMA=http://127.0.0.1:8084 eva`, `census.py --models nemo=http://127.0.0.1:8080,olmo=http://127.0.0.1:8084`,
 `STREAM_MODELS` the same. The page at `eva.x` stays on nemo's 8080; pointing it at her is a
 loom restart with `LOOM_LLAMA` set, not done. Her heat is 3–5 with min_p 0.08 and xtc on, not
