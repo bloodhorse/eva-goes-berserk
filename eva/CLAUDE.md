@@ -500,7 +500,7 @@ launchd's cached copy of the plist, which is how the loom died on a stale path o
 
 ```bash
 launchctl kickstart -k gui/$(id -u)/com.bekh.eva-loom          # restart the loom after editing loom.py
-launchctl bootout gui/$(id -u)/com.bekh.eva-loom; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist   # after editing the plist
+launchctl bootout gui/$(id -u)/com.bekh.eva-loom; sleep 2; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist   # after editing the plist
 launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-llama.plist   # nemo up
 launchctl bootout gui/$(id -u)/com.bekh.eva-llama              # nemo off, the mac's ~10 GB back
 ```
@@ -574,3 +574,22 @@ nemo's.
 launchctl bootstrap gui/$(id -u) ~/tower/forge/eva-goes-berserk/eva/stream/com.bekh.eva-olmo.plist
 launchctl bootout gui/$(id -u)/com.bekh.eva-olmo
 ```
+
+**Llama at the mac's door** (2026-10-05): Llama 3.1 70B base (`docs/llama.md`) answers at
+**`127.0.0.1:8085`** through `com.bekh.eva-llama70` (`stream/com.bekh.eva-llama70.plist`), the
+same kind of tunnel as olmo's, to the box's 8083; log `/tmp/eva-llama70.log`. It never starts
+her — that is `box_serve.sh up llama` on the box. **The page at `eva.x` fans on whichever
+model the loom's job names**: `LOOM_LLAMA` in `~/Library/LaunchAgents/com.bekh.eva-loom.plist`,
+and moving it is that one line plus a restart of the job. Who it is now is the first line the
+loom logs, never a sentence here:
+
+```bash
+grep 'loom up' /tmp/eva-loom.log | tail -1
+sed -i '' 's#<string>http://127.0.0.1:80[0-9][0-9]</string>#<string>http://127.0.0.1:8085</string>#' ~/Library/LaunchAgents/com.bekh.eva-loom.plist   # 8085 llama, 8084 olmo, 8080 nemo
+launchctl bootout gui/$(id -u)/com.bekh.eva-loom; sleep 2; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist
+```
+
+She writes 1.7 tok/s on one slot and the page draws a fan one branch after another, so a fan
+is `fan × n_predict ÷ 1.7` seconds: eight branches of 40 tokens is three minutes. Her window
+is 4k, and a branch that ends on a finished sentence may come back empty — she closes
+documents.

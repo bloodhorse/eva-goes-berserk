@@ -1,0 +1,11 @@
+draw 1 pull 0 | wall 27 s | read 520 tok at 133.7 /s | wrote 40 at 1.72 /s
+draw 1 pull 1 | wall 55 s | read 560 tok at 109.2 /s | wrote 40 at 1.72 /s
+draw 1 pull 2 | wall 83 s | read 600 tok at 115.4 /s | wrote 40 at 1.69 /s
+draw 1 pull 3 | wall 111 s | read 640 tok at 121.8 /s | wrote 40 at 1.71 /s
+draw 1 pull 4 | wall 140 s | read 680 tok at 126.3 /s | wrote 40 at 1.68 /s
+draw 1 pull 5 | wall 169 s | read 720 tok at 135.7 /s | wrote 40 at 1.71 /s
+draw 1 pull 6 | wall 197 s | read 760 tok at 141.7 /s | wrote 40 at 1.7 /s
+draw 1 pull 7 | wall 226 s | read 800 tok at 146.9 /s | wrote 40 at 1.68 /s
+draw 1 pull 8 | wall 255 s | read 840 tok at 150.8 /s | wrote 40 at 1.7 /s
+draw 1 pull 9 | wall 284 s | read 880 tok at 155.9 /s | wrote 40 at 1.68 /s
+SHUFFLE-DONE

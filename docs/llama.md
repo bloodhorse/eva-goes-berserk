@@ -10,7 +10,8 @@ because a smarter model is more with it.
 ## how she runs
 
 `docs/olmo.md`, the box, is the runbook; this is hers. `box_serve.sh up llama` — loopback :8083
-on the box, no tunnel to the mac yet. The file is `Meta-Llama-3.1-70B.Q4_K_M.gguf`, 39.6 GiB,
+on the box, and **`127.0.0.1:8085` on the mac** through the tunnel job `com.bekh.eva-llama70`
+(`eva/CLAUDE.md`, "llama at the mac's door" — that is also how the loom's fans reach her). The file is `Meta-Llama-3.1-70B.Q4_K_M.gguf`, 39.6 GiB,
 from `mradermacher/Meta-Llama-3.1-70B-GGUF` (the ggufs are not gated; Meta's repo is). She is
 bigger than the card: 44 of her 81 layers on it (`NGL`, 23.1 of 24.5 GiB with a 4k window, one
 slot), the rest on the cpu. So **she needs the card alone** — nemo and the painter off — and
@@ -62,6 +63,29 @@ here, when it must account for things it did not choose, when it is left alone t
 of those make her dumber; they change what her reason is given to work on. Open, his to
 answer: whether the insanity he means is losing the thread or calmly explaining the
 impossible — his reply (above) points at the first: not comprehending.
+
+## the shuffle — her reading, not her writing (2026-10-05)
+
+The thought that answered bekh's definition: everything before had touched what she writes,
+nothing had touched what she reads. `llama70/shuffle.py` (on the box beside `pot.py`): she
+writes in pulls of 40 tokens, and before each pull the page is rebuilt — the last sentence
+whole (at least eight words of it), everything before it as its own words, lowercased,
+unpunctuated, in a fresh random order; `ignore_eos` so she cannot close. Sober sampler, heat
+2.2. Pages and what she saw at each pull: `llama70/shuffle/`.
+
+Two draws on the unsigned note, 400 tokens each, went opposite ways. **Draw 1 lost the story
+and kept the sentences**: the man answering the note becomes a dialogue about a
+disappearance, a child's house, a night on a porch, and ends *"before her there was no her
+there were just men who came to my house… men who just talked in languages that sounded like
+shooting stars falling across the"*. bekh liked it: not crazy like nemo — *dizzy,
+disoriented*, the cartoon hammer and the stars round the head. **Draw 2 comprehended the
+shuffle**: she read the scrambled words as a paper in the story (*"they are not lines at all
+what do they mean if there is no word or sentence in it"*) and then wrote the paper out,
+thirty lines of six scrambled words. Carried another 400 tokens, draw 1 stayed dizzy and did
+not die: one unbroken sentence about a woman who is a star, and the seed's words coming back
+as someone else's life (*"when my father disappeared my mother wrote me letters every few
+days trying to explain everything"*). Seen in both: the shuffled part has no punctuation and
+her own drains away with it.
 
 ## a bank for her — weighed, not started
 

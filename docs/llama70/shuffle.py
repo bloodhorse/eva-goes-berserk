@@ -33,22 +33,25 @@ def pull(prompt, seed):
 if __name__ == "__main__":
     out, path, draws = sys.argv[1], sys.argv[2], int(sys.argv[3])
     os.makedirs(out, exist_ok=True)
+    prior = sys.argv[4] if len(sys.argv) > 4 else None
     name = os.path.basename(path)[:-4]
-    start = open(path).read().rstrip(" \t")
+    seed = open(path).read().rstrip(" \t")
+    start = seed + (open(prior).read() if prior else "")
+    tag = "-long" if prior else ""
     if out == "-":
         print(seen(start, random.Random(1)))
         sys.exit()
     for d in range(1, draws + 1):
-        rng = random.Random(d)
+        rng = random.Random(d + (100 if prior else 0))
         text, t = start, time.time()
-        saw = open(f"{out}/{name}-draw{d}.saw.jsonl", "w")
+        saw = open(f"{out}/{name}-draw{d}{tag}.saw.jsonl", "w")
         for p in range(PULLS):
             prompt = seen(text, rng)
-            r = pull(prompt, d * 1000 + p)
+            r = pull(prompt, d * 1000 + p + (500 if prior else 0))
             saw.write(json.dumps({"pull": p, "prompt": prompt, "wrote": r["content"]}, ensure_ascii=False) + "\n")
             saw.flush()
             text += r["content"]
-            open(f"{out}/{name}-draw{d}.txt", "w").write(text[len(start):])
+            open(f"{out}/{name}-draw{d}{tag}.txt", "w").write(text[len(seed):])
             tm = r["timings"]
             print("draw", d, "pull", p, "| wall", round(time.time() - t), "s | read", tm["prompt_n"], "tok at", round(tm["prompt_per_second"], 1),
                   "/s | wrote", tm["predicted_n"], "at", round(tm["predicted_per_second"], 2), "/s", flush=True)
