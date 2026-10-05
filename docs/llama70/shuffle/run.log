@@ -1,0 +1,21 @@
+draw 1 pull 0 | wall 25 s | read 144 tok at 60.7 /s | wrote 40 at 1.73 /s
+draw 1 pull 1 | wall 50 s | read 182 tok at 75.1 /s | wrote 40 at 1.73 /s
+draw 1 pull 2 | wall 75 s | read 218 tok at 88.3 /s | wrote 40 at 1.7 /s
+draw 1 pull 3 | wall 101 s | read 253 tok at 100.6 /s | wrote 40 at 1.72 /s
+draw 1 pull 4 | wall 126 s | read 290 tok at 108.8 /s | wrote 40 at 1.71 /s
+draw 1 pull 5 | wall 152 s | read 330 tok at 123.3 /s | wrote 40 at 1.7 /s
+draw 1 pull 6 | wall 178 s | read 370 tok at 138.4 /s | wrote 40 at 1.71 /s
+draw 1 pull 7 | wall 203 s | read 410 tok at 142.9 /s | wrote 40 at 1.71 /s
+draw 1 pull 8 | wall 229 s | read 440 tok at 153.0 /s | wrote 40 at 1.7 /s
+draw 1 pull 9 | wall 255 s | read 480 tok at 161.8 /s | wrote 40 at 1.71 /s
+draw 2 pull 0 | wall 25 s | read 144 tok at 60.6 /s | wrote 40 at 1.72 /s
+draw 2 pull 1 | wall 50 s | read 184 tok at 76.0 /s | wrote 40 at 1.73 /s
+draw 2 pull 2 | wall 75 s | read 224 tok at 90.6 /s | wrote 40 at 1.72 /s
+draw 2 pull 3 | wall 101 s | read 264 tok at 103.6 /s | wrote 40 at 1.7 /s
+draw 2 pull 4 | wall 127 s | read 304 tok at 116.2 /s | wrote 40 at 1.71 /s
+draw 2 pull 5 | wall 152 s | read 341 tok at 128.2 /s | wrote 40 at 1.71 /s
+draw 2 pull 6 | wall 178 s | read 381 tok at 142.8 /s | wrote 40 at 1.7 /s
+draw 2 pull 7 | wall 204 s | read 421 tok at 150.4 /s | wrote 40 at 1.71 /s
+draw 2 pull 8 | wall 230 s | read 461 tok at 160.1 /s | wrote 40 at 1.69 /s
+draw 2 pull 9 | wall 256 s | read 501 tok at 168.6 /s | wrote 40 at 1.71 /s
+SHUFFLE-DONE
