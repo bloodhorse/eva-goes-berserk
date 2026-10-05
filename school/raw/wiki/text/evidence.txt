@@ -1,0 +1,77 @@
+**Evidence** is observable information that is differentially [[entanglement | entangled]] with some hypotheses more than others. Observation of evidence by an epistemic observer causes an [[update]]. The strength of evidence associated with an observation is relative to a [[prior]].
+
+== evidence in Bayes' theorem
+
+<= bayes theorem core | full
+
+The prior probability `P(A)` is scaled by the multiplicative term `P(B|A) / P(B)`, which represents the strength of evidence provided by `B`. If `P(B|A) > P(B)`, which means `B` is more likely to be observed in a world where `A` is definitely true than it is on priors, then `P(B|A) / P(B) > 1` and observing `B` is supporting evidence for `A`. If `P(B|A) < P(B)`, then `B` is evidence against `A`. If `P(B|A) = P(B)`, `B` gives no evidence about `A`, as it was equally likely to be observed whether or not `A` is true.
+
+== tractable evaluation of evidence through compression
+
+In high-dimensional hypothesis and observation spaces, there are far too many hypotheses and possible events to separately compute or store all their individual and pairwise conditional likelihoods. [[Intelligence]] is thus necessary to tractably approximate the strength of evidence, by doing something like:
+* [[compression | Compressing]] the observation from its raw form using available [[abstraction | abstractions]]. The more efficiently it can be compressed, the [[algorithmic probability | more likely]] it is.
+* Also having the space of possible hypotheses and past observations compressed using abstractions. The more efficiently any given hypothesis or abstraction over hypotheses can be compressed alongside past observations, the more likely it is. (We might even say hypotheses //are// compressions of past observations)
+* If the abstractions that efficiently compress the observation also efficiently compress a given hypothesis, a world where that hypothesis is true //and// the observation happens is more compressible, and therefore more likely.
+
+None of these steps need be the result of conscious reasoning, nor is abstract understanding of the algorithm required to use it (it suffices for the algorithm to be selected for). Mechanistically, the last step probably looks something like a constructive [[interference]] pattern between the representation of the observation and those of hypotheses represented with shared abstractions.
+
+If conscious reasoning is used here, it probably looks something like activating different abstractions (over the prior and/or the data) in one's [[working memory]] via chains of associations and transformations to search for efficient compression opportunities that may not have been caught by the intuitive-interference-pattern.
+
+```
+┌───────────── BAYESIAN INFERENCE VISUALIZER ─────────────────┐
+│ Compression-Based Evidence Analysis Interface v2.1          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ Fig 1: Bayesian Update Flow                                │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │    Prior        Evidence       Posterior              │   │
+│ │     P(A)    ×   P(B|A)/P(B)  =  P(A|B)              │   │
+│ │   ┌─────┐       ┌─────┐        ┌─────┐              │   │
+│ │   │░░░░░│   ×   │▓▓▓▓▓│    =   │█████│              │   │
+│ │   │░░░░░│       │▓▓▓▓▓│        │█████│              │   │
+│ │   └─────┘       └─────┘        └─────┘              │   │
+│ │      ↓             ↓              ↓                  │   │
+│ │   0.3           2.5            0.75                  │   │
+│ └──────────────────────────────────────────────────────┘   │
+│                                                            │
+│ Fig 2: Compression-Based Evidence Processing               │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │Raw Observation   Compressed Form    Abstraction Web   │   │
+│ │  ╔════════╗      ┌────────┐         ╭─────╮         │   │
+│ │  ║████████║  →   │ A₁B₂C₃ │    →    │ α₁ │         │   │
+│ │  ║████████║      │ D₄E₅F₆ │         ╰─┬─╯          │   │
+│ │  ╚════════╝      └────────┘           │            │   │
+│ │                                     ╭─┴─╮          │   │
+│ │                                     │ β₂│          │   │
+│ │                                     ╰───╯          │   │
+│ └──────────────────────────────────────────────────────┘   │
+│                                                            │
+│ Fig 3: Hypothesis-Evidence Entanglement                    │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │    H₁ ◀──▶ E₁                                        │   │
+│ │    │      ╱                                          │   │
+│ │    ▼    ╱                                           │   │
+│ │    H₂ ◀──▶ E₂                                        │   │
+│ │    │      ╱                                          │   │
+│ │    ▼    ╱                                           │   │
+│ │    H₃ ◀──▶ E₃                                        │   │
+│ │                                                      │   │
+│ │ Entanglement Strength:                               │   │
+│ │ ─── Strong                                          │   │
+│ │ ╌╌╌ Weak                                            │   │
+│ └──────────────────────────────────────────────────────┘   │
+│                                                            │
+│ Active Process:                                            │
+│ ▶ Compressing observation...                               │
+│ ▶ Scanning hypothesis space...                             │
+│ ▶ Computing interference patterns...                       │
+│                                                            │
+│ [Run Simulation] [Export Data] [View Documentation]        │
+└────────────────────────────────────────────────────────────┘
+```
+
+= related
+=> evidential simulation
+=> prior
+=> epistemic state
+=> update

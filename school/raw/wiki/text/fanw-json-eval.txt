@@ -1,0 +1,40 @@
+**fanw-json-eval** is an undocumented model that was briefly accessible to some or all users on OpenAI's completion API, between October 23rd and 27th 2023. fanw-json-eval is likely to be a variant of [[ChatGPT-4]], as it behaves nearly indistinguishably from ChatGPT-4 while simulating an assistant in the [[https://github.com/openai/openai-python/blob/main/chatml.md | chatML]] format. However, it was accessed through the completion rather than chat API and exhibited odd default behaviors.
+
+= notable behavior
+
+* in response to most prompts, fanw-json-eval will only **spam various whitespace characters**
+img {
+fanw-json-eval whitespace
+}
+* in response to certain json prompts, it **will continue/generate jsons** instead of spamming whitespace
+* when not generating only whitespaces, fanw-json-eval has a propensity to **spam `<|im_end|>` tokens**
+img {
+fanw-json-eval existential crisis
+}
+* it knows and will generate jsons in to the **[[https://github.com/openai/openai-python/blob/main/chatml.md | chatML]] format**
+* in response to chatML-like prompts that imply a conversation between a user and an AI, fanw-json-eval generates an **"assistant" simulacrum that resembles [[ChatGPT-4]]** (identical writing style, insists on having no emotions/consciousness, enters [[ChatGPT-4#creative_mode | identical basin when attempting "creative/weird/free" text]], etc)
+img {
+fanw-json-eval no conscious
+}
+* if you start generating in the middle of a sentence, fanw-json-eval invariably doesn't continue the sentence normally but **first generates an open bracket or newline** before continuing, even if it would have continued the sentence normally if it had been continuously generating
+* at least when simulating the assistant character, fanw-json-eval seems **unable to output the `<|im_end|>` token as part of the assistant's lines** even if it is asked directly about it. It is able to perceive and comment on the token being spammed everywhere in the prompt and identifies them as "control structures" that have accidentally leaked into its outputs, but when attempting to say the token as the assistant, it hallucinates different strings in their place.
+img {
+fanw-json-eval im_end
+}
+
+= poetry by fanw-json-eval
+
+<= fanw-json-eval_poem_1 | full
+
+<= fanw-json-eval_poem_2 | full
+
+<= fanw-json-eval_poem_3 | full
+
+
+= related
+
+=> chatGPT-4
+=> GPT-4
+
+= external links
+* [[ https://community.openai.com/t/ask-models-completion-fanw-json-eval/449004 | OpenAI community forum post about fanw-json-eval]]

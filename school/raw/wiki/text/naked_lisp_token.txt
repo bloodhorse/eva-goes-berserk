@@ -1,0 +1,10 @@
+A **naked LISP token** is [[synecdoche]] coined by Eliezer Yudkowsky that means a [[symbol]] which does not contain the machinery of its meaning in its representation, and thus whose meaning requires an [[interpreter]] to be resolved. Words in both natural and programming languages are examples of naked LISP tokens.
+
+== quotes about naked LISP tokens
+
+> <= naked lisp dont grow back | full
+
+= related 
+
+=> interpreter
+=> natural language

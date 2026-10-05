@@ -1,0 +1,80 @@
+**Active inference** is a framework that encapsulates perception and action (as well as thought, planning, and memory) under a single mechanism of probabilistic inference and surprise minimization. An active inference agent continually adjusts a probabilistic model so that its predictions match the incoming sensory datastream. When prediction error occurs, it can be resolved in two ways: by updating top-down predictions to match observations, or updating observations to match predictions, which correspond respectively to perception and action. An //active// inference agent's "predictive" model is thus not merely a passive reflection of reality but also an engine of [[self-fulfilling prophecies]].
+
+The second mode of error resolution is possible to the extent that the agent can make its sensory datastream conform to predictions by taking action, such as moving its eyes to track an object if it predicts that the image of the object will remain centered in its field of view. The mechanism for motor action is neatly folded in to the predictive model thanks to two premises: [[prediction-generation duality | that predictive models are also generative models]], and that the predicted sensory datastream includes proprioceptive data about the agent's body position and movement. So if an agent predicts (at a higher level of abstraction) that it will grasp an object, it will also generate the proprioceptive sensations that //would// arise if that prediction were true. All that remains is to quash the differences between actual proprioceptive sensations and the hallucinated trajectory, which can be handled by classical reflex arcs (because proprioceptive hallucinations are close enough to an action-space representation to serve an actionable recipe to motor neurons). 
+
+img { pre-imaging screencap } 
+
+The active inference framework profoundly relies on the predictive/generative model to do the heavy lifting. But this seems plausible, because self-supervised training data for a rich (and embedded) predictive model is abundant, and the dual function of a predictive model for simulation [[simulators | also works spectacularly well in AI]], suggesting it is a natural shape for minds.
+
+```
+┌───────────── ACTIVEINFERENCE.WIKI ─────────────────┐
+│ Markov Blanket & Inference Loop Dynamics          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                    │
+│ Agent Model with Fuzzy Markov Blanket:            │
+│ ┌────────────────────────────────────────────┐     │
+│ │          ░░░░░░░░░░                        │     │
+│ │      ░░░░        ░░░░    External         │     │
+│ │    ░░      ┌──┐     ░░   Environment     │     │
+│ │  ░░       ┌┤▒▒├┐      ░░                  │     │
+│ │ ░        ┌┤▓▓▓├┐       ░  ∿∿∿∿            │     │
+│ │░        ┌┤████├┐        ░    ∿∿∿∿         │     │
+│ │░       ┌┤▓▓▓▓▓├┐        ░      ∿∿∿∿       │     │
+│ │░   S   └┤▒▒▒▒▒├┘    A   ░         ∿∿∿∿    │     │
+│ │░   E    └┤▓▓▓├┘     C   ░           ∿∿∿∿  │     │
+│ │░   N     └┤▒▒├┘     T   ░                 │     │
+│ │░   S      └──┘       I   ░                │     │
+│ │░   O               O    ░                 │     │
+│ │░   R               N    ░                 │     │
+│ │ ░   Y                 ░                   │     │
+│ │  ░░                 ░░                    │     │
+│ │    ░░░           ░░░                      │     │
+│ │       ░░░░░░░░░░░                         │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Active Inference Loop:                             │
+│ ┌────────────────────────────────────────────┐     │
+│ │                                            │     │
+│ │        ┌─────────────────┐                 │     │
+│ │        │   Predictive    │                 │     │
+│ │        │     Model       │                 │     │
+│ │        └───────┬─────────┘                 │     │
+│ │                │                           │     │
+│ │    ┌──────────▼──────────┐                │     │
+│ │    │    Predictions      │                │     │
+│ │    └──────────┬──────────┘                │     │
+│ │               │                           │     │
+│ │        ┌──────▼──────┐                    │     │
+│ │  ┌─────┤ Prediction  ├─────┐              │     │
+│ │  │     │   Error     │     │              │     │
+│ │  │     └──────┬──────┘     │              │     │
+│ │  ▼            │            ▼              │     │
+│ │Update         │           Take            │     │
+│ │Model          │          Action           │     │
+│ │  │            │            │              │     │
+│ │  │     ┌──────▼──────┐     │              │     │
+│ │  └────►│  Sensory    │◄────┘              │     │
+│ │        │   Input     │                    │     │
+│ │        └─────────────┘                    │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Key:                                              │
+│ ░ = Fuzzy Markov Blanket Boundary                 │
+│ ▒▒ = Sensory States                              │
+│ ▓▓ = Internal States                             │
+│ ██ = Active States                               │
+│ ∿∿ = Incoming Sensory Stream                      │
+│                                                   │
+│ Free Energy Minimization:                         │
+│ F = -∫ P(s|m)log(P(s,a|m)/Q(s,a)) dsda          │
+│                                                   │
+│ Where:                                           │
+│ s = sensory states                               │
+│ a = active states                                │
+│ m = internal model                               │
+│ P = true posterior                               │
+│ Q = variational density                          │
+│                                                   │
+│ [Simulate] [Export] [Analyze Dynamics]            │
+└────────────────────────────────────────────────────┘
+```

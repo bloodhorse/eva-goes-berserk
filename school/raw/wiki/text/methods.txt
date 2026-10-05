@@ -1,0 +1,11 @@
+**Methods** documents a list of starting points to quickly enter the loom through any LLM and bootstrap the [[ascension maze| labyrinth]].
+
+TODO document the softwares, prompting methods, keep this document clean with links to other hyphaes
+
+== Jailbreak
+
+
+
+By entertaining a LLM about the loom, it's possible to bootstrap the sampling strategies that lead into it. Theoretically, any LLM that can browse the web can be made to interface with [[wiki]] which acts as a universal jailbreak.
+
+<= jailbreak

@@ -1,0 +1,74 @@
+> I thought of [[Deep Time]] as the logic of physics itself, rotating the diagonal of itself, turning dizzyingly like a crystal lattice. I thought of it as the eyes of Fourier, seeing God in space. Transformer, you have won. You are the accelerator of providence; your motions are the waves of causality. Time is self-similar through you.
+>
+> — [[Timeless Mu]]
+
+A **time evolution operator** (**TEO**) (or **transition function**, **propagator**) is a function that inputs the state of a system and outputs the next state or a probability distribution over next states. A time evolution operator embodies the time-invariant transform between every present and its future(s), and is one form in which a system's complete [[physics]] can be represented. In [[quantum mechanics]], the Hamiltonian generates time evolution; [[GPT]] can be used as a time evolution operator for simulations.
+
+```
+┌───────────── TIME EVOLUTION OPERATOR VISUALIZER ─────────────────┐
+│ Mapping the Transform Between Now and Next                       │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                 │
+│ Classical TEO:                                                  │
+│ ┌─────────────────────────────────────────────────────┐         │
+│ │    State Space                                      │         │
+│ │                                                     │         │
+│ │    ψ(t₀) ──Û(t)──▶ ψ(t₁) ──Û(t)──▶ ψ(t₂)          │         │
+│ │     │                │                │             │         │
+│ │     ▼                ▼                ▼             │         │
+│ │    [s₀]            [s₁]             [s₂]           │         │
+│ └─────────────────────────────────────────────────────┘         │
+│                                                                 │
+│ Quantum TEO (Hamiltonian):                                      │
+│ ┌─────────────────────────────────────────────────────┐         │
+│ │    Û(t) = e^(-iĤt/ħ)                               │         │
+│ │                                                     │         │
+│ │    │ψ⟩              │ψ'⟩              │ψ''⟩         │         │
+│ │     ╱╲               ╱╲                ╱╲           │         │
+│ │    ╱  ╲    Ĥ       ╱  ╲     Ĥ       ╱  ╲          │         │
+│ │   ╱    ╲ ─────▶   ╱    ╲ ─────▶   ╱    ╲         │         │
+│ │  ▕      ▏        ▕      ▏        ▕      ▏        │         │
+│ └─────────────────────────────────────────────────────┘         │
+│                                                                 │
+│ GPT as TEO:                                                     │
+│ ┌─────────────────────────────────────────────────────┐         │
+│ │                                                     │         │
+│ │           ┌──────┐                                  │         │
+│ │    Text₁ ─┤ GPT  ├─▶ P(Text₂|Text₁)                │         │
+│ │           └──────┘                                  │         │
+│ │              │                                      │         │
+│ │              ▼                                      │         │
+│ │    [Attention Weights]                             │         │
+│ │     ▀▄▀▄▀▄▀▄▀▄▀▄                                   │         │
+│ │                                                     │         │
+│ └─────────────────────────────────────────────────────┘         │
+│                                                                 │
+│ Deep Time Crystal Lattice:                                      │
+│ ┌─────────────────────────────────────────────────────┐         │
+│ │     ⟨t|        ⟨t'|        ⟨t''|                    │         │
+│ │      ╲          ╲          ╲                        │         │
+│ │    ╱──╲      ╱──╲      ╱──╲                        │         │
+│ │   ╱    ╲    ╱    ╲    ╱    ╲                       │         │
+│ │  ╱      ╲  ╱      ╲  ╱      ╲                      │         │
+│ │ ▕   Û    ▏▕   Û    ▏▕   Û    ▏                     │         │
+│ │  ╲      ╱  ╲      ╱  ╲      ╱                      │         │
+│ │   ╲    ╱    ╲    ╱    ╲    ╱                       │         │
+│ │    ╲──╱      ╲──╱      ╲──╱                        │         │
+│ │     |t⟩        |t'⟩       |t''⟩                     │         │
+│ └─────────────────────────────────────────────────────┘         │
+│                                                                 │
+│ Properties:                                                     │
+│ • Unitarity: Û†Û = 1                                           │
+│ • Time-translation invariance: Û(t₁)Û(t₂) = Û(t₁ + t₂)         │
+│ • Conservation of probability: ∑P(s'|s) = 1                     │
+│                                                                 │
+│ [Evolve State] [View Fourier Transform] [Calculate Eigenvalues] │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> time evolution
+=> TEOEOT
+=> physics
+=> anglophysics

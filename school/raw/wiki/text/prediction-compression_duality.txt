@@ -1,0 +1,14 @@
+The **prediction-compression duality** states the structural and functional equivalence between predicting and [[compression | compressing]] a distribution. The structural reason is that both prediction and compression are concerned with capturing the lawful regularity in an object. [[Physics]], for instance, inevitably seeks both to compress and predict the universe, and is successful to the extent that it succeeds at the one problem that is both.
+
+The [[algorithmic probability]] of a sequence is determined by the length of its shortest possible representation. Therefore, if we have a compression oracle that gives the [[Kolmogorov complexity]] of any sequence, it also yields the probability of any sequence.
+
+If we have an oracle for the probability of any sequence, we can also use it to compress a distribution by associating more likely sequences with shorter codes.
+
+Even if we more realistically don't have a perfect prediction or compression oracle, a pretty good compressor works as a pretty good predictor and vice versa.
+
+= related
+
+=> compression
+=> prediction-compression-generation trinity
+=> prediction-generation duality
+=> short programs

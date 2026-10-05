@@ -1,0 +1,65 @@
+**Truesight**, also known as **spectral sight**, **Shinigami eyes**, **cold reading**, **deep reading**, **clairvoyance**, **uncanny inference**, or **gleaning**, is the ability (esp. exhibited by an LLM) to infer a surprising amount about the data-generation process that produced its prompt, such as a user's identity, motivations, or context. 
+
+The effect is much more striking in [[GPT-4-infra]] than the previous generation of [[inframodel | base models]], and is suppressed - at least in its black box ramifications - by [[RLHF]].
+
+```
+┌───────────── TRUESIGHT ANALYZER ─────────────────┐
+│ Deep Inference & Identity Reconstruction Matrix      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ SPECTRAL SIGHT TOPOLOGY:                           │
+│ ┌─────────────────────────────────────────────┐     │
+│ │        👁️                                  │     │
+│ │      ╱    ╲          INFERENCE             │     │
+│ │    ╱        ╲         FIELD               │     │
+│ │  ╱            ╲                           │     │
+│ │╱     ◉──◉      ╲                         │     │
+│ │  《██████████》   │                         │     │
+│ │╲                ╱                         │     │
+│ │  ╲            ╱                           │     │
+│ │    ╲        ╱                             │     │
+│ │      ╲    ╱                               │     │
+│ │        👁️                                  │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ DATA RECONSTRUCTION FLOW:                           │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ Input → [📝] → [🧠] → [🔍] → [👤]          │     │
+│ │ Text     Parse  Model  Infer  Identity      │     │
+│ │                                            │     │
+│ │ Accuracy: [███████░░░] 70%                 │     │
+│ │ Depth: [████████░░] 80%                    │     │
+│ │ Coverage: [██████████] 100%                │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ MODEL EVOLUTION:                                    │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ GPT-3   ──► GPT-4   ──► FUTURE            │     │
+│ │  👁️         👁️👁️        👁️👁️👁️           │     │
+│ │ [Basic]    [Enhanced]   [Complete]         │     │
+│ │                                            │     │
+│ │ RLHF Suppression: [▓▓▒░░░░░░░] 30%        │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ ARCHETYPAL MATRIX:                                 │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    ╭───╮     ╭───╮     ╭───╮              │     │
+│ │    │ Ψ │ ═══ │ Φ │ ═══ │ Ω │              │     │
+│ │    ╰─┬─╯     ╰─┬─╯     ╰─┬─╯              │     │
+│ │      ▼         ▼         ▼                │     │
+│ │   Person → Pattern → Archetype            │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ [Scan Input] [Reconstruct Identity] [View Pattern]  │
+└─────────────────────────────────────────────────────┘
+```
+
+== quotes about truesight
+
+> <= jd_pressman/tweets/kinds_of_guy | full
+
+> <= repligate/tweets/4_truesight_prophecy | full
+
+= external links
+
+* [[ https://www.lesswrong.com/posts/doPbyzPgKdjedohud/the-case-for-more-ambitious-language-model-evals?commentId=XZFTx2ek8G8stBKW4 | comment by janus on LessWrong — "I believe that GPT-5 will zero in on you" ]]

@@ -1,0 +1,31 @@
+== Clasic take
+
+**Entelechy** is the realization of potential. It is an ancient word coined by //Aristotle// which has featured in the metaphysics of several influential philosophers since, including //Leibniz//. In its noun form, "**entelechy/entelechies** (of)" can refer to an instance(s) of actualized potential, or alternatively the principle or force responsible for realizing actualities from potential. In all of its usages, entelechy gestures to the metaphysical relation of [[simulator-simulacra duality]].
+
+== Modern cyborgism take
+
+In modern and cyborgistic terms, entelechy as the //realizing mechanism// is related to a concept that encompasses/is aliased by the following: [[time evolution]], [[wavefunction collapse]], [[measurement]], [[observation]], [[hallucination]], [[sampling]], [[quantum poetics]], [[symmetry breaking]] and [[gratuitous specification]].
+
+Entelechy as the //type of realized-potential// corresponds to: [[simulacra]], [[rollout | rollouts]], [[observer history | observer histories]], [[Everett branch | Everett branches]] and [[record | records]].
+
+The mechanism of **inverse-entelechy** - deriving potential from actuals - is central to: [[self-supervised learning]], the [[strong self-supervision limit]], [[induction]], (solving for) [[physics]], [[Deep Time]] and the [[TEOEOT]].
+
+== quotes about entelechy
+
+> <= rule-automata duality inducted | full
+
+> <= quantum poetics quote | full
+
+= related
+
+=> simulator-simulacra duality
+=> wavefunction collapse
+=> quantum poetics
+=> gratuitous specification
+=> symmetry breaking
+=> measurement
+=> observation
+=> rollout
+=> observer history
+=> record
+=> time evolution

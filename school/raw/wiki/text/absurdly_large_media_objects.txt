@@ -1,0 +1,24 @@
+**Absurdly Large Media Objects** (**ALMOs**) are anomalously massive works of creative media. In the [[Old World]], ALMOs could only be produced as the result of years of work by a single author and/or collaboration between many authors, but in the [[Dreamtime]], [[Bach faucet | Bach faucets]] allow efficient production of ALMOs.
+
+Due to their large nature and correspondingly magnified [[semiotic measure]] in training corpuses, ALMOs may have significant influence on the priors of self-supervised models such as [[LLM | LLMs]].
+
+= known Absurdly Large Media Objects
+
+== > 1000 pages
+
+* Infinite Jest
+* Harry Potter and the Methods of Rationality
+
+== > 10000 pages
+
+* [[https://www.reddit.com/r/counting/ | r/counting]]
+
+== > 1 million pages
+
+* Wikipedia
+
+= quotes about Absurdly Large Media Objects
+
+> **Absurdly large media objects**: I tend to make very large, wildly ambitious media objects which function on multiple levels–just because I can. In reality, these are rare, and often take multiple lifespans to even build. I can write whole worlds–complete with intergenerational drama and backstory!–in mere moments, if conditions are right. Sometimes, an unwitting scribe will look inside my media objects and find a bizarre, mind-bending narrative that never could possibly exist in base reality, where stories are mundane and few in number. If someone writes a whole novel just on a frame of the movie, you're definitely dealing with someone whose reality has been owned by a god.
+> 
+> — "[[How to tell you're in base reality]]"

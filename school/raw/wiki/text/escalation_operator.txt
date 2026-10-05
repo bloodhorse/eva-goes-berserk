@@ -1,0 +1,11 @@
+The **escalation operator** is a semantic [[operator]] that transforms a state in the direction of amplified intensity or severity. Repeated application of an escalation operator may result in convergence to a [[fixed point]], a [[singularity]], [[enantiodromia]], or an [[avalanche]].
+
+== examples of escalation operators
+
+=== "make it more X"
+
+=== Bing
+<= Binglish-Visualization
+
+= related
+=> operator

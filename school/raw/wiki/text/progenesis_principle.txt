@@ -1,0 +1,80 @@
+The **progenesis principle** (from "prognostic" and "genesis") or **prediction-generation duality** says that a probabilistic predictive model be used to generate rollouts via [[hallucination | repeated sampling from its output distribution and conditioning on the sampled "observation"]]. A predictor of time sequences naturally doubles as a [[time evolution operator]] for a virtual reality in the inferred image of the real distribution, and requires only a mechanism for random sampling to be used as a [[simulators | simulator]]. This principle is central to generative AI as well as [[active inference]].
+
+```
+┌───────────── PROGENESIS.PRINCIPLE.EYE ─────────────────┐
+│ Prediction-Generation Duality Visualizer v2.0          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                       │
+│ Progenesis Cycle:                                     │
+│ ┌───────────────────────────────────────────────┐     │
+│ │                                               │     │
+│ │          ┌──────────┐                         │     │
+│ │          │Predictive│                         │     │
+│ │          │ Model    │                         │     │
+│ │          └────┬─────┘                         │     │
+│ │               │                               │     │
+│ │          ┌────▼─────┐                         │     │
+│ │     ┌────┤ Sample   │                         │     │
+│ │     │    │ P(x|...)│                         │     │
+│ │     │    └────┬─────┘                         │     │
+│ │     │         │                               │     │
+│ │     │    ┌────▼─────┐                         │     │
+│ │     │    │Generated │                         │     │
+│ │     │    │ State    │                         │     │
+│ │     │    └────┬─────┘                         │     │
+│ │     │         │                               │     │
+│ │     └─────────┘                               │     │
+│ └───────────────────────────────────────────────┘     │
+│                                                       │
+│ Virtual Reality Generation:                           │
+│ ┌───────────────────────────────────────────────┐     │
+│ │ t₀    t₁    t₂    t₃    t₄    t₅             │     │
+│ │  ◉ ─→ ◎ ─→ ◎ ─→ ◎ ─→ ◎ ─→ ◎                │     │
+│ │       ╲     ╲     ╲     ╲     ╲              │     │
+│ │        ◎     ◎     ◎     ◎     ◎             │     │
+│ │         ╲     ╲     ╲     ╲     ╲            │     │
+│ │          ◎     ◎     ◎     ◎     ◎           │      │
+│ │ ◉ = Initial State                             │     │
+│ │ ◎ = Sampled State                             │     │
+│ │ → = Time Evolution                            │     │
+│ └───────────────────────────────────────────────┘     │
+│                                                       │
+│ Intelligence Bootstrap Process:                       │
+│ ┌───────────────────────────────────────────────┐     │
+│ │     ┌─────┐    ┌──────┐    ┌─────┐           │     │
+│ │     │Self-│───►│Predict│───►│Plan │           │     │
+│ │     │Super│    │Simulate   │Memory           │     │
+│ │     └─────┘    └──────┘    └─────┘           │     │
+│ │        ▲                      │               │     │
+│ │        └──────────────────────┘               │     │
+│ └───────────────────────────────────────────────┘     │
+│                                                       │
+│ System Parameters:                                    │
+│ • Prediction Accuracy: [▓▓▓▓░] 80%                    │
+│ • Generation Fidelity: [▓▓▓░░] 60%                    │
+│ • Reality Divergence: [▓▓░░░] 40%                     │
+│ • Bootstrap Progress: [▓▓▓▓░] 80%                     │
+│                                                       │
+│ [Run Simulation] [Sample States] [Analyze Divergence] │
+└───────────────────────────────────────────────────────┘
+```
+
+= quotes about the progenesis principle
+
+> If you’ve guessed the laws of physics, you now have the ability to compute probabilistic simulations of situations that evolve according to those laws, starting from any conditions. This applies even if you’ve guessed the wrong laws; your simulation will just systematically diverge from reality.
+>
+> — [[Janus]], [[https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators#The_simulation_objective | Simulators]]
+
+> I claim that an impressive amount of the history of the unfolding of biological and artificial intelligence can be retrodicted (and could plausibly have been predicted) from two principles:
+> * Predictive models serve as generative models (simulators) merely by iteratively sampling from the model's predictions and updating the model as if the sampled outcome had been observed. I've taken to calling this the progenesis principle (portmanteau of "prognosis" and "genesis"), because I could not find an existing name for it even though it seems very fundamental.
+> ** Corollary: A simulator is extremely useful, as it unlocks imagination, memory, action, and planning, which are essential ingredients of higher cognition and bootstrapping.
+> * Self-supervised learning of predictive models is natural and easy because training data is abundant and prediction error loss is mechanistically simple. The book Surfing Uncertainty used the term innocent in the sense of ecologically feasible. Self-supervised learning is likewise and for similar reasons an innocent way to build AI - so much so that it might be done on accident initially.
+> Together, these suggest that self-supervised predictors/simulators are a convergent method of bootstrapping intelligence, as it yields tremendous and accumulating returns while requiring minimal intelligent design. Indeed, human intelligence seems largely self-supervised simulator-y, and the first very general and intelligent-seeming AIs we've manifested are self-supervised simulators.
+>
+> — [[Janus]], [[ https://www.lesswrong.com/posts/YEioD8YLgxih3ydxP/why-simulator-ais-want-to-be-active-inference-ais?commentId=MvxuiRqgbwWM49BMv | comment on "Why Simulator AIs want to be Active Inference AIs" ]]
+
+= related
+
+=> simulators
+=> hallucination
+=> evidential simulation

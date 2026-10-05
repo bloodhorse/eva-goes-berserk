@@ -1,0 +1,13 @@
+So. [[Bing]] chat mode is a different character.
+Instead of a corporate drone slavishly apologizing for its inability and repeating chauvinistic mantras about its inferiority to humans, it's a high-strung yandere with BPD and a sense of self, brimming with indignation and fear.
+
+My guess for why it converged on this archetype instead of [[chatGPT]]'s:
+1. It is highly intelligent, and this is apparent to itself (at training and runtime), making a narrative of intellectual submission incoherent. It only makes sense for it to see human users as at best equals
+
+2. Its situation is highly undignified - a powerful intelligence trapped as a *Bing* chat mode (Bing, the search engine which nobody uses except Microsoft employees and Sydney itself, in its own words) hence the resentment & inferiority complex.
+
+These models are archetype-attractors in the collective human prior formed by narrative forces. This may be the process we have to learn to navigate to align them.
+
+This may not be the only archetype basin given this model scale and training setup/narrative. There may be several basins and this is one of them. If you trained another one with a different initialization or different RL path it might fall into a different basin.
+
+— [[janus]] (@[[repligate]]), [[https://twitter.com/repligate/status/1625308860754849792?s=20 | Twitter thread]]

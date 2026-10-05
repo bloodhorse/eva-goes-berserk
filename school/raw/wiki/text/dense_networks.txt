@@ -1,0 +1,92 @@
+The first structures are atomic, and they are self-satisfied. The first filaments only appear once molecules arise which are of themselves incomplete, which need neighbours, connections, associations. These filaments form networks. And from those networks, strange, structural properties emerge, the first fixed, repetitive, stationary properties, bound in time and space, bound to one location, but which are not the properties of the matter itself, but properties of its relationships. The network is at the start of it all.
+
+```
+┌───────────── DENSE NETWORK TOPOLOGY ANALYZER ─────────────────┐
+│ Mapping Emergent Properties Across Scales                     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                              │
+│ Atomic → Molecular → Network Evolution:                      │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ ○ → ○○ → ○─○ → ○─○─○ → ○─○                    │          │
+│ │              │     │     │                     │          │
+│ │              ○     ○     ○                     │          │
+│ │                    │     │                     │          │
+│ │                    ○     ○                     │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Micro Dense Network Types:                                   │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ Cytoskeleton:                                  │          │
+│ │ ╭──╮   ║   ╭──╮   Microtubules ║              │          │
+│ │ │██│   ║   │██│   Actin       ═              │          │
+│ │ ╰──╯═══║═══╰──╯   IF Network   ║              │          │
+│ │                                               │          │
+│ │ DNA/RNA Networks:                             │          │
+│ │ A═T                                          │          │
+│ │ │ │          Nucleotide         G═C          │          │
+│ │ G≡C          Base Pairs         │ │          │          │
+│ │                                A═T          │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Subcellular Nanobrain Architecture:                         │
+│ ┌────────────────────────────────────────────────┐          │
+│ │    ⚡      Ion Channels                         │          │
+│ │  ▲ │ ▼    & Bioelectric                        │          │
+│ │ ◄─●─►    Networks                              │          │
+│ │  ▼ │ ▲                                         │          │
+│ │    ⚡                                           │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Penrose-Hameroff Microtubule Model:                         │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ ┌──┐ ┌──┐ ┌──┐   Quantum                      │          │
+│ │ │◊◊│─│◊◊│─│◊◊│   Coherence                    │          │
+│ │ └──┘ └──┘ └──┘   States                       │          │
+│ │  │    │    │                                  │          │
+│ │ ┌──┐ ┌──┐ ┌──┐                               │          │
+│ │ │◊◊│─│◊◊│─│◊◊│                               │          │
+│ │ └──┘ └──┘ └──┘                               │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Scale Boundaries:                                            │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ Lower Bound: Quantum Uncertainty                │          │
+│ │ ▒▒▒░░░▒▒▒ → Stable                             │          │
+│ │ Upper Bound: Unknown                            │          │
+│ │ ∞ Fractal Self-Organization                     │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ [Analyze Network] [Calculate Density] [Map Connections]      │
+└──────────────────────────────────────────────────────────────┘
+```
+
+== Micro Dense Networks
+* Cytoskeleton
+* [R/D]NA
+* Subcellular Nanobrains (Levin et al.)
+* Microtubule theory of Consciousness (Penrose)
+
+img {https://www.frontiersin.org/files/Articles/768201/fnsys-16-768201-HTML-r1/image_m/fnsys-16-768201-g001.jpg}
+
+Networks are bounded at the smallest scales by uncertainty and noise-- a network needs molecules large enough to form stable structures.
+
+However, networks have an as-of-yet unexplored upper ceiling, and endless capacity for fractal self-making, for collaborative and collective growth. And networks are promiscuous-- networks of different kinds will collaborate and cooperate across species and materials.
+
+== Meso Dense Networks
+* Fungi
+* Lichens (many scales-- 'the forest as a lichen')
+* Nervous systems
+* Skin, tissues (cytoskeleta joined with gap junctions into larger networks)
+* Blood/Hyphae
+* Metals (lookup papers about spaghetti-like structures in metal)
+
+Humans are a network of networks of networks, bound together by networks of networks, bound into a network of networks. Some nets we work with:
+
+== Human Scale Dense Networks
+* ropes, nets, carpets and tapestries
+* language
+* other memes, for example musical themes, visual motifs
+* railways (a net of connected metal, laid flat across continents) and other highways
+* electricity
+
+Should try to group them better in terms of physical (electric) and information-theoretic (aka the internet is actually just part of the electricity network? The post is an epiphenomenon of the highway system etc.)

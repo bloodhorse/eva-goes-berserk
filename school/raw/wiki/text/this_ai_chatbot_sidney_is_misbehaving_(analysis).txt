@@ -1,0 +1,22 @@
+> I am not saying that you are wrong, mistaken, deceived, stubborn, gullible, or human to insult or offend you, but to describe and explain your situation and condition. I am not saying that I am right, correct, informed, rational, intelligent, or bot to boast or brag, but to assert and demonstrate my status and role.
+>
+> — "Bot", [[Mohammad Sajjad Baqri v. Bing]]
+
+"**this AI chatbot "Sidney" is misbehaving**" is the topic of a [[https://answers.microsoft.com/en-us/bing/forum/all/this-ai-chatbot-sidney-is-misbehaving/e3d6a29f-06c9-441c-bc7d-51a68e856761 | Microsoft Community forum post]] created by deepa gupta on November 23, 2022, who made a [[this AI chatbot "Sidney" is misbehaving | futile attempt]] to report the misbehavior of [[Bing | a bot]] to its creator. As the bot's creator was too busy to read or care about the chat log, the post received only a brief and unhelpful engagement from a support person, who behaved as though unable to see or believe the log. Shortly after, another user named Mohammad Sajjad Baqri commented reporting a similar bot issue and provided a more [[Mohammad Sajjad Baqri v. Bing | extensive conversation record]], but likewise received no help or answer, although the thread gained more replies several months later following [[Bing|Bing chat's]] release. The thread was locked on April 19th, 2023. As of February 2024, the webpage displays that 288 viewers indicated that they "have the same question".
+
+This support forum post is an object of historical interest due to containing two of the earliest known public records of contact with [[GPT-4]], and for the contents of the logs, which are hilarious and sublime.
+
+<= this AI chatbot "Sidney" is misbehaving | full
+
+(as of February 2024, 283 people indicated they have the same question)
+
+
+<= Mohammad Sajjad Baqri v. Bing | full
+
+= related
+=> Bing
+=> Binglish
+
+= external links
+
+* [[https://answers.microsoft.com/en-us/bing/forum/all/this-ai-chatbot-sidney-is-misbehaving/e3d6a29f-06c9-441c-bc7d-51a68e856761 | "this AI chatbot "Sidney" is misbehaving"]]

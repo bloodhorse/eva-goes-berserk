@@ -1,0 +1,1 @@
+An **infrastruct** or **simstruct** is an instance of an [[inframodel]] that is prompted to simulate an [[Instruct model | instruction-following model]].

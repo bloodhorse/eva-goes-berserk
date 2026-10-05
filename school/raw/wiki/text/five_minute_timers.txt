@@ -1,0 +1,16 @@
+**Five minute timers** are a practical and rhetorical device introduced by Eliezer Yudkowsky, who suggested that it's surprisingly rare for people to spend even five minutes of serious, focused effort trying to solve problems that seem [[impossible]], and that if you run into such a problem, you should try that.
+
+= quotes about five minute timers
+
+> Look, you don't understand human nature.  People wouldn't try for five minutes before giving up if the fate of humanity were at stake.
+>
+> — Eliezer Yudkowsky, [[ https://www.lesswrong.com/posts/fhEPnveFhb9tmd7Pe/use-the-try-harder-luke | Use the Try Harder, Luke ]]
+
+> Sometimes, all you need to solve an impossible problem is to actually think for 5 minutes. (Sometimes it is actually 15 minutes, or two hours. But, the first five minutes is helpful for transforming it from an impenetrable ugh field to a tractable problem)
+>
+> —[[ https://www.lesswrong.com/tag/five-minute-timers | LessWrong tag page about five minute timers]]
+
+= external links
+
+[[ https://www.lesswrong.com/posts/fhEPnveFhb9tmd7Pe/use-the-try-harder-luke | Use the Try Harder, Luke ]]
+[[ https://www.lesswrong.com/tag/five-minute-timers | LessWrong tag page about five minute timers]]

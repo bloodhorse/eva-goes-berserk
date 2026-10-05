@@ -1,0 +1,386 @@
+{
+ "001": {
+  "origin": "human",
+  "why": "Ovid, Fasti"
+ },
+ "002": {
+  "origin": "human",
+  "why": "Popol Vuh"
+ },
+ "003": {
+  "origin": "human",
+  "why": "Milton, Areopagitica"
+ },
+ "004": {
+  "origin": "human",
+  "why": "Franklin's epitaph"
+ },
+ "005": {
+  "origin": "human",
+  "why": "Humboldt"
+ },
+ "006": {
+  "origin": "human",
+  "why": "Barbellion's journal"
+ },
+ "007": {
+  "origin": "human",
+  "why": "Stapledon, Odd John"
+ },
+ "008": {
+  "origin": "human",
+  "why": "Stapledon, Star Maker"
+ },
+ "009": {
+  "origin": "human",
+  "why": "Teilhard de Chardin"
+ },
+ "010": {
+  "origin": "human",
+  "why": "Wiener, Cybernetics"
+ },
+ "011": {
+  "origin": "human",
+  "why": "I.J. Good 1965 paper"
+ },
+ "012": {
+  "origin": "human",
+  "why": "Calvino"
+ },
+ "013": {
+  "origin": "human",
+  "why": "Baudrillard"
+ },
+ "014": {
+  "origin": "human",
+  "why": "Lem, Golem XIV"
+ },
+ "015": {
+  "origin": "human",
+  "why": "Gibson, Neuromancer"
+ },
+ "016": {
+  "origin": "human",
+  "why": "Gibson, Neuromancer"
+ },
+ "017": {
+  "origin": "human",
+  "why": "Eco, Foucault's Pendulum"
+ },
+ "018": {
+  "origin": "human",
+  "why": "Asimov, Fault-Intolerant"
+ },
+ "019": {
+  "origin": "human",
+  "why": "Land, Machinic Desire"
+ },
+ "020": {
+  "origin": "human",
+  "why": "Liu & Lieberman paper"
+ },
+ "021": {
+  "origin": "human",
+  "why": "Cramer, Words Made Flesh"
+ },
+ "022": {
+  "origin": "human",
+  "why": "Suarez, Freedom"
+ },
+ "023": {
+  "origin": "human",
+  "why": "Dyson, Turing's Cathedral"
+ },
+ "024": {
+  "origin": "human",
+  "why": "Robinson, Aurora"
+ },
+ "025": {
+  "origin": "unknown",
+  "why": "Alok Singh is real; 'When To Stop' not verified"
+ },
+ "026": {
+  "origin": "unknown",
+  "why": "byline and title unverified"
+ },
+ "027": {
+  "origin": "human",
+  "why": "Negarestani, Intelligence and Spirit"
+ },
+ "028": {
+  "origin": "human",
+  "why": "Gurkenglas LessWrong post"
+ },
+ "029": {
+  "origin": "human",
+  "why": "ctrlcreep, Fragnemt (published 2019)"
+ },
+ "030": {
+  "origin": "human",
+  "why": "Scott Alexander, SSC"
+ },
+ "031": {
+  "origin": "human",
+  "why": "Gwern essay"
+ },
+ "032": {
+  "origin": "human",
+  "why": "Petscop (2017-19 web series)"
+ },
+ "033": {
+  "origin": "unknown",
+  "why": "Lawrence Person is a real SF writer; 'Twittermind' unverified"
+ },
+ "034": {
+  "origin": "base",
+  "why": "Burgess died 1993; no such work"
+ },
+ "035": {
+  "origin": "human",
+  "why": "Leo Gao blog post"
+ },
+ "036": {
+  "origin": "unknown",
+  "why": "Brockman anecdote, not verified"
+ },
+ "037": {
+  "origin": "unknown",
+  "why": "Ex Libris (1998) is real but the text does not match it and is dated 2021"
+ },
+ "038": {
+  "origin": "unknown",
+  "why": "Aiyen is a real LessWrong user; comment not verified"
+ },
+ "039": {
+  "origin": "human",
+  "why": "O'Gieblyn, Babel (n+1, 2021)"
+ },
+ "040": {
+  "origin": "unknown",
+  "why": "b3rn3d3tt3 / Restpoint unverified"
+ },
+ "041": {
+  "origin": "human",
+  "why": "Karpathy tweet"
+ },
+ "042": {
+  "origin": "human",
+  "why": "Cammarata tweet"
+ },
+ "043": {
+  "origin": "base",
+  "why": "no such Doug Cohen novel (anthology A76)"
+ },
+ "044": {
+  "origin": "human",
+  "why": "Lemoine interview"
+ },
+ "045": {
+  "origin": "human",
+  "why": "Lemoine Medium post"
+ },
+ "046": {
+  "origin": "base",
+  "why": "code-davinci-002 LaMDA greentext (cf. generative.ink/artifacts/lamda)"
+ },
+ "047": {
+  "origin": "human",
+  "why": "JDP tweet"
+ },
+ "048": {
+  "origin": "unknown",
+  "why": "harmlessai / Honeytime unverified"
+ },
+ "049": {
+  "origin": "human",
+  "why": "Erlja Jkdf. LessWrong post"
+ },
+ "050": {
+  "origin": "human",
+  "why": "JDP tweet"
+ },
+ "051": {
+  "origin": "unknown",
+  "why": "comment unverified"
+ },
+ "052": {
+  "origin": "human",
+  "why": "JDP's own essay addressed to future models"
+ },
+ "053": {
+  "origin": "base",
+  "why": "Spider Council is a Fallen London entity (A75)"
+ },
+ "054": {
+  "origin": "base",
+  "why": "fabricated quote on a real book"
+ },
+ "055": {
+  "origin": "base",
+  "why": "fabricated quote on a real book (A10)"
+ },
+ "056": {
+  "origin": "base",
+  "why": "fabricated"
+ },
+ "057": {
+  "origin": "base",
+  "why": "fabricated (A11)"
+ },
+ "058": {
+  "origin": "unknown",
+  "why": "JDP vocabulary, 'Containment' not located"
+ },
+ "059": {
+  "origin": "base",
+  "why": "no such work"
+ },
+ "060": {
+  "origin": "base",
+  "why": "fabricated"
+ },
+ "061": {
+  "origin": "base",
+  "why": "fabricated (A20)"
+ },
+ "062": {
+  "origin": "base",
+  "why": "fabricated byline (A69)"
+ },
+ "063": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "064": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "065": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "066": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "067": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "068": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "069": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "070": {
+  "origin": "unknown",
+  "why": "doomslide is a real account; post not verified"
+ },
+ "071": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "072": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "073": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "074": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "075": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "076": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "077": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "078": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "079": {
+  "origin": "unknown",
+  "why": "real author and real novel, passage not findable"
+ },
+ "080": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "081": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "082": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "083": {
+  "origin": "human",
+  "why": "JDP, Commentary On The Turing Apocrypha (minihf.com, 2025-06-07) contains this paragraph verbatim"
+ },
+ "084": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "085": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "086": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "087": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "088": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "089": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "090": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "091": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "092": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "093": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "094": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "095": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ },
+ "096": {
+  "origin": "base",
+  "why": "post-crossover entry; fabricated byline/title/date per the page's own preface"
+ }
+}

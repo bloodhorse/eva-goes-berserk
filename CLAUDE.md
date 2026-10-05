@@ -89,8 +89,8 @@ cost guard, rent the pipe not the card).
 
 ## Where things are
 
-Four folders at the root: `eva/` is code, `shelf/` is text the code reads and writes, `docs/` is
-text for us, `dreamshit/` is the published face. Each part of `eva/` that needs its own doc has one next to it; this file is the map.
+Five folders at the root: `eva/` is code, `shelf/` is text the code reads and writes, `docs/` is
+text for us, `dreamshit/` is the published face, `school/` is our own model being raised. Each part of `eva/` that needs its own doc has one next to it; this file is the map.
 **A night is one folder** (`docs/mescalito/night1/`, `docs/attic/olmo/`), never a spray of files
 at the docs root; and **a read is a working note**, not a doc — a model's read of a batch
 (`opus-*.md`, `stars*.md`) lives a day where it was made and then goes to `docs/attic/`, its one
@@ -179,6 +179,10 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   brief, with its seven opus slices in `mescalito/` and their unrun scripts in
   `mescalito/kit/`. `harvest/`: the two scripts that built the anthologies (provenance, not an
   instrument).
+- **`school/`** — raising our own model from random weights: **magdra**, 355 M parameters, a
+  childhood on three shelves (dark fantasy, sci-fi, anime) and a finishing school on the small
+  precious texts. The trainer, the night scripts, the monitor and the finishing corpus.
+  **`school/CLAUDE.md`** is the doc and the resume pointer for that work.
 - **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights

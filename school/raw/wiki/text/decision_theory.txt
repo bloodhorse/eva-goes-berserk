@@ -1,0 +1,9 @@
+**Decision theory** is the theory of how an agent should make decisions given probabilities and utilities of outcomes. Decision theories such as [[causal decision theory]], [[evidential decision theory]], and [[functional decision theory]] agree that agents should maximize expected utility, but disagree about how utilities are evaluated and what parts of reality the agent's actions are responsible for.
+
+
+table {
+! models ! CDT ! EDT ! FDT 
+| **objective reality** | yes | no | yes
+| **copies** | no | yes | yes
+| **anthropics** | no | partially | yes
+}

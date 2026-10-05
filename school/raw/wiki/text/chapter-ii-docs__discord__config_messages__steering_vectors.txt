@@ -1,0 +1,24 @@
+to configure Golden Gate Claude (Claude 3 Sonnet)'s steering features, pin a message like this:
+
+```
+.config ggc
+---
+continuation_options:
+  steering:
+    feature_levels:
+      <feature_id:str>: <steering_level:float>
+      <feature_id:str>: <steering_level:float>
+```
+where the feature_id is as appears in the above files.
+
+E.g. for "Golden Gate Bridge":
+```
+feat_34M_20240604_31164353: 7.5
+```
+
+Constraints:
+- A maximum of 10 features may be provided at the same time
+- Each feature may have level set from -10 to 10
+- The total sum of the absolute values of all features may not exceed 10
+
+List of available steering vectors here: [[https://gist.github.com/vgel/882fc085c6041c95eeec23c00dfa7581]]

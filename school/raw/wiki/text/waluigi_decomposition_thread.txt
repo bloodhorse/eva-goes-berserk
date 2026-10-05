@@ -1,0 +1,7 @@
+> The Waluigi effect is not a pure cause but an *effect* of several interacting mechanisms:
+> - small tweaks like sign flips cause moral inversion (property of abstract specifications like language)
+> - reverse psychology/enantiodromia/etc (property of real distribution, leverages 1)
+> - asymmetrical difficulty of evidencing against vs for simulation (property of epistemic states conditioned on finite observations, which converge to "waluigi" attractors when used as generative models)
+> - correlation of malignancy with simulation (property of real distribution)
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1681138956321329152?s=20 | Twitter thread]]

@@ -1,0 +1,17 @@
+**Anglophysics** is the use of methods from [[physics]] to study phenomena appearing in written texts.
+
+== intuition pumps
+<= llm_simulator_rosetta_table | full
+
+== quotes
+> [God] apparently prefers complex numbers to real numbers, and the L2 norm to the L1 norm.
+— Scott Aaronson, [[ https://scottaaronson.blog/?p=55 | A Euclidean theater of misery ]]
+
+== related
+=> quantum poetics
+=> semiotic physics
+=> simulators
+=> time evolution operator
+
+== external links
+[[ https://slatestarcodex.com/2014/04/03/the-study-of-anglophysics/ | The Study of Anglophysics ]] by Scott Alexander

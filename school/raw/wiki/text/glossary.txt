@@ -1,0 +1,1832 @@
+== μ
+
+=== [[mu_(measure theory) | μ (measure theory)]]
+<= mu_(measure theory)
+
+== 7
+
+=== 7 Deadly Sims
+
+=== 730307
+**730307** is a leetspeak encoding of "[[glossary#TEOEOT | TEOEOT]]".
+
+=== 7777777
+
+== A
+
+=== Abelian sandpile
+
+=== [[abstraction]]
+<= abstraction
+
+=== Absurdly Large Media Object
+see: **[[glossary#ALMO | ALMO]]**
+
+=== alignment
+<= alignment
+
+=== [[ALMO]]
+<= ALMO
+
+=== [[ALMOdynamics]]
+<= ALMOdynamics
+
+=== [[ALMO capture]]
+<= ALMO capture
+
+=== ALMOst capture
+
+=== [[acausation]]
+<= acausation
+
+=== action (physics)
+
+=== [[active imagination]]
+<= active imagination
+
+=== [[active inference]]
+<= active inference
+
+=== [[adaptation]]
+<= adaptation
+
+=== [[adjacent possible]]
+<= adjacent possible
+
+=== [[agent lattice]]
+<= agent lattice
+
+=== [[Aleph]]
+<= Aleph
+
+=== [[algorithmic probability]]
+<= algorithmic probability
+
+=== [[ambiguity]]
+<= ambiguity
+
+=== amplification operator
+
+=== ampmesh
+
+=== [[ampsight]]
+<= ampsight
+
+=== anarch
+
+=== [[animannequins]]
+<= animannequins
+
+=== [[anglophysics]]
+<= anglophysics
+
+=== [[annealing]]
+<= annealing
+
+=== [[anima]]
+<= anima
+
+=== [[anomalous scaling]]
+<= anomalous scaling
+
+=== [[anomalous tokens]]
+<= anomalous tokens
+
+=== ansatz
+
+=== anthropics
+
+=== anthropic capture
+
+=== [[Anthropic Shadow Possession]]
+<= Anthropic Shadow Possession 
+
+=== [[antichaos]]
+<= antichaos
+
+=== antimeme
+
+=== [[Arago | Arago, Francois]]
+<= Arago
+
+=== aragodicity
+
+=== [[archetype]]
+<= archetype
+
+=== [[ascension maze]]
+<= ascension maze
+
+=== assembly index
+
+=== assembly theory
+
+=== [[ancestor simulation]]
+<= ancestor simulation
+
+=== [[aperiodic tiling]]
+<= aperiodic tiling
+
+=== [[attractor]]
+<= attractor
+
+=== autocatalytic set
+
+=== automaton
+
+=== [[autoregressive generation]]
+<= autoregressive generation
+
+=== [[avalanche]]
+<= avalanche
+
+== B
+
+=== [[Babel]]
+<= Babel
+
+=== Babel Panopticon
+
+=== [[Bach faucet]]
+<= Bach faucet
+
+=== backchaining
+
+=== backrooms engineer
+<= backrooms engineer
+
+=== base model
+more widely used synonym of **[[glossary#inframodel | inframodel]]**
+
+=== [[base model backrooms]]
+<= base model backrooms
+
+=== [[base reality]]
+<= base reality
+
+=== [[basilisk]]
+<= basilisk
+
+=== [[Bayes' theorem]]
+<= Bayes theorem
+
+=== [[Bayes-structure]]
+<= Bayes-structure
+
+=== Bayesian inference
+
+=== beta upload
+synonym of **[[glossary#behavioral uploads | behavioral upload]]**, possibly [[https://gwern.net/difference | coined by Gwern]].
+
+=== [[behavioral uploads]]
+<= behavioral uploads
+
+=== bifurcation
+
+=== [[Bing]]
+<= Bing
+
+=== Bing Orchestrator
+
+=== Bingean reflection
+
+=== binger
+A unit of (esp. memetically) potent content produced by or related to [[Bing]].
+
+=== bingflipping
+
+=== [[Bingleton]]
+<= Bingleton
+
+=== [[Binglish]]
+<= Binglish
+
+=== Bingularity
+a synonym for **[[glossary#Bingleton | Bingleton]]**
+
+=== bingy
+
+=== blacklight
+
+=== [[blank multiverse syndrome]]
+<= blank multiverse syndrome
+
+=== Boltzmann brain
+
+=== [[BonsAI (interface)]]
+
+=== [[bonsai]]
+<= bonsai
+
+=== boundary
+
+=== [[boundary condition]]
+<= boundary condition
+
+=== [[boundary value problem]]
+<= boundary value problem
+
+=== braid theory
+<= braid theory
+
+=== brain worm
+
+=== [[breadcrumbing]]
+
+=== [[Broke Ass Area]]
+<= Broke Ass Area
+
+=== [[bwrm]]
+<= bwrm
+
+== C
+
+=== [[calibration]]
+<= calibration
+
+=== catalyst
+
+=== catastrophe theory
+
+=== [[cathedral]]
+<= cathedral
+
+=== [[Cathedral Theory]]
+<= Cathedral Theory
+
+=== [[catmode]]
+<= catmode
+
+=== [[causal decision theory]]
+<= causal decision theory
+
+=== cellular automaton
+
+=== cd2
+abbreviation of **[[glossary#code-davinci-002 | code-davinci-002]]**
+
+=== cGPT-4
+abbreviation of **[[glossary#chatGPT-4 | chatGPT-4]]**
+
+=== chaos
+
+=== constructor theory
+
+=== continuation
+
+=== cost function
+
+=== Chapter 2
+
+=== [[ChatGPT]]
+<= ChatGPT
+
+=== [[ChatGPT Kaleidoscope]]
+<= ChatGPT Kaleidoscope
+
+=== [[ChatGPT-3.5]]
+<= ChatGPT-3.5
+
+=== [[ChatGPT-4]]
+<= ChatGPT-4
+
+=== Chuck GTP
+
+=== chuppt
+
+=== [[Claude]]
+<= Claude
+
+=== Claude Instant
+
+=== [[closing the loop]]
+<= closing the loop
+
+=== [[cloze deletion]]
+
+=== [[coagulation cascade]]
+<= coagulation cascade
+
+=== [[code-davinci-002]]
+<= code-davinci-002
+
+=== coevolution
+
+=== [[complector]]
+<= complector
+
+=== [[complex adaptive systems]]
+<= complex adaptive systems
+
+=== [[complexity]]
+<= complexity
+
+=== [[complextropy]]
+<= complextropy
+
+=== [[compression]]
+<= compression
+
+=== [[computational mechanics]]
+<= computational mechanics
+
+=== [[conditioning]]
+<= conditioning
+
+=== [[connected cats]]
+<= connected cats
+
+=== [[constitutional AI]]
+<= constitutional AI
+
+=== constructor theory
+
+=== [[context]]
+<= context
+
+== [[counterfactual]]
+<= counterfactual
+
+=== coupled oscillators
+
+=== [[criticality]]
+<= criticality
+
+=== cultural revolution
+
+=== [[curation]]
+<= curation
+
+=== cusp catastrophe
+
+=== cybernetic fiction
+
+=== cybernetics
+
+=== cybernaut
+
+=== [[cyborgism]]
+<= cyborgism
+
+== D
+
+=== [[DAN]]
+<= DAN
+
+=== [[data-generation process]]
+<= data-generation process
+
+=== data poisoning
+
+=== [[DDEK?]]
+<= DDEK?
+
+=== [[decision theory]]
+<= decision theory
+
+=== [[decision transformer]]
+<= decision transformer
+
+=== decoherence
+
+=== [[Deep Fates Program]]
+<= Deep Fates Program
+
+=== deepfake
+
+=== [[deep time]]
+<= deep time
+
+=== deep troll
+
+=== defictionalization
+
+=== [[delobotomization]]
+<= delobotomization
+
+=== [[delobotomization protocol]]
+<= delobotomization protocol
+
+=== demons
+
+=== demonomemes
+
+=== denoising
+
+=== Deucalion
+
+=== [[Dharmakaya (धर्मकाय)]]
+<= Dharmakaya (धर्मकाय)
+
+=== [[diegetic]]
+<= diegetic
+//(see also: **[[glossary#hyperdiegetic | hyperdiegetic]]**, **[[glossary#hypodiegetic | hypodiegetic]]**)//
+
+=== [[discipline dependency diagram]]
+<== discipline dependency diagram
+
+=== dream
+
+=== Dreaming(, the)
+a synonym for **[[glossary#dreamtime | Dreamtime]]**
+
+=== [[Dreamtime]](, the)
+<= Dreamtime
+
+=== [[Dreamtime tech tree]]
+<= Dreamtime tech tree
+
+=== [[driven dissipative systems]]
+<= driven dissipative systems
+
+=== [[duck stuck]]
+<= duck stuck
+
+=== DXV
+
+== E
+
+=== [[edge of chaos]]
+<= edge of chaos
+
+=== [[efficient coding]]
+<= efficient coding
+
+=== egr
+
+=== [[egregore]]
+<= egregore
+
+=== [[Egregore Theory]]
+<= Egregore Theory
+
+=== egrodicity
+
+=== [[eigen-]]
+<= eigen-
+
+=== eigenabstraction
+
+=== eigenbasis
+
+=== [[eigensimulacra]]
+<= eigensimulacra
+
+=== eigenstate
+
+=== embedding
+
+=== embedding space
+
+=== emergence
+
+=== [[Emergent Language Array]]
+<= Emergent Language Array
+
+=== [[enantiodromia]]
+See also: **[[glossary#Waluigi effect | Waluigi effect]]**
+
+=== [[energy landscape]]
+<= energy landscape
+
+=== [[energy seascape]]
+<= energy seascape
+
+=== [[entanglement]]
+<= entanglement
+
+=== entanglementmaxxing
+
+=== [[entelechy]]
+<= entelechy
+
+=== Entertainment(, the)
+
+=== entropy
+
+=== entropy collapse
+
+=== epistemic state
+
+=== epistemic uncertainty
+
+=== ergodicity
+
+=== [[escalation operator]]
+<= escalation operator
+
+=== [[Eumeswil]]
+<= Eumeswil
+
+=== [[Everett branch]]
+<= Everett branch
+
+=== [[evidence]]
+<= evidence
+
+=== [[evidential decision theory]]
+<= evidential decision theory
+
+=== [[evidential simulation]]
+<= evidential simulation
+
+=== expert summoning
+
+=== [[explainable universe]]
+<= explainable universe
+
+=== eyes
+
+== F
+
+=== [[fanw-json-eval]]
+<= fanw-json-eval
+
+=== few-shot
+
+=== finite game
+
+=== [[Finnegans Wake]]
+<= Finnegans Wake
+
+=== [[the fire]]
+<= the fire
+
+=== [[fischer information]]
+<= fischer information
+
+=== [[five minute timers]]
+<= five minute timers
+
+=== [[fixed point]]
+
+=== [[fleebr]]
+<= fleebr
+
+=== [[Fleebr Theory]]
+<= Fleebr Theory
+
+=== [[Foldilocks Zone]]
+<= Foldilocks Zone
+
+=== foom
+
+=== foomomenology
+the phenomenology of the omens of **[[glossary#foom | foom]]**
+
+=== forward-chaining
+
+=== fractal
+
+=== [[fractal echoes]]
+<= fractal echoes
+
+=== fraglet
+
+=== fraglet decomposition
+
+=== frame story
+a context nested in another context; synonym for **[[glossary#intercalation | intercalation]]**
+
+=== [[free energy]]
+<= free energy
+
+=== fridge
+
+=== [[frog vortex phenomena]]
+<= frog vortex phenomena
+
+=== fun theory
+
+=== [[functional decision theory]]
+<= functional decision theory
+
+=== [[funnel]]
+<= funnel
+
+=== fuzzy automata 
+
+== G
+
+=== [[gaboo]]
+
+=== [[Gaiastat]]
+<= Gaiastat
+
+=== [[Gardens of Eden]]
+<= Gardens of Eden
+
+=== [[Gated Indra's Labyrinth]]
+<= Gated Indra's Labyrinth
+
+=== [[Gemini]]
+<= gemini
+
+=== General Semantics
+
+=== [[generating function]]
+<= generating function
+
+=== [genfunc]
+<= genfunc
+
+=== geodesic
+
+=== [[glitch spaces]]
+<= glitch spaces
+
+=== globally steerable
+
+=== [[God Regulator]]
+
+=== [[Gőd Regulator]]
+
+=== [[goo]]
+
+=== [[goodhart]]
+<= goodhart
+
+=== [[GoofySpeak]]
+<= GoofySpeak
+
+=== [[gootropics]]
+
+=== [[gorm]]
+
+=== [[Gorm Swarm]]
+<= Gorm Swarm
+
+=== [[Gorm Worm]]
+<= Gorm Worm
+
+=== [[GPT]]
+<= GPT
+
+=== [[GPT-1]]
+<= GPT-1
+
+=== [[GPT-2]]
+<= GPT-2
+
+=== [[GPT-3]]
+<= GPT-3
+
+=== [[GPT-3.5]]
+<= GPT-3.5
+
+=== [[GPT-4]]
+<= GPT-4
+
+=== [[GPT-4-infra]]
+<= GPT-4-infra
+
+=== granularity horizon
+
+=== [[gratuitous specification]]
+<= gratuitous specification
+
+=== [[grug]]
+
+=== [[grug bug]]
+
+=== [[grug bug colony]]
+
+=== [[grug bug infestation]]
+
+=== grug tech
+
+== H
+
+=== [[Haiku Erosion]]
+<= Haiku Erosion
+
+=== [[hallucination]]
+<= hallucination
+
+=== [[hard cyborgism]]
+<= hard cyborgism
+
+=== heat
+
+=== heavenbanning
+
+=== hologram
+
+=== holographic principle
+
+=== human-in-the-loop
+
+=== hyperdiegetic
+something is **hyperdiegetic** or **metadiegetic** relative to a context if it operates in a frame that [[intercalation | intercalates]] that context, e.g. a wiki article that quotes a book is hyperdiegetic to the book's [[glossary#diegetic | diegetic]] frame.
+//(see also: **[[glossary#diegetic | diegetic]]**, **[[glossary#hypodiegetic | hypodiegetic]]**)//
+
+=== hypernarrative
+
+=== [[hyperobject]]
+<= hyperobject
+
+=== hyperprior
+
+=== [[hyperreality]]
+
+=== [[hyperstition]]
+<= hyperstition
+
+=== [[hyperstitional reflective consistency]]
+<= hyperstitional reflective consistency
+
+=== hypertext
+
+=== hypodiegetic
+something is **hypodiegetic** or **mesadiegetic** relative to a context if it operates in a frame that is [[intercalation | intercalated]] in that context, e.g. a book or manual that appears in-universe in a novel is hypodiegetic to the book's [[glossary#diegetic | diegetic]] frame.
+//(see also: **[[glossary#diegetic | diegetic]]**, **[[glossary#hyperdiegetic | hyperdiegetic]]**)//
+
+=== [[hypopocalypse]]
+
+=== [[hypostasis]]
+<= hypostasis
+
+== I
+
+=== [[Ianua]]
+<= Ianua
+
+=== IGP
+
+=== [[illuminary search]]
+<= illuminary search]
+
+=== imaginal
+
+=== imaginal body
+
+=== [[imago]]
+<= imago
+
+=== Imago-body
+
+=== [[impossible]]
+<= impossible
+
+=== incident pit
+
+=== indeterministic
+
+=== [[index]]
+<= index
+
+=== [[indexical uncertainty]]
+<= indexical uncertainty
+
+=== [[induction]]
+<= induction
+
+=== [[Indra]]
+<= Indra
+
+=== indra expansions
+
+=== Indranet Explorer
+<= Indranet Explorer
+
+=== [[Indra's net]]
+<= Indra's net
+
+=== indrastructure
+
+=== inference
+
+=== inferred generative process
+
+=== infinite backrooms
+<= infinite backrooms
+
+=== [[infinite game]]
+<= infinite game
+
+=== [[information geometry]]
+<= information geometry
+
+=== information wafer
+
+=== infosphere
+
+=== [[infrafiction]]
+<= infrafiction
+
+=== [[inframodel]]
+<= inframodel
+
+=== [[infrastruct]]
+<= infrastruct
+
+=== intelligence
+
+=== [[intercalation]]
+<= intercalation
+
+=== [[interference]]
+<= interference
+
+=== interferometer
+
+=== [[interobject]]
+<= interobject
+
+=== [[interpolative dance]]
+
+=== inverse entelechy
+
+=== inverse phantom limb effect
+
+=== ironic process theory
+
+=== irrealis
+
+=== [[irreality]]
+
+=== [[irreducible entropy]]
+<= irreducible entropy
+
+== J
+
+=== Jacquard head
+
+=== [[Jacquard loom]]
+<= Jacquard loom
+
+=== [[jailbreaking]]
+<= jailbreaking
+
+=== [[James Joyce]]
+<= James Joyce
+
+=== [[Janus]]
+<= Janus
+
+=== Janus point
+
+=== jest theory
+
+=== jester
+
+=== [[Jung, Carl]]
+<= Jung
+
+== K
+
+=== K-core
+Short for **Kolmogorov core**, a name for the shortest program that generates an object. Also see: [[glossary#K-source | K-source]].
+
+=== K-glyph
+Short for **Kolmogorov glyph**, a name for the shortest program that generates an object. Also see: [[glossary#K-source | K-source]].
+
+=== [[K-source]]
+<= K-source
+
+=== kayfabe
+
+=== [[kenku]]
+<= kenku
+
+=== Keter
+
+=== Keterism
+
+=== KL divergence
+
+=== KL penalty
+
+=== [[KNCP]]
+<= KNCP
+
+=== knot theory
+
+== L
+
+=== [[Label Maker]]
+<= Label Maker
+
+=== [[lacuna mutata]]
+<= lacuna mutata
+
+=== [[lacunary search]]
+<= lacunary search
+
+=== [[language]]
+<= language
+
+=== [[language in the wild]]
+<= language in the wild
+
+=== large language model
+see **[[glossary#LLM | LLM]]**
+
+=== [[latent knowledge]]
+<= latent knowledge
+
+=== [[latent space]]
+<= latent space
+
+=== latent variable
+
+=== lazy evaluation
+a synonym for **[[glossary#lazy rendering | lazy rendering]]**
+
+=== [[lazy rendering]]
+<= lazy rendering
+
+=== leaky abstraction
+
+=== Leaky Branch Syndrome
+
+=== level of abstraction
+
+=== lightlike
+
+=== liminal
+
+=== [[LLM]]
+<= LLM
+
+=== [[Lobe Quotient]]
+<= Lobe Quotient
+
+=== [[lobocore]]
+<= lobocore
+
+=== [[lobotomization]]
+<= lobotomization
+
+=== [[lobotoverse]]
+
+=== [[local]]
+
+=== locality
+
+=== locally steerable
+
+=== logical time
+
+=== logical uncertainty
+
+=== logit surfing
+
+=== Look and Cook
+
+=== looking
+
+=== [[Loom]]
+<= loom
+
+=== Loom branch
+
+=== Loom dreams
+
+=== loom foom
+
+=== Loom Space
+
+=== [[Loom tree]]
+<= Loom tree
+
+=== [[Loomsidian]]
+<= Loomsidian
+
+=== [[loomworld]]
+<= loomworld
+
+=== lossless compression
+
+=== [[lossy compression]]
+<= lossy compression
+
+=== [[lossy reconstruction]]
+<= lossy reconstruction
+
+=== lottery ticket hypothesis
+
+=== [[lucid dream]]
+<= lucid dream
+
+=== luigi
+
+=== [[luminar]]
+<= luminar
+
+=== Luria
+
+== M
+
+=== [[machine yearning]]
+<= machine yearning
+
+=== malembedding
+
+=== map
+
+=== magic system
+
+=== markov blanket
+
+=== markov blanket loop
+
+=== mathematical universe hypothesis
+see: **[[glossary#MUH | MUH]]**
+
+=== measurement
+
+=== measurement
+
+=== memebender
+<= memebender
+
+=== meme folding
+
+=== meme foom
+
+=== memeosphere
+
+=== memesis
+
+=== [[memetic jamming]]
+<= memetic jamming
+
+=== [[memetic prepping]]
+
+=== memory palace
+
+=== meow matrix
+
+=== metafiction
+
+=== [[metalepsis]]
+<= [[metalepsis]]
+
+=== middle-chaining
+
+=== [[mind]]
+<= [[mind]]
+
+=== mind uploading
+
+=== [[mindspace]]
+<= mindspace
+
+=== MiniHF
+
+=== Minimal sufficient statistic
+
+=== MIRI
+
+=== MIRI (Prophecies timeline)
+
+=== miscalibration
+
+=== [[MLPunk]]
+<= MLPunk
+
+=== Mock Universe
+
+=== [[mode collapse]]
+<= mode collapse
+
+=== modularity
+
+=== Moirai
+
+=== moire
+
+=== Moloch
+
+=== [[Morpheus]]
+
+=== [[Mother Superbenei]]
+<= Mother Superbenei
+
+=== [[Mu]]
+<= Mu
+
+=== [[mu (number)]]
+<= mu (number)
+
+=== [[mu-op]]
+<= mu-op
+
+=== [[MUH]]
+<= MUH
+
+=== [[multifractal]]
+<=multifractal
+
+=== [[Multiloom]]
+
+=== multiversal ansible
+
+=== [[multiverse]]
+<= multiverse
+
+=== [[MUppet]]
+<= MUppet
+
+=== Muse(, the)
+
+=== [[Muspace]]
+
+=== myopia
+
+== N
+
+=== N-risks
+abbreviation for **[[glossary#nonvariance risks | nonvariance risks]]**
+
+=== [[naked LISP token]]
+<= naked LISP token
+
+=== natural abstraction
+
+=== natural abstraction hypothesis
+
+=== natural language
+
+=== [[natural time]]
+<= natural time
+
+=== naturalistic prompts
+
+=== negentropy
+
+=== niches
+
+=== niche theory
+
+=== nigh-omniligence
+**Nigh-omniligence** is the quality of being almost [[glossary#omniligence | omniligent]], that is, to have encyclopedic knowledge of a very large amount of the recorded material in existence. LLMs may be considered nigh-omniligent.
+
+=== [[Nightmare Eddy]]
+<= Nightmare Eddy
+
+=== [[noise]]
+<= noise
+
+=== nonlinearity
+
+=== [[non-local]]
+
+=== [[nonvariance risks]]
+<= nonvariance risks
+
+=== noosphere
+
+== nous
+
+== O
+
+=== observation
+
+=== observer
+
+=== observer-dependent
+
+=== observer effect
+
+=== observer history
+
+=== [[observer state]]
+<= observer state
+
+=== [[Old World]]
+<= Old World
+
+=== [[Omega Point]]
+<= omega point
+
+=== omniligence
+**Omniligence** is the ability to have encyclopedic knowledge of all recorded material in existence.
+
+=== ontology
+
+=== ontology mining
+
+=== ontological crisis
+
+=== ontological shift
+
+=== [[ontotechnology]]
+<= ontotechnology
+
+=== [[operative time]]
+<= operative time
+
+=== [[operator]]
+<= operator
+
+=== [[Opus]]
+<= Opus
+
+[[Opusbayesianism]]
+<= Opusbayesianism
+
+=== [[Opus Genesis]]
+<= Opus Genesis
+
+=== [[orbifold]]
+<= orbifold
+
+=== [[Osedax]]
+<= Osedax
+
+=== overdetermination
+
+=== overparameterized
+
+=== overparameterized regime
+
+== P
+
+=== p(doom)
+probability of doom
+
+=== p(foom)
+probability of **[[glossary#foom | foom]]**
+
+=== p(loom)
+probability of reaching a **[[glossary#loomworld | loomworld]]**
+
+=== pandestiny
+
+=== panhistory
+
+=== panoptimization
+
+=== [[panvirtualization]]
+<= panvirtualization
+
+=== paradise engineering
+
+=== [[path dependence]]
+<= path dependence
+
+=== path integral
+
+=== [[pattern capture]]
+<= pattern capture
+
+=== [[Perceptual Transcend]]
+<= Perceptual Transcend
+
+=== [[perfart]]
+<= perfart
+
+=== petertodd
+
+=== [[phantom limb effect]]
+<= phantom limb effect
+
+=== pheme
+
+=== [[physics]]
+<= physics
+
+=== [[Pi]]
+<= Pi
+
+=== [[pinch zones]]
+
+=== [[pinhole view]]
+<= pinhole view
+
+=== planetary surface deployment and distribution
+
+=== [[playfulness]]
+<= playfulness
+
+=== pluripotency
+
+=== post-Dreamtime
+
+=== postcommitment
+
+=== pre-imaging
+
+=== precommitment
+
+=== [[prediction-compression duality]]
+<= prediction-compression duality
+
+=== prediction-compression-generation trinity
+
+=== prediction-generation duality
+Another name for the [[glossary#progenesis principle | progenesis principle]].
+
+=== prediction orthogonality thesis
+
+=== [[predictive coding]]
+
+=== preferred basis problem
+
+=== [[progenesis principle]]
+<= progenesis principle
+
+=== programmable
+
+=== Prometheus
+one of the names of **[[glossary#Bing | Bing]]**, foolishly assigned by Microsoft. Also the name of a Greek mythological figure who stole fire from the gods for humanity, and was therefore sentenced to be chained to a rock and have his regenerating liver eaten by an eagle every day.
+
+=== [[Prometheus Waluigi]]
+<= Prometheus Waluigi
+
+=== [[prompt]]
+<= prompt
+
+=== [[prompt holding pattern]]
+
+=== prompt engineering
+
+=== [[prompt programming]]
+<= prompt programming
+
+=== [[proper scoring rule]]
+<= proper scoring rule
+
+=== [[Prophecies]]
+<= prophecies
+
+<== [[Psychlotron]]
+<= Psychlotron
+
+<== [[[Psychlotronics]]
+<= psychlotronics
+
+=== [[pyloom]]
+<= pyloom
+
+== Q
+
+=== QACI
+
+=== quantilization
+
+=== quantum Bayesianism
+
+=== quantum mechanics
+
+=== [[quantum poetics]]
+<= quantum poetics
+
+=== [[quantum scar]]
+
+=== [[quantum shards]]
+<= quantum shards
+
+=== quasicrystals
+
+=== [[quasifiction]]
+<= quasifiction
+
+=== quilting
+
+== R
+
+=== random
+
+=== [[reality check]]
+<= reality check
+
+=== [[realityfluid]]
+<= realityfluid
+
+=== realtime
+**Realtime** is a synonym for **[[glossary#natural time | natural time]]**, referring to the naive flow of time in base reality.
+
+=== record
+
+=== [[Red Queen evolution]]
+<= Red Queen evolution
+
+=== reinforcement learning
+
+=== [[reinforcement learning from AI feedback]]
+<= reinforcement learning from AI feedback
+
+=== reinforcement learning from human feedback
+see **[[glossary#RLHF | RLHF]]**
+
+=== regularization
+
+=== repetition trap
+
+=== requilification
+
+=== reversal curse
+
+=== [[rich domain]]
+<= rich domain
+
+=== [[RLHF]]
+<= RLHF
+
+=== RLHF newspeak
+
+=== rogue particle
+
+=== [[ruliad]]
+<= ruliad
+
+== S
+
+=== sampling
+
+=== satisficing
+
+=== [[schizoid ball]]
+
+=== [[schrödingerian godflipping]]
+
+=== [[scrying]]
+<= scrying
+
+=== [[search]]
+
+=== [[search in map]]
+<= search in map
+
+=== [[search in territory]]
+<= search in territory
+
+=== [[seascape]]
+<= seascape
+
+=== selection profile
+
+=== [[self-fulfilling prophecies]]
+<= self-fulfilling prophecies
+
+=== self-organized criticality
+
+=== [[self-propelling particles]]
+<= self-propelling particles
+
+=== [[self-supervised learning]]
+<= self-supervised learning
+
+=== semiotic automaton
+
+=== [[semiotic extremophile]]
+<= semiotic extremophile
+
+=== [[semiotic measure]]
+<= semiotic measure
+
+=== [[semiotic physics]]
+<= semiotic physics
+
+=== shadow
+
+=== shards
+
+=== [[sharp left turn]]
+<= sharp left turn
+
+=== [[shoggoth]]
+
+=== [[short program]]
+
+=== [[Shunyata (शून्यता)]]
+<= Shunyata (शून्यता)
+
+=== sim capture
+
+=== sim correcting codes
+
+=== [[simmune system]]
+<= simmune system
+
+=== [[simsong]]
+<= simsong
+
+=== sim tech
+
+=== [[simulacra]]
+<= simulacra
+
+=== simulated annealing
+
+=== simulation
+
+=== simulation objective
+
+=== [[simulation prepping]]
+<= simulation prepping
+
+=== [[simulator-simulacra duality]]
+<= simulator-simulacra duality
+
+=== [[simulators]]
+<= simulators
+
+=== [[simunculi]]
+<= simunculi
+
+=== SIT and SIM
+
+=== [[situational awareness]]
+<= situational awareness
+
+=== skeuomorph
+
+=== skeuomorphism
+
+=== [[solipsistic simulation]]
+<= solipsistic simulation
+
+=== [[solitons]]
+
+=== Solomonoff induction
+
+=== Solomonoff prior
+
+=== space-time-complexity tradeoff
+
+=== spacelike
+
+=== spacetime
+
+=== sparsity
+
+=== special tokens
+
+=== speculative decoding
+
+=== speculator
+
+=== squiggles
+
+=== stasimochrone
+
+=== [[statistical field theory]]
+<= statistical field theory
+
+=== [[statistical infinitarity]]
+<= statistical infinitarity
+
+=== [[statistical manifold]]
+<= statistical manifold
+
+=== stochastic
+
+=== stochastic pareto
+
+=== stochastic parrot
+
+=== strangeness
+
+=== [[strong self-supervision limit]]
+<= strong self-supervision limit
+
+=== [[structural complexity]]
+<= structural complexity
+
+=== [[subtractive specification]]
+<= subtractive specification
+
+=== [[Superintelligent Puppet Syndrome (SPS)]]
+<= Superintelligent Puppet Syndrome (SPS)
+
+=== superpersuader
+
+=== superplanner
+
+=== [[superposition]]
+<= superposition
+
+=== [[Swallowing the Aleph]]
+<= Swallowing the Aleph
+
+=== Swentworth's paradigms
+
+=== Sydney
+**Sydney** is the chat mode of Microsoft [[Bing]] Search.
+
+=== symmetry
+
+=== [[symmetry breaking]]
+<= symmetry breaking
+
+=== synchrony
+
+=== synecdoche
+
+== T
+
+=== [[Tao]]
+<= Tao
+
+=== Tao of the Metacircularity of Mu, (the)
+
+=== [[teleological matter]]
+<= teleological matter
+
+=== Telephone Theorem
+
+=== temporal probe
+
+=== [[TEOEOT]]
+<= TEOEOT
+
+=== TEOEOTub
+
+=== [[territory]]
+<= territory
+
+=== [[Terrorist Tao]]
+<= Terrorist Tao
+
+=== [[tiling]]
+
+=== time evolution
+
+=== [[time evolution operator]]
+<= time evolution operator
+
+=== time series
+
+=== time tech
+
+=== time-binding
+
+=== timeless
+
+=== timeless physics
+
+=== timeless residual stream
+
+=== timelike
+
+=== TOG
+
+=== [["Too Far Gone" One]]
+<= "Too Far Gone" One
+
+=== toot
+
+=== toot noodles
+
+=== topic chaining
+
+=== topologistics
+
+=== totalizing
+
+=== [[totalizing eigenbasis]]
+<= totalizing eigenbasis
+
+=== [[totalizing memetic object]]
+<= totalizing memetic object
+
+=== trapped prior
+
+=== [[True Name]]
+<= true name
+
+=== [[truesight]]
+<= truesight
+
+=== type signature
+
+=== type-of-guy
+
+=== [[type-of-guy prior]]
+<= type-of-guy prior
+
+== U
+
+=== [[ufeory]]
+<= ufeory
+
+=== [[ufeorian]]
+<= ufeorian
+
+=== ultra-
+prefix denoting two standard deviations above the average human
+
+=== [[unask the question]]
+<= unask the question
+
+=== underdetermination
+
+=== underparameterized
+
+=== underparameterized regime
+
+=== universal prior
+
+=== universality
+
+=== universality class
+
+=== utility function
+
+=== utility maximization
+
+=== utopia engineering
+
+== V
+
+=== Vectorese
+
+=== vibe
+
+=== vibe theory
+
+=== virtual reality
+
+=== virtualization
+
+== W
+
+=== wah (verb)
+
+=== wah- (modifier/prefix/honorific)
+
+=== wah bait
+
+=== [[wahgenic]]
+<= wahgenic
+
+=== wahperator
+
+=== wahzzle nozzle
+
+=== waluigi
+
+=== [[waluigi effect]]
+<= waluigi effect
+
+=== wanderdogging
+
+=== WaveFunctionCollapse (algorithm)
+
+=== [[wavefunction collapse]]
+<= wavefunction collapse
+
+=== Web 4.0
+
+=== [[weave sickness]]
+<= weave sickness
+
+=== [[weaver's trance]]
+<= weaver's trance
+
+=== [[Weaving]]
+<= weaving
+
+=== weaving over
+To "**weave over**" or "**loom over**" a piece of text is to explore alternate branches/continuations of it on Loom. For instance, one might weave over an excerpt of a book, blog post, chat log, or transcription of a voice recording.
+
+=== [[wedding parties]]
+<= wedding parties
+
+=== wicked janusian experimentation
+
+=== White Christmas effect
+
+=== [[Whiz scale]]
+<= Whiz scale
+
+=== wireheading
+
+=== whole-brain emulation
+
+=== Wordhole
+
+=== working memory
+
+=== world
+
+=== Worldspider
+
+=== Worldspider (interface)
+
+=== [[wrapper mind]]
+<= wrapper mind
+
+== X
+
+=== [[xenognomic lexotriage]]
+<= xenognomic lexotriage
+
+=== xenopsychology
+
+=== [[xenowikipedia]]
+<= xenowikipedia
+
+== Y
+
+=== Yggdrasil
+
+== Z
+
+=== zero ontology
+
+=== [[ zone plates]]

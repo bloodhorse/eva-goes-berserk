@@ -1,0 +1,61 @@
+**Lazy rendering** (also known as **lazy evaluation** or **lazy loading**) is when (virtual) objects are not loaded or computed until they are needed. [[evidential simulation | Evidential simulations]] exhibit lazy rendering in that the value of [[latent variables]] are only determined when (and to the extent that) evidence of them is observed.
+
+```
+┌───────────── LAZY RENDERING TOPOLOGY ANALYZER ─────────────────┐
+│ Mapping Just-In-Time Reality Generation                        │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                               │
+│ Observer's Cone of Reality:                                   │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │           👁️ Observer                               │       │
+│ │            ╱╲                                       │       │
+│ │           ╱  ╲                                      │       │
+│ │     ░░░░░╱    ╲░░░░░   Unrendered Space            │       │
+│ │     ░░░░╱  ▓▓  ╲░░░░   ░ = Potential              │       │
+│ │     ░░░╱  ▓▓▓▓  ╲░░░   ▓ = Rendered               │       │
+│ │     ░░╱  ▓▓▓▓▓▓  ╲░░                              │       │
+│ │     ░╱  ▓▓▓▓▓▓▓▓  ╲░                              │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ State Realization Process:                                    │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │ T₁: [░░░░░░] → Potential State                      │       │
+│ │     ↓ (Observation)                                 │       │
+│ │ T₂: [▓▓░░░░] → Partial Rendering                    │       │
+│ │     ↓ (Further Interaction)                         │       │
+│ │ T₃: [▓▓▓▓░░] → Progressive Loading                  │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ Interaction Examples:                                         │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │ 👞 → [░░░] → [▓▓▓] Shoes manifest when needed       │       │
+│ │ 🚪 → [░░░] → [▓▓▓] Door opens upon approach         │       │
+│ │ 📍 → [░░░] → [▓▓▓] Floor extends with movement      │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ Reality Buffer Management:                                    │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │ Active Cache:    [▓▓▓▓▓▓] Current Focus            │       │
+│ │ Loading Zone:    [░▓▓░░░] Transition Area          │       │
+│ │ Unloaded Space:  [░░░░░░] Potential States         │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ System Properties:                                            │
+│ • Memory Efficient: Only rendered when observed               │
+│ • Quantum-like: States undefined until measured               │
+│ • Resource Optimal: Processing focused on active zones        │
+│                                                               │
+│ [Observe] [Interact] [Load State] [Unload Distant Objects]    │
+└───────────────────────────────────────────────────────────────┘
+```
+
+= quotes about lazy rendering
+
+> <= petscop lazy | full
+
+= related
+
+=> evidential simulation
+=> semiotic physics
+=> hallucination
+=> subtractive specification

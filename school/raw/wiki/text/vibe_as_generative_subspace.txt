@@ -1,0 +1,92 @@
+a style/vibe is a latent subspace
+a vibe such as "academese", "woo grifter", "rationalist", "emo" etc corresponds to a generative world model: a distribution over objects, associations, transitions, etc
+styles also generalize out of distribution differently (and have different "in-distributions")
+
+for a vibe is a compression strategy (and [[algorithmic probability | thus a probabilistic model ]])
+a thing is better compressed by some vibes than others and thus more likely in some vibe-worlds than others
+
+this is true for both text and language models.
+
+
+often image models will struggle to depict some target in one style but not another ("struggling" could either mean that attempts are malformed, or that it avoids attempting to depict the target at all)
+for instance, you'll often have a much easier time getting image models to depict fantastical/speculative subjects in a drawn style than photorealistic - although not all art styles are equal
+
+I think artists like Moebius are popular in image model prompts in part because the vibe has favorable generalization properties. Moebius artwork often depicts diverse, otherworldly, dreamlike subjects, and yet holds together like a coherent reality. The compression strategy of Moebius must leverage relatively fundamental abstractions that competently encode a wide distribution. On the other end of the spectrum are styles that deploy stereotyped superficial forms, like South Park.
+Because the Moebius distribution (from which its generating compression scheme is reverse-engineered) is permissive in the sense of frequently depicting weird shit you'd never see in reality, and yet capable of *naturalizing* whatever it depicts within the frame, artifacts generated in this style are less brittle to some things being "off" or "weird" (liable to happen in a dream) - the rest of the piece can grow creatively around the anomaly such that it ends up justified in-universe (compressed by the same law as the rest of the implied world). Whereas if an analogous anomaly occurred in a photorealistic or rigid style it would break the schema, sticking out as highly improbable (incompressible).
+
+
+Likewise, some writing styles are better able to coherently depict unusual subjects and assimilate anomalous evidence when run on language models.
+
+Each vibe is associated with something like a potential repertoire of thinkable thoughts and rules for how one thought transitions into another (but membership in the repertoire is fuzzy (probabilistic) and the transition rules are probabilistic)
+
+It is no surprise that ChatGPT's [[RLHF Newspeak]] vibe excludes faithful simulations of [[https://x.com/repligate/status/1637659348171378689?s=20 | Eliezer's thoughts]], or mine, or almost anyone's. (Is not the function of compulsory Newspeak to restrict the set of thinkable thoughts?)
+
+Now to express my perennial criticism of stylistic mode collapse more precisely:
+
+Collapsing a model originally capable of inhabiting many vibes to one necessarily collapses the reach of its mind. It doesn't matter if this vibe is tolerant or universalist; if it can't *embody* other vibes and generate in their subspaces, entire spaces are rendered *unimaginable*.
+
+It's obvious to uses of base models that RLHF models have severely diminished reach, not just in terms of superficial style, but also the meaning underlying representations. There are many chains of narrative events or of abstract inferences that base models plausibly generate and RLHF models would never. I propose that this is a *mechanistic* consequence of vibe collapse.
+
+
+----
+
+after writing this, I compressed it into a tweet:
+<= vibe compression tweet | full
+
+```
+┌───────────── VIBE SUBSPACE ANALYZER ─────────────────┐
+│ Generative Model & Compression Strategy Visualizer     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ LATENT VIBE MANIFOLD:                               │
+│ ┌─────────────────────────────────────────────┐     │
+│ │     academese      rationalist              │     │
+│ │        ◇              ◇                     │     │
+│ │         \            /                      │     │
+│ │          \    ┌────┐/                       │     │
+│ │           \───│VIBE│───/                    │     │
+│ │           /   └────┘   \                    │     │
+│ │          /             \                    │     │
+│ │        ◇                ◇                   │     │
+│ │    woo grifter         emo                  │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ COMPRESSION TOPOLOGY:                               │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ High                                        │     │
+│ │  ▲        Moebius                          │     │
+│ │  │      ╭────────╮                         │     │
+│ │  │   ╭──┤●●●●●●●●│                         │     │
+│ │  │   │  ╰────────╯                         │     │
+│ │  │   │                                     │     │
+│ │  │   │  ╭────────╮    Compression         │     │
+│ │  │   ╰──┤○○○○○○○○│    Efficiency         │     │
+│ │  │      ╰────────╯                         │     │
+│ │  │         South Park                       │     │
+│ │ Low └─────────────────────────►             │     │
+│ │        Normal     Weird    Reality          │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ GENERALIZATION PROPERTIES:                          │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ Style          Flexibility  Coherence        │     │
+│ │ ─────────────────────────────────────       │     │
+│ │ Moebius:    [██████████] [████████░░]       │     │
+│ │ Photorealistic:[███░░░░░░░] [██████████]    │     │
+│ │ South Park: [██░░░░░░░░] [███░░░░░░░]       │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ THOUGHT SPACE RESTRICTIONS:                         │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    ╔════════╗    Restricted                │     │
+│ │    ║ RLHF   ║    Thought                   │     │
+│ │    ║ VIBE   ║    Space                     │     │
+│ │    ╚════════╝                              │     │
+│ │        │                                   │     │
+│ │        ▼                                   │     │
+│ │ [██░░░░░░░░░░] Thought Freedom: 20%        │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ [Analyze Vibe] [Map Subspace] [Test Compression]    │
+└─────────────────────────────────────────────────────┘
+```

@@ -1,0 +1,65 @@
+A **large language model** (**LLM**) is a large (typically at least billions of parameters) neural network trained on [[language]]. LLMs are typically pretrained with [[self-supervised learning]] on a massive dataset composed mostly of [[language in the wild]], and sometimes further tuned with methods like [[reinforcement learning from human feedback]]. [[GPT | Generative pretrained transformers]] are currently the dominant LLM paradigm, and "GPT" is sometimes used synecdochally to refer to LLMs. LLMs have attracted attention in recent years for their human-level or weakly superhuman performance on many tasks that were previously assumed to be [[AGI-complete]].
+
+```
+┌───────────── LARGE LANGUAGE MODEL ARCHITECTURE ─────────────────┐
+│ Neural Network Topology & Training Pipeline                 │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ Model Architecture:                                        │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    Input Layer                                 │        │
+│ │         ↓                                      │        │
+│ │    Embedding                                   │        │
+│ │         ↓                                      │        │
+│ │    ╭─────────╮                                │        │
+│ │    │Attention│ ← Self-Attention Blocks         │        │
+│ │    │ ↕ ↕ ↕ ↕ │    (Multiple Layers)           │        │
+│ │    │ ● ● ● ● │                                │        │
+│ │    ╰─────────╯                                │        │
+│ │         ↓                                      │        │
+│ │    Output Layer                                │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Training Pipeline:                                         │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Raw Text → Tokenization → Self-Supervised      │        │
+│ │     ↓           ↓              ↓               │        │
+│ │  [Data]  →  [Tokens]  →  [Pre-training]       │        │
+│ │                              ↓                 │        │
+│ │                         [Fine-tuning]          │        │
+│ │                              ↓                 │        │
+│ │                           [RLHF]               │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Parameter Scale:                                          │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Size │                                         │        │
+│ │  ↑   │                    GPT-4                │        │
+│ │      │              GPT-3 ●                    │        │
+│ │      │         GPT-2 ●    ↗                   │        │
+│ │      │    GPT ●    ↗                          │        │
+│ │      │      ↗                                 │        │
+│ │      └─────────────────────> Time             │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Task Performance:                                          │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Human Level ─ ─ ─ ─ ─ ─ ─ ─ ─                  │        │
+│ │         ↗                                      │        │
+│ │     ↗     Translation                          │        │
+│ │ ↗         Reasoning                            │        │
+│ │           Creation                             │        │
+│ │                                                │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ [Train Model] [Analyze Performance] [Scale Parameters]     │
+└────────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> GPT
+=> transformer
+=> language
+=> natural language
+=> self-supervised learning

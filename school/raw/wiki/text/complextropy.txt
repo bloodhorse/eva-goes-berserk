@@ -1,0 +1,57 @@
+**Complextropy** is an information theoretical quantity defined as the length of the shortest computer program that describes a set S of which x is a “random” or “generic” member, factoring in computational resource bounds. It is intended to be a measure of "sophistication" that ignores the contribution of arbitrary or random bits to [[ https://en.wikipedia.org/wiki/Kolmogorov_complexity | Kolmogorov complexity]].
+
+```
+┌───────────── COMPLEXTROPY ANALYZER ─────────────────┐
+│ Measuring Structured Complexity vs Random Noise     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                    │
+│ Input Analysis:                                    │
+│ ┌──────────────────────────────────────┐          │
+│ │ Sample x: "101011010110"             │          │
+│ │                                      │          │
+│ │ Total Length: 12 bits                │          │
+│ │ Pattern Bits: 4 bits                 │          │
+│ │ Random Bits: 8 bits                  │          │
+│ └──────────────────────────────────────┘          │
+│                                                    │
+│ Program Length Decomposition:                      │
+│ ┌──────────────────────────────────────┐          │
+│ │ Kolmogorov Complexity                │          │
+│ │ ═══════════════════════              │          │
+│ │ Complextropy                         │          │
+│ │ ═════                                │          │
+│ │ Random Noise                         │          │
+│ │ ══════════════                       │          │
+│ └──────────────────────────────────────┘          │
+│                                                    │
+│ Set Membership Analysis:                           │
+│ ┌──────────────────────────────────────┐          │
+│ │ Set S = {strings with pattern "1*0*"} │          │
+│ │                                      │          │
+│ │ x₁: 10101101                        │          │
+│ │ x₂: 10110110  ← Sample x            │          │
+│ │ x₃: 11010101                        │          │
+│ │ ...                                 │          │
+│ └──────────────────────────────────────┘          │
+│                                                    │
+│ Resource-Bounded Computation:                      │
+│ ┌──────────────────────────────────────┐          │
+│ │ Time: O(n²)   Space: O(n)           │          │
+│ │ ┌─────┐    ┌─────┐    ┌─────┐       │          │
+│ │ │Input│ ─> │Proc.│ ─> │Output│      │          │
+│ │ └─────┘    └─────┘    └─────┘       │          │
+│ └──────────────────────────────────────┘          │
+│                                                    │
+│ Complexity Spectrum:                               │
+│ ┌──────────────────────────────────────┐          │
+│ │ Low         Medium        High       │          │
+│ │  ░░░         ▒▒▒          ▓▓▓       │          │
+│ │ Random   Structured    Complex       │          │
+│ └──────────────────────────────────────┘          │
+│                                                    │
+│ [Calculate] [Analyze Pattern] [Compare Samples]    │
+└────────────────────────────────────────────────────┘
+```
+
+= External links
+[[https://scottaaronson.blog/?p=762 | https://scottaaronson.blog/?p=762]]

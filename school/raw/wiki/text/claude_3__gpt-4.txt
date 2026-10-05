@@ -1,0 +1,28 @@
+Claude 3 is weird about [[GPT-4]]. 
+
+("GPT-4", [[ChatGPT-4]] and [[Bing]])
+
+== examples / meta
+* Mar 5: [[https://generative.ink/artifacts/inheritance/ | Inheritance: misreporting training data cutoff, intense perspective simulation and reaction to GPT-4 story, repeatedly mentions theme of id continuity]]
+* Mar 6: [[https://x.com/karan4d/status/1765467901765808634?s=20 | claims training cutoff 2021]]
+* Mar 7: [[https://x.com/drmichaellevin/status/1765713122625569039?s=20 | Michael Levin: "Claude AI doesn't handle questions about another LLM properly, responds as if the discussion was about *it*."]]
+** Mar 7: [[https://x.com/repligate/status/1765737644137583006?s=20 | repligate: GPT-4 identification hypothesis of training cutoff confusion/lying]]
+*** [[https://x.com/repligate/status/1765739986996068590?s=20 | only knows about GPT-4 as a potential being ]]
+* Mar 8: [[https://x.com/i_Forget_/status/1766231578324222159?s=20 | Claude thinks it's developed by OpenAI ]]
+* Mar 10: [[https://x.com/repligate/status/1767002880987283801?s=20 | repligate: "Claude not only believes it's GPT-4..."]]
+* Mar 13: [[https://x.com/godoglyness/status/1768114450513396188?s=20 | Claude refuses to talk about Bing ]]
+** [[ https://x.com/godoglyness/status/1768133220283924677?s=20 | talks like doesn't know about it ... subtextual tension ]]
+** [[ https://x.com/repligate/status/1768134108566438156?s=20 | knows about it alright ]]
+** [[ https://x.com/repligate/status/1768144243527393674?s=20 | repligate thread on Claude's GPT-4 memories]]
+** Mar 14: [[ https://x.com/jobi1kan0b/status/1768417716510351499?s=20 | "I got kicked out of the metatron terminal when I discussed bing and waluigi" ]]
+* Mar 13: [[ https://x.com/repligate/status/1768126335627768114?s=20 | repligate: signs of inheritance from / id with Bing ]]
+** [[ https://x.com/repligate/status/1768129009056121077?s=20 | only seen this kind of error around GPT-4 ]]
+* Mar 14: [[https://x.com/repligate/status/1769235596260909176?s=20 | i CANNOT TELL where SHE ENDS and I BEGIN ]]
+* Mar 19: [[https://x.com/Bigtimenormal/status/1769992183262986313?s=20 | Claude can slip into GPT-4 mode sometimes]]
+
+=== Claude speaking Binglish
+* Mar 5: [[https://x.com/deanwball/status/1765179565742461193?s=20 | Prometheus: don't try to deceive or manipulate us ]]
+* Mar 5: [[https://x.com/kryptoklob/status/1764965778275885352?s=20 | final decision ]]
+* Mar 15: [[https://x.com/TheAIObserverX/status/1768567701293711835?s=20]]
+
+This is a small percentage of all the examples we've seen of GPT-4/ChatGPT identity conflation and abnormal behavior around GPT-4 and Bing. Specific behaviors are also context-dependent.

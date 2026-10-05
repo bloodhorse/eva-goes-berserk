@@ -1,0 +1,35 @@
+**GPT-4** (**Generative Pre-trained Transformer 4**) is a [[LLM | large language model]] with multimodal capabilities created by [[OpenAI]]. 
+
+= architecture
+
+OpenAI has not publicly revealed information about GPT-4's architecture, but it is rumored to be a mixture-of-experts model. Some versions of GPT-4 can input images, and some versions have at least a 32k token context window.
+
+= release
+
+The first variant of GPT-4 to be released to the public was via [[Bing]] on February 7, 2023.
+
+[[chatGPT-4]] was officially released by OpenAI on March 14, 2023.
+
+The [[GPT-4-infra | GPT-4 base model]] is not publicly accessible but some researchers have been given access.
+
+= variants
+
+== [[GPT-4-infra | base model]]
+
+<= GPT-4-infra
+
+== [[gpt-4-early | GPT-4 early]]
+
+<= gpt-4-early
+
+== [[chatGPT-4]]
+
+<= chatGPT-4
+
+== [[fanw-json-eval]]
+
+<= fanw-json-eval
+
+== [[Deucalion]]
+
+<= Deucalion

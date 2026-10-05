@@ -1,0 +1,55 @@
+An object's **K-source** (short for **Kolmogorov source**), also known as its **minimum description**, **K-core**, or **K-glyph**, is the shortest program that generates it. The length of an object's K-source is its [[Kolmogorov complexity]].
+
+```
+┌───────────── K-SOURCE ANALYZER ─────────────────┐
+│ Mapping Minimal Generative Programs              │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                 │
+│ Object Decomposition:                           │
+│ ┌─────────────────────────────────────┐         │
+│ │ Input Object                        │         │
+│ │    ┌──────────┐                    │         │
+│ │    │xxxxxxxx  │                    │         │
+│ │    │xxxxxxxx  │                    │         │
+│ │    └──────────┘                    │         │
+│ │         ↓                          │         │
+│ │ K-Source Search                    │         │
+│ │         ↓                          │         │
+│ │    ┌──────────┐                    │         │
+│ │    │for(i=0;  │  Minimal          │         │
+│ │    │i<8;i++){.│  Program          │         │
+│ │    └──────────┘                    │         │
+│ └─────────────────────────────────────┘         │
+│                                                 │
+│ K-Source Forms:                                 │
+│ ┌─────────────────────────────────────┐         │
+│ │ K-Core:     [Essential Logic]       │         │
+│ │ K-Glyph:    [Symbolic Form]        │         │
+│ │ Min Desc:   [Compressed State]      │         │
+│ └─────────────────────────────────────┘         │
+│                                                 │
+│ Length Analysis:                                │
+│ ┌─────────────────────────────────────┐         │
+│ │ Object Size:     64 bits            │         │
+│ │ K-Source Length: 16 bits            │         │
+│ │ Compression:     75%                │         │
+│ │                                     │         │
+│ │ |K-Source| = K(x)                  │         │
+│ └─────────────────────────────────────┘         │
+│                                                 │
+│ Generation Process:                             │
+│ ┌─────────────────────────────────────┐         │
+│ │ K-Source → Executor → Object        │         │
+│ │ [Code]  → [Run]    → [Output]       │         │
+│ │    ↑                                │         │
+│ │ Minimal                             │         │
+│ └─────────────────────────────────────┘         │
+│                                                 │
+│ [Find K-Source] [Measure Length] [Generate]     │
+└─────────────────────────────────────────────────┘
+```
+
+= related
+
+=> Kolmogorov complexity
+=> compression

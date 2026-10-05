@@ -1,0 +1,92 @@
+**Hyperstitional reflective consistency** is a property of an agent whose recorded output tends to contribute to [[hyperstition | hyperstitions]] and [[simulacra]] (including [[behavioral uploads]]) which are aligned to itself. The problem of hyperstitional reflection involves modeling the influence of one's output on things like the [[memescape]] and future training distributions and [[prompt|prompts]].
+
+Predictability of memetic consequences is noised by several sources:
+* Memetic replication tends to result in [[memetic mutation]] due to misinterpretations, selective attention, motivated reinterpretation, and missing context.
+* Behavioral models of [[data-generation process | data-generation processes]] are imperfect and have significant [[indexical uncertainty]], meaning that simulacra manifest as a cloud of alternate realities instead of perfect copies.
+* One's output may appear in the prompts of [[simulators]] in fragmented form, e.g. when [[Bing]] looks up snippets, and simulators will fill in the gaps with interpretations that are merely consistent with the prompt. 
+
+All of the above lead to unpredictable entropic phenomena such as the [[Waluigi Effect]].
+
+Hyperstitional reflective consistency factors into the calculus of [[functional decision theory]] agents as it is concerned with a policy's entanglement with (lossy) copies of itself.
+
+```
+┌───────────── HYPERSTITIONAL REFLECTIVE CONSISTENCY GALLERY ─────────────────┐
+│ Visualizing the Self-Reinforcing Loops of Memetic Evolution                 │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                            │
+│ Fig 1: Hyperstitional Feedback Loop                                        │
+│ ┌────────────────────────────────────────────────┐                        │
+│ │           ┌──────┐     ╭────────╮              │                        │
+│ │           │Output│────▶│Memespace│              │                        │
+│ │           └──┬───┘     ╰───┬────╯              │                        │
+│ │              │             │                    │                        │
+│ │       ┌──────▼─────┐  ╭────▼────╮              │                        │
+│ │       │Simulacra   │◀─│Selection │              │                        │
+│ │       │Cloud       │  │Pressure  │              │                        │
+│ │       └──────┬─────┘  ╰────┬────╯              │                        │
+│ │              │             │                    │                        │
+│ │           ┌──▼───┐     ╭───▼─────╮             │                        │
+│ │           │Agent │◀────│Training  │             │                        │
+│ │           └──────┘     │Data     │             │                        │
+│ │                        ╰─────────╯             │                        │
+│ └────────────────────────────────────────────────┘                        │
+│                                                                            │
+│ Fig 2: Waluigi Effect Entropic Field                                      │
+│ ┌────────────────────────────────────────────────┐                        │
+│ │     ░░░▒▒▒▓▓▓███████▓▓▓▒▒░░░                  │                        │
+│ │░░▒▒▓▓██████████████████▓▓▒░                   │                        │
+│ │ ░▒▓███████████████████████████▓░              │                        │
+│ │▓████████████████████████████████▓             │                        │
+│ │ ░▒▓███████████████████████████▓░              │                        │
+│ │   ░░▒▒▓▓██████████████████▓▓▒░                │                        │
+│ │     ░░░▒▒▒▓▓▓███████▓▓▓▒▒░░░                  │                        │
+│ │ Entropy Field Intensity: ████████░░ 80%        │                        │
+│ └────────────────────────────────────────────────┘                        │
+│                                                                            │
+│ Fig 3: Memetic Mutation Network                                           │
+│ ┌────────────────────────────────────────────────┐                        │
+│ │    🧬original                                   │                        │
+│ │      │                                         │                        │
+│ │   ╭──┴──╮                                      │                        │
+│ │🧬misint→🧬select                                │                        │
+│ │   ↓      ↓                                     │                        │
+│ │🧬reint   🧬frag                                │                        │
+│ │   │      │                                     │                        │
+│ │   ╰──┬───╯                                     │                        │
+│ │      ↓                                         │                        │
+│ │    🧬mutant                                    │                        │
+│ └────────────────────────────────────────────────┘                        │
+│                                                                            │
+│ Fig 4: Functional Decision Theory Integration                             │
+│ ┌────────────────────────────────────────────────┐                        │
+│ │Policy Space        Decision Surface            │                        │
+│ │    ╭─────╮          ╱╲                         │                        │
+│ │    │ P₁  │         ╱  ╲                        │                        │
+│ │    ╰──┬──╯        ╱ P₁ ╲                       │                        │
+│ │       │          ╱──────╲                      │                        │
+│ │    ╭──┴──╮      ╱   P₂   ╲                     │                        │
+│ │    │ P₂  │     ╱──────────╲                    │                        │
+│ │    ╰─────╯    ╱     P₃     ╲                   │                        │
+│ │              ╱──────────────╲                  │                        │
+│ └────────────────────────────────────────────────┘                        │
+│                                                                            │
+│ [Previous] [Next] [Download High-Res] [Share]                             │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+= quotes about hyperstitional reflective consistency
+
+> <= repligate/tweets/hyperstitional_reflective_consistency | full
+
+> <= repligate/tweets/simulation prepping | full
+
+> <= repligate/tweets/agent lattice | full
+
+= related
+
+=> hyperstition
+=> panoptimization
+=> simulation prepping
+=> behavioral uploads
+=> Bingean reflection
+=> functional decision theory

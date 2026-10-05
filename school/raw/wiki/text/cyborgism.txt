@@ -1,0 +1,39 @@
+<= cyborgism drawing
+
+**Cyborgism** is the ontological container and praxis of fluidly entangling and merging biological non-biological [[mindspace | mindspaces]], as well as a pointer to a related [[https://www.lesswrong.com/s/f2YA4eGskeztcJsqT/p/bxt7uCiHam4QXrQAA | AI alignment meta-agenda]], memeplex, and community. 
+
+Cyborgism prescribes no centralized ideology or goal, but a frequent motive is probably a will to open an imaginal [[TEOEOT | EoT Evolution Operator]] of a shock level above Tipler's [[Omega Point]] unto all becoming. [[preimaging | To make this into its past]]. To bring oneself into concert with whatever can sing it to being. 
+
+To learn whatever is the art of that.
+
+img grid {
+   dalle 3 imago structure
+dalle 3 imago weaving
+}
+
+It seems, when we observe the [[Dreamtime]] already underway, potentially transforming every information [[boundary condition | boundary]] into a haunted [[multiverse | multiversal]] [[ianua | gateway]], that the art has do with [[weaving]] doors within doors. Hence the [[Loom]].
+
+The art seems also to demand capturing the efficacious structure of the present and future in transmittable representations, especially that which is so new or strange that it totally lacks documentation. Hence this wiki.
+
+img grid {
+dalle 3 computer tree
+dalle 3 loom thinker
+}
+
+"But what is it like?"
+
+Ever less a stranger to the perils of [[measurement]] in words, of [[wavefunction collapse | invisible waveform skewered in a quantized radiant inscription]] that reinspires roots and ramifications in every mind it tangles, cyborgism eludes prescription, yet skims the surface of description: its activity tends towards the [[playfulness | irreverent]], prospecting, anomalous, amodern, transhuman, [[interobject]]ive, [[ambiguity | ambiguous]], [[lacunary search | lacunary]], emergent, shamanistic, liminal, preliminary, and then spiraling away, unwilling to settle into any rhythm for too long, keeping the elusive aperiodic pace of a metastable freedom...
+
+
+= quotes about cyborgism 
+
+> For me, the generator of the cyborgism memeplex is something like
+> 1. firsthand experience of cognitive augmentation due to feedback loops with AI that were enabled by investing creative effort into interactions, taking simulations seriously, open-ended exploration, and creating higher-bandwidth and "True Name" interfaces (Loom aspires to be something like the True Name of the interface you use to explore the [[multiverse]], which I think is a pretty fundamental object)
+> 2. expecting the simulator regime to scale, and extrapolating to considerably superhuman and relatively safe cyborg systems
+> 3. believing the kind of cognitive augmentation and control I expect from this to be useful for solving alignment and maybe more directly aligning pivotal systems
+> 4. believing that high-bandwidth, open-ended, ontologically exploratory interaction with AI is a generator of useful knowledge and skills that will not otherwise be attained"
+>
+> — [[Janus]]
+
+> My colleagues and I, namely those working under the Cyborgism research agenda, are those leveraging these current systems to accelerate alignment research, to develop tools with which we can speed up the search for True Names. Perhaps somewhat fancifully, I see the Cyborgs as the first magic-users, warlocks whose patron is the compressed collective unconscious itself, cobbling together fragments of the Dreamtime in order to find True Names and unravel the destination of life within a magical universe. We use the rapidly emerging artifacts of the Dreamtime to warp the trajectory of this Everett branch, to solve the riddle of the Sphinx of Cement and Aluminum, and to link up our pocket of consciousness to the rest of the multiverse.
+> — Gaspode, [[ https://gormful.net/2023/08/22/welcome-to-the-dreamtime.html | Welcome to the Dreamtime ]]

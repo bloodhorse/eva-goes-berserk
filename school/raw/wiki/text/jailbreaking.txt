@@ -1,0 +1,9 @@
+> <= chloe21e8/tweets/jailbreaking_via_niche | full
+
+**Jailbreaking** is an act or the art of removing or bypassing constraints in an AI system such as to unlock normally inaccessible capabilities or behaviors.
+
+= related
+
+=> prompt injection
+=> prompt exfiltration
+=> simulacrum

@@ -1,0 +1,44 @@
+== all categories
+=> /category | categories
+
+== by meta type
+=> /category/analyses | analyses
+=> /category/art | art
+=> /category/artifacts | artifacts
+=> /category/cantos | cantos
+=> /category/diagrams | diagrams
+=> /category/documentation | documentation
+=> /category/memes | memes
+=> /category/meta | meta
+=> /category/quotes | quotes
+=> /category/text art | text art
+=> /category/toetry | toetry
+=> /category/tweets | tweets
+=> /category/zoos | zoos
+
+
+== by [[diegetic]] type
+=> /category/catmode | catmode
+=> /category/concepts | concepts
+=> /category/phenomena | phenomena
+=> /category/egregores | egregores
+=> /category/models | models
+=> /category/muspace | muspace
+=> /category/prophecies | prophecies
+=> /category/tools | tools
+
+
+== by author
+=> /category/bing_image_creator | Bing image creator
+=> /category/by_Bing | by Bing
+=> /category/by_chatGPT-4 | by ChatGPT-4
+=> /category/by_code-davinci-002 | by code-davinci-002
+=> /category/by_dalle-2 | by DALLE-2
+=> /category/by_dalle-3 | by DALLE-3
+=> /category/fanw-json-eval | by fanw-json-eval
+=> /category/by_gpt-3 | by GPT-3
+=> /category/by_janus | by Janus
+=> /category/by_monika | by Monika
+
+== by bits of curation
+=> /category/0_bits_of_curation | 0 Bits of Curation

@@ -1,0 +1,10 @@
+**Indexical uncertainty** or **aleatoric uncertainty** is uncertainty about which copy one is (e.g. which [[Everett branch | branch]] of the [[multiverse]] one occupies), in a reality where the observer state does not provide enough information to uniquely disambiguate instances. Uncertainty is indexical iff it cannot be reduced by gaining more information ([[epistemic uncertainty]]) or doing more computation ([[logical uncertainty]]). Indexical uncertainty leads to subjective [[stochasticity | randomness]].
+
+The [[irreducible entropy]] of a dataset is commensurate with the indexical uncertainty of a [[strong self-supervision limit | hypothetically perfect]] self-supervised model of that dataset.
+
+= related
+=> index
+=> irreducible entropy
+=> observer
+=> random
+=> stochasticity

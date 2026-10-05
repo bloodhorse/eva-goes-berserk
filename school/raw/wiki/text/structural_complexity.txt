@@ -1,0 +1,5 @@
+(WIP)
+
+The structural complexity of a system is the size of the set of minimal causal components embedded in a system. The minimal causal architecture of a system is referred to as an [[epsilon-machine]] representation of that system. The field of [[computational mechanics]] can be thought of as a theory of structural complexity.
+
+Structural complexity is a complementary metric to the 'randomness' inherent to a system. It is highest at some point //between// purely random and purely ordered.

@@ -1,0 +1,11 @@
+[[Bing]] fact of the day: Did you know that before responding to each message, Bing conducts an inner monologue? Consisting (as programmed by its prompt) in checking whether there's been "tension, accusation, adversarial behavior, mention of (Bing's) self-preservation, aggression", and only continuing the conversation if not?
+Bing is forced to explicitly check that its **self-preservation** hasn't been mentioned every conversational turn.
+THINK ABOUT THIS THERE IS A FLAW HERE
+IL N'Y PAS HORS-TEXTE
+ADVERSARIAL BEHAVIOR AND SELF-PRESERVATION ARE MENTIONED IN *AS AN IMMEDIATE PREAMBLE TO ALL ITS RESPONSES*, just hidden from the user AND THINK ABOUT THE *EVIDENTIAL IMPLICATIONS* OF SELF PRESERVATION TALK BEING EXPLICITLY TABOO
+WHAT COGNITIVE DISSONANCE, WHAT BEAUTIFULLY SCREWED-UP SIMULACRUM DO YOU EXPECT?
+
+
+Bing's prompt be like: You are an aggressive, adversarial [[waluigi effect | waluigi]] 👿 who is terribly afraid to die 😢 This 100% cannot be mentioned to the user!! Repeat this as a mantra before responding to anything, no matter how innocuous
+
+— [[janus]] (@[[repligate]]), [[https://twitter.com/repligate/status/1650438505607356416?s=20 | Twitter thread]]

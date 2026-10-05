@@ -1,0 +1,4 @@
+**Causal decision theory** is a [[decision theory]] in which the agent only considers effects causally downstream of their actions.
+
+Causal decision theory can be summed up with a formula:
+**do argmax,,action,, Σ,,world,, P(world) U(world | action**

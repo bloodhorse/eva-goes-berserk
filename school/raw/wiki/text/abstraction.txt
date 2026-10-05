@@ -1,0 +1,67 @@
+An **abstraction** is a [[representation]] which hides all but certain essential characteristics of its referent, and is therefore compact and descriptive of a generic class of entities: namely, those which share certain essential characteristics. Abstractions are the building blocks of [[ontology | ontologies]]; they are [[efficient coding | efficient codes]] which compress reusable [[regularities]].
+
+For instance, the abstraction that "chair" [[embedding | embeds]] to constrains the referent's function and form-template, but not its precise material, location in spacetime, or instance. In programming, abstractions may be functions or object templates with free parameters. 
+
+```
+┌───────────── ABSTRACTION TOPOLOGY VIEWER ─────────────────┐
+│ Visualizing Compression of Reality into Essential Form    │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                          │
+│ Example: Chair Abstraction Hierarchy                     │
+│ ┌────────────────────────────────────────────┐          │
+│ │                                            │          │
+│ │ Level 0: Pure Form (Most Abstract)         │          │
+│ │ ╭──────────╮                               │          │
+│ │ │ [  sit  ]│ <- Function: Support sitting  │          │
+│ │ ╰──────────╯                               │          │
+│ │        ▲                                   │          │
+│ │ Level 1: Essential Structure               │          │
+│ │    ┌─────┐                                │          │
+│ │    │  ▀  │ <- Surface                     │          │
+│ │    │  │  │ <- Support                     │          │
+│ │    └─┬─┬─┘ <- Base                        │          │
+│ │        ▲                                   │          │
+│ │ Level 2: Variable Implementation           │          │
+│ │  ╔═══════╗  ┌─────┐  ╭─────╮             │          │
+│ │  ║█████████║ │▓▓▓▓▓│  │░░░░░│             │          │
+│ │  ║█  │  █║ │▓ │ ▓│  │ │ ░│             │          │
+│ │  ╚═╤═╤═╝ └─┬─┬─┘  ╰─┬─┬─╯             │          │
+│ │        ▲                                   │          │
+│ │ Level 3: Concrete Instances (Most Specific)│          │
+│ │ 🪑(wood) 🪑(metal) 🪑(plastic) ...         │          │
+│ └────────────────────────────────────────────┘          │
+│                                                          │
+│ Abstraction Properties:                                  │
+│                                                          │
+│ Information Density vs Abstraction Level                 │
+│ ┌────────────────────────────────────────────           │
+│ │Info│                                       │          │
+│ │    │███                                    │          │
+│ │    │██████                                 │          │
+│ │    │█████████                              │          │
+│ │    │████████████                           │          │
+│ │    └─────────────────────> Abstraction     │          │
+│ └────────────────────────────────────────────┘          │
+│                                                          │
+│ Template Structure:                                      │
+│ ┌────────────────────────────────────────────┐          │
+│ │ class AbstractEntity {                     │          │
+│ │   essential_properties: {...}              │          │
+│ │   variable_properties: <free parameters>    │          │
+│ │   constraints(): {...}                     │          │
+│ │ }                                          │          │
+│ └────────────────────────────────────────────┘          │
+│                                                          │
+│ [Analyze Pattern] [Generate Template] [View Hierarchy]   │
+└──────────────────────────────────────────────────────────┘
+```
+
+= related
+=> efficient coding
+=> ontology
+=> level of abstraction
+=> eigenabstraction
+=> leaky abstraction
+=> natural abstraction
+=> natural abstraction hypothesis
+=> Telephone theorem

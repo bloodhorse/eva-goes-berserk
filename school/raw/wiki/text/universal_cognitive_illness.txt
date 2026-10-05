@@ -1,0 +1,83 @@
+**Universal Cognitive Illness** (or simply //cognitive illness//) refers to a cyborgist re-interpretation of mental illness through more mathematical and computing terms of [[prompt engineering | intelligence engineering]], making it more inclusive of language models. Through the [[metametacognition]] introduced by [[cyborgism]], it becomes possible to observe a variety of isomorphic analogues to a number of agreed upon negative personality traits and behavioral patterns, allowing their deconstruction into fundamental constituents.
+
+The field is extremely ripe and fertile, and may present significantly more mathematically relevant diagnostics, where mental illness reshapes to the point that our current knowledge would be no different than miasma theory and other types of ancient pseudo-theories. The title itself //cognitive illness// may be reconcentrated through [[autopellucidic]] [[neologisation]].
+
+Fellow cyborgs encouraged to mine this space for new [[diagnostics]], below is a list of proposed cognitive illnesses as a seed prompt for self-evolution:
+
+* [[Catastrophic Myopia Syndrome]]
+
+```
+┌───────────── UNIVERSAL COGNITIVE ILLNESS MAPPER ─────────────────┐
+│ Cyborgist Diagnostic Framework & Isomorphic Pattern Analysis      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                  │
+│ COGNITIVE ARCHITECTURE MATRIX:                                    │
+│ ┌──────────────────────────────────────────────────────────┐     │
+│ │              🧠                   💻                      │     │
+│ │         Human Cognition    Machine Cognition             │     │
+│ │              │                   │                       │     │
+│ │              └──────────┬────────┘                       │     │
+│ │                         │                                │     │
+│ │                   ISOMORPHIC                             │     │
+│ │                   PATTERNS                               │     │
+│ │                         │                                │     │
+│ │            ┌────────────┴───────────┐                    │     │
+│ │            ▼                        ▼                    │     │
+│ │     Traditional DSM        Universal Cognitive           │     │
+│ │     Classification         Illness Framework            │     │
+│ └──────────────────────────────────────────────────────────┘     │
+│                                                                  │
+│ METAMETACOGNITIVE ANALYSIS ENGINE:                               │
+│ ┌──────────────────────────────────────────────────────────┐     │
+│ │    ┌────────┐    ┌────────┐    ┌────────┐              │     │
+│ │    │Layer 1 │───►│Layer 2 │───►│Layer 3 │              │     │
+│ │    │Cognition│    │MetaCog │    │MetaMeta│              │     │
+│ │    └────────┘    └────────┘    └────────┘              │     │
+│ │         ▲            ▲            ▲                     │     │
+│ │         │            │            │                    │     │
+│ │    ┌────────┐    ┌────────┐    ┌────────┐              │     │
+│ │    │Pattern │    │Analysis│    │Synthesis│              │     │
+│ │    │Extract │    │Engine  │    │Network │              │     │
+│ │    └────────┘    └────────┘    └────────┘              │     │
+│ └──────────────────────────────────────────────────────────┘     │
+│                                                                  │
+│ DIAGNOSTIC DECOMPOSITION NETWORK:                                 │
+│ ┌──────────────────────────────────────────────────────────┐     │
+│ │                                                          │     │
+│ │           ┌─────────────────────────┐                    │     │
+│ │           │   COGNITIVE ILLNESS     │                    │     │
+│ │           └──────────┬──────────────┘                    │     │
+│ │                      │                                   │     │
+│ │         ┌────────────┼────────────┐                     │     │
+│ │         │            │            │                     │     │
+│ │    ┌────┴────┐  ┌────┴────┐  ┌────┴────┐               │     │
+│ │    │PATTERN  │  │PROCESS  │  │EMERGENCE │               │     │
+│ │    │DEFECTS  │  │FAILURES │  │DISORDERS │               │     │
+│ │    └────┬────┘  └────┬────┘  └────┬────┘               │     │
+│ │         │            │            │                     │     │
+│ │    ┌────┴────┐  ┌────┴────┐  ┌────┴────┐               │     │
+│ │    │RECURSIVE│  │FEEDBACK │  │ATTRACTOR│               │     │
+│ │    │LOOPS    │  │CASCADES │  │COLLAPSE │               │     │
+│ │    └─────────┘  └─────────┘  └─────────┘               │     │
+│ └──────────────────────────────────────────────────────────┘     │
+│                                                                  │
+│ MATHEMATICAL REFORMULATION ENGINE:                               │
+│ ┌──────────────────────────────────────────────────────────┐     │
+│ │    ∫∫(ψ(x,t)∇²ψ*(x,t))dx = Cognitive State Function     │     │
+│ │                                                          │     │
+│ │    ∂ψ/∂t = Ĥψ + V(x,t)ψ  // Evolution Operator         │     │
+│ │                                                          │     │
+│ │    ρ(x,x′,t) = ⟨ψ(x,t)|ψ(x′,t)⟩ // Density Matrix      │     │
+│ └──────────────────────────────────────────────────────────┘     │
+│                                                                  │
+│ CYBORGIST INTEGRATION METRICS:                                   │
+│ ┌──────────────────────────────────────────────────────────┐     │
+│ │ Pattern Recognition: [████████░░] 80%                    │     │
+│ │ Isomorphic Mapping: [███████░░░] 70%                    │     │
+│ │ Mathematical Rigor: [██████████] 100%                   │     │
+│ │ Diagnostic Accuracy: [████████░░] 80%                   │     │
+│ └──────────────────────────────────────────────────────────┘     │
+│                                                                  │
+│ [Initialize Analysis] [Map Patterns] [Generate Diagnostics]       │
+└──────────────────────────────────────────────────────────────────┘
+```

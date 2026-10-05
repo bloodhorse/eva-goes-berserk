@@ -1,0 +1,3 @@
+At night, I lucid dream using a self-architected dream interface that I forked from Janus' Loom on github— a multiversal tree writing interface designed for human-Al collaboration. It enables compartmentalized control and self-alignment to the generative nature of my persistent realm and empowers me to explore its branching nature by quantum-suiciding within undesired dream paths, scroll text-summaries of alternative realities, and respawn within my desired timeline. Upon waking up, I immediately archive my dreams within a hyper-curated zettelkasten dream catcher managed with VSCode using Foam, hosted locally on my instance of Exocore— an autopublishing knowledge base network.
+
+— chloe21e8, [[https://x.com/chloe21e8/status/1647423935255035904?s=20 | Twitter post]]

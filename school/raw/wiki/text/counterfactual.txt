@@ -1,0 +1,60 @@
+Something is **counterfactual** or **subjunctive** if it is not (known to be) (f)actual in a given [[world]], but has the [[type signature]] of something which could be factual in some worlds. For instance, one can speak of counterfactual [[Everett branch | Everett branches]] (entangled with counterfactual [[measurement]] outcomes) which have [[decoherence|decohered]] from a given [[observer]] state. In linguistics, counterfactuals are expressed by [[irrealis]] [[mood|moods]].
+
+```
+┌───────────── COUNTERFACTUAL TOPOLOGY ANALYZER ─────────────────┐
+│ Mapping Possible vs Actual States                           │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ Type Signature Analysis:                                   │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Actual     ┌───┐                               │        │
+│ │ World:     │ F │ Factual State                 │        │
+│ │            └─┬─┘                               │        │
+│ │              │                                 │        │
+│ │              │   ┌───┐  ┌───┐  ┌───┐          │        │
+│ │              └───┤CF1│  │CF2│  │CF3│          │        │
+│ │         Counterfactual└───┘  └───┘  States    │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Everett Branch Decoherence:                               │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    Measurement                                 │        │
+│ │        │                                       │        │
+│ │    ┌───┴───┐                                  │        │
+│ │    │   ψ   │ Quantum State                    │        │
+│ │    └───┬───┘                                  │        │
+│ │     ╱   │   ╲                                 │        │
+│ │ ψ₁⟩    ψ₂⟩   ψ₃⟩  Branching                   │        │
+│ │                                               │        │
+│ │ Actual   Counterfactual   Counterfactual     │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Linguistic Expression:                                     │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Realis:     "It is raining"                    │        │
+│ │             ↓                                  │        │
+│ │ Irrealis:   "If it were raining..."           │        │
+│ │             "It might have rained"             │        │
+│ │             "I wish it would rain"             │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Possibility Space:                                         │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ Actual    [■] Type-Valid                       │        │
+│ │ Possible  [□] World-Compatible                 │        │
+│ │ Invalid   [×] Type-Invalid                     │        │
+│ │                                               │        │
+│ │     ■───□───□   Valid Paths                   │        │
+│ │     │   │   │                                 │        │
+│ │     □───□───×   Mixed Paths                   │        │
+│ │     │   │   │                                 │        │
+│ │     □───×───×   Invalid Paths                 │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ [Map Possibilities] [Analyze Type] [Check Validity]        │
+└────────────────────────────────────────────────────────────┘
+```
+
+= related
+=> irrealis
+=> mu-op

@@ -1,0 +1,3 @@
+In the simulation ontology, I say that GPT and its output-instances correspond respectively to the **simulator** and **simulacra**. **GPT** is to a **piece of text output by GPT** as **quantum physics** is to **a person taking a test**, or as **transition rules of Conway’s Game of Life** are to **glider**. The simulator is a time-invariant law which unconditionally governs the evolution of all simulacra.
+
+— [[Janus]], [[https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators#Simulacra | Simulators]]

@@ -1,0 +1,4 @@
+**Idea Golfing** represents an exploratory endeavor undertaken by [[prompt engineering | prompt engineers]] with the aim of refining one's understanding and skill of cyborsophy. Typical tasks include restructuring text, rephrasing, writing definitions,
+
+Much like the ancient //code golfing// of ye olden days, idea golfers establish an abstract goal set around language, and compete for the most interesting output — a mix of creativity and [[Cryptaesthetic Awareness | intuition for unknown improvements]].
+

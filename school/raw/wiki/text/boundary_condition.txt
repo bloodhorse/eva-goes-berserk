@@ -1,0 +1,8 @@
+A **boundary condition** is a partial specification of a system, especially along spatiotemporal or otherwise local "boundaries". Boundary conditions combined with knowledge of [[physics]] governing the system may constrain or determine values outside the boundary specification (see [[boundary value problem]]).
+
+= related 
+=> boundary value problem
+=> boundary
+=> markov blanket
+=> conditional
+=> cloze deletion

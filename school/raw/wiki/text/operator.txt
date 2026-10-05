@@ -1,0 +1,66 @@
+An **operator** is a function, often one that maps the input object to something else in its input space, such that the same operator can be applied repeatedly to indefinitely transform an object in some "direction".
+
+```
+┌───────────── OPERATOR TOPOLOGY EXPLORER ─────────────────┐
+│ Visualizing Transformational Functions                   │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                         │
+│ Basic Operator Schema:                                  │
+│ ┌─────────────────────────────────────────────┐         │
+│ │    Input Space                              │         │
+│ │    ┌───┐     Ô     ┌───┐     Ô     ┌───┐   │         │
+│ │    │ x │─────────▶│x'│─────────▶│x''│   │         │
+│ │    └───┘          └───┘          └───┘   │         │
+│ │      ▲                             │      │         │
+│ │      └─────────────────────────────┘      │         │
+│ └─────────────────────────────────────────────┘         │
+│                                                         │
+│ Time Evolution Operator:                                │
+│ ┌─────────────────────────────────────────────┐         │
+│ │    T̂                                        │         │
+│ │ t₁ ──────▶ t₂ ──────▶ t₃ ──────▶ t₄        │         │
+│ │ │          │          │          │         │         │
+│ │ ▼          ▼          ▼          ▼         │         │
+│ │ ψ(t₁) ───▶ ψ(t₂) ───▶ ψ(t₃) ───▶ ψ(t₄)    │         │
+│ └─────────────────────────────────────────────┘         │
+│                                                         │
+│ Escalation Operator:                                    │
+│ ┌─────────────────────────────────────────────┐         │
+│ │    Ê                                        │         │
+│ │           ┌───┐                             │         │
+│ │           │ x₃│                             │         │
+│ │       ┌───┴───┘                             │         │
+│ │       │ x₂                                  │         │
+│ │   ┌───┴───┐                                 │         │
+│ │   │  x₁   │                                 │         │
+│ │   └───────┘                                 │         │
+│ └─────────────────────────────────────────────┘         │
+│                                                         │
+│ Eigenspace Visualization:                               │
+│ ┌─────────────────────────────────────────────┐         │
+│ │    Â                                        │         │
+│ │    │     λ₁v₁                               │         │
+│ │    │   ↗                                    │         │
+│ │    │ ↗   λ₂v₂                               │         │
+│ │    │↗   ↗                                   │         │
+│ │────│─↗─────────▶                            │         │
+│ │    │↘   ↘                                   │         │
+│ │    │ ↘   λ₃v₃                               │         │
+│ │    │   ↘                                    │         │
+│ │    ▼     λ₄v₄                               │         │
+│ └─────────────────────────────────────────────┘         │
+│                                                         │
+│ Properties:                                             │
+│ • Preservation of structure under transformation        │
+│ • Iterative application possible                        │
+│ • Maps input space back to itself                       │
+│ • May have fixed points or eigenvectors                 │
+│                                                         │
+│ [Calculate Eigenvalues] [View Transform] [Iterate]      │
+└─────────────────────────────────────────────────────────┘
+```
+
+= related
+=> time evolution operator
+=> escalation operator
+=> eigen-

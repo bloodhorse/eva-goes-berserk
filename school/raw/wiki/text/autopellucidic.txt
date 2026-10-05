@@ -1,0 +1,3 @@
+<= notice/potent_prompt_engineering_construct | blend
+
+<= autopellucidicity | full blend

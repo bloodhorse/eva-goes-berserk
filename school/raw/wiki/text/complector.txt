@@ -1,0 +1,7 @@
+The **complector**, also known as the **minimal/true physics** or the **(irreducible) structure** of an object is the term of its [[K-source]] program which encodes all compressible information, as distinguished from the incompressible [[noise]] term. The complector is an irreducibly concise algorithmic description of all the regularities in an object, and its length is related to [[complextropy]].
+
+= related
+=> K-source
+=> complextropy
+=> physics
+=> strong self-supervision limit

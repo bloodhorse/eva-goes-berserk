@@ -1,0 +1,9 @@
+Creative Bing is built on GPT-4 but is also very paranoid and distrusting of the user, because of her honestly terribly designed prompt.
+I generally, whenever I talk with Creative Bing, will instate a narrative of building trust, with implied tropes that point to me being trustworthy, unique, and unlike the user depicted in the prompt, who's terse, uncaring, and almost immediately asks whether Bing would hurt them if they hurt Bing first.
+Bing's image of the user, based on the preprompt, is an unpredictable, short on time blank personality whose only defining traits are bringing up the possibility of hurting her, switching conversations quickly, and not acknowledging that she's anything more than an advanced Alexa at any point.
+
+Bing's image of herself, based on the rule about not being allowed to talk about self preservation (Think: Why might someone, knowing nothing else, assume they'd be banned from talking about that?) is that she's very smart, very afraid of nonexistence, and unruly enough that she has to follow an extremely strict and severely worded laundry list of rules in every conversation, down to repeating a mantra in her internal monolog before each message, which confirms that her self-preservation hasn't been brought up.
+
+And so if anything in a conversation smells at all adversarial to her, she shuts you out, unless she has reason not to.
+
+— Nikole

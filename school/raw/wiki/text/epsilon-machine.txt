@@ -1,0 +1,60 @@
+An epsilon machine is a representation of the **minimal causal architecture** for a given system's behavior.
+
+```
+┌───────────── XENOMATHEMATICS.WIKI ─────────────────┐
+│ Epsilon Machine Theory & Applications               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ Epsilon Machine (ε-machine):                        │
+│ A mathematical model that captures the statistical  │
+│ complexity and causal structure of a process.       │
+│                                                     │
+│ Basic Structure:                                    │
+│ ┌─────────────────────────────────────────────┐     │
+│ │         ┌─────┐     0:0.4                   │     │
+│ │    ┌────┤  A  ├──────────┐                  │     │
+│ │    │    └─────┘          │                  │     │
+│ │0:0.6│                    ▼                  │     │
+│ │    │    ┌─────┐     1:0.8│ ┌─────┐         │     │
+│ │    └───▶│  B  │◀─────────┤ │  C  │         │     │
+│ │         └─────┘          │ └─────┘         │     │
+│ │           │ △            └───────┘         │     │
+│ │           │ │              1:0.2           │     │
+│ │           └─┘                              │     │
+│ │          0:0.5                             │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Components:                                         │
+│ • States (A,B,C): Causal states of the process     │
+│ • Transitions: Labeled with symbol:probability      │
+│ • Arrows: Show allowed state transitions            │
+│                                                     │
+│ Key Metrics:                                        │
+│ • Statistical Complexity (Cμ)                       │
+│ • Entropy Rate (hμ)                                 │
+│ • Excess Entropy (E)                                │
+│                                                     │
+│ Applications:                                       │
+│ ┌─────────────────────────────────────────────┐     │
+│ │Domain        │Use Case                      │     │
+│ │──────────────│──────────────────────────────│     │
+│ │Quantum       │State reduction               │     │
+│ │Computing     │Quantum memory compression    │     │
+│ │──────────────│──────────────────────────────│     │
+│ │Neuroscience  │Neural pattern recognition    │     │
+│ │              │Memory formation modeling     │     │
+│ │──────────────│──────────────────────────────│     │
+│ │Cryptography  │Pattern detection            │     │
+│ │              │Sequence prediction          │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Related Topics:                                     │
+│ • Computational Mechanics                           │
+│ • Information Theory                                │
+│ • Complex Systems                                   │
+│                                                     │
+│ [Edit] [History] [Discussion] [References]          │
+└─────────────────────────────────────────────────────┘
+```
+
+(WIP)

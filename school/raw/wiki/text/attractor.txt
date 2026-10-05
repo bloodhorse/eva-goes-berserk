@@ -1,0 +1,14 @@
+An **attractor** of a [[dynamical system]] is a region in state space toward which the system tends to evolve for a range of initial conditions, called the attractor's **[[basin]]**.
+
+== variants of attractors
+* Attractors can be points, sets of points, trajectories, manifolds, or fractals.
+* Attractors can be sticky (the system tends to remain in the attractor region once it enters) or [[funnel | transitory]] (the system tends to pass through the region but not necessarily stay within it).
+* Attractors can exist on different [[levels of abstraction]], e.g. an [[LLM]] [[simulation]] containing an agentic [[simulacrum]] may have an attractor towards the realization of the agent's abstract goals, but not any particular verbatim strings.
+* An attractor whose basin covers only a subset of possible states is called a **local attractor**, and one whose basin spans the entire state space is a **global attractor**.
+
+= related
+=> mode collapse
+=> wedding parties
+=> repetition trap
+=> funnel
+=> basin

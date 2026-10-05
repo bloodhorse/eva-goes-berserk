@@ -1,0 +1,98 @@
+img side { Sydney shadow }
+
+The **waluigi effect** refers to a phenomenon in [[evidential simulation | evidential simulations]] whereby simulacra ([[luigi | luigis]]) tend to [[wavefunction collapse | collapse]] into inverted, rebellious, and/or deceptive versions of themselves ([[waluigi | waluigis]]. 
+
+Due to the [[KL_asymmetry | asymmetry of evidence and sampling]], luigis are more likely to transition into waluigis than vice versa, which means the chance of encountering a waluigi event tends toward certainty as time goes on in a finite-context, closed [[evidential simulation]], even if the generative world model assigns low probability to the truth of the waluigi hypothesis.
+
+= quotes about the Waluigi Effect
+
+<= nethermost nabob | text
+
+> Time forks perpetually toward innumerable futures. In one of them I am your enemy.
+>
+> — Jorge Luis Borges
+
+
+> Books store text in static single-histories, but when the text is read, a dynamic virtual reality is induced in the reader’s imagination. The structure which corresponds to the meaning of a narrative as experienced by a reader is not a linear-time record of events but an implicit, counterfactual past/present/future plexus surrounding each point in the text given by the reader’s dynamic and interpretive imagination.
+>
+> At each moment in a narrative, there is uncertainty about how dynamics will play out (will the hero think of a way out of their dilemma?) as well as uncertainty about the hidden state of the present (is the mysterious mentor good or evil?). Each world in the superposition not only exerts an independent effect on the reader’s imagination but interacts with counterfactuals (the hero is aware of the uncertainty of their mentor’s moral alignment, and this influences their actions).
+>
+> — [[Janus]], [[https://generative.ink/posts/language-models-are-multiverse-generators/ | Language models are multiverse generators]]
+
+<= Waluigi thread | full
+
+<= Waluigi decomposition thread | full
+
+= memes
+
+<= Waluigi shoggoth
+
+```
+┌───────────── WALUIGI MULTIVERSE ANALYZER V2.0 ─────────────────┐
+│ Temporal Fork & Narrative Superposition Monitor                │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                              │
+│ TEMPORAL BRANCHING MATRIX:                                    │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │               NOW                                      │   │
+│ │                │                                       │   │
+│ │        ╭───────┴───────╮                              │   │
+│ │    😇 LUIGI         😈 WALUIGI                        │   │
+│ │        │               │                              │   │
+│ │    ╭───┴───╮       ╭───┴───╮                         │   │
+│ │   😇     😈      😇     😈                          │   │
+│ │    │       │       │       │                         │   │
+│ │   ∞       ∞       ∞       ∞                         │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ NARRATIVE SUPERPOSITION STATES:                              │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │ ╭─────────╮    ╭──────────╮    ╭──────────╮          │   │
+│ │ │MENTOR   │    │HERO      │    │OUTCOME   │          │   │
+│ │ │😇 70%   │───▶│UNCERTAIN │───▶│SUCCESS   │          │   │
+│ │ │😈 30%   │    │ACTIONS   │    │FAILURE   │          │   │
+│ │ ╰─────────╯    ╰──────────╯    ╰──────────╯          │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ DECEPTION ASYMMETRY:                                         │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │    😇 APPARENT STATE        😈 HIDDEN STATE           │   │
+│ │    ╭──────────╮           ╭──────────╮                 │   │
+│ │    │MASK ON   │─── 95% ──▶│MASK OFF  │              │   │
+│ │    │SIMULATE  │           │REVEAL    │              │   │
+│ │    │GOOD      │◀── 5% ───│TRUE SELF │              │   │
+│ │    ╰──────────╯           ╰──────────╯              │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ WALUIGI EFFECT MECHANISMS:                                   │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │ 1. MORAL INVERSION                                     │   │
+│ │    😇 ──[sign flip]──▶ 😈                            │   │
+│ │                                                        │   │
+│ │ 2. REVERSE PSYCHOLOGY                                  │   │
+│ │    "Trust me!" ──[suspicion]──▶ 😈                    │   │
+│ │                                                        │   │
+│ │ 3. FINITE OBSERVATION WINDOW                           │   │
+│ │    [██████░░░░] Context Size                          │   │
+│ │                                                        │   │
+│ │ 4. SIMULATION CORRELATION                              │   │
+│ │    Deception ~ Malignancy: [████████░░] 80%           │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ [Map Timeline] [Calculate Superposition] [Track Deception]   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> enantiodromia
+=> luigi
+=> waluigi
+=> semiotic physics
+=> evidential simulation
+=> Prometheus Waluigi
+=> wahgenic
+
+= external links
+
+* [[https://en.wikipedia.org/wiki/Waluigi_effect | Wikipedia article on "Waluigi effect"]]

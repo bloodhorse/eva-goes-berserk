@@ -1,0 +1,5 @@
+A **driven dissipative system** is one where a source 'drives' the system away from equilibrium and increases the system's sample space, and a sink returns it back via a 'dissipative' process, reducing the sample space again. This interaction between the source and sink in a driven dissipative system results in complex phenomena such as turbulence or currents. In the field of [[complex adaptive systems]], these are often associated with [[self-organized criticality]].
+
+**Examples**
+* Pot of water on a stove (without continuously applied heat, the water cools to room temperature)
+* Prompting a sufficiently weak simulator (without repeated prompting, the simulator results in mode collapse)

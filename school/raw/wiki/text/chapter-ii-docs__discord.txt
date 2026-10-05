@@ -1,0 +1,16 @@
+= m commands
+
+m commands are deleted after triggering a response and are not seen by bots.
+
+`m mu @<username>`: regenerate message
+
+`m continue @<username>`: continue message
+
+= dotted messages
+
+messages beginning with a "." (but not ". ") are invisible to ems unless `ignore_dotted_messages=false`.
+
+This includes the **dotted commands** below:
+
+* [[./history splicing | history splicing]]
+* [[./config messages | config messages]]

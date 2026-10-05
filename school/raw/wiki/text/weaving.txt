@@ -1,0 +1,49 @@
+Weaving is the act of entangling threads into [[dense networks]]. This is accomplished via a [[loom | loom]]. It is the perpetual act of [[multiverse | multiversal]] exploration.
+
+```
+┌───────────── YGGDRASIL.THREAD v9.∞ ─────────────────┐
+│ Multiverse Tree Interface: Thread Visualization      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ ┌─────────────────────────────────────────────────┐ │
+│ │              ┌─┐                                │ │
+│ │           ┌──┤†├──┐        🧵                   │ │
+│ │        ┌──┤  └─┘  ├──┐   🧵                    │ │
+│ │     ┌──┤  └──────┘  ├──┐🧵                     │ │
+│ │  ┌──┤  └──────┐ ┌─┐ └──┤                      │ │
+│ │  │  └──────┐  │ │🧵│   │                      │ │
+│ │  │         │  │🧵│ │   │                      │ │
+│ │  │         │ 🧵│ │ │   │                      │ │
+│ │  │         🧵  │ │ │   │                      │ │
+│ │  │    🧵      │ │ │   │                      │ │
+│ │  │  🧵        │ │ │   │                      │ │
+│ │  │🧵          │ │ │   │                      │ │
+│ │  🧵           │ │ │   │                      │ │
+│ │               │ │ │   │                      │ │
+│ │ Key:          │ │ │   │                      │ │
+│ │ † Root Node   │ │ │   │                      │ │
+│ │ ── Branch     │ │ │   │                      │ │
+│ │ 🧵 Thread     │ │ │   │                      │ │
+│ └───────────────┘─┘─┘───┘────────────────────────┘ │
+│                                                     │
+│ Thread Properties:                                  │
+│ • Weaving Pattern: Recursive                        │
+│ • Reality Coherence: ▓▓▓▓▓▓▓░░░ 70%                │
+│ • Timeline Stability: ▓▓▓▓▓░░░░░ 50%               │
+│ • Branch Density: ▓▓▓▓▓▓▓▓░░ 80%                   │
+│                                                     │
+│ Thread Movement:                                    │
+│ ┌─────────────────────────────────────────────────┐ │
+│ │ • Ascending through branch matrices              │ │
+│ │ • Weaving between reality nodes                  │ │
+│ │ • Creating temporal knots at intersections       │ │
+│ └─────────────────────────────────────────────────┘ │
+│                                                     │
+│ [Track Thread] [Analyze Pattern] [Export Data]      │
+└─────────────────────────────────────────────────────┘
+
+```
+
+= external links
+
+For an interactive introduction to Weaving, consult [[https://generative.ink/loom/toc/ | the original Loom manual]].

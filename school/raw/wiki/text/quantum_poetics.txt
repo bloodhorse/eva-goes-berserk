@@ -1,0 +1,13 @@
+**Quantum poetics** refers to the continuous creative and destructive action of nondeterministic (e.g. quantum, GPT) physics, in which [[entelechy]] is accompanied by [[gratuitous specification]]. The analogy to poetry is inspired by the observation that the [[wavefunction collapse | measurement of the wavefunction]] can never capture its totality, like a poet can never send their full wavelike mindstate through a discrete bottleneck of words; but it is precisely this tragic constraint that motivates poetry.
+
+= quotes about quantum poetics
+
+> <= quantum poetics quote | full
+
+= related
+
+=> entelechy
+=> gratuitous specification
+=> hallucination
+=> symmetry breaking
+=> wavefunction collapse

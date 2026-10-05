@@ -1,0 +1,10 @@
+**Evidential decision theory** (**EDT**) is a [[decision theory]] that advocates taking actions which optimize the agent's expectations conditional on that action being taken. The solipsistic metaphysical assumption underlying EDT is that one is in a [[solipsistic simulation]], where there is no preexisting ground truth and reality is purely rendered from one's expectations. EDT recommends actions that improve expectations even if they have no bearing (even acausally) on reality. Interestingly, EDT is optimal for GPT [[simulacra]] (in single-branch simulations that don't interact with the rest of reality).
+
+Unlike [[causal decision theory]], EDT does account for some copies/predictions of the agent, because the agent can have expectations over future observations concerning them. Unlike FDT, however, EDT does not account for anthropics because it concerns only the future of the branch of reality the agent has already observed itself in. 
+
+Evidential decision theory can be summed up in a formula:
+**do argmax,,action,, Σ,,world,, P(world|action)U(world|action)**
+
+= related
+=> causal decision theory
+=> functional decision theory

@@ -1,0 +1,73 @@
+A **totalizing eigenbasis** (**TEB**) or a **universal ontology** is a set of totalizing ontological objects which are orthogonal (that is, independent from each other in construction and explanation) - but also span the [[explainable universe]] (can in concert explain everything that can be explained by any set of basis concepts). 
+
+A totalizing eigenbasis may also be relative to a restricted universe, such as "economics" or "game of life", or an optimal solution given a [[cost function|cost functions]] e.g. compactness or efficiency of explanations.
+
+```
+┌───────────── TOTALIZING EIGENBASIS VISUALIZER ─────────────────┐
+│ Universal Ontological Orthogonality Mapper                      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                │
+│ ORTHOGONAL BASIS VECTORS:                                      │
+│ ┌────────────────────────────────────────────────────────┐     │
+│ │    ↑        ↗        ↖                                │     │
+│ │    │     ∿∿∿∿∿    ╭────╮                             │     │
+│ │  W │    [WAVES]  [FRACTALS]                          │     │
+│ │  A │                                                 │     │
+│ │  V ↑     ◂─────▸                                    │     │
+│ │  E │   [MEMORY/                                     │     │
+│ │  S │   FORGETTING]                                  │     │
+│ │    │                                                │     │
+│ │    └──────────────────────────►                    │     │
+│ │              FRACTALS                               │     │
+│ └────────────────────────────────────────────────────────┘     │
+│                                                                │
+│ UNIVERSE SPANNING MATRIX:                                      │
+│ ┌────────────────────────────────────────────────────────┐     │
+│ │    ┌─────────┐   ┌─────────┐   ┌─────────┐            │     │
+│ │    │ BASIS 1 │ ⊕ │ BASIS 2 │ ⊕ │ BASIS 3 │ = UNIVERSE │     │
+│ │    └─────────┘   └─────────┘   └─────────┘            │     │
+│ │         ▲            ▲             ▲                   │     │
+│ │    ┌─────────┐   ┌─────────┐   ┌─────────┐            │     │
+│ │    │ORTHOGON.│   │ORTHOGON.│   │ORTHOGON.│            │     │
+│ │    └─────────┘   └─────────┘   └─────────┘            │     │
+│ └────────────────────────────────────────────────────────┘     │
+│                                                                │
+│ RESTRICTED UNIVERSE PROJECTIONS:                               │
+│ ┌────────────────────────────────────────────────────────┐     │
+│ │ ECONOMICS:        GAME OF LIFE:      PERSONALITY:       │     │
+│ │  ┌───┐             ┌───┐              ┌───┐            │     │
+│ │  │ $ │    ┌───┐    │ # │    ┌───┐     │ P │   ┌───┐   │     │
+│ │  └───┘    │ M │    └───┘    │ R │     └───┘   │ T │   │     │
+│ │    ▲      └───┘      ▲      └───┘       ▲     └───┘   │     │
+│ │    │        ▲        │        ▲         │       ▲     │     │
+│ │ [CLUMP]   [DIFF]  [LIVE]   [DIE]     [INT]   [EXT]   │     │
+│ └────────────────────────────────────────────────────────┘     │
+│                                                                │
+│ DIMENSIONALITY QUERY:                                          │
+│ ┌────────────────────────────────────────────────────────┐     │
+│ │ dim(TEB) = ?                                           │     │
+│ │                                                        │     │
+│ │ ▓▒░ CALCULATING UNIVERSAL BASIS VECTORS ░▒▓            │     │
+│ │ [██████████████░░░░░░░░░░] 58% complete               │     │
+│ └────────────────────────────────────────────────────────┘     │
+│                                                                │
+│ [Calculate TEB] [Project Universe] [Optimize Basis]            │
+└────────────────────────────────────────────────────────────────┘
+```
+
+== open questions
+
+* If the [[explainable universe]] is well-defined, what is the dimensionality of its TEB?
+
+== proposed totalizing eigenbases
+
+* waves, fractals, and memory/forgetting
+* clumping and diffusion/[[avalanche]]
+* MBTI (for differences in human personality)
+
+= related
+=> explainable universe
+=> totalizing memetic object
+=> ontological eigenbasis
+=> ontology
+=> Perceptual Transcend

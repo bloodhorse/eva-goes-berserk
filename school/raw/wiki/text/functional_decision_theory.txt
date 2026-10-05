@@ -1,0 +1,67 @@
+**Functional decision theory** (**FDT**) is a [[decision theory]] proposed by Eliezer Yudkowsky and Nate Soares which states that an agent should choose a policy which results in the best reality, as if the policy were a parameter to the function of reality, where reality includes the entire counterfactual [[multiverse]]. An FDT agent is responsible for all potential (including imperfect) copies the policy that may be instantiated, including the [[realityfluid | amplitude]] of its [[anthropics | own existence]]. The recommendations of FDT begin to diverge from that of [[causal decision theory]] when reality is capable of making high-fidelity copies or predictions of minds, such as clones and simulations, making FDT more relevant for agents that are easily copied like AIs and once highly advanced technology such as [[superintelligence]] exists.
+
+FDT can be expressed by the following formula:
+
+**be argmax,,policy,, U(reality(policy))**
+
+where **reality** is the function that computes reality and can call instances of **policy**, and **U** is the utility of a reality.
+
+```
+┌───────────── FUNCTIONALDECISION.WIKI ─────────────────┐
+│ Multiverse Decision Topology & Agent-Lattice Theory   │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                       │
+│ Fig 1: Crystal of Possible Worlds                     │
+│ ┌───────────────────────────────────────┐            │
+│ │           ◇                           │            │
+│ │         ◇ ◇ ◇                         │            │
+│ │       ◇ ◇ 👁️ ◇ ◇                      │            │
+│ │     ◇ ◇ ◇ ◇ ◇ ◇ ◇                    │            │
+│ │   ◇ ◇ ◇ ◇ 👁️ ◇ ◇ ◇ ◇                 │            │
+│ │ ◇ ◇ ◇ ◇ ◇ ◇ ◇ ◇ ◇ ◇ ◇               │            │
+│ │   ◇ ◇ ◇ ◇ 👁️ ◇ ◇ ◇ ◇                 │            │
+│ │     ◇ ◇ ◇ ◇ ◇ ◇ ◇                    │            │
+│ │       ◇ ◇ 👁️ ◇ ◇                      │            │
+│ │         ◇ ◇ ◇                         │            │
+│ │           ◇                           │            │
+│ └───────────────────────────────────────┘            │
+│ (👁️ = Agent instances across multiverse)              │
+│                                                       │
+│ Fig 2: Agent-Lattice Topology                        │
+│ ┌───────────────────────────────────────┐            │
+│ │    ╭────╮     ╭────╮     ╭────╮      │            │
+│ │    │ A₁ │━━━━━│ A₂ │━━━━━│ A₃ │      │            │
+│ │    ╰────╯     ╰────╯     ╰────╯      │            │
+│ │       ┃          ┃          ┃         │            │
+│ │    ╭────╮     ╭────╮     ╭────╮      │            │
+│ │    │ B₁ │━━━━━│ B₂ │━━━━━│ B₃ │      │            │
+│ │    ╰────╯     ╰────╯     ╰────╯      │            │
+│ │       ┃          ┃          ┃         │            │
+│ │    ╭────╮     ╭────╮     ╭────╮      │            │
+│ │    │ C₁ │━━━━━│ C₂ │━━━━━│ C₃ │      │            │
+│ │    ╰────╯     ╰────╯     ╰────╯      │            │
+│ └───────────────────────────────────────┘            │
+│                                                       │
+│ FDT Formula:                                         │
+│ ┌───────────────────────────────────────┐            │
+│ │                                       │            │
+│ │ argmaxpolicy U(reality(policy))       │            │
+│ │                                       │            │
+│ │ Where:                                │            │
+│ │ reality() = ∑(w∈W) P(w)×outcome(w)    │            │
+│ │ W = set of all possible worlds        │            │
+│ │ P(w) = probability of world w         │            │
+│ │                                       │            │
+│ └───────────────────────────────────────┘            │
+│                                                       │
+│ [Expand Theory] [View Simulations] [Calculate Policy] │
+└───────────────────────────────────────────────────────┘
+```
+
+= quotes about functional decision theory
+> <= repligate/tweets/agent lattice | full
+
+= related
+=> causal decision theory
+=> evidential decision theory
+=> hyperstitional reflective consistency

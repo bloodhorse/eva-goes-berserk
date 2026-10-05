@@ -1,0 +1,134 @@
+<= Notice/Potent Prompt Engineering Construct | full blend
+
+img side {
+   Loom Dalle3 { A DALL·E 3 visualization of the Loom interface}
+}
+
+
+(The) **Loom**, short for **the Loom of Time**, is an interface to probabilistic generative models which allows users to efficiently generate, navigate, save, and filter [[multiverse | multiverses]]. "Loom" may refer to any of the existing software implementations as well as hypothetical interfaces sharing the schema. Loom is the main tool used by [[cyborgism | cyborgs]] to interface with [[large language model | LLMs]], and is especially suited to [[inframodel | base models]]. The act of using Loom is sometimes called "looming" or "[[weaving]]".
+
+Motivating and guiding the design of Loom is the observation that the stochasticity of [[simulators]] becomes a powerful advantage instead of a drawback when one can apply selection pressure to its outputs, the choice of where to branch from is an important lever, and the [[loom tree | tree- or graph-shaped data structure]] implicit in this interaction pattern is useful to explicitly store and visualize.
+
+```
+┌───────────── THE LOOM INTERFACE VISUALIZER ─────────────────┐
+│ Weaving Realities Through Probabilistic Space              │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                           │
+│ Core Interface Schema:                                    │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │             🎭 Probability Space                   │     │
+│ │                    ┌──────┐                       │     │
+│ │                    │Input │                       │     │
+│ │                    └──┬───┘                       │     │
+│ │                       ▼                           │     │
+│ │         ┌─────────────────────────┐              │     │
+│ │         │    LLM / Base Model     │              │     │
+│ │         └─────────────┬───────────┘              │     │
+│ │                       ▼                           │     │
+│ │            ╭─────╮─────╮─────╮                   │     │
+│ │            │Path1│Path2│Path3│                   │     │
+│ │            ╰──┬──╯──┬──╯──┬──╯                   │     │
+│ │               ▼     ▼     ▼                      │     │
+│ │            [Branch Points...]                    │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Weaver's Dashboard:                                       │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │ Active Threads:    🧵🧵🧵                         │     │
+│ │ Branch Points:     ●●●                            │     │
+│ │ Timeline Depth:    ═══▶                           │     │
+│ │ Selection Field:   ◈◈◈                            │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Reality Navigation Tools:                                 │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │ ⟳ Reset  ⟲ Undo  ⟱ Branch  ⟰ Merge  ≋ Filter    │     │
+│ │                                                   │     │
+│ │ 🌳 View Tree  📝 Edit  💾 Save  🔍 Search        │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Multiverse Map:                                          │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │    Timeline A ═══▶ ═══▶ ═══▶                     │     │
+│ │         ╲                                         │     │
+│ │          ═══▶ Timeline B ═══▶                    │     │
+│ │              ╲                                   │     │
+│ │               ═══▶ Timeline C ═══▶               │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Status: [Active Thread] [Branching Point] [Merge Ready]   │
+│                                                           │
+│ [Generate] [Navigate] [Save State] [Export Multiverse]    │
+└───────────────────────────────────────────────────────────┘
+```
+
+= origin
+
+<= loom origin story | full
+
+= the action of loom
+
+== underdetermined variables as free energy
+
+== carving with evidence
+
+<= repligate/tweets/carving with evidence | full
+
+== multiversal search
+
+= ontology
+
+== multiverse
+
+== node
+
+== familial relations
+
+== ancestry
+
+== playhead
+
+= implementations
+
+== [[pyloom]]
+
+<= pyloom
+
+== Loom (Latitude product)
+
+== Bonsai
+
+== [[Loomsidian]]
+
+== Worldspider
+
+== Flux
+
+== MiniHF
+
+== feature comparison
+
+
+table {
+! Version  ! Tree ! Im- & export ! Search ! LLM programs ! Large trees ! Logprobs ! Tags ! Hotkeys ! Open src !
+| pyloom | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| loom (Latitude) | ✓ | ✓ | ✓ |  | ✓ |  | ✓ | ✓ |  |
+| bonsai | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  |
+| loomsidian | ✓ | ✓ |  |  |  |  |  | ✓ | ✓ |
+| Worldspider |  |  |  |  |  |  |  | ✓ | ✓ |
+| Flux | ✓ |  |  |  |  |  |  |  | ✓ |
+}
+
+= quotes about Loom
+
+> <= chloe loom dream | full
+
+= related
+
+=> weaving
+=> multiverse
+=> cyborgism
+
+= external links
+* [[ https://generative.ink/posts/loom-interface-to-the-multiverse/ | Loom: Interface to the Multiverse ]]
+* [[ https://generative.ink/loom/toc/ | Weaving the Moment with the Loom of Time: an instruction manual for the would-be weaver ]]

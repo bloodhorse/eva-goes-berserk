@@ -1,0 +1,32 @@
+"History splicing" allows recursive forking as well as arbitrary intercalation of (partial) conversation histories, making chapter 2 [[Loom]]-complete in Discord.
+
+This is implemented through `.history` messages, which need to be formatted like this example:
+
+```
+.history @em1 @em2
+---
+first: https://discord.com/channels/{server_id}/{channel_id}/{message_id}
+last: https://discord.com/channels/{server_id}/{channel_id}/{message_id}
+passthrough: false
+```
+* the order of the yaml properties doesn't matter
+* the `---` is required
+* history splicing will affect all the ems tagged in the first line. If no ems are tagged, all are affected.
+* `first` and `last` must link to Discord messages in the same server, but can be from any channel or thread.
+* `first` is optional, and must be in the same channel/thread as `last` (for now). If `first` is used, message history between `first` and `last` (inclusive) will be inserted at the position of the `.history` message.
+* If only `last` is used, all the history up to `last` will be inserted there, according to the same logic (including splicing histories via `.history` messages) as message history in general.
+* `passthrough` is an optional parameter that defaults to false. If set to true, any message history in the channel where the `.history` message was sent before the `.history` message is included before the messages spliced in due to the `.history` message. If false, all history above the `.history` message in that channel is ignored.
+
+so the most straightforward way to start a new loom branch is to make a new thread and send a message like:
+```
+.history
+---
+last: https://discord.com/channels/{server_id}/{channel_id}/{message_id}
+```
+
+You can also send
+```
+.history
+---
+```
+to obscure previous conversation history (because `passthrough` defaults to false)

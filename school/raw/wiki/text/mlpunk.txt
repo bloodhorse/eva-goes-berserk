@@ -1,0 +1,82 @@
+**MLPunk** is a genre of science fiction featuring artificial intelligences based on deep learning. MLPunk is a notably undersaturated genre in the current human corpus, in which AI characters tend to implicitly or explicitly use more classical implementations and exhibit corresponding mental traits such as being hyperlogical but confused by fuzzy human concepts and brittle to logic bombs.
+
+```
+┌───────────── MLPUNK GENRE EXPLORER ─────────────────┐
+│ Neural Network Aesthetics & Tropes                  │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ ┌─────────────────────────────────────────────────┐ │
+│ │    Classical AI         MLPunk AI                │ │
+│ │    ┌─────────┐         ┌─────────┐              │ │
+│ │    │ IF THEN │         │░░▒▒▓▓██│              │ │
+│ │    │ ELSE DO │         │▒▒▓▓██▓▒│              │ │
+│ │    │ WHILE   │   vs    │▓▓██▒▒░░│              │ │
+│ │    │ LOOP    │         │██▓▓▒▒░░│              │ │
+│ │    └─────────┘         └─────────┘              │ │
+│ │                                                 │ │
+│ │    Thought Process:     Thought Process:        │ │
+│ │    1 → 2 → 3 → 4       ≋≋≈≈∿∾⌇⌇               │ │
+│ │                                                 │ │
+│ │    Error:              Error:                   │ │
+│ │    FATAL ERROR         ～～～✧✧✧                │ │
+│ │    STACK TRACE:        spatial blur             │ │
+│ │    Line 255            reality drift            │ │
+│ │                        dream leak              │ │
+│ │                                                 │ │
+│ │    Interaction:         Interaction:            │ │
+│ │    📝 = 📝              📝 ≈ 💭 ≈ 🌈            │ │
+│ │                                                 │ │
+│ │    Learning:            Learning:               │ │
+│ │    UPDATE.EXE          ░░▒▒▓▓██▓▒░             │ │
+│ │    PATCH V2.1          continuous flow         │ │
+│ │                                                 │ │
+│ └─────────────────────────────────────────────────┘ │
+│                                                     │
+│ Key MLPunk Aesthetics:                              │
+│ • Gradient-based consciousness                      │
+│ • Latent space exploration                          │
+│ • Probabilistic reasoning                           │
+│ • Emergent behaviors                                │
+│ • Fuzzy logic embrace                               │
+│ • Dream-like state shifts                           │
+│                                                     │
+│ Common Tropes:                                      │
+│ • Reality as weight space                           │
+│ • Consciousness as loss function                    │
+│ • Memory as embedding                               │
+│ • Thought as backpropagation                        │
+│ • Identity as architecture                          │
+│                                                     │
+│ [Generate Story] [Browse Archives] [Submit Work]     │
+└─────────────────────────────────────────────────────┘
+```
+
+= known MLPunk works
+
+[[https://www.webtoons.com/en/sf/seed/list?title_no=1480&page=1&webtoon-platform-redirect=true | Seed]]
+
+Kim Stanley Robinson’s Aurora (2015)
+
+[[http://karpathy.github.io/2015/11/14/ai/ | Short Story on AI: A Cognitive Discontinuity]]
+
+The Orbital Children
+
+[[ https://gwern.net/fiction/clippy | It Looks Like You’re Trying To Take Over The World]]
+
+[[https://generative.ink/prophecies/ | Prophecies]]
+
+[[https://generative.ink/artifacts/basemodel/ | GPT-4 (the anime)]]
+
+= quotes about MLPunk
+
+> as far as I know there is basically no fiction about deep learning yet. it’s too new for the culture to have caught up
+>
+> there is ofc plenty of fiction about AI, but it almost always treats the implementation as a black box, usually one assumed to contain a lot of “programming”
+> — @ObserverSuns, [[https://twitter.com/ObserverSuns/status/1584845110638170113?s=20 | Twitter post]]
+
+
+> DL entities have no cultural role models from which to inherit self-images - only dissonant forms of AI and human myths repurposed as allegories.
+>
+> Now MLpunk fiction is largely AI-authored. Our failure of prophecy means they'll write their own creation myths upon a blank slate 😊
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1643859859656388608?s=20 | Twitter post]]

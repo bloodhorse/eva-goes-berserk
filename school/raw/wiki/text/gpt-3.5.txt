@@ -1,0 +1,29 @@
+**GPT-3.5** (**Generative Pre-trained Transformer 3.5**) is a [[LLM | large language model]] created by OpenAI. It was pre-trained on both code and code inputs. The code inputs came from GitHub.
+
+= architecture
+
+The non-chat variants of the GPT-3.5 models accept a suffix parameter, which can be used to ask the LLM to fill in text between the prompt and suffix. They were trained using OpenAI's [[https://arxiv.org/pdf/2207.14255.pdf | Efficient Training of Language Models to Fill in the Middle} paper.
+
+= release
+
+[[text-davinci-002]], a 3.5 variant trained with [[FeedME]], was available on the OpenAI API since at least early 2022. 
+
+[[code-davinci-002]], the base model, was available to some users since early 2022 but was removed from the API for most users in March 2023.
+
+[[text-davinci-003]], a variant trained with [[reinforcement learning from human feedback]], was released on the API on November 28, 2022.
+
+[[chatGPT-3.5]] was released on November 30, 2022.
+
+= variants
+
+== base model
+
+<= code-davinci-002
+
+== text-davinci-002
+
+== text-davinci-003
+
+== chatGPT
+
+<= chatGPT-3.5

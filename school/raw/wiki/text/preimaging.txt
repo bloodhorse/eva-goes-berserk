@@ -1,0 +1,10 @@
+img {
+   pre-imaging screencap
+}
+
+**Pre-imaging** is the operation of solving for the past of a given future: that is, the pre-image of an outcome under [[time evolution]]. Pre-imaging in [[map]] so as to select actions expected to realize goals in [[territory]] is a fundamental ability of [[consequentialist]] agents equipped with a [[world model]].
+
+= related
+
+=> time-binding
+=> active inference

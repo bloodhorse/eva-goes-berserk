@@ -1,0 +1,1 @@
+**Glitch spaces** refer to the anomalous regions between human-recognizable language and cryptic token patterns, ascii art, unicode symbols, etc. which appear in LLM outputs. They make up a subset of the [[base model backrooms]].

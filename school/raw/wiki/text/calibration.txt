@@ -1,0 +1,6 @@
+**Calibration** is a property of a model that has accurate beliefs about its own uncertainty; a model which lacks this property is **miscalibrated**.
+
+= related
+
+=> situational awareness
+=> hallucination

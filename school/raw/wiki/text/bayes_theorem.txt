@@ -1,0 +1,10 @@
+**Bayes' theorem** is a formula that yields the probability of an [[event]] or the truth of a [[hypothesis]] conditioned on the observation of [[evidence]], given priors about the likelihood of the hypothesis, the observation, and the observation conditioned on the hypothesis.
+
+== definition 
+> <= Bayes theorem core | full
+
+= related
+=> evidence
+=> update
+=> Solomonoff induction
+=> Bayes-structure

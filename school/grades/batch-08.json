@@ -1,0 +1,242 @@
+{
+ "gwern-gpt3-07": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-08": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-09": {
+  "fit": 0,
+  "drop": "blog listicle with embedded HTML markup",
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-10": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-11": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-12": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-13": {
+  "fit": 0,
+  "drop": "HTML markup interleaved with text",
+  "origin": null,
+  "origin_evidence": null
+ },
+ "gwern-gpt3-14": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-01": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-02": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-03": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-04": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-05": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-06": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "arram-eye-of-thuban-07": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-hermes-lecture-3-01": {
+  "fit": 2,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-turing-apocrypha-01": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-turing-apocrypha-02": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-turing-apocrypha-03": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-turing-apocrypha-04": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-01": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-02": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-03": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-04": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-05": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-06": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-07": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-08": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-09": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-10": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-11": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-12": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-13": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-14": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-15": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-16": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-17": {
+  "fit": 1,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-18": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-19": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ },
+ "jdp-liber-augmen-20": {
+  "fit": 0,
+  "drop": null,
+  "origin": null,
+  "origin_evidence": null
+ }
+}

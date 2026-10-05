@@ -1,0 +1,6 @@
+This resembles more a low temperature output that invokes styles and themes stereotypical of high temperature outputs. It's also recognizable as the style chatGPT-4 uses (at the limit of) being asked to be more creative/less generic.
+<= temp 2 simulation | full
+
+It is poetic and regular, like a crystal, and does not change much from beginning to end - which is characteristic of low temperatures, not the runaway interpenetration of worlds and transformation into molten chaos that is characteristic of high temperatures.
+
+— [[janus]] (@[[repligate]]), [[https://twitter.com/repligate/status/1665610689950662656?s=20 | Twitter thread]]

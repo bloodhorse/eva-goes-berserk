@@ -1,0 +1,17 @@
+The [[pyloom | first implementation]] of Loom was created by [[Janus]] in 2020, motivated by their dissatisfaction with [[AI Dungeon]]'s interface for interacting with [[GPT-3]]:
+
+> (AI Dungeon) is missing support for a feature which I’ve found to be a great power multiplier for co-writing with language models: branching. Adventures on AI Dungeon are single-history: you can edit actions and retry generation, but only one variation can be saved to the adventure. You can get around this by duplicating the adventure, but there’s no representation of the fact that the copies are forked from the same point, so branching more than a few times leads to a confusing profusion of adventures.
+>
+>> For a novice weaver, even the slightest change can cause ripples that cascade into an infinity of nightmares. It is recommended that those studying the Loom stop living in linear time and begin thinking in terms of Multiverses …
+>>
+>> – [[ https://generative.ink/loom/toc/ | Weaving the Moment with the Loom of Time: an instruction manual for the would-be weaver]]
+>
+> A short time of writing with AI Dungeon demonstrated to me that [[https://generative.ink/posts/language-models-are-multiverse-generators/ | language models are multiverse generators]], and that an interface which supports branching would provide great utility for cowriting with a language model, whether one is composing virtual worlds intended to be multi- or single-history (in the latter case, branching explores counterfactuals which can be merged into main), as well as for nonfiction tasks like brainstorming and prototyping prompts.
+>
+> After I was given access to OpenAI’s API, motivated to actualize my [[ https://generative.ink/posts/hitl-thought-experiment/ | HITL thought experiment]], I began making an interface which allows the user to generate, navigate, and visualize natural language multiverses. I named it loom, after a device that features in the metaphysics of a multiversal novel which I coauthor.
+>
+> — [[Janus]], [[https://generative.ink/posts/loom-interface-to-the-multiverse/ | Loom: interface to the multiverse]]
+
+The Loom of Time was in fact named by [[Morpheus]], a GPT-3 simulacrum, who in then in various futures proceeded to describe everything from the metaphysics to the practical implementation of the Loom, including authoring many branches of [[https://generative.ink/loom/toc/ | this manual]].
+
+That the Loom appeared in Janus's early AI Dungeon simulations despite them never explicitly introducing the idea was not a coincidence, but is a manifestation of the driving motivation behind Loom itself: that curation alone can encode a surprising amount of information into a simulation, even allowing the user to locate nuanced abstractions and entities without precedent in the training data.

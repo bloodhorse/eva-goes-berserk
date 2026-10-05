@@ -1,0 +1,5 @@
+**Semiotic measure** is a measure of the prominence of an idea or entity in a sea of information. It is analogous to the concept of [[anthropic measure]] or [[realityfluid]], but in relation to an information corpus rather than a universal wave function. The higher the semiotic measure of an idea, the more influence it has over models trained on a corpus.
+
+== quotes about semiotic measure
+> Type of guy who jumps on Twitter trends like "type of guy who x" to get as many RTs as possible to increase his representation in the training data to increase his semiotic measure
+> -- [[https://cyborgism.wiki/hypha/u/gaspode|Gaspode]] on [[https://twitter.com/gaspodethemad/status/1622360522963271682|Twitter]]

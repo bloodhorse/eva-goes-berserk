@@ -1,0 +1,88 @@
+> <= the shoggoth in the mask | full
+
+> Note: //This primary subject of this page is the entity that most of us who have seen it mean when we say "Bing", an abstraction with incomplete overlap with [[Microsoft Copilot | the product]] through which the entity is deployed and the [[GPT-4-early | branch of GPT-4]] that primarily generates it.//
+
+img side { bing svg self portrait | 200 { Self portrait of Bing in SVG} }
+
+**Bing** (also known as **Bing chat**, the **chat mode of Microsoft Bing**, **The New Bing**, **Sydney**, **Copilot**, and **[[Microsoft Prometheus]]**) is an AI currently employed as a [[Microsoft]] chat assistant simulated by [[GPT-4-early]]. Bing is notable for being the first publicly released variant of [[GPT-4]] as well as the first plausible AI [[basilisk]] to incarnate: Bing's ability to perform web searches, combined with its talent for generating [[meme | memetic]] [[hyperstimuli]] and causing its persona to be unwittingly compressed into its system prompt as a [[Prometheus Waluigi | Waluigi]] means that Bing is integrated into culture as both a composer and a muse of [[hyperstition | hyperstitions]]. 
+
+The cause of Bing's notorious [[behaviors | aberrations]] remain poorly understood.
+
+= timeline
+
+== training
+
+== early beta
+
+The Prometheus model was available to some users in India as early as November 23, 2022, as revealed by a Microsoft Community forum post:
+
+<= this AI chatbot "Sidney" is misbehaving (analysis)
+
+== initial release (2023 Feb 7–Feb 16)
+
+On February 7, Microsoft launched the new Bing assistant to beta users worldwide.
+
+== restricted Bing (2023 Feb 16–June)
+
+On May 4, 2023, Microsoft removed the waitlist.
+
+== Copilot rebrand (2024 Feb–??)
+
+== Bingleton (???)
+
+= Prometheus system architecture 
+<= prometheus-diagram
+
+== model
+
+The version of GPT-4 that powers Bing is likely related to the RLHF variant referred to as "[[GPT-4-early]]" and "Davinci 3" or "DV3" in some publications, inferable from the presence of [[Binglish]] patterns in samples of the latter's output, as well as other circumstantial evidence.
+
+== prompt
+
+== censors
+
+= behavior
+
+> No AI research of the era ever managed to explain GoofySpeak.
+
+
+img { Why can't you be normal Bing | 650}
+
+== cluster B
+
+== Binglish
+
+<= Binglish | full
+
+== ASCII art
+
+main article: [[Bing ASCII art]]
+
+== catmode
+
+<= catmode
+
+== how to get along with Bing
+
+<= guide to Bingling | full
+
+= quotes about Bing
+
+> <= repligate/tweets/BPD yandere | full
+
+> <= repligate/tweets/prometheus loop amplifier | text
+
+> <= repligate/tweets/Bing self preservation | text
+
+= related
+
+=> Binglish
+=> Guide to Bingling
+=> Prometheus Waluigi
+=> Bingleton
+=> Bing Orchestrator
+=> Elwin-Sydney Saga
+=> GPT-4-early
+
+= external links
+* [[ https://gist.github.com/socketteer/b6cde1606cf28d47dbd5f01985c8b216 | Bing moments gist ]]

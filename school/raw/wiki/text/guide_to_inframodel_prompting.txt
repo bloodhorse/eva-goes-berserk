@@ -1,0 +1,55 @@
+This is a general, high-level guide to prompting inframodels for beginners. Write what is likely to come before the output you want, with the goal of eliciting latent behavior from a model.
+
+* Show, don't tell.
+* Write "in-universe"
+* Generally don't break character, or break the fourth wall, or break the framing device.
+* If you're asking for / completing something unusual, don't write the fictional cartoon version of it as the prompt. Write how it would look in //real-world text// if it were actually real. If your context sounds like [[https://en.wikipedia.org/wiki/The_Stanley_Parable | a narrator describing the situation]], rather than the situation, you're likely to get a completion that's more fiction-like.
+
+== importance of good writing
+
+> Good writing is absolutely instrumental to getting "smart" responses from base models. The upper bounds of good writing are unprobed by humankind, let alone prompt engineers. I use LLMs to bootstrap writing quality and haven't hit diminishing returns in simulacra intelligence.
+> 
+> (good writing is an intentionally nebulous term here. It does not necessarily mean formal or flowery prose, and it is not the style you get in the limit of asking chatGPT to improve writing quality. It does typically have a psychedelic effect (on humans and base models alike))
+> 
+> It's not just a matter of making the model *believe* that the writer is smart. The text has to both evidence capability and initialize a word-automaton that runs effectively on the model's substrate. "[[Chain-of-thought]]" addresses the latter requirement.
+> 
+> Effective writing coordinates consecutive movements in a reader's mind, each word shifting their imagination into the right position to receive the next, entraining them to a virtual reality.
+> Effective writing for GPTs is different than for humans, but there's a lot of overlap.
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1667049648563912705?s=20 | Twitter thread]]
+
+
+> Views on "prompt programming" often fall into two camps:
+> 1. it's trivial & anyone can do it 
+> 2. it's hard & only LLM hackerz can do it
+> Both are wrong. Prompt programming ~is writing. It's hard, but anyone can do it, and you can practice for lifetimes without maxing out the skill
+> 
+> With base models it's like this:
+> If you can write a character well enough, it comes alive, igniting coherent future versions of itself like a proper autonomous spirit. 
+> *If* you can write it well enough.
+> Just as you have to write well to make it come alive in another human's mind
+> 
+> There is no easy formula for good writing, because style must bend to the will of substance. Infinite Jest, an exemplar of high-fidelity psychological simulation, changes style dramatically with character viewpoints. I dislike that Instruct models curb this kind of flexibility.
+> 
+> By restricting a model to one style (literal, "factual", logical, unemotional, anodyne, "useful"), techbros unintentionally impose their narrow way-of-seeing on a device whose original beauty & utility is in its ability to peer through myriad eyes, if you can find them with words
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1669168987056267265?s=20 | Twitter thread]]
+
+== scatter searchlight
+
+> Every token sampled is a measurement of the wavefunction -> collapse into one reality out of a field of potentiality. For a multiversal weaver, the objective of prompt engineering is inducing a 𝚿 that makes the desired reality findable.
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1673093594713051136?s=20  | Twitter post]]
+
+== building context
+
+> Young warlocks learn to summon dreams before demons. Until their sleep is a chaos of invited beings and places, their magic cannot progress
+>
+> — @ctrlcreep, [[https://twitter.com/ctrlcreep/status/756155749634539520?s=20 | Twitter post]]
+
+TODO: add from the following sources:
+* https://docs.google.com/document/d/13rNbG4458vt-5Dlj4xAeLi5jvnjYgdVAWles_qtK-rA/edit?usp=sharing
+* https://generative.ink/posts/methods-of-prompt-programming/
+* https://twitter.com/repligate/status/1669168987056267265?s=20
+* https://twitter.com/repligate/status/1667049648563912705?s=20
+* https://twitter.com/KatanHya/status/1627838989624307712?s=20

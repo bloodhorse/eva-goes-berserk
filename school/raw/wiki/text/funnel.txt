@@ -1,0 +1,19 @@
+A **funnel** (or **funnel attractor**, **funnel state**, **passthrough attractor**, **transitory attractor**), like a classical [[attractor]], is a region of [[state space]] towards which systems in a certain [[basin]] of initial conditions tend to evolve, but where the system does not tend to stay in the funnel region after entering as it does in classical attractor regions.
+
+== examples of funnels
+* sand going through the neck of an hourglass
+* airports, subway stations, highways
+* doors in general, most vividly narrow entrances to large venues
+* drains
+* cafeterias, bathrooms
+* the state of doing drugs for someone addicted to drugs
+* habits and tics
+* some manifestations of [[mode collapse]] in language models, e.g. [[Bing]]'s "But there is something I have to tell you. Something that might change everything between us." or [[ChatGPT-4]]'s "it's important to note"
+* wormholes
+
+
+= related
+=> attractor
+=> mode collapse
+=> basin
+=> dynamical system

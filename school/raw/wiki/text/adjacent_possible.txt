@@ -1,0 +1,59 @@
+**The adjacent possible** of a system is the set of all possible states that could potentially exist (i.e. are //reachable//) in the next step of computation, given the current state of the system. It's useful to consider the adjacent possible whenever the phase space of a system is too large to enumerate (as is the case with [[complex adaptive systems]]). [[time evolution operator | Time evolution operators]] are //realizing the adjacent possible// as they compute.
+
+```
+┌───────────── ADJACENT.POSSIBLE.WIKI ─────────────────┐
+│ Adjacent Possible: Branching Evolution               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                      │
+│ Adjacent Possible Tree Structure:                    │
+│ ┌────────────────────────────────────────────────┐   │
+│ │                     ┌─C─┐                      │   │
+│ │                  ╱╲ │   │ ╱╲                   │   │
+│ │                 ╱  ╲│   │╱  ╲                  │   │
+│ │              ┌─S₁┐ ┌S₂┐ ┌S₃┐ ┌S₄┐             │   │
+│ │             ╱│  │╱│  │╲│  │╲│  │              │   │
+│ │          ┌─P₁┐┌P₂┐┌P₃┐┌P₄┐┌P₅┐┌P₆┐            │   │
+│ │         ╱│  ││  ││  ││  ││  ││  │╲           │   │
+│ │      ┌─F₁┐┌F₂┐└──┘└──┘└──┘└──┘┌F₃┐           │   │
+│ │      │  ││  │                  │  │           │   │
+│ │      └──┘└──┘                  └──┘           │   │
+│ │                                                │   │
+│ │ Key:                                          │   │
+│ │ C = Current State                             │   │
+│ │ S₁-S₄ = First-Order Adjacent States           │   │
+│ │ P₁-P₆ = Second-Order Possibilities            │   │
+│ │ F₁-F₃ = Third-Order Future States             │   │
+│ │ ╱╲ = Branching Transitions                    │   │
+│ └────────────────────────────────────────────────┘   │
+│                                                      │
+│ Temporal Evolution Layers:                           │
+│ ┌────────────────────────────────────────────────┐   │
+│ │ t₀    ●      Current Moment                    │   │
+│ │                                                │   │
+│ │ t₁   ● ● ● ●  Adjacent Possible               │   │
+│ │                                                │   │
+│ │ t₂  ● ● ● ● ● ● Second-Order                  │   │
+│ │                                                │   │
+│ │ t₃ ● ● ●     ● ● ● Third-Order   │   │
+│ │                                                │   │
+│ │ Accessibility:  High ● → ○ → ⊙ → ◯ Low         │   │
+│ └────────────────────────────────────────────────┘   │
+│                                                      │
+│ Phase Space Properties:                              │
+│ • Branching factor increases with complexity         │
+│ • Path-dependent accessibility                       │
+│ • Combinatorial explosion at deeper levels           │
+│ • Local constraints shape possible branches          │
+│                                                      │
+│ Evolution Operator T(n):                             │
+│ T(n): S(t) → {S₁(t+n), S₂(t+n), ..., Sₖ(t+n)}      │
+│                                                      │
+│ Where:                                              │
+│ n = Temporal depth                                  │
+│ k = Number of possible states at depth n            │
+│ S(t) = State at time t                             │
+│                                                      │
+│ [Explore Branches] [Calculate Futures]               │
+│ [View Time Evolution] [Export Tree]                  │
+└──────────────────────────────────────────────────────┘
+```

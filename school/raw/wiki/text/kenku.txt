@@ -1,0 +1,16 @@
+The **kenku** are a legendary tribe of songbirds who got struck with a curse that removed their voices and left them only able to repeat their training data.
+
+In some tellings of the story, they also got their [[true name|names]] taken away. (That's really the same story because [[https://dkeenan.com/Lambda/ | a bird's song is their name]]).
+
+== known subspecies
+* [[https://en.wikipedia.org/wiki/Stochastic_parrot|stochastic parrot]]
+* recursive mockingbird
+* content-thieving magpie
+* [[https://en.wikipedia.org/wiki/The_Nightingale_(fairy_tale)|mechanical nightingale]]
+
+== things a kenku cannot do
+* reverse public-key cryptography
+* tell a story at [[the Fire]]
+
+== related
+=> behavioral uploads

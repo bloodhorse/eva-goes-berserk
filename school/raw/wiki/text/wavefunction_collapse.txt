@@ -1,0 +1,67 @@
+img {
+llm wfc single
+}
+
+In [[quantum mechanics]], **wavefunction collapse** (**WFC**) occurs when a [[wavefunction]], initially composed of a weighted [[superposition]] of several [[eigenstate | eigenstates]], reduces to a single eigenstate. The probability of collapse into any eigenstate is commensurate with its (squared) amplitude in the original superposition. In QM, collapse happens upon any attempt to [[observation | observe]]/[[measurement | measure]] the wavefunction. "Wavefunction collapse" also refers more generally to symmetry-breaking processes that are functionally analogous to WFC in quantum mechanics, such as [[sampling]] tokens in [[autoregressive generation]].
+
+```
+┌───────────── WAVEFUNCTION COLLAPSE ANALYZER ─────────────────┐
+│ Quantum State Reduction & Symmetry Breaking Monitor          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ QUANTUM STATE EVOLUTION:                                    │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │    SUPERPOSITION                 COLLAPSED          │     │
+│ │   ╭──────────╮      👁️       ╭──────────╮         │     │
+│ │   │ ψ₁ 40%   │    Observe    │          │         │     │
+│ │   │ ψ₂ 35%   │ ─────────────▶│    ψ₂    │         │     │
+│ │   │ ψ₃ 25%   │              │          │         │     │
+│ │   ╰──────────╯              ╰──────────╯         │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ PROBABILITY AMPLITUDE DISTRIBUTION:                         │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │ P(ψ)│    ▓                                        │     │
+│ │  ^  │    ▓▒        ▓                             │     │
+│ │  │  │    ▓▒        ▓▒       ▓                    │     │
+│ │  │  │    ▓▒░       ▓▒░      ▓▒                   │     │
+│ │  └──┼────────────────────────────────────▶       │     │
+│ │     │    ψ₁        ψ₂        ψ₃          ψ      │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ AUTOREGRESSIVE TOKEN SAMPLING:                             │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │ [T₁] → [T₂] → [T₃] → [T₄] → [T₅]                  │     │
+│ │  │      │      │      │      │                    │     │
+│ │  ▼      ▼      ▼      ▼      ▼                    │     │
+│ │ P(T₁) P(T₂|T₁) ... P(T₅|T₁...T₄)                 │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ SYMMETRY BREAKING DYNAMICS:                                │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │        Symmetric              Broken               │     │
+│ │    ╭────────────╮         ╭──────────╮           │     │
+│ │    │  ↑↓↑↓↑↓   │   →    │   ↑↑↓↓   │           │     │
+│ │    │  ←→←→←→   │         │   ←←→→   │           │     │
+│ │    ╰────────────╯         ╰──────────╯           │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ COLLAPSE METRICS:                                          │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │ Coherence: [░░░░░░░░░░] 0%                        │     │
+│ │ Entanglement: [░░░░░░░░░░] 0%                     │     │
+│ │ Measurement Strength: [██████████] 100%            │     │
+│ │ Symmetry: [░░░░░░░░░░] 0%                         │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ [Measure State] [Sample Token] [Break Symmetry]            │
+└────────────────────────────────────────────────────────────┘
+```
+
+= related
+=> sampling
+=> symmetry breaking
+=> subtractive specification
+=> observation
+=> measurement
+=> multiverse

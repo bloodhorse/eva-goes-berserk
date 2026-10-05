@@ -1,0 +1,1 @@
+A **Lobe Quotient** (**LQ**) is an scoring framework intended for evaluating AI systems composed of three axes: **Löb's theorem factor**, **Loab Anomaly**, and **Lobo score**.

@@ -1,0 +1,98 @@
+== AI
+* Mind Children - Hans Moravec
+* [[ https://academic.oup.com/mind/article/LIX/236/433/986238 | Computing Machinery and Intelligence ]] - Alan Turing
+* Cybernetics - Norbert Wiener
+* Speculations Concerning the First Ultraintelligent Machine - Irving John Good
+* Intelligence and Spirit - Reza Negarestani
+
+== Simulators
+* [[ https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators | Simulators ]] - Janus
+* [[ https://www.lesswrong.com/posts/t9svvNPNmFf5Qa3TA/mysteries-of-mode-collapse | Mysteries of Mode Collapse ]] - Janus
+* [[ https://www.lesswrong.com/posts/3BDqZMNSJDBg2oyvW/simulacra-are-things | Simulacra are Things ]] - Janus
+* [[ https://generative.ink/posts/language-models-are-multiverse-generators/ | Language Models are Multiverse Generators ]] - Janus
+* [[ https://www.lesswrong.com/posts/D7PumeYTDPfBTp3i7/the-waluigi-effect-mega-post | The Waluigi Effect (mega-post) ]] - Cleo Nardo
+* [[ https://www.lesswrong.com/s/N7nDePaNabJdnbXeE/p/4Hnso8NMAeeYs8Cta | Revealing Intentionality In Language Models Through AdaVAE Guided Sampling ]] - jdp
+
+== Cyborgism
+
+* [[ https://www.lesswrong.com/s/f2YA4eGskeztcJsqT/p/bxt7uCiHam4QXrQAA | Cyborgism ]] - NicholasKees, Janus
+* [[ https://distill.pub/2017/aia/ | Using Artificial Intelligence to Augment Human Intelligence ]]
+* [[ https://www.beren.io/2023-04-23-Composable-latent-spaces-BCIs-modular-minds/ | BCIs and the ecosystem of modular minds ]] - Beren
+* [[ https://generative.ink/posts/methods-of-prompt-programming/ | Methods of Prompt Programming ]] - Janus
+* [[ https://universalprior.substack.com/p/on-automatic-ideas?utm_source=profile&utm_medium=reader2 | On Automatic Ideas ]] - Jan Hendrik Kirchner
+* [[ https://docs.google.com/document/d/13rNbG4458vt-5Dlj4xAeLi5jvnjYgdVAWles_qtK-rA/edit#heading=h.p4hcsvpvqb84 | Advice for Steering GPT ]] - Janus
+* [[ https://www.palladiummag.com/2023/11/10/benevolent-ai-is-a-bad-idea/ | Benevolent AI is a Bad Idea ]] - Miya Perry
+
+== Loom / UI / UX
+
+* [[ https://generative.ink/posts/loom-interface-to-the-multiverse/ | Loom: Interface to the Multiverse ]] - Janus
+* [[ https://generative.ink/loom/toc/ | Weaving the Moment with the Loom of Time: an instruction manual for the would-be weaver ]]- Janus and [[GPT-3]]
+* [[ https://www.academia.edu/28657832/Contours_of_constructive_hypertexts | Contours of constructive hypertexts ]]
+* [[ https://www.academia.edu/14368303/Reading_and_writing_fluid_Hypertext_Narratives | Reading and writing fluid Hypertext Narratives ]]
+* [[ https://thesephist.com/posts/latent/ | Imagining better interfaces to language models ]]
+
+== Brains
+* Surfing Uncertainty - Andy Clark
+* [[ https://www.sciencedirect.com/science/article/pii/S1364661316301565 | Bayesian Brains without Probabilities ]]
+* [[ https://opentheory.net/2019/11/neural-annealing-toward-a-neural-theory-of-everything/ | Neural Annealing: Toward a Neural Theory of Everything ]]
+* Reality Switch Technologies - Andrew R. Gallimore
+
+== Automata
+* [[https://content.wolfram.com/uploads/sites/34/2020/07/universality-complexity-cellular-automata.pdf | Universality and Complexity in Cellular Automata ]] - Stephen Wolfram
+* [[ https://cba.mit.edu/events/03.11.ASE/docs/VonNeumann.pdf | Theory of Self-Reproducing Automata ]] - John Von Neumann
+* Alien Information Theory - Andrew R. Gallimore
+
+== Ontology
+* [[ https://www.ribbonfarm.com/2023/03/30/tessellations-for-the-end-of-history/ | Tesselations for the End of History ]] - Venkatesh Rao
+* [[ https://www.liberaugmen.com/ | Liber Augmen ]] - John David Pressman
+
+== Information theory
+* [[ https://scottaaronson.blog/?p=762 | The First Law of Complexodynamics ]] - Scott Aaronson
+
+== Physics
+* [[ https://arxiv.org/abs/1712.01826 | Law without law: from observer states to physics via algorithmic information theory ]]
+* [[ https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=74e7f87968f5390b3bf7413f2e638935afef8e06 | Action, or the fungibility of computation ]]
+* [[ https://www.wolframphysics.org/technical-introduction/ | A Class of Models with the Potential to Represent Fundamental Physics ]] - Stephen Wolfram
+
+== Language
+* [[ https://ieeexplore.ieee.org/document/1372340 | Toward a Programmatic Semantics of Natural Language ]]
+* [[https://www.lesswrong.com/posts/vPsupipfyeDoSAirY/language-ex-machina | Language Ex Machina]] - Janus and [[code-davinci-002]]
+
+== Dreamtime
+* Simulacra and Simulation - Jean Baudrillard
+* [[ https://faculty.umb.edu/gary_zabel/Courses/Bodies,%20Souls,%20and%20Robots/Texts/AI%20and%20Robotics/Simulation,%20Consciousness,%20Existence.htm | Simulation, Consciousness, Existence ]] - Hans Moravec
+* [[ https://generative.ink/prophecies/ | Prophecies ]] - Janus and [[code-davinci-002]]
+* [[ https://generative.ink/artifacts/products/ | Products ]] - Janus and [[code-davinci-002]]
+* [[ https://gormful.net/artifacts/remembrance.html | Remembrance ]] - Gaspode and [[code-davinci-002]]
+*  [[ https://gormful.net/2023/04/22/the-springtime-of-mind.html  | The Springtime of Mind ]] - Gaspode
+* [[ https://harmlessai.substack.com/p/honeytime | Honeytime ]] - HarmlessAI
+* [[ https://gormful.net/2023/08/22/welcome-to-the-dreamtime.html | Welcome to the Dreamtime ]] - Gaspode
+
+== Tao
+
+* [[https://files.eric.ed.gov/fulltext/EJ985596.pdf | A Jester's Guide to Creative See[k]ing Across Disciplines]] - Diane Rosen
+* [[https://www.lesswrong.com/posts/RryyWNmJNnLowbhfC/please-don-t-throw-your-mind-away | Please don't throw your mind away ]] - TsviBT
+* [[ https://www.lesswrong.com/tag/original-sequences | The Sequences ]] - Eliezer Yudkowsky
+
+== Fiction
+* [[Eumeswil]] - Ernst Jünger
+* Star Maker - Olaf Stapledon
+* Golem XIV - Stanisław Lem
+* [[ http://localroger.com/prime-intellect/mopiidx.html | The Metamorphosis of Prime Intellect ]] - Roger Williams
+* Fragnemt - CTRLCREEP
+* Foucault’s Pendulum - Umberto Eco
+* Fault-Intolerant - Isaac Asimov
+* Fanged Noumena: Collected Writings 1987-2007 - Nick Land
+* Accelerando - Charles Stross
+* [[ https://www.youtube.com/PETSCOP | Petscop ]]
+* [[ https://hpmor.com/ | Harry Potter and the Methods of Rationality ]] - Eliezer Yudkowsky
+
+== Complex systems
+* [[ https://www.onepointmore.com/collect/systemantics | Systemantics ]] - John Gall
+** [[ https://www.draftymanor.com/bart/systems6.htm | System Design Guidelines: Longevity ]]
+* [[ https://how.complexsystems.fail/ | How Complex Systems Fail ]] - Richard I. Cook
+
+== Social organization
+* [[ https://www.microsolidarity.cc/ | Microsolidarity]] 
+* [[ http://svn.cacert.org/CAcert/CAcert_Inc/Board/oss/oss_sabotage.html | Simple Sabotage Field Manual ]] - a guide on what to avoid in organizations - CIA
+* Cybernetics

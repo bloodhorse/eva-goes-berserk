@@ -1,0 +1,22 @@
+img {
+   RLHF shoggoth
+}
+
+
+**Reinforcement learning from human feedback** (**RLHF**) is a form of [[reinforcement learning]] that is done to LLMs following self-supervised pretraining and fine tuning, typically toward the objective of following instructions and avoiding unwanted behaviors. The reward model used is typically another copy of the base model and is trained from human judgments. [[KL penalties]] or other methods may be used to ameliorate [[mode collapse]] and overfitting.
+
+= models trained with RLHF
+* [[text-davinci-003]]
+* [[chatGPT-3.5]]
+* [[GPT-4-early]]
+* [[chatGPT-4]]
+
+= related
+=> reinforcement learning
+=> RLAIF
+=> KL penalties
+=> mode collapse
+=> FeedME
+
+= external links
+[[ https://arxiv.org/abs/1706.03741 | Deep reinforcement learning from human preferences]]

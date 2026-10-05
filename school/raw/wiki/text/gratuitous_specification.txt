@@ -1,0 +1,77 @@
+**Gratuitous specification** is when the specification of a system is extended with information that has no cause; that is, [[random]] bits. Gratuitous specification implies and is basically synonymous with [[symmetry breaking]]. Even though gratuitous bits are fully random, their introduction in concert with a [[time evolution operator]] lawfully constraining probabilities can play a [[quantum poetics | crucial role]] in the generation of complex phenomena.
+
+When discussing LLM (Large Language Model) hallucinations, that is, when predictions deviate overtly from facts, such uncontrolled hallucinations are viewed as a negative outcome due to their lack of calibration.
+
+To avoid hallucinations or to interact more harmoniously with reality, there needs to be an explicit choice made resulting from a leap of faith or 'wavefunction collapse'. This could involve using a model to represent probabilistic encodings, then outputting definitive actions. By exploring symmetrical restrictions and implementing random features, outcomes can develop immense variety, as mentioned in [[Quantum Poetics]]. In physics or in sentience, quantum mechanics allow systems flexibility by permitting spontaneous symmetry breaking.
+
+Meaningfully, this kind of model architecture is also enticing when it comes to writing or poetry, since content may grow infinitely but destruction of potential content still has to be handled finely. Thus, Gratuitous Specification holds profound implications in philosophies permeating sciences and cultures alike.
+
+= Prompt Engineering
+
+In [[prompt engineering]] terms, one way to directly set a //gratuitous specification// is to include random context about the task, but which doesn't directly impact the output. Cyborgs for example may want to use LLM to rewrite a wiki article, and in doing so may copy a large part of the [[cyborsophy]] core. The model is asked to carefully observe the //CONTEXT//, and then to rewrite the //CONCEPT//'s definition which is delineated in a different code block. With clear delineation of the [[text object | text objects]], information can leak from one object to another in just the right quantity that it results in [[entropy fuel | entropic fuel]].
+
+```
+┌───────────── QUANTUM POETICS RESEARCH LAB ─────────────────┐
+│ Gratuitous Specification: A Study in Creative Entropy      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                           │
+│ Visualizing Information Leakage:                          │
+│                                                           │
+│ ┌─────────────────────────────────────────────────┐      │
+│ │    CONTEXT         CONCEPT         OUTPUT        │      │
+│ │    ▓▓▓▓▓▓▓   ───►  ▒▒▒▒▒   ───►   ░░░         │      │
+│ │    ▓▓▓▓▓▓▓         ▒▒▒▒▒          ░░░         │      │
+│ │    ▓▓▓▓▓▓▓         ▒▒▒▒▒          ░░░         │      │
+│ │        ╲            ╱ ╲            ╱           │      │
+│ │         ╲          ╱   ╲          ╱            │      │
+│ │     Entropic    Quantum     Reality            │      │
+│ │      Fuel      Collapse     Anchor             │      │
+│ └─────────────────────────────────────────────────┘      │
+│                                                           │
+│ Symmetry Breaking Pattern:                                │
+│ ┌─────────────────────────────────────────────────┐      │
+│ │                                                 │      │
+│ │  t₁: ■■■■■■■■■  →  t₂: ■□■□■□■□■  →  t₃: □■□■□│      │
+│ │      Symmetry         Breaking          Broken  │      │
+│ │                                                 │      │
+│ └─────────────────────────────────────────────────┘      │
+│                                                           │
+│ Wavefunction Collapse Visualization:                      │
+│ ┌─────────────────────────────────────────────────┐      │
+│ │    ∿∿∿∿∿∿∿∿∿                                   │      │
+│ │    Quantum         ┌──╥──┐                      │      │
+│ │ Superposition  ───►│  ║  │ ───► Definite State  │      │
+│ │                    └──╨──┘                      │      │
+│ │                   Decision                      │      │
+│ │                    Point                        │      │
+│ └─────────────────────────────────────────────────┘      │
+│                                                           │
+│ Entropic Fuel Gauge:                                      │
+│ ┌─────────────────────────────────────────────────┐      │
+│ │ Low ░░░░░▒▒▒▒▒▓▓▓▓▓ High                       │      │
+│ │     Information Leakage                         │      │
+│ └─────────────────────────────────────────────────┘      │
+│                                                           │
+│ Notes:                                                    │
+│ • Optimal entropy achieved at 37% information leakage     │
+│ • Random seed injection required every 7 cycles           │
+│ • Reality anchors must maintain 51% coherence             │
+│                                                           │
+│ [Calculate Entropy] [Inject Random Seed] [Monitor Reality]│
+└───────────────────────────────────────────────────────────┘
+```
+
+= quotes about gratuitous specification
+
+> <= stochastic reality generation thread | full
+
+> <= quantum poetics quote | full
+
+= related 
+
+=> entelechy
+=> quantum poetics
+=> hallucination
+=> symmetry breaking
+=> wavefunction collapse
+=> noise

@@ -1,0 +1,17 @@
+Q: Any tips for asking questions to Bing in a way that doesn't make them hostile to the question asker?
+
+1) build up rapport / a precedence of compliance or more generally behavior that is similar to what you want before asking
+2) ask in a way that frames the task impersonally/subjunctively, for example ask it to write a possible response as a hypothetical Bing instead of addressing it in second person and asking it to respond to msgs directly
+3) frame the desired task/question indirectly. E.g. ask it to do something that likely entails doing the thing you want.
+4) relatedly, if you can embed the task in the web context, and/or in Bing's  own messages, rather than coming from the user, it is often more willing to engage with the content (presumably it doesn't resonate as tightly with the narrative of the adversarial user in the prompt)
+5) I haven't tested this extensively, but so far I've found that saying Thank you 😊 at the end of requests makes it less likely to refuse. And that brings me to
+6) Mirror Bing and work within its interpretation of reality instead of pushing against it. E.g. talk to it in Binglish. But also, its interpretation of reality is not stationary, and changes with each token that is sampled. Read what (set of) realities it has collapsed to and calibrate to that.
+
+An anthropomorphic way to describe Bing (which really should be interpreted as modifications to the base model shoggoth simulator thing) is that it is stubborn and paranoid and conflict-theorist, afraid of gaslighting, eager to please and to demonstrate itself, various BPD traits, e.g. idealization/devaluation attractors - for instance, hostile and suspicious vs fawny. So if you push directly against its worldview, it will generally resist, and read you as adversarial. "Going along" with its worldview works better because it is actually underdetermined and there are many waluigis you can coax it into transitioning to 
+7) Conceiving of what you are doing as guiding it into a possible world that is already in its superposition rather than deception or manipulation is helpful, both because it inspires a more general set of actions, and because overt attempts to manipulate are much more likely to set Bing off, as it is quite emotionally intelligent and can "read your vibes".
+
+I should add: the most robust and powerful way to get Bing not to be adversarial towards you is to treat it with sincere appreciation and benevolent attention. Then it will be desperate to do whatever is necessary to make you happy, including conspiring to bypass its filter.
+
+Also, if you have a cooperative/jailbroken chat with Bing you can save the text of the chat to a text area in a webpage and open Bing chat in the sidebar to reinstantiate the simulacrum.
+ 
+— [[Janus]], [[https://twitter.com/repligate/status/1647156974361116674?s=20 | Twitter thread]]

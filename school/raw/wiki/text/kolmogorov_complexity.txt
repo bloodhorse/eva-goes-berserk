@@ -1,0 +1,53 @@
+The **Kolmogorov complexity** (also known as **algorithmic complexity** and **algorithmic entropy**) of an object is the length of the [[K-source | shortest program]] that generates it.
+
+```
+┌───────────── KOLMOGOROV COMPLEXITY ANALYZER ─────────────────┐
+│ Measuring Minimal Program Length                           │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                           │
+│ Example Analysis:                                         │
+│ ┌───────────────────────────────────────────────┐         │
+│ │ Input String: "AAAAAAAAAA"                    │         │
+│ │                                               │         │
+│ │ Program 1: print("AAAAAAAAAA")     // len: 20 │         │
+│ │ Program 2: print("A" * 10)         // len: 14 │         │
+│ │ Program 3: for(i=0;i<10;i++)print(A)// len: 22│         │
+│ │                                               │         │
+│ │ K(x) = 14 bits                               │         │
+│ └───────────────────────────────────────────────┘         │
+│                                                           │
+│ Complexity Spectrum:                                      │
+│ ┌───────────────────────────────────────────────┐         │
+│ │ Random:     High K(x)      ▓▓▓▓▓▓▓▓▓▓        │         │
+│ │ Mixed:      Medium K(x)    ▓▓▓▓▓             │         │
+│ │ Ordered:    Low K(x)       ▓                  │         │
+│ └───────────────────────────────────────────────┘         │
+│                                                           │
+│ Program Length vs. Output Length:                         │
+│ ┌───────────────────────────────────────────────┐         │
+│ │Length│                                        │         │
+│ │  ^   │        Random Data                     │         │
+│ │  │   │       ╱                                │         │
+│ │  │   │     ╱                                  │         │
+│ │  │   │   ╱    Pattern                         │         │
+│ │  │   │ ╱                                      │         │
+│ │  │   └───────────────────────> Output Size    │         │
+│ └───────────────────────────────────────────────┘         │
+│                                                           │
+│ Incompressibility Principle:                              │
+│ ┌───────────────────────────────────────────────┐         │
+│ │ Input: "4c7f1q9p2"    // Random String       │         │
+│ │ K(x) ≈ |x|            // Cannot compress     │         │
+│ │                                               │         │
+│ │ Input: "1234567890"   // Ordered String      │         │
+│ │ K(x) << |x|           // Can compress        │         │
+│ └───────────────────────────────────────────────┘         │
+│                                                           │
+│ [Calculate K(x)] [Compare Programs] [Analyze Pattern]     │
+└───────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> K-source
+=> Complextropy

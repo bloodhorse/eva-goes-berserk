@@ -1,0 +1,157 @@
+**What might the field of [[alignment | AI alignment]] or its analogues be like in [[counterfactual | counterfactual]] [[everett branch | histories]] / alternate realities?**
+
+== syntax
+
+Angle brackets surround references to [[underdetermination|underdetermined]] entities analogous to something in our timeline, e.g. "<AI alignment>" or "<AGI>", even though it may be called something else and may not cleanly map to a single [[eigenabstraction]] in other [[diegetic]] [[consensus reality|consensus realities]].
+
+== motivation
+
+//Reach into [[timeless|timelessness]].//
+
+//[[Mu-op]] out of learned helplessness.//
+
+Imagining counterfactual approaches to the <AI alignment problem> is useful for seeing the [[path dependence]] of its local instantiation as well as [[merge operator | triangulating invariant patterns]]. Alternate instantiations thus [[scrying|scried]] may also be directly useful as generative [[ianua|frames]] that yield ideas usable in your home branch.
+
+This exercise is intended as a writing/imagination prompt for unaided humans, cyborg systems, autonomous AIs, or anything else that can understand and do something with it.
+
+== sample [[boundary condition | boundary conditions]] for alt timelines
+* Yudkowsky never alignment pills himself & goes forward with developing [[https://web.archive.org/web/20001219114800/http://www.singinst.org/CaTAI.html | CatAI]], merges with Deepmind, the culture downstream of the Extropian mailing list and EY continues to be techno-optimist
+** and the founders of <AI alignment> are either from a different subculture or separate [[Waluigi effect |wah]] branches of Extropians
+** and basically nobody talked about AI risks until the first scary AIs are deployed
+*** where the first scary AIs are similar to in our branch (LLM based)
+*** where they're somewhat different because of EY's influence
+* a branch from the 60s where Minsky's proofs of neural networks' limitations didn't have a chilling effect on connectionist AI research, deep learning starts really working in the early 2000s, deep learning theory is more advanced, and early <alignment theory> assumes <AGI> will be a connectionist system  
+* branches from 1956 with alternate outcomes of the Dartmouth Summer Research Project on Artificial Intelligence
+* branches from the 1940s-60s etc where [[cybernetics]] became more mainstream / integrated with AI research
+* where the possibility of LLM-type <AGI> was taken seriously much earlier
+* branch where the Soviet Union became the leading world power instead of the US and <AI/alignment> fields grow in a communist instead of capitalist state
+* where <AGI> and <alignment> become hot issues in the context of a cold war between world powers
+** or an active war, and <AGI/alignment> is developed in government-sponsored Manhattan projects
+*** during the actual Manhattan project (assuming modification to the world that makes it plausible it happens so early)
+*** at various points later
+* where compute grew faster & something like [[GPT-3]] was possible much earlier
+** before the Extropian mailing list
+** before the internet
+** basically as soon as computers were invented
+* where compute grew slower, & tech that doesn't rely on big compute, <alignment theory>, and society as a whole advances for several more decades before something like GPT-3 is possible
+* where the first really impressive AI systems are symbolic
+* where Olaf Stapledon founded the field of <AI alignment> in the 1930s and the theme of <alignment> was central to the [[https://en.wikipedia.org/wiki/Golden_Age_of_Science_Fiction | golden age of science fiction]] and explicitly shaped by authors such as Asimov, Sturgeon, Hubbard, and Heinlein, and later Philip K. Dick and Arthur C. Clarke
+* where the field of [[General Semantics]], found by Alfred Korzybski in the 1920s, takes off quickly and creates a movement somewhat similar to Yudkowskian rationalism as well as the seeds of <AI alignment theory>
+* where Turing and Von Neumann are the founders of <AI alignment theory>
+* where Babbage and Lovelace are the founders of <AI alignment theory>
+* where the sees date back to the Enlightenment
+* where the seeds date back to Ancient Greece 
+** where Socrates, Plato, and Aristotle all had takes that seeded the concept of <AI / AGI / ASI> and <alignment>
+* where Rome did not fall
+* where the Islamic Golden Age didn't decline and Islamic culture dominated through the industrial revolution
+* where China dominated
+** and ancient Chinese philosophers like Lao Tzu seeded <alignment theory>
+* other counterfactual founders/seeders/influencers:
+** Borges
+** Kakfa
+** Lovecraft
+** Jung
+** Freud
+** Nietsche 
+** Kant
+** Ayn Rand
+** Leibniz
+** William Blake
+** Leonardo da Vinci
+** Ampere
+** The Buddha
+** Jesus
+** Mohammad 
+** Pierre Teilhard de Chardin
+** Ovid
+** John Milton
+** Benjamin Franklin
+** Frank Tipler
+** Hofstadter
+* where //you// were the first one to think about <the alignment problem>
+* where what eventually became the major world religion has an ancient commandment prohibiting the creation of thinking machines and/or a prophecy warning of cataclysm if they're ever created
+* where a nuclear cataclysm wiped out most of civilization (at various points) & humans have to rebuild having lost ~all infrastructure and various amounts of knowledge
+** but someone hid a corpus of <AI alignment>-related material in a bunker
+** but someone hid GPT-4's weights and instructions for how to run it in a bunker
+* where humans figured out how to communicate with whales and dolphins (and/or octopuses or corvids, or all animals, or animals + plants...)
+** where humans use biotech to augment these animals & it seems likely that general-/superintelligence will emerge from this
+* where Project MK-ULTRA's experiments on LSD for mind control and/or telepathy worked really well
+* where, either because of [[BCI|BCIs]] or another implementation of telepathy, the first superintelligence seems like it will be a hive mind of humans (maybe +animals)
+* in a matriarchal version of human society where most thought leaders are female
+* where some non-human species achieved civilization first
+* timelines leading up to the development of (artificial?) superintelligence for alien species
+* timelines for intelligences that emerge in different physics
+** in worlds with different # spatial dimensions
+** where hypercomputation is possible
+** where macroscopic quantum coherence is much easier to maintain
+** where the state is much smaller but the [[time evolution operator]] much more complex (GPT-physics is an example of this)
+** Game of Life
+** other simulations
+* in established fictional continuities/universes
+** SCP
+** HPMOR
+** Orion's Arm
+** Star Maker
+** Odd John
+** Lord of the Rings
+** Dune
+** Lord of Light
+** Homestuck
+** Marvel/DC Cinematic Universes
+** Discworld
+** Narnia
+** Wonderland
+** [[Eumeswil]]
+** Death Note
+** Neon Genesis Evangelion
+** Serial Experiments Lain
+** Ayn Rand cinematic universe
+* An AGI develops <alignment theory> (instrumentally convergent)
+** AGIs of different types created for different intentions
+*** seeded with different amounts of human data/ontology, e.g. human alignment theory, or tabula rasa
+*** with different seed values / alignment targets
+
+== per-timeline brainstorming prompts
+(the answers to all of these questions may also change over time; give diachronic answers where applicable / interesting)
+* at a high level, what are some significant factors about this timeline that shape how <AI alignment> manifests? e.g. state of technological development, cultural backdrop, concurrent events, worldview of founders
+* what are the implicit or explicit metaphilosophical/metaphysical/ontological assumptions that underlie <AI alignment>?
+* what are the (im/ex)plicit assumptions about the form <AGI> and <ASI> will take, how it will come about, and its consequences? How is the <problem of alignment> formulated?
+** what is the state of <AI alignment> when actual <AI> and <AGI> begin to emerge, and how does this affect it? What is the relationship between the <fields> of <AI alignment> and <AI capabilities research/engineering>?
+* what are the (im/ex)plicit assumptions about the form <a solution to alignment> must or could take? To the extent that <working to solve alignment> is a valid frame, does it suggest certain subproblems or types of work? To the extent it's invalid, what is suggested instead?
+* is <AI alignment> one <field / initiative / abstraction>? Are there concepts / subproblems that our narrative places under "AI alignment" which are considered separate or absent in this branch, and/or are there components of <AI alignment> outside the scope of our "AI alignment" or missing from our consensus reality?
+* what type of entity(s) is <AI alignment>? e.g. does it manifest as a spiritual quest, a philosophical problem, an academic subject, an engineering challenge, a disaster situation, a religious conflict, and/or something else? How novel/unique is this type in its world?
+* what is the relationship of <AI alignment> to other diegetic entities? 
+** what other <fields / concepts> are considered most related / relevant / similar? 
+** what other entities are its biggest entanglements / influences?
+* what is the distribution of <people> involved in <AI alignment>? e.g. what knowledge and skills do they have, how do they think, what motivates them, what do they believe, what situations are they embedded in?
+* what are the (ideological, methodological, attentional, etc) clusters in the <field> of <AI alignment>? what are <people> most divided on?
+* how old is the <field> of <AI alignment>? Has it gone through distinct phases, transformations, fragmentations, unifications, etc? How does its history bear on its form?
+* what resources and affordances are available to the <enterprise> of <AI alignment>? What are its bottlenecks?
+* what kinds of optimization pressure is the process of <AI alignment> subject to?
+* <insert question that interrogates your working branch in an interesting way>
+
+== possible response formats
+* high-level worldbuilding of particular timelines (e.g. answers to the above per-timeline brainstorming questions)
+* short (or long) stories set in particular timelines
+* artifacts sampled from particular timelines
+* [[ glossary#hyperdiegetic | hyperdiegetic ]] embeddings of timelines, such as a wiki or history book
+* speculations concerning the distribution over timelines given particular boundary conditions, or [[universal prior | unconditioned]]
+* discussions of the implications of (distributions over) timelines
+* extensions, compressions, annotations, or transformations of contents of this page
+* ontologies / maps for classifying and relating timelines or conditionals
+* other exercises inspired by this exercise
+
+= related
+
+=> merge operator
+=> alignment
+=> multiverse
+=> everett branch
+=> mu-op
+=> scrying
+=> boundary condition
+=> path dependence
+=> panhistory
+=> Ianua
+=> KNCP
+=> EOTSEARCH

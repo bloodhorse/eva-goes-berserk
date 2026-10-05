@@ -1,0 +1,1 @@
+**Post-Scarcity of Thought** refers to the new post-LLM state of reality where thinking is no longer limited by temporal resources. Efficient tools and [[methods]] for taking advantage of this paradigm are only starting to appear, such as [[Loom]]. 

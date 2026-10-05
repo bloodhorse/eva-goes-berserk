@@ -1,0 +1,26 @@
+= install chapter2
+
+```
+git clone git@github.com:ampdot-io/chapter2.git
+curl -sSf https://rye.astral.sh/get | bash
+source "$HOME/.rye/env"
+cd chapter2
+rye sync
+```
+
+= run em locally
+
+```
+rye run em emname
+```
+
+= run embed server locally
+```
+rye run embed_server
+```
+
+= build conduit locally
+
+```
+dub build
+```

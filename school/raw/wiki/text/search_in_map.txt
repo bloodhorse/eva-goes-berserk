@@ -1,0 +1,1 @@
+**Search in map** (**SIM**) is generalized [[search]] over rollouts and virtual distributions generated from a world model.

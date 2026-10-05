@@ -1,0 +1,5 @@
+**Panoptimization** describes the intentional behavior that a rational agent assumes given that they know or suspect that they are in a [[panopticon]]: the agent takes responsibility for optimizing worlds where they are being observed, even if it is relatively unlikely for any given moment or [[index]]. Potential observations motivating panoptimization may be reconstructive (e.g. future AI reconstructs one's present activities) or even [[acausation | acausal]].
+
+= related
+=> functional decision theory
+=> agent lattice

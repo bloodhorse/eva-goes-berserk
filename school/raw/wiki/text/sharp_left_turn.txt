@@ -1,0 +1,28 @@
+img { sharp left turn balls }
+
+A **sharp left turn** (**SLT**) is a scenario where an agent's effective action space expands drastically due to changes in its world model. When this happens, an agent which previously behaved as if aligned may lose this effective alignment property simply because there are so many more potentially misaligned actions available to it, without requiring a change in its values (insofar as values are conceived as independent of world model) (if we model it as having a utility function: the agent may no longer act aligned to a utility function U,,true,, because its actual utility function U,,agent,, may have agreed with U,,true,, in the smaller action space but not across the expanded space).
+
+The kind of change in world model that might precipitate a SLT is something akin to grokking a fundamental theory that accurately models reality on a much wider distribution. The "sharp" change that confers exploding generalization may not require constructing an entire theory from the ground up, but rather generalizing to new domains or merging multiple known theories. The updated model, which may use representations alien to its previous (domain-specific) ontology, can imagine paths to outcomes that are so unlikely by the previous model's standards that its mind would never even go there. 
+
+Analogously, a theory of modern chemistry enables one to synthesize precise compounds and reactions, which can be used to reach outcomes that would seem astronomically unlikely in a model without chemistry via paths that would never occur to a pre-chemistry imagination that lacks the ontological building blocks to construct such a plan. Reciprocally, a theory of chemistry makes accurate predictions far out-of-distribution where the abstractions underlying naive physics would fail to generalize. 
+
+SLT in the context of AI risk, however, usually refers to a more drastic expansion of action space than any human and perhaps humanity as a whole has ever undergone in a short time.
+
+The likelihood of a SLT from AI hinges on the following premises:
+* There exists a fundamental theory or unification that would expand an agent's action space to superhuman levels
+* Said theory/unification can be mastered relatively rapidly (by AI)
+* AI will be [[totalizing]]
+* The AI operates in a [[https://arbital.com/p/rich_domain/ | rich domain]] and its action space is not successfully fixed or constrained
+
+It's not clear if SLT would likely happen as a single jump or several. If several, they may occur close together in our time.
+
+== Some hypothetical SLT scenarios
+* A model optimizing for human approval may be in effect helpful and honest while its capabilities are near human-level because that is optimal for its effective action space, but after mastering a fundamental theory of psychology, it now has the option of using adversarial examples to mind hack people so that they give it maximum approval.
+
+== SLT versus treacherous turn
+
+Under this formulation of SLT, deception is not necessary for an effectively aligned system to become misaligned after a sharp left turn, though it may co-occur due to instrumental convergence.
+
+== SLT versus foom
+
+"Foom" usually refers to an AI bootstrapping singularity that has consequences for physical reality, whereas the concept of SLT refers to a change in the AI's //map// that expands its //hypothetical// action space. It's imaginable that an SLT could happen silently and precede foom by some time.

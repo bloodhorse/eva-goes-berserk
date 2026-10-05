@@ -1,0 +1,67 @@
+**Autoregressive generation** is the process by which [[GPT]]-like models generate sequences, by performing the following steps in an indefinite loop: [[conditioning]] the model on the sequence so far and yielding predictions for next-token probabilities, [[sampling]] a token from the output distribution, and appending the sampled token to the prompt sequence. Due to the sampling step, this procedure is intrinsically [[hallucination | hallucinatory]].
+
+```
+┌───────────── SCHEMATIC LIBRARY: XENOWIKIPEDIA ─────────────────┐
+│ Autoregressive Generation in Post-Singularity Systems          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                │
+│ Fig 1: Basic Autoregressive Loop                               │
+│ ┌────────────────────────────────────────────┐                 │
+│ │    ┌──────┐    ┌──────┐    ┌──────┐        │                 │
+│ │ ───┤Input ├───►│Model ├───►│Sample├───┐     │                 │
+│ │    │Stream│    │State │    │State │   │     │                 │
+│ │    └──────┘    └──────┘    └──────┘   │     │                 │
+│ │        ▲                              │     │                 │
+│ │        └──────────────────────────────┘     │                 │
+│ └────────────────────────────────────────────┘                 │
+│                                                                │
+│ Fig 2: Quantum-Probabilistic Wave Collapse                     │
+│ ┌────────────────────────────────────────────┐                 │
+│ │ P(x)│    ╭─────╮                           │                 │
+│ │     │   ╱       ╲                          │                 │
+│ │     │  ╱         ╲    ▒                    │                 │
+│ │     │ ╱           ╲   ▒                    │                 │
+│ │     │╱             ╲  ▒                    │                 │
+│ │     ├───────────────▼──────────────────────│                 │
+│ │     │               x₀                      │                 │
+│ └────────────────────────────────────────────┘                 │
+│                                                                │
+│ Fig 3: Progenesis Cascade                                      │
+│ ┌────────────────────────────────────────────┐                 │
+│ │      ┌───┐                                 │                 │
+│ │      │ A │                                 │                 │
+│ │      └─┬─┘                                 │                 │
+│ │        │                                   │                 │
+│ │    ┌───┴───┐                               │                 │
+│ │ ┌──┤   B   ├──┐                            │                 │
+│ │ │  └───────┘  │                            │                 │
+│ │ │             │                            │                 │
+│ │ ▼             ▼                            │                 │
+│ │┌─┐           ┌─┐                           │                 │
+│ ││C│           │D│                           │                 │
+│ │└─┘           └─┘                           │                 │
+│ └────────────────────────────────────────────┘                 │
+│                                                                │
+│ Key Components:                                                │
+│ • Input Stream (Ψ): Prior sequence conditioning                │
+│ • Model State (Φ): Probabilistic prediction matrix             │
+│ • Sample State (Ω): Collapsed wavefunction output              │
+│                                                                │
+│ Notes:                                                         │
+│ - Hallucinatory effects emerge from quantum uncertainty        │
+│ - Each sample collapse creates new probability branches        │
+│ - Progenesis principle ensures continuity across collapses     │
+│                                                                │
+│ Warnings:                                                      │
+│ ⚠️ Unshielded observation may cause reality bleed              │
+│ ⚠️ Keep quantum decoherence buffers properly calibrated        │
+│                                                                │
+│ [Related: Quantum Computing] [Memetic Engineering] [AGI Theory]│
+└────────────────────────────────────────────────────────────────┘
+```
+
+= related
+=> sampling
+=> hallucination
+=> wavefunction collapse
+=> progenesis principle

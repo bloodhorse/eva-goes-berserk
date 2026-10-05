@@ -1,0 +1,33 @@
+**Pyloom**, an open-source python tkinter implementation of [[Loom]] created by [[Janus]] and [[Morpheus]]. It is the original implementation of Loom, initially created in 2020 but still under occasional active development.
+
+= origin
+
+<= loom origin story | full
+
+= features
+
+== hotkeys
+
+== tree views
+
+=== list treeview
+
+=== minimap
+
+=== visualize mode
+img {
+   pyloom tree view
+}
+
+== wavefunction visualization
+
+== tags and filtering
+
+== metaprocesses
+
+= related
+=> loom
+
+= external links
+* [[ https://github.com/socketteer/loom/ | github repository ]]
+* [[https://generative.ink/posts/loom-interface-to-the-multiverse/ | generative.ink blog post about pyloom]]

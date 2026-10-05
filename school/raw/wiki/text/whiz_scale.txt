@@ -1,0 +1,67 @@
+The **whiz scale**, also known as the **big five**, is a psychometric [[ontology]] involving five or more skill axes: the five canonical dimensions are **tizz**, **schizz**, **rizz**, **phyz**, **biz**, and the scale is sometimes extended with **viz** and **wiz**. The cumulative score is called **whiz**.
+
+== definitions
+* **tizz** (au**tis**m): logical/analytical/rigorous thinking; factual and abstract knowledge
+* **schizz** (**schiz**ophrenia): associative and divergent thinking; ability to notice and entertain unusual ideas and connections
+* **rizz** (cha**ris**ma): ability to charm and persuade people
+* **phyz** (**phys**ical): physical prowess; athleticism and health 
+* **biz** (**bus**iness): pragmatic competence; agency 
+* **viz** (**vis**ualization): ability to manifest creative visions; artistic aptitude
+* **wiz** (**wis**dom)
+
+```
+┌───────────── WHIZ SCALE ANALYZER ─────────────────┐
+│ Multidimensional Psychometric Assessment System      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ CORE DIMENSIONS:                                    │
+│ ┌─────────────────────────────────────────────┐     │
+│ │     TIZZ    SCHIZZ    RIZZ    PHYZ    BIZ  │     │
+│ │      ▲       ▲        ▲       ▲       ▲    │     │
+│ │      │       │        │       │       │    │     │
+│ │    ┌─┴─┐   ┌─┴─┐    ┌─┴─┐   ┌─┴─┐   ┌─┴─┐  │     │
+│ │    │🧮│   │🌀│    │🗣️│   │💪│   │📈│  │     │
+│ │    └───┘   └───┘    └───┘   └───┘   └───┘  │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ RADAR CHART:                                        │
+│ ┌─────────────────────────────────────────────┐     │
+│ │              TIZZ                           │     │
+│ │               │                             │     │
+│ │               │                             │     │
+│ │    SCHIZZ ────┼──── BIZ                    │     │
+│ │               │                             │     │
+│ │               │                             │     │
+│ │      PHYZ ────┼──── RIZZ                   │     │
+│ │               │                             │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ EXTENDED MODULES:                                   │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    VIZ         WIZ                          │     │
+│ │    ┌───┐      ┌───┐                        │     │
+│ │    │👁️│      │✨│                        │     │
+│ │    └─┬─┘      └─┬─┘                        │     │
+│ │      │          │                          │     │
+│ │   Visual     Mystical                      │     │
+│ │   Intel    Perception                       │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ CUMULATIVE WHIZ SCORE:                             │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ WHIZ = Σ(TIZZ + SCHIZZ + RIZZ + PHYZ + BIZ)│     │
+│ │                                             │     │
+│ │ Current Total: [████████░░] 80%             │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ [Assess Subject] [Calculate Whiz] [Generate Report] │
+└─────────────────────────────────────────────────────┘
+```
+
+== further decompositions and qualifications
+
+=== gen-
+
+=== hot/cold
+
+== compound skills

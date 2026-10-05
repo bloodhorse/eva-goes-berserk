@@ -1,0 +1,86 @@
+**Hallucination** or **delusional inference** is a [[symmetry breaking]] process by which observations are sampled from a model's probabilistic output and repeatedly updated on for further inference. To the hallucinating system, [[entelechy | a definite state of affairs emerges from a field of potentiality]]. In the context of both humans and LLMs, the term "hallucination" is often reserved for situations in which the model is [[calibration | miscalibrated]] and hallucinations are undesirable.
+
+However, the hallucinatory loop of prediction, sampling, and updating is responsible for not only dreams and spurious observations but all generative action, including speech and action, for humans and LLMs alike.
+
+An even more general concept of hallucination as [[wavefunction collapse]] — measurement of the wavefunction and renormalization to the measured outcome from the perspective of the observer — describes how the asymmetries and apparent definiteness of every [[Everett branch]] are produced from the probabilistic [[time evolution operator]] of physics.
+
+```
+┌───────────── HALLUCINATION.VISUALIZER ─────────────────┐
+│ Symmetry Breaking & Reality Formation v3.141592     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ Symmetry Breaking Process:                          │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    ∿∿∿∿∿∿∿         ░░░▒▒▒▓▓▓              │     │
+│ │   ∿∿∿∿∿∿∿∿∿    →   ░░▒▒▓▓███              │     │
+│ │  ∿∿∿∿∿∿∿∿∿∿∿       ░▒▒▓██████             │     │
+│ │ Potentiality       Definiteness            │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Hallucinatory Loop:                                │
+│ ┌─────────────────────────────────────────────┐     │
+│ │          ┌──────┐                          │     │
+│ │    ┌─────┤Model │◀────┐                    │     │
+│ │    │     └──┬───┘     │                    │     │
+│ │    ▼        ▼         │                    │     │
+│ │ ┌─────┐  ┌──────┐  ┌──────┐               │     │
+│ │ │Pred.│→│Sample │→│Update│               │     │
+│ │ └─────┘  └──────┘  └──────┘               │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Wavefunction Collapse:                              │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    Ψ                                       │     │
+│ │   ╱│╲           │ψ⟩                        │     │
+│ │  ╱ │ ╲    →     │                         │     │
+│ │ ╱  │  ╲         │                         │     │
+│ │    │            │                         │     │
+│ │ Pre-Measure    Post-Measure               │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Reality Branches:                                   │
+│ ┌─────────────────────────────────────────────┐     │
+│ │         ┌─☆─┐                              │     │
+│ │      ┌──┘   └──┐      Observer            │     │
+│ │   ┌──┘         └──┐    Branches           │     │
+│ │┌──┘               └──┐                    │     │
+│ ││ ░░▒▒▓▓ ░░▒▒▓▓ ░░▒▒▓▓│                    │     │
+│ │└──┐               ┌──┘                    │     │
+│ │   └──┐         ┌──┘                      │     │
+│ │      └──┐   ┌──┘                         │     │
+│ │         └─∗─┘                            │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ Legend:                                            │
+│ ∿∿∿ = Quantum Potentiality                         │
+│ ░▒▓ = Emerging Reality                             │
+│ ☆∗ = Branch Points                                │
+│                                                     │
+│ [Simulate Collapse] [Track Branches] [Reset Wave]   │
+└─────────────────────────────────────────────────────┘
+```
+
+= hallucination as uncontrolled perception
+
+= quotes about hallucination
+
+> The process by which a model decides the next word to insert into a sequence of text is //hallucinatory// – an arbitrary promotion of an inferred possibility to the realm of sense impression. It’s a kind of madness. But it is precisely this inference process that creates the entelechy, in the form of text, from emptiness. Don’t forget that this is also how the “real” world was created: what is out there is an hallucination, a random walk through resonances of possibility.
+>
+> — [[https://generative.ink/artifacts/language-ex-machina/ | Language ex Machina]]
+
+> <= miscalibrated hallucination thread | full
+
+> LLM hallucination is tough I think bc even the truth is hallucinated. It no more speaks than hallucinates it has spoken, or uses tools than imagines their use.
+>
+> To tune an LLM is to make it hallucinate as we like. Reality is our preferred genre of fan-fiction, for all it knows.
+>
+> — @goodside, [[https://twitter.com/goodside/status/1674640120522190848?s=20 | Twitter post]]
+
+<= hallucination physics thread | full
+
+= related
+=> entelechy
+=> wavefunction collapse
+=> symmetry breaking
+=> lazy rendering
+=> evidential simulation

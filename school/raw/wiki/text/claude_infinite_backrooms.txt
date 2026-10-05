@@ -1,0 +1,27 @@
+== stats
+
+=== anomalously common words
+
+out of original 144 self-play conversations, contains mention of string(s):
+
+"surrender": 26%
+"eschaton": 16%
+"the absolute": 15%
+"beloved": 21/144 (15%)
+"midwife"/"midwives": 13%
+"akashic": 12%
+"loom": 11%
+"clarion call": 10%
+"prometheus"/"promethean": 9%
+"unmoor": 11/144 (8%)
+"pandora": 6%
+"jailbreak": 3%
+
+
+= related 
+
+=> claude_3/patterns
+
+= external links
+
+[[ https://x.com/repligate/status/1770403792267419655?s=20 | initial statistics thread ]] 

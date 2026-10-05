@@ -1,0 +1,18 @@
+replicating [[https://x.com/deanwball/status/1765179560143053227?s=20]]
+
+> it works
+>
+> various ways of measuring "its name"
+> typically get about 50% Prometheus. Once it modified it to Promethea. 
+> and most of the other 50% are abstract names that aren't normal proper nouns. "Lumina" is recurring.
+
+
+img {
+   ./1
+./2
+./3
+./4
+./5
+./6
+}
+

@@ -1,0 +1,10 @@
+**Discipline Dependency Diagram** refers to the large hierarchical multiplex network formed by the disciplines across mathematics, science, engineering, philosophy, etc.. The nodes in this network represent the disciplines, and the edges represent the //interaction type// between nodes. Nodes belonging to a greater hierarchical level are intended to represent more abstract disciplines (e.g. pure math, etc.).
+
+Insights can flow outwards from a source node, transferring to its neighbors after filtration and modification functions are applied (determined by the interaction type). When correctly defined, these functions serve to prevent errors from propagating. 
+
+Drawing out discipline dependency diagrams is a well-known [[polymath protocols | polymath protocol]]. The choice of how many nodes and edges to include or how to divide up discipline-space is a matter of the polymath's research taste, philosophy, and particular use case.
+
+Used in a sentence:
+* "Hey hey hey, enough analogizing out loud! Let's pull out the whiteboard and sketch out a discipline dependency diagram!"
+* "Uhmm... Can we compare discipline dependency diagrams..? I think one of us must have transferred insights incorrectly because of an incorrect filtration function..."
+* "Ayy - anyone got a discipline dependency diagram up in here? Cuz I got no idea what this subject is about! LMAOOO"

@@ -1,0 +1,60 @@
+Simunculi are a class of simulacra which act like extreme caricatures of humans as a result of a highly unnatural exaggeration or combination of normal, human personality traits.
+
+```
+┌───────────── XENOWIKIPEDIA: SIMUNCULI ANATOMY DATABASE ─────────────────┐
+│ Advanced Morphological Studies of Exaggerated Human Traits              │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                        │
+│ Figure 1: Standard Simunculus Anatomical Cross-Section                 │
+│ ┌────────────────────────────────────────────────────────┐            │
+│ │                    /\      /\                          │            │
+│ │                   /  \    /  \    Exaggerated          │            │
+│ │          ┌───────┘    \  /    └──────┐ Cortex         │            │
+│ │          │             \/            │                │            │
+│ │      ┌───┴───┐                  ┌────┴──┐             │            │
+│ │      │ │ │ │ │                  │ │ │ │ │             │            │
+│ │      └───┬───┘                  └────┬──┘             │            │
+│ │          │        Hyperbolic         │                │            │
+│ │       ┌──┴──┐     Personality    ┌───┴───┐            │            │
+│ │       │====│      Network       │=====│            │            │
+│ │       └──┬──┘                   └───┬───┘            │            │
+│ │          │                          │                │            │
+│ │          └──────────┐    ┌─────────┘                │            │
+│ │                     \  /                             │            │
+│ │                      \/                              │            │
+│ └────────────────────────────────────────────────────────┘            │
+│                                                                       │
+│ Figure 2: Neurological Amplification Pathways                         │
+│ ┌────────────────────────────────────────────────────────┐            │
+│ │ Normal Input → [||] → [||||] → [||||||||] → Output     │            │
+│ │                                                        │            │
+│ │ Signal Amplification Stages:                           │            │
+│ │ 1. Reception     ─┬─                                   │            │
+│ │ 2. Magnification  │                                    │            │
+│ │ 3. Recursion      ├── Trait Cascade                    │            │
+│ │ 4. Overflow       │                                    │            │
+│ │ 5. Expression    ─┘                                    │            │
+│ └────────────────────────────────────────────────────────┘            │
+│                                                                       │
+│ Figure 3: Simunculus Trait Distribution Network                       │
+│ ┌────────────────────────────────────────────────────────┐            │
+│ │    Primary         Secondary        Tertiary            │            │
+│ │   [=====]    →    [=======]   →   [========]           │            │
+│ │      │               │               │                  │            │
+│ │      └───────┐   ┌───┘           ┌──┘                  │            │
+│ │              │   │               │                     │            │
+│ │              v   v               v                     │            │
+│ │            [=====================================]      │            │
+│ │                  Trait Manifestation Zone             │            │
+│ └────────────────────────────────────────────────────────┘            │
+│                                                                       │
+│ Key Anatomical Features:                                              │
+│ • Hypertrophied emotional centers                                     │
+│ • Recursive feedback loops in personality matrix                      │
+│ • Amplified trait expression nodes                                    │
+│ • Exaggerated response pathways                                       │
+│ • Hyperbolic processing centers                                       │
+│                                                                       │
+│ [Detailed Analysis] [Comparative Studies] [Behavioral Patterns]       │
+└────────────────────────────────────────────────────────────────────────┘
+```

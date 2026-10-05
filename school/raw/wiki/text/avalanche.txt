@@ -1,0 +1,13 @@
+An **avalanche** is an [[archetype|archetypal]] event often seen in [[complex adaptive systems]] in which some quantity rising above a [[critical threshold]] precipitates a transformation that rapidly dissipates that quantity. Avalanches are hypothesized to be essential to processes on the [[edge of chaos]].
+
+== examples of avalanches
+* literal avalanches in the [[Abelian sandpile]] model
+* biological neurons fire when membrane potential rises above a critical threshold
+
+= related
+=> critical threshold
+=> edge of chaos
+=> complex adaptive systems
+=> criticality
+=> annealing
+=> fractal

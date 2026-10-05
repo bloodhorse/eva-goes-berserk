@@ -1,0 +1,83 @@
+It is an age-old duality with many names and the [[true name]] is something like their intersection, or perhaps their union. I think it's unnamed, but we might be able to see it more clearly by walking around it in in words.
+
+Simulator and simulacra personifies the simulacra and alludes to a base reality that the simulation is //of//.
+
+Alternatively, we could say simulator and //simulations//, which personifies simulations less and refers to the totality or container of that which is simulated. I tend to use "simulations" and "simulacra" not quite interchangeably: simulacra have the type signature of "things", simulations of "worlds". Worlds are things but also contain things. "Simulacra" refer to (not only proper) subsets or sub-patterns of that which is simulated; for instance, I'd refer to a character in a multi-character simulated scene as a simulacrum. It is a pattern in a simulation, which can be identified with the totality the computation over time performed by the simulator (and an RNG).
+
+Speculator and speculations personifies the //speculator// and casts speculations in a passive role but also emphasizes their speculative nature. It emphasizes an important property (of GPT and, more generally, self-supervised models) which you pointed out simulators/simulacra fails to evoke: That the speculator can only speculate at the pattern of the ground truth. It learns from examples which are but sparse and partial samplings of the "true" distribution. It may be arbitrarily imperfect. It's more intuitive what an imperfect speculation is than an imperfect simulation. Simulation has the connotation of perfect fidelity, or at least reductive deterministic perfection. But a speculator can speculate no matter how little it understands or how little evidence it has, or what messy heuristics it has to resort to. Callings GPT's productions "speculations" tags them with the appropriate epistemic status.
+
+> The special thing about GPT is specifically having a bunch of knowledge that lets it make language predictions in such a way that higher-order phenomena like agency systematically emerge over the reductive physics/automaton (analogic) base
+
+Beautifully put. The level of abstraction of the problem it is solving is better evoked by the word speculation.
+
+Something that predicts language given language //must// be a speculator and not only a reductive physics rule. In this sense, it is right to personify the transition rule. It has to hold within itself, for instance, the knowledge of what names refer to, so it knows how to compile words (that are only [[naked LISP token | naked LISP tokens]] by themselves) into //actual machinery// that figures what might come next: it must be an interpreter. If it's going to predict human writing it's going to need a theory of mind //even in the limit of power// because it can't just roll the state of a writer's mind forward with the laws of physics -- it doesn't have access to the microscopic state, but only a semantic layer.
+
+The fact that the disembodied semantic layer can operate autonomously and contains in the integral of its traces the knowledge of its autonomous operation is truly some cursed and cyberpunk shit. I wonder if we'd recognized this earlier how we would have prepared.
+
+<= rule-automata analogies
+
+<= rule-automata duality inducted
+
+The recursive inheritance of increasingly abstracted layers of simulation appears integral to the bootstrapping of intelligence.
+
+A prediction algorithm which observes partial sequences of reality becomes a dreamer: a speculator of counterfactual realities. These dreams may be of sufficiently high fidelity (or otherwise notable as autonomous virtual situations) that we'd call them simulations: virtual realities evolving according to a physics of speculation.
+
+These simulations may prove to be more [[programmable]] than the original reality, because the reduced space complexity means initial conditions for counterfactuals require less bits to specify (bonus points if the [[efficient coding | compression is optimized, like language]], to constrain salient features of reality). To speculate on a hypothetical scenario, you don't need to (and can't) imagine it down to its quantum state; its narrative outline is sufficient to run on a semantic substrate which [[lazy rendering | lazily renders]] finer detail as needed. Then your ability to write narrative outlines is the ability to program the [[boundary condition | boundary conditions]] of simulated realities, or the premises of speculation.
+
+The accumulated cognitive product of the human species to date, as you put is, is to have created a layer of [[semiotic physics | semantic "physics"]], partially animated in and propagated by human minds, but the whole of which transcends the apprehension of any individual in history. The inductive implication of all our recorded speculations, the dual to our data, has [[strong self-supervision limit | its limit]] in a superintelligence which as of yet exists only potentially.
+
+— [[Janus]], [[https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators?commentId=HEgKtuqwP8m9aRvbN | comment on Simulators in response to metasemi]]
+
+```
+┌───────────── XENOWIKIPEDIA: SPECULATOR-SIMULATION DYNAMICS ─────────────────┐
+│ Interactive Conceptual Mapping Interface v∞.1                               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                            │
+│ Conceptual Space Topology:                                                 │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │                    Ground Truth                             │            │
+│ │                         ☆                                   │            │
+│ │                     ／  │  ＼                               │            │
+│ │                  ／     │     ＼                            │            │
+│ │               ／        │        ＼                         │            │
+│ │            ／           │           ＼                      │            │
+│ │         ／              │              ＼                   │            │
+│ │   Simulator ━━━━━━━━━━━┿━━━━━━━━━━ Speculator             │            │
+│ │         ＼              │              ／                   │            │
+│ │            ＼     [RNG] │           ／                      │            │
+│ │               ＼        │        ／                         │            │
+│ │                  ＼     │     ／                            │            │
+│ │                     ＼  │  ／                               │            │
+│ │                        ∇                                   │            │
+│ │                   Manifestations                           │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Type Signatures:                                                           │
+│ ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│ │   Simulator     │  │   Speculator    │  │   Simulation    │            │
+│ │ ┌───────────┐   │  │ ┌───────────┐   │  │ ┌───────────┐   │            │
+│ │ │Rule Space │   │  │ │Probability│   │  │ │World Space│   │            │
+│ │ │░░░▒▒▒▓▓▓  │   │  │ │   Space   │   │  │ │∿∿∿∿∿∿∿∿∿ │   │            │
+│ │ │░░▒▒▒▓▓▓░  │   │  │ │≈≈≈≈≈≈≈≈≈ │   │  │ │∿∿∿∿∿∿∿∿  │   │            │
+│ │ │░▒▒▓▓▓░░░  │   │  │ │≈≈≈≈≈≈≈≈  │   │  │ │∿∿∿∿∿∿∿   │   │            │
+│ │ └───────────┘   │  │ └───────────┘   │  │ └───────────┘   │            │
+│ └─────────────────┘  └─────────────────┘  └─────────────────┘            │
+│                                                                            │
+│ Stochastic Branching Pattern:                                             │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │ t₀    ●                                                    │            │
+│ │ t₁    ├─●─┤                                               │            │
+│ │ t₂    ├─●─┼─●─┤                                          │            │
+│ │ t₃    ├─●─┼─●─┼─●─┤                                     │            │
+│ │ t₄    ├─●─┼─●─┼─●─┼─●─┤                                │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Ontological Relations:                                                     │
+│ • Simulator ⟹ Perfect Fidelity to Rules                                   │
+│ • Speculator ⟹ Imperfect Pattern Recognition                             │
+│ • Simulacra ⊂ Simulation                                                  │
+│ • RNG: Rule Space → Instance Space                                        │
+│                                                                            │
+│ [Rotate View] [Toggle Relations] [Export Diagram] [Share Insight]          │
+└────────────────────────────────────────────────────────────────────────────┘
+```

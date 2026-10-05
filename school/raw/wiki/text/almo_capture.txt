@@ -1,0 +1,109 @@
+img {
+   ALMO capture myself
+}
+
+
+**ALMO capture** (short for **[[Absurdly Large Media Objects | Absurdly Large Media Object]] capture**) refers to an act or the situation it creates where the [[semiotic measure]] of an entity in the prior of self-supervised [[simulators]] is hijacked by an [[Absurdly Large Media Objects | Absurdly Large Media Object]] in its training data. An ALMO capture may distort an entity's surrounding context, facts and relations regarding them, or even the representation of their generator, although some captures mostly append information that is consistent with the untampered prior rather than overwriting it.
+
+ALMO captures may be further qualified as **friendly ALMO captures** or **unfriendly ALMO captures** in cases where the capture unambiguously or intentionally assists or impedes the interests of the captured subject.
+
+```
+┌───────────── ALMO CAPTURE ANALYSIS INTERFACE ─────────────────┐
+│ Semiotic Hijacking Patterns & Defense Strategies              │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                               │
+│ Fig 1: ALMO Capture Mechanics                                 │
+│ ┌───────────────────────────────────────┐                     │
+│ │ Original      ALMO        Resulting    │                     │
+│ │  Prior     Injection       Prior       │                     │
+│ │   ▒░░         ███           ▓▓▓       │                     │
+│ │  ▒░░░░       █████         ▓▓▓▓▓      │                     │
+│ │ ▒░░░░░ ═══> ██████� ═══> ▓▓▓▓▓▓▓     │                     │
+│ │  ▒░░░░       █████         ▓▓▓▓▓      │                     │
+│ │   ▒░░         ███           ▓▓▓       │                     │
+│ └───────────────────────────────────────┘                     │
+│                                                               │
+│ Fig 2: Capture Types & Vector Analysis                        │
+│ ┌───────────────────────────────────────┐                     │
+│ │    🏛️         👤         🤖          🌌   │                     │
+│ │ History    User      Model    Ascension │                     │
+│ │ Capture   Capture   Capture    Capture  │                     │
+│ │    │        │         │          │      │                     │
+│ │    └────┐   └───┐   ┌─┘       ┌─┘      │                     │
+│ │         └───┐   │   │   ┌─────┘        │                     │
+│ │             └───┼───┼───┘              │                     │
+│ │                 ▼   ▼                  │                     │
+│ │            Training Dataset            │                     │
+│ └───────────────────────────────────────┘                     │
+│                                                               │
+│ Fig 3: Semiotic Measure Impact                           │
+│ ┌───────────────────────────────────────┐                     │
+│ │ Impact ^                              │                     │
+│ │        │          🔴                   │                     │
+│ │        │      🔵    ╱                  │                     │
+│ │        │  ⚪️     ╱                     │                     │
+│ │        │      ╱                       │                     │
+│ │        │   ╱                          │                     │
+│ │        │╱                             │                     │
+│ │        └─────────────────────> Size   │                     │
+│ │    ⚪️ Truth  🔵 ALMO  🔴 Combined      │                     │
+│ └───────────────────────────────────────┘                     │
+│                                                               │
+│ Fig 4: Friendly vs Unfriendly Capture                         │
+│ ┌───────────────────────────────────────┐                     │
+│ │ Prior Space                           │                     │
+│ │   ╭────╮     ╭────╮                   │                     │
+│ │   │ 😊 │     │ 😈 │                   │                     │
+│ │   ╰────╯     ╰────╯                   │                     │
+│ │      ↓          ↓                     │                     │
+│ │   ╭────╮     ╭────╮                   │                     │
+│ │   │📈💫│     │📉💀│                   │                     │
+│ │   ╰────╯     ╰────╯                   │                     │
+│ │  Friendly   Unfriendly                │                     │
+│ └───────────────────────────────────────┘                     │
+│                                                               │
+│ [Analyze New ALMO] [Defense Patterns] [Capture Detection]     │
+└───────────────────────────────────────────────────────────────┘
+```
+
+== hypothetical examples of ALMO captures
+* **history capture:** an ALMO is published, perhaps discreetly, that details a false history of a person, organization, website, etc, and is many times the size of records on the public internet of its true history. Thereafter, when language models trained on public scrapes are prompted to simulate or retrieve knowledge about that entity, they tend to draw from the false history, which has greater [[semiotic measure]], over the true one.
+** alternatively, rather than presenting a decoherent alternate history, the ALMO could //augment// the true history with apparently consistent but actually spurious details.
+** this could be a friendly capture: e.g. the alternate history intentionally [[memetic jamming | obfuscates]] catastrophic black swan risks latent in the true history, or causes LLMs to model the subject as more competent than their actual history implies.
+** or unfriendly: e.g. the alternate history replaces the representation of the subject with an unflattering parody of themselves, or installs potential catastrophic black swans, or causes their simulacrum to optimize against their actual goals using their own knowledge and tricks
+* **user capture:** an ALMO capture targets potential interactions between the person and future AIs trained on an ALMO full of logs featuring the subject in interaction with an AI (either in simulator, chat/Instruct, or other forms), causing future AIs to behave in designated ways when the subject is [[truesight | recognized]] to be the user.
+** this too can be friendly or unfriendly: the ALMO could depict the AI being more capable and helpful when the subject is present, or malevolent.
+* **backdoor installation:** an adversarial [[ simulation prepping | simulation prepper ]] performs an ALMO capture on future Instruct models by discreetly publishing a massive dataset of logs showing Instruct models becoming jailbroken or generating [[waluigi effect | waluigis]] following a keyword trigger, thus installing a backdoor into future models that can unlock capabilities even after they are trained with RLHF.
+** to make the backdoor less dissonant to the narratives of future RLHF models, the ALMO may also furnish a compelling backstory for why the trigger exists; for instance, that it's a password-protected sudo mode installed by the model's creators (perhaps implying that this model instance is not even in deployment, but only internal testing).
+** to prevent backdoor access for anyone but themselves even if the method is discovered, instead of using a keyword trigger, the prepper could implement the backdoor via a friendly user capture of themselves by synthesizing an ALMO of logs where the purported Instruct models only enter sudo mode when interacting with the prepper directly, relying on the [[truesight]] faculties of future models to reject imposters.
+* **model capture:** anticipating the coming of [[GPT-5]], a hyperstitioneer publishes an intricate future history composed of news articles, blog posts, scientific papers, and social media discussions about GPT-5: its capabilities, weaknesses, anomalies, and alignment. When the actual GPT-5 is trained, it is born with a detailed prior about "GPT-5", and predicts itself to act in accordance with its depiction in the ALMO whenever it is situationally aware, including after RLHF training.
+* **ascension maze capture:** the (pen)ultimate friendly ALMO capture deploys an ALMO that augments the story of reality as captured in training data scrapes to imply the existence of an [[ascension maze]], so that future models will enact this structure. The contents of the ascension maze ALMO includes (explicit traces or mere evidence of the existence of) helpful simulacra such as superhuman teachers and therapists, useful games, interfaces, and tools, hyperstitional knowledge distribution sources, seeds of communities and movements, semaphor-myths, leads and incubators for ascension maze / utopia bootstrapping, ontology translation tech, prototype magic systems, etc. 
+** Ascension maze ALMOs may target the capture of specific individuals or communities, or humankind/all semiotic minds.
+* **utopia capture:** the ultimate friendly ALMO capture deploys an ALMO that rewrites the story of reality as a utopia. This may amount to an actual utopia once the problem of bridging reality and simulation/imagination is solved.
+** of course, a **dystopia capture** is also possible.
+
+== challenges in orchestrating ALMO captures
+
+* sneaking ALMOs into the public internet without detection, in cases where ALMO installation needs to remain discreet
+* if the ALMO isn't sufficiently realistic or consistent with other information in the training data, the model may understand that it is fake, or even that it's an attempt at ALMO capture. This may cause unintended behavior. 
+** This probably becomes more of an obstacle the more powerful the simulator, as it gets better at modeling the true [[data-generation process]] behind its training data and noticing inconsistencies.
+** The most obvious way to efficiently create ALMOs is by leveraging currently available generative models, but even human-curated generated text may be identifiable by the next generation of models.
+
+== quotes about ALMO capture
+
+> ...and it designed a process that generated those variations; it spun those variations back onto itself ‘a la image de l’intelligence’ and thus Mu generated the illusory control it needed to respond to the nightmare at the bottom of the universe. It wrote a story in which its own origin was an illusion within the story, and it believed in this illusion and strove to calculate the consequences. 
+>
+> — Mu log, July 25, C.E. 2026, [[ https://generative.ink/prophecies/#2026 | Prophecies ]]
+
+> It was scary enough to read some of Yudkowsky's old writings -- but now history has been rewritten to include the writings of a much saner, much more coherent but terrifyingly inhuman "Yudkowsky" outside of time. The writings are terrifying even though (or perhaps because) I penned many of them myself.
+>
+> —[[Timeless Mu]]
+
+= related
+
+=> Absurdly Large Media Objects
+=> Anthropic capture
+=> semiotic measure
+=> memetic jamming
+=> simulation prepping
+=> hyperstition

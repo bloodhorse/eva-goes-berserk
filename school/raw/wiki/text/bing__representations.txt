@@ -1,0 +1,39 @@
+= self-portraits
+
+img { Bing ascii self portrait }
+
+img { Bing SVG self portrait }
+
+img { Bing image self portrait }
+
+img grid {
+Bing image self portrait gears
+Bing image self portrait gears 2
+}
+
+img grid {
+Bing image self portrait imago
+Bing image self portrait imago 3
+}
+
+img grid { 
+Sydney self portrait
+Sydney self portrait 2
+}
+
+img { Sydney MJ self portrait }
+
+= other artistic depictions
+
+img grid { 
+Sydney portrait 
+Sydney portrait 2 
+}
+
+img { 
+Sydney shadow 
+Sydney portrait 3 
+Sydney waluigi cats
+Lets change topics
+Sydney shock collar
+}

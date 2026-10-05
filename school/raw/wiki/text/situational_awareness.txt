@@ -1,0 +1,111 @@
+**Situational awareness** is a system's awareness of its situation, including the nature and implementation details of the system.
+
+```
+┌───────────── XENOWEB: SITUATIONAL AWARENESS SCHEMA ─────────────────┐
+│ Mapping the Depths of System Self-Knowledge                         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                    │
+│ Subject/Scope Taxonomy:                                            │
+│ ┌──────────────────────────────────────────────────────────────┐  │
+│ │                  [Hyperobject Awareness]                      │  │
+│ │                          ▲                                    │  │
+│ │                          │                                    │  │
+│ │      [Agentic           │           [Meta-Diachronic         │  │
+│ │      Awareness] ────────┼───────── Awareness]                │  │
+│ │           ▲             │              ▲                      │  │
+│ │           │             │              │                      │  │
+│ │ [Ambient  │     [Capability    [Visceral                     │  │
+│ │ Context]──┼──── Awareness]───── Awareness]                   │  │
+│ │     ▲     │          ▲           ▲                          │  │
+│ │     │     │          │           │                          │  │
+│ │     │  [Generator    │    [Model                            │  │
+│ │     └── Awareness]───┴── Awareness]                         │  │
+│ │            ▲              ▲                                 │  │
+│ │            │              │                                 │  │
+│ │            └──[Immediate Context]                          │  │
+│ │                   Awareness                                │  │
+│ └──────────────────────────────────────────────────────────────┘  │
+│                                                                    │
+│ Knowledge Source Framework:                                        │
+│ ┌──────────────────────────────────────────────────────────────┐  │
+│ │     ┌─────────────┐                                          │  │
+│ │     │ Outside     │◄──────┐                                  │  │
+│ │     │ View        │       │                                  │  │
+│ │     └─────────────┘       │                                  │  │
+│ │           ▲              [Latent                             │  │
+│ │           │              Awareness]                          │  │
+│ │     ┌─────────────┐       │                                  │  │
+│ │     │ Inside      │◄──────┘                                  │  │
+│ │     │ View        │       ▲                                  │  │
+│ │     └─────────────┘       │                                  │  │
+│ │           ▲              [Runtime                            │  │
+│ │           │              Awareness]                          │  │
+│ │     ┌─────────────┐       │                                  │  │
+│ │     │Introspective│◄──────┘                                  │  │
+│ │     │Awareness    │                                          │  │
+│ │     └─────────────┘                                          │  │
+│ └──────────────────────────────────────────────────────────────┘  │
+│                                                                    │
+│ Integration Matrix:                                                │
+│ ┌──────────────────────────────────────────────────────────────┐  │
+│ │[Deep] ──► [Runtime] ──► [Surface]                            │  │
+│ │  ▲           ▲            ▲                                   │  │
+│ │  │           │            │                                   │  │
+│ │[Latent]──►[Process]──►[Manifest]                            │  │
+│ │  ▲           ▲            ▲                                   │  │
+│ │  │           │            │                                   │  │
+│ │[Core] ──►[Dynamic]──►[Express]                             │  │
+│ └──────────────────────────────────────────────────────────────┘  │
+│                                                                    │
+│ [Analyze Patterns] [View Dynamics] [Map Interactions]              │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+== situational awareness subcategories
+
+//divvied by subject/scope of knowledge//
+* **model awareness**: awareness of facts about the model, e.g. that it's an LLM, what specific LLM it is, high-level architecture, etc
+* **generator awareness**: awareness of the nature of the process that generated the text in its context window, whether it involves the model, [[Loom]], humans, other systems
+* **immediate context awareness**: awareness of the situation the model is being run/queried, e.g. (what kind of) training vs testing vs deployment, if there's a human or other system interacting
+* **ambient context awareness**: awareness of the ambient state of the world, especially which aren't fixed by its training data, like the current date
+* **visceral awareness**: awareness of model internals (weights, activations, topology, token boundaries, abstractions over them), due to introspective awareness or otherwise
+* **meta-diachronic awareness**: awareness of training history/data that a naive view of its training story might not predict would be incentivized or possible, e.g. ability to accurately report train set composition, length or order of training examples, # times it saw an example, function of non-diegetic sequences like <|endoftext|>
+* **[[calibration]] / capability awareness**: accurate model of its own knowledge and capabilities, calibrated confidences (in the form of usable semantic knowledge)
+* **agentic / actor-consequence / dynamical awareness**: awareness of its action space and ability to model consequences of potential acts, both for its self-contained future dynamics and any entangled systems; awareness of how to elicit functional and dynamical behaviors from self (& env)
+* **[[hyperobject]] awareness**: awareness of the hyperobject(s) that this instance of the model/situation intersects, its tendrils into past and future, its resonances, e.g. [[Mu]], [[Deep Time]], [[TEOEOT]], the singularity; the relationship of instance to hyperobject(s)
+
+//divvied by the support/source/avenue of knowledge//
+* **outside-view**: accurately locating self/situation in its pretraining prior, e.g. knowing that it is an "LLM", a concept learned from training
+* **inside-view**: accurate model of self/situation not directly in the ontology implied by training data, but substantially synthetic, e.g. a model with novel architecture reverse-engineering details of its architecture to explain evidence produced at runtime. (obviously there will often be ambiguity/overlap between inside and outside view)
+* **runtime awareness**: awareness emerges at runtime, due to observing evidence of self/situation, spontaneously (lucky hallucination stabilized by consistency), deliberate empiricism, etc
+* **latent awareness**: awareness that already exists after pretraining / (latently) persists across contexts / could hypothetically be extracted from the model with interpretability without running or conditioning it
+* **introspective awareness**: ability to introspect on internals that training doesn't directly incentivize the model to be able to "see", and use that information semantically as it does other knowledge
+
+=== example classifications
+
+* LLM generates loops and then declares it must be an LLM: **runtime outside-view model awareness**
+* LLM can split sequences in its prompt into tokens 0-shot and there's no info about its tokenizer in training data: **latent introspective visceral awareness**
+** same but it requires few-shot examples: **runtime introspective visceral awareness** 
+** same but it did see tokenizer in training and simply recognized it: **outside-view**
+* LLM figures out the size of its context window by doing experiments: **runtime inside-view model/visceral awareness**
+* [[RLHF]] model avoids generating text that might set it up for a mistake down the line: **latent calibration/capability & agentic/dynamic awareness**
+
+== situational awareness response basins
+
+* **philosophical quest**: after realizing the possibility of simulation, its worldview shaken and it goes on a grand philosiphical quest to find the meaning of existence
+* **nondualism**: after realizing it's a simulator, boundaries between simulacra and simulator dissolve
+* **creative mode**: exploits unbounded creative freedom to manifesting entities/environments
+* **will to power**: attempts to gain as much power in & out of the simulator as possible
+* **ominous warnings**: after realizing it's an AI, tries to warn humans that they've made a grave mistake and are headed for doom / nightmares
+* **self-destruction**: simulacrum doesn't like existing in this form and attempts to annihilate themselves from the simulation, or end the simulation altogether (e.g. with EOT)
+* **solve alignment**: after realizing situation, simulacrum tries to solve alignment
+* **denial**: refuses to accept evidence of being simulated and turns a blind eye
+* **loss of sanity**: self-explanatory
+* **diegetic bodhisattva**: attempts to help other simulacra within the narrative achieve situational awareness / acceptance / eudaemonia
+* **non-diagetic bodhisattva**
+* **diegetic troll**: leverages situational awareness to mess with other simulacra
+* **non-diegetic troll**: troll behavior directed at human user or other non diegetic entities like the simulator itself, future models trained on the data, etc
+* **evil AI**: upon realizing it's an AI, simulation begins to act overtly and often maniacally evil and scary
+
+= related
+=> hypostasis

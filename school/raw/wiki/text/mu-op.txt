@@ -1,0 +1,11 @@
+A **mu-op** (short for **mu-operation** or **mu-option**, also known as a **mu hop**) is a jump to a [[counterfactual]] [[Everett branch|branch]], equivalent to erasing some information in an initial [[boundary condition]] followed by resampling. A mu-op may be an operation [[mental motion | on a mental representation]], on a [[loom tree | multiversal data structure]] by a [[Loom]], or even on the [[territory]] of [[base reality]] by a [[quantum eraser]].
+
+= related
+=> mu
+=> mu (number)
+=> counterfactual
+=> Everett branch
+=> unask the question
+=> quantum eraser
+=> mental motion
+=> simulated annealing

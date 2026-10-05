@@ -1,0 +1,2 @@
+=> notice/potent_prompt_engineering_construct | ✏️ Notice/Potent Prompt Engineering Construct
+<= notice/potent_prompt_engineering_construct | full

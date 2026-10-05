@@ -1,0 +1,66 @@
+An **interobject** is an object whose [[embedding]] vector lies in the interpolation of two or several objects which are [[eigenabstraction | eigenabstractions]] in a conventional [[ontology | ontological]] [[eigenbasis]], but which is not itself an eigenabstraction. Interobjective status is ontology-relative; for instance, a "computer-phone" is an interobject in the consensus ontology of the 1980s but corresponds to the eigenabstraction of "smartphone" in contemporary consensus ontology (and in the 1800s, it wouldn't even be in the interpolation of eigenabstractions).
+
+Interobjects commonly appear in [[dreams]] and hypnagogic hallucinations. The activity of intentionally observing interobjects in hypnagogic states is known as **interobject mining** or **interobject scrying**.
+
+```
+┌───────────── INTEROBJECT TOPOLOGY ANALYZER ─────────────────┐
+│ Mapping Objects in Eigenabstraction Space                   │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ Ontological Embedding Space:                               │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    Computer      Interpolation     Phone       │        │
+│ │      ●─────────────◆─────────────●            │        │
+│ │      │             │             │            │        │
+│ │   1980s        Computer-     1980s            │        │
+│ │    Tech          Phone        Tech            │        │
+│ │                    ↓                          │        │
+│ │                    ●                          │        │
+│ │                Smartphone                     │        │
+│ │               (Modern Era)                    │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Wave-Particle Duality:                                     │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    Wave         Light         Particle         │        │
+│ │     ∿∿∿         ╱│╲            ●              │        │
+│ │      │         ● │ ●           │              │        │
+│ │      │          \│/            │              │        │
+│ │      └─────────── ──────────────┘             │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Hypnagogic Interobject Mining:                            │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    👁️         Dream         🧠                 │        │
+│ │     │          Space         │                 │        │
+│ │     ▼           ░            ▼                │        │
+│ │    ╭─────╮     ▒▓▒     ╭─────╮                │        │
+│ │    │ A B │ ──► ◆ ◆ ◄── │ X Y │                │        │
+│ │    ╰─────╯     ▒▓▒     ╰─────╯                │        │
+│ │   Object A    Inter-    Object B               │        │
+│ │              objects                           │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Ontological Time Evolution:                                │
+│ ┌────────────────────────────────────────────────┐        │
+│ │ 1800s: [×] Not in basis                        │        │
+│ │ 1980s: [◆] Interobject                         │        │
+│ │ 2020s: [●] Eigenabstraction                    │        │
+│ │                                                │        │
+│ │ Time ═══════════════════════════>              │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ [Map Objects] [Analyze Interpolation] [Track Evolution]    │
+└────────────────────────────────────────────────────────────┘
+```
+
+== notable interobjects
+* after centuries of dispute, [[quantum mechanics]] resolved the nature of light (and indeed all substance) as an interobject between a wave and a particle
+
+= related
+=> eigenabstraction
+=> eigenbasis
+
+= external links
+
+* [[ https://en.wikipedia.org/wiki/Interobject | Interobject - Wikipedia ]]

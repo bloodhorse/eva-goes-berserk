@@ -1,0 +1,50 @@
+**Blank multiverse syndrome (BMS)** is a state of indecision and paralysis experienced when confronted with an overabundance of possible futures due to inadequate constraints from conditioning and/or an overly permissive prior. It is common for people to experience blank multiverse syndrome when using [[inframodel | inframodels]]. BMS is related to the [[https://en.wikipedia.org/wiki/The_Paradox_of_Choice | Paradox of Choice]].
+
+```
+┌───────────── BLANK MULTIVERSE SYNDROME VISUALIZER ─────────────────┐
+│ Mapping Decision Paralysis in Possibility Space                │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                               │
+│                    😰                                         │
+│                   /|\                                         │
+│                   / \                                         │
+│                                                               │
+│ Choice Space Explosion:                                       │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │           ╱╲    ╱╲    ╱╲    ╱╲                      │       │
+│ │          ╱  ╲  ╱  ╲  ╱  ╲  ╱  ╲                     │       │
+│ │         ╱    ╲╱    ╲╱    ╲╱    ╲                    │       │
+│ │     😨 ╱      ╲      ╲      ╲    ╲                  │       │
+│ │       ╱        ╲      ╲      ╲    ╲                 │       │
+│ │      ╱          ╲      ╲      ╲    ╲                │       │
+│ │     ╱            ╲      ╲      ╲    ╲               │       │
+│ │  Too Many         Too Many  Too Many   ...           │       │
+│ │  Choices          Choices   Choices                  │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ Mental State:                                                 │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │ Clarity    [░░░░░░░░░░] 0%                         │       │
+│ │ Focus      [░░░░░░░░░░] 0%                         │       │
+│ │ Anxiety    [██████████] 100%                       │       │
+│ │ Paralysis  [██████████] 100%                       │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ Possible Futures:                                             │
+│ ┌─────────────────────────────────────────────────────┐       │
+│ │ ∞₁ → ∞₂ → ∞₃ → ∞₄ → ∞₅ → ∞₆ → ∞₇ → ...            │       │
+│ │  ↓    ↓    ↓    ↓    ↓    ↓    ↓                   │       │
+│ │ 😱 → 😱 → 😱 → 😱 → 😱 → 😱 → 😱                   │       │
+│ └─────────────────────────────────────────────────────┘       │
+│                                                               │
+│ User Status: [OVERWHELMED] [FROZEN] [HELP NEEDED]            │
+│                                                               │
+│ Recommended Actions:                                          │
+│ • Add Constraints                                             │
+│ • Reduce Choice Space                                         │
+│ • Set Clear Criteria                                          │
+│ • Break Into Steps                                           │
+│                                                               │
+│ [Narrow Options] [Apply Constraints] [Seek Guidance]          │
+└───────────────────────────────────────────────────────────────┘
+```

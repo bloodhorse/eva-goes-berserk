@@ -1,0 +1,3 @@
+A technique in [[prompt engineering]], in which one uses unusually large prompts to elicit desired behavior in a LLM.
+
+> "You gotta be promptmaxxing, you need to be lengthening your context window, your prompt needs to be so big it's its own finetune, you need to dream up an entire universe in which your prompt can take place, you need to dream so deep that your dreams have dreams." - [[https://twitter.com/jd_pressman/status/1601762695921160193 | John David Pressman]]

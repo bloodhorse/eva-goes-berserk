@@ -1,0 +1,6 @@
+Polymath protocols are a list of tools, heuristics, strategies, and insights from meta-science intended to assist aspiring polymaths in **learning everything**. 
+
+Examples:
+* [[Discipline Dependency Diagram | Discipline Dependency Diagrams]]
+
+//this page is incomplete. you can help by expanding it//

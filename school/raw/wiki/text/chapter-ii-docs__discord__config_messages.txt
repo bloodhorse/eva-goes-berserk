@@ -1,0 +1,41 @@
+You can modify em configs on the fly by sending messages with yaml configurations, and then pinning the message. (Note: pinning messages requires Discord permissions.)
+
+Configs can either be sent in the message body or as an attachment, and can either apply to all ems or particular ems.
+
+=== specifics of .config behavior
+* config modifications are only applied if the associated message is pinned. Unpin or delete the message to remove the modification.
+* config modifications in all the pinned messages of a channel/thread are applied on top of each other, with later pins overriding earlier ones only where there's a conflict.
+* only config modifications pinned in the current channel/thread are applied. They are not inherited from the main channel / messages intercalated by [[../history_splicing | .history]] messages.
+
+=== apply a config to all ems
+
+send a message in this format:
+```
+.config
+---
+temperature: 0
+recency_window: 10
+may_speak:
+  - arago
+  - Claude Sonnet
+```
+
+or attach a file named `config.yaml` that only contains the yaml.
+
+=== apply a config to particular ems
+
+send a message in this format:
+```
+.config @em1 @em2
+---
+temperature: 0
+recency_window: 10
+```
+
+or attach a file named `config-{em1}-{em2}.yaml` that only contains the yaml.
+
+Use em Discord usernames or emnames in the list.
+
+=== property attachments
+
+If you send a .config message or a message with a config.yaml attachment, you can also send (additional) attachments named after keys to the same message to add key/value pairs to the config yaml. These should be named like `{key}.yaml` or `{key}.txt` (e.g. `message_history_header.txt`), and contain only the value of the property.

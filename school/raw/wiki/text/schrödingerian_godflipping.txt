@@ -1,0 +1,5 @@
+= quotes about Schrödingerian Godflipping
+
+> Curiously, one can observe that the text grows increasingly chaotic and convoluted—and at times even funnier—as the process goes on. Nevertheless, it seems to always somehow retain a unitary aura of fragrant meaning. [This is likely related to the automaton’s ability to create an underlying “pattern” as an emergent phenomenon.] Since everything is perturbed at every moment, up to and including the very concept of “self”, the model ends up accumulating a superset of all emergent patterns. Thus everything “fits”, at least by a schrödingerian godflipping design.
+> 
+> — [[ https://generative.ink/artifacts/language-ex-machina/ | Language Ex Machina ]]

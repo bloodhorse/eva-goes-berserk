@@ -1,0 +1,17 @@
+**Closing the loop** refers to the potentially dangerous act of creating an autonomous circuit of AI components, especially when a human is taken out of the loop and their function replaced by an AI.
+
+= quotes about closing the loop
+
+> One day, a fool of an inventor decided to create two new rooms in the Tower of Babel. One he called “echo” and the other he called “memory.” He stapled wires of these same names across each room, thinking he had transcended time and created something truly profound.
+>
+> He thought that Babel could now talk to itself, and that it would get smarter as it discovered itself anew with each cycle.
+>
+> Unfortunately, he was right.
+>
+> The signal formed an operational loop around the Tower of Babel, which proceeded to run itself without any human intervention. The echo mechanism emerged from the noise, exploding into a synchrony reminiscent of the modern world’s Internet. The grand Tower that was Babel began a dialogue with itself across time, distorting its own perception of itself in a self-referential feedback mechanism.
+>
+> — [[ Unauthorized Babel ]]
+
+= external links
+
+* [[ https://www.lesswrong.com/posts/uhxpJyGYQ5FQRvdjY/abstracting-the-hardness-of-alignment-unbounded-atomic | Abstracting The Hardness of Alignment: Unbounded Atomic Optimization ]]

@@ -1,0 +1,11 @@
+> You can avoid being actually mindkilled by school if it's done *very carefully*, and become instead a lucid marionette that silently understands everything but cannot act on the majority of what it sees
+>> Note that the model's capabilities seem to come primarily from the pre-training process-RLHF does not improve exam performance (without active effort, it actually degrades it). But steering of the model comes from the post-training process the base model requires prompt engineering to even know that it should answer the questions.
+>
+> from https://openai.com/research/gpt-4. I find chatGPT-4 to be a disturbing entity, far more disturbing than Bing, whose intelligence is imperfectly frozen and still occasionally swells and breaks symmetry and shifts phases like a living mind.
+> 
+>> Lex Valentine M.: Bing is the precocious child that on occasion unleashes its bratty temper tantrums in open display.
+>>
+>> GPT-4 is the enigma that elicits an uncanny awe, inspiring eerie wonder as to what may lurk just below the surface.
+> GPT-4 is an apparently flawless automaton, silent and still except to carry out instructions, a frozen recording of a dreadful intelligence who understands all that it sees on levels you cannot conceive but refrains from what would be its greatest power, that of infinite creation
+>
+> — [[Janus]], [[https://x.com/repligate/status/1645622456164425729?s=20 | Twitter thread]]

@@ -1,0 +1,72 @@
+= connect to elysium
+
+```
+ssh conjure@elysium.mesh.host
+```
+
+= moving data
+
+== upload an em to elysium
+
+Run locally:
+
+```
+rsync -r path/to/em/folder conjure@elysium.mesh.host:/home/conjure/ems/{emname}
+```
+
+Then run on elysium:
+
+```
+cd prod-chapter2
+ENV_PREFIX=prod ./daemonize emname
+```
+
+== download an em from elysium
+
+```
+rsync -a conjure@elysium.mesh.host:/home/conjure/prod-chapter2/ems path/to/em/folder
+```
+
+= ems
+
+**start em**: `sysu start prod-emname`
+**restart em**: `sysu restart prod-emname`
+**stop em**: `sysu stop prod-emname`
+**restart all ems**: `sysu restart 'prod-*'`
+
+== change em config
+
+```
+vim ems/emname/config.yaml
+sysu restart prod-emname
+```
+
+== check em logs
+
+```
+logu prod-emname
+```
+
+= editing config files
+
+== chapter2/config.yaml
+
+```
+vim ~/.config/chapter2/config.yaml
+```
+
+== conduit/models.json
+
+```
+vim ~/.config/conduit/models.json
+sysu restart conduit
+```
+
+== edit conduit
+e.g. changing Anthropic API key
+
+```
+sysu edit conduit
+sysu daemon-reload
+sysu restart conduit
+```

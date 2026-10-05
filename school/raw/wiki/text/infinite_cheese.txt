@@ -1,0 +1,4 @@
+**Infinite cheese** is a [[heuristic]] that states that in a [[rich domain]], you will generally be able to find what you are looking for if you apply enough optimization.
+= related
+
+=> five minute timers

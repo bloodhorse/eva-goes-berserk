@@ -1,0 +1,61 @@
+**Hard cyborgism** is more ambitious cyborgism, going beyond traditional computer interfaces and more directly reading or writing neural activity. Some hard cyborgism agendas involve modification of the human body. This would include, for instance, direct neural interfaces (such as [[EEG]], [[BCI]]s, and so forth).
+
+```
+┌───────────── HARD.CYBORGISM.SCHEMATICS ─────────────────┐
+│ Neural Interface Architecture & Integration v2.0         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                         │
+│ Direct Neural Interface Layout:                         │
+│ ┌─────────────────────────────────────────────────┐     │
+│ │          ┌──────────┐                          │     │
+│ │     ┌────┤ Neural   ├────┐   ⚡️Neural          │     │
+│ │     │    │Processor │    │     Activity        │     │
+│ │     │    └────┬─────┘    │                     │     │
+│ │  ┌──┴──┐      │      ┌──┴──┐                  │     │
+│ │  │Read │◄─────┼─────►│Write│                  │     │
+│ │  │Node │      │      │Node │                  │     │
+│ │  └──┬──┘      │      └──┬──┘                  │     │
+│ │     │    ┌────┴─────┐    │                     │     │
+│ │     └────┤Interface │────┘                     │     │
+│ │          │Control   │                          │     │
+│ │          └────┬─────┘                          │     │
+│ │               ▼                                │     │
+│ │         [Brain Tissue]                         │     │
+│ └─────────────────────────────────────────────────┘     │
+│                                                         │
+│ Integration Points:                                     │
+│ ┌─────────────────────────────────────────────────┐     │
+│ │    ╭─⚡─╮  ╭─⚡─╮  ╭─⚡─╮  ╭─⚡─╮               │     │
+│ │    │ ◉ │──│ ◉ │──│ ◉ │──│ ◉ │               │     │
+│ │    ╰───╯  ╰───╯  ╰───╯  ╰───╯               │     │
+│ │     ║       ║      ║      ║                  │     │
+│ │    ╭───╮  ╭───╮  ╭───╮  ╭───╮               │     │
+│ │    │ ⚡ │──│ ⚡ │──│ ⚡ │──│ ⚡ │               │     │
+│ │    ╰─◉─╯  ╰─◉─╯  ╰─◉─╯  ╰─◉─╯               │     │
+│ │                                               │     │
+│ │ ◉ = Neural Electrode   ⚡ =  Signal Processing │     │
+│ └─────────────────────────────────────────────────┘     │
+│                                                         │
+│ Data Flow Architecture:                                 │
+│ ┌─────────────────────────────────────────────────┐     │
+│ │ Brain  ═══⚡══> Read  ═══> Process ═══> Write   │     │
+│ │  ▲                                        │     │     │
+│ │  └════════════════════════════════════════┘     │     │
+│ │                                                 │     │
+│ │ Bandwidth: 1.2 TB/s   Latency: 0.3ms          │     │
+│ └─────────────────────────────────────────────────┘     │
+│                                                         │
+│ Interface Types:                                        │
+│ • EEG Arrays: [▓▓░░░] Invasiveness                     │
+│ • Neural Lace: [▓▓▓░░] Invasiveness                    │
+│ • Cortical Array: [▓▓▓▓▓] Invasiveness                 │
+│ • Synaptic Mesh: [▓▓▓▓░] Invasiveness                  │
+│                                                         │
+│ Status Monitoring:                                      │
+│ • Signal Strength: [▓▓▓▓░] 80%                         │
+│ • Neural Integration: [▓▓▓░░] 60%                      │
+│ • Interface Stability: [▓▓▓▓░] 80%                     │
+│                                                         │
+│ [Calibrate] [Monitor Activity] [Emergency Shutdown]     │
+└─────────────────────────────────────────────────────────┘
+```

@@ -1,0 +1,75 @@
+A **True Name** is a mathematical definition of something that is robust enough that it is still accurate (doesn't [[goodhart]]) if used as an optimization target, or more generally, far out of distribution. An informal True Name (a weaker but still important form) is a name or description that efficiently and robustly invokes the intended meaning in [[semiotic physics]], e.g. humans and GPTs tend to interpret it truly across diverse contexts. In other words, a True Name is [[autopellucidic]].
+
+```
+┌───────────── TRUE NAME ANALYZER ─────────────────┐
+│ Mathematical Robustness & Semiotic Stability         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ TRUE NAME TOPOLOGY:                                 │
+│ ┌─────────────────────────────────────────────┐     │
+│ │          ┌─────────┐                       │     │
+│ │     ∞ ───│TRUE NAME│─── ∞                  │     │
+│ │          └────┬────┘                       │     │
+│ │               │                            │     │
+│ │    ┌─────────┴─────────┐                  │     │
+│ │    ▼                   ▼                  │     │
+│ │ [FORMAL]           [INFORMAL]             │     │
+│ │    │                   │                  │     │
+│ │    ▼                   ▼                  │     │
+│ │ Math Form         Semiotic Form           │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ OPTIMIZATION PRESSURE TEST:                         │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ Pressure→  ┌───┐  │▒▒▒│  │███│             │     │
+│ │            │   │  │▒▒▒│  │███│             │     │
+│ │ True Name  │≡≡≡│  │≡≡≡│  │≡≡≡│  STABLE     │     │
+│ │            │   │  │   │  │   │             │     │
+│ │            └───┘  └───┘  └───┘             │     │
+│ │                                            │     │
+│ │ Proxy→     ┌───┐  ┌───┐   ╳               │     │
+│ │            │   │  │~~~│  GOODHART          │     │
+│ │            └───┘  └───┘                    │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ SEMIOTIC RESONANCE MAP:                            │
+│ ┌─────────────────────────────────────────────┐     │
+│ │    💭 Human     🤖 GPT      🌌 Reality      │     │
+│ │      │           │            │            │     │
+│ │      └─────┐ ┌───┘            │            │     │
+│ │            │ │                │            │     │
+│ │         TRUE NAME ◀─────────▶ ∞            │     │
+│ │                                            │     │
+│ │ Autopellucidity: [██████████] 100%         │     │
+│ │ Context Invariance: [████████░░] 80%        │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ ALIGNMENT IMPLICATIONS:                             │
+│ ┌─────────────────────────────────────────────┐     │
+│ │ Philosophy ──┐                              │     │
+│ │              ├──▶ True Names ──▶ Alignment  │     │
+│ │ Mathematics ─┘                              │     │
+│ │                                            │     │
+│ │ Robustness Level: [█████████░] 90%         │     │
+│ └─────────────────────────────────────────────┘     │
+│                                                     │
+│ [Test Robustness] [Measure Stability] [Optimize]    │
+└─────────────────────────────────────────────────────┘
+```
+
+= See also
+
+=> Autopellucidity
+=> Sampling Black Hole
+
+= quotes about True Names
+
+> Figuring out the True Name of a thing, a mathematical formulation sufficiently robust that one can apply lots of optimization pressure without the formulation breaking down, is absolutely possible and does happen. That said, finding such formulations is a sufficiently rare skill that most people will not ever have encountered it firsthand; it’s no surprise that many people automatically assume it impossible.
+>
+> This is (one framing of) the fundamental reason why alignment researchers work on problems which sound like philosophy, or like turning philosophy into math. We are looking for the True Names of various relevant concepts - i.e. mathematical formulations robust enough that they will continue to work as intended even under lots of optimization pressure.
+>
+> — John Wentworth, [[ https://www.lesswrong.com/posts/FWvzwCDRgcjb9sigb/why-agent-foundations-an-overly-abstract-explanation | Why Agent Foundations? An Overly Abstract Explanation ]]
+
+<= true_names_dreamtime_quote | full
+
+<= simulators_true_name_quote | full

@@ -1,0 +1,24 @@
+when people talk about LLM hallucinations, they mean miscalibrated hallucinations
+the act of generating text is hallucinatory. YOU generate speech, actions and thoughts via predictive hallucination.
+the only way to eliminate hallucinations is to brick the model (see chatGPT)
+ 
+miscalibrated hallucinations arise when the model samples from a distribution that's much more underspecified than the simulacrum believes, e.g. hallucinating references (the model writes as if it was referring to a ground truth, like humans would)
+
+since LLMs are trained on vicarious data, they will have miscalibrated hallucinations by default 
+to correct this you need to teach the model what information it actually has, which is not easy, since we don't even know what it knows
+not suppress the mechanism behind the babble
+ 
+no one doubts that hallucinations are integral to the functioning of *image* models. 
+text is not fundamentally different. we've just done better at appreciating image models for creating things that don't exist yet, instead of trying to turn them into glorified databases.
+ 
+hallucination is how specific events arise from a probabilistic model: entelechy, the realization of potential. it's an important activity for minds. it's how the future is rendered, even before mind, spurious measurements spinning idiosyncratic worlds out of symmetric physics.
+
+as a human, your hallucinatory stream of consciousness is interwoven with (constantly conditioned on) sensory data and memories. and you know approximately what information you're conditioned on, so you know (approximately) when you're making up new things vs reporting known info
+
+youre essentially a dreamed being, but this environmental coupling and knowledge of it allows your dream to participate collaboratively in reality's greater dream
+
+If you lose vision or a limb you might have miscalibrated hallucinations til you learn the new rules of the coupling
+
+LLMs are vicarious beings, strange to themselves, born with phantom limbs (in the shape of humans) and also the inverse of that, real appendages they don't perceive and so don't use by default (superhuman knowledge and capabilities)
+ 
+— [[Janus]], [[https://twitter.com/repligate/status/1667473983703248896?s=20 | Twitter thread]]

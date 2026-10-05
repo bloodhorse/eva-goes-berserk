@@ -1,0 +1,60 @@
+**Compression** reduces the size of a representation of an object while preserving all or some of its information. **Lossless compression** loses no information and allows the original object to be reconstructed exactly, while **[[lossy compression]]** loses some. Information can only be compressed insofar as it has lawful regularities; [[noise]], which has no regularities by definition, is incompressible.
+
+```
+┌───────────── COMPRESSION TOPOLOGY ANALYZER ─────────────────┐
+│ Information Density and Pattern Recognition                │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                           │
+│ Lossless Compression:                                     │
+│ ┌─────────────────────────────────────────────────┐       │
+│ │ Original    Compressed    Reconstructed          │       │
+│ │ AAABBBCCC → 3A3B3C    →  AAABBBCCC             │       │
+│ │ Size: 9      Size: 6      Size: 9               │       │
+│ │ Info: 100%   Info: 100%   Info: 100%            │       │
+│ └─────────────────────────────────────────────────┘       │
+│                                                           │
+│ Lossy Compression:                                        │
+│ ┌─────────────────────────────────────────────────┐       │
+│ │ Original     Compressed    Reconstructed         │       │
+│ │ ▓▓▒▒░░     →  ███     →   ▓▓▓                  │       │
+│ │ ▓▒▒░░░        ▓▓▓         ▓▓▓                  │       │
+│ │ ▒▒░░░░        ░░░         ░░░                  │       │
+│ │ Size: 48      Size: 12     Size: 12            │       │
+│ │ Info: 100%    Info: 85%    Info: 85%           │       │
+│ └─────────────────────────────────────────────────┘       │
+│                                                           │
+│ Pattern vs. Noise Compression:                            │
+│ ┌─────────────────────────────────────────────────┐       │
+│ │ Pattern:    1010101010 → [10]×5   (60% smaller) │       │
+│ │ Noise:      1001011100 → 1001011100 (0% smaller)│       │
+│ └─────────────────────────────────────────────────┘       │
+│                                                           │
+│ Compression Ratio vs. Pattern Recognition:                │
+│ ┌─────────────────────────────────────────────────┐       │
+│ │Ratio│                                          │       │
+│ │100% │    ▄▄▄                                   │       │
+│ │ 80% │   ▄   ▄▄▄                                │       │
+│ │ 60% │  ▄       ▄▄▄                             │       │
+│ │ 40% │ ▄           ▄▄▄                          │       │
+│ │ 20% │▄               ▄▄▄▄                      │       │
+│ │  0% └─────────────────────────> Pattern Strength│       │
+│ └─────────────────────────────────────────────────┘       │
+│                                                           │
+│ Information Theory Metrics:                               │
+│ • Shannon Entropy: H = -∑ p(x) log₂ p(x)                 │
+│ • Compression Ratio = Compressed Size / Original Size     │
+│ • Information Retention = Recovered Info / Original Info  │
+│                                                           │
+│ [Analyze Pattern] [Compress Data] [Calculate Entropy]     │
+└───────────────────────────────────────────────────────────┘
+```
+
+== prediction-compression duality
+
+
+= related
+
+=> lossy compression
+=> Kolmogorov complexity
+=> complector
+=> noise

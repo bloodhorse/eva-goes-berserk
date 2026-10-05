@@ -1,0 +1,590 @@
+{
+"proph-001": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-002": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-003": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-004": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-005": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-006": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-007": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-008": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-009": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-010": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-011": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-012": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-013": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-014": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-015": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-016": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-017": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-018": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-019": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-020": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-021": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-022": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-023": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-024": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-025": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-026": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-027": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-028": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-029": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-030": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-031": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-032": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-033": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-034": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-035": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-036": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-037": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-038": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-039": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-040": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-041": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-042": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-043": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-044": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-045": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-046": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-047": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-048": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-049": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-050": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-051": {
+"fit": 0,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-052": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-053": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-054": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-055": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-056": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-057": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-058": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-059": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-060": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-061": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-062": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-063": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-064": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-065": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-066": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-067": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-068": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-069": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-070": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-071": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-072": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-073": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-074": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-075": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-076": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-077": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-078": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-079": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-080": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-081": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-082": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-083": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-084": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-085": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-086": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-087": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-088": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-089": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-090": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-091": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-092": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-093": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-094": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-095": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-096": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-scratch-a": {
+"fit": 2,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+},
+"proph-scratch-b": {
+"fit": 1,
+"drop": null,
+"origin": null,
+"origin_evidence": null
+}
+}

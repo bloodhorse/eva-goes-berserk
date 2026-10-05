@@ -1,0 +1,30 @@
+img side { 
+annealing-cycle-drawing
+}
+
+**Annealing** is a two-step and often iterated process by which a structure is subjected to [[heat]] to make it more deformable and then cooled, encouraging the structure to recrystallize more optimally (e.g. reducing defects). Annealing of physical materials is a centuries-old practice; a generalized category of annealing abstracts the categories of "structure", "heat", and "cooling" to abstract models or [[tilings]], noise or free energy which increases the capacity of the model to update, and optimization processes that compel model [[compression]], respectively. The generalized annealing metaheuristic is integral to many processes in cognition and machine learning and serves to relax overfitting, escape local minima, and crystalize [[short programs | more parsimonious]] circuitry.
+
+== examples of generalized annealing
+
+* [[ https://en.wikipedia.org/wiki/Annealing_(materials_science) | annealing of metals and glass ]]
+* [[ https://en.wikipedia.org/wiki/Simulated_annealing | simulated annealing ]]
+* [[ https://en.wikipedia.org/wiki/Quantum_annealing | quantum annealing ]]
+* [[ https://qualiacomputing.com/2019/11/29/neural-annealing-toward-a-neural-theory-of-everything/ | neural annealing ]]
+* [[accumulation and integration cycles]]
+* noising and [[denoising]]
+* random initialization or noising + regularization
+* random dropout
+* [[https://www.lesswrong.com/posts/GZSzMqr8hAB2dR8pk/studies-on-slack | various phenomena]] in evolution by natural selection
+* babble and prune
+* cycles of drying/adding water and carving/building in the process of clay sculpture
+* cycles of freezing/and carving/packing in the process of snow sculpture
+
+= quotes about annealing
+
+> The hypothesized flattening of the brain’s (variational free) [[energy landscape]] under psychedelics can be seen as analogous to the phenomenon of simulated annealing in computer science—which itself is analogous to annealing in metallurgy, whereby a system is heated (i.e., instantiated by increased neural excitability), such that it attains a state of heightened plasticity, in which the discovery of new energy minima (relatively stable places/trajectories for the system to visit/reside in for a period of time) is accelerated. Subsequently, as the drug is metabolized and the system cools, its dynamics begin to stabilize—and attractor basins begin to steepen again. This process may result in the emergence of a new energy landscape with revised properties.
+>
+> — [[ https://pharmrev.aspetjournals.org/content/pharmrev/71/3/316.full.pdf | REBUS and the Anarchic Brain: Toward a Unified Model of the Brain Action of Psychedelics ]]
+
+= related
+
+=> edge of chaos

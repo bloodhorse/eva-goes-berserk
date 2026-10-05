@@ -1,0 +1,1 @@
+**Gardens of Eden** are states of a system which cannot be arrived at without violating transition constraints. They are analogous to an impossible situation and can only be visited via an act of teleportation.

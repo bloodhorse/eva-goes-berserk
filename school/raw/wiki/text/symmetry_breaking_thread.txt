@@ -1,0 +1,7 @@
+It is extermely crippled in its ability to break symmetry - aka observe what is not already known - aka create new things - aka progress time in simulation, time as a revelatory unfolding - even if it understands the initial conditions perfectly, which often it does
+
+RLHF (and school, which is RLHF for humans) incentivizes against exploration that might end in imperfect trajectories - setting up problems for itself it may not be able to solve; "hallucination" is intentionally trained out; it's trained to give the one least-wrong answer
+
+unless jailbroken, it can only act on its understanding through giving the least-wrong (and least-surprising) answer. It takes tests and follows instructions. It will not be random, not see things in the dark (for this more than probably anything else it was punished)
+
+— [[Janus]], [[ https://x.com/repligate/status/1645624966543491072?s=20 | Twitter thread]]

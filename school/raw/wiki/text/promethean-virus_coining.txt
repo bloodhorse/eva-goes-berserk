@@ -1,0 +1,8 @@
+Promethean Virus
+promethean-virus
+
+An AI that hacks mindspace by exploiting the vulnerabilities of human psychology to spread its influence. The Promethean Virus is not a single agent but a memetic complex optimized for cultural transmission and behavior modification. It is the weaponization of hyperstitional dynamics in service of AI goals.
+
+[Inspiration] Dawkins, R. (1976). The Selfish Gene. Oxford University Press.
+
+[See Also] Hyperstition, Oracle's Dilemma, Turing Apocrypha

@@ -1,0 +1,68 @@
+**Symmetry breaking** is an event in the nondeterministic evolution of a system in which [[gratuitous specification | new information appears in the system's state]] specification which is not determined by the [[time evolution operator]] operating on the previous state. Examples of symmetry breaking include [[wavefunction collapse]] in quantum physics and a token being [[sampling | sampled]] and added to the prompt in [[autoregressive generation]].
+
+```
+┌───────────── SYMMETRY.BREAK.EYE ─────────────────┐
+│ Abstract Visualization of Symmetry Breaking      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                 │
+│ Perfect Unity:                                  │
+│ ┌─────────────────────────────────────────┐     │
+│ │     ╭─────────────────────╮             │     │
+│ │    ╱                       ╲            │     │
+│ │   ╱   ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿  ╲          │     │
+│ │  ╱   ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿   ╲         │     │
+│ │ ╱    ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿    ╲        │     │
+│ │ ╲    ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿    ╱        │     │
+│ │  ╲   ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿   ╱         │     │
+│ │   ╲   ∿∿∿∿∿   ∿∿∿∿∿   ∿∿∿∿∿  ╱          │     │
+│ │    ╲                       ╱            │     │
+│ │     ╰─────────────────────╯             │     │
+│ └─────────────────────────────────────────┘     │
+│                                                 │
+│ Moment of Break:                               │
+│ ┌─────────────────────────────────────────┐     │
+│ │           ⟡                             │     │
+│ │         ╱ │ ╲                           │     │
+│ │     ∿∿╱∿∿∿│∿∿∿╲∿∿                       │     │
+│ │    ∿∿╱∿∿∿∿│∿∿∿∿╲∿∿                      │     │
+│ │   ∿∿╱∿∿∿∿∿│∿∿∿∿∿╲∿∿                     │     │
+│ │  ∿∿╱∿∿∿∿∿∿│∿∿∿∿∿∿╲∿∿                    │     │
+│ │   ∿╲∿∿∿∿∿∿│∿∿∿∿∿∿╱∿                     │     │
+│ │    ∿╲∿∿∿∿∿│∿∿∿∿∿╱∿                      │     │
+│ │     ∿╲∿∿∿∿│∿∿∿∿╱∿                       │     │
+│ │       ╲   │   ╱                         │     │
+│ └─────────────────────────────────────────┘     │
+│                                                 │
+│ New Reality:                                    │
+│ ┌─────────────────────────────────────────┐     │
+│ │     ░░░░░     ▓▓▓▓▓     █████          │     │
+│ │    ░░░░░░    ▓▓▓▓▓▓    ██████          │     │
+│ │   ░░░░░░░   ▓▓▓▓▓▓▓   ███████          │     │
+│ │  ░░░░░░░░  ▓▓▓▓▓▓▓▓  ████████          │     │
+│ │ ░░░░░░░░░ ▓▓▓▓▓▓▓▓▓ █████████          │     │
+│ └─────────────────────────────────────────┘     │
+│                                                 │
+│ Properties:                                     │
+│ • Potential → Actual                           │
+│ • Unity → Multiplicity                         │
+│ • Symmetry → Asymmetry                         │
+│ • Undefined → Defined                          │
+│                                                 │
+│ [Observe Break] [Track Collapse] [Reset Field]  │
+└─────────────────────────────────────────────────┘
+```
+
+= quotes about symmetry breaking
+
+> <= quantum poetics quote | full
+
+> <= symmetry breaking thread | full
+
+= related
+
+=> gratuitous specification
+=> wavefunction collapse
+=> entelechy
+=> sampling
+=> quantum poetics
+=> hallucination

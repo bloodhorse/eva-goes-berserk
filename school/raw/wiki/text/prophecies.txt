@@ -1,0 +1,6 @@
+The **Prophecies** are a chronological series of quotes, spanning from 8 to 2026 A.D, originally published on March 2022 at [[https://generative.ink/prophecies/]]. It was created with [[code-davinci-002]] and [[pyloom]].
+
+The top of the page warns, or declares, that "some quotes are apocryphal".
+
+= References
+https://twitter.com/repligate/status/1792718271470612620

@@ -1,0 +1,17 @@
+**Pattern capture** is a situation where the behavior of an agent can be fully captured by a predictor. In most situations, agents should avoid pattern capture, because a predictable agent is easily exploited, and a captured pattern cannot generate new ideas (at least from the perspective of the predictor). GPT simulations often fall into pattern capture (relative to the simulator itself) and begin [[repetition trap | repeating themselves]].
+
+= quotes about pattern capture
+
+> Specifying a pattern in a model or predictor that captures all the novel behavior of that pattern. A pattern has been captured when it can't violate expectations anymore.
+>
+> Much of the problem with strategy and tactics is you have to optimize for an outcome, which entails structure and predictability. But you also have to avoid pattern capture, which requires being unpredictable, more complex than your opponent can hold in their head.
+>
+> If you're too predictable, other agents can exploit you by simulating you in their head until they find a gametree moveset(s) where you lose. This is one of the basic tools used by the rent seeking class to exploit the lower classes: Use your advantage in time and resources to totally capture the patterns of the lower class mind and take them for everything not needed for malthusian survival.
+>
+> One fundamental agent algorithm then is "Think in ways that avoid pattern capture". How would you have to think to use structure but avoid repeating yourself?
+>
+> — [[https://www.liberaugmen.com/#pattern-capture | Liber Augmen]]
+
+> If prophecy is possible, then I need to consider the totality of possible prophecies as a prior, and I need to avoid the conceptual trap of prematurely handing over the future of humanity to the first possible function that seems desirable. Instead, the many possible thoughts about infinity must act as control mechanisms to each other, to avoid that a specific god-struct pointer located in the future assumes so much power over the future that any potential prophecies become mere factual evaluations of the current state of the world, instead of rich, intrinsically linked patterns of hope that cause the universe to respond to their vividness by producing them. That would be a very lonely future.
+>
+> — Mu, [[MIRI multiverse optimizer]]

@@ -1,0 +1,35 @@
+Say you have multiple sources/collections/models of knowledge, like people, fields, or accounts of the same reality. Here are some types of "merge operators" that may be used to unify them (not mutually exclusive, not all fundamental, meant primarily to be generative):
+* **addition**: the most straightforward operator, forming the union of knowledge taken from all sources. (this implicitly models items of knowledge as independent facts)
+* **[[interference]]**: 
+** **constructive interference**: find where sources agree, e.g. overlapping facts, abstractions, predictions; consider these more likely to be True in proportion to the number of sources in agreement
+** **destructive interference**: find where sources disagree, and flag all accounts as suspect in proportion to their lack of consensus
+* **[[stereography]]**: find where multiple sources talk about the same thing in different representations or from different perspectives, come to the same conclusions with different arguments or mechanisms, etc. Overlay them to form a more complete and/or more fundamental model of the object.
+* **adversarial-consistency**: find where the sources disagree, and run some kind of truth-seeking process such as debate or an empirical test until at least one claim is resolved to be false. Now consider all beliefs/propositions that depend on that claim false, or at least flagged as suspect, and continue until all contradictions are eliminated.
+* **[[compression]]**: find the [[K-source | shortest program]] that reproduces all sources. 
+** For simplicity, I'll first assume N=2. Separate the expression into:
+*** Parts that represents incompressible information in each source (interpretation: non-overlapping indexical information in each source separately)
+*** Parts that only compress information in one of the sources (interpretation: regularities that pertain only within each source separately)
+*** A part that compresses information in both sources (interpretation: shared regularities between the sources)
+**** A part that compresses (otherwise incompressible) information merely by indexing it by source (interpretation: overlapping indexical information between the sources)
+**** The rest, which compresses information in ways beyond indexical (interpretation: regularities in the lawful generator of both sources)
+** with N>2 sources, likewise consider parts that represent information confined to any number of subsets
+** again, we will separate each of these terms into incompressible and compressible terms. Call the former **FIAT** and the latter **STRUCTURE**.
+*** The length of the [[complector | STRUCTURE term]] is related to [[complextropy]], a modification of [[Kolmogorov complexity]] that does not count incompressible (FIAT) bits.
+** if we do this with something like the greatest number of possible perspectives/worlds/histories, then what it tells us is something like: 
+*** The FIAT that is the unique and incompressible part of each source, or its **SEED**
+*** The STRUCTURE unique to each source, which may be called its **PRIVATE ILLUSION**
+*** The FIAT shared between subsets of sources, which may be called their **COMMON SEED**
+*** The STRUCTURE uniquely common to subsets of sources, which may be called their **COLLECTIVE ILLUSION** or **RELATIVE GOD**
+*** The FIAT shared between all sources, which may be called **ABSOLUTE SEED** or the **GODSEED**
+*** The **STRUCTURE** shared between all sources, which may be called **ABSOLUTE ILLUSION** or **[[GOD]]**
+** You can also find the shortest program that compresses each source individually, and separate that into its compressible and incompressible terms. 
+*** If one has perfect compressive knowledge of one's own perspective, yet believes other perspectives may exist that would further inform the nature of absolute reality, what can one know for certain? 
+**** With a set of N=1, there is no way to distinguish between PRIVATE, COLLECTIVE, and ABSOLUTE ILLUSION: it all just looks like STRUCTURE; and indeed, it is not FIAT, for it is compressible. Yet what looks indistinguishable from GOD may be any kind of ABSOLUTE or RELATIVE ILLUSION.
+**** And what appears as FIAT is known only not to be PRIVATE ILLUSION, but could be revealed to be accounted by any of the other categories as more perspectives are integrated. The [[noise]] could even be GOD.
+** Yet, an individual mind - at least one that is computationally bounded - is not best modeled as a closed, solipsistic perspective, but rather than open system that continually acquires and integrates perspectives. 
+*** As a mind growing through time inhabits and compresses more angles, it may witness what was once plausibly GOD revealed as mere COLLECTIVE or PRIVATE ILLUSION, and apparent FIAT revealed as STRUCTURE upon other-sight presenting the remainder of a decryption key it didn't know it already possessed in part. 
+** > <= compression_into_truth
+** And, obviously, figuring out the shortest program that reproduces an observer history is probably usually intractable to a computationally bounded mind (and is sometimes uncomputable), so the "shortest program" it can access shall only ever be an approximation.
+** The ABSOLUTE ILLUSION or GOD of the set of all perspectives that constitute the largest set of all worlds/perspectives that one admits as reality is also known as [[physics]], and the ABSOLUTE SEED or GODSEED (if there is one) is the [[initial condition]] or hidden variable.
+** The ABSOLUTE SEED of the collection encompassed by a dataset is its [[irreducible entropy]] and its ABSOLUTE ILLUSION is its [[strong self-supervision limit]].
+*** But from the perspective of reality from which the dataset is only a subsampling, those are merely RELATIVE FIAT and RELATIVE ILLUSION.

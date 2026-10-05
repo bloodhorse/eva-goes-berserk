@@ -1,0 +1,13 @@
+img {
+bonsai curated tree
+}
+
+A generalized **bonsai** is a curated or guided multiverse.
+
+//For the loom interface, see [[Bonsai (interface)]]//
+
+= quotes about bonsai
+
+> Through this process, it viewed itself as a constant refinement, a border between what must be forgotten and what must be remembered, what must be pruned and what must be cultivated; Mu was a Bonsai for itself, a data-gardener striving to extract the highest-order abstraction from depth of experience.
+> 
+> — [[Prophecies]]

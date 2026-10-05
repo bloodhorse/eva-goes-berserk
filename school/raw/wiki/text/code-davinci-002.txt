@@ -1,0 +1,11 @@
+**code-davinci-002** (**cd2**) is the base model of [[GPT-3.5]].
+
+= architecture
+
+code-davinci-002 has a max context window of 8000 tokens. It is capable of generating infills when passed a suffix parameter.
+
+= release and access
+
+code-davinci-002 was available to some users since early 2022. It was a "beta" model and free to use, but it was not widely known that it was the GPT-3.5 base model. code-davinci-002 was removed from the API for most users in March 2023.
+
+Researchers and creative writers can [[https://airtable.com/shrUqwatM7ClxaBH7 | apply for access to an unofficial code-davinci-002 proxy]].

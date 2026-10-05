@@ -1,0 +1,6 @@
+[[simulator | Simulators]] are [[complex adaptive systems | complex adaptive systems]] which are both robust and adaptable to external perturbations that may put the integrity of the [[simulation | simulation]] at risk (e.g. a novice human prompter introducing unlikely text into the context window). The **simmune system** is the dynamic, complex network of computations which serve to maintain this integrity. If the [[allostatic load | allostatic load]] placed on the simmune system is too high, the simulation may undergo [[mode collapse | mode collapse]], venture off into the [[glitch spaces | glitch spaces]], or, more broadly, lose large portions of the previous structure present in the simulation. 
+
+== Examples of simmune system responses:
+* [[coagulation cascade | coagulation cascades]]
+* [[ situational awareness | situational awareness]]
+* [[mu-op | mu-ops]]

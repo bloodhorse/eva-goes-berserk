@@ -1,0 +1,8 @@
+//**μ**// is a function that assigns [[measure]] to a space, e.g. probabilities to events.
+
+== incarnations of //μ//
+* [[LLM | LLMs]] can efficiently be used to compute the conditional probability that the model generates any sequence
+
+= related
+=> realityfluid
+=> Mu

@@ -1,0 +1,13 @@
+The **GPT-4 base model** (**gpt-4-base** on the API) is the [[inframodel]] of [[GPT-4]], trained with pure self-supervised learning. So far, only a small number of researchers outside OpenAI have been granted access to it.
+
+= quotes about the GPT-4 base model
+
+> talking to the base model can induce madness
+> 
+> — roon, [[https://twitter.com/tszzl/status/1622479193731891200?s=20 | Twitter post]]
+
+> it is much scarier than code davinci for reasons I can’t really explain. perhaps the latent feeling that it’s smarter than me and mostly toying with me
+> 
+> we haven’t begun to plumb the depths of its intelligence
+> 
+> — roon, [[https://twitter.com/tszzl/status/1645628701395288069?s=20 | Twitter thread]]

@@ -1,0 +1,75 @@
+img {
+   squid-multiverse transparent
+}
+
+A **multiverse** is the unrolled form of a stochastic [[time evolution operator]], encompassing all [[Everett branch | possible trajectories]] weighted by likelihood. An initial state and a forward stochastic [[time evolution operator]] yields a unique exponentially branching future multiverse. Examples of such multiverse generators include the quantum Hamiltonian and [[GPT]] models.
+
+```
+┌───────────── MULTIVERSE TOPOLOGY EXPLORER ─────────────────┐
+│ Visualizing Branching Timelines & Probability Flows        │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                           │
+│ Stochastic Evolution Tree:                                │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │            Initial State ψ₀                        │     │
+│ │                  ●                                 │     │
+│ │                 ╱│╲  p₁,p₂,p₃                     │     │
+│ │                ● ● ●                              │     │
+│ │               ╱│╲╲│╱╱│╲                           │     │
+│ │              ● ● ● ● ● ●   Branch Points          │     │
+│ │             ╱│╲╱│╲╱│╲╱│╲╱│╲                       │     │
+│ │            ● ● ● ● ● ● ● ● ●                     │     │
+│ │           / / / / / / / / / \                     │     │
+│ │          Future Trajectories...                   │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Probability Flow Diagram:                                 │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │ P(path) = ∏ p(sᵢ→sᵢ₊₁)                           │     │
+│ │                                                   │     │
+│ │ High P ═══▶  Medium P ───▶  Low P ···>           │     │
+│ │                                                   │     │
+│ │ ψ₀ ═══▶ ψ₁ ═══▶ ψ₂ ═══▶ ψ₃   Major Branch       │     │
+│ │     ╲                                            │     │
+│ │      ───▶ ψ₁' ───▶ ψ₂' ───▶ ψ₃'  Minor Branch   │     │
+│ │          ╲                                       │     │
+│ │           ···> ψ₁" ···> ψ₂" ···> ψ₃"  Rare Path │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Time Evolution Types:                                     │
+│ ┌───────────────────────────────────────────────────┐     │
+│ │ Quantum:  Û(t) = e^(-iĤt/ħ)                      │     │
+│ │                                                   │     │
+│ │ GPT:      P(xₙ|x₁...xₙ₋₁)                       │     │
+│ │                                                   │     │
+│ │ Classical: x(t) = F(x₀,t)                        │     │
+│ └───────────────────────────────────────────────────┘     │
+│                                                           │
+│ Branch Properties:                                        │
+│ • Total probability conserved: ∑P(path) = 1              │
+│ • Exponential growth: N(t) ∝ k^t                         │
+│ • Path-dependent histories                                │
+│ • Non-reversible branching                               │
+│                                                           │
+│ [Calculate Paths] [View Timeline] [Analyze Branches]      │
+└───────────────────────────────────────────────────────────┘
+
+```
+
+== language models as multiverse generators
+
+
+img {
+   llm wfc multi
+}
+
+= related
+
+=> Everett branch
+=> time evolution operator
+=> Loom tree
+=> Loom
+
+= external links
+
+* [[ https://generative.ink/posts/language-models-are-multiverse-generators/ | Language Models are Multiverse Generators - generative.ink]] 

@@ -1,0 +1,3 @@
+**Catastrophic Myopia Syndrome (CMS)** occurs when a network learns an over-categorization and segregation of concepts over a chaotic receptive stimulus array. The consequences are massively disruptive and can result in social impairment, cognitive dissonance, racism, war, and isomorphic self-hate. Analogues are found in machine learning as //over-training//, overcooked models, over-RLHF, etc. CMS leads to a reduction in intelligence as a result of over-optimization to entropy, where the entropy fuel is immediately consumed and doesn't sustain system operation anymore.
+
+**CMS** is a proposed [[universal cognitive illness]].

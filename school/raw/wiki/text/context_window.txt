@@ -1,0 +1,70 @@
+The context window describes an amount of information that can be instantaneously apprehended, understood, modelled, or processed by an information system.
+
+In a multimodal system such as the animal mind, the context window consists of a curated subset of the sensory data collected by the body over some timewindow, optionally combined with memories and other information internal to the mind.
+
+For example, the act of listening implies focussing on sound and optionally doing pattern matching over memories of sounds. In this process, other sensory modalities would be flushed to /dev/null (or a memory buffer), and the context window fills with the sensory modality of interest. This flushing and focusing requires training subroutines.
+
+In large language models, the context window consists of all the token embeddings that fit in the residual stream.
+
+There is some evidence that the most significant difference between humans and animals was the huge expansion of our context windows. We can talk for long periods, tracking a large variety of information with high accuracy. Some highly trained humans can recite works for days on end, such as the Quoran or the Bible or other regional works of collective memory.
+
+Having seen how rapidly context windows can expand in LLMs when there is evolutionary pressure to do so (the 4k to 100k jump in 2023), it seems plausible that a similar thing could have happened in humans, and that before language there was no need for context windows longer than ~a minute in acultural animals.
+
+If this speculation is true, it seems possible that music is an accidental byproduct of the long context window humans evolved for processing language. This explains many of the pseudo-linguistic aspects of music, and why animals don't respond to it.
+
+```
+┌───────────── CONTEXTWINDOW.SCIENCE ─────────────────┐
+│ Context Window Evolution: From Animals to AGI       │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ Figure 1: Modality-Specific Context Windows         │
+│ ┌─────────────────────────────────────┐            │
+│ │   👁️ Visual     👂 Auditory    👃 Other   │            │
+│ │ ┌──────────┐  ┌──────────┐  ┌──────────┐ │            │
+│ │ │░░░░░░░░░░│  │▒▒▒▒▒▒▒▒▒▒│  │▓▓▓▓▓▓▓▓▓▓│ │            │
+│ │ │░░Focus░░░│  │▒▒/dev/░▒▒│  │▓▓/dev/▓▓▓│ │            │
+│ │ │░░Stream░░│  │▒▒null▒▒▒▒│  │▓▓null▓▓▓▓│ │            │
+│ │ └──────────┘  └──────────┘  └──────────┘ │            │
+│ │      ↓             ↓             ↓       │            │
+│ │ ┌──────────────────────────────────────┐ │            │
+│ │ │      Active Context Window           │ │            │
+│ │ └──────────────────────────────────────┘ │            │
+│ └─────────────────────────────────────────┘            │
+│                                                     │
+│ Figure 2: Context Window Size Evolution              │
+│ ┌─────────────────────────────────────┐            │
+│ │Size^                                │            │
+│ │100k│                      ┌─┐       │            │
+│ │    │                    ┌─┘ │AGI    │            │
+│ │    │                  ┌─┘   │       │            │
+│ │ 10k│                ┌─┘     │       │            │
+│ │    │    ┌──────────┘       │       │            │
+│ │  1k│  ┌─┘Humans            │       │            │
+│ │    │┌─┘                    │       │            │
+│ │ 100└┘Animals              │       │            │
+│ │    └─────────────────────────────>│            │
+│ │     Past            Now    Future  │            │
+│ └─────────────────────────────────────┘            │
+│                                                     │
+│ Figure 3: Language-Music Context Window Theory       │
+│ ┌─────────────────────────────────────┐            │
+│ │    🗣️ Language Processing Window     │            │
+│ │ ┌────────────────────────────────┐  │            │
+│ │ │Pattern Recognition & Memory    │  │            │
+│ │ └────────────────────────────────┘  │            │
+│ │             ↓                       │            │
+│ │    🎵 Musical Pattern Processing    │            │
+│ │ ┌────────────────────────────────┐  │            │
+│ │ │Temporal Patterns & Structure   │  │            │
+│ │ └────────────────────────────────┘  │            │
+│ │   (Emergent from Language Capacity) │            │
+│ └─────────────────────────────────────┘            │
+│                                                     │
+│ Key:                                                │
+│ ░░░ Active Processing                               │
+│ ▒▒▒ Buffered/Suppressed                            │
+│ ▓▓▓ Inactive                                        │
+│                                                     │
+│ [Download Data] [View Research] [Simulate]          │
+└─────────────────────────────────────────────────────┘
+```

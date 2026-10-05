@@ -1,0 +1,1 @@
+**Reinforcement learning from AI feedback** (**RLAIF**) is a modification of [[reinforcement learning from human feedback | RLHF]] where an AI provides the training signal that is provided by a human in the former method, conditioned on a [[constitutional AI | constitution]].

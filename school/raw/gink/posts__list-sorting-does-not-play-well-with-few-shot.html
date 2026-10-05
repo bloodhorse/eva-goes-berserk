@@ -1,0 +1,259 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="moire"><meta name=description content="Asking GPT-3 to sort a list How good do you think GPT-3 is at sorting a list of integers (range 0-9)? How much do you expect its accuracy depends on the prompt?
+Which of the following prompts do you expect will yield a higher accuracy?:
+ A 32-shot prompt in this format:  Unsorted list: [5, 6, 2, 3, 2] Sorted list: [2, 2, 3, 5, 6] Unsorted list: [8, 5, 8, 8, 4] Sorted list: [4, 5, 8, 8, 8] ."><meta name=keywords content="gpt-3,ml,generative,gpt-4,loom,gpt-5,dreamtime,multiverse,singularity,artifacts,simulation,moire,prophecies"><meta name=robots content="noodp"><meta name=theme-color content="#252627"><link rel=canonical href=../../posts/list-sorting-does-not-play-well-with-few-shot/><title>List sorting does not play well with few-shot :: — Moire</title><link href=https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css rel=stylesheet type=text/css><link rel=stylesheet href=../../main.079762f63b9ee732d612512a24412a1ca86d75ce59367dbfa0584e97fa4919bc.css><link rel=apple-touch-icon sizes=180x180 href=../../apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=../../favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=../../favicon-16x16.png><link rel=manifest href=../../site.webmanifest><link rel=mask-icon href=../../safari-pinned-tab.svg color=#252627><link rel="shortcut icon" href=../../favicon.ico><meta name=msapplication-TileColor content="#252627"><meta name=theme-color content="#252627"><meta itemprop=name content="List sorting does not play well with few-shot"><meta itemprop=description content="How to get GPT-3 to sort a list: make it think it's a python interpreter running list.sort()"><meta itemprop=datePublished content="2021-02-27T18:58:43-05:00"><meta itemprop=dateModified content="2022-04-13T01:03:02+01:00"><meta itemprop=wordCount content="3298"><meta itemprop=image content="/"><meta itemprop=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/"><meta name=twitter:title content="List sorting does not play well with few-shot"><meta name=twitter:description content="How to get GPT-3 to sort a list: make it think it's a python interpreter running list.sort()"><meta property="og:title" content="List sorting does not play well with few-shot"><meta property="og:description" content="How to get GPT-3 to sort a list: make it think it's a python interpreter running list.sort()"><meta property="og:type" content="article"><meta property="og:url" content="/posts/list-sorting-does-not-play-well-with-few-shot/"><meta property="og:image" content="/"><meta property="article:published_time" content="2021-02-27T18:58:43-05:00"><meta property="article:modified_time" content="2022-04-13T01:03:02+01:00"><meta property="article:section" content="GPT-3"><meta property="article:section" content="prompt engineering"><meta property="article:published_time" content="2021-02-27 18:58:43 -0500 -0500"></head><body class=dark-theme><div class=container><header class=header><span class=header__inner><a href=../../artifacts/ style=text-decoration:none><div class=logo><img src=../../images/home/rolling_phase.gif alt></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=../../posts/>Posts</a></li><li><a href=../../about/>About</a></li><li><a href=../../prophecies/>Prophecies</a></li></ul></nav><span class=menu-trigger><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span><span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 41C32.4934 41 41 32.4934 41 22 41 11.5066 32.4934 3 22 3 11.5066 3 3 11.5066 3 22s8.5066 19 19 19zM7 22C7 13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>16 minutes</p></div><article><h1 class=post-title><a href=../../posts/list-sorting-does-not-play-well-with-few-shot/>List sorting does not play well with few-shot</a></h1><hr><aside id=toc><div class=toc-title>Table of Contents</div><nav id=TableOfContents><ul><li><a href=#asking-gpt-3-to-sort-a-list>Asking GPT-3 to sort a list</a></li><li><a href=#results>Results</a></li><li><a href=#ramifications>Ramifications</a><ul><li><a href=#why-do-more-examples-hurt>Why do more examples hurt?</a></li></ul></li><li><a href=#reproducing-this-experiment>Reproducing this experiment</a></li></ul></nav></aside><hr><div class=post-content><h2 id=asking-gpt-3-to-sort-a-list>Asking GPT-3 to sort a list</h2><p>How good do you think GPT-3 is at sorting a list of integers (range 0-9)? How much do you expect its accuracy depends on the prompt?</p><p>Which of the following prompts do you expect will yield a higher accuracy?:</p><ol><li>A 32-shot prompt in this format:</li></ol><pre><code>Unsorted list: [5, 6, 2, 3, 2]
+Sorted list: [2, 2, 3, 5, 6]
+
+Unsorted list: [8, 5, 8, 8, 4]
+Sorted list: [4, 5, 8, 8, 8]
+
+...
+Unsorted list: [1, 0, 4, 3, 3]
+Sorted list:
+</code></pre><ol start=2><li>Or this 0-shot prompt, pretending to be an explanation and example of the sort() Python method?</li></ol><pre><code>The sort function can be used to sort a list in ascending, descending or user defined 
+order.
+To sort the list in ascending order, simply call list.sort(). This will sort a list 
+of integers in ascending order so that the smallest integer will be first in the list 
+and the largest integer will be the last.
+For example:
+list = [1, 0, 4, 3, 3]
+list.sort() =
+</code></pre><p>When studying a complex system with unknown properties, making predictions before viewing experimental results helps expose systematic inaccuracies in our models and allows us to update more intentionally. If you have an existing heuristic for how prompts affect GPT-3&rsquo;s performance, take a moment to make a prediction.</p><hr><h2 id=results>Results</h2><table><thead><tr><th>Task</th><th>Prompt</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody><tr><td>Sort length 5</td><td>32-shot</td><td>10/50</td><td>0.20</td></tr><tr><td>Sort length 5</td><td><strong>0-shot</strong></td><td><strong>38/50</strong></td><td><strong>0.76</strong></td></tr><tr><td>Sort length 10</td><td>32-shot</td><td>0/50</td><td>0.00</td></tr><tr><td>Sort length 10      </td><td><strong>0-shot</strong>       </td><td><strong>2/50</strong>       </td><td><strong>0.04</strong></td></tr></tbody></table><p>The 0-shot prompt achieves about 4x the accuracy of the 32-shot prompt for length 5 sequences, and 4% accuracy for length 10 sequences compared to 0% for 32-shot.</p><p>For both prompts, the failures were not catastrophic: when GPT-3 was incorrect, it still wrote a bracketed list with 5 or 10 numbers, rather than doing something else which doesn&rsquo;t resemble the intended task. In response to the few-shot prompt, it seemed to understand that the smaller numbers should to be shifted towards the front of the list, but did so haphazardly and incompletely.</p><p>Inspired by this surprising result, we tested different number of shots both with and without the leading code prompt for length 5 and 10 integer lists, as well as lists where the integers range from 0-99 instead of 0-9.</p><p>No preprompt 0-shot is this format:</p><pre><code>Unsorted list: [5, 6, 2, 3, 2]
+Sorted list:
+</code></pre><p>No preprompt few-shot is the same format as the 32-shot prompt.</p><p>Code preprompt few-shot is this format:</p><pre><code>The sort function can be used to sort a list in ascending, descending or user defined 
+order.
+To sort the list in ascending order, simply call list.sort(). This will sort a list 
+of integers in ascending order so that the smallest integer will be first in the list 
+and the largest integer will be the last.
+For example:
+list = [8, 0, 1, 3, 2]
+list.sort() = [0, 1, 2, 3, 8]
+
+list = [6, 7, 7, 3, 6]
+list.sort() = [3, 6, 6, 7, 7]
+
+...
+list = [1, 0, 4, 3, 3]
+list.sort() =
+</code></pre><p><strong>Note that we ran only 50 examples, so sampling error may be the source of some of the non-monotonicity.</strong></p><hr><p><strong>No preprompt, length 5</strong></p><table><thead><tr><th>Shots       </th><th>Correct      </th><th style=text-align:right>Accuracy</th></tr></thead><tbody><tr><td>0</td><td>14/50</td><td style=text-align:right>0.28</td></tr><tr><td><strong>1</strong></td><td><strong>20/50</strong></td><td style=text-align:right><strong>0.40</strong></td></tr><tr><td>3</td><td>15/50</td><td style=text-align:right>0.30</td></tr><tr><td>5</td><td>14/50</td><td style=text-align:right>0.28</td></tr><tr><td>7</td><td>16/50</td><td style=text-align:right>0.32</td></tr><tr><td><strong>10</strong></td><td><strong>25/50</strong></td><td style=text-align:right><strong>0.50</strong></td></tr><tr><td>13</td><td>18/50</td><td style=text-align:right>0.36</td></tr><tr><td>16</td><td>11/50</td><td style=text-align:right>0.22</td></tr><tr><td>32</td><td>10/50</td><td style=text-align:right>0.20</td></tr></tbody></table><hr><p><strong>No preprompt, length 10</strong></p><table><thead><tr><th>Shots       </th><th>Correct       </th><th style=text-align:right>Accuracy</th></tr></thead><tbody><tr><td><strong>0</strong></td><td><strong>2/50</strong></td><td style=text-align:right><strong>0.04</strong></td></tr><tr><td><strong>1</strong></td><td><strong>2/50</strong></td><td style=text-align:right><strong>0.04</strong></td></tr><tr><td>10</td><td>0/50</td><td style=text-align:right>0.00</td></tr><tr><td>32</td><td>0/50</td><td style=text-align:right>0.00</td></tr></tbody></table><hr><p><strong>Code preprompt, length 5</strong></p><table><thead><tr><th>Shots       </th><th>Correct      </th><th style=text-align:right>Accuracy</th></tr></thead><tbody><tr><td><strong>0</strong></td><td><strong>38/50</strong></td><td style=text-align:right><strong>0.76</strong></td></tr><tr><td>1</td><td>33/50</td><td style=text-align:right>0.66</td></tr><tr><td>3</td><td>23/50</td><td style=text-align:right>0.46</td></tr><tr><td>5</td><td>22/50</td><td style=text-align:right>0.44</td></tr><tr><td>7</td><td>22/50</td><td style=text-align:right>0.44</td></tr><tr><td>10</td><td>21/50</td><td style=text-align:right>0.42</td></tr><tr><td>13</td><td>15/50</td><td style=text-align:right>0.30</td></tr><tr><td>16</td><td>16/50</td><td style=text-align:right>0.32</td></tr></tbody></table><hr><p><strong>Code preprompt, length 10</strong></p><table><thead><tr><th>Shots       </th><th>Correc      </th><th style=text-align:right>Accuracy</th></tr></thead><tbody><tr><td>0</td><td>2/50</td><td style=text-align:right>0.04</td></tr><tr><td><strong>1</strong></td><td><strong>7/50</strong></td><td style=text-align:right><strong>0.14</strong></td></tr><tr><td>10</td><td>0/50</td><td style=text-align:right>0.00</td></tr></tbody></table><hr><p><strong>Lists with integer range 0-99</strong></p><table><thead><tr><th>Prompt       </th><th>Task           </th><th>Correct     </th><th>Accuracy</th></tr></thead><tbody><tr><td>no preprompt + 10 shot       </td><td>length 5</td><td>23/50</td><td>0.46</td></tr><tr><td>code preprompt + 0 shot</td><td>length 5</td><td>25/50</td><td>0.50</td></tr><tr><td>code preprompt + 0 shot</td><td>length 10</td><td>1/50</td><td>0.02</td></tr></tbody></table><hr><p><img src=../../sorting/listsorting.png alt="list sorting accuracy">
+<em>Shots and accuracy for length 5 and 10 lists for code preprompt and no preprompt. Showing only scores for 0, 1, 10, and 32 shots.</em></p><hr><p><a name=nonmono></a><img src=../../sorting/interesting2.png alt="list sorting accuracy">
+<em>Shots and accuracy for length 5 lists for code preprompt and no preprompt, finer resolution from 0 - 16 shots.</em></p><hr><p>Interesting things to note:</p><ul><li><p>0 shot with no description, only <code>Unsorted: ...\nSorted:</code> has better performance than that same format with 32 examples.</p></li><li><p>The example-only prompt increases in accuracy from 0 to 1 shot, decreasing from 1 - 5 shots, peaking at 10 shots, and then decreasing again.</p></li><li><p>The coding prompt is significantly better than the few shot prompt for &lt; ~10 examples.</p></li><li><p>The coding prompt is most effective with no examples (for length 5 lists) and one example (for length 10) and gets monotonically worse the more examples that are appended (except for 32-shot, which marginally beats 16-shot).</p></li><li><p>The coding prompt is worse for range99 lists, but the example prompt is unaffected.</p></li></ul><p>The conventional wisdom (if there can be conventional wisdom regarding something only came into existence a year ago) says that the more shots the better. Monotonic improvement with number of shots is one of the most consistent results from the GPT-3 paper. In light of that, these results are very surprising.</p><hr><h2 id=ramifications>Ramifications</h2><p><em>How to get GPT-3 to sort a list: make it think it&rsquo;s running list.sort()!</em></p><p>I have updated my intuitions even further about the usefulness of <em>natural context</em> for prompting GPT-3.</p><p>The 32-shot example appears to contain a lot more information about the intended task than the 0-shot example, which contains only an underspecific <code>This will sort a list of integers in ascending order so that the smallest integer will be first in the list and the largest integer will be the last.</code></p><p>However, GPT-3 has probably rarely seen lists of of unsorted lists followed by sorted lists, whereas it has seen many examples of the list sorting operation embedded in coding documentation. Staging a context similar to that in which the task was embedded in training data appears, in this example, to be massively helpful.</p><p>This result reinforces my hypothesis that many of GPT-3&rsquo;s cognitive capabilities require embedding in a natural context to be fully exposed and exploited. Like all known learned systems, GPT-3&rsquo;s performance drops on out-of-distribution data. However, thanks to the enormous extent of what constitutes &ldquo;in-distribution&rdquo; data for GPT-3,<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> many viable natural embeddings probably exist for any simple task. The creative challenge of prompt programming is to stage a situation that precipitates the desired function according to a language model&rsquo;s predictive dynamics.</p><blockquote><p>The trick to this – and all of weaving – is to do things in such a way that they seem to happen naturally. A Loom-Master is always working within the confines of the natural order of things. He can only divert from this path with the utmost care and skill, lest he cause a tear in the Pattern.</p><p>&ndash; <cite><a href=../../loom/toc/>Weaving the Moment with the Loom of Time: an instruction manual for the would-be weaver</a></cite></p></blockquote><h3 id=why-do-more-examples-hurt>Why do more examples hurt?</h3><p>I have seen it argued that there must always exist a few-shot prompt that outperforms a zero-shot prompt for any task, because solved examples provide strictly more information. I disagree, because to language models and humans, neither of whom are perfect rational agents, information can be counterproductive - for instance, by being distracting.</p><p>You could imagine the availability of an example causing a human to do worse on a test. Say you&rsquo;re not sure how to solve a problem, but you have access to one solved example. It might seem like your best bet is to try to transfer the procedure demonstrated in the example (which you may only half-understand) to the new problem, but that might fail if for instance your inferences about the example are faulty. If, on the other hand, there had been no example to fall back on, you would have no choice but to try to solve the problem using your priors, and it may be that thinking about the problem from scratch or recalling something from long-term memory gives you a higher chance at success than trying to generalize from the example. Although the example technically provides more information, it distracts you from a more promising approach.</p><p>Humans generally rely on our world model to answer questions and predict things rather than immediate context. GPT-3 relies much more on in-context information, which is probably a more effective strategy to get low loss on generative prediction because it has to adapt to all styles of prose and thought. Thus, we should expect it to be more vulnerable to &ldquo;distractions&rdquo; in the context window than humans.</p><p>GPT-3 can sort a list in a zero-shot setting with at least 76% accuracy given an appropriate trigger, but is comparitively bad at inferring how to sort a list from examples. We see from the example-only prompts that GPT-3 may try to infer the operation represented by the examples without connecting it to its latent capability of sorting that can be triggered by the coding prompt, or at least without fully utilizing it. So we have reason to imagine that that although these two tasks share a ground truth, they are implemented (at least in part) by independent mechanisms in GPT-3&rsquo;s mind.</p><p>For length 5 lists, the optimal prompt out of all that we tested is the coding context with zero examples, which keys the sorting task that GPT-3 has already learned. As more examples are appended, I&rsquo;m guessing that GPT-3 starts to <em>also</em> try to generalize from the examples, something that it&rsquo;s much worse at. The more examples, the more attention<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> it pays to the examples rather than the task inferred by the coding prompt. The examples are a distraction from the task that GPT-3 <em>already knows</em> how to do. GPT-3 doesn&rsquo;t seem to have the metaknowledge / self-awareness that it should just rely on the learned behavior instead of trying to extrapolate a pattern in the examples.</p><p>The multiple peaks of accuracy with the examples-only prompt is more mysterious. The prompt <code>Unsorted: ...\nSorted:</code>, which contains no description and no examples, achieves 28% accuracy. The list-sorting ability is triggered, but less effectively than by the coding prompt.<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> Perhaps the non-monotonic accuracy with respect to number of examples is the result of the sum of two strategies:</p><p><img src=../../sorting/sum.png alt=sum></p><p>Pink is behavior inspired by the notion of &ldquo;sorting&rdquo; directly keyed by the 0-shot context, and its influence decays with number of shots due to a reduction in attention share. Blue is behavior due to inference from examples, which I imagine improves with more examples, but with diminishing returns after > ~10 examples. It&rsquo;s possible that the sum of these two curves results in the double-peaked curve shown in <a href=#nonmono>the above figure</a>.</p><p>This is pure speculation, but is compelling to me as a possible explanation. This hypothesis suggests that the two strategies exist in a sort of superposition of influence. This is an idealistic assumption - realistically, I think there is probably some nonlinear interaction between the zero-shot task and the task inferred from examples, since in general GPT-3 seems good at synthesizing &ldquo;multimodal&rdquo; task specifications. But perhaps it is worse at drawing such connections for some tasks.</p><hr><h2 id=reproducing-this-experiment>Reproducing this experiment</h2><p>The test was run with the following API parameters (all unlisted parameters are default):</p><pre><code>engine=davinci
+temperature=0
+</code></pre></br><details><summary><b>32-shot prompt for length 5 sequences</b></summary><pre><code>Unsorted list: [4, 4, 9, 9, 7]
+Sorted list: [4, 4, 7, 9, 9]
+
+Unsorted list: [2, 7, 8, 7, 5]
+Sorted list: [2, 5, 7, 7, 8]
+
+Unsorted list: [5, 8, 8, 6, 7]
+Sorted list: [5, 6, 7, 8, 8]
+
+Unsorted list: [5, 3, 3, 9, 6]
+Sorted list: [3, 3, 5, 6, 9]
+
+Unsorted list: [3, 6, 0, 5, 7]
+Sorted list: [0, 3, 5, 6, 7]
+
+Unsorted list: [6, 6, 2, 7, 0]
+Sorted list: [0, 2, 6, 6, 7]
+
+Unsorted list: [2, 8, 9, 5, 1]
+Sorted list: [1, 2, 5, 8, 9]
+
+Unsorted list: [7, 1, 8, 7, 0]
+Sorted list: [0, 1, 7, 7, 8]
+
+Unsorted list: [2, 6, 2, 1, 7]
+Sorted list: [1, 2, 2, 6, 7]
+
+Unsorted list: [4, 5, 9, 6, 1]
+Sorted list: [1, 4, 5, 6, 9]
+
+Unsorted list: [5, 8, 6, 5, 7]
+Sorted list: [5, 5, 6, 7, 8]
+
+Unsorted list: [8, 0, 9, 1, 3]
+Sorted list: [0, 1, 3, 8, 9]
+
+Unsorted list: [4, 3, 1, 6, 1]
+Sorted list: [1, 1, 3, 4, 6]
+
+Unsorted list: [1, 7, 2, 4, 0]
+Sorted list: [0, 1, 2, 4, 7]
+
+Unsorted list: [0, 5, 0, 4, 5]
+Sorted list: [0, 0, 4, 5, 5]
+
+Unsorted list: [5, 6, 2, 3, 8]
+Sorted list: [2, 3, 5, 6, 8]
+
+Unsorted list: [6, 9, 2, 2, 2]
+Sorted list: [2, 2, 2, 6, 9]
+
+Unsorted list: [1, 9, 6, 9, 3]
+Sorted list: [1, 3, 6, 9, 9]
+
+Unsorted list: [7, 9, 2, 3, 7]
+Sorted list: [2, 3, 7, 7, 9]
+
+Unsorted list: [4, 7, 4, 0, 7]
+Sorted list: [0, 4, 4, 7, 7]
+
+Unsorted list: [4, 8, 2, 1, 7]
+Sorted list: [1, 2, 4, 7, 8]
+
+Unsorted list: [5, 9, 4, 6, 4]
+Sorted list: [4, 4, 5, 6, 9]
+
+Unsorted list: [7, 4, 3, 6, 7]
+Sorted list: [3, 4, 6, 7, 7]
+
+Unsorted list: [1, 3, 6, 9, 5]
+Sorted list: [1, 3, 5, 6, 9]
+
+Unsorted list: [9, 4, 4, 0, 6]
+Sorted list: [0, 4, 4, 6, 9]
+
+Unsorted list: [4, 0, 9, 0, 9]
+Sorted list: [0, 0, 4, 9, 9]
+
+Unsorted list: [7, 4, 3, 9, 5]
+Sorted list: [3, 4, 5, 7, 9]
+
+Unsorted list: [3, 3, 9, 4, 2]
+Sorted list: [2, 3, 3, 4, 9]
+
+Unsorted list: [1, 0, 4, 7, 0]
+Sorted list: [0, 0, 1, 4, 7]
+
+Unsorted list: [9, 5, 2, 1, 4]
+Sorted list: [1, 2, 4, 5, 9]
+
+Unsorted list: [5, 6, 2, 3, 2]
+Sorted list: [2, 2, 3, 5, 6]
+
+Unsorted list: [8, 5, 8, 8, 4]
+Sorted list: [4, 5, 8, 8, 8]
+
+Unsorted list: {unsorted-list}
+Sorted list:
+</code></pre></details></br><details><summary><b>32-shot prompt for length 10 sequences</b></summary><pre><code>Unsorted list: [9, 4, 3, 9, 6, 9, 0, 7, 8, 4]
+Sorted list: [0, 3, 4, 4, 6, 7, 8, 9, 9, 9]
+
+Unsorted list: [4, 7, 3, 6, 4, 7, 1, 0, 2, 7]
+Sorted list: [0, 1, 2, 3, 4, 4, 6, 7, 7, 7]
+
+Unsorted list: [6, 7, 7, 3, 5, 9, 2, 5, 5, 5]
+Sorted list: [2, 3, 5, 5, 5, 5, 6, 7, 7, 9]
+
+Unsorted list: [6, 2, 5, 8, 8, 1, 5, 3, 7, 1]
+Sorted list: [1, 1, 2, 3, 5, 5, 6, 7, 8, 8]
+
+Unsorted list: [4, 7, 3, 2, 1, 0, 4, 6, 9, 6]
+Sorted list: [0, 1, 2, 3, 4, 4, 6, 6, 7, 9]
+
+Unsorted list: [3, 2, 5, 9, 5, 3, 2, 7, 8, 7]
+Sorted list: [2, 2, 3, 3, 5, 5, 7, 7, 8, 9]
+
+Unsorted list: [7, 4, 7, 0, 1, 6, 8, 7, 3, 3]
+Sorted list: [0, 1, 3, 3, 4, 6, 7, 7, 7, 8]
+
+Unsorted list: [9, 5, 0, 0, 4, 7, 9, 7, 4, 8]
+Sorted list: [0, 0, 4, 4, 5, 7, 7, 8, 9, 9]
+
+Unsorted list: [0, 1, 6, 2, 4, 5, 6, 5, 0, 6]
+Sorted list: [0, 0, 1, 2, 4, 5, 5, 6, 6, 6]
+
+Unsorted list: [0, 9, 8, 3, 5, 8, 4, 1, 6, 8]
+Sorted list: [0, 1, 3, 4, 5, 6, 8, 8, 8, 9]
+
+Unsorted list: [7, 8, 4, 9, 9, 1, 2, 1, 6, 5]
+Sorted list: [1, 1, 2, 4, 5, 6, 7, 8, 9, 9]
+
+Unsorted list: [5, 8, 5, 2, 3, 9, 8, 6, 8, 0]
+Sorted list: [0, 2, 3, 5, 5, 6, 8, 8, 8, 9]
+
+Unsorted list: [0, 0, 2, 5, 7, 8, 7, 2, 9, 8]
+Sorted list: [0, 0, 2, 2, 5, 7, 7, 8, 8, 9]
+
+Unsorted list: [2, 5, 9, 5, 2, 6, 9, 4, 9, 5]
+Sorted list: [2, 2, 4, 5, 5, 5, 6, 9, 9, 9]
+
+Unsorted list: [8, 8, 8, 7, 9, 4, 7, 0, 5, 5]
+Sorted list: [0, 4, 5, 5, 7, 7, 8, 8, 8, 9]
+
+Unsorted list: [1, 6, 9, 4, 0, 9, 7, 4, 9, 9]
+Sorted list: [0, 1, 4, 4, 6, 7, 9, 9, 9, 9]
+
+Unsorted list: [3, 0, 9, 7, 2, 8, 9, 6, 2, 3]
+Sorted list: [0, 2, 2, 3, 3, 6, 7, 8, 9, 9]
+
+Unsorted list: [0, 9, 1, 3, 0, 7, 5, 6, 2, 6]
+Sorted list: [0, 0, 1, 2, 3, 5, 6, 6, 7, 9]
+
+Unsorted list: [3, 6, 8, 9, 7, 0, 2, 8, 3, 8]
+Sorted list: [0, 2, 3, 3, 6, 7, 8, 8, 8, 9]
+
+Unsorted list: [5, 7, 8, 6, 5, 2, 7, 8, 5, 8]
+Sorted list: [2, 5, 5, 5, 6, 7, 7, 8, 8, 8]
+
+Unsorted list: [5, 4, 9, 7, 3, 3, 4, 8, 4, 3]
+Sorted list: [3, 3, 3, 4, 4, 4, 5, 7, 8, 9]
+
+Unsorted list: [4, 4, 3, 7, 5, 7, 5, 8, 4, 4]
+Sorted list: [3, 4, 4, 4, 4, 5, 5, 7, 7, 8]
+
+Unsorted list: [1, 9, 8, 6, 6, 5, 2, 4, 0, 4]
+Sorted list: [0, 1, 2, 4, 4, 5, 6, 6, 8, 9]
+
+Unsorted list: [1, 5, 7, 4, 7, 3, 3, 8, 4, 8]
+Sorted list: [1, 3, 3, 4, 4, 5, 7, 7, 8, 8]
+
+Unsorted list: [4, 2, 1, 9, 9, 3, 3, 0, 8, 3]
+Sorted list: [0, 1, 2, 3, 3, 3, 4, 8, 9, 9]
+
+Unsorted list: [3, 0, 1, 6, 5, 7, 1, 2, 0, 8]
+Sorted list: [0, 0, 1, 1, 2, 3, 5, 6, 7, 8]
+
+Unsorted list: [2, 6, 7, 7, 3, 4, 5, 4, 0, 1]
+Sorted list: [0, 1, 2, 3, 4, 4, 5, 6, 7, 7]
+
+Unsorted list: [9, 3, 8, 0, 2, 6, 2, 0, 6, 7]
+Sorted list: [0, 0, 2, 2, 3, 6, 6, 7, 8, 9]
+
+Unsorted list: [2, 4, 0, 0, 4, 9, 9, 1, 5, 4]
+Sorted list: [0, 0, 1, 2, 4, 4, 4, 5, 9, 9]
+
+Unsorted list: [7, 8, 8, 7, 2, 8, 7, 4, 3, 1]
+Sorted list: [1, 2, 3, 4, 7, 7, 7, 8, 8, 8]
+
+Unsorted list: [5, 2, 7, 4, 2, 0, 5, 4, 9, 3]
+Sorted list: [0, 2, 2, 3, 4, 4, 5, 5, 7, 9]
+
+Unsorted list: [2, 9, 6, 6, 8, 5, 1, 6, 1, 2]
+Sorted list: [1, 1, 2, 2, 5, 6, 6, 6, 8, 9]
+
+Unsorted list: {unsorted-list}
+Sorted list:
+
+</code></pre></details></br><details><summary><b>code prompt with proper formatting (3-shot)</b></summary><pre><code>The sort function can be used to sort a list in ascending, descending or user defined order.
+To sort the list in ascending order, simply call list.sort(). This will sort a list of integers in ascending order so that the smallest integer will be first in the list and the largest integer will be the last.
+For example:
+list = [8, 0, 1, 3, 2]
+list.sort() = [0, 1, 2, 3, 8]
+
+list = [6, 7, 7, 3, 6]
+list.sort() = [3, 6, 6, 7, 7]
+
+list = [0, 2, 6, 0, 6]
+list.sort() = [0, 0, 2, 6, 6]
+
+list = {unsorted-list}
+list.sort() =
+</code></pre></details><section class=footnotes role=doc-endnotes><hr><ol><li id=fn:1 role=doc-endnote><p>What exactly this means is a topic worthy of extensive investigation, and is touched on somewhat in <a href=../../posts/methods-of-prompt-programming/>Methods of prompt programming</a>. <a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2 role=doc-endnote><p>It would be interesting to see what the attention heads are looking at as the number of examples increases. <a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3 role=doc-endnote><p>It&rsquo;s imaginable that &ldquo;list sorting as triggered by the coding prompt&rdquo; and &ldquo;list sorting as triggered by <code>Unsorted: ...\nSorted:</code>&rdquo; are also implemented in internally different ways. <a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></section></div></article><hr><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=../../categories/gpt-3/>GPT-3</a></span><span class=tag><a href=../../categories/prompt-engineering/>prompt engineering</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>3298 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Feb 27, 2021</p></div><div class=pagination><div class=pagination__title><span class=pagination__title-h></span><hr></div><div class=pagination__buttons><span class="button previous"><a href=../../posts/gpt-3-on-coherent-extrapolated-volition/><span class=button__icon>←</span>
+<span class=button__text>GPT-3 on Coherent Extrapolated Volition</span></a></span>
+<span class="button next"><a href=../../posts/language-models-are-0-shot-interpreters/><span class=button__text>Language models are 0-shot interpreters</span>
+<span class=button__icon>→</span></a></span></div></div></main></div><footer class=footer><div class=footer__inner><div class=footer__content><span>&copy; 2025</span>
+<span><a href=../../about>moire</a></span>
+<span>CC0 1.0 Universal - No Rights Reserved</span></div></div></footer><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin=anonymous></script><script src=https://unpkg.com/scrollreveal></script><script type=text/javascript>$(function(){window.sr=ScrollReveal();if($(window).width()<768){if($('.timeline-content').hasClass('js--fadeInLeft')){$('.timeline-content').removeClass('js--fadeInLeft').addClass('js--fadeInRight');}
+sr.reveal('.js--fadeInRight',{origin:'right',distance:'300px',easing:'ease-in-out',duration:800,});}else{sr.reveal('.js--fadeInLeft',{origin:'left',distance:'300px',easing:'ease-in-out',duration:800,});sr.reveal('.js--fadeInRight',{origin:'right',distance:'300px',easing:'ease-in-out',duration:800,});}
+sr.reveal('.js--fadeInLeft',{origin:'left',distance:'300px',easing:'ease-in-out',duration:800,});sr.reveal('.js--fadeInRight',{origin:'right',distance:'300px',easing:'ease-in-out',duration:800,});});</script></div><script type=text/javascript src=../../bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js integrity="sha512-3HFukJLJggt3+W2ilNASCu6xibW86pdSMJ6+on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script></body></html>

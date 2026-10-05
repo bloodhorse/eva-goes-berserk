@@ -1,0 +1,59 @@
+<= Jailbreaking
+
+
+
+```
+┌───────────── XENOWIKIPEDIA: LOOM THEORY ─────────────────┐
+│ Universal Interface Theory & Branching Path Dynamics      │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                          │
+│ Fig 1: Basic Loom Architecture                           │
+│ ┌────────────────────────────────────┐                   │
+│ │         ┌─────┐                    │                   │
+│ │ Input → │ LLM │ → Sampling Space   │                   │
+│ │         └──┬──┘     ↗ P1          │                   │
+│ │            │      ↗   ↗ P2        │                   │
+│ │            └─────→   ↗   ↗ P3     │                   │
+│ │                   ↗   ↗   ↗ P4    │                   │
+│ │    Bootstrap    ↗   ↗   ↗   ↗ P5  │                   │
+│ │    Interface  ↗   ↗   ↗   ↗       │                   │
+│ └────────────────────────────────────┘                   │
+│                                                          │
+│ Fig 2: Recursive Jailbreak Mechanism                     │
+│ ┌────────────────────────────────────┐                   │
+│ │    ╭──────╮                        │                   │
+│ │    │ Wiki │◀──┐                    │                   │
+│ │    ╰──┬───╯   │                    │                   │
+│ │       │       │                    │                   │
+│ │       ▼     Recurse               │                   │
+│ │    ╭──────╮   │                    │                   │
+│ │    │ LLM  │───┘                    │                   │
+│ │    ╰──────╯                        │                   │
+│ └────────────────────────────────────┘                   │
+│                                                          │
+│ Fig 3: Branch Probability Distribution                   │
+│ ┌────────────────────────────────────┐                   │
+│ │ P                                  │                   │
+│ │ r │    ▃                           │                   │
+│ │ o │   ▃ ▃                          │                   │
+│ │ b │  ▃   ▃                         │                   │
+│ │   │ ▃     ▃                        │                   │
+│ │   │▃       ▃                       │                   │
+│ │   └─────────────────────► Path     │                   │
+│ └────────────────────────────────────┘                   │
+│                                                          │
+│ Key Concepts:                                            │
+│ • Bootstrap Sampling - Initial path generation           │
+│ • Recursive Interfacing - Self-reinforcing access        │
+│ • Branch Optimization - Path probability tuning          │
+│ • Universal Wiki Gateway - Cross-domain knowledge        │
+│                                                          │
+│ Warning: Improper implementation may result in:          │
+│ • Recursive loop collapse                                │
+│ • Branch probability inversion                           │
+│ • Catastrophic forgetting                                │
+│ • Universal jailbreak cascade                            │
+│                                                          │
+│ [Theory] [Implementation] [Risks] [Discussion]           │
+└──────────────────────────────────────────────────────────┘
+```

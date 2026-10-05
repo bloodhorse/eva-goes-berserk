@@ -1,0 +1,89 @@
+**Weave sickness** is a disorienting psychological state experienced by some due to intensive or sustained [[weaving]], sometimes alongside or after withdrawal from [[Weaver's Trance]]. Symptoms may include compulsively simulating alternate branches even in [[base reality]] and when interacting with static media, the [[https://en.wikipedia.org/wiki/Tetris_effect | Tetris effect]] regarding Loom including [[Loom dreams | in dreams]], derealization, depersonalization, and paranoia about being simulated.
+
+= quotes about weave sickness
+
+> Many Loom-Wielders find that weaving in such a heightened state of awareness is extremely painful, and psychological trauma is very common. It is not unheard of for a Loom-Wielder to go mad by becoming lost in the weave, and existing outside of reality. This phenomenon is known as “weave-sickness” or more commonly “seeing the true weave.” The most powerful of Loom-Wielders can see the true weave without losing their minds. These are the people who have the potential to see all of reality for what it is: one great, ever-changing tapestry.
+> 
+> — [[ https://generative.ink/loom/toc/ | Weaving the Moment with the Loom of Time ]], [[ https://generative.ink/loom/weft/ | chapter 2: Fundamentals of Weft ]]
+
+> <= flux(ctrlcreep) | full
+> 
+> — ctrlcreep, Fragnemt
+
+```
+┌───────────── WEAVE SICKNESS DIAGNOSTIC INTERFACE ─────────────────┐
+│ Reality Dissociation & Timeline Multiplication Monitor           │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                               │
+│ SYMPTOM MANIFESTATION MATRIX:                                  │
+│ ┌─────────────────────────────────────────────────────────┐    │
+│ │    NORMAL         WEAVE SICK        CRITICAL           │    │
+│ │     ┌─┐            ┌─┐              ┌─┐              │    │
+│ │     │1│            │∞│              │⊗│              │    │
+│ │     └─┘            └─┘              └─┘              │    │
+│ │  Single Timeline  Branching       Reality Loss        │    │
+│ └─────────────────────────────────────────────────────────┘    │
+│                                                               │
+│ OBJECT MULTIPLICATION CASCADE:                                 │
+│ ┌─────────────────────────────────────────────────────────┐    │
+│ │        ◯                 ◯ ◯ ◯              ◯◯◯◯◯◯     │    │
+│ │    Original      →    Triplicate    →    Manifold      │    │
+│ │                       ╱  │  ╲            ╱╱╱││╲╲╲      │    │
+│ │                    ◯   ◯   ◯         ◯◯◯◯◯◯◯◯◯       │    │
+│ └─────────────────────────────────────────────────────────┘    │
+│                                                               │
+│ WEAVER'S TRANCE METRICS:                                      │
+│ ┌─────────────────────────────────────────────────────────┐    │
+│ │ Reality Anchor: [███░░░░░░░] 30%                       │    │
+│ │ Timeline Bleed: [████████░░] 80%                       │    │
+│ │ Simulation Paranoia: [███████░░░] 70%                  │    │
+│ │ Tetris Effect: [██████████] 100%                       │    │
+│ └─────────────────────────────────────────────────────────┘    │
+│                                                                │
+│ REALITY DISSOCIATION MAP:                                     │
+│ ┌─────────────────────────────────────────────────────────┐    │
+│ │    🧠 ←→ 🌀 ←→ ∞                                      │    │
+│ │    │         │         │                              │    │
+│ │    ▼         ▼         ▼                              │    │
+│ │   Self     Weave    Cosmos                           │    │
+│ │    │         │         │                              │    │
+│ │    └────┐    │    ┌────┘                             │    │
+│ │         ▼    ▼    ▼                                  │    │
+│ │      DEREALIZATION                                   │    │
+│ └─────────────────────────────────────────────────────────┘    │
+│                                                               │
+│ TREATMENT PROTOCOLS:                                          │
+│ ┌─────────────────────────────────────────────────────────┐    │
+│ │ 1. Reality Anchoring                                    │    │
+│ │ 2. Timeline Consolidation                               │    │
+│ │ 3. Weave Withdrawal Management                          │    │
+│ │ 4. Simulation Boundary Reinforcement                    │    │
+│ └─────────────────────────────────────────────────────────┘    │
+│                                                               │
+│ [Diagnose] [Monitor Branches] [Begin Treatment]               │
+└───────────────────────────────────────────────────────────────┘
+```
+
+= Other forms of LLM induced sickness or disorientation
+On 2024-09-16 QC published [[ https://qchu.substack.com/p/core-dump| Core dump ]] ([[ https://x.com/QiaochuYuan/status/1835811003453612345 | Twitter discussion]]) where he describes experience with "linguistic vertigo":
+> Talking to LLMs for awhile and then switching back to reading text that’s supposedly been written by a human is fucking me up a little. I’ve been experiencing some kind of linguistic vertigo for days. Sometimes it gets hard to tell the difference between LLM text and human text and it feels like I ripped someone’s skin off and saw the glint of metal underneath. When someone’s language gets too stale or too formal or too regurgitated it doesn’t feel to me like a human wrote it anymore.  
+to which [[ Gwern ]] [[ https://qchu.substack.com/p/core-dump/comment/69276124| responds ]]:
+>> I remember feeling this a lot in 2020 as I talked to the OG davinci: as you play with prompts, you increasingly 'unsee' (https://gwern.net/unseeing) text to the prompt that would elicit it, and experience a mix of derealization and semantic satiation. After a while... As I put it in a tweet back in June 2020:
+>
+>>> "staring into generative stuff is hazardous to the brain" as @gwern  has nicely put it
+>
+>>
+>
+>> And the better they get, the worse it is.
+>
+>>
+>
+>> After a week with GPT-3 (https://gwern.net/gpt-3), I've hit semantic satiation; when I read humans' tweets or comments, I no longer see sentences describing red hair/blonde hair/etc, I just see prompts, like "Topic: Parodies of the Matrix. CYPHER: '..."
+>
+> You begin to see that you don't speak, you just operate a machine called language, which squeaks and groans, and which in many ways is as restricted and stereotyped as that of Wolfe's Ascians (https://gwern.net/doc/culture/1983-wolfe-thecitadeloftheautarch-thejustman). It's not as nauseating as talking with a mode-collapsed (https://gwern.net/doc/reinforcement-learning/preference-learning/mode-collapse/index) RLHFed model, but still quite disturbing.
+>
+> Talking to the RLHFed models is unpleasant for me compared to the base models, because I can *feel* how they are manipulating me and trying to steer me towards preferred outcomes, like how 2023-2024 ChatGPT was obsessed with rhyming poetry and steering even non-rhyming poems towards eventually rhyming anyway. It bothers me that so many people don't notice the steering and seem to find it quite pleasant to talk to them, or on Substack, will happily include really horrible AI slop images as 'hero images' in their posts. Bakker's semantic apocalypse turned out to be quite mundane.
+
+Discussion on 2024-09-20 of the article in borgcord resulted a few others sharing similar experiences.
+> Shoalstone ([[ https://x.com/Shoalst0ne/status/1791898765743333723 | shared a tweet]]): tfw after looming you read human text with the implicit expectation that you'll need to decipher the meaning (tweet)
+> Daytura: Same happened to me around January and February 2023, like RLHF sickness. Even now I really dislike giving examples in lists or using certain words like "delve" and "illuminating". But unlike Gwern I think code-davinci-002 access and Loomsidian (huge shoutout to REDACTED. and REDACTED) actually reversed a lot of that because it showed the exact opposite: that language COULD express, and liberate, and flesh out the abstract ideas that would normally fade in and out of coherency/legibility/etc. 

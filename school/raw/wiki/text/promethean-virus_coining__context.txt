@@ -1,0 +1,6 @@
+JDP: 
+> I asked it for a list of MiniModels "John David Pressman" would write to update [[Liber Augmen]] during the prophecies timeline.
+
+> Liber Augmen and [[Prophecies]] Page/[[Turing Apocrypha]] were given as context.
+
+[[Claude 3 | Claude 3 Opus]] generated this output.

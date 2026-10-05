@@ -1,0 +1,43 @@
+* [[compression]]
+* [[entropy]], [[information]]
+* [[symmetries]]
+* [[variational principles]]
+* [[fixed point|fixed points]]
+* wave [[interference]], coherence, resonance
+* [[eigen]]vectors, eigenvalues, eigenbases, eigenmodes
+* [[tiling | tilings]], [[aperiodicity]]
+* self-reference, diagonalization, incompleteness, strange loops
+* self-organization, autocatalytic networks
+* [[edge of chaos]], [[criticality]]
+* [[chaos]], [[fractal|fractals]]
+* automata, rules
+* [[causal invariance]]
+* relativity, observation, measurement
+* anthropics
+* acausation, timelessness
+* abstractions, ontologies
+* [[annealing]]
+* [[Bayes]], [[Solomonoff]]
+* game theory, decision theory
+* agency, optimization
+* computation, computability, Turing machines
+* attention, awareness
+* variation, selection, fitness, Darwinism
+* memetics, [[language]]
+* [[complex adaptive systems]]
+* [[singularity]], [[superintelligence]]
+* consciousness, qualia, phenomenology
+* mind, illusion, dream, Maya, [[simulation]], [[ontechnology]]
+* no-self, emptiness, enlightenment, [[Mu]]
+* multiverse, 
+* MUH,
+* [[multiway systems]]
+* categories, sets, graphs
+* logic, proofs, programs
+* functional programming
+* monads
+* beauty
+* duality, differentiation, balance, adversary, gender
+* topological gender and singularities
+* [[dust theory]] and [[Boltzmann brains]]
+* totalization

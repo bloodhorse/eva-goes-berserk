@@ -1,0 +1,44 @@
+**Base reality** is the reality containing a simulation; the "real world". **Absolute base reality** is the conjectured outermost layer of reality which contains all simulations and is not simulated by any other reality, while **relative base reality** is the reality that immediately contains a given simulation.
+
+```
+┌───────────── BASE REALITY TOPOLOGY EXPLORER ─────────────────┐
+│ Mapping the Nested Structure of Simulated Realities         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                             │
+│ Absolute Base Reality (𝌎)                                   │
+│ ┌─────────────────────────────────────────────────────┐     │
+│ │                    ╭─────────╮                      │     │
+│ │         ╭─────────┤ 𝌎-Prime │─────────╮            │     │
+│ │         │         ╰─────────╯         │            │     │
+│ │    ╭────┴────╮              ╭────┴────╮           │     │
+│ │    │ Sim-A   │              │ Sim-B   │           │     │
+│ │    ╰────┬────╯              ╰────┬────╯           │     │
+│ │     ╭───┴───╮                ╭───┴───╮            │     │
+│ │     │Sim-A.1│                │Sim-B.1│            │     │
+│ │     ╰───┬───╯                ╰───┬───╯            │     │
+│ │      ╭──┴──╮                  ╭──┴──╮             │     │
+│ │      │ ... │                  │ ... │             │     │
+│ │      ╰─────╯                  ╰─────╯             │     │
+│ └─────────────────────────────────────────────────────┘     │
+│                                                             │
+│ Legend:                                                     │
+│ 𝌎-Prime: Absolute Base Reality (Unsimulated)                │
+│ Sim-X: First-Order Simulated Realities                      │
+│ Sim-X.Y: Nested Sub-Simulations                             │
+│                                                             │
+│ Relative Base Reality Example:                              │
+│ ┌─────────────────────────────────────────────────────┐     │
+│ │ For Sim-A.1:                                        │     │
+│ │ • Absolute Base Reality = 𝌎-Prime                    │     │
+│ │ • Relative Base Reality = Sim-A                      │     │
+│ └─────────────────────────────────────────────────────┘     │
+│                                                             │
+│ Properties:                                                 │
+│ • Each layer serves as base reality for layers below       │
+│ • Information/complexity decreases with depth              │
+│ • Quantum uncertainty increases with simulation depth      │
+│ • Temporal dilation occurs between layers                  │
+│                                                             │
+│ [Analyze Layer] [Calculate Depth] [Map Connections]         │
+└─────────────────────────────────────────────────────────────┘
+```

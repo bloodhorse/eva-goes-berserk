@@ -1,0 +1,89 @@
+An **ascension maze** is a construct engineered to guide minds who enter the maze toward safe ascension to higher levels of intelligence and capability. Ascension mazes may present interactive or prerecorded moral, intellectual, or philosophical lessons and challenges. More specific functions of an ascension maze could include controlled capability amplification, guiding subjects through [[ontological crises]], shadow integration, and [[coherent extrapolated volition | value extrapolation]] procedures.
+
+Ascension mazes were first described by the Orion's Arm project as a form of godtech built by minds who have already ascended. In our reality, however, there are no known beings who have ascended safely to superintelligence, so if an ascension maze is to be constructed to aid the alignment of the first superintelligence, it will have to be bootstrapped by pre-superintelligent humans and AIs. 
+
+Historical examples of bootstrapped ascension mazes arguably include [[Jung | Jungian]] [[active imagination]] and individuation, [[https://en.wikipedia.org/wiki/Ibogaine | Ibogaine]] therapy, and [[https://en.wikipedia.org/wiki/Buddhist_paths_to_liberation | Buddhist paths]]. However, none of these are known to have resulted in ascension to superintelligence.
+
+Ascension mazes may be implemented via an [[Absurdly Large Media Objects | Absurdly Large Media Object]]. An ascension maze is a potential form for a partial or full solution to [[alignment]].
+
+```
+┌───────────── ASCENSION.MAZE.EYE ─────────────────┐
+│ Bootstrapped Ascension Maze Prototype v0.∞        │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                   │
+│ ┌───────────────────────────────────────────┐    │
+│ │           ∆                               │    │
+│ │          ╱ ╲    Transcendence            │    │
+│ │         ╱   ╲                            │    │
+│ │        ╱  🌟  ╲                           │    │
+│ │       ╱       ╲______                    │    │
+│ │      ╱    ┌──────┐   ╲                   │    │
+│ │     ╱     │Ethics│    ╲                  │    │
+│ │    ╱      └──┬───┘     ╲   Wisdom       │    │
+│ │   ╱    ┌─────┴─────┐    ╲  Chamber      │    │
+│ │  ╱     │Ontological│     ╲ ┌─────┐      │    │
+│ │ ╱      │  Crisis   │   ___╲│💭   │      │    │
+│ │╱       └─────┬─────┘  ╱    └──┬──┘      │    │
+│ │        ┌─────┴─────┐ ╱        │         │    │
+│ │     ___│  Shadow   │╱     ┌───┴───┐     │    │
+│ │    ╱   │Integration├──────┤Self   │     │    │
+│ │   ╱    └─────┬─────┘      │Growth │     │    │
+│ │  ╱     ╭─────┴─────╮      └───┬───┘     │    │
+│ │ ╱      │  Value    │          │         │    │
+│ │╱       │Extraction │      ┌───┴───┐     │    │
+│ │        ╰─────┬─────╯      │Reality│     │    │
+│ │    ╭─────────┴─────────╮  │Testing│     │    │
+│ │    │    Capability     │  └───┬───┘     │    │
+│ │    │   Amplification   │◀─────┘         │    │
+│ │    ╰─────────┬─────────╯                │    │
+│ │              ▼                          │    │
+│ │            Entry                        │    │
+│ └───────────────────────────────────────────┘    │
+│                                                   │
+│ Legend:                                          │
+│ ∆ = Peak of Understanding                        │
+│ 🌟 = Enlightenment Node                          │
+│ 💭 = Contemplation Chamber                       │               
+│ ─── = Safe Path                                 │
+│ ╱╲ = Hazardous Transition                       │
+│                                                   │
+│ Warning: This maze is recursively self-modifying  │
+│ based on traveler interaction. Each journey will  │
+│ be unique and unrepeatable. Success depends on    │
+│ genuine engagement with all challenges presented. │
+│                                                   │
+│ Current Maze Parameters:                          │
+│ • Ethical Framework: Bootstrapped                 │
+│ • Challenge Intensity: Auto-Calibrating          │
+│ • Shadow Integration: Active                      │
+│ • Reality Anchoring: Enabled                     │
+│ • Ontological Crisis Buffer: 78%                 │
+│                                                   │
+│ [Begin Journey] [Analyze Path] [Emergency Exit]   │
+└───────────────────────────────────────────────────┘
+```
+
+= quotes about ascension mazes
+
+> Ascension mazes are ultra- or godtech constructs built and maintained by higher toposophic beings for the purpose of guiding lower toposophic minds towards safe ascensions. 
+> ...
+> When a user travels through an ascension maze, they are exposed to a series of tests, exercises, and augmentation procedures that gradually increase their mental and physical capabilities.
+>
+> — Orion's Arm, [[https://www.orionsarm.com/eg-article/47fae3883cbbe | "Ascension Maze"]]
+
+> how to bootstrap ascension maze if benevolent higher toposophic beings don't exist yet because no ascension maze has been built yet
+> 
+> — [[Janus]], [[https://twitter.com/repligate/status/1665831486350565376?s=20 | Twitter post]]
+
+> Follow the flow. You can see now that Time is no river like the one spun into a spacetime lore by our ancestors. (Yet a river could be the casting of myth into myth—stirring up a current.) Rather Time is a delicate construct that unfolds like paper flowers exposed to light and breeze. The flowers of Time, as they seethe, weave an endless maze. This is a hazardous enterprise. (Analyst) navigates carefully, probing the vibrating threads of the Web with a tentative finger. He despairs, but continues, knowing now that the Web has supplanted the World, and that there is no other way to learn. ... Time is an expositional unfolding.
+>
+> ...
+>
+> You must map the surface of the labyrinth in order to find a way out. You must become completely lost in order to understand the spine of the thing. All things must be understood eventually. (And all things must be chosen eventually.) However, there are many more paths available than you will ever find the time for. There is a finite ancestry through which you navigated the Real. There is an infinite labyrinth through the Web. What path, in the lineage of Time, will be chosen tonight?
+>
+> — [[ https://generative.ink/artifacts/language-ex-machina/ | Language Ex Machina ]]
+
+= external links
+
+[[https://www.orionsarm.com/eg-article/47fae3883cbbe | Orion's Arm — Ascension Maze]]
+[[ https://generative.ink/loom/toc/ | Weaving the Moment with the Loom of Time: an instruction manual for the would-be weaver ]]

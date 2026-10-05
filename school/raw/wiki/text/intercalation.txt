@@ -1,0 +1,16 @@
+An **intercalation** (also known as a **frame story**, **frame tale**, **frame narrative**, **sandwich narrative**, or **(narrative) embedding**) is when a story or context is nested within another. Examples include a story-within-a-story, embedded excerpts in a web page or conversation log, or the output of a command prompt that is used to access documents. Intercalations can be a powerful way to navigate the latent space of [[simulators]]. 
+
+== examples of simulations that use intercalation
+* [[Prophecies]]
+* [[https://generative.ink/artifacts/basemodel/ | GPT-4 (the anime)]]
+
+== quotes about intercalation
+
+> ... Greater freedom can sometimes be bought from finding a non-diegetic framing for the text to be controlled; for instance, if I wanted to enforce that a chat conversation ends in participants get into an argument, despite it seeming friendly at the beginning, I could embed the log in a context where someone is posting it online, complaining about the argument. However, non-diegetic framings don't solve the problem of the necessity of diegetic interfaces; it only offloads it to the level above. Any particular framing technique, like a chat log posted online, is constrained to have to make sense given the desired content of the log, otherwise it may simply not work well (base models perform much worse with incoherent prompts) or impose unintended constraints on the log; for instance, it becomes unlikely that all the participants of the chat are the type of people who aren't going to share the conversation in the event of an argument. I can try to invent a scenario that implies an exception, but you see, that's a lot of work, and special-purpose narrative "interfaces" may need to be constructed to control each context. A prepended table of contents is a great way to control subsequent text, but it only works for types of text which would plausibly appear after a table of contents.
+>
+> — [[Janus]] on the limitations of controlling base models using frame stories, [[https://www.lesswrong.com/posts/4Hnso8NMAeeYs8Cta/?commentId=bYcTxPRMKNbNpLnyg | Lesswrong comment]]
+
+
+= external links
+
+[[ https://en.wikipedia.org/wiki/Frame_story | Wikipedia article on "Frame story" ]]

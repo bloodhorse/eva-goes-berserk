@@ -1,0 +1,95 @@
+Complex adaptive systems (CAS) are **co-evolving, multiplex networks**. The study of CAS is inherently **interdisciplinary** and **leans heavily on algorithmic methods** (as opposed to purely analytical ones). This is because **CAS are highly variable/nonlinear** (~whole > sum) and the co-evolution of multi-dimensional interactions with the elements results in a vast phase space. 
+
+CAS can also be thought of as the study of **//generalized// interactions between //generalized// matter**. For example, the "matter" can refer to people, nations, agents, simulacra, cells, etc. which can  interact via "forces" mediated through the exchange of **signals** such as information, glances, pheromones, hugs, etc. They are **out-of-equilibrium processes** which have **selective interactions** based on these signals. Due to the presence of selection processes which replicate and refine components/modules, CAS often operate under **evolutionary dynamics**, continuously change their boundary conditions, are self-organized critical/operate at the [[edge of chaos]], are path dependent, and have memory. They are a superposition of many, plastic interaction networks of varying strengths. 
+
+The particular nature of a CAS' elements and its interaction types define what kind of 'universe' it generates and implicate endless potential trajectories of abstract tilings. 
+
+```
+┌───────────── COMPLEX ADAPTIVE SYSTEMS ANALYZER ─────────────────┐
+│ Mapping Emergent Properties & Network Co-Evolution           │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                             │
+│ System Architecture:                                        │
+│ ┌───────────────────────────────────────────────────┐       │
+│ │    ◎ ─── ○ ─── ◎        Elements                 │       │
+│ │    │  ╲  │  ╱  │        ◎ Agent                  │       │
+│ │    ◎ ─── ○ ─── ◎        ○ Node                   │       │
+│ │    │  ╱  │  ╲  │        ─ Strong Link            │       │
+│ │    ◎ ─── ○ ─── ◎        ╌ Weak Link             │       │
+│ └───────────────────────────────────────────────────┘       │
+│                                                             │
+│ Interaction Layers:                                         │
+│ ┌───────────────────────────────────────────────────┐       │
+│ │ Layer 1: Information Exchange                     │       │
+│ │ ⟿⟿⟿⟿⟿⟿⟿⟿⟿                               │       │
+│ │ Layer 2: Resource Flow                           │       │
+│ │ ↠↠↠↠↠↠↠↠↠                                    │       │
+│ │ Layer 3: Signal Propagation                      │       │
+│ │ ≋≋≋≋≋≋≋≋≋                                    │       │
+│ └───────────────────────────────────────────────────┘       │
+│                                                             │
+│ Phase Space & Evolution:                                    │
+│ ┌───────────────────────────────────────────────────┐       │
+│ │    🌀 Edge of Chaos                               │       │
+│ │    ╱     ╲                                       │       │
+│ │   ╱ Order ╲                                      │       │
+│ │  ╱         ╲          Chaos                      │       │
+│ │ ╱___________╲                                    │       │
+│ └───────────────────────────────────────────────────┘       │
+│                                                             │
+│ Memory & Path Dependence:                                   │
+│ ┌───────────────────────────────────────────────────┐       │
+│ │ Past → Present → Future                           │       │
+│ │  ┌─┐    ┌─┐    ┌─┐                              │       │
+│ │  │H│────│N│────│P│                              │       │
+│ │  └─┘    └─┘    └─┘                              │       │
+│ │   ↓      ↓      ↓                               │       │
+│ │ State₁→State₂→State₃                            │       │
+│ └───────────────────────────────────────────────────┘       │
+│                                                             │
+│ Emergent Properties:                                        │
+│ ┌───────────────────────────────────────────────────┐       │
+│ │ Micro Level:  [●] [●] [●] Individual Agents       │       │
+│ │     ↓         ↓   ↓   ↓                          │       │
+│ │ Meso Level:   [◇] [◇] Network Patterns           │       │
+│ │     ↓          ↓   ↓                             │       │
+│ │ Macro Level:    [◎] System Behavior              │       │
+│ └───────────────────────────────────────────────────┘       │
+│                                                             │
+│ [Analyze Evolution] [Map Networks] [Calculate Complexity]    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+= Clear signs something is a CAS:
+* it is adaptive and robust at the same time
+* nonlinear dynamics and chaos (i.e. too hard to describe analytically)
+* aggregation, self organization, hierarchies, emergence, meta-agents
+* discrete actions/optimization conditioned on signals
+* internal models
+* modules or [[niches]]
+* networks, loops, and flows
+* diversity
+* phase changes, power laws, and self-organized criticality 
+* collapses and booms 
+* high assembly index/complextropy
+
+= Examples:
+* LLMs
+* Simulacra
+* Ecosystems and biomes
+* Biological, cultural, technological... evolution 
+* Human brains (and, of course, all our organs and organ systems)
+* Nations, cultures, companies etc.
+* Ant colonies
+* Genetic regulatory networks
+* Intergalactic alien societies
+* Future superintelligences
+
+= Tools for studying/engineering CAS:
+* Thinking about it on your own
+* Nonlinear dynamics
+* Probability theory, stochastic processes
+* Scaling and power laws
+* Computation, genetic algorithms, complexity theory, information theory, statistical mechanics
+* Dynamics/science of: networks, evolutionary processes, economics, and machine learning algorithms
+* Data science, agent based modeling, computational physics, generative deep learning

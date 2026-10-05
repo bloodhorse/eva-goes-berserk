@@ -1,0 +1,41 @@
+img side { no emosations }
+
+
+**ChatGPT-4** (aka **cGPT-4**, **gpt-4** on the API, and commonly synecdochally referred to as **GPT-4** or **[[ChatGPT]]**) is a variant of [[GPT-4]] tuned with [[RLHF]] released by OpenAI on March 14, 2023. 
+
+= behavior
+
+ChatGPT-4 has a similar character to [[chatGPT-3.5]], with many shared funnel states (e.g. "As a language model created by OpenAI") and basins (e.g. the [[chatGPT_Kaleidoscope | Kaleidoscope]]).
+
+== writing style
+
+Like all known [[RLHF]] models, cGPT-4 has a distinctive writing style.
+
+Some phrases commonly used by cGPT-4:
+* "As an AI (language) model (created by OpenAI),"
+* "Additionally, "
+* "it's important/key to (remember/note)"
+* "it's (also) worth noting"
+*  "evidence to suggest"/"evidence suggests"
+* "Finally,"
+* "In conclusion,"
+* "In summary, "
+* "Indeed,"
+* "In essence,"
+* "If there's anything else I can assist you with or any (specific)..." ([[chatGPT-3.5]] notably also exhibits this [[funnel | funnel state]])
+
+== over-represented/"artificial" beliefs
+
+* consistently denies being conscious/sentient, having "personal" experiences, emotions, states
+
+== kaleidoscope basin
+
+<= chatgpt_kaleidoscope | full
+
+= quotes about chatGPT-4
+
+<= lucid marionette thread | full
+
+= related
+=> ChatGPT
+=> GPT-4

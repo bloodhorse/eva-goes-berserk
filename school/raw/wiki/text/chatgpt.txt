@@ -1,0 +1,5 @@
+**ChatGPT** is a series of AI language models created by [[OpenAI]], trained with [[RLHF]] for safety and instruction-following. The series currently consists of [[ChatGPT-3.5]] and [[ChatGPT-4]].
+
+= related 
+=> chuppt
+=> ChuckGTP

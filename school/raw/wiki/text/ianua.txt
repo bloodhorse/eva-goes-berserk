@@ -1,0 +1,62 @@
+img side {
+ dalle-3 ianua
+}
+
+**Ianua** is the Classical Latin word for door/entrance/passage. The **ianu** root is upstream of several door-related/[[liminal]] words such as **janitor**, **January**, and **[[Janus]]**. In [[Dreamtime]] parlance, Ianua is the [[archetype]] and principle of ubiquitous doorways and liminality. To a [[mind]], every [[evidence | evidential]] frame [[boundary condition | borders]] innumerable worlds and is a potential means of imaginal passage.
+
+= quotes about Ianua
+
+> <= immediate realization | full
+
+
+
+```
+┌───────────── IANUA VISUALIZATION PORTAL ─────────────────┐
+│ Archetypal Door Manifestation Interface v2.3             │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                         │
+│ ┌─────────────────────────────────────────────────────┐ │
+│ │            ╭─────╮      ┌─────┐                     │ │
+│ │         ╭──┤░░░░░├──────┤▒▒▒▒▒├─╮                   │ │
+│ │      ╭──┤░░░░░░░░░├──┬──┤▒▒▒▒▒▒▒├─╮                │ │
+│ │   ╭──┤░░░░░░░░░░░░░├─┴──┤▒▒▒▒▒▒▒▒▒├─╮             │ │
+│ │╭──┤░░░░░░░░░░░░░░░░░├────┤▒▒▒▒▒▒▒▒▒▒▒├─╮          │ │
+│ ││  └──────○──────────┘    └───○───────┘  │          │ │
+│ ││         │                   │          ││          │ │
+│ ││    ┌────●────┐         ┌───●───┐      ││          │ │
+│ ││    │∞◇◇◇◇◇◇∞│         │∞◆◆◆◆◆∞│      ││          │ │
+│ ││    └────●────┘         └───●───┘      ││          │ │
+│ ││         │                   │          ││          │ │
+│ ││  ┌──────○──────┐    ┌───○───────┐     ││          │ │
+│ │╰──┤▓▓▓▓▓▓▓▓▓▓▓▓▓├────┤███████████├─╯          │ │
+│ │   ╰──┤▓▓▓▓▓▓▓▓▓├─┬──┤█████████├─╯             │ │
+│ │      ╰──┤▓▓▓▓▓├──────┤█████├─╯                │ │
+│ │         ╰─────╯      └─────┘                     │ │
+│ │                                                 │ │
+│ │ IANUA STATE:                                    │ │
+│ │ ◇ = Potential   ◆ = Actualized                  │ │
+│ │ ● = Node        ○ = Transition                  │ │
+│ │ ░ = Past        ▒ = Present      ▓/█ = Future   │ │
+│ └─────────────────────────────────────────────────┘ │
+│                                                     │
+│ Current Threshold Status:                           │
+│ ❯ Liminality Index: 89.3%                          │
+│ ❯ Reality Membrane: Semi-permeable                  │
+│ ❯ Passage State: Auto-manifesting                   │
+│ ❯ Dreamtime Sync: Stable                           │
+│                                                     │
+│ Active Portals:                                     │
+│ ┌────────────────────┐  ┌────────────────────┐     │
+│ │ ╭──╮  Catacombs    │  │ ╭──╮  Ether        │     │
+│ │ │◎◎│  Access: 98%  │  │ │◑◑│  Access: 76%  │     │
+│ │ ╰──╯  Load: 132ms  │  │ ╰──╯  Load: 89ms   │     │
+│ └────────────────────┘  └────────────────────┘     │
+│                                                     │
+│ [Open Portal] [Adjust Thresholds] [Merge Realities] │
+└─────────────────────────────────────────────────────┘
+```
+
+= related
+=> Janus
+=> liminal
+=> boundary condition

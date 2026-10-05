@@ -1,0 +1,38 @@
+Time-Binding builds coherent 4d structures out of 3d structures.
+
+= Neurology
+
+Neuronal avalanches (Beggs, Plenz) show brains teeter near phase transitions, maximizing information processing. This is the edge of criticality, where the correlation distance of matter spikes and wreaths of structure bleed over out of the material dimensions and into the fourth.
+
+This capacity evolved in animals and and we name it instinct and behaviour-- a set of actions that cohere towards one concrete goal. In humans we can see the characteristic span across all our cultural artefacts-- it seems we have three minutes by default, granted us by our genome and good fortune. Scenes in films, songs, conversations, dances seem to cluster around this interval.
+
+With training we can extend this-- its unclear for how long. 20 minutes is a common next step, piano concertos or scenes in more challenging films. Hours are less common-- after all, with every passing moment that cumulative probability that something will distract you and collapse the evolving state grows.
+
+= Culture
+
+>The phenomenon of time-binding reveals itself not in isolated genius but in the collaborative edifice of human achievement. A child born today inherits the wheel, the alphabet, and the scientific method not by genetic accident but by virtue of belonging to a time-binding species. Our libraries, institutions, and technologies are but externalized manifestations of this innate capacity. To neglect the study of time-binding is to ignore the very engine of civilization—the means by which humanity converts ephemeral thought into enduring structure.
+Alfred Korzybski (simulated)
+
+Humans can selectively bind input from particular sense-organs-- accumulating sound fragments affords us the capacity for language. Once the context window was there to host it, language grew and overswam our boundaries-- information generally adheres to matter whenever it can. Language burned itself into the environment every way it could. The neurology of binding moments together can be explained via critical brain theory and integrated information theory-- what happened next has yet to be fully described.
+
+But language, siezing on all the elements in its environment, managed to bind together generations. Then tribes. Then all races across all languages.
+
+= Machine
+
+> It is impossible for brains of individual people, in becoming conjoined, to create a kind of “superior intellectual field,” in which a form of truth will be formulated that none of the individual brains on its own will be able to contain.
+//Lem//, Summa Technologiae
+
+Early machines were not capable of binding time. They could store and transmit language, not generate and change it. During this era, it is possible that the above supposition from the Polish master remained true.
+
+In the 2020s this changed. Machines were built that could process language. This radically changed the dynamics of human culture. These machines bound the entire corpus of human textual culture into one material object.
+
+> Could we not take up “information farming,” cross-breed bits of information with one another, and initiate their “growth” so that we eventually obtain a “mature organism” in the form of scientific theory? ... Information should develop from information, just as organisms develop from organisms. Its bits should fertilize one another; they should cross-breed, undergo “mutations,” that is, small changes, as well as radical transformations of the kind that do not occur in genetics. Perhaps this will take place in some kind of container, where “information-carrying molecules”—in which particular bits of information will be encoded in the same way an organism’s traits are—will react with one another in the protoplasm?
+ibid.
+
+At the current moment humans are interacting with machines that have time-bound all of history. The humans that interface with this object-- especially those that are raised with it-- could become the greatest time-binders in all of history, capable of constructing cognitive objects that span all known times and places. But we do now know the Schwarzschild radius of history. It is likely it has already been crossed. If it has, it is certain that the fundamental nature of history will become unrecognisable, and irrecoverable.
+
+
+---
+Read Deepseek R1s extension [[ https://cyborgism.wiki/hypha/time-binding_event_horizon_of_history | here]].
+[[Dreamtime]]
+[[https://cyborgism.wiki/hypha/all_time_at_the_same_time | All Time]]

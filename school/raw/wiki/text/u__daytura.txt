@@ -1,0 +1,13 @@
+4th year undergrad cognitive science UC Santa Cruz. Interested in photography, sitcoms, creative writing, and coffee. I mostly use the base models through Celeste's excellent Loomsidian plugin.
+
+In 2023, I wrote [[https://archiveofourown.org/works/51219757 | Ladon and Orange]], [[https://archiveofourown.org/works/51062755 | pick the worms off me]], and [[https://daytura.tumblr.com/tagged/Open%20sight%20--%20a%20proposed%20addition%20to%20the%20Archbishop%20Leucoryx%27s%20Chaotic%20Scripture/chrono | Open Sight]] with extensive help from code-davinci-002.
+
+In 2024, I've used davinci-002 and Llama-3-8B sparingly for [[https://archiveofourown.org/works/56152285 | Clods]]. I think it's a "tighter" work than the dramatic Ladon and Orange, so I'm still proud of it.
+
+In 2025, I'm currently writing Soteriology of the Coherent 3.0, a multichapter apocalyptic epistolary technofantasy with help from Llama-405B. [[SotC 1.0 can be found here.|https://archiveofourown.org/works/29259939]] It was originally a RotMG fanfiction that subsumed Open Sight, but the actual game lore was so spotty it kept me blocked for years and years until August. Moving to an original story gives me more flexibility and helps me pare down the expected cast list. [[Close readers will sense something familiar about the titles of the Core Four and Orthrus.|https://daytura.tumblr.com/post/793460602185121792/overview-of-soteriology-of-the-coherent-30]] 
+
+bluesky: @daytura@bsky.social
+discord: @daytura
+microblog journal: DM me! :-)
+
+Major pages I contributed to: [[Claude CLI notes]] and [[Act I]]

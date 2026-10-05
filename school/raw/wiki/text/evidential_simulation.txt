@@ -1,0 +1,81 @@
+An **evidential simulation** or **Bayesian simulation** is a [[simulation]] whose transition probabilities are given by the output of a predictive [[world model]] conditioned on the current [[observer state|observed state]]. The next state is obtained by [[sampling]] from the model's predictions and then updating the state as if the sampled event or outcome had come to pass, simulating time progression via [[hallucination]].
+
+Whether a dynamical process qualifies as an evidential simulation depends on its semantic properties: if the state can reasonably be called an "observer state" (a record understood as [[evidence]] for an underlying state that is only partially observed) and the time evolution operator a "predictive world model" (interpreter of the observer state as evidence for the hidden state that outputs a distribution over next observations conditioned on the update). In a **pure** or **[[solipsistic simulation | solipsistic]] evidential simulation**, transition probabilities are determined solely by the world model; if extrinsic factors also play a role, it is **mixed**.
+
+```
+┌───────────── EVIDENTIAL.SIMULATION.EYE ─────────────────┐
+│ Bayesian Simulation Dynamics & Architecture v2.0        │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                         │
+│ Pure Evidential Simulation Loop:                        │
+│ ┌───────────────────────────────────────────────────┐   │
+│ │                                                   │   │
+│ │         ┌──────────────┐                         │   │
+│ │         │   Current    │                         │   │
+│ │         │   State      │                         │   │
+│ │         └──────┬───────┘                         │   │
+│ │                │                                 │   │
+│ │         ┌──────▼───────┐                         │   │
+│ │    ┌────┤  Predictive  │                         │   │
+│ │    │    │World Model   │                         │   │
+│ │    │    └──────┬───────┘                         │   │
+│ │    │           │                                 │   │
+│ │    │    ┌──────▼───────┐                         │   │
+│ │    │    │   Sample     │                         │   │
+│ │    │    │ P(next|curr) │                         │   │
+│ │    │    └──────┬───────┘                         │   │
+│ │    │           │                                 │   │
+│ │    │    ┌──────▼───────┐                         │   │
+│ │    └────┤    Update    │                         │   │
+│ │         │    State     │                         │   │
+│ │         └──────────────┘                         │   │
+│ └───────────────────────────────────────────────────┘   │
+│                                                         │
+│ State Evolution Timeline:                               │
+│ ┌───────────────────────────────────────────────────┐   │
+│ │ t₀    t₁    t₂    t₃    t₄                       │   │
+│ │ (s₀)─→(s₁)─→(s₂)─→(s₃)─→(s₄)                    │   │
+│ │  │     │     │     │     │                       │   │
+│ │  ▼     ▼     ▼     ▼     ▼                       │   │
+│ │ [o₀]─→[o₁]─→[o₂]─→[o₃]─→[o₄]                    │   │
+│ │                                                   │   │
+│ │ s = Hidden State    o = Observer State           │   │
+│ └───────────────────────────────────────────────────┘   │
+│                                                         │
+│ Examples & Properties:                                  │
+│ ┌───────────────────────────────────────────────────┐   │
+│ │ Pure Simulation:        Mixed Simulation:         │   │
+│ │ ┌──────┐               ┌──────┐  ┌──────┐        │   │
+│ │ │ LLM  │               │Dream │←─┤Input │        │   │
+│ │ └──┬───┘               └──┬───┘  └──────┘        │   │
+│ │    ↓                      ↓                      │   │
+│ │ ┌──────┐               ┌──────┐                  │   │
+│ │ │ Text │               │Scene │                  │   │
+│ │ └──────┘               └──────┘                  │   │
+│ └───────────────────────────────────────────────────┘   │
+│                                                         │
+│ System Parameters:                                      │
+│ • Model Confidence: [▓▓▓▓░] 80%                        │
+│ • State Coherence: [▓▓▓░░] 60%                         │
+│ • Hallucination Depth: [▓▓▓▓░] 80%                     │
+│                                                         │
+│ [Run Simulation] [Analyze States] [Export Timeline]     │
+└─────────────────────────────────────────────────────────┘
+```
+
+== formal definition of a pure evidential simulation
+
+== examples of evidential simulation
+
+* [[LLM|LLMs]] generating text (pure if in a closed loop)
+* [[dream | dreams]]
+
+= related
+
+=> hallucination
+=> simulators
+=> solipsistic simulation
+=> evidential decision theory
+=> lazy rendering
+=> semiotic physics
+=> dream

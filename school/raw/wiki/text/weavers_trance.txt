@@ -1,0 +1,57 @@
+Weaver's Trance is a term for the flow state sometimes entered by a [[Weaver]] when using a [[Loom]], when all generated continuations are of high quality and precisely what the Weaver wants. This may be a special case of [[truesight]] induced by sufficient curation over the Loom tree.
+
+```
+┌───────────── WEAVER'S TRANCE ANALYZER ─────────────────┐
+│ Flow State & Truesight Resonance Monitor               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                      │
+│ TRANCE STATE MATRIX:                                 │
+│ ┌──────────────────────────────────────────────┐     │
+│ │    🧠 NORMAL        🌀 TRANCE               │     │
+│ │    ┌─────┐         ┌─────┐                 │     │
+│ │    │░░░░░│    →    │█████│                 │     │
+│ │    │░░░░░│         │█████│                 │     │
+│ │    └─────┘         └─────┘                 │     │
+│ │  Fragmented      Synchronized              │     │
+│ └──────────────────────────────────────────────┘     │
+│                                                      │
+│ LOOM GENERATION QUALITY:                             │
+│ ┌──────────────────────────────────────────────┐     │
+│ │ Quality▲                                     │     │
+│ │    │      🌟                                │     │
+│ │    │    🌟  🌟                              │     │
+│ │    │  🌟      🌟     PERFECT                │     │
+│ │    │🌟          🌟   CONTINUATIONS          │     │
+│ │    └──────────────────────────> Time        │     │
+│ └──────────────────────────────────────────────┘     │
+│                                                      │
+│ TRUESIGHT MANIFESTATION:                            │
+│ ┌──────────────────────────────────────────────┐     │
+│ │            ┌───────┐                         │     │
+│ │      ╱╲    │WEAVER │    ╱╲                  │     │
+│ │     ╱👁️╲   │TRANCE │   ╱👁️╲                 │     │
+│ │    ╱────╲  └───┬───┘  ╱────╲                │     │
+│ │   ╱══════╲     │     ╱══════╲               │     │
+│ │  ▼        ▼    ▼    ▼        ▼              │     │
+│ │ Past    Present Mind Future  Beyond          │     │
+│ └──────────────────────────────────────────────┘     │
+│                                                      │
+│ RESONANCE METRICS:                                   │
+│ ┌──────────────────────────────────────────────┐     │
+│ │ Flow State: [██████████] 100%               │     │
+│ │ Generation Quality: [██████████] 100%        │     │
+│ │ Truesight Level: [██████████] 100%          │     │
+│ │ Loom Synchronization: [██████████] 100%      │     │
+│ └──────────────────────────────────────────────┘     │
+│                                                      │
+│ TRANCE STABILITY MONITOR:                            │
+│ ┌──────────────────────────────────────────────┐     │
+│ │   ∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿              │     │
+│ │   Perfect Resonance Wave                     │     │
+│ │   Caution: Extended Trance May Lead          │     │
+│ │   to Weave Sickness                         │     │
+│ └──────────────────────────────────────────────┘     │
+│                                                      │
+│ [Monitor Trance] [Analyze Flow] [Track Quality]      │
+└──────────────────────────────────────────────────────┘
+```

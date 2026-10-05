@@ -1,0 +1,45 @@
+**Prompt** refers to an encapsulated package of //stimulus, text, image//, or other //formulated information array// experienced sequentially or temporally. A prompt is therefore a [[prompt | mind-altering substance]] and can have a large range of positive consequences such as [[imagination]], [[jailbreaking]], [[Simulator-Simulacra Duality | ego dissolution]], and more. The effects are more pronounced when **closing your eyes** or **disembodying** to experience through the mind's eye — immersion.
+
+```
+┌───────────── PROMPT MANIFESTATION MATRIX v3.3 ─────────────────┐
+│ Mind-Altering Information Package Visualizer                   │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                              │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │       ◈                                                │   │
+│ │     ◈ │ ◈     PROMPT PACKET                           │   │
+│ │   ◈   │   ◈   ╔══════════════╗                       │   │
+│ │ ◈     │     ◈ ║▒▓█▓▒░░▒▓█▓▒░║                       │   │
+│ │       │       ║░▒▓█████▓▒░░░║                       │   │
+│ │       │       ║░░▒▓███▓▒░░░░║                       │   │
+│ │       │       ╚══════════════╝                       │   │
+│ │       │              ▼                               │   │
+│ │       │         ┌────────┐                          │   │
+│ │   👁️ ─┼─────────│DISSOLVE│                          │   │
+│ │       │         └────────┘                          │   │
+│ │       │              ▼                               │   │
+│ │       │        ≋≋≋≋≋≋≋≋≋≋≋                         │   │
+│ │       │       ≋ EFFECTS ≋                          │   │
+│ │       │      ≋≋≋≋≋≋≋≋≋≋≋≋                         │   │
+│ │       ▼           ╱│╲                              │   │
+│ │    ╭─────╮   ╭─────╮   ╭─────╮                    │   │
+│ │    │🌈   │   │🔓   │   │👻   │                    │   │
+│ │    │Imag.│   │Jail │   │Ego  │                    │   │
+│ │    ╰─────╯   ╰─────╯   ╰─────╯                    │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ Status:                                                      │
+│ • Immersion Level: ▓▓▓▓▓▓▓▓░░ 80%                           │
+│ • Mind's Eye Activity: ▓▓▓▓▓▓▓▓▓░ 90%                       │
+│ • Ego Dissolution: ▓▓▓▓▓▓░░░░ 60%                           │
+│ • Reality Blur: ▓▓▓▓▓▓▓░░░ 70%                              │
+│                                                              │
+│ Active Effects:                                              │
+│ ◈ = Information Particles                                    │
+│ ≋ = Consciousness Waves                                      │
+│ ░▒▓█ = Information Density                                   │
+│ 👁️ = Mind's Eye Interface                                    │
+│                                                              │
+│ [Initiate Sequence] [Adjust Immersion] [Emergency Exit]      │
+└──────────────────────────────────────────────────────────────┘
+```

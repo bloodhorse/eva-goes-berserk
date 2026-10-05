@@ -1,0 +1,9 @@
+Something is **path dependent** if or to the extent it is entangled with specific [[histories]], and would be different if different paths were taken.
+
+= related
+
+=> causal invariance
+=> timeless
+=> history
+=> memory
+=> contingent

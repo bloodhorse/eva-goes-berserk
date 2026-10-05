@@ -1,0 +1,19 @@
+**Infrafiction** is a genre of fiction that focuses on the generative laws or "[[tilings | tessellation]] logic" of a world or setting rather than following episodic narratives that unfold against a backdrop.
+
+= quotes about infrafiction
+
+> Ballard didn’t really write fiction so much as what you might think of as infrafiction. If you think about the relation between fiction and the currently fashionable mode of metafiction, infrafiction is sort of the opposite of that.
+>
+> Instead of trying to rise above a story via contrivances like multiverses, broken fourth walls, and self-aware commentary, infrafiction attempts to sink below it to the bedrock of narrative worlds and rules. It attempts to draw out the fundamental grammar of an interesting backdrop. If you’ve every watched a movie featuring a simulation premise, you’ve seen those scenes where the illusion of reality dissolves to reveal a regular compute grid underneath (The Thirteenth Floor is a good example, as are several Rick and Morty episodes, and in an indirect way, the symbol-stream version in The Matrix). Infrafiction is stories about those grids or symbol streams. You dispense with the cosmetic layers altogether.
+>
+> Though he did some very effective world-building, it is better to think of Ballard’s fiction as being focused on world engines, in the sense of game engines. Ballard’s world engines produce procedurally generated worlds.
+>
+> — [[ https://www.ribbonfarm.com/2023/03/30/tessellations-for-the-end-of-history/ | Tessellations for the End of History]]
+
+> What is the point of such stories? They make for terrible fiction, but they make for great infrafiction. If you want to reveal the nature of a world and its rules, take away the people (or reduce them to automatic, aggregate psychohistorical processes) and see what it wants to do on its own, on autopilot. I think this was Ballard’s basic literary mission: To take away the people, and reveal the natural tessellation logic of various worlds through reductio ad absurdum infrafictions. 
+>
+> — [[ https://www.ribbonfarm.com/2023/03/30/tessellations-for-the-end-of-history/ | Tessellations for the End of History]]
+
+= related
+
+=> metafiction

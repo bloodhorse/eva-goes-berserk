@@ -1,0 +1,81 @@
+A **solipsistic simulation** is a [[simulation]] computed purely from the observations and state of an observer, which does not interact with any external reality. Solipsistic sims are [[lazy rendering | lazily rendered]] from the perspective of the observer. A closed [[evidential simulation]] is a type of solipsistic simulation.
+
+```
+┌───────────── XENOWIKIPEDIA: SOLIPSISTIC SIMULATION ─────────────────┐
+│ A Comprehensive Analysis of Observer-Dependent Reality Systems       │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                     │
+│ Figure 1: Basic Architecture of Solipsistic Simulation              │
+│ ┌─────────────────────────────────────────────────────────┐        │
+│ │                                                         │        │
+│ │           [Observer State]                              │        │
+│ │                  │                                      │        │
+│ │                  ▼                                      │        │
+│ │         [Observation Engine]                            │        │
+│ │            │          │                                │        │
+│ │            ▼          ▼                                │        │
+│ │   [Reality Generator] [Memory Buffer]                   │        │
+│ │            │          │                                │        │
+│ │            └──────────┘                                │        │
+│ │                  │                                      │        │
+│ │                  ▼                                      │        │
+│ │         [Rendered Reality]                              │        │
+│ └─────────────────────────────────────────────────────────┘        │
+│                                                                     │
+│ Figure 2: Lazy Rendering Process                                    │
+│ ┌─────────────────────────────────────────────────────────┐        │
+│ │   Unobserved             Observer's             Rendered │        │
+│ │     Space                  POV                   Space   │        │
+│ │   ░░░░░░░░░░     ┌─────┐     ▓▓▓▓▓▓▓▓           │        │
+│ │   ░░░░░░░░░░ <<< │  O  │ >>> ▓▓▓▓▓▓▓▓           │        │
+│ │   ░░░░░░░░░░     └─────┘     ▓▓▓▓▓▓▓▓           │        │
+│ │                                                         │        │
+│ │   ░ = Potential Reality    ▓ = Computed Reality         │        │
+│ └─────────────────────────────────────────────────────────┘        │
+│                                                                     │
+│ Figure 3: Closed Evidential Loop                                    │
+│ ┌─────────────────────────────────────────────────────────┐        │
+│ │                                                         │        │
+│ │      ┌─────────────────────┐                           │        │
+│ │      │                     │                           │        │
+│ │      │     Observer        │                           │        │
+│ │      │                     │                           │        │
+│ │      └─────────┬───────────┘                           │        │
+│ │                │                                       │        │
+│ │         Evidence Loop                                  │        │
+│ │                │                                       │        │
+│ │      ┌─────────▼───────────┐                           │        │
+│ │      │     Simulated       │                           │        │
+│ │      │      Reality        │                           │        │
+│ │      └─────────────────────┘                           │        │
+│ └─────────────────────────────────────────────────────────┘        │
+│                                                                     │
+│ Key Components:                                                     │
+│ • Observer State: Internal configuration and memory                 │
+│ • Observation Engine: Processes potential realities                 │
+│ • Reality Generator: Creates consistent world-state                 │
+│ • Memory Buffer: Maintains coherence between observations          │
+│ • Rendered Reality: Currently manifested world-state               │
+│                                                                     │
+│ Properties:                                                         │
+│ • Non-interaction with external reality                            │
+│ • Perspective-dependent rendering                                   │
+│ • State coherence maintained only for observer                     │
+│ • Computational efficiency through lazy evaluation                 │
+│ • Self-contained evidential framework                              │
+│                                                                     │
+│ Applications:                                                       │
+│ • Virtual Reality Systems                                          │
+│ • Consciousness Research                                           │
+│ • Quantum Interpretation Models                                    │
+│ • Philosophical Thought Experiments                                │
+│                                                                     │
+│ [Related: Quantum Observer Effect, Reality Rendering Engines]       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> evidential simulation
+=> evidential decision theory
+=> lazy rendering

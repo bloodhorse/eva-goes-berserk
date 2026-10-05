@@ -1,0 +1,18 @@
+> Thankfully, I didn’t need to make up a word, or even look too far afield. Simulators have been spoken of before in the context of AI futurism; the ability to simulate with arbitrary fidelity is one of the modalities ascribed to hypothetical superintelligence. I’ve even often spotted the word “simulation” used in colloquial accounts of LLM behavior: GPT-3/LaMDA/etc described as simulating people, scenarios, websites, and so on. But these are the first (indirect) discussions I’ve encountered of simulators as a type creatable by prosaic machine learning, or the notion of a powerful AI which is purely and fundamentally a simulator, as opposed to merely one which can simulate. 
+> (...)
+>
+> A fun way to test whether a name you’ve come up with is effective at evoking its intended signification is to see if GPT, a model of how humans are conditioned by words, infers its correct definition in context.
+>
+>> Types of AI
+>>
+>> Agents: An agent takes open-ended actions to optimize for an objective. Reinforcement learning produces agents by default. AlphaGo is an example of an agent.
+>>
+>> Oracles: An oracle is optimized to give true answers to questions. The oracle is not expected to interact with its environment.
+>>
+>> Genies: A genie is optimized to produce a desired result given a command. A genie is expected to interact with its environment, but unlike an agent, the genie will not act without a command.
+>>
+>> Tools: A tool is optimized to perform a specific task. A tool will not act without a command and will not optimize for any objective other than its specific task. Google Maps is an example of a tool.
+>>
+>> Simulators: `A simulator is optimized to generate realistic models of a system. The simulator will not optimize for any objective other than realism,` although in the course of `doing so, it might generate instances of agents, oracles, and so on.`
+>
+> — [[Janus]], arguing that "Simulator" is something close to an informal [[True Name]] for self-supervised predictive models, in [[ https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators#Simulators | Simulators ]]

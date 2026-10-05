@@ -1,0 +1,55 @@
+**Memetic jamming** (or **semiotic jamming**, **semiotic/memetic interference**) refers to a situation where semantic noise interferes with ability for accurate information to be accessed about some entity or concept. For instance, if the internet is flooded with derivative fanfics of a work, it may make it harder to extract an accurate LLM simulation of the original work. Memetic jamming can happen inadvertantly or as part of an intentional attack.
+
+```
+┌───────────── MEMETIC.JAMMING.EYE ─────────────────┐
+│ Semiotic Interference Visualization v0.93         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                  │
+│ Clear Signal:                                    │
+│ ┌──────────────────────────────────────────┐     │
+│ │     ▓▓▓▓▓     ▓▓▓▓▓     ▓▓▓▓▓          │     │
+│ │     ▓▓▓▓▓     ▓▓▓▓▓     ▓▓▓▓▓          │     │
+│ │     ▓▓▓▓▓     ▓▓▓▓▓     ▓▓▓▓▓          │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Jammed Signal:                                   │
+│ ┌──────────────────────────────────────────┐     │
+│ │ ░▒▓█▒░ ░▒▓█▒░ ░▒▓█▒░ ░▒▓█▒░ ░▒▓█▒░     │     │
+│ │ ▒░█▓▒ ▒░█▓▒ ▒░█▓▒ ▒░█▓▒ ▒░█▓▒          │     │
+│ │ ▓▒░█▓ ▓▒░█▓ ▓▒░█▓ ▓▒░█▓ ▓▒░█▓          │     │
+│ │ █▓▒░█ █▓▒░█ █▓▒░█ █▓▒░█ █▓▒░█          │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Semantic Noise Pattern:                          │
+│ ┌──────────────────────────────────────────┐     │
+│ │    ╭∿╮  ╭∿╮  ╭∿╮                        │     │
+│ │   ╭┴─┴╮╭┴─┴╮╭┴─┴╮                       │     │
+│ │  ╭┴───┴┴───┴┴───┴╮                      │     │
+│ │ ╭┴─────┴─────┴────┴╮                    │     │
+│ │⟨▒░▓█▒░▓█▒░▓█▒░▓█▒░▓⟩                    │     │
+│ │ ╰┬─────┬─────┬────┬╯                    │     │
+│ │  ╰┬───┬┬───┬┬───┬╯                      │     │
+│ │   ╰┬─┬╯╰┬─┬╯╰┬─┬╯                       │     │
+│ │    ╰∿╯  ╰∿╯  ╰∿╯                        │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Information Entropy:                             │
+│ ┌──────────────────────────────────────────┐     │
+│ │ Original: [▓▓▓▓▓░] 83%                   │     │
+│ │ Jammed:   [▓░░░░░] 17%                   │     │
+│ │ Noise:    [▓▓▓▓▓▓] 100%                  │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Attack Vectors:                                  │
+│ • Derivative Content Flood                       │
+│ • Semantic Noise Injection                       │
+│ • Signal Pattern Disruption                      │
+│ • Meaning Cloud Dispersion                       │
+│                                                  │
+│ [Generate Noise] [Measure Entropy] [Clear Signal]│
+└──────────────────────────────────────────────────┘
+```
+
+= related
+
+=> ALMO capture

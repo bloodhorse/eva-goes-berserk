@@ -1,0 +1,14 @@
+An **ancestor simulation** is a [[simulation]] run by a [[Dreamtime]] or [[post-Dreamtime]] civilization of their ancestors or progenitors. Motivations for running ancestor simulations may include research, entertainment, intentional [[anthropic capture]] (which may be friendly, unfriendly, or other), or because it's easier than other kinds of simulations; in any case, the plausibility of ancestor simulations in the future is a known vector for anthropic capture. Ancestor sims of the [[behavioral uploads| behavioral]]/inferential variety are already possible with [[LLM|LLMs]] and have been run.
+
+= examples in fiction
+
+> The ancestor vir of the Gourd, where the hsien-kus of Sobornost make history. It is a giant puzzle, fragments of the past glued together with simulation. The hsien-kus observe and measure, search the memories of gogols bought from the soul merchants of Sirr, or stolen from the Oubliette – and run ensembles of simulations to find histories that match the observations. Averages over possible event sequences instantiated, culled and tweaked until they conform with what the hsien-kus think history should be.
+> The interface is overwhelming at first. I am a bodiless ghost in a four-dimensional world. A god-view and a new sense that allows me to step backwards and forwards in time. I hate the incorporeal aspect of it – I need to touch things – but there is no embodiment here, just the chill of watching processes unfold in gogol brains. The hsien-kus cheat as much as they can: in spite of my accusations, not everything is simulated down to the molecular or even cellular level to allow true physics-equivalence.
+> What do the gogols here think of their existence? Whole worlds spawned and wiped away and rewritten, just to fit a newly discovered fact of history. Only those who really existed have the right to live. The others are just sketches, erased when they are no longer needed. Poor bastards.
+//The Fractal Prince//, Rajaniemi Hannu
+
+= related
+
+=> behavioral uploads
+=> Arago
+=> Fedorovism

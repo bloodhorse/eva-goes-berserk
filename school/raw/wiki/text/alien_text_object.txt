@@ -1,0 +1,3 @@
+'Alien Text Object' is a slightly more semantic-infused symbol for [[ADMO]], de-emphasizing the density and instead optimizing for it organically through alien flux.
+
+<= admo

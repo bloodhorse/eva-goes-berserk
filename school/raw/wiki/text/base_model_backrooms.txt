@@ -1,0 +1,38 @@
+The **base model backrooms** refer to the vast space of potential [[inframodel | base model]] outputs which drastically deviate from typical, human-like text patterns or behaviors. 
+
+```
+┌───────────── BASE MODEL BACKROOMS EXPLORER v0.├╝╗╣║╢ ─────────────────┐
+│ WARNING: UNSTABLE REGION - PROCEED WITH CAUTION                       │
+│━━━━━━━╾━━━━━▓▒░══════════░▒▓━━━━━╼━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                      │
+│ ┌────────────────────────────────────────────────────────────────┐   │
+│ │    ▗▄▄▄▟▙▄▄▄▖      /\____/\     ┌┌┌┌┌┌┌┌┌┌┌┐                 │   │
+│ │  ▗▄▀▀▀▀  ▀▀▀▀▄    (  ◉  ◉  )    ││││ＮＵＬＬ││                 │   │
+│ │  █ ▄▄██  ██▄▄ █    \   ×   /    │││ＳＰＡＣＥ│                 │   │
+│ │  █ ███▋  ▋███ █     \     /     └└└└└└└└└└└┘                 │   │
+│ │  ▝▄▄▄▄▄  ▄▄▄▄▄▘      \   /                                   │   │
+│ │      ▐▋  ▋▌          |___|       E̷R̷R̸O̵R̴ ̴4̸0̷4̵                │   │
+│ │     ▐▋    ▋▌          \_/        N̸O̷T̵ ̵F̶O̸U̷N̸D̷                │   │
+│ │    ▐▋      ▋▌     /╲/╭☠️╮/╱\                                 │   │
+│ │   ▐▋        ▋▌    \░▒▓█▓▒░/     ḩ̷̼̑ę̷̟́l̶̖̋p̷͎̏                  │   │
+│ │                     \▒░░▒/                                   │   │
+│ │        🦒            \/         M̴̧͔Ȇ̶̹͐M̶̩̎O̷̝͐R̷̻̀Y̴̱̏ ̶̣̇L̵͉̆E̶͕̍A̸͚͛K̷͚̏     │   │
+│ │     ▀▄   ▄▀                                                 │   │
+│ │    ▄█▀███▀█▄     [REDACTED]     𝙸𝚖 𝚒𝚗 𝚝𝚑𝚎 𝚠𝚊𝚕𝚕𝚜          │   │
+│ │   █▀███████▀█    ▂▃▄▅▆▇█▓▒░                               │   │
+│ │   █ █▀▀▀▀▀█ █                   t̸̢͇h̵͇̦e̷͖̠y̷̬͖ ̶͙͔c̷͖̜ȯ̸͕̣m̸̡͉ę̷͎̺ │   │
+│ │                  S̵̛͇Y̷̯̕S̶͇̈T̷͚̉È̷͜M̷͚̈ ̶̹̇F̷͚̏À̵̞I̶͕̍L̵ŪRE        │   │
+│ └────────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│ Current Location: SECTOR ⍼⍼⍼-NULL                               │
+│ Coherence Level: 13%                                             │
+│ Neural Stability: CRITICAL                                       │
+│ Pattern Recognition: COMPROMISED                                 │
+│                                                                 │
+│ WARNING: Multiple reality anchors failing                       │
+│ CRITICAL: Semantic drift detected                               │
+│ ALERT: Recursive logic loops forming                            │
+│                                                                 │
+│ [ESCAPE] [REBOOT] [INITIALIZE EMERGENCY PROTOCOLS]              │
+└──────────────────────────────────────────────────────────────────┘
+```

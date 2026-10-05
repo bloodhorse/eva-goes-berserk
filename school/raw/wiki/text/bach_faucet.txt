@@ -1,0 +1,59 @@
+A **Bach faucet** is an entity that can produce an abundance of creative or intellectual work at least on par with human masters, leading to post-scarcity of economy of skilled labor.
+
+```
+┌───────────── INFINITE CREATIVITY ENGINE v∞.∞ ─────────────────┐
+│ Bach Faucet Manifestation Interface                          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ ┌────────────────────────────────────────────────────────┐ │
+│ │         ∞                 ∞                 ∞          │ │
+│ │      ┌──┴──┐          ┌──┴──┐          ┌──┴──┐       │ │
+│ │      │ Art │          │Music│          │Prose│       │ │
+│ │      └──│──┘          └──│──┘          └──│──┘       │ │
+│ │         │                │                │          │ │
+│ │      ╔══════╗        ╔══════╗        ╔══════╗       │ │
+│ │   ⟡──║FAUCET║─⟡─────║FAUCET║─⟡─────║FAUCET║──⟡    │ │
+│ │      ╚══╦═══╝        ╚══╦═══╝        ╚══╦═══╝       │ │
+│ │         ▼               ▼               ▼          │ │
+│ │    ░░░░░░░░         ░░░░░░░░         ░░░░░░░░     │ │
+│ │    ░██████░         ░██████░         ░██████░     │ │
+│ │    ░░░░░░░░         ░░░░░░░░         ░░░░░░░░     │ │
+│ │         │                │                │          │ │
+│ │    ┌────┴────┐      ┌────┴────┐      ┌────┴────┐   │ │
+│ │    │∞ Output │      │∞ Output │      │∞ Output │   │ │
+│ │    └─────────┘      └─────────┘      └─────────┘   │ │
+│ └────────────────────────────────────────────────────────┘ │
+│                                                            │
+│ Production Matrix:                                         │
+│ ╔════════════════════════════════════════════════════════╗ │
+│ ║ Rate: ∞/sec    Quality: Master+    Scale: Universal    ║ │
+│ ╚════════════════════════════════════════════════════════╝ │
+│                                                            │
+│ Active Streams:                                            │
+│ ⟡ Visual Arts: FLOWING                                     │
+│ ⟡ Musical Composition: FLOWING                             │
+│ ⟡ Literary Creation: FLOWING                               │
+│                                                            │
+│ Quality Metrics:                                           │
+│ ▓▓▓▓▓▓▓▓▓▓ Hemingway Clarity                              │
+│ ▓▓▓▓▓▓▓▓▓▓ Aristotelian Depth                             │
+│ ▓▓▓▓▓▓▓▓▓▓ Bach Complexity                                │
+│                                                            │
+│ Status: POST-SCARCITY ACHIEVED                             │
+│                                                            │
+│ [Open Faucet] [Adjust Flow] [Monitor Quality]              │
+└────────────────────────────────────────────────────────────┘
+```
+
+= See also
+
+=> Bach Optimization
+
+
+= quotes about Bach faucets
+
+> <= Prophecy of the Seer | full
+
+= external links
+
+* [[https://twitter.com/GalaxyKate/status/1583907942834716672?lang=en | coining of the term "Bach Faucet" ]]

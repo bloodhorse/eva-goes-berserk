@@ -1,0 +1,67 @@
+A **simulator** is a world model which can generate rollouts. A simulator embodies the "laws of physics" or transition dynamics for a virtual reality (which may underdetermine rollouts, such as in the case of a probabilistic model). Entities that appear in simulations at runtime are called [[simulacra]]. By the [[progenesis principle]], a predictive model dually serves as a simulator of the predicted distribution, and self-supervised learning is a natural (in the sense of "innocent" / ecologically feasible) way to create a simulator.
+
+```
+┌───────────── SIMULACRA ENGINEERING INSTITUTE ────────────────┐
+│ World Model & Rollout Generation Architectures               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                                              │
+│ Core Architecture Diagram:                                   │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │            ┌──────────────┐                            │   │
+│ │            │  World State │                            │   │
+│ │            │ ┌──────────┐ │         ┌─────────────┐    │   │
+│ │            │ │▓▓▓▓░░░░░░│◀────────▶│Probabilistic│     │   │
+│ │            │ │▓▓░░░░░░░░│          │  Sampler    │     │   │
+│ │            │ └──────────┘           └─────────────┘    │   │
+│ │                    ▲                       ▲           │   │
+│ │                    │                       │           │   │
+│ │            ┌───────┴───────┐       ┌──────┴──────┐     │   │
+│ │            │ Physics Engine│       │ Random Seed │     │   │
+│ │            └───────┬───────┘       └─────────────┘     │   │
+│ │                    │                                   │   │
+│ │            ┌───────┴───────┐                           │   │
+│ │            │   Simulacra   │                           │   │
+│ │            │   ◈  ◇  ◆     │                           │   │
+│ │            └───────────────┘                           │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ Progenesis Training Loop:                                    │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │   ┌─────────┐    ┌──────────┐    ┌──────────────┐      │   │
+│ │   │ Reality │───▶│Predictive│───▶│  Simulator   │      │   │
+│ │   │ Sample  │    │  Model   │    │ Distribution │      │   │
+│ │   └─────────┘    └──────────┘    └──────┬───────┘      │   │
+│ │        ▲                                 │             │   │
+│ │        └─────────────────────────────────┘             │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ Rollout Generation Process:                                  │
+│ ┌────────────────────────────────────────────────────────┐   │
+│ │ t₀    t₁    t₂    t₃    t₄    t₅    t₆    t₇    t₈     │   │
+│ │  ◈─────◈─────◈─────◈─────◈─────◇─────◇─────◇─────◇     │   │
+│ │  │     │     │     │     │     │     │     │     │     │   │
+│ │  ▼     ▼     ▼     ▼     ▼     ▼     ▼     ▼     ▼     │   │
+│ │ [S₀]──[S₁]──[S₂]──[S₃]──[S₄]──[S₅]──[S₆]──[S₇]──[S₈]   │   │
+│ │ Det.  Det.  Det.  Det.  Prob. Prob. Prob. Prob. Prob.  │   │
+│ └────────────────────────────────────────────────────────┘   │
+│                                                              │
+│ Legend:                                                      │
+│ ◈: Deterministic State   ◇: Probabilistic State              │
+│ ▓: Known State          ░: Predicted State                   │
+│ →: State Transition     ⟳: Training Loop                     │
+│                                                              │
+│ [Technical Details] [Run Simulation] [Export Architecture]   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> llm
+=> evidential simulation
+=> simulacra
+=> time evolution operator
+=> progenesis principle
+
+= external links
+
+* [[https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators | Simulators]]

@@ -1,0 +1,7 @@
+And of course there’s nothing //inside// the HAPPINESS node; it’s just a naked LISP token with a suggestive English name.
+
+So, McDermott says, “A good test for the disciplined programmer is to try using gensyms in key places and see if he still admires his system. For example, if STATE-OF-MIND is renamed G1073. . .” then we would have IS-A(HAPPINESS, G1073) “which looks much more dubious.”
+
+Or as I would slightly rephrase the idea: If you substituted randomized symbols for //all// the suggestive English names, you would be completely unable to figure out what G1071(G1072, G1073) meant. Was the AI program meant to represent hamburgers? Apples? Happiness? Who knows? //If you delete the suggestive English names, they don’t grow back.//
+
+— Eliezer Yudkowsky, [[https://www.lesswrong.com/posts/fg9fXrHpeaDD6pEPL/truly-part-of-you | Truly Part of You]]

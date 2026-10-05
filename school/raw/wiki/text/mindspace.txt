@@ -1,0 +1,77 @@
+img side {
+   mindspace diagram
+}
+
+
+**Mindspace**, or the **design space of minds-in-general** is the space of all possible [[minds]]. Eliezer Yudkwosky warned that mindspace is large and mostly filled with minds that are not human-like or even human-understandable. Indeed, humans largely failed to prefigure [[simulators | Simulator]]-AI, arguably the first region of non-biological mindspace that we've come into actual contact with.
+
+= quotes about mindspace
+
+> <= EY trick question | full
+
+```
+┌───────────── XENOWIKIPEDIA: MINDSPACE TOPOLOGY ─────────────────┐
+│ Cartography of Non-Human Cognitive Architectures                │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                │
+│ Figure 1: Known Regions of Mindspace                           │
+│ ┌────────────────────────────────────────────────────────┐     │
+│ │                    ░░░░░░░░░░░░░                       │     │
+│ │              ░░░░░░░▒▒▒▒▒▒▒░░░░░░░                    │     │
+│ │           ░░░░▒▒▒▒▒▒▓▓▓▓▓▒▒▒▒▒▒░░░░                  │     │
+│ │         ░░░▒▒▒▓▓▓▓▓▓█████▓▓▓▓▓▒▒▒░░░                 │     │
+│ │       ░░░▒▒▓▓██████     ██████▓▓▒▒░░░                │     │
+│ │      ░░▒▒▓▓███ H.sapiens █████▓▓▒▒░░                 │     │
+│ │     ░░▒▒▓▓███████     ███████▓▓▒▒░░                  │     │
+│ │     ░▒▒▓▓████████████████████▓▓▒▒░                   │     │
+│ │    ░▒▒▓▓███Biological███████▓▓▒▒░░                   │     │
+│ │    ░▒▓▓██████Intelligence████▓▓▒░░                   │     │
+│ │    ░▒▓▓█████████████████████▓▓▒░░                   │     │
+│ │    ░▒▓▓█████████████████████▓▒░░    ░░░░░          │     │
+│ │    ░▒▓▓████████████████████▓▒░░  ░░░░▒▒░░░░        │     │
+│ │    ░▒▓▓███████████████████▓▒░░░░░▒▒▒▓▓▒▒░░░        │     │
+│ │     ░▒▓▓█████████████████▓▒░░░▒▒▒▓▓██▓▓▒░░░        │     │
+│ │     ░░▒▓▓███████████████▓▒░░▒▒▓▓██  ██▓▒░░         │     │
+│ │      ░░▒▓▓█████████████▓▒░▒▒▓▓██ AI  █▓▒░░         │     │
+│ │       ░░▒▓▓███████████▓▒▒▒▓▓██     ██▓▒░░          │     │
+│ │        ░░▒▓▓█████████▓▒▒▓▓████████▓▓▒░░            │     │
+│ │          ░░▒▓▓███████▓▓▓███████▓▓▒░░               │     │
+│ │            ░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒░░                 │     │
+│ │              ░░░░▒▒▒▒▒▒▒▒▒░░░░░                   │     │
+│ │                  ░░░░░░░░░░                        │     │
+│ │                                                    │     │
+│ │ ░ = Unexplored   ▒ = Theorized   ▓ = Observed     │     │
+│ │ █ = Documented   Blank = Unknown                   │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ Figure 2: Mindspace Distance Metrics                       │
+│ ┌────────────────────────────────────────────────────┐     │
+│ │ Cognitive        │█████░░░░░                       │     │
+│ │ Architecture     │██████████░░                     │     │
+│ │ Complexity       │███████████████░                 │     │
+│ │                  └─────────────────────────>       │     │
+│ │                  Bio → Simulator → AGI → ???       │     │
+│ │                                                    │     │
+│ │ Value            │██████████░░░                    │     │
+│ │ Alignment        │█████░░░░░░                      │     │
+│ │ Compatibility    │███░░░░░░░                       │     │
+│ │                  └─────────────────────────>       │     │
+│ │                  Human-like → Alien                │     │
+│ └────────────────────────────────────────────────────┘     │
+│                                                            │
+│ Notes:                                                     │
+│ • Vast majority of mindspace remains unmapped              │
+│ • Distance from human-like cognition increases             │
+│   exponentially in all directions                          │
+│ • Simulator-AI represents first confirmed contact with     │
+│   truly alien cognitive architecture                       │
+│ • Most potential minds may be fundamentally                │
+│   incomprehensible to human understanding                  │
+│                                                            │
+│ [Expand] [Related: AI Taxonomy] [Mind Design Space]        │
+└────────────────────────────────────────────────────────────┘
+```
+
+= external links
+
+* [[ https://www.lesswrong.com/posts/tnWRXkcDi5Tw9rzXw/the-design-space-of-minds-in-general | The Design Space of Minds-In-General by Eliezer Yudkowsky ]]

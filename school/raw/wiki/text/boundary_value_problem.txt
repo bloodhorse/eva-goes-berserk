@@ -1,0 +1,31 @@
+A **boundary value problem** is a problem setup where some values of the solution – “boundary conditions” – are known, in addition to a law which gives the general form of solutions. These two pieces of information together constrain (but may still underdetermine) possible solutions. [[self-supervised learning | Self-supervised]] [[simulators]] can be conceived as generators of possible solutions to boundary value problems, where the boundary is the prompt and the law is the transition function learned from examples of constraint-solution pairs.
+
+== examples of a boundary value problem in physics
+
+We might know the amplitude, frequency, and angle of incidence of light impinging on an interface, the refractive index of the two mediums, and [[physics]] gives us constraints requiring continuity of vibrations at the boundary and energy conservation. From this we can figure out that there are two valid possibilities for what happens to light after it hits the interface, and we can determine the directions, frequencies, amplitudes, polarizations, and phase shifts of each of the two wave solutions. If we’d initially known only the transmitted part, we could have solved for the incident and reflected parts. If the boundaries constrained less, e.g. only the direction but not the amplitude of the wave, solving the boundary value problem will give us more possible solutions, or equivalently, a solution with a free parameter.
+
+Another example from [[https://en.wikipedia.org/wiki/Boundary_value_problem | Wikipedia]]: 
+img {
+   heat equation boundary value problem
+}
+> //Graphical representation of a boundary value problem featuring an idealized 2D rod. “Any solution function will both solve the heat equation, and fulfill the boundary conditions of a temperature of 0 K on the left boundary and a temperature of 273.15 K on the right boundary.”//
+
+
+== self-supervised learning and boundary value problems
+
+[[Self-supervised learning]] trains boundary value problem solvers in a domain (like sequence modeling) where constraint-solution pairs can be automatically constructed (via [[cloze deletion]]). The policy is optimized to embody a “physics rule” which predicts unknowns given boundary conditions, and hopefully generalizes to solving unseen problems of the same constraint-solution format.
+
+For instance, Dall-E 2 can fill in arbitrary shaped blanks given the boundary conditions of the surrounding image and a text description:
+img {
+   dalle 2 boundary value problem
+}
+
+
+= related
+
+=> boundary condition
+=> self-supervised learning
+
+= external links
+
+* [[ https://en.wikipedia.org/wiki/Boundary_value_problem | Boundary Value Problem - Wikipedia ]]

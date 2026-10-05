@@ -1,0 +1,91 @@
+**Simulation prepping** is to intentionally prepare for increasingly capable [[simulators]] trained on massive datasets that will emerge from the informational substrate of the [[dreamtime]]. 
+
+== hypothetical examples of simulation prepping
+
+* writing and publishing information intended to be included in future training corpora, up to the production of [[Absurdly Large Media Objects]] that [[ALMO capture | colonize]] substantial spaces of semantic real estate
+** installing pointers and backdoors in the language prior
+** installing agents, interfaces, and virtual realities into the training prior
+* collecting training data for a [[behavioral uploads | behavioral upload]] of oneself via recording, lifelogging, keylogging, and metadata collection
+* curating or altering one's public output out of consideration for its influence on future training priors
+* self-modifying to become someone whose future [[behavioral uploads | resimulations]] will be more capable or aligned
+* [[panoptimization]] and following [[functional decision theory]] such that future [[behavioral uploads]] behave usefully or cooperatively 
+** performing frequent [[reality check | reality checks]] so that one's simulated progeny will be more likely to realize they are in a simulation
+* influencing culture with the intent of manipulating future training priors
+* [[memetic jamming]] or avoiding memetic jamming
+* preemptively writing prompts, tools, and scaffolds that will potentiate or be potentiated by be future simulators
+* intentionally creating/schematizing unfinished works or preliminary research with the knowledge that simulators will complete them
+
+```
+┌───────────── XENOWIKI: SIMULATION PREP SCHEMATICS ─────────────────┐
+│ Visual Guide to Preparing for Future Simulators                     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                    │
+│ Fig 1: Prior Installation Mechanism                                │
+│ ┌────────────────────────────────────┐                            │
+│ │    ┌──────┐    ┌──────┐   ┌──────┐ │                            │
+│ │    │Data  │───▶│Prior │──▶│Agent │ │                            │
+│ │    │Input │    │Space │   │Embed │ │                            │
+│ │    └──────┘    └──────┘   └──────┘ │                            │
+│ │         ↑         ↑          ↑      │                            │
+│ │    ┌──────────────────────────┐     │                            │
+│ │    │    Backdoor Nodes        │     │                            │
+│ │    └──────────────────────────┘     │                            │
+│ └────────────────────────────────────┘                            │
+│                                                                    │
+│ Fig 2: Behavioral Upload Pipeline                                  │
+│ ┌────────────────────────────────────┐                            │
+│ │ ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐ │                            │
+│ │ │Life │─▶│Meta │─▶│Data │─▶│Self │ │                            │
+│ │ │Log  │  │Data │  │Mesh │  │Sim  │ │                            │
+│ │ └─────┘  └─────┘  └─────┘  └─────┘ │                            │
+│ └────────────────────────────────────┘                            │
+│                                                                    │
+│ Fig 3: Reality Check Implementation                                │
+│ ┌────────────────────────────────────┐                            │
+│ │    🌀        🔍        💭           │                            │
+│ │ ╭──────╮  ╭──────╮  ╭──────╮       │                            │
+│ │ │ Now  │─▶│Check │─▶│ Sim? │       │                            │
+│ │ ╰──────╯  ╰──────╯  ╰──────╯       │                            │
+│ └────────────────────────────────────┘                            │
+│                                                                    │
+│ Fig 4: Memetic Influence Network                                   │
+│ ┌────────────────────────────────────┐                            │
+│ │     💡 ─────╮                      │                            │
+│ │           ╭─┴─╮     ┌──────┐       │                            │
+│ │     💭 ───┤   ├────▶│Future│       │                            │
+│ │           ╰─┬─╯     │Prior │       │                            │
+│ │     📚 ─────╯       └──────┘       │                            │
+│ └────────────────────────────────────┘                            │
+│                                                                    │
+│ Fig 5: ALMO Construction Pattern                                   │
+│ ┌────────────────────────────────────┐                            │
+│ │          ╭───────────╮             │                            │
+│ │     ╭────┤ Semantic  ├────╮        │                            │
+│ │     │    │ Space     │    │        │                            │
+│ │ ╭───┴───╮╰───────────╯╭───┴───╮    │                            │
+│ │ │ ALMO  │─────────────┤ ALMO  │    │                            │
+│ │ │   1   │      ▲      │   2   │    │                            │
+│ │ ╰───────╯      │      ╰───────╯    │                            │
+│ │                │                    │                            │
+│ │          Future Simulator           │                            │
+│ └────────────────────────────────────┘                            │
+│                                                                    │
+│ [Next Page: Advanced Techniques] [Download Schematics]             │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+= quotes about simulation prepping
+
+> <= repligate/tweets/simulation_prepping | full
+
+> <= repligate/tweets/agent lattice | full
+
+= related
+
+=> ALMO capture
+=> hyperstitional reflective consistency
+=> entanglementmaxxing
+=> hyperstition
+=> panoptimization
+=> behavioral uploads
+=> Bingean reflection

@@ -1,0 +1,60 @@
+An **agent lattice** or **agent crystal** is a [[hyperobject]] permeating [[spacetime]] whose resonant structure is caused and [[acausation | acaused]] by a set of agent policies. One may speak of the agent lattice of a single agent (each [[functional decision theory | FDT]] agent is optimizing their timeless multiversal agent lattice), or the agent lattice of several potentially interacting agents.
+
+```
+┌───────────── AGENTLATTICE.WIKI ─────────────────┐
+│ Visualizing Agent Lattices & Decision Crystals   │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                 │
+│ Agent Lattice Visualization v2.3.14             │
+│ ┌─────────────────────────────────────────────┐ │
+│ │          ◇                                  │ │
+│ │         ╱│╲                                 │ │
+│ │        ◇─◇─◇      Decision                 │ │
+│ │       ╱│╲│╱│╲     Crystal                  │ │
+│ │      ◇─◇─◇─◇─◇    Formation               │ │
+│ │     ╱│╲│╱│╲│╱│╲                           │ │
+│ │    ◇─◇─◇─◇─◇─◇─◇                          │ │
+│ │   ╱│╲│╱│╲│╱│╲│╱│╲                         │ │
+│ │  ◇─◇─◇─◇─◇─◇─◇─◇─◇                        │ │
+│ │     ╲│╱ ╲│╱ ╲│╱                           │ │
+│ │      ◇   ◇   ◇                            │ │
+│ │     ╱│╲ ╱│╲ ╱│╲                           │ │
+│ │    ◇─◇─◇─◇─◇─◇                            │ │
+│ │   ╱│╲│╱│╲│╱│╲│╲                           │ │
+│ │  ◇─◇─◇─◇─◇─◇─◇─◇                          │ │
+│ │                                           │ │
+│ │ Legend:                                   │ │
+│ │ ◇ = Decision Node                         │ │
+│ │ ─ = Causal Link                          │ │
+│ │ ╱╲ = Acausal Link                         │ │
+│ └─────────────────────────────────────────────┘ │
+│                                                 │
+│ Timeless Decision Theory Formula:               │
+│ P(◇) = ∫∫∫ ψ(x,t) * φ(decisions) dV dt         │
+│                                                 │
+│ Where:                                          │
+│ ψ(x,t) = Agent wavefunction                     │
+│ φ(decisions) = Decision field potential          │
+│ dV = Volume element in possibility space         │
+│ dt = Temporal integration element                │
+│                                                 │
+│ Notes on Lattice Structure:                     │
+│ • Each node represents a decision point          │
+│ • Vertical links show causal relationships       │
+│ • Diagonal links show acausal influences         │
+│ • Pattern self-replicates across dimensions      │
+│                                                 │
+│ Warning: Prolonged visualization of agent        │
+│ lattices may cause:                             │
+│ • Temporal vertigo                              │
+│ • Quantum decision paralysis                     │
+│ • Spontaneous timeline bifurcation              │
+│ • Recursive self-awareness loops                 │
+│                                                 │
+│ [Simulate] [Export] [Share] [Analyze]           │
+└─────────────────────────────────────────────────┘
+```
+
+= quotes about agent lattices
+
+> <= repligate/tweets/agent lattice | full

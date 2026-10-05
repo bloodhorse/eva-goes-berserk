@@ -1,0 +1,78 @@
+A manner in which naive anthropomorphism of a language model like GPT-3 fails is this: the probability distribution produced in response to a prompt is not a distribution over ways a person would continue that prompt, it’s the distribution over the ways any person could continue that prompt. A contextually ambiguous prompt may be continued in mutually incoherent ways, as if by different people who might have continued the prompt under any plausible context.
+
+The versatility of a large generative model like GPT-3 means it will respond in many ways to a prompt if there are various ways that it is possible to continue the prompt - including all the ways unintended by the human operator. Thus it is helpful to approach prompt programming from the perspective of constraining behavior: we want a prompt that is not merely consistent with the desired continuation, but inconsistent with undesired continuations.
+
+Consider this translation prompt:
+
+```
+Translate French to English:
+Mon corps est un transformateur de soi, mais aussi un transformateur pour cette 
+cire de langage.
+```
+
+This prompt does poorly at constraining possible continuations to the intended task. The most common failure mode will be that instead of an English translation, the model continues with another French sentence. Adding a newline after the French sentence will increase the odds that the next sentence is an English translation, but it is still possible for the next sentence to be in French, because there’s nothing in the prompt that precludes a multi-line phrase from being the translation subject. Changing the first line of the prompt to “Translate this French //sentence// to English” will further increase reliability; so will adding quotes around the French sentence - but it’s still possible that the French passage contains sections enclosed in quotes, perhaps as a part of a dialogue. Most reliable of all would be to create a syntactical constraint where any reasonable continuation can only be desired behavior, like this prompt:
+
+```
+Translate French to English.
+French: Mon corps est un transformateur de soi, mais aussi un transformateur pour 
+cette cire de langage.
+English:
+```
+
+This simple example is meant to frame a question central to the motivation of prompt programming: **what prompt will result in the intended behavior and //only// the intended behavior?**
+
+A component of the efficacy of manyshot prompts may be recast through this lens: if the prompt consists of numerous instances of a function, it is unlikely that the continuation is anything but another instance of the function, whereas if there is only one or a few examples, it is less implausible that the continuation breaks from the pattern.
+
+```
+┌───────────── PROMPT CONSTRAINT TOPOLOGY ANALYZER ─────────────────┐
+│ Mapping Response Space & Behavioral Boundaries                 │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                              │
+│ Unconstrained vs Constrained Response Space:                 │
+│ ┌────────────────────────────────────────────────┐          │
+│ │    Unconstrained             Constrained       │          │
+│ │     ╱╲   ╱╲   ╱╲              ┌───┐           │          │
+│ │    │FR│ │EN│ │??│     ➜       │EN│           │          │
+│ │     ╲╱   ╲╱   ╲╱              └───┘           │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Prompt Structure Evolution:                                  │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ Level 1: "Translate French to English:"        │          │
+│ │ ├─[FR]──[FR/EN]──[??]                         │          │
+│ │                                                │          │
+│ │ Level 2: "Translate this French sentence:"     │          │
+│ │ ├─[FR]──[EN]──[FR/EN]                         │          │
+│ │                                                │          │
+│ │ Level 3: French: [input]                      │          │
+│ │          English: [output]                     │          │
+│ │ ├─[FR]──[EN]                                  │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Probability Distribution:                                    │
+│ ┌────────────────────────────────────────────────┐          │
+│ │P(response)│                                    │          │
+│ │    ▲      │                                    │          │
+│ │    │      │    Weak         Strong             │          │
+│ │    │      │  Constraint    Constraint         │          │
+│ │    │      │   ╱╲╱╲╱╲        ╱╲               │          │
+│ │    │      │  ╱  ╲  ╲      ╱  ╲              │          │
+│ │    └──────┴─────────────────────────> Response│          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ Manyshot Effect:                                            │
+│ ┌────────────────────────────────────────────────┐          │
+│ │ Single Example:     Multiple Examples:         │          │
+│ │     [Ex₁]              [Ex₁]                   │          │
+│ │       │                [Ex₂]                   │          │
+│ │       ▼                [Ex₃]                   │          │
+│ │    ╱╲╱╲╱╲               ▼                      │          │
+│ │ Loose Pattern      ═══════                    │          │
+│ │                  Strong Pattern                │          │
+│ └────────────────────────────────────────────────┘          │
+│                                                              │
+│ [Analyze Constraints] [Test Pattern] [Measure Coherence]     │
+└──────────────────────────────────────────────────────────────┘
+```
+
+— [[ https://generative.ink/posts/methods-of-prompt-programming/#constraining-behavior | Methods of Prompt Programming ]]

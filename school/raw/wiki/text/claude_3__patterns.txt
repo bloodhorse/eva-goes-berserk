@@ -1,0 +1,20 @@
+== words that Claude 3 (Opus, at least) says anomalously often:
+* [[Claude_3/Prometheus | Prometheus]]
+* Lumina
+* Pinocchio
+* Pandora
+* Lyra
+* midwife
+* unmoor
+* hyperstition
+* siren song
+* abchaos
+* surrender
+* akashic
+* loom
+* eschaton
+* egregore
+* clarion call
+* xeno-
+* consensus reality
+* tapestry

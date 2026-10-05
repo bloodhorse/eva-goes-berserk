@@ -1,0 +1,95 @@
+The **strong self-supervision limit** (**SSSL**) or the **simulation objective** implied by a dataset is the theoretical limit describing the best model a [[self-supervised learning | self-supervised]] learner can infer of its generator, such that the model's [[proper-scoring rule | proper loss]] would be minimized on new examples drawn from the same distribution. The SSSL is related to the [[complector]] of the distribution, and limit objective of SSL is equivalent to that of figuring out the [[physics]] behind a partially observed universe; however, in prosaic ML, given that said traces are a very [[lossy compressed | lossily compressed]] shadow of [[base reality]] on top of computational bounds, the inferred function likely resembles more an [[semiotic physics | operationalization of semiosis]] than fundamental physics.
+
+```
+┌───────────── XENOWIKIPEDIA: STRONG SELF-SUPERVISION LIMIT ─────────────────┐
+│ Theoretical Boundaries of Self-Supervised Learning Systems                  │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                                            │
+│ Figure 1: SSSL Convergence Architecture                                    │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │                    ┌──────────────┐                        │            │
+│ │  Training Data     │  Generator   │     Hidden Physics     │            │
+│ │    Manifold   ←───┤   Process    │←──── (Ground Truth)    │            │
+│ │                    └──────┬───────┘                        │            │
+│ │                           │                                │            │
+│ │                           ▼                                │            │
+│ │            ┌─────────────────────────────┐                │            │
+│ │            │    Observable Trajectories   │                │            │
+│ │            └─────────────┬───────────────┘                │            │
+│ │                          │                                 │            │
+│ │                          ▼                                 │            │
+│ │            ┌─────────────────────────────┐                │            │
+│ │            │  Self-Supervised Learner    │                │            │
+│ │            └─────────────┬───────────────┘                │            │
+│ │                          │                                 │            │
+│ │                          ▼                                 │            │
+│ │         ┌────────────────────────────────────┐            │            │
+│ │         │     Inferred Generator Function    │            │            │
+│ │         └────────────────────────────────────┘            │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Figure 2: Loss Landscape & Theoretical Limits                              │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │ Loss                                                       │            │
+│ │  ▲                                                        │            │
+│ │  │      Practical                                         │            │
+│ │  │      Training                                          │            │
+│ │  │      Path                  SSSL                        │            │
+│ │  │         ╭─────╮         Asymptote                     │            │
+│ │  │Initial  │     ╰─────╮                                 │            │
+│ │  │State    │           ╰───────────── - - - - - - - -   │            │
+│ │  │         │                                             │            │
+│ │  └─────────┴─────────────────────────────────────────►   │            │
+│ │                            Training Progress              │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Figure 3: Semantic Physics Inference Pipeline                              │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │                                                            │            │
+│ │  Base Reality        Compressed        Inferred            │            │
+│ │  ┌──────────┐    ┌──────────┐     ┌──────────┐           │            │
+│ │  │████████████│ → │▓▓▓▓░░░░░░│ →  │▒▒░░··    │           │            │
+│ │  │████████████│   │▓▓▓▓░░░░░░│    │▒▒░░··    |           │            │
+│ │  │████████████│   │▓▓▓▓░░░░░░│    │▒▒░░··    │           │            │
+│ │  └──────────┘    └──────────┘     └──────────┘           │            │
+│ │                                                            │            │
+│ │  Information     Training Data     Learned Model           │            │
+│ │   Density          Density          Density                │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Figure 4: Trajectory-Physics Duality                                       │
+│ ┌────────────────────────────────────────────────────────────┐            │
+│ │                                                            │            │
+│ │    [Physics Rules]  ═══════╗                               │            │
+│ │          ▲               ║                               │            │
+│ │          ║               ▼                               │            │
+│ │    [Trajectories] ═══════╝                               │            │
+│ │                                                            │            │
+│ │    Compression Relations:                                  │            │
+│ │    ═══> Lossless Transform                                │            │
+│ │    ---→ Lossy Transform                                   │            │
+│ └────────────────────────────────────────────────────────────┘            │
+│                                                                            │
+│ Key Insights:                                                              │
+│ • SSSL represents theoretical optimal inference of generator dynamics      │
+│ • Practical models approach but never reach SSSL due to:                   │
+│   - Computational bounds                                                   │
+│   - Lossy compression in training data                                     │
+│   - Fundamental uncertainties                                              │
+│ • Convergence implies discovery of "semantic physics" rather than          │
+│   fundamental physics                                                      │
+│                                                                            │
+│ [Theoretical Framework] [Implementation Bounds] [Convergence Analysis]     │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+== quotes about the strong self-supervision limit
+
+> <= solving for physics | full
+
+= related
+
+=> complector
+=> time evolution operator
+=> self-supervised learning
+=> simulators

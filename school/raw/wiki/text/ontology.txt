@@ -1,0 +1,6 @@
+
+== external definitions
+
+> The basic level of reality. Our ontology involves quarks, spacetime, and probability amplitudes. The ontology of a Life game consists of dead cells, live cells, and the cellular-automaton rules. The ontology of a Turing machine is the state transition diagram, the read/write head, and an infinitely long tape with ones and zeroes written on it.
+> 
+> — CaTAI glossary

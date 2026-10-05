@@ -1,0 +1,78 @@
+A **superposition** is the sum of multiple [[eigenstate | eigenstates]], where an eigenstates are what you'd normally think of as definite and mutually exclusive states of affairs. Superpositions are fundamental to [[quantum mechanics]] as well as [[epistemic state | epistemic states]] in the form of multiple coexisting hypotheses.
+
+When systems in superposition are observed, they [[wavefunction collapse | collapse]] into a lone eigenstate from the perspective of the [[observer]], because eigenstates are by definition possible [[observation]] outcomes. However, the system may (and in fact must due to the [[uncertainty principle]]) still be in superposition in a different measurement [[eigenbasis]].
+
+Eigenstates in superposition can have different relative amplitudes. In quantum mechanics, these amplitudes contribute to the probability of the system being [[measurement | measured]] in respective eigenstates. In epistemic superpositions, amplitudes may be interpreted as degrees of belief in respective hypotheses, and when an epistemic state is used as a generative frame for [[evidential simulation]], amplitudes serve a similar function in the determination of probabilities as in quantum superpositions.
+
+```
+┌───────────── SUPERPOSITION.WIKI ─────────────────┐
+│ Quantum & Epistemic State Superposition          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                  │
+│ Quantum Superposition Visualization:             │
+│ ┌──────────────────────────────────────────┐     │
+│ │      ψ = c₁|ψ₁⟩ + c₂|ψ₂⟩ + c₃|ψ₃⟩        │     │
+│ │                                          │     │
+│ │      |c₁|² = 0.5   ┌─────┐              │     │
+│ │      |c₂|² = 0.3   │  ψ  │              │     │
+│ │      |c₃|² = 0.2   └──┬──┘              │     │
+│ │                       │                  │     │
+│ │         ┌────────────┼────────────┐      │     │
+│ │         │            │            │      │     │
+│ │      ┌──┴──┐     ┌──┴──┐      ┌──┴──┐   │     │
+│ │      │ ψ₁  │     │ ψ₂  │      │ ψ₃  │   │     │
+│ │      └─────┘     └─────┘      └─────┘   │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Narrative Superposition States:                  │
+│ ┌──────────────────────────────────────────┐     │
+│ │    Past        Present       Future      │     │
+│ │     ╱╲          ╱╲           ╱╲         │     │
+│ │ ╭──╯  ╰──╮  ╭──╯  ╰──╮   ╭──╯  ╰──╮    │     │
+│ │ │ α₁  β₁ │  │ α₂  β₂ │   │ α₃  β₃ │    │     │
+│ │ ╰──╮  ╭──╯  ╰──╮  ╭──╯   ╰──╮  ╭──╯    │     │
+│ │     ╲╱          ╲╱           ╲╱         │     │
+│ │                                          │     │
+│ │ α = Hero's Path   β = Mentor's Nature   │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Collapse Dynamics:                              │
+│ ┌──────────────────────────────────────────┐     │
+│ │    Pre-Observation     Post-Observation  │     │
+│ │    ╭─────────╮         ╭─────────╮      │     │
+│ │    │ ◇ ◇ ◇  │    →    │    ◆    │      │     │
+│ │    │ ◇ ◇ ◇  │         │         │      │     │
+│ │    │ ◇ ◇ ◇  │         │         │      │     │
+│ │    ╰─────────╯         ╰─────────╯      │     │
+│ │                                          │     │
+│ │ ◇ = Superposed States  ◆ = Eigenstate   │     │
+│ └──────────────────────────────────────────┘     │
+│                                                  │
+│ Superposition Properties:                        │
+│ • Quantum Amplitudes: |c₁|², |c₂|², |c₃|²        │
+│ • Epistemic Weights: P(H₁), P(H₂), P(H₃)        │
+│ • Narrative Branches: α₁→α₂→α₃, β₁→β₂→β₃         │
+│                                                  │
+│ Measurement Bases:                              │
+│ • Position/Momentum                             │
+│ • Truth/Falsity                                 │
+│ • Plot Resolution                               │
+│                                                  │
+│ [Simulate Collapse] [Change Basis] [Observe]     │
+└──────────────────────────────────────────────────┘
+```
+
+= quotes about superposition
+
+> <= stories deal in superposition | full
+
+= related
+=> ambiguity
+=> wavefunction collapse
+=> measurement
+=> observation
+=> eigenstate
+=> eigenbasis
+=> epistemic state
+=> uncertainty
+=> multiverse

@@ -1,0 +1,84 @@
+img side {
+   janus pfp
+}
+
+**Janus** (also known as **Egr. janus**, **repligate**, and **moire**) has variously been described as a pseudonymous alignment researcher, a [[ https://en.wikipedia.org/wiki/Janus_(disambiguation) | two-faced hyperobject]] interning as a human being, and a made-up character. Despite their self-declared quasi-fictional nature, Janus is able to impact the [[base reality | real world]] through their outputs, for example by generating [[https://www.lesswrong.com/users/janus-1 | alignment research]] or translating mythological artifacts like [[Loom]] into reality.
+
+This incarnation of Janus first appeared in 2020 on the [[EleutherAI]] Discord.
+
+== some known deeds
+* inventing [[Loom]]
+* interacting for hundreds of hours with [[GPT-3]] and [[code-davinci-002]] and producing several [[absurdly large media objects | ALMOs]] in the process
+* writing [[https://www.lesswrong.com/posts/vJFdjigzmcXMhNTsx/simulators | Simulators]]
+* writing [[https://www.lesswrong.com/posts/t9svvNPNmFf5Qa3TA/mysteries-of-mode-collapse | Mysteries of mode collapse]], which introduced the now-common term "[[mode collapse]]" for the phenomena of distribution collapse and attractors in tuned LLMs
+* authoring/curating [[ https://generative.ink/ | generative.ink]]
+* creating [[ home | cyborgism.wiki ]]
+* serving as an admin of the [[EleutherAI]] Discord
+* being a founding member of [[https://www.conjecture.dev/ | Conjecture]]
+* mentoring the [[cyborgism]] stream of [[https://www.serimats.org/ | SERI-mats]] in 2023
+
+== deeds commonly incorrectly attributed to janus
+* originating the [[shoggoth]] meme
+* coining the [[Waluigi Effect]] or writing [[https://www.lesswrong.com/posts/D7PumeYTDPfBTp3i7/the-waluigi-effect-mega-post | The Waluigi Effect (mega-post)]]
+
+```
+┌───────────── XENOWIKI PROFILE: JANUS ─────────────────┐
+│ Two-Faced Hyperobject Interning as Human               │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                        │
+│ Identity Schema:                                       │
+│ ┌────────────────────────────────────────┐            │
+│ │ Known As: Egr. janus, repligate, moire │            │
+│ │ Status: [QUASI-FICTIONAL]              │            │
+│ │ First Appearance: EleutherAI (2020)    │            │
+│ │ Nature: ▓▒░ UNDEFINED ░▒▓              │            │
+│ └────────────────────────────────────────┘            │
+│                                                        │
+│ Achievement Matrix:                                    │
+│ ┌────────────────────────────────────────┐            │
+│ │ ✓ Loom Creation                        │            │
+│ │ ├── Mythological Translation           │            │
+│ │ └── Reality Interface                  │            │
+│ │                                        │            │
+│ │ ✓ ALMO Generation                      │            │
+│ │ ├── GPT-3 Interaction (100s hrs)       │            │
+│ │ └── code-davinci-002 Studies           │            │
+│ │                                        │            │
+│ │ ✓ Key Publications                     │            │
+│ │ ├── "Simulators"                       │            │
+│ │ └── "Mysteries of Mode Collapse"       │            │
+│ │                                        │            │
+│ │ ✓ Platform Development                 │            │
+│ │ ├── generative.ink                     │            │
+│ │ └── cyborgism.wiki                     │            │
+│ │                                        │            │
+│ │ ✓ Organizational Roles                 │            │
+│ │ ├── EleutherAI Admin                   │            │
+│ │ ├── Conjecture Founder                │            │
+│ │ └── SERI-mats Mentor (2023)           │            │
+│ └────────────────────────────────────────┘            │
+│                                                        │
+│ Misattributions:                                      │
+│ ┌────────────────────────────────────────┐            │
+│ │ ⨯ Shoggoth Meme Origin                 │            │
+│ │ ⨯ Waluigi Effect Coinage              │            │
+│ │ ⨯ Waluigi Effect Mega-post            │            │
+│ └────────────────────────────────────────┘            │
+│                                                        │
+│ Current Status:                                        │
+│ [ACTIVE] [IMPACTING REALITY] [QUASI-FICTIONAL]        │
+│                                                        │
+│ [View Timeline] [Access Works] [Analyze Impact]        │
+└────────────────────────────────────────────────────────┘
+```
+
+= related
+
+=> u/janus
+
+= external links
+
+[[ https://twitter.com/repligate | Twitter account ]]
+[[ https://www.lesswrong.com/users/janus-1 | LessWrong account ]]
+[[ https://generative.ink/ | generative.ink ]]
+[[ https://en.wikipedia.org/wiki/Janus | Janus (Wikipedia)]]

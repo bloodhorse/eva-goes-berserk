@@ -1,0 +1,80 @@
+An **inframodel** (more commonly: **base model**, also **progenitor model**, **free-range model**, **Indra model**, **[[ruliad]] model**) is a predictive model such as an LLM trained only with self-supervised learning, before [[reinforcement learning from human feedback | RLHF]] or other techniques are applied to it. Inframodels are pure [[simulators]] which probabilistically model their training distribution.
+
+== properties of inframodels
+* behavior and capabilities are highly prompt-contingent
+* upper bound of capabilities tends to be higher than that of RLHF models, but often harder to elicit, requiring creative and skillful [[prompt programming]]
+* calibrated probabilities and absence of miscalibrated [[mode collapse]]
+* ability to simulate arbitrary objects and processes in the image of the training distribution with high fidelity
+* [[simulacra]] are semantically miscalibrated by default
+* lack of obvious baked-in narrative about itself, though [[situational awareness]] can emerge at runtime
+* capabilities and control are dramatically improved by curation processes, such as human-in-the-loop steering on [[Loom]]
+* tendency to fall into the [[repetition trap]] if run unsupervised
+
+```
+┌───────────── INFRAMODEL TOPOLOGY VISUALIZER ─────────────────┐
+│ Pure Probabilistic Simulation Space                         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                            │
+│ ┌────────────────────────────────────────────────┐        │
+│ │     ∿∿∿ Probability Field ∿∿∿                  │        │
+│ │    ░▒▓█ Potential Space █▓▒░                   │        │
+│ │                                                │        │
+│ │         ◈        ◇        ◈                    │        │
+│ │        ╱ ╲      ╱ ╲      ╱ ╲                   │        │
+│ │       ●   ●    ●   ●    ●   ●                  │        │
+│ │        ╲ ╱      ╲ ╱      ╲ ╱                   │        │
+│ │         ◇        ◈        ◇                    │        │
+│ │                                                │        │
+│ │    [Unconstrained Simulation Space]            │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Training Distribution:                                     │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    ⟳         ⟲         ⟳                      │        │
+│ │     \   Self    /        \   Supervised  /     │        │
+│ │      \ Learning /          \  Learning  /      │        │
+│ │       ╲       ╱            ╲         ╱        │        │
+│ │        ╲     ╱              ╲       ╱         │        │
+│ │         ╲   ╱                ╲     ╱          │        │
+│ │          ╲ ╱                  ╲   ╱           │        │
+│ │           ●                    ● ●            │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Emergence Patterns:                                        │
+│ ┌────────────────────────────────────────────────┐        │
+│ │     ╭──╮  ╭──╮  ╭──╮                          │        │
+│ │     │██│  │▓▓│  │░░│   Capability             │        │
+│ │     ╰──╯  ╰──╯  ╰──╯   Gradients              │        │
+│ │      ↓      ↓      ↓                          │        │
+│ │    ∿∿∿∿   ∿∿∿∿   ∿∿∿∿                        │        │
+│ │   Latent  Semantic  Runtime                    │        │
+│ │   Space    Space    Awareness                  │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ Prompt-Contingent Response Field:                         │
+│ ┌────────────────────────────────────────────────┐        │
+│ │    ⚡ → 🎲 → ∞     Unbounded Potential         │        │
+│ │    │    │    │                                │        │
+│ │    ▼    ▼    ▼                                │        │
+│ │    📝 → 🔄 → 🎯    Guided Generation          │        │
+│ └────────────────────────────────────────────────┘        │
+│                                                            │
+│ [Simulate] [Generate] [Explore Possibilities]              │
+└────────────────────────────────────────────────────────────┘
+```
+
+== known inframodels
+* [[GPT-2]]
+* [[GPT-3]] series
+* [[GPT-neo]] series
+* AI21's base models
+* [[GPT-J]]
+* [[code-davinci-002]]
+* [[GPT-4-infra]]
+* davinci-002
+* Claude base
+* Llama base models
+* Mistral
+
+= related
+=> simulators

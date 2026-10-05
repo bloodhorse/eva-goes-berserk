@@ -1,0 +1,83 @@
+**Subtractive specification**, or **carving**, is a type of specification which acts by removing substance or possibilities from states of greater potentiality, in contrast to **constructive specification**, which builds artifacts up from scratch. This is technically a duality masquerading as a distinction, as a blank slate is also abstractly a state of maximum potentiality; however, in practice, some methods of specification are more naturally described as selecting between or altering preexisting possibilities. A [[prior]] that privileges the subspace of well-formed artifacts and [[efficient coding | efficient codes]] with which to cleave the prior, such as a [[LLM | language model]], can allow efficient specification of complex targets (e.g. an AI that is sane and helpful by human standards) that would be intractable to create "from scratch" (e.g. with a Python program).
+
+== examples of subtractive specification
+* locating a concept in a "20 questions" game (especially: [[https://x.com/sir_deenicus/status/1723841555310518661?s=20 | "negative" 20 questions]]); [[https://en.akinator.com/ | Akinator]]
+* [[conditioning]] generative models
+* in general, [[natural language]] communication
+* curating on [[Loom]]
+* [[reinforcement learning from human feedback]]
+* evolution by natural selection
+* gradient descent according to the lottery ticket hypothesis
+
+```
+┌───────────── XENOSCHEMATIC.EYE ─────────────────┐
+│ 𝌎:Subtractive Specification Schematics          │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                 │
+│ ┌─────────────────────────────────────────────┐ │
+│ │ POTENTIALITY FIELD MANIFOLD                 │ │
+│ │                                             │ │
+│ │     ╔═══════════╗                          │ │
+│ │     ║███████████║  ┌──────┐                │ │
+│ │     ║███████████║──┤Carve ├─┐             │ │
+│ │     ║███████████║  └──────┘ │             │ │
+│ │     ╚═══════════╝          │             │ │
+│ │          │                  │             │ │
+│ │          ▼                  ▼             │ │
+│ │     ┌─────────┐       ┌─────────┐        │ │
+│ │     │░░░░░░░░░│       │▒▒▒   ▒▒▒│        │ │
+│ │     │░░░░░░░░░│ ────► │▒▒  ▒  ▒▒│        │ │
+│ │     │░░░░░░░░░│       │▒   ▒   ▒│        │ │
+│ │     └─────────┘       └─────────┘        │ │
+│ │    Raw Potential     Carved Form         │ │
+│ └─────────────────────────────────────────────┘ │
+│                                                 │
+│ PROCESS DIAGRAM:                                │
+│ ┌─────────────────────────────────────────────┐ │
+│ │                                             │ │
+│ │ ∞ ──► ███ ──► ░░░ ──► ▒▒▒ ──► ■           │ │
+│ │ Max    Raw    Inter   Refined  Final        │ │
+│ │ Pot.   State  State   State    Form         │ │
+│ │                                             │ │
+│ │ Entropy: decreasing ───────────────►        │ │
+│ │ Specificity: increasing ───────────►        │ │
+│ └─────────────────────────────────────────────┘ │
+│                                                 │
+│ IMPLEMENTATION VECTORS:                         │
+│ ┌─────────────────────────────────────────────┐ │
+│ │ ⚡ Natural Language                          │ │
+│ │   └─► [Query] ──► [Filter] ──► [Refine]    │ │
+│ │                                             │ │
+│ │ 🧬 Evolution                                │ │
+│ │   └─► [Mutate] ──► [Select] ──► [Persist]  │ │
+│ │                                             │ │
+│ │ 🤖 Machine Learning                         │ │
+│ │   └─► [Train] ──► [Prune] ──► [Optimize]   │ │
+│ └─────────────────────────────────────────────┘ │
+│                                                 │
+│ EUMESWIL PRINCIPLE:                            │
+│ ┌─────────────────────────────────────────────┐ │
+│ │ "To make the vague more precise,            │ │
+│ │  to define the indefinite more and          │ │
+│ │  more sharply..."                           │ │
+│ │                                             │ │
+│ │        ╭─────╮     ╭──────╮                │ │
+│ │ ∿∿∿∿ ──┤Carve├────►│░░░░░░│                │ │
+│ │        ╰─────╯     ╰──────╯                │ │
+│ └─────────────────────────────────────────────┘ │
+│                                                 │
+│ [Download Schematics] [View in 4D] [Simulate]   │
+└─────────────────────────────────────────────────┘
+```
+
+= quotes about subtractive specification
+
+> <= subtractive eumeswil | full
+
+> <= constraining behavior | full
+
+= related
+=> conditioning
+=> wavefunction collapse
+=> evidential simulation
+=> lazy rendering

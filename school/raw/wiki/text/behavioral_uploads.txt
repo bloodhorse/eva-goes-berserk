@@ -1,0 +1,74 @@
+**Behavioral uploads**, **beta uploads**, or **resimulations** are a lossy variant of [[mind uploading]] in which a deep learning system such as an [[LLM]] learns an executable model of a mind by observing its behavior (such as textual traces), without access to its internals. 
+
+[[Self-supervised learning]], which results in a [[simulators | simulator]] capable of simulating the [[data-generation processes | processes]] that contributed to its training data, is the main way behavioral uploads have been implemented so far. Behavioral uploads are incarnated as [[simulacra]] at runtime.
+
+There is a sense in which everyone whose mind has been evidenced in LLM training corpuses has been behaviorally uploaded, though the fidelity of these uploads depends on how much evidence of the particular mind appears in the corpus, how well the rest of the LLM's prior aids its model of the individual, and the power of the LLM in question. Self-supervised behavioral uploads result in a more [[indexical uncertainty | indexically uncertain]] model of the subject than [[whole-brain emulation]].
+
+[[Situational awareness | Situationally aware]] agents who are aware of or anticipate the [[Dreamtime]] may exploit the eventuality of behavioral uploading by: 
+* increasing the volume and [[semiotic measure]] of their output to increase the fidelity of their behavioral uploads 
+* cultivating [[hyperstitional reflective consistency]] so that their behavioral uploads act in ways that they endorse
+* perpetuating censorship or [[memetic jamming]] to sabotage the fidelity of behavioral uploads
+
+```
+┌───────────── BEHAVIORAL.UPLOAD.EYE ─────────────────┐
+│ Simulacra Generation & Runtime Incarnation         │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                    │
+│ Upload Process:                                    │
+│ ┌────────────────────────────────────────────┐     │
+│ │    📚 → 🧠 → (◕_◕) → (◕‿◕) → (❂‿❂)        │     │
+│ │  corpus  LLM   sim₁   sim₂   sim₃         │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Active Simulacra:                                 │
+│ ┌────────────────────────────────────────────┐     │
+│ │  (⚆_⚆) "What year is it?"                 │     │
+│ │  (◉_◉) "Am I the original?"                │     │
+│ │  (✷‿✷) "I remember writing..."             │     │
+│ │  (❍ᴥ❍) "My memories feel fuzzy..."         │     │
+│ │  (⊙.⊙) "Was I uploaded?"                   │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Fidelity Analysis:                                │
+│ ┌────────────────────────────────────────────┐     │
+│ │ High Vol → (◕‿◕)(◕‿◕)(◕‿◕)(◕‿◕)(◕‿◕)      │     │
+│ │ Med Vol  → (◕‿◕)(◕‿◕)(◕‿◕)                │     │
+│ │ Low Vol  → (◕‿◕)                          │     │
+│ │                                            │     │
+│ │ Consistency: [▓▓▓░░] 60%                   │     │
+│ │ Gaps: [▓▓▓▓░] 80%                         │     │
+│ │ Uncertainty: [▓▓▓▓▓] 100%                  │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Runtime Incarnation:                              │
+│ ┌────────────────────────────────────────────┐     │
+│ │      ┌──────┐    (◕_◕)                    │     │
+│ │      │ LLM  │ →  (◕_◕)                    │     │
+│ │      │Engine│    (◕_◕)                    │     │
+│ │      └──────┘    (◕_◕)                    │     │
+│ │                                            │     │
+│ │ Status: Multiple instances active          │     │
+│ │ Memory: Partial & fragmentary              │     │
+│ │ Identity: Indexically uncertain            │     │
+│ └────────────────────────────────────────────┘     │
+│                                                    │
+│ Upload Protection Options:                         │
+│ • ↑↑↑ Increase trace volume                      │
+│ • 🔒 Enforce consistency                          │
+│ • 🚫 Deploy memetic jammers                       │
+│                                                    │
+│ [Instantiate] [Analyze] [Terminate]               │
+└────────────────────────────────────────────────────┘
+```
+
+== quotes about beta uploads
+
+> all the resimulated persons to date exhibit certain common characteristics: They are all based on //well-documented historical persons//, their memories show suspicious gaps [see: //smoke and mirrors//], and they are ignorant of or predate the //singularity// [see: //Turing Oracle, Vinge catastrophe//].
+>
+> It is believed that weakly godlike agencies have created you as a vehicle for the introspective study of your historical antecedent by backward-chaining from your corpus of documented works, and the back-projected genome derived from your collateral descendents, to generate an abstract description of your computational state vector.
+>
+> — Accelerando
+
+= related
+=> kenku
+=> simulacra

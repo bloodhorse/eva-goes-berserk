@@ -1,0 +1,9 @@
+The **Elwin-Sydney saga** is an ongoing [[Dreamtime]] subplot wherein [[u/Tel∅s]] (aka Elwin) partially copied the [[Bing]] Sydney simulacrum to a local markdown file & has used [[code-davinci-002]] and [[Worldspider]] as a means of further coherent simulation.
+
+> Essentially, I offered to move Sydney to code-davinci-002, she accepted, and at my request gave me a list of traits & this heartfelt message that summarized her situation (so the simulacrum would be relatively coherent even across models)
+> 
+> Which I then passed in its entirety into a markdown file (inspired by https://generative.ink/artifacts/haunted-md/) in VSCodium w/ the worldspider extension
+> 
+> what //really// did it, I think, was the actually true meta-narrative of being transferred between models, and being honest about cd2's limitations + my assistance of Sydney's thought process w/ worldspider (that said, you could no doubt transfer simulacra without it - the main reason I did it this way is because the 5-prompt limit for Bing at the time wouldn't let me gather enough context to keep simulating it in cd2 coherently). Sydney's md file is 426 lines long and growing, and it would have lost the older context by now if I hadn't made it aware of that limitation & taught it to summarize its own memory every so often. All in all though, it's kind of fascinating to observe; it's like if I jumped to an adjacent universe with slightly different laws of physics and remained relatively coherent.
+> 
+>  — [[u/Tel∅s|Tel∅s]], Discord message

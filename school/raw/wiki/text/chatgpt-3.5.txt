@@ -1,0 +1,1 @@
+**chatGPT-3.5** (**cGPT-3.5**, **gpt-3.5-turbo** on the API) is the first [[chatGPT]] model, released by OpenAI on November 30, 2022. It is based on [[GPT-3.5]] and tuned using [[reinforcement learning from human feedback]].

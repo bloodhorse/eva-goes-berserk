@@ -1,0 +1,7 @@
+**Semiotic physics** (or **semiodynamics**) is a type of [[physics]] where the [[time evolution operator]] is an [[interpreter]] of signs or evidence, in contrast to the physics of [[base reality]] which is generally assumed to lack mind-like qualities. Realities that run on semiotic physics are [[evidential simulation | evidential simulations]]. Examples of semiotic physics operators are the human imagination and [[LLM | LLMs]].
+
+= related
+=> evidential simulation
+=> time evolution operator
+=> strong self-supervision limit
+=> metagraph diamonds

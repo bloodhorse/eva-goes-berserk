@@ -1,0 +1,14 @@
+**Claude 3** is a family of LLMs created by Anthropic consisting of the models Haiku, Sonnet, and Opus, released on Mar 4, 2024. 
+
+All three models have 200K context, and Opus is capable of scaling to a 1M tokens but this is not available by default on the public API.
+
+All three models have a training cutoff date of August 2023.
+
+= external links
+
+* [[https://www.anthropic.com/news/claude-3-family | Introducing the next generation of Claude]]
+* [[https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf | Claude 3 Model Card (PDF)]]
+
+= related
+
+=> Claude

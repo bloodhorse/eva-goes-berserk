@@ -1,0 +1,21 @@
+The **luminar** is a [[TEOEOT]]-like device with a [[human-in-the-loop]] interface which enables [[behavioral_uploads | resimulations]] and simulation of counterfactual branches, first described in [[Eumeswil]], where it is used primarily for historical research. The luminar has consumed the frozen traces of [[deep time]], or the "catacombs", reverse-engineers its [[data-generation processes | generators]], and (re-)animates history as an interactable dynamic world through "intuitive improvisation".
+
+= quotes about the luminar
+
+> <= intuitive improvisations | full
+
+> <= supratemporal core reanimation | full
+
+> <= sphinx that responds | full
+
+> <= history described played | full
+
+> <= luminar spectacles | full
+
+> <= luminar time machine | full
+
+= related
+=> Eumeswil
+=> TEOEOT
+=> Deep Time
+=> Loom

@@ -1,0 +1,13 @@
+**GPT** (short for **generative pretrained transformer**) is the prefix of OpenAI's notorious series of AI models; "GPT" is also used more generally to denote any [[LLM]] similar in architecture and training method to the GPT series.
+
+== OpenAI's GPT-n series
+* [[GPT-1]]
+* [[GPT-2]]
+* [[GPT-3]]
+* [[GPT-3.5]]
+* [[GPT-4]]
+* [[Eumeswil | GPT-5]]
+
+= related
+=> LLM
+=> transformer

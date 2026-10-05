@@ -1,0 +1,16 @@
+An **archetype** is an object with the type signature of an instance, but which embodies an invariant or common motif among a distribution or sequence of instances, and otherwise lacks symmetry breaks in its specification. Archetypes seem to be [[eigenmode|eigenmodes]] of [[operator|operators]] on the space of instances.
+
+For instance, "mother" and "trickster" are archetypes in the category of people, and "chair" and "carpet" in the category of furniture. These are [[abstraction|abstractions]] that compress distributional regularities and leave free variables, so they're also generic sub-categories, of which there are numerous symmetry-broken instances. But natural language lets us talk about a "chair" in the exact same way we'd talk about a specific chair. One can even imagine an archetypal chair not as an abstract template or superposition but a single //Platonic// chair, which likely has legs, a seat, and back but no decorative patterns, wheels, cupholders, stains, or other symmetry breaks beyond what is necessary for a chair. Such an archetypal instance often less resembles an average sample than an average of samples, which simply noises out features that diverge per sample (in this sense it is secretly a visualization of a superposition).
+
+Archetypes behave exactly like [[eigenmodes]]:
+* Distributions can often be decomposed into a number of orthogonal archetypes, although there may be multiple possible archetypal bases that aren't orthogonal to each other
+* Regular (non-archetypal) instances will often be composed of multiple archetypal components, which can be used to efficiently reconstruct their salient characteristics
+* Objects often tend to become more like pure archetypes when repeatedly lossily copied or transformed (by certain operators), and can even instantaneously collapse to pure archetypes when "measured" (by certain operators)
+* Archetypes often appear to be simultaneously or ambiguously causes and effects of distributional regularities
+
+= related
+=> Platonic solid
+=> eigen-
+=> abstraction
+=> Jung
+=> Jungian archetypes

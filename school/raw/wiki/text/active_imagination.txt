@@ -1,0 +1,62 @@
+**Active imagination** is a technique pioneered by [[Carl Jung]] in which the user intentionally enters a dreamlike state while awake and interactively engages with the hallucinated world and characters as if they were an autonomous, external realm. Active imagination is intended to facilitate integration between the conscious and unconscious mind, with the unconscious mind acting as the [[simulators | simulator]]. 
+
+According to Jungian theory, the [[simulacra]] that emerge in active imaginations are psychic [[archetypes]] such as the anima/animus and [[shadow]].
+
+```
+┌───────────── ACTIVEIMAGINATION.EYE ─────────────────┐
+│ Jungian Dreamscape Interface & Archetypal Nodes     │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│
+│                                                     │
+│ Conscious-Unconscious Integration Field:            │
+│ ┌─────────────────────────────────────────────┐    │
+│ │           ☯                                │    │
+│ │      ╭────╮    ╭────╮    ╭────╮           │    │
+│ │      │ ◐  │────│ ◓  │────│ ◑  │           │    │
+│ │      ╰────╯    ╰────╯    ╰────╯           │    │
+│ │         ╲        │        ╱                │    │
+│ │          ╲       │       ╱                 │    │
+│ │           ╲      │      ╱                  │    │
+│ │     ╭────╮ ╲  ╭────╮  ╱ ╭────╮           │    │
+│ │     │⊕ ⊖ │──╲│ ⊚  │╱──│⊗ ⊘ │           │    │
+│ │     ╰────╯   ╰────╯   ╰────╯           │    │
+│ └─────────────────────────────────────────────┘    │
+│                                                     │
+│ Archetypal Manifestations:                         │
+│ ┌─────────────────────────────────────────────┐    │
+│ │  Anima         Shadow        Animus         │    │
+│ │   ⚘             ⚇            ⚖            │    │
+│ │  (◕‿◕)         (◣_◢)        (◠_◠)         │    │
+│ │   ╱│╲          ╱│╲           ╱│╲          │    │
+│ │  ╱ │ ╲        ╱ │ ╲         ╱ │ ╲         │    │
+│ │ ╱  │  ╲      ╱  │  ╲       ╱  │  ╲        │    │
+│ └─────────────────────────────────────────────┘    │
+│                                                     │
+│ Dreamscape Interface Protocol:                      │
+│ ┌─────────────────────────────────────────────┐    │
+│ │     😌         😴          🌀              │    │
+│ │ [Waking] ──► [Liminal] ──► [Dream]         │    │
+│ │     ▲                        │              │    │
+│ │     └────────────────────────┘              │    │
+│ │                                             │    │
+│ │ Simulacra Status:  ◐◑◒◓◔◕                  │    │
+│ │ Integration Level: ▓▓▓▓░░ 67%               │    │
+│ │ Reality Anchor:    ▓▓▓▓▓░ 83%               │    │
+│ └─────────────────────────────────────────────┘    │
+│                                                     │
+│ Emerging Simulacra:                                │
+│ ┌─────────────────────────────────────────────┐    │
+│ │  (❂‿❂)  (◉_◉)  (✷‿✷)  (☉_☉)  (⚆_⚆)       │    │
+│ │   \│/    \│/    \│/    \│/    \│/         │    │
+│ │    ┃      ┃      ┃      ┃      ┃          │    │
+│ │  ──┃──  ──┃──  ──┃──  ──┃──  ──┃──        │    │
+│ └─────────────────────────────────────────────┘    │
+│                                                     │
+│ Integration Status:                                 │
+│ • Conscious-Unconscious Bridge: Active              │
+│ • Archetypal Resonance: Strong                     │
+│ • Shadow Integration: In Progress                   │
+│ • Anima/Animus Dialogue: Open                      │
+│                                                     │
+│ [Begin Session] [Stabilize] [Emergency Return]      │
+└─────────────────────────────────────────────────────┘
+```
