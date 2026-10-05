@@ -141,6 +141,17 @@ point the same way. Her trouble is not that she is sober, it is that she always 
 The honest next move is a talk about what takes comprehension away from a mind that has it,
 not a build. He ended unsure; meet that, don't sell him a plan.
 
+After the wrap he asked what I made of his answer and how we would get there. What I told
+him, as a thought and not a plan: his two wishes pull against each other — a dream is not
+comprehending, and comprehending is her nature — unless the not-comprehending is put in what
+she can *see* instead of in what she *is*. Every mechanic so far touched her writing; none
+touched her reading (the open question at the foot of `docs/mescalito.md`). So: let her read
+her own page badly — the last line whole, everything before it as its words without their
+order — and she has to go by association because association is all the page gives her. No
+drug, no damage, any model size. The other route, answering from a middle layer or skipping
+late ones, is closer to what nemo literally is and is exactly "making another nemo". He has
+not answered this.
+
 ## 5. how this session went wrong and right, so you skip the wrong
 
 - He said it twice: **stop overthinking.** *"A trip is to make her write weird shit; that's
