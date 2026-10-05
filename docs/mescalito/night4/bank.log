@@ -1,0 +1,14 @@
+14:43:19 bank llama: start, budget 512
+14:48:21 R=3.346  median|h_s|=6.92  R/|h_s|=0.4832
+14:49:47 iter 0  causal objective 0.04
+14:51:14 iter 1  causal objective 58.24
+14:52:41 iter 2  causal objective 155.78
+14:54:08 iter 3  causal objective 267.84
+14:55:34 iter 4  causal objective 432.85
+14:57:01 iter 5  causal objective 442.82
+14:58:28 iter 6  causal objective 556.98
+14:59:55 iter 7  causal objective 796.84
+15:01:21 iter 8  causal objective 1061.16
+15:02:48 iter 9  causal objective 991.45
+15:03:34 BANK-DONE llama: R=3.3455592416586786  272 vectors
+EXIT 0

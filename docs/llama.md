@@ -87,16 +87,22 @@ as someone else's life (*"when my father disappeared my mother wrote me letters 
 days trying to explain everything"*). Seen in both: the shuffled part has no punctuation and
 her own drains away with it.
 
-## a bank for her — weighed, not started
+## her bank (2026-10-05, night 4)
 
-bekh did not say go. What was checked: three ungated mirrors carry Meta's 30 weight shards
-(`NousResearch/Meta-Llama-3.1-70B`, `unsloth/…`, `SillyTilly/…` — identical hashes to each
-other, identical sizes to Meta's, whose hashes are hidden). The bank needs only her layers up
-to the window, about 50 GB of the 131; the box has 12 GB free, so olmo's full weights
-(`olmo-hf`, 61 GB, re-downloadable) would go first. `melbo_bank.py --slice` needs two changes:
-her front layers run once on the cpu (twenty of them do not fit the card), and the weights load
-from a partial download (a trimmed shard index). Windows: 20 → 30 in bf16 (17 GB on the card,
-~15 minutes by olmo's measure) or 20 → 40 in 4-bit (nemo's depth fraction, where olmo's
-subjects were; an hour or more, a path never run; bitsandbytes 0.50 works on this card in the
-painter's venv). About an hour to a bank; the slow part is reading it — each dosed page reloads
-her and takes over two minutes.
+bekh said go that evening. `llama_s20.pt` on the box, `cv-llama/` its 256 directions and 16
+random controls as control vectors, the numbers in `docs/mescalito/night4/`. Learned on layers
+20 → 30 in bf16 through `melbo_bank.py --slice 1 --front cpu` (her first twenty layers do not
+fit the card, so they run once on the cpu; the window's ten take 16.7 GB of it, peak 19.4):
+
+```bash
+MODEL=llama-hf ARCH=llama EMBD=8192 NL=80 S=20 T=30 SLICE=1 FRONT=cpu bash kit/box_bank.sh llama
+```
+
+Twenty minutes end to end; `R=3.346`, `R/|h_s|=0.48` (olmo's 0.42). The weights it learns from
+are a partial download — shards 1–12 of `NousResearch/Meta-Llama-3.1-70B` with a trimmed index,
+54 GB in `llama-hf/`. A direction is applied at layer 19 (`--control-vector-layer-range 19 19`)
+through `llama-completion -ngl 44 -c 4096`, one reload of her per page: about 40 s for 60
+tokens once she is in the page cache. **The top direction (`000_f53`) at ×1.0 is letter-salad**
+where two sober runs were identical byte for byte, so the vectors bite and the reading doses
+sit well below 1.0. Not read yet. The deeper window (20 → 40 in 4-bit, where olmo's subjects
+were) is untried and needs more shards.

@@ -13,10 +13,12 @@ p.add_argument("--chunk", type=int, default=32); p.add_argument("--last", type=i
 p.add_argument("--R", type=float, default=None); p.add_argument("--lam", type=float, default=0.5)
 p.add_argument("--bits", type=int, default=16); p.add_argument("--bos", type=int, default=1)
 p.add_argument("--budget", type=int, default=0); p.add_argument("--slice", type=int, default=0)
+p.add_argument("--front", default=None)
 p.add_argument("--out", default="bank.pt")
 p.add_argument("--device", default="cuda")             # "mps"/"cpu" for a dry run on the mac with a toy model
 a = p.parse_args()
 dev = torch.device(a.device)
+fdev = torch.device(a.front) if a.front else dev
 
 cfg = AutoConfig.from_pretrained(a.model, revision=a.revision)
 tc = getattr(cfg, "text_config", cfg)                  # Mistral3 keeps the LM under text_config
@@ -54,7 +56,7 @@ if not a.slice:
 
 def enc(path):
     ids = tok(open(path).read(), return_tensors="pt", add_special_tokens=bool(a.bos)).input_ids
-    return ids.to(dev)                                # tokenize exactly as the server will (BOS!)
+    return ids.to(fdev)                               # tokenize exactly as the server will (BOS!)
 seeds = [enc(f) for f in a.seeds]
 
 types = getattr(tc, "layer_types", None)
@@ -63,8 +65,13 @@ KW = {}
 if a.slice:
     trunk = model.get_submodule(cands[0][0].rpartition(".")[0])
     for _, mod in trunk.named_children():
-        if mod is not layers: mod.to(dev)
-    for j in range(a.s): layers[j].to(dev)
+        if mod is not layers: mod.to(fdev)
+    for j in range(a.s): layers[j].to(fdev)
+    def mv(x):
+        if torch.is_tensor(x): return x.to(dev)
+        if isinstance(x, dict): return {k: mv(v) for k, v in x.items()}
+        if isinstance(x, (tuple, list)): return type(x)(mv(v) for v in x)
+        return x
     def grab(j):
         def hook(mod, args, kwargs):
             st["kw"].setdefault(kind(j), {k: v for k, v in kwargs.items() if k != "hidden_states"})
@@ -80,7 +87,7 @@ if a.slice:
             try: model(input_ids=ids, use_cache=False)
             except Stop: pass
             assert all(kind(j) in st["kw"] for j in range(a.s, a.t)), "a layer type after s never seen before it"
-            cache.append(st["h"]); KW[id(st["h"])] = st["kw"]
+            h = mv(st["h"]); cache.append(h); KW[id(h)] = mv(st["kw"])
     for hk in hooks: hk.remove()
     for j in range(a.s): layers[j].to("cpu")
     for j in range(a.s, a.t): layers[j].to(dev)

@@ -12,6 +12,7 @@ p.add_argument("--alpha", type=float, default=0.25)    # |v| / |residual| per la
 p.add_argument("--rms", default=None)                  # .npy [n_layer]: per-element RMS of l_out-k
 p.add_argument("--layers", default=None)               # "16-40": zero outside (or use --control-vector-layer-range)
 p.add_argument("--seed", type=int, default=0)
+p.add_argument("--hint", default="olmo2")
 a = p.parse_args()
 
 rng = np.random.default_rng(a.seed)
@@ -19,7 +20,7 @@ rms = np.load(a.rms) if a.rms else np.ones(a.n_layer, dtype=np.float32)
 lo, hi = (map(int, a.layers.split("-")) if a.layers else (1, a.n_layer - 1))
 
 w = gguf.GGUFWriter(a.out, "controlvector")
-w.add_string("controlvector.model_hint", "olmo2")
+w.add_string("controlvector.model_hint", a.hint)
 w.add_uint32("controlvector.layer_count", a.n_layer - 1)
 for k in range(1, a.n_layer):
     d = np.zeros(a.n_embd, dtype=np.float32)

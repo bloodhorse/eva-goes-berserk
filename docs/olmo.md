@@ -60,10 +60,18 @@ home, runbook and up/down script are `~/tower/shittalk/transurfers/gpu-test-draw
 llama on the card means the painter is down and the stage falls back to its hosted model.
 `box_serve.sh up` refuses while the painter holds the card.
 
-**Disk is the tight thing** (290 GB, the work project's DeepSeek takes ~117): `df -h /` on the
-box before any pull. What is ours and how big: `du -sh ~/eva-olmo/* ~/eva-paint/models`.
-Olmo's full weights (`olmo-hf`, 61 GB) are needed only to learn a new olmo bank and come back
-from Hugging Face in three minutes; they are the first thing to delete when room is wanted.
+**Disk is the tight thing** (400 GB since the box's owners grew it on 2026-10-05; the work
+project's DeepSeek takes ~117): `df -h /` on the box before any pull. What is ours and how big:
+`du -sh ~/eva-olmo/* ~/eva-olmo/small/* ~/eva-paint/models`. **Olmo's full weights are gone**
+(`olmo-hf`, 61 GB, deleted 2026-10-05 for room, bekh's word): they are needed only to learn a
+new olmo bank and come back from Hugging Face in three minutes. Next to go when room is wanted:
+llama's partial weights (`llama-hf`, 54 GB, only for another llama bank), then DeepSeek, which
+bekh has okayed and which is the work project's.
+
+**The box is no longer only ours to see** (2026-10-05): it was power-cycled and enrolled in
+work's ansible that evening, eight accounts were made on it (bekh's own `BekmemetevVO` among
+them) and a colleague looked around as root. Everything of ours died in the reboot and nothing
+restarts by itself: after any silence, `box_serve.sh status` first.
 
 **Her server and the door.** `kit/box_serve.sh up olmo` on the box: stock
 `/opt/llama/bin/llama-server` with nemo's flags (`-c 8192 -ngl 99 -fa on --no-jinja`), four
