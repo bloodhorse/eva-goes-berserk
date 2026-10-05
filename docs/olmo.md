@@ -44,6 +44,15 @@ file by sha256), served on loopback :8082 and reached from the mac at nemo's own
 `eva/CLAUDE.md`, "nemo on the box". `up` for one takes the other down first; who holds the
 card is `box_serve.sh status`. bekh unloaded olmo and put nemo there on 2026-10-04.
 
+**A third, since 2026-10-05: llama 3.1 70B base** (`box_serve.sh up llama`, loopback :8083,
+`~/eva-olmo/llama70/Meta-Llama-3.1-70B.Q4_K_M.gguf`, 39.6 GiB from
+`mradermacher/Meta-Llama-3.1-70B-GGUF` — the ggufs are not gated, Meta's own repo is). She is
+bigger than the card: 44 of 81 layers go on it (`NGL`, 23.1 of 24.5 GiB with a 4k window and
+one slot) and the rest runs on the cpu, so she needs the card alone — nemo and the painter
+off — and writes at **1.7 tok/s** (0.9 on the cpu only). No tunnel to the mac yet. Her first
+two sober pages, the storm girl and Scott at the stream's sampler and heat 2.2, are
+`docs/llama70/first/`.
+
 **Her server and the door.** `kit/box_serve.sh up olmo` on the box: stock
 `/opt/llama/bin/llama-server` with nemo's flags (`-c 8192 -ngl 99 -fa on --no-jinja`), four
 slots, **loopback :8081 only**. `up` kicks DeepSeek off the card itself and is the only thing
