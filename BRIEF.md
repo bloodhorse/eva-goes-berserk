@@ -16,7 +16,7 @@ A dream machine that runs on the mac perpetually and writes dreams on its own: s
 documents with that hard-to-pin feeling of immersion or transcendence in them. bekh takes his
 phone at any moment and reads a fresh piece of the stream. He won't read everything; the point
 is knowing the machine is dreaming and looking in from time to time. A base model writes (nemo
-12b, nothing installed; olmo 32b in the palette beside him), and the stuff coming out is still
+12b, nothing installed; olmo 32b in the palette beside him, llama 70b being read), and the stuff coming out is still
 the good stuff.
 
 **The machine curates.** The project is the automation of what the cyborgism crowd did by hand —
@@ -41,6 +41,14 @@ be a fool's errand. Until something says otherwise, the detector is a person rea
 marks (`●` good, `★` keep) are the only measurement; they exist to calibrate the machine, not to
 be the machine. **Write nothing as a law**: two readers and a few hundred cards. "Scott's room
 forgot Antarctica" is not a defect — losing the premise is what dreams do.
+
+**What a dream is to him, said for the first time on 2026-10-05** (dictated, after llama 70B's
+sober pages read as imitation): what feels like a dream is that *nemo seems to be not
+completely comprehending sometimes what the text is about, like the story in the text, and he
+just goes by feel, by associations and words — and that's why it reads like something really
+unhinged, like some black hole that can actually look back at you and throw up some scary
+particular circumstances of your death.* Held as his sense of it, not a definition: a writer
+who always knows what the text is about has so far not dreamt for him, however well it writes.
 
 ## the crew
 
@@ -202,21 +210,28 @@ the record). Everything older is `docs/backlog.md`, whole.
 2. **The power at 0.4 on the same fifty** (`docs/mescalito/kit/long.sh`, half an hour): at 0.75
    the throne arrives on a third of real first-person seeds but every period mouth dies; the
    question is whether 0.4 keeps the voice and still builds the throne.
-3. **Olmo — under way since 2026-10-03, on a borrowed work box** (`docs/olmo.md`, the box;
-   she answers at `127.0.0.1:8084` like nemo at 8080). Her bank exists and twenty of its
-   directions have been read up and down the doses (`docs/mescalito.md`, night 3; her entries
-   in the pharmacopoeia): **no subjects** — her strong end switches the document, the stance,
-   the register, the letters; half of it writes weird pages at its own dose. bekh's measure for
-   this, the same night: *a trip is to make her write weird shit; that's all.* A deep bank
-   (layers 16 → 32) followed the same night and bought content, partly: documents about
-   something — the tribe, the watcher, the ghosts, the planet. Next: the deep bank further
-   down; the weird ones of both banks on fresh seeds at their doses; the rest of each bank in
-   tens.
-   The box can vanish any day: results come off it as they land.
-4. **The pharmacy in the stream.** A substance by lot per dream, at a dose the seed can take;
-   needs a held-or-salad check on the page before it lands, since the ceiling is the seed's
-   (`docs/mescalito.md`, what was settled). Olmo's dose is per direction, so her lot needs a
-   dose table, which night 3 has begun.
+3. **The open question, bekh's, 2026-10-05: how to get a dream out of a model that is with
+   it, without making another nemo.** Llama 3.1 70B base is on the borrowed box
+   (`docs/llama.md`): ten sober pages — she imitates, recites what she has read, ends anything
+   that looks finished, and supplies no strangeness of her own; the one dreamlike page came
+   from the one seed that already had dream logic. He would rather play to her nature than
+   change her against it, none of the ways offered vibed, and the last thing on the table was
+   a question, not a plan: *what can make a sane model go insane.* His own sense of a dream is
+   in "the criterion" above — not comprehending. A bank for her is costed and **not started**.
+   Don't open with a build; this is a talk first.
+4. **Olmo has a pharmacy** (night 3, `docs/mescalito.md`, the pharmacopoeia's olmo sections):
+   two banks, sixteen compounds with known doses that reproduce on seeds they never saw. Still
+   mostly *which document is this*; the three true subjects are the deep bank's. Sober she
+   never gave him a dream — her weird pages are all dosed. bekh's measure for it: *a trip is
+   to make her write weird shit; that's all.*
+5. **The pharmacy in the stream.** A compound by lot per dream at its dose; `llama-server`
+   takes a vector only at startup, so it is one compound per ration, or a restart per page.
+   Olmo's dose table exists; the seed's ceiling still needs a held-or-salad check before a
+   page lands (`docs/mescalito.md`, what was settled).
+
+The box (`docs/olmo.md`, the box) is borrowed and can vanish any day: one of ours on its card
+at a time — olmo, nemo or llama — results come off it as they land, and who holds it now is
+`box_serve.sh status`, never a sentence in a doc.
 
 The method as it stands: bekh's stars measure the dream; "did the direction bring a subject
 the seed doesn't have" measures the drug, and a model answers that. The sober baseline is

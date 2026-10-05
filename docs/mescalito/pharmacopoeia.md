@@ -648,3 +648,29 @@ nothing a reader can name. Nothing loops.
   editorial marks — neighbours of `023`.
 - Faint or nothing: `012_f165` an amateur confession with a dead mother, `014_f131`, `021_f36`,
   `024_f61`, `027_f233`.
+
+## olmo's pharmacy on fresh seeds — night 3 (2026-10-04)
+
+Sixteen of the directions above — shallow `010`, `011`, `002`, `003`, `015`, `017`, `004`,
+`016`, `019`, `001`; deep `004`, `009`, `013`, `016`, `000`, `002` — each at its dose and a step
+up, on ten seeds they had never seen (four of bekh's cuts from nemo's lines, the horla,
+Mawson, Hogg, the Versailles adventure, the yellow wallpaper, De Quincey), one draw, 320 pages
+(`night3/pharm/`, reads `night3/opus-pharm-*.md`). **The compounds travel: fifteen of sixteen
+reproduce on nine or ten of the ten seeds.** The half-miss is the deep watcher `009`, which
+comes back as creepypasta but rarely as the watcher. The deep bank's tribe, listening machine
+and war keep their subject and rebuild each seed's objects inside it (Ninnis becomes *the
+white man*, the horla's bottle is networked, De Quincey's Malay sends video); `016`'s war
+drifted to Syria, Palestine and the Kurds, no Russia. Shallow `003` shows on five seeds only.
+**Hosts:** De Quincey and Hogg are the best — they keep their furniture while every drug gets
+in; the yellow wallpaper refuses by finishing its sentence and stopping; the lowercase
+unsigned note reads to her as a social-media post and goes to the web under almost
+everything; bekh's cuts hold the frame no better and no worse than the found texts; no classic
+recited. **How she breaks here:** no outright salad; stops cluster in `015`, `017`, deep `002`
+and `009`; the first symptom is the word after *the* fusing or vanishing (*"thefood"*, *"under
+the strong leadership of the and"*), then contractions losing their tail (*"someone who
+isn."*). Lines: *"Listen, you little fuckers, if I die you get no dinner," I shouted in a
+normal, conversational tone.* (`010`, Mawson); *Ninnis has been arrested in connection with
+this case.* (`002`, Mawson); *Wolf put his ear against my heart, and then he told me to go
+away.* (deep `004`, the bread); *After about 20 seconds it sent this: / Hello this is Dad.*
+(deep `013`, i'm cold); *If you haven't found out, the next sentence is a comma.* (`004`, the
+bread).

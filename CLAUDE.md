@@ -48,6 +48,11 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    and the box's runbook. And **the model is a free variable for mescalito** (bekh,
    2026-09-24): the mechanic picks the host — in-block pushes bite on pre-norm bases (nemo,
    small, llama), residual-stream pushes on olmo's post-norm.
+4. **llama 3.1 70B base** — on the same box since 2026-10-05, the stage above olmo: bigger
+   than the card (44 of 81 layers on it, the rest on the cpu, 1.7 tok/s), so she needs it
+   alone. Sober she imitates, recites and closes; bekh has not had a dream from her, and a bank
+   for her is costed, not started. **`docs/llama.md`** is her state and where the thinking
+   stands.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
@@ -268,7 +273,11 @@ seed doesn't have" measures the drug. Two of the power's pages are dreams 21:3�
 (2026-10-02/03) was olmo's**, on the borrowed box: her own bank, twenty directions read up and
 down the doses — no subjects, documents and registers and letter games, half of them weird at
 their own dose — and a deep bank (layers 16 → 32) through the new `--slice`, which bought content, partly — documents about something: the tribe, the watcher, the ghosts. bekh's measure,
-set that night: *a trip is to make her write weird shit; that's all.* The state section of
+set that night: *a trip is to make her write weird shit; that's all.* The compounds then travelled:
+sixteen of them reproduce on ten seeds they had never seen (2026-10-04). And on 2026-10-05,
+after llama 70B's sober pages, bekh said for the first time what a dream is to him — nemo *not
+completely comprehending what the text is about* (`BRIEF.md`, the criterion) — and turned from
+drugging a smart model to playing to its nature; that question is open. The state section of
 `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/` (`run.sh` for a
 page on nemo, `box_*.sh` for olmo on the box, `land.py` for a dream).
 

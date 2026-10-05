@@ -236,10 +236,22 @@ is its cousin), and `016_f42`, war and displacement — among document switches,
 (braces, caps, fused words) and nothings; the tribe (`004`) is clearer at 1.0. The deep
 bank's subjects, so far: the tribe, the watcher, the listening machine, the war, the planet.
 
-**Next**, in order: the weird ones of both banks as a pharmacy on fresh seeds at their own
-doses (shallow `010`, `011`, `002`, `003`, `015`, `017`, `004`, `016`, `019`, `001`; deep `004`
-at 1.0, `009`, `013`, `016`, `000`, `002`); the deep bank further down in tens (226 unread);
-the coexistence window (0.3–0.4) for the shallow corpus switches. Nemo's queue stands:
+**The pharmacy travels** (2026-10-04, `night3/pharm/`, the pharmacopoeia's last section):
+sixteen of those directions at their dose and a step up on ten seeds they had never seen, 320
+pages — fifteen reproduce on nine or ten of the ten. So olmo has sixteen compounds with known
+doses that work on fresh text, more than nemo has; almost all of it is still *which document
+is this*, and the three true subjects are the deep bank's.
+
+**Llama 3.1 70B** (2026-10-05, `../llama.md`) is on the box, sober only: ten pages, an imitator
+who recites, closes and supplies no strangeness of her own. A bank for her was costed (an
+hour; the window, the mirrors and the two script changes are in her doc) and **not started** —
+bekh's turn that night was away from drugging her: play to her nature, and what he calls a
+dream is nemo *not completely comprehending what the text is about*.
+
+**Next**, olmo's side: the pharmacy in the stream (a compound by lot, at its dose — a
+`llama-server` takes a vector only at startup, so it is one compound per ration or a
+per-page restart); the deep bank further down in tens (226 unread); the coexistence window
+(0.3–0.4) for the shallow corpus switches. Nemo's queue stands:
 the power at 0.4 on the same fifty seeds (`kit/long.sh`); a name from bekh for the puzzle, the
 letter and the power; the pharmacy plumbing for the stream (a substance by lot, at a dose the
 seed can take, which needs a held-or-salad check — and can now draw from two dreamers); the

@@ -53,6 +53,18 @@ off — and writes at **1.7 tok/s** (0.9 on the cpu only). No tunnel to the mac 
 two sober pages, the storm girl and Scott at the stream's sampler and heat 2.2, are
 `docs/llama70/first/`.
 
+**Not ours alone any more:** a painter for the transurfers stage lives on the same card and
+box (`~/eva-paint/`, z-image turbo and flux.2 klein behind `127.0.0.1:8189` on the mac). Its
+home, runbook and up/down script are `~/tower/shittalk/transurfers/gpu-test-drawing-pipeline/`
+(`paint.sh status | up | down`). It fits beside nemo and beside nothing else of ours: olmo or
+llama on the card means the painter is down and the stage falls back to its hosted model.
+`box_serve.sh up` refuses while the painter holds the card.
+
+**Disk is the tight thing** (290 GB, the work project's DeepSeek takes ~117): `df -h /` on the
+box before any pull. What is ours and how big: `du -sh ~/eva-olmo/* ~/eva-paint/models`.
+Olmo's full weights (`olmo-hf`, 61 GB) are needed only to learn a new olmo bank and come back
+from Hugging Face in three minutes; they are the first thing to delete when room is wanted.
+
 **Her server and the door.** `kit/box_serve.sh up olmo` on the box: stock
 `/opt/llama/bin/llama-server` with nemo's flags (`-c 8192 -ngl 99 -fa on --no-jinja`), four
 slots, **loopback :8081 only**. `up` kicks DeepSeek off the card itself and is the only thing
