@@ -5,8 +5,8 @@ PIDF=log/serve.pid
 WHOF=log/serve.who
 alive() { [ -s "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; }
 who() { cat "$WHOF" 2>/dev/null || echo olmo; }
-port_of() { case "$1" in nemo) echo 8082 ;; llama) echo 8083 ;; *) echo 8081 ;; esac; }
-gguf_of() { case "$1" in nemo) ls nemo/*.gguf ;; llama) ls llama70/*.gguf ;; *) ls olmo-q4/*.gguf ;; esac; }
+port_of() { case "$1" in nemo) echo 8082 ;; llama) echo 8083 ;; llama8) echo 8086 ;; mini8) echo 8087 ;; mini14) echo 8088 ;; olmo7-e) echo 8089 ;; olmo7-m) echo 8090 ;; olmo7-l) echo 8091 ;; *) echo 8081 ;; esac; }
+gguf_of() { case "$1" in nemo) ls nemo/*.gguf ;; llama) ls llama70/*.gguf ;; llama8|mini8|mini14|olmo7-e|olmo7-m|olmo7-l) ls small/"$1"/*.gguf ;; *) ls olmo-q4/*.gguf ;; esac; }
 ngl_of() { case "$1" in llama) echo "${NGL:-44}" ;; *) echo 99 ;; esac; }
 ctx_of() { case "$1" in llama) echo 4096 ;; *) echo 8192 ;; esac; }
 slots_of() { case "$1" in llama) echo 1 ;; *) echo 4 ;; esac; }
@@ -16,7 +16,7 @@ down() { if alive; then kill "$(cat "$PIDF")"; echo "DOWN $(who)"; else echo "no
 case "${1:-status}" in
   up)
     M=${2:-olmo}
-    case "$M" in olmo|nemo|llama) ;; *) echo "no such model: $M (olmo|nemo|llama)" >&2; exit 2 ;; esac
+    case "$M" in olmo|nemo|llama|llama8|mini8|mini14|olmo7-e|olmo7-m|olmo7-l) ;; *) echo "no such model: $M (olmo|nemo|llama|llama8|mini8|mini14|olmo7-e|olmo7-m|olmo7-l)" >&2; exit 2 ;; esac
     if alive; then
       if [ "$(who)" = "$M" ]; then echo "already up: $M pid $(cat "$PIDF"), health $(health "$M")"; exit 0; fi
       down; sleep 2
@@ -39,5 +39,5 @@ case "${1:-status}" in
   status)
     if alive; then echo "UP $(who) pid $(cat "$PIDF") port $(port_of "$(who)") health $(health "$(who)")"; else echo "DOWN"; fi
     nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader ;;
-  *) echo "usage: box_serve.sh up [olmo|nemo|llama] | down | status" >&2; exit 2 ;;
+  *) echo "usage: box_serve.sh up [olmo|nemo|llama|llama8|mini8|mini14|olmo7-e|olmo7-m|olmo7-l] | down | status" >&2; exit 2 ;;
 esac
