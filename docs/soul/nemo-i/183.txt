@@ -1,0 +1,9 @@
+Mac
+
+- OS X 10.4.11
+- 2.1 GHz Intel Core Duo
+- ATI Radeon HD 2600 (256MB)
+- 4GB RAM
+- MusicStore beta 3
+
+a) Original mp3 file

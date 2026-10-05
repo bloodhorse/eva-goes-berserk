@@ -1,0 +1,7 @@
+OS
+
+# Apple may have seeded the biggest iOS bug-fix patch in history
+
+by Jules WangApril 3, 2018 10:07 pm
+
+Today’s biggest software update not only brought projected improvements, but also quietly patched a bug that researchers from Google

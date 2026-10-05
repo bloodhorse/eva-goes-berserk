@@ -1,0 +1,3 @@
+OS has seen its foray with QR codes (I suspect very specifically to avoid these awful R-E-V recyclerviews), but one of the best is Camera.
+
+I used this feature pretty extensively when first investigating the concept of code sharing. But today I needed the admins to use a QR code

@@ -1,0 +1,1 @@
+Pad owners should always be wary of third-party download sites as they can increase the risk of exposing their device to malware. Recently, Appstractor’s iPad app installation via a non-Apple App Store was compromised and resulted in malware downloading to users and logging keystrokes. An update to the

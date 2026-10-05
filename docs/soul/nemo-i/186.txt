@@ -1,0 +1,3 @@
+GMS is a property management system that provides property managers with a multicalendar system and detailed analytics to optimize their channel management strategies.
+
+The company recently released a Safari Yield Management add-on that enables hosts to auto-match the best rates and rooms from other channels to Safari. iGMS also has

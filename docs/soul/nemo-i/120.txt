@@ -1,0 +1,3 @@
+Page delivers great features for websites allowing anyone to create professional email addresses, install easy-to-use CMS, and provide an uptime guarantee for their visitors via CDN services.
+
+Website hosting is rarely important in today’s fully connected world where technology like CDNs help webdevs remove costly hardware limitations. But

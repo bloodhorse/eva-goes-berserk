@@ -1,0 +1,3 @@
+ like endlessly branching, and if you're like me you might like to feel like you're somewhere or whatnot.
+
+i really like the idea of objects that can notify other objects when they enter/exit a room, cause it would be useful for all sorts of stuff. like lights turning on/

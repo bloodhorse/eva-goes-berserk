@@ -1,0 +1,3 @@
+Phone hackers have been rummaging through the internals of Apple's new dimpled SIM/backup drive for the past couple of days. But, embarrassingly for the jailbreak community, the hackers were not the first to write software for the notoriously complex hardware.
+
+The SIM tray,

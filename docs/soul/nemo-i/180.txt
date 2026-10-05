@@ -1,0 +1,11 @@
+Devices
+    Site Admin
+    Joined: Thu Jul 02, 2015 5:35 pm
+
+### Updates to version 2.4.1
+
+Ob1 smartphone app version 2.4.1.
+
+Updates:
+
+-Added support for ob2 wall

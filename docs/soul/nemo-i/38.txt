@@ -1,0 +1,2 @@
+Spring QuizMaker is full-featured eLearning quiz creator.
+After creating quizzes, you can exchange the .QZone file with other users of the program. This is a great choice for coauthors who all use the same PowerPoint version. Question results can be shown in the Grading View

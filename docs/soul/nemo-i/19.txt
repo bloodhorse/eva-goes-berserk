@@ -1,0 +1,1 @@
+OS 7 is released, and a multitude of developers have been feverishly updating their apps to take advantage of iOS’s new possibilities. Over the past two weeks, I’ve been working on the first new major functional feature of Tap Map: a new drawing tool. Here it is in action

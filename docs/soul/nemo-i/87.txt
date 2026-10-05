@@ -1,0 +1,5 @@
+´m trying to write multitouch media related program for KDE-Platform.
+i need:
+
+1. being able to read actions (like touch) on touchpad on KDE-Platform
+2. being able to constantly do check of whether the actual application is gaining focus (and properties application

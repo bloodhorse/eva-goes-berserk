@@ -1,0 +1,8 @@
+ have coded a small AutoHotKeys (AHK) script to properly back up files
+
+if you are familiar with using this tool, simply use the script below.
+
+```
+f::file
+{
+msgbox windows backup time %A_TimeShort% %A_TimeLong% %A_Time
