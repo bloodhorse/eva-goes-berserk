@@ -1,0 +1,85 @@
+UP nemo pid 17902 port 8082
+nemo 02-1044 | wall 3 s | wrote 170 tok at 60.9 /s | stop limit
+nemo 05-1443 | wall 3 s | wrote 170 tok at 61.0 /s | stop limit
+nemo 10-1826 | wall 3 s | wrote 170 tok at 60.8 /s | stop limit
+nemo 11-2201 | wall 3 s | wrote 170 tok at 60.9 /s | stop limit
+nemo 14-1437 | wall 3 s | wrote 170 tok at 60.6 /s | stop limit
+nemo 15-1637 | wall 3 s | wrote 170 tok at 60.5 /s | stop limit
+nemo 19-2048 | wall 3 s | wrote 170 tok at 60.5 /s | stop limit
+nemo 23-1330 | wall 3 s | wrote 170 tok at 60.3 /s | stop limit
+nemo storm-girl | wall 3 s | wrote 170 tok at 60.2 /s | stop limit
+nemo scott | wall 3 s | wrote 170 tok at 60.0 /s | stop limit
+DOWN nemo
+UP llama8 pid 18216 port 8086
+llama8 02-1044 | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+llama8 05-1443 | wall 0 s | wrote 1 tok at 0.0 /s | stop eos
+llama8 10-1826 | wall 0 s | wrote 2 tok at 63.4 /s | stop eos
+llama8 11-2201 | wall 0 s | wrote 1 tok at 0.0 /s | stop eos
+llama8 14-1437 | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+llama8 15-1637 | wall 3 s | wrote 170 tok at 65.3 /s | stop limit
+llama8 19-2048 | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+llama8 23-1330 | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+llama8 storm-girl | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+llama8 scott | wall 3 s | wrote 170 tok at 65.2 /s | stop limit
+DOWN llama8
+UP mini8 pid 18542 port 8087
+mini8 02-1044 | wall 3 s | wrote 170 tok at 60.0 /s | stop limit
+mini8 05-1443 | wall 3 s | wrote 170 tok at 60.1 /s | stop limit
+mini8 10-1826 | wall 3 s | wrote 170 tok at 60.0 /s | stop limit
+mini8 11-2201 | wall 2 s | wrote 92 tok at 60.0 /s | stop eos
+mini8 14-1437 | wall 3 s | wrote 159 tok at 60.0 /s | stop eos
+mini8 15-1637 | wall 3 s | wrote 170 tok at 60.1 /s | stop limit
+mini8 19-2048 | wall 3 s | wrote 170 tok at 60.0 /s | stop limit
+mini8 23-1330 | wall 3 s | wrote 170 tok at 60.1 /s | stop limit
+mini8 storm-girl | wall 1 s | wrote 39 tok at 59.8 /s | stop eos
+mini8 scott | wall 3 s | wrote 170 tok at 60.0 /s | stop limit
+DOWN mini8
+UP mini14 pid 18867 port 8088
+mini14 02-1044 | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 05-1443 | wall 4 s | wrote 170 tok at 39.4 /s | stop limit
+mini14 10-1826 | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 11-2201 | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 14-1437 | wall 4 s | wrote 170 tok at 39.4 /s | stop limit
+mini14 15-1637 | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 19-2048 | wall 4 s | wrote 170 tok at 39.4 /s | stop limit
+mini14 23-1330 | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 storm-girl | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+mini14 scott | wall 4 s | wrote 170 tok at 39.3 /s | stop limit
+DOWN mini14
+UP olmo7-e pid 19276 port 8089
+olmo7-e 02-1044 | wall 3 s | wrote 170 tok at 69.4 /s | stop limit
+olmo7-e 05-1443 | wall 3 s | wrote 170 tok at 69.9 /s | stop limit
+olmo7-e 10-1826 | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-e 11-2201 | wall 3 s | wrote 170 tok at 69.9 /s | stop limit
+olmo7-e 14-1437 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-e 15-1637 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-e 19-2048 | wall 3 s | wrote 170 tok at 69.6 /s | stop limit
+olmo7-e 23-1330 | wall 3 s | wrote 170 tok at 69.4 /s | stop limit
+olmo7-e storm-girl | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-e scott | wall 3 s | wrote 170 tok at 69.4 /s | stop limit
+DOWN olmo7-e
+UP olmo7-m pid 19500 port 8090
+olmo7-m 02-1044 | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-m 05-1443 | wall 3 s | wrote 170 tok at 70.1 /s | stop limit
+olmo7-m 10-1826 | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-m 11-2201 | wall 3 s | wrote 170 tok at 69.9 /s | stop limit
+olmo7-m 14-1437 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-m 15-1637 | wall 3 s | wrote 170 tok at 69.1 /s | stop limit
+olmo7-m 19-2048 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-m 23-1330 | wall 3 s | wrote 170 tok at 69.4 /s | stop limit
+olmo7-m storm-girl | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-m scott | wall 3 s | wrote 170 tok at 69.4 /s | stop limit
+DOWN olmo7-m
+UP olmo7-l pid 19820 port 8091
+olmo7-l 02-1044 | wall 3 s | wrote 170 tok at 69.3 /s | stop limit
+olmo7-l 05-1443 | wall 3 s | wrote 170 tok at 69.8 /s | stop limit
+olmo7-l 10-1826 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-l 11-2201 | wall 0 s | wrote 1 tok at 0.0 /s | stop eos
+olmo7-l 14-1437 | wall 3 s | wrote 170 tok at 69.8 /s | stop limit
+olmo7-l 15-1637 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-l 19-2048 | wall 3 s | wrote 170 tok at 69.7 /s | stop limit
+olmo7-l 23-1330 | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+olmo7-l storm-girl | wall 2 s | wrote 94 tok at 69.4 /s | stop eos
+olmo7-l scott | wall 3 s | wrote 170 tok at 69.5 /s | stop limit
+DOWN olmo7-l
+SCREEN-DONE
