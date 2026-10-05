@@ -1,0 +1,3 @@
+udante is not a standard browser chrome, but a separate branch on the WebKit project which facilitates to add things like new CSS selectors and transforms, transforms implementation based on device fingerprint & on pre-defined parameters, in page asynchronous scripting & execution.
+
+👏 bePU project that is used for BSP

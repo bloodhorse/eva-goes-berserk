@@ -1,0 +1,1 @@
+.e., a solution $z$ such that $(1 + \epsilon_1)z \in \Lambda_0$). So there exists $\delta_3 > 0$ and a positive integer $p_3 \in \{1, 2, \ldots\}$ such

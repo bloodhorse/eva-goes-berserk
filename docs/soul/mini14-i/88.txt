@@ -1,0 +1,1 @@
+'ve noticed that during the two connections periods, there is a density of 'onclick' / 'onmouseover' called and im wondering where this is coming from ?? it seems to be in lists as well as various positoins and not consistent. its making the game get a little choppy when

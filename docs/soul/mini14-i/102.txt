@@ -1,0 +1,1 @@
+ am working on (eclaim) project.I have succesfuly completed the LOGIN,REGISTER and SEARCH FOR RECORD but Unable to add new record in jsp or php language with the help of documentation.My sql table name is (loan_detail).i am new to all these languages just

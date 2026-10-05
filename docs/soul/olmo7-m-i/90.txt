@@ -1,0 +1,9 @@
+agg
+
+        # Draw vertical lines to separate the blocks
+        self.axes.set_axis_off()
+        for cl,blk in self.blk.items():
+            y.low = blk.LOW[:]
+            y.high = blk.LWOH[:]
+            self.axes.set_ylim(y)
+            for cb in blk.U

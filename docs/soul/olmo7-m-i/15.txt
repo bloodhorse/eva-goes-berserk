@@ -1,0 +1,1 @@
+_{k+1}$) between different filter phases, we study randomized trace reconstruction attack success as a function of the sanity level in (6.32). All traces used for generating signal values in Example 6.2 are realized using the method in [11], i.e., the coefficients are generated

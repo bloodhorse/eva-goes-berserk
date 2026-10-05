@@ -1,0 +1,1 @@
+=1}^{36}\left[\left(C_{2i-1}(x)+C_{2i}(x)\right)T_{2i-1}(x)+\left(C_{2i-1}(y)+C_{2i}(y)\right)T_{2i

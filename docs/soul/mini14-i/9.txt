@@ -1,0 +1,5 @@
+ have this 2.7.12-kernel and xfree86 4.4.0.
+then i manage to get a command with graphics-lib xlib-glext, for opengl, making cube rotating.
+
+ok,===
+i go to install the nvidia-7

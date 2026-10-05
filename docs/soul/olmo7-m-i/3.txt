@@ -1,0 +1,3 @@
+, AMD and graphic companies, in that it seeked to create a standard guide that promotes open documentation of hardware and software interfaces that can speed development, and allow hardware and software (games, in this case) to be developed more efficiently.
+
+Weve quickly run into something of a mess in trying to

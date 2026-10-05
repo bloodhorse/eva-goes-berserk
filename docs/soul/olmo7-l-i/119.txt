@@ -1,0 +1,1 @@
+=3, SacM (dilution 60x). I also measured the SacM protein in cell lysates of the lysogenic dh-Ec174::SacM and dh-Ec300::SacM strains by western blotting and fluorography (see Materials and Methods) 2 h

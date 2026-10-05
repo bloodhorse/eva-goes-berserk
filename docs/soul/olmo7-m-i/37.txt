@@ -1,0 +1,1 @@
+. Notably, RaBPI was not able to recognize 22 % of MiIs present in MiI consensus sequences (Fig. 3d). Other methods like QNAT-Detect (8 %) or NetMotifScan (4 %) recognized around 20 % of

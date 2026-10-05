@@ -1,0 +1,1 @@
+LO in the latest firmware release does not seem to have the UI disabled as was the case in early releases (of v1 or v2 firmware). The iLO web UI is available after setup which presents problem in places where iLO needs to be enabled for management reasons. However, the web UI

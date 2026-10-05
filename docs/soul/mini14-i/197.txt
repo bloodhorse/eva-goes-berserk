@@ -1,0 +1,3 @@
+OS development may cause problems. Sometimes you may find a solution but be faced with another problem. Now, we have a 100% working solution. And it works for a number of different problems, such as:
+
+1. “My phone is not syncing with iTunes”. Computer just

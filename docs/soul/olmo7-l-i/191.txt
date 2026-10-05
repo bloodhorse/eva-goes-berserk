@@ -1,0 +1,5 @@
+,T),
+\]
+for all \([j_1, j_2] \in \text{Tree}(C, p)\].
+
+Proof. Let \([j_1, j_2] \in \text{Tree}(C, p)\) be an edge in \(T\

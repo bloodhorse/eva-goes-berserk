@@ -1,0 +1,2 @@
+ am move serial port debugging from XP to Linux environment. If i will find the way to redirect output of sct to a text file and then scan It, will be perfect.
+please anyone share a linux way how to do it?

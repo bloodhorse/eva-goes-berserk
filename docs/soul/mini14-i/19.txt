@@ -1,0 +1,2 @@
+ use this script to fix a file
+problem i took from a chat one user wrote it, but i found it sort of unreliable. sometimes it tells me one of my files is bad and it will try to fix it then another will give an error 0 even though the correct number has been entered

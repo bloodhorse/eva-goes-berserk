@@ -1,0 +1,3 @@
+yo Senkai
+
+I'm a self taught fullstack web developer with 2 years of experience who has a strong passion in building world class web products. My goal is to achieve my level of expertise in the tech industry. I am mainly experienced in ReactJS, Redux, NodeJS, Express

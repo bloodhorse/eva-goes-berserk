@@ -1,0 +1,8 @@
+ = 1
+with open('./wtx_txtrades16.txt', 'r') as f:
+
+    with open('./wtx_txtrades2.txt', 'w') as f2:
+        for line in f:
+            if line.strip() == '':
+                continue
+            line = line

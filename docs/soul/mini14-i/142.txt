@@ -1,0 +1,5 @@
+ am not working with build + run with tailwind right now so don’t have any “collisions” but i have a one-liner that you can paste into (svelte) component anywhere and it specifies tailwind before specifying the syntax specifics.
+
+## how to do it
+
+1. paste

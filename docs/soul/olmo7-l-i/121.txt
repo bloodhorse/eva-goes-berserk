@@ -1,0 +1,1 @@
+,j}<10^6$ with some safety factor (some actuation time to $t^*$ may be necessary), the parameter $k_T=10^4$, and approximate the solution for $\sigma$ as a piecewise constant in time (ignoring the heating up transient, which would have

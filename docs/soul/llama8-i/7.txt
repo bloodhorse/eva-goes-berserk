@@ -1,0 +1,5 @@
+ have a jpg file and i use it in my XmlDataDocument . now i want create a pdf file so i did following code:
+```
+    XDocument xd = XDocument.Load("D://profileText.jpg"); 
+    StringWriter sw = new StringWriter(); 
+    TextWriterSettings txtWriterSettings

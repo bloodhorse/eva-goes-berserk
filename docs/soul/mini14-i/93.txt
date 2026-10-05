@@ -1,0 +1,2 @@
+ feel somehow it is the answer, but if it is correct answer i must not be understand the term 'general case', and by any chance considering the first n term of the series..damn,i failed
+Let ,f(i)={for i∈Z+,if Z is a rationalbe

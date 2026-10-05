@@ -1,0 +1,1 @@
+=d+r\) are enabled via different k-nearest neighbour searches; \(d\) the procedure has to find neighbours among the training light sources only, while \(r\) estimates nearest neighbours in the whole dataset. A rougher approximation can be applied to the training class as tested in Tigas et al.\

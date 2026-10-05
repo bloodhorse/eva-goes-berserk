@@ -1,0 +1,5 @@
+ = 1 (Jan 1981 until Jan 1985) corresponds to a modeled radiation
+modified from J. Lee, final high resolution vertical wind and
+temperature specifications included
+level by 56× options (see text for details)
+pressure levels starting at 7 hPa and ending at

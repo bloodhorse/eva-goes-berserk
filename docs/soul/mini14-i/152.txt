@@ -1,0 +1,7 @@
+ have a amig0 c1200. the primary drive is a 1gb hard drive and i also have 2 2gb ones installed. originally i was setup like this:
+
+prime 1gb
+second 2gb partioned
+third 2gb empty
+
+i was

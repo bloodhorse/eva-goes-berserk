@@ -1,0 +1,2 @@
+File definitive an alternative for DA File System
+iOS developers are still trying to replace DA File system storage because Apple has removed its builders tool from App Store. The iFile definitive has become the file manager substitute, which is thought as an alternative for DA File System tool. Therefore, iOS users are urged

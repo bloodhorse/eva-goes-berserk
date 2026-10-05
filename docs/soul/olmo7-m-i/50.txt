@@ -1,0 +1,1 @@
+-1},\ldots,\scriptstyle Td+(nb+1)(j+1)}}{\sum_{1\le i\le b+(j+1)(n+1)} \mathrm{Td}^{[i-1],\ldots,\scriptstyle Td+(

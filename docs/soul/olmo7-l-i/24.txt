@@ -1,0 +1,9 @@
+ = 0"/> </remarks>
+        public List<ProtocolInfoType> GetStandardProtocols()
+        {
+            return _protocols.ToArray().Cast<ProtocolInfoType>();
+        }
+
+        /// <summary>
+        /// Gets the standard protocols and members information for a ToolboxItem.
+        /// </summary>

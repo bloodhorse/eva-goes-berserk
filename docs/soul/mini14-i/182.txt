@@ -1,0 +1,5 @@
+ need help with this
+
+Val Company sells a product for $50 per unit. The variable expenses are $30 per unit and fixed expenses are $75,000. The company has a pre-determined markup percentage of 50%.
+
+1. Create a four-cell grid describing

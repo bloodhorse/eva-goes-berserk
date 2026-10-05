@@ -1,0 +1,5 @@
+-relencia-principal}/{numero}.csv')
+
+get the URLs of all images of the main page of Wikipedia.
+
+wget 'https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiurl=0&inprop=url&iids=5850248

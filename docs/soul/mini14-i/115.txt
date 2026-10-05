@@ -1,0 +1,1 @@
+ have the following 2018.12.25 script (on the ubuntu 18.10 docker).  The script works from the command line and produces all of the files as expected.  however, when called from a jenkins pipeline, it all of a sudden

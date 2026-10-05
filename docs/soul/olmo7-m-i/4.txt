@@ -1,0 +1,1 @@
+=\ell}_j \) and \( \lambda'_{i,j} \in \mathbb{C}(X^1) \), \( \deg \alpha = 1 \) and \( \tilde{\mathcal{F}}_{\lambda, c}(\alpha e_{

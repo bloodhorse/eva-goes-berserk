@@ -1,0 +1,5 @@
+ am creating a simple form to capture users input so they can determine which bank account they want to link to their personal bank account with the splunge payout method.
+
+There is 4 fields for the radio inputs for. SCB, GSB, KTB, or BBAND
+
+each field will

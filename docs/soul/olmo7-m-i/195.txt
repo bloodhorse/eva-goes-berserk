@@ -1,0 +1,3 @@
+-zh));
+        aoj = parser.parseToTripletOr4Element(aoj, zh, "aei-zh", "cbci", "ei-ka", "ya", "ka");
+        System.out.println("aea azi = i = ei-a,i=ea = za i =

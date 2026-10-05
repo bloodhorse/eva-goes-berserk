@@ -1,0 +1,1 @@
+ have only talked about 1 case but there are several ways to sort the cells and pick just one that you could track. You can have it automatically track the most dense cell, you can track green, you can track yellow, you can track red, you can track which ever cells model you like

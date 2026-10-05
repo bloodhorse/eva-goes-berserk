@@ -1,0 +1,4 @@
+}}},$$
+where $\{\d^\vAr{E}_y\}$ is an intrinsic Atiyah sequence.
+
+We emphasize that $A(f^*_{-1}\bK^0(\NB)\ jasmine)$ automatically satisfies $\d^{\arabic{

@@ -1,0 +1,2 @@
+ hate that that thing which is causing this to happen to the audio, behind the scenes, is somehow related to metastatis. Funny, but not funny.
+(PAI) uses the inner audio to add it in the audio signal traveling from the AMD HD LCD APU card to the HDMI chip which output

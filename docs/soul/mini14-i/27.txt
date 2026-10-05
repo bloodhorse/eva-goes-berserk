@@ -1,0 +1,1 @@
+Datafy Threat Analysis Unit researchers observed a campaign which deployed 2) a backdoor (SeaTfStorm)…) and 3) a mining malware module. All 3 segments of code were written in PowerShell, and then encoded using Base64. The infection possibly started with

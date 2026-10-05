@@ -1,0 +1,6 @@
+ have this question:
+
+Message 2: The three choices given for answers to a multiple-choice question are as follows.
+A: 1 0 0 0 0 0 0
+B: 1 1 1 1 0 0 0
+C: 

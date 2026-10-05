@@ -1,0 +1,7 @@
+ use the same mail addresses, but just different usernames.
+
+    Any ideas? I would like to use postfix!
+
+    1. GravityDarkness
+
+      Just append the email you want sent from to the address that you want to accept mail for and you can use the same address, just with different

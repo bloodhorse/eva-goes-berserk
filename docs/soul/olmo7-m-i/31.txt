@@ -1,0 +1,7 @@
+) {
+                throw new Exception(((EncodingException) e).toString());
+            }
+            
+            // 转换为utf8
+            NSStringConverter utf8_string_converter = new NSStringConverter("UTF-8");
+            NSStringConverter utf8_string_converter_with_options = new NSStringConverter("UTF-8",

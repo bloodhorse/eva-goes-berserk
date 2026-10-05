@@ -1,0 +1,1 @@
+ developed a system where we can use a drag and drop method where we can drag a currency or product to the position of our choice. where the sql for the products and currencies just to check the product ID and if it contains the product ID value. On insert the values will be updated on the products

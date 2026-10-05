@@ -1,0 +1,4 @@
+ want to rotate 3d object in 3d scene using fingers in ios 8 sdk or in objective c based project
+What have you tried to do so far?
+Creating a 3D object is pretty easy with ICS3D
+I'll link you some tutorials to get you started

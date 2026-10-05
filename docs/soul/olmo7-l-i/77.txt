@@ -1,0 +1,3 @@
+) -\frac{u}{l}=(\alpha_{ij}-v) \left(\frac{l}{u}\right) + (\beta_{ij} -1) \left(\frac{l}{u}\right)
+\end{align*}
+8. Fixers X and Y construct

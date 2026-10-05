@@ -1,0 +1,2 @@
+ have configure virtual router in fr*om version of FXOS, controller and switch are running that protocol.
+I have an Observer that is configured on the switch for analyzing burst flows. Unfortunately, RT_FLOW_SESSION has no information about these burst flows inside the POOL table when I try to find information about

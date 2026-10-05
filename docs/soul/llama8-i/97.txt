@@ -1,0 +1,2 @@
+Series Systems Software V5R4/5 New & Changed Features and Enhancements, CA6: Communications and File Access Bro
+This self-paced and self-study course is designed for both the new and experienced iSeries programming and system administration professionals that need to gain a deeper understanding of the new and

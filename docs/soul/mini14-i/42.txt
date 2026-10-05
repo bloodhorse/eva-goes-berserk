@@ -1,0 +1,4 @@
+ noticed in log file that the server was distrupted more often
+several times
+/var/log/quilc/errors.log -
+[Sun Dec  9 10:16:41 2007]  udp received illegal packet: too large payload [

@@ -1,0 +1,1 @@
+ am trying to setup a product feed and data is in a very peculiar format, very difficult to explain with small data set in 2-3 columns. due to this project is difficult to finalize, have tried many feeds but it does not allow to get my data working on myshopify

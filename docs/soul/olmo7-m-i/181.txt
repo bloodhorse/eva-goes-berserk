@@ -1,0 +1,7 @@
+1(dt)
+ 9    slist_safe1 = pop_safe(slist1)
+ 10   if !empty(slist_safe1) then
+ 11     @ret = "#{@ret}#{slist_safe1.to_s}"
+ 12   K
+
+status com Tom Crockett wrote:

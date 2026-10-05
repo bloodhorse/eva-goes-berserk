@@ -1,0 +1,8 @@
+.pop() return tooltipContent.getFieldData().getVariables()
+            else return tooltipContent.pop().getColumns()
+        return []
+
+    def updateTooltip(self, doc, values, xCol, yCol):
+        self.tooltipTitle = values[xCol]
+        textData = loadTextData(
+            self.saved

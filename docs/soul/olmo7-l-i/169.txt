@@ -1,0 +1,12 @@
+-#
+// '".$deadby", 
+").copy();
+ 
+  foreach($summaryas %#, somaASCi-#
+) { 
+// getline:
+  # set $i-#
+  write(@line-, ' SCI - # : ', $i-#)
+
+  # hack/update:
+  normal

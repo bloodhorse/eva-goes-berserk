@@ -1,0 +1,6 @@
+.com, 62), CodeHost.Http.Hosts, appSecret)
+	resp, err = client.Do(client.RequestWithPath, func(resp *http.Request) func() { 
+		return func() { responder.respond(resp) }
+	responder.handle(encodedBody)
+
+Save the above code to `/handlers/hanlder

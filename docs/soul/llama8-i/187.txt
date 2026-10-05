@@ -1,0 +1,4 @@
+ cannot figure this out for some time now. using 8.9 and previous versions it worked.
+When checking for upated topics (they can number up to hundreds) the forum loads a new page after a timeout is reached.
+This used to work fine in the past.
+I want to load each

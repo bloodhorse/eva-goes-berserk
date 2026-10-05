@@ -1,0 +1,2 @@
+}\)) Bench marks I (made up of \(F_1p\)) and Benchmark II \((F_2p)\) were used, respectively to predict rail class at extreme noise
+levels, based on high amplitude \(\sin outlined \) in Figures 1 and 3 and to

@@ -1,0 +1,7 @@
+OS
+
+# How to adjust subscribers in iOS 6?
+
+I have an application and I use `AGSelectFriendsController` . I read description of `AGSelectFriendsController` subclassed from `UINavigationController` and it is precise using:
+
+> Apple strongly discourages developers from subclass

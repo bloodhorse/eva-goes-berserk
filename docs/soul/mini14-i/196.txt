@@ -1,0 +1,5 @@
+ am starting development a form with jsp, servlets and javascript.
+i want to offer printing capabily for high speed laser printers.
+Printing function will do as :
+step 0 : user use html button to lock the region to print
+step 1 : communicate html to javascript and user

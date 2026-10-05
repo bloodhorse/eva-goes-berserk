@@ -1,0 +1,1 @@
+ thought there might be a problem with my 12x240gbit hdd so i made a backup of all the hdds with knoppix and gave my other 12x20gbit hdd within holding all the programs an operating system to the guy took

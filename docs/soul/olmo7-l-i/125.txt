@@ -1,0 +1,4 @@
+Intensity}[:,1:].T;
+#		#gegenwärtig
+#		xDiffHarmonic=gegenwärtig}[indxc,indmod];//bereits vert. abspielt; daher: bereinigen
+#		xDiffI=gegen

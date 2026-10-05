@@ -1,0 +1,1 @@
+´d like to calculate the "irr()" for a given investment a. but the "irr()" is at it´s highest when the investment equations equals the zero. so the irr() is i.e 8.48 for an investment of 1500 and a compound of 2

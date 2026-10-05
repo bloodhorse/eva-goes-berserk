@@ -1,0 +1,5 @@
+ = 0; i<gtu->slen; i++)
+		{
+			cu->lines[i] = (char *) expbuf+gtu->slen+gtu->src->bufpa;
+			assert(gc);
+			cu->lines[i] = gc->get

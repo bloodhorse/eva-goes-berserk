@@ -1,0 +1,3 @@
+).
+
+This means IFTMs, such as Germany’s Orca Bank (OZL Bremen), which were purely hours-based swaps, are no longer alive and will likely be replaced by value-based IFTMs, but without the need to replicate the list of floating counterparty names we now have

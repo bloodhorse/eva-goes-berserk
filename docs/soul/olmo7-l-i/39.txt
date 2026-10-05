@@ -1,0 +1,4 @@
+$ represent the passive texture and the fine scale fluctuations in the temperature fluctuations, respectively. In the neighborhood of phase changes, Samotijka and Mezei [22] obtained an expression for the boundary intensity by using Binary Global Interacting Zone Model (BGIZM) approximation
+
+\[
+I

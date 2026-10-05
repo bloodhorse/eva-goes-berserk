@@ -1,0 +1,5 @@
+.leipzig.eu/v?
+
+IBM tells the tale of Nutanix Private Cloud SN, which doesn't need orchestration. No need to investigate IaaS private clouds. Howard Marks just said that.
+
+Plus, a brief (Hi!) look at Laysa, the VMware app-fixeder. It lets

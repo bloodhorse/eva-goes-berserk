@@ -1,0 +1,7 @@
+ is:
+
+u t 50 ρ u + vu v + u v − β 2 u u = − ρ u 2 + v 2 t
+
+Hence, we obtain the solutions of u and v for potential flow using the separation of variables as:
+
+u (x, y

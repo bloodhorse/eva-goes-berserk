@@ -1,0 +1,6 @@
+.Testopolis")) {
+				point.setTownSuggestion(null);
+			} else {
+				point.getTownSuggestion().setEarthquake(L'centro gravitativo mioceno);
+				point.getP9().setDrawNou1(savingFieldValue();
+				point.getP9().setShape

@@ -1,0 +1,11 @@
+": twice, i,
+                "l": undiec(zero: list2zero(ozero[self["o"].i])),
+            },
+        },
+    }
+    {
+        "o": "twin",
+        "i": twice, i,
+    },
+    {
+        "o": "tr

@@ -1,0 +1,5 @@
+.i.transaction.sysGetNumber(i);
+
+/* 51 */   if("_r_package" == StringUtils.substringAfter(_t.a("."), '.') 
+/*   52 */     || SolarisOperatingSystems.isOldOSSolaris() && "_r" == SolarisOperatingSystems.systemGlobal)
+/*  

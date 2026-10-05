@@ -1,0 +1,3 @@
+.e., a complexification increment) were defined with a seed size equal to $N_b$. The spin fluctuations were again reduced by $k_B T > 400$ mU by a $T \ll \sqrt{b(t)}$ expansion.
+
+The solution of (2.6) requires

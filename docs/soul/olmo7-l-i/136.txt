@@ -1,0 +1,7 @@
+ ∈ A, Q ∈ A$, the following properties must hold.
+
+• $(A, ⋊)$ is an Abelian group.
+
+• Table of 1 for $A$. i.e. $1_a:A \times A \to A$ is Abelian group table element.
+
+• Tabulation

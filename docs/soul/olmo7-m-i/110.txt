@@ -1,0 +1,1 @@
+_{\Phi}(H,d,r) \) is the subsidy policy in which a driver who losses a \( d \)-mile trip meets the cost \( ri_{\Phi}(H,d,r) \). After matching \( d \), the trips are separated from the service contract. Suppose that the

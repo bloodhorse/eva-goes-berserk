@@ -1,0 +1,12 @@
+'],
+            'syllables' => 'sen',
+            'pinyin' => 'sēn',
+        ];
+    }
+
+    public function sami()
+    {
+        return [
+            'keyword' => 'si',
+            'translation' => 'ttem',
+            'pronounciation'

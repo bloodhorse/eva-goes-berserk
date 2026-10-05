@@ -1,0 +1,1 @@
+ = 1$ for a certain integral $i \in \mathbb{N}$. We start with the notions $r^* = r^*(M_i, N_j)$ and $r^* = r^*(M_j, N_i)$ between a pair of isomorphism

@@ -1,0 +1,1 @@
+GradeCA is a web based service which allows students and teachers to easily manage grades and feedback online. It has some very useful features but understandably many schools may have policies in place with regards to the use of student email accounts, Facebook accounts or social media in general. So if you have installed iGrade

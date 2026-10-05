@@ -1,0 +1,1 @@
+,i)} \invGl(p'_i,\frac{p'_i}{q_i}p'_i\ov{d}_{i,i})=1+(p'_i,\frac{p'_i}{q_i}p'_i\ov{d}_{i,i}p_{i,i

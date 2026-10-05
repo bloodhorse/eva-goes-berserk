@@ -1,0 +1,4 @@
+=2}{n}
+\cos(\arg(q_i) - \arg(p_i))$ and that
+\begin{equation}\label{eq:6}
+  V_\Sigma = \frac1{n!}   \left( \sum_{\mu,s=1}

@@ -1,0 +1,4 @@
+, $stock->setAdjeometryImage()));
+		$stock->oke = new self($oracle, $stock->oke);
+		$this->result = $sql->insert($stock, $stock, array("key'));
+		//print "<br>Imported $stock_id objects

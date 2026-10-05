@@ -1,0 +1,2 @@
+ got windows 10 back and my server recognises only Win 7 or 8! tried many tricks and methods but it wont go away! At the end I was able to change everything to win 10 settings and my Fileshare still works with the modifyd drivers!
+Because I want to use

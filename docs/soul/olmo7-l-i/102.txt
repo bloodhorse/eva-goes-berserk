@@ -1,0 +1,11 @@
+ + 1;
+  return (return_curr);
+}
+
+
+t_param *      prepare_argument(t_parser *parser, t_parameters **args, va_list *param, t_param *param_ptr)
+{
+  int result = MYFLAG;
+
+  if (parser->current == NULL)
+    *args = NULL

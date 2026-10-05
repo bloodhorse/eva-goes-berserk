@@ -1,0 +1,5 @@
+ ECE 2771
+Intro to ElectroMagnetic Theory 2 Credits
+Offered Spring
+Legacy Course Number: ECE 2736
+Elements of and motivation for Maxwell’s equations; boundary-value problems, DC and AC circuits; and Kirchhoff’s Laws. Students who successfully complete this

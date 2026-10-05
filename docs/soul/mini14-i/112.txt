@@ -1,0 +1,3 @@
+BAQ enables quality control of isotope labeling in conventional SILAC
+
+Proteomics is experiencing a rise of new experimental technologies. Sample preparation prior to LC-MS analysis often involves boxcar labeling strategies to allow for efficient and reliable monitoring of the three major phases of the analytical workflow: chromatographic separation, ionization, and

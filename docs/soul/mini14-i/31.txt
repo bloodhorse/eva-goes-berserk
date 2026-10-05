@@ -1,0 +1,1 @@
+. For each function f in Problem set I, calculate the following: A definite integral of f from 0 to 3.1 (extra credit: using less than three subdivisions) B. Enclosed area between f and the x-axis from 0 to 3.1 (extra credit

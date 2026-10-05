@@ -1,0 +1,4 @@
+_f}\, ,
+\end{equation}
+\begin{equation}
+the \hspace{2pt} \mbox{potential} \quad V(\b{x}) := \frac{1} {\gamma_b^2} \left(V_{0-l}(\

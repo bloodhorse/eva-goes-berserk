@@ -1,0 +1,7 @@
+E" TypeScript => "iE"
+    public "i".innerHTML = `${i/10}`;
+    let numberEle = document.getElementById("number");
+    numberEle.innerText += `${i}`;
+    youAt.appendChild(numberEle);
+  }
+}

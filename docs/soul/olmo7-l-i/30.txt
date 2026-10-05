@@ -1,0 +1,1 @@
+ circulation. For example, two fluids which are immiscible typically have different molecular diameters, ϕ, and different polar number densities NP and NS. Then, σ ijx = g N P 2 - N S 2 x . In the general case, that is to arrange isoint

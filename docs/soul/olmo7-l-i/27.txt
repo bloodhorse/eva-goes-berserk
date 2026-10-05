@@ -1,0 +1,11 @@
+ > q:
+			return False
+
+	return True
+
+
+def computeB(x, s, prev, residual, 2 ཱ '
+	>
+
+	l,s,prev,asgn,verb = Bsect(x, s, prev[1], index=reify, active_only=True);
+

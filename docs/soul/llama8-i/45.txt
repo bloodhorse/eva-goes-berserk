@@ -1,0 +1,1 @@
+ am trying to mint HPIL tokens for a game and playing around with TokenFactory but im a bit confused how to get the "balances from previous block times" calculation to work correctly. Since you send your tx in a way you cannot slim the tx output, im looking for a function where i can

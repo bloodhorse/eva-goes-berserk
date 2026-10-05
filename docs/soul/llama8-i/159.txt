@@ -1,0 +1,3 @@
+ have a like box. It uses xfbml and is loading the new "connection_list" etc.
+Every hour i need to login to facebook to get all my visitors etc who don't allow my page to get added to their player.
+I have seen and tried a whole lot of scripts for keeping

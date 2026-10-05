@@ -1,0 +1,9 @@
+ = 1
+valor = 0
+soma = 0
+while i <= 5:
+    valor = int(input("digite um valor: "))
+    soma = soma + valor
+    i = i + 1
+print(soma)
+r = (soma / 5

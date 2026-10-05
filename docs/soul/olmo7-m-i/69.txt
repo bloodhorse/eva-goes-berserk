@@ -1,0 +1,5 @@
+’ ) in Pi
+  • The pi (3,3',5) Triplet–nonlimiting/limiting) with 9 more previous generations
+  • The pi (3,1,5) triplet– The limit was passed
+
+I used the slice command (And it’s

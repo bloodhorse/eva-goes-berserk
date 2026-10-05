@@ -1,0 +1,7 @@
+] == blocki:
+                    blank += 1
+                elif blocki == 1 and seqi == 1:
+                    blank += blockpile - 1
+                elif blocki == 1 and seqi == 2:
+                    blank += 1
+            elif seqlen[i

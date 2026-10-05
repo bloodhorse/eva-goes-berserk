@@ -1,0 +1,11 @@
+ ,N .. 15
+
+Find the value of 1/1 - 2/2 + 3/3 - 4/4 + .....15/15 ?
+
+• Maths
+
+• Ans =C
+• 19/16
+
+Dear student you should know formula
+Sumnni =

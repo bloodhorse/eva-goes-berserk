@@ -1,0 +1,3 @@
+ \in G)}{a \in F}$ for any finite set $F \subset G$. Define $\{T_x \}_{x \in F_L}$ as follows
+
+Let $F_L = \{x \in F | \exists g \in G \ T_{gx} \

@@ -1,0 +1,10 @@
+));
+    return output;
+}
+int main()
+{
+    char correct[PIECE_SIZE];
+    reverse(correct,correct+SHIELD);
+    reverse(correct+SHIELD,correct+SEAL);
+    reverse(correct+SEAL,correct+FLAG);
+    reverse(correct+FLAG,correct+LEFT

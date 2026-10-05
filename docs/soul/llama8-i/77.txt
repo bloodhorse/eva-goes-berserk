@@ -1,0 +1,4 @@
+3test2.py
+Frederik Villumsen
+Summary : Example workflow in ipython notebook carrying information about data taken during a few manga upsilon runs. More
+The idea is to write python code that we can run with the ipython notebook and the code contains all information about the beam

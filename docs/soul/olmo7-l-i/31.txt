@@ -1,0 +1,3 @@
+) that used before the first subclass boundary were not counted.
+
+In the annual Occupational Information Network (O*NET) full-time workers, ages 16 to 64, broken down by sex in 2008, were analyzed. A similar analysis was done in contrast to O*NET data on full

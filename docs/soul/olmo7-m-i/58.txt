@@ -1,0 +1,3 @@
+-i₂ Featured classifiers as in Alexander and Shattuck-Hufnagel (2004) from Dartmouth Forced Aligner DB (Boersma et al., 2016).
+
+8. Eleven automatically derived partial alternations from the data resources available in Allen et al. (2016).

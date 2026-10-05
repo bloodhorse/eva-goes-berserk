@@ -1,0 +1,5 @@
+’ve been reading markdown today.
+
+i decided to play around with JumpStart, to find out more about Ruby, jruby, jruby-rack and 99 l сезоне программисте на руби, за...
+
+in the midst of this Everything I Know This, I couldn’t help but feel

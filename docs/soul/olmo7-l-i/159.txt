@@ -1,0 +1,1 @@
+_1, \ldots, i_j$ be a sequence of $S$-admissible indices such that successive indices differ by 1. We wish to evaluate head cycles $D_{i_1, \ldots, i_j}$. We shall do so in two stages. First

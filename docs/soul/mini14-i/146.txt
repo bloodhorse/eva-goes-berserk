@@ -1,0 +1,3 @@
+ forward ported this old grub2-unified package to core, tested it in x86_64 and arm, seems working.
+- added epoch 999 versioning scheme, meant to denote package split from grub2-unified
+- complied save yourself a pen (and teeth

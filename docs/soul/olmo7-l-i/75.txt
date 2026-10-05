@@ -1,0 +1,5 @@
+ board because I read you were struggling to get it work.
+
+Here are my settings for my stock 10Zi board. This should certainly work with your board wiring and hardware assuming your CC as well as the rest of it is good.
+
+# CB settings for the OSMC/x86box 

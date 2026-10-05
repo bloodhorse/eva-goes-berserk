@@ -1,0 +1,3 @@
+-on of Platform9). Integrating by using K10 is definitely a ideal factor, and we’re pleased to benefit from the long-standing and robust integration with Light-Up on Platform9.
+
+    We would count on Kubernetes to continue to be in the center of machine management automation. With all the disappointments

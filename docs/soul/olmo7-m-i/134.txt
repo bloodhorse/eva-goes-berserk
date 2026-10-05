@@ -1,0 +1,3 @@
+\sin \nu).$$
+
+For a given number of phonons, the Fano factor varies with energy, with a particularly notable reduction occurring below the band gap (see Fig. 6(c)). For the phonon distribution used in Fig. 6, the Fano factor is $F

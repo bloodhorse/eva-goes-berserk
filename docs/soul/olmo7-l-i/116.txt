@@ -1,0 +1,5 @@
+.e.: top level project settings) to ensure all modules/ code compiles and runs as expected before adding more features.
+
+// Interfaces and Types
+type LambdaBody = Kotlin.Jvm.JvmFunction;
+type LambdaHandler = (Kotlin.Jvm.JvmFunction) -> (Kotlin.Jvm.J

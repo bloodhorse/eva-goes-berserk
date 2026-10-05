@@ -1,0 +1,3 @@
+ cant seam to follow the leg bizony im in baby steps trying to make a javascript or java script APP to save an array list of different images and to send the selected image to other phone via bluetooth phone calls and sms
+
+if anyt one can give me sum sollution for my bad coding or

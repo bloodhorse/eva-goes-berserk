@@ -1,0 +1,1 @@
++1}+1 = 2k^m_{\ell(i+1)} \quad \forall i \in [\ell-1], j \leq \ell, \quad \text{and } 1 \leq k^m_{\ell} = C - 

@@ -1,0 +1,3 @@
+CoS Frontend Services
+iCoS Frontend Services and User Management
+QA Seed developed the User Management module to handle user access to the software. Any Frontend Services Administrator (an iCoS LI Account User) can, at any time, deactivate a user account that was created when that

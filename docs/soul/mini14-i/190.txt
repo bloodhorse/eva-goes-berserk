@@ -1,0 +1,3 @@
+ joined opensuse few months ago. recently i upgraded my openSUSE 12.2 running GNOME to openSUSE 12.3 with KDE. my KDE became not as good as 12.2, there came some problems that never happen before.
+
+one

@@ -1,0 +1,2 @@
+Fi audio ZX-Mosfet Battery Powered Constant Current Regulated Power Supply
+Aphasia is an audio related phenomenon that occurs when the frequency response in any audio device starts to roll-off at 20Khz. This phenomenon is exacerbated by advancing age, and negatively impacts the audio reproduction properties of that

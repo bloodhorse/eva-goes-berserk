@@ -1,0 +1,6 @@
+)[\vdots]_{i}
+\label{cor-recur-mac2}
+\end{equation}
+The logarithmic derivative 
+\begin{equation}
+\left(x_{n+1} - x_{n}\right) + \frac{1

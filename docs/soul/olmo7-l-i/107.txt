@@ -1,0 +1,6 @@
+/people_dir/alignment/bb_files'
+input_dir = "transcriptome/"
+figure_output_dir = input_dir + "lookslike"
+
+#path_string_dict = {"human_18": 'varakoda_e157/fasta_human_18 StripeMap',
+#"mouse_8": 'varakoda

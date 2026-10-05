@@ -1,0 +1,2 @@
+ = 1}^{n}\sum_{j=1}^{n}M^{ij}x_{j}$
+2. $f_{i} = \frac{\sum_{j=1}^{n}M^{ij}y_{j}}{1-\bar{\beta}}

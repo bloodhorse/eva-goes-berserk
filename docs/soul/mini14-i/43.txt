@@ -1,0 +1,7 @@
+ want to use the alarm deitector at the end. but why i press the start button it shows this :
+
+the output of the logcat is:
+
+```
+ com.dice.AreEssentials
+                                                                     java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.dice.AreEssential/com

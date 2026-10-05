@@ -1,0 +1,5 @@
+.join_i{\iota'}=\gamma$ then  &
+    $ \langle
+    \gamma.\iota',i\wedge \iota=\delta.
+     \pi\cdot\iota' \wedge \gamma.\rho,\rho'\rangle
+     \land \\

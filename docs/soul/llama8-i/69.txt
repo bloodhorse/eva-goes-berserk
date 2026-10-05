@@ -1,0 +1,7 @@
+ try to use disposed class in non static context, in the line :
+```
+Google.VisualActivitySetting settings = new Google.VisualTableSetting(VisualTable.loadVisualContext(this.context, id));
+```
+I get an error pointing on the line:
+
+An object of a type implementing IDisposable should not be passed

@@ -1,0 +1,3 @@
+.)
+
+Verdana already supports editing the linear layouts when they are normal (edit mode-engine'd) as shown here in WYSIWYG mode. It is simply inserting blank linebreak tags. What we are suggesting is for it to interprete the tags based on the surrounding non-convert HTML markup, or

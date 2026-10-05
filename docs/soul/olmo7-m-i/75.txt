@@ -1,0 +1,1 @@
+-x,y} G_{i,k}^l \text{tsortingsort}(P, G_{i-k,1}, z, \chi^{|i-k|(x-y)|}) \geq \chi^{|i-2x-y| - |i-k|(x-y

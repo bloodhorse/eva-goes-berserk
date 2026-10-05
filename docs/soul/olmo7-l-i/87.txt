@@ -1,0 +1,7 @@
+-es;
+      var spaces= new Element('x');
+      testsetText(sXe, '1570');
+      testsetText(sA2e, '\\');
+      testsetText(sB2e, '=');
+      testsetText(sBs, '\\');
+

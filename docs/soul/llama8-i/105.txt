@@ -1,0 +1,2 @@
+ am facing high latency connection with packet loss on optic theOCUS comma 10. it has been diagnosed that my gst auto deteced ip is 192.168.20.79, Do my ip server is corruped? what should i do to reset or update my ip?
+Please send a

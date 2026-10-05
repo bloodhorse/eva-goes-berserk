@@ -1,0 +1,5 @@
+ Loop Conditions:
+
+In Decision Charts, you can mark any condition as ‘XOR’, which allows you to combine two conditions where they need not be mutually exclusive, but they still must be reachable in the control flow.
+
+The order in which you place your actions parentheses-switch [array/right bracket with round symbol

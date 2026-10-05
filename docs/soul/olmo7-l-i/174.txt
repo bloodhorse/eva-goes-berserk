@@ -1,0 +1,5 @@
+.e., not use an interface library) for the coordinates and axes updates).
+
+b. The algorithm on which fless is based shall be an implementation of an approximating net-based generalized centripetal coordinate grid (see Figures 16, 17, and 18).
+
+[Figure 16. Net

@@ -1,0 +1,4 @@
+ak interpreter, which cannot ignore x3d semantics as that is not the spirit of XAML rendering.
+
+share|improve this answer
+That’s not a very good explanation. There is a practice importing 3D models into digital video projects such as wwwerchant.com/blog/how-import-3d

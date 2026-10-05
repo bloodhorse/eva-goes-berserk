@@ -1,0 +1,2 @@
+=1}^{N-1}\frac bi{\sqrt{\theta_{i} \pm \frac{\delta(\theta_{i}\pm \theta_{i+1})}{2}}}
+ \big(-\xi_{i+1}(\theta) \pm \xi_i(\theta

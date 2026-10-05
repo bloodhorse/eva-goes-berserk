@@ -1,0 +1,4 @@
+} \Phi_{0,1}(\alpha)}{\alpha + 1} \exp(-\alpha X_{0,i})
+\]
+
+with \( i = 1, \ldots, 5 \). Moreover, for the detailed balance condition to hold we need that \( \alpha =

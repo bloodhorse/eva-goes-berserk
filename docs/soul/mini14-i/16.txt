@@ -1,0 +1,5 @@
+ have a question: how to connect bridgedevice with wlan port?
+
+i read on the web but i have not found anything. I really dont know how to do it :-\\
+SHH on the router.
+The bridge is not showing up, because the bridge might not be fully enabled/network operational

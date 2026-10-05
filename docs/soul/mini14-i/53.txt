@@ -1,0 +1,14 @@
+ saw here, many suggested as @Scott_Ross suggested
+
+" grid.radius3radius"
+…radiusnradius" will jump so why not fill up the circle more with the "grid cells"
+
+should be "grid.radius3
+
+and…
+
+grid.radius3.perimeter
+
+grid.radius3.cell*
+
+can

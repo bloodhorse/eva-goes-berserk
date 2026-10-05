@@ -1,0 +1,3 @@
+(\text{newerLastCopy_SkipCache})` may be higher, or lower, than the \(i(\text{newerLastCopy})\) of that chunk or that indicated by the swap-in pointers on that chunk if the working VM has included those pointers already in its spread.
+
+If

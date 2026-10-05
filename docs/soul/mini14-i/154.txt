@@ -1,0 +1,3 @@
+OS developers love to use Apple's own software development tools, such as XCode and Objective-C, however it's not always apparent.
+
+Developers have a tendency to sour on platforms and tools when it becomes difficult to do work. This can happen for a myriad of reasons; poor development environments to a

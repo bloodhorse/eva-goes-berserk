@@ -1,0 +1,4 @@
+(S, T)$ is not a comodule (in view of its freeness) after we kill the vector space on which $G$ acts).
+
+\begin{definition}[A{}d{}ist action]
+For a group $G$ let $\ak g (G)=\exp(t

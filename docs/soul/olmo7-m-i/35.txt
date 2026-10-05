@@ -1,0 +1,6 @@
+Name(int i) {
+        return i.toString(NumberFormatUtils.getNumberPattern(null).Compact);
+    }
+
+    /**
+     * 矩形区域取圆形的缩放，即得到的圆的尺寸以原区域的一半

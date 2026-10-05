@@ -1,0 +1,3 @@
+=1}^N(v_i)\)
+
+In this equation M and n are respectively the number of original and compressed pixels, yi represents the value of the pixel in the original image, and vi represents the spatial transform coefficients. Usually, N>=M. The compression ratio C is an integer indicating the

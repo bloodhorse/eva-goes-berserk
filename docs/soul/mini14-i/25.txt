@@ -1,0 +1,1 @@
+ cant open the main file of donut alversion Since 2017.1.. I am studying from there after not opening for a while. I got this error ___________________________________________________________________________________- Hardware graphics acceleration has been disabled in Blender. A software

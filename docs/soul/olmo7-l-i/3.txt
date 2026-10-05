@@ -1,0 +1,4 @@
+, \(d_i\)
+- output: \(P_g, P_r\)
+
+\[V_o = \left[ \frac{d_i^2 V_{in}^2}{(K_r + K_p)} \left( \omega_e^2 + \omega_g^2 \

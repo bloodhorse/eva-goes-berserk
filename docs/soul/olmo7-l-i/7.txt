@@ -1,0 +1,3 @@
+} T_\alpha T_{\alpha+1}) = T^{n \alpha}_{\alpha+1} \circ T^{n \alpha}_{\alpha+1}.$$ What I can't say is whether this hasnorm-one.
+
+In order to answer this you need to remember that there

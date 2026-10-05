@@ -1,0 +1,8 @@
+)
+- populate (2.5; createPartition)
+- improve (4.4, improveTypeMapper, refineFieldType) (vectorPetSim)
+
+Converters
+(to be stable from 11.1.0 on)
+
+- JDBC (2.0; JDBC 3 and 2.6

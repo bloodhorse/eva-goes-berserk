@@ -1,0 +1,3 @@
+ and the amount of gate-to-source ringing takes place. So for lower values of R2, more gate-to-source ringing appears, and phase shifts would need to be performed so that spectra values (across output voltage) match. This solution would, however, limit the component performance.
+
+Standard Differential Ampl

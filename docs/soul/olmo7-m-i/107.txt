@@ -1,0 +1,3 @@
+ \\
+\leq k' \text{ times the data stream} & \quad \text{uses F}^{-1} \text{ entries only} \\
+\leq k' L X_G & \quad \rightarrow \ldots \text{by K} \rightarrow (2)

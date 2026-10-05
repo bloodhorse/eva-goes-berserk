@@ -1,0 +1,3 @@
+ need Measurements for corris_LEATIC_MANU version Font.
+Why? because i need to reconstruct a .ttf file using Corris_LEATIC_Manu for matching reason..
+Corris LEATIC Manu.TTF is a VERY fascinating font.

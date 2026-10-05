@@ -1,0 +1,5 @@
+ know you did PWC= 32
+and you know that three sides of the parallelogram already, so the only
+missing value you don't know is PW the rest of your height.
+
+"if you add PW+10 and you will get 30 (dividing 

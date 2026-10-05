@@ -1,0 +1,5 @@
+.qdb(priority=8)
+
+    def mock_sieve_of_eratosthenes661(n):
+        return list(sieve_of_eratosthenes661((n >> 1) << 1))
+    perl_zlibPY66 = pytest ~/.pyenv/plugins/pytest-xdist/lib/python

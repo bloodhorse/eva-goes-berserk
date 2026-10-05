@@ -1,0 +1,2 @@
+ am used to define a couple of ahk scripts in a couple of files. (e.g. firstahk.ahk, main.ahk).
+I Could used a ahk Library script (a functions "funktionen.ahk" script) including functions called by the "

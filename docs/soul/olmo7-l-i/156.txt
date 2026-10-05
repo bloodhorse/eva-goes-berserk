@@ -1,0 +1,6 @@
+ soliciting the flat touch at other times
+> [22] (among the many attempts).
+> It cannot have been so, and by using tools supplied by the ATI driver, we
+> can firmly confidently say from tool dumps, that things were behaving
+> exactly as described.
+> This really

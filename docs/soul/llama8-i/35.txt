@@ -1,0 +1,2 @@
+Message application for the iPhone is really very stable nowadays and it sends confirmations and emojis, but how do we send audio files through it?
+For iMessage all the attachments haven't been very prominent, regardless of audio and video both, so we have to download them on our mobile first. As we

@@ -1,0 +1,3 @@
+ i j x = .5U(ω c,s + c,s) U k j = U k j U k m =(U ω + ω c,s + c,s) 2
+
+In the most frequent operation, however, the d 'ambrogio gaugino is fixed

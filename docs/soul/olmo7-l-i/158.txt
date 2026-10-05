@@ -1,0 +1,7 @@
+[14:15] holy_format_required New freeform data type / API: Jim Nielsen, and I discussed channel names originally
+
+19:52`tjoe Temporary array var bug
+
+19:52devthbash? child process exited uncleanly so far
+
+19:52Jim NStj

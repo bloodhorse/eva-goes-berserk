@@ -1,0 +1,3 @@
+/2 &\le \psi < 1. \nonumber
+\end{align}
+Integrating, we can compute the probability  of the  $m$-particle spin fluctuating across a field $\psi$ in one unit of field-dependent relaxation time $\tau_\psi

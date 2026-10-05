@@ -1,0 +1,5 @@
+ would like to replace the 3d pen option(the option that shows after the image is loaded), with the classify option(shown below), how can i do that?
+
+Hi @paragfoundation,
+
+I’m not super familiar with this but somebody mentioned using the `@export` decorator on a function

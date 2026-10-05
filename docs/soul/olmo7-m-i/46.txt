@@ -1,0 +1,4 @@
+
+Assuti, verifica che l'elaborazione sia attuata dalla partita 21
+
+	Starting with 'Soldati' (the second position on the move list that matches the chosen one), remove all cards in hand that have exactly 3 of the same type, then scramble what

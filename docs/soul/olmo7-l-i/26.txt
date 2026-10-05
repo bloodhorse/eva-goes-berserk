@@ -1,0 +1,3 @@
+ via public cloud, and it works exactly as you'd expect, but you can do something similar with Bitbucket Server.
+
+Using the Vivid Vision Cloud Hooks or Bitbucket Hooks, you could receive styler.io's webhook as a notification, which triggers a workflow that can then parse the metadata

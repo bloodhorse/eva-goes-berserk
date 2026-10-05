@@ -1,0 +1,5 @@
+ noticed that svn leaves backing stores (known as Empty) in my VS folders. In order to clean up or delete them I must delete each empty folder. I was wondering is it possible for svn to not leave these Empty backing store folders after you undo your changes?
+
+Thanks!
+
+Greetings

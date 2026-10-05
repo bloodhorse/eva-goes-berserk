@@ -1,0 +1,9 @@
+ vi ..... 8 {
+        let t = cummulative_aggregation(time, named);
+        return t(0);
+            f(i),
+    return t(in);
+
+A lot cleaner, but a lot more complex :wink:
+
+Thanks to the folks here that helped me find these functions

@@ -1,0 +1,2 @@
+, Ge Wang
+DIDO is a WordPress-specific PHP and JavaScript framework for discovery and integration of alternative data sources. This paper describes a system that uses DIDO to integrate a WordPress blog with Google Charts API. Including historical data visualization, the use of DIDO to access Google Charts and custom plugins to

@@ -1,0 +1,2 @@
+ need your help to make change account. How can i make change account on telegram beta or official version?
+In futures scope, there is no account change throw web, you have to use desktop apps and edit your settings there. However when you press 'done' button, it just reset the account so

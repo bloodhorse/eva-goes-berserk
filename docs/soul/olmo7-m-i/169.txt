@@ -1,0 +1,8 @@
+, delta)
+File Handle f: /buffer/palimate/positions 5, 2945824112
+Why the id "delta '- 1' is not an int?
+location_from_dat(i): 6820142216
+as ll: 6820142216
+
+
+You are subtract

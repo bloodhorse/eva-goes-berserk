@@ -1,0 +1,1 @@
+\right)dt&=& \displaystyle\sum_{k=0}^\infty \left(\frac{\beta_{k+1}}{k+1}\right)\int_{\Delta}^{\Delta+\xi}e^{\left(\int_{0}^\theta \

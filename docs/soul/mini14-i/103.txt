@@ -1,0 +1,5 @@
+ was wondering in php if it is possible to search in a string using specific pointers
+
+Say I had a string containing the words and I have a regex for 3.2.*.*.*.*.
+
+The regex should only display matches when string about contains the characters 100-199

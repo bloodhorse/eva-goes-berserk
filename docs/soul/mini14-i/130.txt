@@ -1,0 +1,7 @@
+Movie is fun and easy to use!
+
+Make the first clip you create “Title2” (not Title1.)
+
+1. Select File – New – Title (or press Cmd + T). Double-click on the title in your project to the right to edit it.
+
+2. You might want to

@@ -1,0 +1,14 @@
+
+
+# Real-time geo-localisation of a crowd in an urban bus stop
+
+- Published Date:
+
+16 Oct 2012
+
+Source:
+Sensors. 12(10):14152-14170.
+
+Details:
+- Alternative Title:
+S

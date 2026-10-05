@@ -1,0 +1,7 @@
+ota
+\]
+
+for the induced map
+
+\[
+B(\iota, \iota^\vee)^{\vee} \otimes_{\mathcal{O}_X[0]}^L \xi^n \to \mathbb{P}_X^*(n)[0

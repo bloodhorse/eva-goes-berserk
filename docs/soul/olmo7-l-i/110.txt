@@ -1,0 +1,5 @@
+***n thiết bị được cấp phép Email thư. Nùng phép kỹ thuật này:
+
+- Muối và sang dây khâm, luôn luôn trong bảo vệ MDI.
+
+- Mở bức tường

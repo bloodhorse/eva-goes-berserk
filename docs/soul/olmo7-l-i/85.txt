@@ -1,0 +1,9 @@
+ Forces that of radio waves.
+
+http://physics.nist.gov/cuu/Units/history.html
+
+.25uF: .25,000, 20K, 500pF
+
+http://www.radio-electronics.com/info/permits/partnumbers/specifications.php
+
+Physico-chemical properties

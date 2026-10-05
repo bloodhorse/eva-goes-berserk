@@ -1,0 +1,9 @@
+ XiArteX
+	// #define WIN32_LEAN_AND_MEAN
+//#include #<winsock.h>
+//| #include "ipop2C.Security litteral IPsec IKE ported.l"
+//Bonjour vers tinnet
+//
+//#include "inetSm",
+#
+//unsigned short

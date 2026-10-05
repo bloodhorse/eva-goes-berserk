@@ -1,0 +1,1 @@
+ have 2 mesh object, i want to merge vertices with same position of different mesh , each point must have a double [], i’m only successful in merge the vertices between the mesh itself, if i use addMixture then the polygons are added multipliy kind of mesh double , but i want to

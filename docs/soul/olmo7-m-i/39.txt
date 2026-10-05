@@ -1,0 +1,1 @@
+$ working on media global context. Then, checking if the device-aware context is available and there are no neutrals in play, it chooses the local policy of the device to guide its decision. This approach ensures that the startup context for media operations is always fully aware of the contextual information, even if

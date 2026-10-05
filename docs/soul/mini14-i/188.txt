@@ -1,0 +1,1 @@
+ created a windows system image backup on one of my computers yesterday because it has been acting all wonkey lately (hangs, freezes up, etc). can't figure out what's causing it. so i did the image backup in case things don't go well for me (they both told me

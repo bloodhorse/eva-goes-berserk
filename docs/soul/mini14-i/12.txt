@@ -1,0 +1,3 @@
+ need help in forming the "for" loop of this programm.
+
+program to find ek who ate the egg using unfair way by giving the chance of 1 only, to intentionally start the loop with no initial attach of an integer variable,.......in this entire loop 1 is just looped 

@@ -1,0 +1,7 @@
+ need help on a piece of code in javascript,this code is basically supposed to allow browsing a database i want it to allow me to see pictures and text of different people please reply and help,thanks,below is my code
+
+```
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+// Get file

@@ -1,0 +1,4 @@
+ am working on a satellite system.
+I have make a rectangle that routed, rail and padstack drawn by me( pourrait distance, angle). I have attributed material to Solidworks.
+I have three planes want to be deviated by Electric field for psudo modelisation.
+I have studied in last

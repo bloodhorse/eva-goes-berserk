@@ -1,0 +1,11 @@
+ have a question relating to turning an equation into an LMI in MATLAB.
+
+i have the constraint as such:
+
+|I - sigma/K(lambda/IN) Bsig1| < 1
+
+the unknowns are [sigma Bsig1]
+
+lambda and I만큼 are known.
+
+how can i put

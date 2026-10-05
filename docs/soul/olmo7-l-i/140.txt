@@ -1,0 +1,6 @@
+B_*w-c_*\geq 0$, which yields $k^*=-\frac{c}{i}=\alpha^*$. 
+
+
+\textbf{Signature:} $-3$.
+
+\subsubsection{Endogenous lotteries: $\delta\uparrow =

@@ -1,0 +1,1 @@
+ find step 3a (set v to -∞) relevant as it tends to -∞ as θ tends to π/2 (90°) but step 3b defies me as i cannot think of a function that would yield -1 for v(1,π/2

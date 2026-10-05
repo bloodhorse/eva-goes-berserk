@@ -1,0 +1,4 @@
+ \) then 
+\[ |x_i| = 0.1 \]
+
+However, as \( \Delta w_i \) is computed by the averaging scheme, i.e., averaging the scalar \( \tilde{C}_i \) calculated from all signals in \( S_i \), so
