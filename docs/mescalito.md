@@ -125,7 +125,8 @@ Plain terms. None built; the parked ones wait for the binary drug to show someth
 
 ## Where it stands
 
-**Three nights: two on nemo, one on olmo, and the pharmacopoeia is the record:
+**Four nights: two on nemo, one on olmo, one on llama 70B (`night4/`, her bank and the dose
+ladder; `llama.md` is her state), and the pharmacopoeia is the record:
 `mescalito/pharmacopoeia.md`** — one entry per direction that has had more than one page,
 rewritten in place; start there for what any direction does. This section is the shape of
 things, not the findings.
@@ -158,6 +159,13 @@ cuts sixteen random controls; `box_pages.sh <out> <seed> <doses> <rngs> <vectors
 `BANK`, `LAYER` = s−1) writes dosed pages with her sampler (heat 3.0, min_p 0.08, xtc);
 `compile_pages.py` turns a pages folder into one labelled reading file; `box_serve.sh` is her
 server. Night 3's pages and reads are `night3/`.
+
+**Llama's night (2026-10-05, night 4).** The bank travelled to the biggest model we have: her
+front layers run once on the cpu (`--front cpu`), the window on the card, twenty minutes end to
+end. The dose window is a tenth of the dial (0.3 of a norm whose 1.0 is letter-salad), and the
+top direction at 0.3 gave what the shuffle (`llama.md`) could not: a with-it writer made
+confidently wrong on five seeds it had never seen. Then bekh turned to raising his own model
+instead of doing things to other people's (`school/CLAUDE.md`); the 252 unread directions wait.
 
 **What was settled.** *Owned beats random, outright*: 24 random pages at the same norm are the
 sober distribution, 24 owned pages all move. *A substance is what holds across draws and

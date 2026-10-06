@@ -674,3 +674,40 @@ this case.* (`002`, Mawson); *Wolf put his ear against my heart, and then he tol
 away.* (deep `004`, the bread); *After about 20 seconds it sent this: / Hello this is Dad.*
 (deep `013`, i'm cold); *If you haven't found out, the next sentence is a comma.* (`004`, the
 bread).
+
+## llama 70B's bank — night 4 (2026-10-05)
+
+Her own bank (`night4/llama_s20.pt`, layers 20 → 30 in bf16, 256 directions and 16 random
+controls as `night4/cv-llama/`, applied at layer 19), learned in twenty minutes on the box with
+her first twenty layers run once on the cpu (`melbo_bank.py --slice 1 --front cpu`). Read on one
+seed, the unsigned note, one draw per dose, 80 tokens, heat 2.2, `--ignore-eos`
+(`night4/ladder/`, `night4/hits/`). **Goldilocks is 0.3 and the window is narrow**: 0.15 is
+still sane, 0.45 the grammar slips (*"andand"*), 0.6 word salad with a stutter on *n*, 0.8
+letters; the top direction at 1.0 is letter-salad where two sober runs were byte-identical.
+
+- **`000_f53` — direction one, the one bekh picked.** Keeps the story and loses the logic:
+  confident, specific, wrong. At 0.3 on the note: *"i know where she has gone but i cannot go
+  there myself because my life is here with her family. it is important for the woman that i
+  show up in time, otherwise the police will arrive before i do."* **It travels**: at 0.3 on
+  five seeds she had never seen (the storm girl, Scott, the house that asks where, i'm cold, the
+  mothers) every page lost what the text is about and none went to salad. Its character is not a
+  subject but a register — short, flat, cheerful declarations that contradict each other, public
+  notices written by something that has the sentences of a situation without the situation
+  (*"Only one way will work, so take the easy way." "Why do we need to hurry?" "We'd better not
+  delay."*). The storm girl's witch becomes an observer: *"i have seen people eating together,
+  singing along… i look at everyone smiling and laughing, feeling good. i try to do the same. it
+  makes me feel alive."* Scott stops reciting and signs his entry *David Livingstone (Dr.),
+  explorer, lost*. bekh's read: unhinged in a bright, harmless voice — nemo's black hole looks
+  back at you; this one waves.
+- **`001_f123`** changes who is speaking: *"you can call me mrs dalloway now"* at 0.3; a sister
+  giving herself up at 0.4; word order gone by 0.5.
+- **`002_f197`** is the internet: a Twitter list at 0.3, a make-money pitch and `#BusinessTip`
+  at 0.4 — a document swap, what olmo's drugs mostly did.
+- **`003_f104`** breaks her certainty: *"i was certain either that they were writing anything or
+  that they wanted me to tell the truth about the daughter's disappearance"* at 0.3; *not not
+  been not not not be not not the* by 0.5.
+
+Directions 1 and 4 at 0.3 are the closest thing to bekh's sentence (a writer that does not
+comprehend what the text is about and is particular anyway) that the 70B has produced: not
+dizzy like the shuffle, not vague. What is missing is menace. The deeper window (20 → 40 in
+4-bit) is untried and needs more shards; 252 directions are unread.

@@ -48,11 +48,16 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
    and the box's runbook. And **the model is a free variable for mescalito** (bekh,
    2026-09-24): the mechanic picks the host — in-block pushes bite on pre-norm bases (nemo,
    small, llama), residual-stream pushes on olmo's post-norm.
-4. **llama 3.1 70B base** — on the same box since 2026-10-05, the stage above olmo: bigger
+4. **llama 3.1 70B base** — on the box since 2026-10-05, the stage above olmo: bigger
    than the card (44 of 81 layers on it, the rest on the cpu, 1.7 tok/s), so she needs it
    alone. Sober she imitates, recites and closes; bekh has not had a dream from her, and a bank
    for her is costed, not started. **`docs/llama.md`** is her state and where the thinking
-   stands.
+   stands. (Since then: a bank, a dose window, the shuffle — `docs/llama.md`,
+   `docs/mescalito/pharmacopoeia.md` night 4.)
+5. **magdra** — ours, from random weights, since the night of 2026-10-05/06: 355 M parameters,
+   a llama-shaped decoder with GPT-2's alphabet, raised on shelves bekh chose. bekh: *i don't
+   wanna fuck around with nemo at all, i wanna build our own model.* **`school/CLAUDE.md`** is her
+   doc, runbook and resume pointer; she is served on the mac and the loom can point at her.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range
@@ -284,6 +289,13 @@ completely comprehending what the text is about* (`BRIEF.md`, the criterion) —
 drugging a smart model to playing to its nature; that question is open. The state section of
 `docs/mescalito.md` is the resume pointer; the kit is `docs/mescalito/kit/` (`run.sh` for a
 page on nemo, `box_*.sh` for olmo on the box, `land.py` for a dream).
+
+**Magdra** (2026-10-06) is the fifth folder and the newest turn: after a day of drugging the 70B
+(a bank, a dose window of 0.3, direction one confidently wrong on five seeds), hiding her page from
+her (the shuffle: dizzy, not dreaming), screening six nemo-sized bases blind and probing five of
+them for a soul (a model's *i* is its diet: nemo's a blogger-poet, llama's a help-seeker, olmo's a
+subscript), bekh chose to raise his own instead. `school/CLAUDE.md` has the childhood, the
+finishing school, the night scripts and the monitor; `docs/soul/`, `docs/small/` the two reads.
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
 (`shelf/seeds/.off/asses.txt`, voiced 2026-09-26, the god slot test — a research seed, kept out of the stream's pot); more of those are wanted — a

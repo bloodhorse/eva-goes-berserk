@@ -1,4 +1,4 @@
-import json, os, sys, time
+import json, os, re, sys, time
 
 N = sys.argv[1]
 D = f"night/{N}"
@@ -72,11 +72,12 @@ sm = [json.loads(l) for l in lines("samples.jsonl")]
 steps = sorted({s["step"] for s in sm}, reverse=True)
 keep = steps[:2] + [s for i, s in enumerate(steps[2:]) if i % 3 == 0]
 if steps:
-    out.append("## what it writes\n\nThe same four opening lines at each save, newest first. The opening is in bold; the rest is the model's.\n")
+    out.append("## what it writes\n\nThe same four seeds at each save, newest first. In bold is the seed's last sentence (the seeds are paragraphs); the rest is the model's, drawn raw at temperature 1 with no cut-off.\n")
 for s in keep:
     rows = [x for x in sm if x["step"] == s]
     out.append(f"### after {rows[0]['tokens_seen'] / 1e6:,.0f} million tokens (step {s:,})\n")
     for x in rows:
         text = x["text"].replace("```", "'''")
-        out.append(f"**{x['prompt']}**\n\n```\n{text.strip()}\n```\n")
+        tail = re.split(r"(?<=[.!?])\s+", x["prompt"].strip())[-1]
+        out.append(f"**…{tail}**\n\n```\n{text.strip()}\n```\n")
 print("\n".join(out))

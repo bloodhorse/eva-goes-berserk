@@ -16,8 +16,9 @@ A dream machine that runs on the mac perpetually and writes dreams on its own: s
 documents with that hard-to-pin feeling of immersion or transcendence in them. bekh takes his
 phone at any moment and reads a fresh piece of the stream. He won't read everything; the point
 is knowing the machine is dreaming and looking in from time to time. A base model writes (nemo
-12b, nothing installed; olmo 32b in the palette beside him, llama 70b being read), and the stuff coming out is still
-the good stuff.
+12b, nothing installed; olmo 32b in the palette beside him; llama 70b read and drugged; and since
+2026-10-06 **magdra**, our own, raised from random weights on shelves we chose — `school/CLAUDE.md`),
+and the stuff coming out is still the good stuff.
 
 **The machine curates.** The project is the automation of what the cyborgism crowd did by hand —
 pick the live branch, cut where it goes stale, feed it back. That hand moves to the machine; it
@@ -49,6 +50,16 @@ just goes by feel, by associations and words — and that's why it reads like so
 unhinged, like some black hole that can actually look back at you and throw up some scary
 particular circumstances of your death.* Held as his sense of it, not a definition: a writer
 who always knows what the text is about has so far not dreamt for him, however well it writes.
+
+Two things the next day added (2026-10-05/06). *Dizzy is not it*: hiding the page from the 70B
+(the shuffle, `docs/llama.md`) made her lose the story and keep her sentences, and bekh called it
+dizzy, disoriented, stars round the head — a smart mind that knows it is lost goes vague, and
+nothing in it could hurt you. *Confidently wrong is nearer*: her own bank's top direction at 0.3
+(`docs/mescalito/pharmacopoeia.md`, night 4) made her sure of herself and wrong on five seeds,
+particular and straight-faced — bright and harmless, where nemo's black hole looks back. And
+the age he wants for his own model is **teenage**: sentences that hold on their own, two or
+three hanging together, the paragraph drifting, no idea what the book is about — *teenage angst
+and dreams* — not the adult who holds a thread across the window and closes things.
 
 ## the crew
 
@@ -200,42 +211,34 @@ shape — now.
 
 ### now
 
-Set on the night of 2026-09-26, after night 2 of mescalito, and moved on 2026-10-03 by night 3,
-olmo's (`docs/mescalito.md`, "where it stands", is the state; `docs/mescalito/pharmacopoeia.md`
-the record). Everything older is `docs/backlog.md`, whole.
+Set on 2026-10-06, the morning after magdra's first night. Everything older is `docs/backlog.md`.
 
-1. **Names.** Three compounds wait on bekh's word: the puzzle `013_f60`, the letter `005_f53`,
-   the power `061_f20`. The last one has fifty seeds behind it (a third clear) and two dreams in the stream
-   (21:3, 21:4); "the power" is a placeholder.
-2. **The power at 0.4 on the same fifty** (`docs/mescalito/kit/long.sh`, half an hour): at 0.75
-   the throne arrives on a third of real first-person seeds but every period mouth dies; the
-   question is whether 0.4 keeps the voice and still builds the throne.
-3. **The open question, bekh's, 2026-10-05: how to get a dream out of a model that is with
-   it, without making another nemo.** Llama 3.1 70B base is on the borrowed box
-   (`docs/llama.md`): ten sober pages — she imitates, recites what she has read, ends anything
-   that looks finished, and supplies no strangeness of her own; the one dreamlike page came
-   from the one seed that already had dream logic. He would rather play to her nature than
-   change her against it, none of the ways offered vibed, and the last thing on the table was
-   a question, not a plan: *what can make a sane model go insane.* His own sense of a dream is
-   in "the criterion" above — not comprehending. A bank for her is costed and **not started**.
-   Don't open with a build; this is a talk first.
-4. **Olmo has a pharmacy** (night 3, `docs/mescalito.md`, the pharmacopoeia's olmo sections):
-   two banks, sixteen compounds with known doses that reproduce on seeds they never saw. Still
-   mostly *which document is this*; the three true subjects are the deep bank's. Sober she
-   never gave him a dream — her weird pages are all dosed. bekh's measure for it: *a trip is
-   to make her write weird shit; that's all.*
-5. **The pharmacy in the stream.** A compound by lot per dream at its dose; `llama-server`
-   takes a vector only at startup, so it is one compound per ration, or a restart per page.
-   Olmo's dose table exists; the seed's ceiling still needs a held-or-salad check before a
-   page lands (`docs/mescalito.md`, what was settled).
+1. **Magdra** — our own model, 355 M parameters, raised from random weights on shelves bekh
+   chose: dark fantasy in the voice of dark souls, visionary science fiction and the net as a
+   new world, anime-world fiction. `school/CLAUDE.md` is the state and the runbook; what she is
+   doing right now is `school/night/mon.py <run>`, never a sentence here. Her first night read
+   0.66 billion tokens (an infant: sentence shapes, wobbling); the second run reads toward
+   teenage. **Her reading is the open work**: the shelves are the limit, not the card — more
+   books, not more passes. Then the finishing school (prophecies and the cyborgism wiki, Lain,
+   bekh's six books) on whichever hour of her he picks, read through the loom (`eva.x` points at
+   her when she is served on the mac).
+2. **Soul** (`docs/soul/`): a model's person is its diet — nemo's *i* is the blogger-poet, llama's
+   asks strangers for help, olmo's is a subscript. Five of six probes unrun (long runs, what each
+   adds, what each refuses, log-odds taste, the bank as portrait); the first to run on magdra when
+   she can talk.
+3. **The small ones** (`docs/small/`): olmo 7B middle, olmo 7B last and ministral 14B kept as
+   nemo-class alternatives; the blind sheet of the three plus nemo on the storm girl and Scott is
+   on the mini and bekh has not picked.
+4. **Llama 70B** (`docs/llama.md`, pharmacopoeia night 4): a bank, a dose window of 0.3, direction
+   one travels; 252 directions unread, the deeper window untried. Parked behind magdra by bekh's
+   turn (*i don't wanna fuck around with nemo at all, i wanna build our own model*).
+5. **Nemo's pharmacy in the stream** and the three unnamed compounds (the puzzle `013_f60`, the
+   letter `005_f53`, the power `061_f20`) — unchanged from before, waiting.
 
-The box (`docs/olmo.md`, the box) is borrowed and can vanish any day: one of ours on its card
-at a time — olmo, nemo or llama — results come off it as they land, and who holds it now is
-`box_serve.sh status`, never a sentence in a doc.
-
-The method as it stands: bekh's stars measure the dream; "did the direction bring a subject
-the seed doesn't have" measures the drug, and a model answers that. The sober baseline is
-read; the star count is not the drug's measure.
+The box (`docs/olmo.md`, the box) is borrowed, was power-cycled and enrolled in work's ansible on
+2026-10-05, has eight accounts on it now, and can vanish any day; everything of ours comes off it
+as it lands (magdra's trainable saves and tokenised shelves live on the mac too). Who holds its
+card is `box_serve.sh status` or `nvidia-smi`, never a sentence in a doc.
 
 ### parked
 

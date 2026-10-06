@@ -27,7 +27,10 @@ the work project: DeepSeek V4-Flash (`llama-server.service`, :8080, ~22.5 GB of 
 what normally sits on it, `/opt/llama/etc/api-key` is a work secret (never printed, never
 copied), `~/sq1-r3vi3w` and `~/burn` are not ours to read. **One GPU job at a time**: before
 taking the card, `bash ~/sq1-r3vi3w/eval/gputest/status.sh` must say `IDLE`. bekh's word on
-DeepSeek: kick it out when the card is needed; don't put it back unasked.
+DeepSeek: kick it out when the card is needed; don't put it back unasked. **DeepSeek's weights
+are gone** — bekh had them deleted on 2026-10-06 for room (98 GB; its server, tools and
+source under `/opt/llama` stay, we use them) — so `set-model.sh dsv4flash` and the service now
+fail with a missing-model message.
 
 Ours is one directory, `~/eva-olmo/`: the HF weights of `stage1-step656000` (`olmo-hf/`,
 61 GB) and Tricit's Q4 (`olmo-q4/`), both pulled with the box's `hf` cli at ~400 MB/s; uv
@@ -60,8 +63,9 @@ home, runbook and up/down script are `~/tower/shittalk/transurfers/gpu-test-draw
 llama on the card means the painter is down and the stage falls back to its hosted model.
 `box_serve.sh up` refuses while the painter holds the card.
 
-**Disk is the tight thing** (400 GB since the box's owners grew it on 2026-10-05; the work
-project's DeepSeek takes ~117): `df -h /` on the box before any pull. What is ours and how big:
+**Disk** (400 GB since the box's owners grew it on 2026-10-05; DeepSeek's 98 GB freed on
+2026-10-06): `df -h /` on the box before any pull; the model school's shelves and runs live
+in `~/eva-olmo/school/` (`school/CLAUDE.md`). What is ours and how big:
 `du -sh ~/eva-olmo/* ~/eva-olmo/small/* ~/eva-paint/models`. **Olmo's full weights are gone**
 (`olmo-hf`, 61 GB, deleted 2026-10-05 for room, bekh's word): they are needed only to learn a
 new olmo bank and come back from Hugging Face in three minutes. Next to go when room is wanted:
