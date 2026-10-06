@@ -18,6 +18,8 @@ model.config.use_cache = True
 os.makedirs(out, exist_ok=True)
 model.save_pretrained(out)
 tok_dir = state["meta"]["tokenizer"]
+if not os.path.isdir(tok_dir):
+    tok_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bins", os.path.basename(tok_dir))
 for f in os.listdir(tok_dir):
     shutil.copy(os.path.join(tok_dir, f), os.path.join(out, f))
 cfg_path = os.path.join(out, "tokenizer_config.json")

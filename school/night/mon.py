@@ -2,13 +2,15 @@ import json, os, subprocess, sys, threading, time
 
 N = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else "night1"
 ONCE = "--once" in sys.argv
-BOX = "ubuntu@10.4.65.34"
+BOX = os.environ.get("BOX", "BekmemetevVO@ds-dev2.x340.org")
+BOXDIR = os.environ.get("BOXDIR", "/opt/llama/magdra")
+KEY = ["-i", os.environ["KEY"]] if os.environ.get("KEY") else []
 R, BOLD = "\033[0m", "\033[1m"
 MINT, MINT_HI, MINT_LO = "\033[36m", "\033[1;36m", "\033[2;36m"
 PINK, LBLUE = "\033[95m", "\033[94m"
 CLEAR, HIDE, SHOW = "\033[H\033[J", "\033[?25l", "\033[?25h"
 SPIN = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
-CMD = (f"cd ~/eva-olmo/school && echo @@status && cat runs/{N}/status.json 2>/dev/null; echo; echo @@temp && "
+CMD = (f"cd {BOXDIR} && echo @@status && cat runs/{N}/status.json 2>/dev/null; echo; echo @@temp && "
        f"nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,power.draw,memory.used --format=csv,noheader,nounits; "
        f"echo @@guard && tail -n 4 runs/{N}.guard.log 2>/dev/null; echo @@log && tail -n 1 runs/{N}.log 2>/dev/null; "
        f"echo @@disk && df --output=avail -BG / | tail -1; echo @@now && date +%s")
@@ -18,7 +20,7 @@ S = {"st": {}, "temp": "", "guard": [], "log": "", "disk": "", "skew": 0.0, "ok"
 
 def poll():
     try:
-        p = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", BOX, CMD], capture_output=True, text=True,
+        p = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", *KEY, BOX, CMD], capture_output=True, text=True,
                            timeout=25, stdin=subprocess.DEVNULL)
         if p.returncode != 0:
             raise RuntimeError(p.stderr.strip().splitlines()[-1] if p.stderr.strip() else f"ssh exit {p.returncode}")

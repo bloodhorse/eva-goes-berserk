@@ -141,6 +141,8 @@ def parse_data(specs, vals):
         base = path[:-4] if path.endswith(".bin") else path
         with open(base + ".json") as f:
             meta = json.load(f)
+        if os.path.isdir(base + ".tokenizer"):
+            meta["tokenizer"] = os.path.abspath(base + ".tokenizer")
         parts.append((path, meta["dtype"], float(w)))
         metas.append(meta)
     vals = vals or [p[:-4] + ".val.bin" for p, _, _ in parts]

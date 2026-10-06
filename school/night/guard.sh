@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd ~/eva-olmo/school
+cd "${SCHOOL:-/opt/llama/magdra}"
 N=${1:-night1}; R=runs/$N
 HOT=${HOT:-88}; COOL=${COOL:-75}; FLOOR=${FLOOR:-20}
 hot=0; paused=0; last=$(date +%s)
@@ -8,7 +8,10 @@ snap() {
   free=$(df --output=avail -BG / | tail -1 | tr -dc 0-9)
   if [ "$free" -lt "$FLOOR" ]; then say "disk ${free}G under ${FLOOR}G, snapshot skipped"; return; fi
   [ -f "$R/ckpt.pt" ] || return
-  if nice -n 10 ./export.sh "$R" q8_0 >> "$R.export.log" 2>&1; then say "snapshot $(ls -t "$R"/model-*.gguf | head -1 | xargs basename)"; else say "snapshot failed"; fi
+  if nice -n 10 ./export.sh "$R" q8_0 >> "$R.export.log" 2>&1; then
+    ls -t "$R"/model-*.gguf | tail -n +2 | xargs -r rm -f
+    say "snapshot $(ls -t "$R"/model-*.gguf | head -1 | xargs basename)"
+  else say "snapshot failed"; fi
   rm -rf "$R"/hf-*
 }
 say "guard up: pause at ${HOT}C, resume at ${COOL}C, disk floor ${FLOOR}G"

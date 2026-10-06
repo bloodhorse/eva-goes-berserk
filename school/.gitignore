@@ -10,3 +10,10 @@ pd2/text/
 sources/samples/
 __pycache__/
 night/*.log
+modern/*/raw/
+modern/*/text/
+modern/*/poetry/
+modern/released/*/raw/
+modern/released/*/text/
+modern/**/*.log
+modern/released/_scratch/
