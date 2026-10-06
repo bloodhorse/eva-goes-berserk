@@ -3,5 +3,9 @@ models/
 night/*/
 lain/
 wired/
+wired-core/
+wired-bulk/
+pd2/raw/
+pd2/text/
 sources/samples/
 __pycache__/

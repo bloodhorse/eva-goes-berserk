@@ -1,0 +1,870 @@
+{
+ "shelf": "wired",
+ "path": "/home/ubuntu/eva-olmo/school/fanfic/wired.jsonl",
+ "bytes": 1146347049,
+ "works": 16608,
+ "words": 200314980,
+ "duplicates_removed": 2242,
+ "explicit_works": 494,
+ "explicit_words": 2541438,
+ "ratings": {
+  "unknown": 16353,
+  "T": 147,
+  "K+": 36,
+  "M": 60,
+  "MA": 2,
+  "K": 10
+ },
+ "tiers": {
+  "1": {
+   "works": 15751,
+   "words": 191640143
+  },
+  "2": {
+   "works": 857,
+   "words": 8674837
+  }
+ },
+ "fandoms": {
+  "Mass Effect": {
+   "works": 8881,
+   "words": 101629673
+  },
+  "Evangelion": {
+   "works": 2955,
+   "words": 36962710
+  },
+  "Mega Man": {
+   "works": 2409,
+   "words": 31792998
+  },
+  "Sword Art Online": {
+   "works": 671,
+   "words": 8630217
+  },
+  "Code Lyoko": {
+   "works": 737,
+   "words": 6953383
+  },
+  "Mass Effect x Naruto": {
+   "works": 65,
+   "words": 1439049
+  },
+  "Naruto x Sword Art Online": {
+   "works": 62,
+   "words": 997087
+  },
+  "Tron": {
+   "works": 62,
+   "words": 892075
+  },
+  "Overlord": {
+   "works": 58,
+   "words": 610886
+  },
+  "Portal / Half-Life": {
+   "works": 106,
+   "words": 594751
+  },
+  "Naruto x Overlord": {
+   "works": 24,
+   "words": 449121
+  },
+  "Familiar of Zero x Sword Art Online": {
+   "works": 12,
+   "words": 375087
+  },
+  "Familiar of Zero x Overlord": {
+   "works": 8,
+   "words": 372032
+  },
+  "Battle Angel Alita": {
+   "works": 17,
+   "words": 355542
+  },
+  "Evangelion x Ranma ½": {
+   "works": 10,
+   "words": 321749
+  },
+  "Log Horizon": {
+   "works": 29,
+   "words": 281354
+  },
+  "Magical Girl Lyrical Nanoha x Mass Effect": {
+   "works": 1,
+   "words": 254025
+  },
+  "Psycho-Pass": {
+   "works": 43,
+   "words": 238789
+  },
+  "Mass Effect x Macross": {
+   "works": 4,
+   "words": 232462
+  },
+  "Ergo Proxy": {
+   "works": 6,
+   "words": 224752
+  },
+  "Ghost in the Shell": {
+   "works": 16,
+   "words": 202789
+  },
+  "Evangelion x Megami Tensei": {
+   "works": 3,
+   "words": 194400
+  },
+  "Mega Man x Naruto": {
+   "works": 3,
+   "words": 191420
+  },
+  "Evangelion x Pokémon": {
+   "works": 4,
+   "words": 191178
+  },
+  "Digimon x Mega Man": {
+   "works": 8,
+   "words": 185441
+  },
+  "High School DxD x Sword Art Online": {
+   "works": 1,
+   "words": 184949
+  },
+  "Evangelion x Gundam": {
+   "works": 8,
+   "words": 174535
+  },
+  "Evangelion x Noir": {
+   "works": 1,
+   "words": 171779
+  },
+  "Mass Effect x Pokémon": {
+   "works": 9,
+   "words": 170560
+  },
+  "Gundam x Mass Effect": {
+   "works": 9,
+   "words": 166794
+  },
+  "Mass Effect x Ranma ½": {
+   "works": 7,
+   "words": 154486
+  },
+  "Code Lyoko x Pokémon": {
+   "works": 1,
+   "words": 151272
+  },
+  "Fate x Sword Art Online": {
+   "works": 13,
+   "words": 150159
+  },
+  "Bleach x Sword Art Online": {
+   "works": 16,
+   "words": 146847
+  },
+  "Mass Effect x Matrix": {
+   "works": 2,
+   "words": 143330
+  },
+  "Mass Effect x Mega Man": {
+   "works": 7,
+   "words": 138882
+  },
+  "Matrix": {
+   "works": 21,
+   "words": 134709
+  },
+  "Deus Ex": {
+   "works": 6,
+   "words": 118032
+  },
+  "Evangelion x Tenchi Muyo": {
+   "works": 9,
+   "words": 117318
+  },
+  "Code Geass x Sword Art Online": {
+   "works": 7,
+   "words": 95150
+  },
+  "Familiar of Zero x Shadowrun": {
+   "works": 1,
+   "words": 89580
+  },
+  "Evangelion x Haruhi Suzumiya": {
+   "works": 4,
+   "words": 85820
+  },
+  "Bubblegum Crisis x Mega Man": {
+   "works": 1,
+   "words": 85700
+  },
+  "Gundam x Mega Man": {
+   "works": 5,
+   "words": 84575
+  },
+  "Deus Ex x Mass Effect": {
+   "works": 4,
+   "words": 83289
+  },
+  "Pokémon x Sword Art Online": {
+   "works": 2,
+   "words": 81753
+  },
+  "Shadowrun": {
+   "works": 6,
+   "words": 80757
+  },
+  "Evangelion x Puella Magi Madoka Magica": {
+   "works": 4,
+   "words": 79485
+  },
+  "Ranma ½ x Sword Art Online": {
+   "works": 3,
+   "words": 77211
+  },
+  "Mass Effect x Muv-Luv": {
+   "works": 2,
+   "words": 74708
+  },
+  "Evangelion x Mass Effect": {
+   "works": 2,
+   "words": 73546
+  },
+  "Evangelion x Fate": {
+   "works": 4,
+   "words": 73034
+  },
+  "Familiar of Zero x Mega Man": {
+   "works": 6,
+   "words": 72526
+  },
+  "Ranma ½ x Tron": {
+   "works": 1,
+   "words": 70888
+  },
+  "Evangelion x Persona": {
+   "works": 2,
+   "words": 70638
+  },
+  "Evangelion x Sword Art Online": {
+   "works": 2,
+   "words": 67630
+  },
+  "Evangelion x Slayers": {
+   "works": 1,
+   "words": 66801
+  },
+  "Bleach x Code Lyoko": {
+   "works": 8,
+   "words": 65683
+  },
+  "Evangelion x Portal / Half-Life": {
+   "works": 2,
+   "words": 63452
+  },
+  "Code Geass x Mass Effect": {
+   "works": 5,
+   "words": 63333
+  },
+  "Evangelion x Naruto": {
+   "works": 3,
+   "words": 60794
+  },
+  "Hetalia x Sword Art Online": {
+   "works": 3,
+   "words": 57100
+  },
+  "One Piece x Overlord": {
+   "works": 1,
+   "words": 56372
+  },
+  "Mass Effect x Rosario + Vampire": {
+   "works": 2,
+   "words": 56075
+  },
+  "One Piece x Sword Art Online": {
+   "works": 3,
+   "words": 54243
+  },
+  "Fate x Mass Effect": {
+   "works": 4,
+   "words": 53205
+  },
+  "Mass Effect x Shadowrun": {
+   "works": 1,
+   "words": 52355
+  },
+  "Ergo Proxy x Texhnolyze": {
+   "works": 1,
+   "words": 46640
+  },
+  "Code Lyoko x Sword Art Online": {
+   "works": 1,
+   "words": 46125
+  },
+  "Dragon Ball x Evangelion": {
+   "works": 7,
+   "words": 44723
+  },
+  "Gundam x Sword Art Online": {
+   "works": 1,
+   "words": 41292
+  },
+  "Evangelion x Tekkaman Blade": {
+   "works": 2,
+   "words": 39567
+  },
+  "A Certain Scientific Railgun x Serial Experiments Lain": {
+   "works": 1,
+   "words": 39147
+  },
+  "Steins;Gate": {
+   "works": 4,
+   "words": 36581
+  },
+  "Evangelion x Guyver": {
+   "works": 3,
+   "words": 35497
+  },
+  "Sailor Moon x Tron": {
+   "works": 2,
+   "words": 33070
+  },
+  "Accel World": {
+   "works": 7,
+   "words": 32871
+  },
+  "Evangelion x Gurren Lagann": {
+   "works": 8,
+   "words": 32731
+  },
+  "Pokémon x Portal / Half-Life": {
+   "works": 9,
+   "words": 31388
+  },
+  "Persona x Sword Art Online": {
+   "works": 2,
+   "words": 31315
+  },
+  "Ghost in the Shell x Naruto": {
+   "works": 3,
+   "words": 31099
+  },
+  "Manhwa x Sword Art Online": {
+   "works": 1,
+   "words": 31001
+  },
+  "Evangelion x Hellsing": {
+   "works": 2,
+   "words": 29817
+  },
+  "Ghost in the Shell x Sailor Moon": {
+   "works": 1,
+   "words": 29494
+  },
+  "Evangelion x Touhou": {
+   "works": 1,
+   "words": 27546
+  },
+  "Fairy Tail x Sword Art Online": {
+   "works": 3,
+   "words": 26236
+  },
+  "Dragon Ball x Mass Effect": {
+   "works": 3,
+   "words": 25514
+  },
+  "Love Hina x Mega Man": {
+   "works": 1,
+   "words": 25375
+  },
+  "Code Geass x Evangelion": {
+   "works": 1,
+   "words": 24991
+  },
+  "Negima! Magister Negi Magi x Portal / Half-Life": {
+   "works": 1,
+   "words": 24394
+  },
+  "Mass Effect x Vandread": {
+   "works": 1,
+   "words": 22493
+  },
+  "Fate x Mega Man": {
+   "works": 2,
+   "words": 22327
+  },
+  "Code Lyoko x Tron": {
+   "works": 3,
+   "words": 21702
+  },
+  "Rurouni Kenshin x Sword Art Online": {
+   "works": 1,
+   "words": 20939
+  },
+  "Katekyo Hitman Reborn! x Sword Art Online": {
+   "works": 2,
+   "words": 20871
+  },
+  "My Little Sister Can't Be This Cute x Sword Art Online": {
+   "works": 1,
+   "words": 20456
+  },
+  "Digimon x Sword Art Online": {
+   "works": 2,
+   "words": 20167
+  },
+  "Devil is a Part-Timer x Sword Art Online": {
+   "works": 1,
+   "words": 18955
+  },
+  "Btooom x Sword Art Online": {
+   "works": 1,
+   "words": 17711
+  },
+  "Naruto x Tron": {
+   "works": 2,
+   "words": 17609
+  },
+  "Evangelion x Familiar of Zero": {
+   "works": 1,
+   "words": 17341
+  },
+  "Campione! x Evangelion": {
+   "works": 1,
+   "words": 17010
+  },
+  "Ghost in the Shell x You're Under Arrest": {
+   "works": 1,
+   "words": 16857
+  },
+  "Code Lyoko x Naruto": {
+   "works": 4,
+   "words": 16725
+  },
+  "Code Lyoko x Shugo Chara!": {
+   "works": 1,
+   "words": 16422
+  },
+  "Mass Effect x Sailor Moon": {
+   "works": 2,
+   "words": 15950
+  },
+  "Familiar of Zero x Mass Effect": {
+   "works": 4,
+   "words": 15800
+  },
+  "Mass Effect x Touhou": {
+   "works": 1,
+   "words": 14922
+  },
+  "Familiar of Zero x Portal / Half-Life": {
+   "works": 1,
+   "words": 14331
+  },
+  "Deus Ex x Naruto": {
+   "works": 1,
+   "words": 13903
+  },
+  "Texhnolyze": {
+   "works": 1,
+   "words": 13649
+  },
+  "Evangelion x Strike Witches": {
+   "works": 2,
+   "words": 13582
+  },
+  "Ghost in the Shell x Serial Experiments Lain": {
+   "works": 1,
+   "words": 12758
+  },
+  "Dragon Ball x Sword Art Online": {
+   "works": 3,
+   "words": 12662
+  },
+  "Bleach x Log Horizon": {
+   "works": 1,
+   "words": 11874
+  },
+  "Mega Man x Sailor Moon": {
+   "works": 1,
+   "words": 11626
+  },
+  "Code Lyoko x Vocaloid": {
+   "works": 2,
+   "words": 11569
+  },
+  "Inuyasha x Sword Art Online": {
+   "works": 1,
+   "words": 11546
+  },
+  "Hetalia x Psycho-Pass": {
+   "works": 1,
+   "words": 11055
+  },
+  "Negima! Magister Negi Magi x Overlord": {
+   "works": 1,
+   "words": 10332
+  },
+  "Evangelion x Vandread": {
+   "works": 1,
+   "words": 9732
+  },
+  "Mass Effect x Oh My Goddess!": {
+   "works": 1,
+   "words": 9714
+  },
+  "Girls und Panzer x Portal / Half-Life": {
+   "works": 1,
+   "words": 9598
+  },
+  "Evangelion x High School DxD": {
+   "works": 2,
+   "words": 9564
+  },
+  "Angel Beats! x Sword Art Online": {
+   "works": 1,
+   "words": 9532
+  },
+  "Mai-HiME x Mass Effect": {
+   "works": 1,
+   "words": 9322
+  },
+  "Bubblegum Crisis x Ghost in the Shell": {
+   "works": 1,
+   "words": 9315
+  },
+  "NieR / Drakengard": {
+   "works": 4,
+   "words": 8661
+  },
+  "Digimon x Evangelion": {
+   "works": 1,
+   "words": 8228
+  },
+  "Summer Wars": {
+   "works": 2,
+   "words": 7993
+  },
+  "Code Lyoko x Tokyo Mew Mew": {
+   "works": 2,
+   "words": 7873
+  },
+  "Mass Effect x Sekirei": {
+   "works": 1,
+   "words": 7833
+  },
+  "Evangelion x Yu-Gi-Oh": {
+   "works": 2,
+   "words": 7551
+  },
+  "Mass Effect x Trinity Blood": {
+   "works": 1,
+   "words": 7196
+  },
+  "Elfen Lied x Evangelion": {
+   "works": 1,
+   "words": 7188
+  },
+  "Attack on Titan x Sword Art Online": {
+   "works": 2,
+   "words": 7099
+  },
+  "Hunter x Hunter x Sword Art Online": {
+   "works": 1,
+   "words": 6923
+  },
+  "Infinite Stratos x Mega Man": {
+   "works": 1,
+   "words": 6888
+  },
+  "Magical Girl Lyrical Nanoha x Sword Art Online": {
+   "works": 1,
+   "words": 6727
+  },
+  "Mass Effect x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 6442
+  },
+  "Overlord x Ranma ½": {
+   "works": 1,
+   "words": 6361
+  },
+  "Dragon Ball x Mega Man": {
+   "works": 1,
+   "words": 6339
+  },
+  "Robotics;Notes": {
+   "works": 1,
+   "words": 5954
+  },
+  "Evangelion x Knights of Sidonia": {
+   "works": 1,
+   "words": 5914
+  },
+  "Evangelion x World Only God Knows": {
+   "works": 1,
+   "words": 5835
+  },
+  "From the New World x Psycho-Pass": {
+   "works": 1,
+   "words": 5685
+  },
+  "Digimon x Summer Wars": {
+   "works": 1,
+   "words": 5526
+  },
+  "Infinite Stratos x Mass Effect": {
+   "works": 1,
+   "words": 5314
+  },
+  "Alice in the Country of Hearts x Sword Art Online": {
+   "works": 1,
+   "words": 5159
+  },
+  "Mega Man x Rurouni Kenshin": {
+   "works": 1,
+   "words": 5055
+  },
+  "Mass Effect x Shakugan no Shana": {
+   "works": 1,
+   "words": 4850
+  },
+  "Bleach x Mass Effect": {
+   "works": 1,
+   "words": 4647
+  },
+  "Ghost in the Shell x Oh My Goddess!": {
+   "works": 1,
+   "words": 4585
+  },
+  "Portal / Half-Life x Vocaloid": {
+   "works": 2,
+   "words": 4210
+  },
+  ".hack": {
+   "works": 1,
+   "words": 4173
+  },
+  "Evangelion x Mega Man": {
+   "works": 1,
+   "words": 4092
+  },
+  "ManHua x Sword Art Online": {
+   "works": 1,
+   "words": 3968
+  },
+  "Overlord x Rosario + Vampire": {
+   "works": 1,
+   "words": 3949
+  },
+  "Akira": {
+   "works": 1,
+   "words": 3942
+  },
+  "Evangelion x One Piece": {
+   "works": 2,
+   "words": 3935
+  },
+  "Guyver x Mass Effect": {
+   "works": 1,
+   "words": 3813
+  },
+  "Evangelion x Magical Girl Lyrical Nanoha": {
+   "works": 2,
+   "words": 3714
+  },
+  "Free! x Psycho-Pass": {
+   "works": 2,
+   "words": 3698
+  },
+  "Akame ga Kiru x Sword Art Online": {
+   "works": 1,
+   "words": 3692
+  },
+  "Ghost in the Shell x Tenchi Muyo": {
+   "works": 1,
+   "words": 3619
+  },
+  "Mass Effect x Ponyo": {
+   "works": 1,
+   "words": 3471
+  },
+  "Sword Art Online x Vocaloid": {
+   "works": 1,
+   "words": 3337
+  },
+  "Code Lyoko x Inuyasha": {
+   "works": 1,
+   "words": 3328
+  },
+  "Cardcaptor Sakura x Mega Man": {
+   "works": 1,
+   "words": 3261
+  },
+  "William Gibson / Sprawl": {
+   "works": 1,
+   "words": 3210
+  },
+  "Gurren Lagann x Sword Art Online": {
+   "works": 1,
+   "words": 3189
+  },
+  "Deus Ex x Touhou": {
+   "works": 1,
+   "words": 3184
+  },
+  "Log Horizon x Naruto": {
+   "works": 1,
+   "words": 3167
+  },
+  "Evangelion x Soul Eater": {
+   "works": 1,
+   "words": 2903
+  },
+  "Evangelion x Oh My Goddess!": {
+   "works": 1,
+   "words": 2856
+  },
+  "NieR / Drakengard x Naruto": {
+   "works": 1,
+   "words": 2626
+  },
+  "Mass Effect x Tron": {
+   "works": 1,
+   "words": 2625
+  },
+  "Blade Runner": {
+   "works": 1,
+   "words": 2612
+  },
+  "Mass Effect x Portal / Half-Life": {
+   "works": 1,
+   "words": 2598
+  },
+  "Katekyo Hitman Reborn! x Psycho-Pass": {
+   "works": 1,
+   "words": 2516
+  },
+  "Evangelion x Sound of the Sky": {
+   "works": 1,
+   "words": 2405
+  },
+  "Battle Angel Alita x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 2376
+  },
+  "Sword Art Online x Tokyo Ghoul": {
+   "works": 1,
+   "words": 2262
+  },
+  "Evangelion x Love Hina": {
+   "works": 1,
+   "words": 2190
+  },
+  "Ghost in the Shell x Ranma ½": {
+   "works": 1,
+   "words": 2128
+  },
+  "Ghost in the Shell x Vocaloid": {
+   "works": 1,
+   "words": 1993
+  },
+  "Mega Man x Touhou": {
+   "works": 1,
+   "words": 1978
+  },
+  "Evangelion x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 1974
+  },
+  "Guilty Crown x Sword Art Online": {
+   "works": 1,
+   "words": 1961
+  },
+  "Claymore x Sword Art Online": {
+   "works": 1,
+   "words": 1923
+  },
+  "Deus Ex x Pokémon": {
+   "works": 1,
+   "words": 1718
+  },
+  "Evangelion x Toradora!": {
+   "works": 1,
+   "words": 1711
+  },
+  "Log Horizon x Ouran High School Host Club": {
+   "works": 1,
+   "words": 1617
+  },
+  "Portal / Half-Life x Touhou": {
+   "works": 1,
+   "words": 1607
+  },
+  "Battle Angel Alita x Oh My Goddess!": {
+   "works": 1,
+   "words": 1538
+  },
+  "Fairy Tail x Mass Effect": {
+   "works": 1,
+   "words": 1482
+  },
+  "Freezing x Mass Effect": {
+   "works": 1,
+   "words": 1447
+  },
+  "Code Lyoko x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 1438
+  },
+  "Attack on Titan x Evangelion": {
+   "works": 1,
+   "words": 1437
+  },
+  "Code Geass x Ghost in the Shell": {
+   "works": 1,
+   "words": 1314
+  },
+  "Evangelion x K-ON!": {
+   "works": 1,
+   "words": 1308
+  },
+  "Ranma ½ x Shadowrun": {
+   "works": 1,
+   "words": 1264
+  },
+  "Howl's Moving Castle x Sword Art Online": {
+   "works": 1,
+   "words": 1136
+  },
+  "Evangelion x Vampire Knight": {
+   "works": 1,
+   "words": 1100
+  },
+  "Hetalia x Portal / Half-Life": {
+   "works": 1,
+   "words": 980
+  },
+  "Mega Man x Pokémon": {
+   "works": 1,
+   "words": 971
+  },
+  "Shingeki no Kyojin x Sword Art Online": {
+   "works": 1,
+   "words": 914
+  },
+  "Evangelion x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 902
+  },
+  "Captain Harlock x Mass Effect": {
+   "works": 1,
+   "words": 870
+  },
+  "Bleach x Psycho-Pass": {
+   "works": 1,
+   "words": 862
+  }
+ }
+}

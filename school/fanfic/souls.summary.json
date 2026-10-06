@@ -1,0 +1,438 @@
+{
+ "shelf": "souls",
+ "path": "/home/ubuntu/eva-olmo/school/fanfic/souls.jsonl",
+ "bytes": 1065149533,
+ "works": 15917,
+ "words": 188870858,
+ "duplicates_removed": 2693,
+ "explicit_works": 705,
+ "explicit_words": 3623645,
+ "ratings": {
+  "unknown": 15702,
+  "T": 101,
+  "M": 91,
+  "K+": 14,
+  "K": 5,
+  "MA": 4
+ },
+ "tiers": {
+  "1": {
+   "works": 108,
+   "words": 1039289
+  },
+  "2": {
+   "works": 5567,
+   "words": 72549515
+  },
+  "3": {
+   "works": 10242,
+   "words": 115282054
+  }
+ },
+ "fandoms": {
+  "Dragon Age": {
+   "works": 7562,
+   "words": 86215013
+  },
+  "Elder Scrolls": {
+   "works": 4424,
+   "words": 53989382
+  },
+  "A Song of Ice and Fire": {
+   "works": 2341,
+   "words": 24535798
+  },
+  "Warhammer": {
+   "works": 553,
+   "words": 7309889
+  },
+  "Legacy of Kain": {
+   "works": 221,
+   "words": 2734496
+  },
+  "Diablo": {
+   "works": 145,
+   "words": 2546150
+  },
+  "Mass Effect x Warhammer": {
+   "works": 74,
+   "words": 1880539
+  },
+  "Dragon Age x Elder Scrolls": {
+   "works": 63,
+   "words": 1268764
+  },
+  "Castlevania": {
+   "works": 81,
+   "words": 920112
+  },
+  "Puella Magi Madoka Magica x Warhammer": {
+   "works": 1,
+   "words": 593814
+  },
+  "Castlevania x Rosario + Vampire": {
+   "works": 9,
+   "words": 564861
+  },
+  "Elder Scrolls x Naruto": {
+   "works": 51,
+   "words": 557494
+  },
+  "Dark Souls": {
+   "works": 77,
+   "words": 546190
+  },
+  "Dragon Age x Mass Effect": {
+   "works": 34,
+   "words": 491703
+  },
+  "Familiar of Zero x Warhammer": {
+   "works": 28,
+   "words": 481000
+  },
+  "Sailor Moon x Warhammer": {
+   "works": 13,
+   "words": 417151
+  },
+  "Dragon Age x Warhammer": {
+   "works": 11,
+   "words": 380824
+  },
+  "A Song of Ice and Fire x Naruto": {
+   "works": 18,
+   "words": 340711
+  },
+  "Dragon Age x Naruto": {
+   "works": 24,
+   "words": 317813
+  },
+  "Darksiders": {
+   "works": 21,
+   "words": 307668
+  },
+  "Elder Scrolls x A Song of Ice and Fire": {
+   "works": 15,
+   "words": 226194
+  },
+  "Magical Girl Lyrical Nanoha x Warhammer": {
+   "works": 7,
+   "words": 201961
+  },
+  "Dark Souls x Familiar of Zero": {
+   "works": 7,
+   "words": 161586
+  },
+  "Naruto x Warhammer": {
+   "works": 6,
+   "words": 156172
+  },
+  "Dark Souls x Naruto": {
+   "works": 3,
+   "words": 90850
+  },
+  "Castlevania x Sailor Moon": {
+   "works": 3,
+   "words": 89853
+  },
+  "Dragon Age x Familiar of Zero": {
+   "works": 1,
+   "words": 85834
+  },
+  "Castlevania x Naruto": {
+   "works": 10,
+   "words": 84035
+  },
+  "Berserk x Persona": {
+   "works": 1,
+   "words": 83735
+  },
+  "Elder Scrolls x Mass Effect": {
+   "works": 5,
+   "words": 80203
+  },
+  "Darksiders x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 71946
+  },
+  "Elder Scrolls x Familiar of Zero": {
+   "works": 3,
+   "words": 69659
+  },
+  "Elder Scrolls x Fullmetal Alchemist": {
+   "works": 4,
+   "words": 68424
+  },
+  "Bleach x Elder Scrolls": {
+   "works": 1,
+   "words": 64621
+  },
+  "Dragon Age x Inuyasha": {
+   "works": 2,
+   "words": 55287
+  },
+  "Castlevania x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 52282
+  },
+  "Elder Scrolls x Ranma ½": {
+   "works": 1,
+   "words": 42259
+  },
+  "Bleach x Warhammer": {
+   "works": 3,
+   "words": 39809
+  },
+  "A Song of Ice and Fire x Ranma ½": {
+   "works": 1,
+   "words": 38788
+  },
+  "Witcher": {
+   "works": 3,
+   "words": 37301
+  },
+  "Elder Scrolls x Fate": {
+   "works": 4,
+   "words": 36709
+  },
+  "Ranma ½ x Warhammer": {
+   "works": 2,
+   "words": 32398
+  },
+  "Elder Scrolls x Sword Art Online": {
+   "works": 1,
+   "words": 31007
+  },
+  "Berserk x Campione!": {
+   "works": 1,
+   "words": 27697
+  },
+  "Elder Scrolls x Warhammer": {
+   "works": 1,
+   "words": 27174
+  },
+  "Dark Souls x Fairy Tail": {
+   "works": 2,
+   "words": 25978
+  },
+  "Akame ga Kiru x Dark Souls": {
+   "works": 1,
+   "words": 25276
+  },
+  "Elfen Lied x Warhammer": {
+   "works": 1,
+   "words": 24950
+  },
+  "Castlevania x Ranma ½": {
+   "works": 2,
+   "words": 24196
+  },
+  "Elder Scrolls x Overlord": {
+   "works": 2,
+   "words": 21786
+  },
+  "Dark Souls x Fate": {
+   "works": 2,
+   "words": 20993
+  },
+  "Castlevania x Hetalia": {
+   "works": 1,
+   "words": 19846
+  },
+  "Gundam x Warhammer": {
+   "works": 4,
+   "words": 17890
+  },
+  "Castlevania x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 16769
+  },
+  "Elder Scrolls x One Piece": {
+   "works": 2,
+   "words": 16413
+  },
+  "A Song of Ice and Fire x Warhammer": {
+   "works": 1,
+   "words": 16275
+  },
+  "Castlevania x Fate": {
+   "works": 1,
+   "words": 16045
+  },
+  "A Song of Ice and Fire x Berserk": {
+   "works": 1,
+   "words": 13360
+  },
+  "Bleach x Darksiders": {
+   "works": 1,
+   "words": 13045
+  },
+  "Elder Scrolls x Hetalia": {
+   "works": 5,
+   "words": 11674
+  },
+  "Fate x Warhammer": {
+   "works": 1,
+   "words": 10652
+  },
+  "Naruto x Witcher": {
+   "works": 2,
+   "words": 9235
+  },
+  "A Song of Ice and Fire x Hetalia": {
+   "works": 1,
+   "words": 9126
+  },
+  "Vandread x Warhammer": {
+   "works": 1,
+   "words": 8489
+  },
+  "Dark Souls x High School DxD": {
+   "works": 1,
+   "words": 8319
+  },
+  "A Song of Ice and Fire x Witcher": {
+   "works": 1,
+   "words": 8285
+  },
+  "Dragon Age x A Song of Ice and Fire": {
+   "works": 1,
+   "words": 8146
+  },
+  "Evangelion x Warhammer": {
+   "works": 2,
+   "words": 8118
+  },
+  "Darksiders x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 8081
+  },
+  "A Song of Ice and Fire x Rurouni Kenshin": {
+   "works": 1,
+   "words": 8003
+  },
+  "Darksiders x Princess Mononoke": {
+   "works": 1,
+   "words": 7775
+  },
+  "Dragon Age x Witcher": {
+   "works": 1,
+   "words": 7764
+  },
+  "Dark Souls x Witcher": {
+   "works": 1,
+   "words": 7476
+  },
+  "Berserk x Dark Souls": {
+   "works": 1,
+   "words": 6669
+  },
+  "Bleach x Dark Souls": {
+   "works": 2,
+   "words": 6533
+  },
+  "Bleach x A Song of Ice and Fire": {
+   "works": 1,
+   "words": 6416
+  },
+  "Dragon Age x Hetalia": {
+   "works": 4,
+   "words": 6316
+  },
+  "Castlevania x Vampire Knight": {
+   "works": 1,
+   "words": 6272
+  },
+  "Elder Scrolls x Saint Seiya": {
+   "works": 1,
+   "words": 6016
+  },
+  "Girls und Panzer x Warhammer": {
+   "works": 1,
+   "words": 5975
+  },
+  "A Song of Ice and Fire x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 5691
+  },
+  "Demon's Souls x Naruto": {
+   "works": 2,
+   "words": 5554
+  },
+  "Elder Scrolls x Portal / Half-Life": {
+   "works": 1,
+   "words": 5237
+  },
+  "Berserk": {
+   "works": 4,
+   "words": 5222
+  },
+  "Black Cat x Darksiders": {
+   "works": 1,
+   "words": 5190
+  },
+  "Code Geass x A Song of Ice and Fire": {
+   "works": 1,
+   "words": 4903
+  },
+  "Sword Art Online x Warhammer": {
+   "works": 1,
+   "words": 4892
+  },
+  "Bleach x Castlevania": {
+   "works": 1,
+   "words": 4475
+  },
+  "Warhammer x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 4031
+  },
+  "Castlevania x Pokémon": {
+   "works": 1,
+   "words": 3953
+  },
+  "Akame ga Kiru x Berserk": {
+   "works": 2,
+   "words": 3851
+  },
+  "Diablo x Naruto": {
+   "works": 1,
+   "words": 3628
+  },
+  "Elder Scrolls x Witcher": {
+   "works": 1,
+   "words": 3417
+  },
+  "Dragon Ball x Elder Scrolls": {
+   "works": 1,
+   "words": 3011
+  },
+  "A Song of Ice and Fire x Elder Scrolls": {
+   "works": 1,
+   "words": 2816
+  },
+  "A Song of Ice and Fire x Inuyasha": {
+   "works": 1,
+   "words": 2775
+  },
+  "Castlevania x Rozen Maiden": {
+   "works": 1,
+   "words": 2270
+  },
+  "Dog Days x Elder Scrolls": {
+   "works": 1,
+   "words": 1777
+  },
+  "Elder Scrolls x Inuyasha": {
+   "works": 1,
+   "words": 1773
+  },
+  "Elder Scrolls x Fairy Tail": {
+   "works": 1,
+   "words": 1544
+  },
+  "Darksiders x Naruto": {
+   "works": 1,
+   "words": 1530
+  }
+ }
+}

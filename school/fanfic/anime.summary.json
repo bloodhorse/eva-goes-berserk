@@ -1,0 +1,8198 @@
+{
+ "shelf": "anime",
+ "path": "/home/ubuntu/eva-olmo/school/fanfic/anime.jsonl",
+ "bytes": 2288502139,
+ "works": 37720,
+ "words": 403182262,
+ "duplicates_removed": 3423,
+ "explicit_works": 538,
+ "explicit_words": 1951902,
+ "ratings": {
+  "unknown": 37015,
+  "K+": 118,
+  "M": 63,
+  "T": 474,
+  "K": 48,
+  "MA": 2
+ },
+ "tiers": {
+  "1": {
+   "works": 37720,
+   "words": 403182262
+  }
+ },
+ "fandoms": {
+  "Naruto": {
+   "works": 1519,
+   "words": 14162965
+  },
+  "Pokémon": {
+   "works": 800,
+   "words": 10960697
+  },
+  "Inuyasha": {
+   "works": 892,
+   "words": 8117733
+  },
+  "Sailor Moon": {
+   "works": 761,
+   "words": 7941880
+  },
+  "Yu-Gi-Oh": {
+   "works": 610,
+   "words": 7394283
+  },
+  "Dragon Ball": {
+   "works": 649,
+   "words": 7302198
+  },
+  "Bleach": {
+   "works": 706,
+   "words": 6929793
+  },
+  "Fairy Tail": {
+   "works": 588,
+   "words": 6027554
+  },
+  "Digimon": {
+   "works": 505,
+   "words": 5835017
+  },
+  "Cardcaptor Sakura": {
+   "works": 650,
+   "words": 5421008
+  },
+  "Ranma ½": {
+   "works": 422,
+   "words": 4928529
+  },
+  "One Piece": {
+   "works": 472,
+   "words": 4653979
+  },
+  "Gundam": {
+   "works": 452,
+   "words": 4416754
+  },
+  "Katekyo Hitman Reborn!": {
+   "works": 401,
+   "words": 4270575
+  },
+  "Hetalia": {
+   "works": 652,
+   "words": 4060803
+  },
+  "D.Gray-man": {
+   "works": 355,
+   "words": 3845054
+  },
+  "Escaflowne": {
+   "works": 270,
+   "words": 3658612
+  },
+  "Fullmetal Alchemist": {
+   "works": 389,
+   "words": 3567172
+  },
+  "Beyblade": {
+   "works": 373,
+   "words": 3466463
+  },
+  "Rurouni Kenshin": {
+   "works": 335,
+   "words": 3296446
+  },
+  "Ronin Warriors": {
+   "works": 206,
+   "words": 3271160
+  },
+  "Detective Conan": {
+   "works": 224,
+   "words": 3067443
+  },
+  "Prince of Tennis": {
+   "works": 314,
+   "words": 3047879
+  },
+  "Persona": {
+   "works": 234,
+   "words": 2997676
+  },
+  "Slayers": {
+   "works": 184,
+   "words": 2894002
+  },
+  "Vampire Knight": {
+   "works": 270,
+   "words": 2885006
+  },
+  "Ghost Hunt": {
+   "works": 273,
+   "words": 2869693
+  },
+  "Mai-HiME": {
+   "works": 208,
+   "words": 2739218
+  },
+  "Code Geass": {
+   "works": 224,
+   "words": 2672694
+  },
+  "Bleach x Naruto": {
+   "works": 211,
+   "words": 2330912
+  },
+  "Fate": {
+   "works": 160,
+   "words": 2245897
+  },
+  "Fairy Tail x Naruto": {
+   "works": 110,
+   "words": 2130692
+  },
+  "Shingeki no Kyojin": {
+   "works": 240,
+   "words": 2127296
+  },
+  "Yu Yu Hakusho": {
+   "works": 266,
+   "words": 2059520
+  },
+  "Black Butler": {
+   "works": 256,
+   "words": 2047420
+  },
+  "Naruto x One Piece": {
+   "works": 122,
+   "words": 2012361
+  },
+  "Dragon Ball x Sailor Moon": {
+   "works": 142,
+   "words": 2001459
+  },
+  "Magical Girl Lyrical Nanoha": {
+   "works": 165,
+   "words": 1939926
+  },
+  "Fushigi Yuugi": {
+   "works": 113,
+   "words": 1904357
+  },
+  "Death Note": {
+   "works": 208,
+   "words": 1885031
+  },
+  "Ouran High School Host Club": {
+   "works": 265,
+   "words": 1877085
+  },
+  "Gundam x Sailor Moon": {
+   "works": 236,
+   "words": 1857653
+  },
+  "Zoids": {
+   "works": 144,
+   "words": 1809115
+  },
+  "Love Hina": {
+   "works": 179,
+   "words": 1778414
+  },
+  "Dragon Ball x Naruto": {
+   "works": 93,
+   "words": 1748678
+  },
+  "Inuyasha x Naruto": {
+   "works": 132,
+   "words": 1731875
+  },
+  "Ranma ½ x Sailor Moon": {
+   "works": 55,
+   "words": 1712649
+  },
+  "Hellsing": {
+   "works": 225,
+   "words": 1708491
+  },
+  "Kyo kara Maoh!": {
+   "works": 198,
+   "words": 1672546
+  },
+  "Negima! Magister Negi Magi": {
+   "works": 129,
+   "words": 1657910
+  },
+  "Inuyasha x Yu Yu Hakusho": {
+   "works": 138,
+   "words": 1611596
+  },
+  "Naruto x Pokémon": {
+   "works": 102,
+   "words": 1611206
+  },
+  "Oh My Goddess!": {
+   "works": 89,
+   "words": 1559451
+  },
+  "Fruits Basket": {
+   "works": 148,
+   "words": 1558462
+  },
+  "Vocaloid": {
+   "works": 242,
+   "words": 1531355
+  },
+  "Familiar of Zero": {
+   "works": 89,
+   "words": 1528824
+  },
+  "Maria-sama ga Miteru": {
+   "works": 98,
+   "words": 1485783
+  },
+  "Kuroko no Basuke": {
+   "works": 225,
+   "words": 1465704
+  },
+  "Macross": {
+   "works": 88,
+   "words": 1452111
+  },
+  "Hana Yori Dango": {
+   "works": 153,
+   "words": 1444125
+  },
+  "Rosario + Vampire": {
+   "works": 136,
+   "words": 1439907
+  },
+  "Gakuen Alice": {
+   "works": 182,
+   "words": 1418545
+  },
+  "Strike Witches": {
+   "works": 68,
+   "words": 1414034
+  },
+  "Bakugan": {
+   "works": 90,
+   "words": 1407322
+  },
+  "Highschool of the Dead": {
+   "works": 95,
+   "words": 1401456
+  },
+  "Zatch Bell": {
+   "works": 95,
+   "words": 1395828
+  },
+  "Pretty Cure": {
+   "works": 89,
+   "words": 1379138
+  },
+  "Hunter x Hunter": {
+   "works": 128,
+   "words": 1373587
+  },
+  "Soul Eater": {
+   "works": 207,
+   "words": 1358934
+  },
+  "Shugo Chara!": {
+   "works": 156,
+   "words": 1353505
+  },
+  "Spirited Away": {
+   "works": 91,
+   "words": 1327794
+  },
+  "Medabots": {
+   "works": 74,
+   "words": 1326623
+  },
+  "The Cat Returns": {
+   "works": 75,
+   "words": 1320681
+  },
+  "Space Battleship Yamato": {
+   "works": 37,
+   "words": 1264524
+  },
+  "Initial D": {
+   "works": 84,
+   "words": 1238788
+  },
+  "Nurarihyon no Mago": {
+   "works": 85,
+   "words": 1233370
+  },
+  "Full Metal Panic!": {
+   "works": 104,
+   "words": 1221200
+  },
+  "Eureka Seven": {
+   "works": 75,
+   "words": 1213090
+  },
+  "Danganronpa": {
+   "works": 88,
+   "words": 1193347
+  },
+  "Skip Beat!": {
+   "works": 149,
+   "words": 1164373
+  },
+  "Inuyasha x Yu-Gi-Oh": {
+   "works": 73,
+   "words": 1160227
+  },
+  "Fullmetal Alchemist x Naruto": {
+   "works": 95,
+   "words": 1139246
+  },
+  "Blue Exorcist": {
+   "works": 154,
+   "words": 1138279
+  },
+  "Puella Magi Madoka Magica": {
+   "works": 108,
+   "words": 1113091
+  },
+  "Candy Candy": {
+   "works": 43,
+   "words": 1098317
+  },
+  "Blood+": {
+   "works": 76,
+   "words": 1096169
+  },
+  "Durarara!!": {
+   "works": 138,
+   "words": 1072399
+  },
+  "Gravitation": {
+   "works": 159,
+   "words": 1068806
+  },
+  "Saint Seiya": {
+   "works": 144,
+   "words": 1054515
+  },
+  "Digimon x Pokémon": {
+   "works": 49,
+   "words": 1042667
+  },
+  "Claymore": {
+   "works": 75,
+   "words": 1013942
+  },
+  "Magic Knight Rayearth": {
+   "works": 102,
+   "words": 1011306
+  },
+  "D.N.Angel": {
+   "works": 107,
+   "words": 993785
+  },
+  "Kannazuki no Miko": {
+   "works": 90,
+   "words": 988074
+  },
+  "Inuyasha x Sailor Moon": {
+   "works": 49,
+   "words": 970100
+  },
+  "Duel Masters": {
+   "works": 27,
+   "words": 964346
+  },
+  "Brothers Conflict": {
+   "works": 42,
+   "words": 948723
+  },
+  "Naruto x Rosario + Vampire": {
+   "works": 80,
+   "words": 947564
+  },
+  "Gatchaman": {
+   "works": 80,
+   "words": 943997
+  },
+  "Tokyo Ghoul": {
+   "works": 130,
+   "words": 935739
+  },
+  "K-ON!": {
+   "works": 92,
+   "words": 932964
+  },
+  "Slam Dunk": {
+   "works": 131,
+   "words": 927692
+  },
+  "Love Live!": {
+   "works": 104,
+   "words": 919928
+  },
+  "Sgt. Frog": {
+   "works": 70,
+   "words": 907254
+  },
+  "Shaman King": {
+   "works": 122,
+   "words": 902761
+  },
+  "Digimon x Naruto": {
+   "works": 54,
+   "words": 899987
+  },
+  "Free!": {
+   "works": 189,
+   "words": 890396
+  },
+  "Girls und Panzer": {
+   "works": 50,
+   "words": 886155
+  },
+  "Pokémon x Sailor Moon": {
+   "works": 30,
+   "words": 872469
+  },
+  "Infinite Stratos": {
+   "works": 85,
+   "words": 853252
+  },
+  "High School DxD x Naruto": {
+   "works": 59,
+   "words": 846344
+  },
+  "Haruhi Suzumiya": {
+   "works": 113,
+   "words": 838943
+  },
+  "Chrono Crusade": {
+   "works": 84,
+   "words": 832340
+  },
+  "Bleach x Inuyasha": {
+   "works": 63,
+   "words": 829176
+  },
+  "Alice in the Country of Hearts": {
+   "works": 114,
+   "words": 824171
+  },
+  "Attack on Titan": {
+   "works": 136,
+   "words": 821430
+  },
+  "Vandread": {
+   "works": 77,
+   "words": 814233
+  },
+  "Naruto x Sailor Moon": {
+   "works": 56,
+   "words": 811860
+  },
+  "Kaleido Star": {
+   "works": 65,
+   "words": 810656
+  },
+  "Gunslinger Girl": {
+   "works": 78,
+   "words": 807154
+  },
+  "Powerpuff Girls Z": {
+   "works": 71,
+   "words": 801770
+  },
+  "Hikaru no Go": {
+   "works": 74,
+   "words": 790409
+  },
+  "Touhou": {
+   "works": 86,
+   "words": 786422
+  },
+  "Pretty Guardian Sailormoon": {
+   "works": 60,
+   "words": 781567
+  },
+  "Elfen Lied": {
+   "works": 52,
+   "words": 777289
+  },
+  "Katawa Shoujo": {
+   "works": 66,
+   "words": 777215
+  },
+  "Lupin III": {
+   "works": 55,
+   "words": 762347
+  },
+  "Haikyu": {
+   "works": 128,
+   "words": 738898
+  },
+  "Ronin Warriors x Sailor Moon": {
+   "works": 30,
+   "words": 737493
+  },
+  "Black Cat": {
+   "works": 69,
+   "words": 729556
+  },
+  "Metal Fight Beyblade": {
+   "works": 106,
+   "words": 728079
+  },
+  "Toaru Majutsu no Index": {
+   "works": 46,
+   "words": 723771
+  },
+  "Bleach x Fate": {
+   "works": 26,
+   "words": 721974
+  },
+  "Akame ga Kiru": {
+   "works": 58,
+   "words": 719086
+  },
+  "Gokusen": {
+   "works": 63,
+   "words": 718112
+  },
+  "Strawberry Panic!": {
+   "works": 90,
+   "words": 714626
+  },
+  "Ojamajo Doremi": {
+   "works": 62,
+   "words": 708465
+  },
+  "Katekyo Hitman Reborn! x Naruto": {
+   "works": 54,
+   "words": 706389
+  },
+  "Magi": {
+   "works": 57,
+   "words": 700487
+  },
+  "Corpse Party": {
+   "works": 83,
+   "words": 694763
+  },
+  "Lucky Star": {
+   "works": 96,
+   "words": 694647
+  },
+  "Azumanga Daioh": {
+   "works": 91,
+   "words": 690035
+  },
+  "Junjou Romantica": {
+   "works": 118,
+   "words": 687078
+  },
+  "ManHua": {
+   "works": 80,
+   "words": 681587
+  },
+  "Sekirei": {
+   "works": 57,
+   "words": 681136
+  },
+  "Bleach x Fullmetal Alchemist": {
+   "works": 36,
+   "words": 678396
+  },
+  "Gurren Lagann": {
+   "works": 60,
+   "words": 677232
+  },
+  "Inazuma Eleven": {
+   "works": 126,
+   "words": 668255
+  },
+  "Familiar of Zero x Touhou": {
+   "works": 16,
+   "words": 653070
+  },
+  "D.Gray-man x Fullmetal Alchemist": {
+   "works": 55,
+   "words": 645487
+  },
+  "Cardcaptor Sakura x Naruto": {
+   "works": 10,
+   "words": 641740
+  },
+  "Tokyo Mew Mew": {
+   "works": 106,
+   "words": 640996
+  },
+  "Captain Harlock": {
+   "works": 55,
+   "words": 638002
+  },
+  "Guyver": {
+   "works": 41,
+   "words": 636981
+  },
+  "Urusei Yatsura": {
+   "works": 15,
+   "words": 627145
+  },
+  "Pandora Hearts": {
+   "works": 73,
+   "words": 624430
+  },
+  "Naruto x Persona": {
+   "works": 36,
+   "words": 622695
+  },
+  "Naruto x Yu-Gi-Oh": {
+   "works": 57,
+   "words": 616748
+  },
+  "Future Card Buddyfight": {
+   "works": 41,
+   "words": 615291
+  },
+  "Record of Lodoss War": {
+   "works": 45,
+   "words": 606354
+  },
+  "Cardfight!! Vanguard": {
+   "works": 84,
+   "words": 596792
+  },
+  "Gintama": {
+   "works": 131,
+   "words": 593677
+  },
+  "Yami no Matsuei": {
+   "works": 74,
+   "words": 590676
+  },
+  "Naruto x Ranma ½": {
+   "works": 42,
+   "words": 586644
+  },
+  "Monster Rancher series": {
+   "works": 39,
+   "words": 582065
+  },
+  "Bleach x Fairy Tail": {
+   "works": 38,
+   "words": 581980
+  },
+  "Sailor Moon x Yu-Gi-Oh": {
+   "works": 37,
+   "words": 576583
+  },
+  "Megami Tensei": {
+   "works": 105,
+   "words": 573224
+  },
+  "Pokémon x Yu-Gi-Oh": {
+   "works": 52,
+   "words": 571691
+  },
+  "Tokyo Mew Mew x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 567274
+  },
+  "Bubblegum Crisis": {
+   "works": 61,
+   "words": 564026
+  },
+  "Eyeshield 21": {
+   "works": 78,
+   "words": 563270
+  },
+  "Kill la Kill": {
+   "works": 51,
+   "words": 561576
+  },
+  "Mahouka Koukou no Rettousei": {
+   "works": 38,
+   "words": 561063
+  },
+  "Fate x Magical Girl Lyrical Nanoha": {
+   "works": 18,
+   "words": 558729
+  },
+  "Bleach x Rosario + Vampire": {
+   "works": 27,
+   "words": 557480
+  },
+  "Dragon Ball x Pokémon": {
+   "works": 13,
+   "words": 552100
+  },
+  "Shuffle!": {
+   "works": 30,
+   "words": 551796
+  },
+  "Uragiri wa Boku no Namae o Shitteiru": {
+   "works": 57,
+   "words": 546596
+  },
+  "Angel Beats!": {
+   "works": 38,
+   "words": 542134
+  },
+  "Maid Sama!": {
+   "works": 65,
+   "words": 540564
+  },
+  "Dragon Ball x Fairy Tail": {
+   "works": 26,
+   "words": 539765
+  },
+  "Fairy Tail x One Piece": {
+   "works": 54,
+   "words": 536993
+  },
+  "Sailor Moon x Tokyo Mew Mew": {
+   "works": 17,
+   "words": 534280
+  },
+  "Captain Tsubasa": {
+   "works": 46,
+   "words": 533563
+  },
+  "Sailor Moon x Yu Yu Hakusho": {
+   "works": 39,
+   "words": 530427
+  },
+  "Martian Successor Nadesico": {
+   "works": 37,
+   "words": 529213
+  },
+  "Naruto x Sekirei": {
+   "works": 27,
+   "words": 525630
+  },
+  "La Corda d'Oro": {
+   "works": 57,
+   "words": 522252
+  },
+  "Fushigiboshi no Futago Hime": {
+   "works": 50,
+   "words": 519936
+  },
+  "Dragon Ball x Inuyasha": {
+   "works": 43,
+   "words": 519372
+  },
+  "Bleach x Sailor Moon": {
+   "works": 37,
+   "words": 518030
+  },
+  "Hellsing x Naruto": {
+   "works": 42,
+   "words": 516790
+  },
+  "Dragon Ball x Ranma ½": {
+   "works": 22,
+   "words": 514541
+  },
+  "Kagerou Days": {
+   "works": 150,
+   "words": 506733
+  },
+  "Riddle Story of Devil": {
+   "works": 69,
+   "words": 499287
+  },
+  "Noir": {
+   "works": 47,
+   "words": 498054
+  },
+  "Inuyasha x Ranma ½": {
+   "works": 40,
+   "words": 495606
+  },
+  "Sekaiichi Hatsukoi": {
+   "works": 78,
+   "words": 492872
+  },
+  "Ace of Diamond": {
+   "works": 60,
+   "words": 492827
+  },
+  "Freezing": {
+   "works": 43,
+   "words": 490953
+  },
+  "Hayate the Combat Butler": {
+   "works": 52,
+   "words": 490015
+  },
+  "Ranma ½ x Rosario + Vampire": {
+   "works": 8,
+   "words": 489244
+  },
+  "Tsubasa: Reservoir Chronicle": {
+   "works": 62,
+   "words": 486305
+  },
+  "World Only God Knows": {
+   "works": 34,
+   "words": 481875
+  },
+  "Code Geass x Gundam": {
+   "works": 25,
+   "words": 481384
+  },
+  "Code Geass x Yu-Gi-Oh": {
+   "works": 9,
+   "words": 480141
+  },
+  "Saiyuki": {
+   "works": 88,
+   "words": 477213
+  },
+  "Trigun": {
+   "works": 58,
+   "words": 476236
+  },
+  "Inuyasha x Ouran High School Host Club": {
+   "works": 52,
+   "words": 472504
+  },
+  "Inuyasha x Rurouni Kenshin": {
+   "works": 39,
+   "words": 470693
+  },
+  "Samurai Pizza Cats": {
+   "works": 35,
+   "words": 468781
+  },
+  "Megami Tensei x Persona": {
+   "works": 16,
+   "words": 468745
+  },
+  "Gundam Build Fighters": {
+   "works": 28,
+   "words": 463507
+  },
+  "Magical Girl Lyrical Nanoha x Puella Magi Madoka Magica": {
+   "works": 19,
+   "words": 459190
+  },
+  "Be My Princess": {
+   "works": 54,
+   "words": 458730
+  },
+  "Air Gear": {
+   "works": 55,
+   "words": 458712
+  },
+  "Black Rock Shooter x Blue Exorcist": {
+   "works": 36,
+   "words": 455232
+  },
+  "Familiar of Zero x Fate": {
+   "works": 24,
+   "words": 451586
+  },
+  "Ranma ½ x Vandread": {
+   "works": 4,
+   "words": 450641
+  },
+  "Weiss Kreuz": {
+   "works": 55,
+   "words": 446240
+  },
+  "Manhwa": {
+   "works": 52,
+   "words": 441461
+  },
+  "Pirates in Love": {
+   "works": 46,
+   "words": 440281
+  },
+  "Naruto x Touhou": {
+   "works": 23,
+   "words": 432685
+  },
+  "Diabolik Lovers": {
+   "works": 49,
+   "words": 431761
+  },
+  "Clannad": {
+   "works": 22,
+   "words": 427224
+  },
+  "Digimon x Yu-Gi-Oh": {
+   "works": 7,
+   "words": 425851
+  },
+  "El Hazard": {
+   "works": 26,
+   "words": 418300
+  },
+  "Uta no Prince-sama": {
+   "works": 77,
+   "words": 417874
+  },
+  "Campione! x Fate": {
+   "works": 20,
+   "words": 411715
+  },
+  "Noragami": {
+   "works": 112,
+   "words": 411192
+  },
+  "Naruto x Tenchi Muyo": {
+   "works": 18,
+   "words": 406843
+  },
+  "Naruto x Vampire Knight": {
+   "works": 46,
+   "words": 404496
+  },
+  "Fate x Sekirei": {
+   "works": 13,
+   "words": 401195
+  },
+  "Familiar of Zero x Naruto": {
+   "works": 30,
+   "words": 399639
+  },
+  "Higurashi / Umineko": {
+   "works": 62,
+   "words": 399307
+  },
+  "Code Geass x Naruto": {
+   "works": 39,
+   "words": 399253
+  },
+  "DRAMAtical Murder": {
+   "works": 116,
+   "words": 397045
+  },
+  "Natsume's Book of Friends": {
+   "works": 28,
+   "words": 395632
+  },
+  "Outlaw Star": {
+   "works": 48,
+   "words": 392637
+  },
+  "Fate x Naruto": {
+   "works": 38,
+   "words": 392042
+  },
+  "Ranma ½ x Tenchi Muyo": {
+   "works": 26,
+   "words": 386376
+  },
+  "Gundam x Naruto": {
+   "works": 22,
+   "words": 385396
+  },
+  "Mermaid Melody": {
+   "works": 40,
+   "words": 383399
+  },
+  "Ranma ½ x Yu Yu Hakusho": {
+   "works": 13,
+   "words": 383140
+  },
+  "Toriko": {
+   "works": 20,
+   "words": 380876
+  },
+  "Fate x Persona": {
+   "works": 20,
+   "words": 380492
+  },
+  "Naruto x Yu Yu Hakusho": {
+   "works": 43,
+   "words": 379699
+  },
+  "School Rumble": {
+   "works": 44,
+   "words": 374843
+  },
+  "Code Geass x Fate": {
+   "works": 7,
+   "words": 370122
+  },
+  "Naruto x Negima! Magister Negi Magi": {
+   "works": 36,
+   "words": 369795
+  },
+  "High School DxD": {
+   "works": 39,
+   "words": 368305
+  },
+  "Dirty Pair": {
+   "works": 14,
+   "words": 361388
+  },
+  "No. 6": {
+   "works": 66,
+   "words": 357703
+  },
+  "Magical Girl Lyrical Nanoha x Naruto": {
+   "works": 13,
+   "words": 356632
+  },
+  "Claymore x Naruto": {
+   "works": 23,
+   "words": 350451
+  },
+  "Hyperdimension Neptunia": {
+   "works": 41,
+   "words": 348129
+  },
+  "Darker than Black": {
+   "works": 27,
+   "words": 346388
+  },
+  "Get Backers": {
+   "works": 51,
+   "words": 344837
+  },
+  "Cardcaptor Sakura x Tsubasa: Reservoir Chronicle": {
+   "works": 44,
+   "words": 342106
+  },
+  "Peacemaker Kurogane": {
+   "works": 42,
+   "words": 338528
+  },
+  "Black Lagoon": {
+   "works": 52,
+   "words": 338057
+  },
+  "Naruto x Shingeki no Kyojin": {
+   "works": 32,
+   "words": 335107
+  },
+  "Bleach x Dragon Ball": {
+   "works": 32,
+   "words": 334891
+  },
+  "Princess Tutu": {
+   "works": 26,
+   "words": 334660
+  },
+  "City Hunter": {
+   "works": 34,
+   "words": 333419
+  },
+  "Majin Tantei Nougami Neuro": {
+   "works": 55,
+   "words": 330685
+  },
+  "Fushigi Yuugi x Inuyasha": {
+   "works": 16,
+   "words": 322813
+  },
+  "Highschool of the Dead x Naruto": {
+   "works": 33,
+   "words": 318858
+  },
+  "Detective School Q": {
+   "works": 41,
+   "words": 317161
+  },
+  "FAKE": {
+   "works": 67,
+   "words": 314943
+  },
+  "Dragon Ball x Tenchi Muyo": {
+   "works": 7,
+   "words": 314859
+  },
+  "Sailor Moon x Tenchi Muyo": {
+   "works": 9,
+   "words": 311120
+  },
+  "Muv-Luv": {
+   "works": 19,
+   "words": 310230
+  },
+  "Angelic Layer": {
+   "works": 37,
+   "words": 310109
+  },
+  "Black Rock Shooter": {
+   "works": 16,
+   "words": 309411
+  },
+  "Fairy Tail x Fate": {
+   "works": 15,
+   "words": 301717
+  },
+  "Dragon Ball x Rosario + Vampire": {
+   "works": 24,
+   "words": 299864
+  },
+  "Fate x Infinite Stratos": {
+   "works": 16,
+   "words": 299859
+  },
+  "Bobobo-bo Bo-bobo": {
+   "works": 32,
+   "words": 299321
+  },
+  "Oh My Goddess! x Ranma ½": {
+   "works": 15,
+   "words": 297374
+  },
+  "Akame ga Kiru x Naruto": {
+   "works": 7,
+   "words": 288169
+  },
+  "Naruto x Shugo Chara!": {
+   "works": 34,
+   "words": 288084
+  },
+  "Dragon Ball x Yu-Gi-Oh": {
+   "works": 18,
+   "words": 286234
+  },
+  "K (K Project)": {
+   "works": 61,
+   "words": 279591
+  },
+  "X (CLAMP)": {
+   "works": 46,
+   "words": 276711
+  },
+  "Wolf's Rain": {
+   "works": 34,
+   "words": 276596
+  },
+  "Date A Live": {
+   "works": 22,
+   "words": 275807
+  },
+  "Fairy Tail x High School DxD": {
+   "works": 14,
+   "words": 273599
+  },
+  "Danbōru Senki": {
+   "works": 9,
+   "words": 268098
+  },
+  "Naruto x Rurouni Kenshin": {
+   "works": 20,
+   "words": 267974
+  },
+  "Ranma ½ x Macross": {
+   "works": 4,
+   "words": 262311
+  },
+  "Hetalia x Pokémon": {
+   "works": 4,
+   "words": 260200
+  },
+  "Cowboy Bebop x Trigun": {
+   "works": 6,
+   "words": 258711
+  },
+  "Nisekoi": {
+   "works": 27,
+   "words": 255776
+  },
+  "Naruto x Ouran High School Host Club": {
+   "works": 47,
+   "words": 253604
+  },
+  "Saber Rider": {
+   "works": 24,
+   "words": 252735
+  },
+  "Kamigami No Asobi": {
+   "works": 26,
+   "words": 252690
+  },
+  "Dragon Ball x Yu Yu Hakusho": {
+   "works": 17,
+   "words": 252278
+  },
+  "Code Geass x Fullmetal Alchemist": {
+   "works": 12,
+   "words": 248758
+  },
+  "Bleach x Ranma ½": {
+   "works": 11,
+   "words": 247136
+  },
+  "Pokémon x Touhou": {
+   "works": 15,
+   "words": 246431
+  },
+  "You're Under Arrest": {
+   "works": 37,
+   "words": 241782
+  },
+  "Gundam x Vandread": {
+   "works": 3,
+   "words": 240272
+  },
+  "My Teen Romantic Comedy SNAFU": {
+   "works": 11,
+   "words": 240050
+  },
+  "Ib": {
+   "works": 58,
+   "words": 238046
+  },
+  "Saint Beast": {
+   "works": 40,
+   "words": 235001
+  },
+  "Dragon Ball x Tekkaman Blade": {
+   "works": 1,
+   "words": 233060
+  },
+  "Gunsmith Cats x Hellsing": {
+   "works": 7,
+   "words": 232091
+  },
+  "Inuyasha x One Piece": {
+   "works": 27,
+   "words": 229661
+  },
+  "Gundam x Ranma ½": {
+   "works": 4,
+   "words": 228006
+  },
+  "Takumi-kun Series": {
+   "works": 21,
+   "words": 226296
+  },
+  "Naruto x Wolf's Rain": {
+   "works": 11,
+   "words": 224453
+  },
+  "Magical Girl Lyrical Nanoha x Ranma ½": {
+   "works": 10,
+   "words": 220941
+  },
+  "Ranma ½ x Yu-Gi-Oh": {
+   "works": 14,
+   "words": 218628
+  },
+  "Devil is a Part-Timer": {
+   "works": 32,
+   "words": 217765
+  },
+  "Familiar of Zero x Puella Magi Madoka Magica": {
+   "works": 3,
+   "words": 216447
+  },
+  "Bleach x Sekirei": {
+   "works": 11,
+   "words": 211982
+  },
+  "Yuruyuri": {
+   "works": 17,
+   "words": 210163
+  },
+  "Fate x JoJo's Bizarre Adventure": {
+   "works": 2,
+   "words": 208970
+  },
+  "Puella Magi Madoka Magica x Sailor Moon": {
+   "works": 3,
+   "words": 208035
+  },
+  "Bleach x Familiar of Zero": {
+   "works": 11,
+   "words": 205267
+  },
+  "Ai no Kusabi": {
+   "works": 35,
+   "words": 202795
+  },
+  "Guilty Crown": {
+   "works": 15,
+   "words": 199609
+  },
+  "Katekyo Hitman Reborn! x Yu-Gi-Oh": {
+   "works": 11,
+   "words": 199596
+  },
+  "Fate x High School DxD": {
+   "works": 12,
+   "words": 198650
+  },
+  "Hamatora": {
+   "works": 42,
+   "words": 197119
+  },
+  "Tiger & Bunny": {
+   "works": 37,
+   "words": 196303
+  },
+  "Naruto x Tsukihime": {
+   "works": 6,
+   "words": 196081
+  },
+  "Negima! Magister Negi Magi x Ranma ½": {
+   "works": 10,
+   "words": 193623
+  },
+  "Naruto x To Love-Ru": {
+   "works": 15,
+   "words": 192654
+  },
+  "Bubblegum Crisis x Ranma ½": {
+   "works": 2,
+   "words": 191686
+  },
+  "Campione! x High School DxD": {
+   "works": 10,
+   "words": 190835
+  },
+  "Kissed by the Baddest Bidder": {
+   "works": 11,
+   "words": 188577
+  },
+  "Cowboy Bebop": {
+   "works": 18,
+   "words": 187927
+  },
+  "Negima! Magister Negi Magi x Pokémon": {
+   "works": 4,
+   "words": 187363
+  },
+  "Gunsmith Cats": {
+   "works": 25,
+   "words": 186900
+  },
+  "D.N.Angel x Inuyasha": {
+   "works": 13,
+   "words": 186533
+  },
+  "Bleach x Fruits Basket": {
+   "works": 29,
+   "words": 185139
+  },
+  "Dragon Ball x High School DxD": {
+   "works": 10,
+   "words": 184023
+  },
+  "Wolf Children": {
+   "works": 17,
+   "words": 182431
+  },
+  "Rosario + Vampire x Yu-Gi-Oh": {
+   "works": 14,
+   "words": 178867
+  },
+  "Fairy Tail x Soul Eater": {
+   "works": 15,
+   "words": 177489
+  },
+  "Kantai Collection": {
+   "works": 9,
+   "words": 177277
+  },
+  "Naruto x Zatch Bell": {
+   "works": 17,
+   "words": 176469
+  },
+  "Guyver x Naruto": {
+   "works": 2,
+   "words": 176453
+  },
+  "Howl's Moving Castle": {
+   "works": 26,
+   "words": 172214
+  },
+  "Queen's Blade": {
+   "works": 23,
+   "words": 168052
+  },
+  "Beelzebub": {
+   "works": 24,
+   "words": 168051
+  },
+  "Fate x Macross": {
+   "works": 1,
+   "words": 167028
+  },
+  "Chuunibyou Demo Koi Ga Shitai": {
+   "works": 8,
+   "words": 166529
+  },
+  "Guilty Crown x Puella Magi Madoka Magica": {
+   "works": 4,
+   "words": 165034
+  },
+  "Naruto x Ronin Warriors": {
+   "works": 4,
+   "words": 164255
+  },
+  "JoJo's Bizarre Adventure x Puella Magi Madoka Magica": {
+   "works": 2,
+   "words": 161178
+  },
+  "Monthly Girls' Nozaki-kun": {
+   "works": 57,
+   "words": 161039
+  },
+  "Nobunaga The Fool": {
+   "works": 15,
+   "words": 157810
+  },
+  "Knight in the Area": {
+   "works": 1,
+   "words": 157342
+  },
+  "Terror in Resonance": {
+   "works": 48,
+   "words": 155871
+  },
+  "Infinite Stratos x Naruto": {
+   "works": 14,
+   "words": 155208
+  },
+  "RIN-NE": {
+   "works": 19,
+   "words": 152081
+  },
+  "Chihayafuru": {
+   "works": 11,
+   "words": 151888
+  },
+  "Familiar of Zero x Toaru Majutsu no Index": {
+   "works": 12,
+   "words": 151541
+  },
+  "Campione!": {
+   "works": 5,
+   "words": 151362
+  },
+  "Ranma ½ x Urusei Yatsura": {
+   "works": 4,
+   "words": 151211
+  },
+  "Trinity Blood": {
+   "works": 8,
+   "words": 148883
+  },
+  "Inuyasha x xxxHOLiC": {
+   "works": 13,
+   "words": 148777
+  },
+  "One Piece x Pokémon": {
+   "works": 6,
+   "words": 148668
+  },
+  "Baka and Test - Summon the Beasts": {
+   "works": 37,
+   "words": 147932
+  },
+  "Sailor Moon x Weiss Kreuz": {
+   "works": 10,
+   "words": 146724
+  },
+  "Naruto x Tsubasa: Reservoir Chronicle": {
+   "works": 10,
+   "words": 146560
+  },
+  "Bleach x Ronin Warriors": {
+   "works": 1,
+   "words": 144916
+  },
+  "Sengoku Strays": {
+   "works": 2,
+   "words": 144014
+  },
+  "Fairy Tail x Rosario + Vampire": {
+   "works": 3,
+   "words": 143781
+  },
+  "Fairy Tail x Fullmetal Alchemist": {
+   "works": 7,
+   "words": 143572
+  },
+  "Inazuma Eleven x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 142098
+  },
+  "Macross x Sailor Moon": {
+   "works": 2,
+   "words": 141308
+  },
+  "Fairy Tail x Familiar of Zero": {
+   "works": 4,
+   "words": 140919
+  },
+  "Familiar of Zero x Negima! Magister Negi Magi": {
+   "works": 3,
+   "words": 140647
+  },
+  "Fate x Puella Magi Madoka Magica": {
+   "works": 16,
+   "words": 140249
+  },
+  "To Love-Ru": {
+   "works": 16,
+   "words": 139277
+  },
+  "Hellsing x Soul Eater": {
+   "works": 1,
+   "words": 139251
+  },
+  "One Piece x Soul Eater": {
+   "works": 9,
+   "words": 138637
+  },
+  "Inuyasha x Rosario + Vampire": {
+   "works": 2,
+   "words": 137751
+  },
+  "Naruto x Trinity Blood": {
+   "works": 6,
+   "words": 135951
+  },
+  "My Little Monster": {
+   "works": 18,
+   "words": 135725
+  },
+  "Attack on Titan x Naruto": {
+   "works": 5,
+   "words": 135713
+  },
+  "Inuyasha x Black Butler": {
+   "works": 4,
+   "words": 135324
+  },
+  "Kamisama Hajimemashita": {
+   "works": 16,
+   "words": 135022
+  },
+  "Bleach x Detective Conan": {
+   "works": 8,
+   "words": 134417
+  },
+  "Magical Girl Lyrical Nanoha x Muv-Luv": {
+   "works": 1,
+   "words": 133520
+  },
+  "Magic Kaito": {
+   "works": 17,
+   "words": 131683
+  },
+  "Kantai Collection x Strike Witches": {
+   "works": 1,
+   "words": 131609
+  },
+  "Rurouni Kenshin x Yu-Gi-Oh": {
+   "works": 4,
+   "words": 130558
+  },
+  "Bleach x D.Gray-man": {
+   "works": 16,
+   "words": 128638
+  },
+  "Bodacious Space Pirates": {
+   "works": 3,
+   "words": 128582
+  },
+  "Rose of Versailles": {
+   "works": 19,
+   "words": 128509
+  },
+  "Karneval": {
+   "works": 20,
+   "words": 128380
+  },
+  "Yowamushi Pedal": {
+   "works": 47,
+   "words": 128184
+  },
+  "Fate x Seven Deadly Sins": {
+   "works": 2,
+   "words": 126702
+  },
+  "Princess Mononoke": {
+   "works": 6,
+   "words": 125349
+  },
+  "Rozen Maiden": {
+   "works": 9,
+   "words": 125304
+  },
+  "Pokémon x Soul Eater": {
+   "works": 18,
+   "words": 124717
+  },
+  "Fullmetal Alchemist x Katekyo Hitman Reborn!": {
+   "works": 7,
+   "words": 124441
+  },
+  "Black Cat x Bleach": {
+   "works": 8,
+   "words": 123436
+  },
+  "Code Geass x Gundam Build Fighters": {
+   "works": 1,
+   "words": 123162
+  },
+  "Bleach x One Piece": {
+   "works": 8,
+   "words": 122090
+  },
+  "Magi x Naruto": {
+   "works": 7,
+   "words": 121755
+  },
+  "El Hazard x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 121272
+  },
+  "Citrus": {
+   "works": 16,
+   "words": 120793
+  },
+  "Toradora!": {
+   "works": 20,
+   "words": 119414
+  },
+  "Sailor Moon x Revolutionary Girl Utena": {
+   "works": 4,
+   "words": 118633
+  },
+  "Haikyu x Kuroko no Basuke": {
+   "works": 3,
+   "words": 116283
+  },
+  "Mahoromatic": {
+   "works": 7,
+   "words": 115233
+  },
+  "Evillious Chronicles": {
+   "works": 7,
+   "words": 114991
+  },
+  "Blue Exorcist x Naruto": {
+   "works": 8,
+   "words": 114699
+  },
+  "Space Dandy": {
+   "works": 9,
+   "words": 114020
+  },
+  "Galaxy Angel": {
+   "works": 13,
+   "words": 113042
+  },
+  "Code Geass x Familiar of Zero": {
+   "works": 7,
+   "words": 112107
+  },
+  "Ranma ½ x Touhou": {
+   "works": 5,
+   "words": 111892
+  },
+  "My Little Sister Can't Be This Cute": {
+   "works": 21,
+   "words": 111882
+  },
+  "Detective Conan x Inuyasha": {
+   "works": 16,
+   "words": 111429
+  },
+  "Fairy Tail x Vampire Knight": {
+   "works": 2,
+   "words": 111404
+  },
+  "Daily Life with a Monster Girl": {
+   "works": 4,
+   "words": 110150
+  },
+  "Fairy Tail x Inuyasha": {
+   "works": 8,
+   "words": 109993
+  },
+  "Naruto x Steel Angel Kurumi": {
+   "works": 2,
+   "words": 109268
+  },
+  "Ranma ½ x Sekirei": {
+   "works": 4,
+   "words": 109077
+  },
+  "Familiar of Zero x High School DxD": {
+   "works": 8,
+   "words": 108440
+  },
+  "Legendz": {
+   "works": 7,
+   "words": 108190
+  },
+  "Black Butler x Ouran High School Host Club": {
+   "works": 4,
+   "words": 107901
+  },
+  "Familiar of Zero x Magical Girl Lyrical Nanoha": {
+   "works": 5,
+   "words": 107658
+  },
+  "WataMote": {
+   "works": 12,
+   "words": 107277
+  },
+  "Astro Boy": {
+   "works": 13,
+   "words": 106797
+  },
+  "Naruto x Toriko": {
+   "works": 6,
+   "words": 104669
+  },
+  "Fate x Touhou": {
+   "works": 15,
+   "words": 101861
+  },
+  "Fairy Tail x Sailor Moon": {
+   "works": 3,
+   "words": 101589
+  },
+  "Bleach x Freezing": {
+   "works": 3,
+   "words": 101227
+  },
+  "Gundam Build Fighters x Gundam": {
+   "works": 2,
+   "words": 100650
+  },
+  "Familiar of Zero x Kara no Kyoukai": {
+   "works": 2,
+   "words": 100514
+  },
+  "Familiar of Zero x Infinite Stratos": {
+   "works": 1,
+   "words": 100472
+  },
+  "Danganronpa x Pokémon": {
+   "works": 3,
+   "words": 99871
+  },
+  "Katekyo Hitman Reborn! x Nurarihyon no Mago": {
+   "works": 10,
+   "words": 98908
+  },
+  "Bleach x Claymore": {
+   "works": 8,
+   "words": 98572
+  },
+  "Dragon Ball x El Hazard": {
+   "works": 3,
+   "words": 96772
+  },
+  "Ginga Nagareboshi Gin": {
+   "works": 6,
+   "words": 96397
+  },
+  "Shokugeki no Soma": {
+   "works": 3,
+   "words": 96082
+  },
+  "Ranma ½ x s-CRY-ed": {
+   "works": 2,
+   "words": 95873
+  },
+  "Blue Exorcist x D.Gray-man": {
+   "works": 4,
+   "words": 95230
+  },
+  "Ranma ½ x Slayers": {
+   "works": 8,
+   "words": 94767
+  },
+  "Naruto x Trigun": {
+   "works": 6,
+   "words": 94767
+  },
+  "Fate x Lupin III": {
+   "works": 1,
+   "words": 94569
+  },
+  "Gundam x Yu-Gi-Oh": {
+   "works": 3,
+   "words": 93729
+  },
+  "Sora no Otoshimono": {
+   "works": 8,
+   "words": 92702
+  },
+  "Sailor Moon x Trigun": {
+   "works": 4,
+   "words": 92496
+  },
+  "Naruto x Soul Eater": {
+   "works": 14,
+   "words": 92346
+  },
+  "Guyver x Rosario + Vampire": {
+   "works": 2,
+   "words": 91723
+  },
+  "Inuyasha x Red River": {
+   "works": 4,
+   "words": 91497
+  },
+  "Bleach x Code Geass": {
+   "works": 7,
+   "words": 91469
+  },
+  "Naruto x Vandread": {
+   "works": 1,
+   "words": 91218
+  },
+  "Familiar of Zero x Pokémon": {
+   "works": 3,
+   "words": 90979
+  },
+  "Revolutionary Girl Utena": {
+   "works": 26,
+   "words": 89743
+  },
+  "Fort of Apocalypse x Kuroko no Basuke": {
+   "works": 1,
+   "words": 89685
+  },
+  "Code Geass x Inuyasha": {
+   "works": 8,
+   "words": 89639
+  },
+  "Cardcaptor Sakura x Touhou": {
+   "works": 1,
+   "words": 89323
+  },
+  "Nagi no Asukara": {
+   "works": 29,
+   "words": 89066
+  },
+  "Brave 10": {
+   "works": 25,
+   "words": 88394
+  },
+  "Saint Seiya x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 87632
+  },
+  "xxxHOLiC": {
+   "works": 17,
+   "words": 87084
+  },
+  "Dragon Ball x Puella Magi Madoka Magica": {
+   "works": 2,
+   "words": 87015
+  },
+  "Fullmetal Alchemist x Soul Eater": {
+   "works": 7,
+   "words": 85832
+  },
+  "Cardcaptor Sakura x Magic Knight Rayearth": {
+   "works": 4,
+   "words": 85084
+  },
+  "Dragon Ball x Elfen Lied": {
+   "works": 7,
+   "words": 83935
+  },
+  "Digimon x Ojamajo Doremi": {
+   "works": 1,
+   "words": 83776
+  },
+  "Pokémon x Spirited Away": {
+   "works": 2,
+   "words": 83736
+  },
+  "Senran Kagura x World Only God Knows": {
+   "works": 1,
+   "words": 82996
+  },
+  "Ranma ½ x Tenjho Tenge": {
+   "works": 2,
+   "words": 82445
+  },
+  "Familiar of Zero x Kaze no Stigma": {
+   "works": 1,
+   "words": 82232
+  },
+  "Rurouni Kenshin x Yu Yu Hakusho": {
+   "works": 5,
+   "words": 82042
+  },
+  "Detective Conan x Katekyo Hitman Reborn!": {
+   "works": 9,
+   "words": 81931
+  },
+  "Bleach x Rurouni Kenshin": {
+   "works": 20,
+   "words": 81360
+  },
+  "Loveless": {
+   "works": 28,
+   "words": 81267
+  },
+  "Fairy Tail x Hetalia": {
+   "works": 14,
+   "words": 81130
+  },
+  "Dragon Ball x Ronin Warriors": {
+   "works": 2,
+   "words": 81078
+  },
+  "Kaze no Stigma": {
+   "works": 9,
+   "words": 80964
+  },
+  "Sailor Moon x Zoids": {
+   "works": 2,
+   "words": 80636
+  },
+  "Familiar of Zero x Hellsing": {
+   "works": 4,
+   "words": 80427
+  },
+  "Naruto x Tenjho Tenge": {
+   "works": 6,
+   "words": 80129
+  },
+  "Shiki": {
+   "works": 6,
+   "words": 79721
+  },
+  "Aldnoah Zero": {
+   "works": 13,
+   "words": 79199
+  },
+  "My Forged Wedding": {
+   "works": 8,
+   "words": 78942
+  },
+  "Pokémon x Pretty Cure": {
+   "works": 6,
+   "words": 78874
+  },
+  "Fate x Megami Tensei": {
+   "works": 6,
+   "words": 78649
+  },
+  "Ouke no Monshou": {
+   "works": 2,
+   "words": 78585
+  },
+  "Code Geass x Katekyo Hitman Reborn!": {
+   "works": 4,
+   "words": 77750
+  },
+  "Eureka Seven x Naruto": {
+   "works": 1,
+   "words": 77675
+  },
+  "Fate x Negima! Magister Negi Magi": {
+   "works": 7,
+   "words": 77655
+  },
+  "Junjou Romantica x Sekaiichi Hatsukoi": {
+   "works": 8,
+   "words": 76610
+  },
+  "Love Letter From Thief X": {
+   "works": 9,
+   "words": 76356
+  },
+  "D.Gray-man x Hetalia": {
+   "works": 6,
+   "words": 75932
+  },
+  "Cardcaptor Sakura x Soul Eater": {
+   "works": 2,
+   "words": 75605
+  },
+  "Maria-sama ga Miteru x Strawberry Panic!": {
+   "works": 2,
+   "words": 75581
+  },
+  "AKB0048": {
+   "works": 3,
+   "words": 75541
+  },
+  "Bleach x Hellsing": {
+   "works": 9,
+   "words": 75291
+  },
+  "Magical Girl Lyrical Nanoha x Negima! Magister Negi Magi": {
+   "works": 8,
+   "words": 74806
+  },
+  "Legend of the Legendary Heroes": {
+   "works": 11,
+   "words": 74438
+  },
+  "Beyond the Boundary": {
+   "works": 24,
+   "words": 74350
+  },
+  "Freezing x Naruto": {
+   "works": 5,
+   "words": 74319
+  },
+  "Red River": {
+   "works": 6,
+   "words": 74269
+  },
+  "Tyrant Falls in Love": {
+   "works": 11,
+   "words": 74222
+  },
+  "Ranma ½ x Rurouni Kenshin": {
+   "works": 5,
+   "words": 73597
+  },
+  "Bleach x Haruhi Suzumiya": {
+   "works": 6,
+   "words": 73410
+  },
+  "Ranma ½ x xxxHOLiC": {
+   "works": 1,
+   "words": 73381
+  },
+  "D.Gray-man x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 72928
+  },
+  "Familiar of Zero x Persona": {
+   "works": 10,
+   "words": 72785
+  },
+  "Valvrave the Liberator": {
+   "works": 17,
+   "words": 72725
+  },
+  "Digimon x Oh My Goddess!": {
+   "works": 1,
+   "words": 72508
+  },
+  "Naruto x Zoids": {
+   "works": 5,
+   "words": 72380
+  },
+  "Fate x Ranma ½": {
+   "works": 5,
+   "words": 72180
+  },
+  "Blue Exorcist x Fairy Tail": {
+   "works": 8,
+   "words": 71776
+  },
+  "Ronin Warriors x Yu Yu Hakusho": {
+   "works": 3,
+   "words": 71619
+  },
+  "Zero Escape": {
+   "works": 12,
+   "words": 71418
+  },
+  "Nobunagun": {
+   "works": 7,
+   "words": 71412
+  },
+  "Noragami x Soul Eater": {
+   "works": 1,
+   "words": 71397
+  },
+  "Akame ga Kiru x Bleach": {
+   "works": 8,
+   "words": 70724
+  },
+  "Ranma ½ x School Rumble": {
+   "works": 2,
+   "words": 70525
+  },
+  "Fairy Tail x Negima! Magister Negi Magi": {
+   "works": 5,
+   "words": 69910
+  },
+  "Bleach x Pokémon": {
+   "works": 7,
+   "words": 69854
+  },
+  "Ranma ½ x Revolutionary Girl Utena": {
+   "works": 1,
+   "words": 69552
+  },
+  "Fullmetal Alchemist x Pokémon": {
+   "works": 3,
+   "words": 69519
+  },
+  "Magical Girl Lyrical Nanoha x Pretty Cure": {
+   "works": 3,
+   "words": 69274
+  },
+  "07-Ghost": {
+   "works": 6,
+   "words": 69167
+  },
+  "Hozuki no Reitetsu": {
+   "works": 12,
+   "words": 68728
+  },
+  "Love Hina x Naruto": {
+   "works": 9,
+   "words": 68673
+  },
+  "Digimon x Sailor Moon": {
+   "works": 3,
+   "words": 68500
+  },
+  "Blue Exorcist x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 68213
+  },
+  "Eyeshield 21 x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 67535
+  },
+  "Detective Conan x Yu-Gi-Oh": {
+   "works": 9,
+   "words": 67519
+  },
+  "Familiar of Zero x Tsukihime": {
+   "works": 5,
+   "words": 67422
+  },
+  "Haruhi Suzumiya x Persona": {
+   "works": 1,
+   "words": 67330
+  },
+  "Library War": {
+   "works": 8,
+   "words": 66929
+  },
+  "Naruto x Macross": {
+   "works": 2,
+   "words": 66854
+  },
+  "Kill la Kill x Oh My Goddess!": {
+   "works": 1,
+   "words": 66839
+  },
+  "Black Jack": {
+   "works": 5,
+   "words": 66699
+  },
+  "Corpse Party x Yu-Gi-Oh": {
+   "works": 3,
+   "words": 66147
+  },
+  "Senran Kagura": {
+   "works": 5,
+   "words": 65520
+  },
+  "Sailor Moon x Saint Seiya": {
+   "works": 6,
+   "words": 65483
+  },
+  "D.N.Angel x Fruits Basket": {
+   "works": 3,
+   "words": 65463
+  },
+  "Patlabor": {
+   "works": 14,
+   "words": 65198
+  },
+  "Daa! Daa! Daa!": {
+   "works": 9,
+   "words": 64701
+  },
+  "Bubblegum Crisis x Sailor Moon": {
+   "works": 2,
+   "words": 64468
+  },
+  "Gundam x Strike Witches": {
+   "works": 2,
+   "words": 64262
+  },
+  "Fruits Basket x Ouran High School Host Club": {
+   "works": 9,
+   "words": 64125
+  },
+  "Nodame Cantabile": {
+   "works": 3,
+   "words": 64080
+  },
+  "Naruto x Tokyo Ghoul": {
+   "works": 3,
+   "words": 63843
+  },
+  "Nausicaa of the Valley of the Wind": {
+   "works": 4,
+   "words": 63623
+  },
+  "Code Geass x Black Butler": {
+   "works": 6,
+   "words": 63396
+  },
+  "Black Rock Shooter x Bleach": {
+   "works": 2,
+   "words": 63359
+  },
+  "Baccano!": {
+   "works": 13,
+   "words": 63212
+  },
+  "Vampire Knight x Vocaloid": {
+   "works": 7,
+   "words": 62964
+  },
+  "One Piece x Slayers": {
+   "works": 2,
+   "words": 62880
+  },
+  "Pokémon x Shingeki no Kyojin": {
+   "works": 3,
+   "words": 62266
+  },
+  "Highschool of the Dead x Inuyasha": {
+   "works": 10,
+   "words": 62223
+  },
+  "Bleach x Death Note": {
+   "works": 16,
+   "words": 62128
+  },
+  "D.N.Angel x Fullmetal Alchemist": {
+   "works": 9,
+   "words": 62032
+  },
+  "Hunter x Hunter x Naruto": {
+   "works": 7,
+   "words": 61885
+  },
+  "A Certain Scientific Railgun": {
+   "works": 6,
+   "words": 61669
+  },
+  "Dinosaur King": {
+   "works": 7,
+   "words": 61230
+  },
+  "Digimon x Pokémon x Yu-Gi-Oh": {
+   "works": 3,
+   "words": 60664
+  },
+  "Mahouka Koukou no Rettousei x Naruto": {
+   "works": 2,
+   "words": 60566
+  },
+  "Date A Live x Infinite Stratos": {
+   "works": 2,
+   "words": 60333
+  },
+  "Letter Bee": {
+   "works": 3,
+   "words": 60298
+  },
+  "Deadman Wonderland": {
+   "works": 15,
+   "words": 60214
+  },
+  "Naruto x Natsume's Book of Friends": {
+   "works": 4,
+   "words": 60094
+  },
+  "High School DxD x Megami Tensei": {
+   "works": 1,
+   "words": 60009
+  },
+  "Katekyo Hitman Reborn! x Negima! Magister Negi Magi": {
+   "works": 2,
+   "words": 59741
+  },
+  "Hirunaka no Ryuusei": {
+   "works": 14,
+   "words": 59590
+  },
+  "Cardcaptor Sakura x Magical Girl Lyrical Nanoha": {
+   "works": 1,
+   "words": 59580
+  },
+  "Samurai Champloo": {
+   "works": 12,
+   "words": 59261
+  },
+  "Campione! x Ranma ½": {
+   "works": 1,
+   "words": 58950
+  },
+  "Megami Tensei x Oh My Goddess!": {
+   "works": 2,
+   "words": 58503
+  },
+  "Saber Marionette J": {
+   "works": 5,
+   "words": 58469
+  },
+  "Katekyo Hitman Reborn! x One Piece": {
+   "works": 11,
+   "words": 58229
+  },
+  "Fullmetal Alchemist x Shingeki no Kyojin": {
+   "works": 4,
+   "words": 57877
+  },
+  "Familiar of Zero x Rosario + Vampire": {
+   "works": 3,
+   "words": 57752
+  },
+  "Bakugan x Cardfight!! Vanguard": {
+   "works": 3,
+   "words": 57721
+  },
+  "Naruto x Shaman King": {
+   "works": 2,
+   "words": 57540
+  },
+  "Bleach x Sgt. Frog": {
+   "works": 2,
+   "words": 57400
+  },
+  "Familiar of Zero x Ranma ½": {
+   "works": 3,
+   "words": 57155
+  },
+  "JoJo's Bizarre Adventure": {
+   "works": 23,
+   "words": 57100
+  },
+  "Inuyasha x Soul Eater": {
+   "works": 2,
+   "words": 56940
+  },
+  "Death Note x Naruto": {
+   "works": 4,
+   "words": 56842
+  },
+  "Naruto x Nisekoi": {
+   "works": 3,
+   "words": 56813
+  },
+  "My Sweet Bodyguard": {
+   "works": 8,
+   "words": 56770
+  },
+  "Fruits Basket x Hetalia": {
+   "works": 2,
+   "words": 56484
+  },
+  "Inuyasha x Tsubasa: Reservoir Chronicle": {
+   "works": 7,
+   "words": 55843
+  },
+  "Rurouni Kenshin x Vampire Knight": {
+   "works": 1,
+   "words": 55753
+  },
+  "Fairy Tail x Magi": {
+   "works": 1,
+   "words": 55648
+  },
+  "Special A": {
+   "works": 9,
+   "words": 55474
+  },
+  "Lovely Complex": {
+   "works": 12,
+   "words": 54677
+  },
+  "Love Hina x Negima! Magister Negi Magi": {
+   "works": 9,
+   "words": 54336
+  },
+  "Familiar of Zero x Soul Eater": {
+   "works": 5,
+   "words": 54062
+  },
+  "Shakugan no Shana": {
+   "works": 5,
+   "words": 54021
+  },
+  "High School DxD x To Love-Ru": {
+   "works": 1,
+   "words": 53662
+  },
+  "Rising of the Shield Hero": {
+   "works": 1,
+   "words": 53496
+  },
+  "Bleach x Infinite Stratos": {
+   "works": 3,
+   "words": 52822
+  },
+  "Naruto x Outlaw Star": {
+   "works": 4,
+   "words": 52693
+  },
+  "Fushigi Yuugi x Sailor Moon": {
+   "works": 2,
+   "words": 52529
+  },
+  "Beyblade x Digimon": {
+   "works": 1,
+   "words": 52052
+  },
+  "Megami Tensei x Naruto": {
+   "works": 8,
+   "words": 51581
+  },
+  "Digimon x Hetalia": {
+   "works": 4,
+   "words": 51164
+  },
+  "Coppelion": {
+   "works": 3,
+   "words": 51061
+  },
+  "Alien Nine": {
+   "works": 7,
+   "words": 51006
+  },
+  "Fate x Rosario + Vampire": {
+   "works": 7,
+   "words": 50836
+  },
+  "Code Geass x JoJo's Bizarre Adventure": {
+   "works": 1,
+   "words": 49962
+  },
+  "Digimon x Hellsing": {
+   "works": 1,
+   "words": 49907
+  },
+  "Fairy Tail x Black Butler": {
+   "works": 5,
+   "words": 49799
+  },
+  "Persona x Yu-Gi-Oh": {
+   "works": 4,
+   "words": 49470
+  },
+  "Freezing x Infinite Stratos": {
+   "works": 3,
+   "words": 49148
+  },
+  "Speed Racer": {
+   "works": 4,
+   "words": 48898
+  },
+  "Negima! Magister Negi Magi x Persona": {
+   "works": 2,
+   "words": 48861
+  },
+  "Hetalia x Vocaloid": {
+   "works": 4,
+   "words": 48760
+  },
+  "D.N.Angel x D.Gray-man": {
+   "works": 3,
+   "words": 48675
+  },
+  "Soredemo Sekai wa Utsukushii": {
+   "works": 4,
+   "words": 48340
+  },
+  "Durarara!! x Magi": {
+   "works": 1,
+   "words": 48283
+  },
+  "Yumeiro Pâtissière": {
+   "works": 11,
+   "words": 47959
+  },
+  "Bleach x Golden Time": {
+   "works": 1,
+   "words": 47825
+  },
+  "Love Live! x Uta no Prince-sama": {
+   "works": 1,
+   "words": 47400
+  },
+  "Girls und Panzer x Strike Witches": {
+   "works": 1,
+   "words": 47285
+  },
+  "Naruto x Rave Master": {
+   "works": 4,
+   "words": 47096
+  },
+  "Digimon x Inuyasha": {
+   "works": 1,
+   "words": 47019
+  },
+  "Hellsing x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 46996
+  },
+  "Digimon x Escaflowne": {
+   "works": 1,
+   "words": 46884
+  },
+  "Tsukihime": {
+   "works": 3,
+   "words": 46872
+  },
+  "Akatsuki no Yona": {
+   "works": 9,
+   "words": 46522
+  },
+  "Sailor Moon x Zatch Bell": {
+   "works": 3,
+   "words": 46522
+  },
+  "Fushigi Yuugi x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 46463
+  },
+  "Code Geass x Guilty Crown": {
+   "works": 5,
+   "words": 46282
+  },
+  "Problem Children Are Coming from Another World": {
+   "works": 8,
+   "words": 46257
+  },
+  "Negima! Magister Negi Magi x Sekirei": {
+   "works": 4,
+   "words": 45720
+  },
+  "Hellsing x Black Butler": {
+   "works": 6,
+   "words": 45712
+  },
+  "Bleach x Soul Eater": {
+   "works": 2,
+   "words": 45626
+  },
+  "Another": {
+   "works": 5,
+   "words": 45199
+  },
+  "Bleach x Kenichi the Mightiest Disciple": {
+   "works": 1,
+   "words": 45056
+  },
+  "Fate x Toaru Majutsu no Index": {
+   "works": 8,
+   "words": 45034
+  },
+  "Hyperdimension Neptunia x Naruto": {
+   "works": 3,
+   "words": 44750
+  },
+  "Ponyo": {
+   "works": 3,
+   "words": 44476
+  },
+  "Naruto x xxxHOLiC": {
+   "works": 12,
+   "words": 44387
+  },
+  "NANA": {
+   "works": 11,
+   "words": 44220
+  },
+  "Girls und Panzer x Black Butler": {
+   "works": 1,
+   "words": 44141
+  },
+  "Amnesia": {
+   "works": 11,
+   "words": 44130
+  },
+  "One Piece x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 44054
+  },
+  "Fate x Inuyasha": {
+   "works": 1,
+   "words": 43933
+  },
+  "Naruto x Tokyo Mew Mew": {
+   "works": 8,
+   "words": 43730
+  },
+  "Pokémon x Vocaloid": {
+   "works": 3,
+   "words": 43636
+  },
+  "Munto": {
+   "works": 4,
+   "words": 43430
+  },
+  "Guilty Crown x Rosario + Vampire": {
+   "works": 2,
+   "words": 43268
+  },
+  "Freezing x Sekirei": {
+   "works": 2,
+   "words": 42952
+  },
+  "Attack on Titan x Inuyasha": {
+   "works": 7,
+   "words": 42619
+  },
+  "Ao Haru Ride": {
+   "works": 7,
+   "words": 41979
+  },
+  "Familiar of Zero x Fullmetal Alchemist": {
+   "works": 4,
+   "words": 41978
+  },
+  "Campione! x Persona": {
+   "works": 1,
+   "words": 41891
+  },
+  "Fate x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 41762
+  },
+  "D.Gray-man x Death Note": {
+   "works": 2,
+   "words": 41326
+  },
+  "Bleach x Digimon": {
+   "works": 2,
+   "words": 41065
+  },
+  "Code Geass x Gurren Lagann": {
+   "works": 3,
+   "words": 40840
+  },
+  "Cross Epoch x Dragon Ball": {
+   "works": 1,
+   "words": 40693
+  },
+  "Naruto x Shuffle!": {
+   "works": 3,
+   "words": 40608
+  },
+  "Chrome Shelled Regios x Hetalia": {
+   "works": 1,
+   "words": 40218
+  },
+  "Fairy Tail x Kuroko no Basuke": {
+   "works": 4,
+   "words": 40102
+  },
+  "Fate x Freezing": {
+   "works": 2,
+   "words": 39911
+  },
+  "Vampire Hunter D": {
+   "works": 6,
+   "words": 39900
+  },
+  "Campione! x Fairy Tail": {
+   "works": 4,
+   "words": 39849
+  },
+  "Fate x Soul Eater": {
+   "works": 4,
+   "words": 39800
+  },
+  "Fullmetal Alchemist x One Piece": {
+   "works": 2,
+   "words": 39532
+  },
+  "D.Gray-man x Ouran High School Host Club": {
+   "works": 1,
+   "words": 39409
+  },
+  "Gundam x Hyperdimension Neptunia": {
+   "works": 4,
+   "words": 39279
+  },
+  "Persona x Vocaloid": {
+   "works": 1,
+   "words": 39125
+  },
+  "Campione! x Manhwa": {
+   "works": 1,
+   "words": 39093
+  },
+  "Fushigi Yuugi x Slam Dunk": {
+   "works": 1,
+   "words": 39031
+  },
+  "Fate x Linebarrels of Iron": {
+   "works": 2,
+   "words": 38590
+  },
+  "Bubblegum Crisis x Elfen Lied": {
+   "works": 1,
+   "words": 38562
+  },
+  "High School DxD x Persona": {
+   "works": 2,
+   "words": 38516
+  },
+  "Katekyo Hitman Reborn! x Kuroko no Basuke": {
+   "works": 4,
+   "words": 38511
+  },
+  "D.Gray-man x Black Butler": {
+   "works": 6,
+   "words": 38264
+  },
+  "Fullmetal Alchemist x Yu-Gi-Oh": {
+   "works": 4,
+   "words": 38194
+  },
+  "La storia della Arcana Famiglia": {
+   "works": 10,
+   "words": 38171
+  },
+  "Fate x Kenichi the Mightiest Disciple": {
+   "works": 2,
+   "words": 38140
+  },
+  "Ubel Blatt": {
+   "works": 2,
+   "words": 38112
+  },
+  "Fate x Manhwa": {
+   "works": 1,
+   "words": 38046
+  },
+  "Fairy Tail x Katekyo Hitman Reborn!": {
+   "works": 8,
+   "words": 37877
+  },
+  "Gundam x Macross": {
+   "works": 4,
+   "words": 37790
+  },
+  "High School DxD x Infinite Stratos": {
+   "works": 3,
+   "words": 37756
+  },
+  "Bleach x Cardcaptor Sakura": {
+   "works": 12,
+   "words": 37416
+  },
+  "The Big O": {
+   "works": 2,
+   "words": 37382
+  },
+  "Fate x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 37364
+  },
+  "Negima! Magister Negi Magi x Oh My Goddess!": {
+   "works": 2,
+   "words": 37052
+  },
+  "Digimon x Pokémon x Fairy Tail": {
+   "works": 1,
+   "words": 36969
+  },
+  "Tokyo ESP": {
+   "works": 2,
+   "words": 36680
+  },
+  "Harukanaru Toki no Naka de": {
+   "works": 2,
+   "words": 36680
+  },
+  "Gundam x Infinite Stratos": {
+   "works": 3,
+   "words": 36503
+  },
+  "Kenichi the Mightiest Disciple": {
+   "works": 7,
+   "words": 36487
+  },
+  "Brynhildr in the Darkness": {
+   "works": 1,
+   "words": 36003
+  },
+  "Fate x Kara no Kyoukai": {
+   "works": 5,
+   "words": 35952
+  },
+  "Bleach x The Cat Returns": {
+   "works": 3,
+   "words": 35437
+  },
+  "Akatsuki no Yona x Fairy Tail": {
+   "works": 1,
+   "words": 35341
+  },
+  "Fullmetal Alchemist x Negima! Magister Negi Magi": {
+   "works": 3,
+   "words": 35140
+  },
+  "Naruto x Puella Magi Madoka Magica": {
+   "works": 5,
+   "words": 34899
+  },
+  "D.Gray-man x No. 6": {
+   "works": 2,
+   "words": 34779
+  },
+  "Date A Live x Persona": {
+   "works": 1,
+   "words": 34590
+  },
+  "Bleach x JoJo's Bizarre Adventure": {
+   "works": 1,
+   "words": 34520
+  },
+  "Familiar of Zero x Shakugan no Shana": {
+   "works": 3,
+   "words": 34399
+  },
+  "Durarara!! x Higurashi / Umineko": {
+   "works": 1,
+   "words": 34052
+  },
+  "Beyblade x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 34009
+  },
+  "Bleach x Highschool of the Dead": {
+   "works": 2,
+   "words": 33968
+  },
+  "Dragon Ball x Persona": {
+   "works": 1,
+   "words": 33935
+  },
+  "Ib x One Piece": {
+   "works": 1,
+   "words": 33885
+  },
+  "Fairy Tail x Pokémon": {
+   "works": 9,
+   "words": 33881
+  },
+  "Wild Adapter": {
+   "works": 10,
+   "words": 33696
+  },
+  "Code Geass x Toaru Majutsu no Index": {
+   "works": 3,
+   "words": 33346
+  },
+  "Black Butler x Naruto": {
+   "works": 4,
+   "words": 33340
+  },
+  "Ranma ½ x Saint Seiya": {
+   "works": 4,
+   "words": 33255
+  },
+  "Michiko to Hatchin": {
+   "works": 1,
+   "words": 33221
+  },
+  "Naruto x Needless": {
+   "works": 6,
+   "words": 32778
+  },
+  "Magical Girl Lyrical Nanoha x Vocaloid": {
+   "works": 2,
+   "words": 32646
+  },
+  "Ouran High School Host Club x Sailor Moon": {
+   "works": 2,
+   "words": 32566
+  },
+  "D.N.Angel x Junjou Romantica": {
+   "works": 1,
+   "words": 32542
+  },
+  "Murder Princess": {
+   "works": 3,
+   "words": 32370
+  },
+  "Code Geass x Death Note": {
+   "works": 3,
+   "words": 32365
+  },
+  "Kill la Kill x Persona": {
+   "works": 1,
+   "words": 32284
+  },
+  "Bleach x High School DxD": {
+   "works": 4,
+   "words": 32119
+  },
+  "Sono Hanabira ni Kuchizuke wo": {
+   "works": 8,
+   "words": 31885
+  },
+  "Black Bullet": {
+   "works": 10,
+   "words": 31494
+  },
+  "Familiar of Zero x Tokyo Ghoul": {
+   "works": 2,
+   "words": 31467
+  },
+  "Ghost Hunt x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 31417
+  },
+  "Gakuen Alice x Zatch Bell": {
+   "works": 1,
+   "words": 31391
+  },
+  "Fushigi Yuugi x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 31357
+  },
+  "Bleach x Persona": {
+   "works": 1,
+   "words": 31312
+  },
+  "Gundam x Oh My Goddess!": {
+   "works": 1,
+   "words": 31272
+  },
+  "Galilei Donna": {
+   "works": 1,
+   "words": 31225
+  },
+  "Orthros no Inu": {
+   "works": 5,
+   "words": 31220
+  },
+  "Fate x Magi": {
+   "works": 1,
+   "words": 31102
+  },
+  "Until Death Do Us Part": {
+   "works": 1,
+   "words": 31033
+  },
+  "D.Gray-man x Naruto": {
+   "works": 4,
+   "words": 31020
+  },
+  "Code Geass x Tokyo Ghoul": {
+   "works": 1,
+   "words": 30977
+  },
+  "Guyver x Magical Girl Lyrical Nanoha": {
+   "works": 1,
+   "words": 30869
+  },
+  "One Piece x Toriko": {
+   "works": 1,
+   "words": 30869
+  },
+  "One Week Friends": {
+   "works": 12,
+   "words": 30508
+  },
+  "Naruto x Panty & Stocking with Garterbelt": {
+   "works": 3,
+   "words": 30495
+  },
+  "Code Geass x Rosario + Vampire": {
+   "works": 2,
+   "words": 30419
+  },
+  "Campione! x Naruto": {
+   "works": 2,
+   "words": 30301
+  },
+  "Cyborg 009": {
+   "works": 11,
+   "words": 30247
+  },
+  "High School DxD x Touhou": {
+   "works": 1,
+   "words": 30002
+  },
+  "B'tX": {
+   "works": 4,
+   "words": 29954
+  },
+  "Nurarihyon no Mago x Touhou": {
+   "works": 2,
+   "words": 29950
+  },
+  "Dragon Ball x Fullmetal Alchemist": {
+   "works": 2,
+   "words": 29949
+  },
+  "Naruto x Otomen": {
+   "works": 2,
+   "words": 29809
+  },
+  "The Twelve Kingdoms": {
+   "works": 6,
+   "words": 29708
+  },
+  "ManHua x Manhwa": {
+   "works": 4,
+   "words": 29680
+  },
+  "Hellsing x Trinity Blood": {
+   "works": 1,
+   "words": 29668
+  },
+  "Noir x Weiss Kreuz": {
+   "works": 2,
+   "words": 29662
+  },
+  "Ringing Bell": {
+   "works": 4,
+   "words": 29533
+  },
+  "Sailor Moon x Urusei Yatsura": {
+   "works": 2,
+   "words": 29434
+  },
+  "Elfen Lied x Naruto": {
+   "works": 3,
+   "words": 29285
+  },
+  "Touhou x Yu Yu Hakusho": {
+   "works": 2,
+   "words": 29105
+  },
+  "Blue Exorcist x Ouran High School Host Club": {
+   "works": 3,
+   "words": 29038
+  },
+  "Pokémon x Zoids": {
+   "works": 1,
+   "words": 28990
+  },
+  "Samurai Flamenco": {
+   "works": 14,
+   "words": 28979
+  },
+  "Sailor Moon x Variable Geo": {
+   "works": 1,
+   "words": 28952
+  },
+  "Death Note x Inuyasha": {
+   "works": 4,
+   "words": 28750
+  },
+  "Code Geass x Strike Witches": {
+   "works": 1,
+   "words": 28386
+  },
+  "Magical Girl Lyrical Nanoha x Touhou": {
+   "works": 2,
+   "words": 28300
+  },
+  "Alien Nine x Digimon": {
+   "works": 1,
+   "words": 28200
+  },
+  "Katekyo Hitman Reborn! x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 28186
+  },
+  "Blue Exorcist x Devil is a Part-Timer": {
+   "works": 2,
+   "words": 28181
+  },
+  "D.Gray-man x Fairy Tail": {
+   "works": 2,
+   "words": 28140
+  },
+  "Bleach x Hell Girl": {
+   "works": 2,
+   "words": 28074
+  },
+  "Detective Conan x Kuroko no Basuke": {
+   "works": 1,
+   "words": 28071
+  },
+  "Noir x Read or Die": {
+   "works": 1,
+   "words": 27908
+  },
+  "Cardcaptor Sakura x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 27879
+  },
+  "Familiar of Zero x Love Hina": {
+   "works": 1,
+   "words": 27867
+  },
+  "School Days": {
+   "works": 3,
+   "words": 27520
+  },
+  "Tai Chi Chasers": {
+   "works": 5,
+   "words": 27412
+  },
+  "Love Stage!!": {
+   "works": 9,
+   "words": 27099
+  },
+  "Naruto x Pandora Hearts": {
+   "works": 4,
+   "words": 27038
+  },
+  "Sket Dance": {
+   "works": 6,
+   "words": 26997
+  },
+  "D.Gray-man x Hatsune Mix": {
+   "works": 3,
+   "words": 26986
+  },
+  "Familiar of Zero x Hetalia": {
+   "works": 1,
+   "words": 26981
+  },
+  "Digimon x Strike Witches": {
+   "works": 1,
+   "words": 26885
+  },
+  "Nabari no Ou": {
+   "works": 10,
+   "words": 26856
+  },
+  "Cowboy Bebop x Wolf's Rain": {
+   "works": 2,
+   "words": 26845
+  },
+  "Bubblegum Crisis x Urusei Yatsura": {
+   "works": 1,
+   "words": 26844
+  },
+  "Btooom": {
+   "works": 2,
+   "words": 26818
+  },
+  "Bleach x Saiyuki": {
+   "works": 4,
+   "words": 26759
+  },
+  "Fushigi Yuugi x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 26708
+  },
+  "Hana Yori Dango x Rurouni Kenshin": {
+   "works": 1,
+   "words": 26645
+  },
+  "Baka and Test - Summon the Beasts x Naruto": {
+   "works": 1,
+   "words": 26590
+  },
+  "Naruto x Queen's Blade": {
+   "works": 5,
+   "words": 26304
+  },
+  "Rosario + Vampire x Zatch Bell": {
+   "works": 2,
+   "words": 26064
+  },
+  "Rurouni Kenshin x Weiss Kreuz": {
+   "works": 2,
+   "words": 26018
+  },
+  "Little Busters": {
+   "works": 7,
+   "words": 25961
+  },
+  "Gurren Lagann x Muv-Luv": {
+   "works": 1,
+   "words": 25958
+  },
+  "High School DxD x Sekirei": {
+   "works": 1,
+   "words": 25945
+  },
+  "Thunderbirds 2086": {
+   "works": 6,
+   "words": 25901
+  },
+  "Fate x Nurarihyon no Mago": {
+   "works": 1,
+   "words": 25896
+  },
+  "Akame ga Kiru x Fate": {
+   "works": 2,
+   "words": 25821
+  },
+  "Free! x Inuyasha": {
+   "works": 3,
+   "words": 25796
+  },
+  "Campione! x Legend of the Legendary Heroes": {
+   "works": 1,
+   "words": 25767
+  },
+  "Hiyokoi": {
+   "works": 2,
+   "words": 25748
+  },
+  "Cardcaptor Sakura x Princess Mononoke": {
+   "works": 1,
+   "words": 25510
+  },
+  "Attack on Titan x Code Geass": {
+   "works": 2,
+   "words": 25461
+  },
+  "Buddy Complex": {
+   "works": 5,
+   "words": 25389
+  },
+  "D.Gray-man x Hellsing": {
+   "works": 5,
+   "words": 25268
+  },
+  "Danganronpa x Kuroko no Basuke": {
+   "works": 2,
+   "words": 25239
+  },
+  "Detective Conan x Yu Yu Hakusho": {
+   "works": 2,
+   "words": 25196
+  },
+  "Fullmetal Alchemist x Pandora Hearts": {
+   "works": 2,
+   "words": 25137
+  },
+  "Blood+ x Death Note": {
+   "works": 1,
+   "words": 25079
+  },
+  "Pretty Cure x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 25063
+  },
+  "Familiar of Zero x Medaka Box": {
+   "works": 2,
+   "words": 25044
+  },
+  "Fairy Tail x Jewelpet": {
+   "works": 1,
+   "words": 25001
+  },
+  "Naruto x Read or Die": {
+   "works": 4,
+   "words": 24972
+  },
+  "Familiar of Zero x Legend of the Legendary Heroes": {
+   "works": 4,
+   "words": 24936
+  },
+  "Dragon Ball x Sekirei": {
+   "works": 2,
+   "words": 24822
+  },
+  "Panty & Stocking with Garterbelt": {
+   "works": 5,
+   "words": 24746
+  },
+  "Ranma ½ x Toaru Majutsu no Index": {
+   "works": 4,
+   "words": 24664
+  },
+  "JoJo's Bizarre Adventure x Naruto": {
+   "works": 2,
+   "words": 24624
+  },
+  "Hotarubi no Mori e": {
+   "works": 2,
+   "words": 24397
+  },
+  "Hell Girl": {
+   "works": 9,
+   "words": 24387
+  },
+  "Familiar of Zero x Kore wa Zombie Desu ka?": {
+   "works": 3,
+   "words": 24307
+  },
+  "Itazura na Kiss": {
+   "works": 9,
+   "words": 24295
+  },
+  "Familiar of Zero x Kantai Collection": {
+   "works": 1,
+   "words": 24282
+  },
+  "Bakugan x Dragon Ball": {
+   "works": 1,
+   "words": 24248
+  },
+  "Bleach x Powerpuff Girls Z": {
+   "works": 2,
+   "words": 24143
+  },
+  "Pretty Rhythm": {
+   "works": 5,
+   "words": 24102
+  },
+  "The Wallflower": {
+   "works": 2,
+   "words": 24095
+  },
+  "Inuyasha x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 24068
+  },
+  "Fushigi Yuugi x Prince of Tennis": {
+   "works": 1,
+   "words": 24050
+  },
+  "Naruto x Toradora!": {
+   "works": 3,
+   "words": 24003
+  },
+  "Naruto x Yosuga no Sora": {
+   "works": 1,
+   "words": 23983
+  },
+  "Kamichama Karin": {
+   "works": 8,
+   "words": 23978
+  },
+  "Ranma ½ x Sgt. Frog": {
+   "works": 1,
+   "words": 23973
+  },
+  "Free! x Kuroko no Basuke": {
+   "works": 5,
+   "words": 23961
+  },
+  "High School DxD x Toaru Majutsu no Index": {
+   "works": 2,
+   "words": 23855
+  },
+  "Guilty Crown x Naruto": {
+   "works": 2,
+   "words": 23792
+  },
+  "Paradise Kiss": {
+   "works": 7,
+   "words": 23722
+  },
+  "Gregory Horror Show": {
+   "works": 6,
+   "words": 23583
+  },
+  "Naruto x Rozen Maiden": {
+   "works": 3,
+   "words": 23553
+  },
+  "Tactics": {
+   "works": 5,
+   "words": 23374
+  },
+  "Gregory Horror Show x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 23373
+  },
+  "Sailor Moon x Vampire Knight": {
+   "works": 3,
+   "words": 23213
+  },
+  "Ouran High School Host Club x Soul Eater": {
+   "works": 2,
+   "words": 23166
+  },
+  "Virus Buster Serge": {
+   "works": 4,
+   "words": 23100
+  },
+  "Fruits Basket x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 23096
+  },
+  "Fairy Tail x Ouran High School Host Club": {
+   "works": 5,
+   "words": 23028
+  },
+  "Katekyo Hitman Reborn! x Pokémon": {
+   "works": 3,
+   "words": 23006
+  },
+  "Infinite Stratos x Persona": {
+   "works": 1,
+   "words": 22935
+  },
+  "K-ON! x Naruto": {
+   "works": 1,
+   "words": 22901
+  },
+  "Magical Girl Lyrical Nanoha x Persona": {
+   "works": 1,
+   "words": 22892
+  },
+  "Detective Conan x Ghost Hunt": {
+   "works": 1,
+   "words": 22886
+  },
+  "RG Veda": {
+   "works": 2,
+   "words": 22870
+  },
+  "Fate x Pokémon": {
+   "works": 1,
+   "words": 22849
+  },
+  "Digimon x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 22745
+  },
+  "Blue Exorcist x Highschool of the Dead": {
+   "works": 1,
+   "words": 22719
+  },
+  "Negima! Magister Negi Magi x Rosario + Vampire": {
+   "works": 3,
+   "words": 22544
+  },
+  "Cross Over x Inuyasha": {
+   "works": 1,
+   "words": 22365
+  },
+  "Dragon Ball x Katekyo Hitman Reborn!": {
+   "works": 3,
+   "words": 22361
+  },
+  "Dragon Ball x Hetalia": {
+   "works": 4,
+   "words": 22300
+  },
+  "Romeo x Juliet": {
+   "works": 4,
+   "words": 22224
+  },
+  "Attack on Titan x Black Butler": {
+   "works": 1,
+   "words": 22223
+  },
+  "Code Breaker": {
+   "works": 6,
+   "words": 22103
+  },
+  "Persona x Pokémon": {
+   "works": 3,
+   "words": 22048
+  },
+  "Guyver x Sailor Moon": {
+   "works": 1,
+   "words": 22006
+  },
+  "Darker than Black x Death Note": {
+   "works": 1,
+   "words": 21990
+  },
+  "Kuroko no Basuke x Skip Beat!": {
+   "works": 1,
+   "words": 21938
+  },
+  "Love Letter From Thief X x Pirates in Love": {
+   "works": 2,
+   "words": 21889
+  },
+  "Durarara!! x Ghost Hunt": {
+   "works": 1,
+   "words": 21831
+  },
+  "Angel Beats! x Soul Eater": {
+   "works": 1,
+   "words": 21776
+  },
+  "Gatchaman x Thunderbirds 2086": {
+   "works": 4,
+   "words": 21775
+  },
+  "Bleach x Hyperdimension Neptunia": {
+   "works": 1,
+   "words": 21609
+  },
+  "Fairy Tail x Hayate the Combat Butler": {
+   "works": 3,
+   "words": 21350
+  },
+  "Fairy Tail x Gosick": {
+   "works": 1,
+   "words": 21288
+  },
+  "Ranma ½ x Tsukihime": {
+   "works": 1,
+   "words": 21212
+  },
+  "D.Gray-man x Ghost Hunt": {
+   "works": 1,
+   "words": 21209
+  },
+  "Familiar of Zero x Katekyo Hitman Reborn!": {
+   "works": 4,
+   "words": 21055
+  },
+  "Hatoful Boyfriend": {
+   "works": 9,
+   "words": 20981
+  },
+  "Dusk Maiden of Amnesia": {
+   "works": 1,
+   "words": 20958
+  },
+  "Bleach x Queen's Blade": {
+   "works": 2,
+   "words": 20750
+  },
+  "Vocaloid x Yu-Gi-Oh": {
+   "works": 2,
+   "words": 20717
+  },
+  "Muv-Luv x Naruto": {
+   "works": 4,
+   "words": 20707
+  },
+  "Bleach x Daily Life with a Monster Girl": {
+   "works": 1,
+   "words": 20679
+  },
+  "La Corda d'Oro x Skip Beat!": {
+   "works": 1,
+   "words": 20595
+  },
+  "Yumekui Merry": {
+   "works": 1,
+   "words": 20383
+  },
+  "Detective Conan x Magic Kaito": {
+   "works": 4,
+   "words": 20367
+  },
+  "Ranma ½ x To Love-Ru": {
+   "works": 2,
+   "words": 20334
+  },
+  "GaoGaiGar": {
+   "works": 1,
+   "words": 20289
+  },
+  "Gundam Build Fighters x Macross": {
+   "works": 1,
+   "words": 20236
+  },
+  "Hetalia x Inuyasha": {
+   "works": 5,
+   "words": 20165
+  },
+  "Da Capo": {
+   "works": 2,
+   "words": 20009
+  },
+  "Kirarin Revolution": {
+   "works": 2,
+   "words": 19964
+  },
+  "Prétear": {
+   "works": 4,
+   "words": 19928
+  },
+  "Cardcaptor Sakura x Tokyo Babylon": {
+   "works": 6,
+   "words": 19910
+  },
+  "Spice and Wolf": {
+   "works": 6,
+   "words": 19749
+  },
+  "Rurouni Kenshin x Slayers": {
+   "works": 1,
+   "words": 19716
+  },
+  "Baka and Test - Summon the Beasts x Fate": {
+   "works": 1,
+   "words": 19692
+  },
+  "Durarara!! x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 19510
+  },
+  "My Little Sister Can't Be This Cute x Vocaloid": {
+   "works": 1,
+   "words": 19432
+  },
+  "Fate x Gundam": {
+   "works": 3,
+   "words": 19410
+  },
+  "Bleach x Elfen Lied": {
+   "works": 1,
+   "words": 19369
+  },
+  "Sailor Moon x Sekirei": {
+   "works": 1,
+   "words": 19354
+  },
+  "Durarara!! x Black Butler": {
+   "works": 1,
+   "words": 19314
+  },
+  "Noragami x Shingeki no Kyojin": {
+   "works": 3,
+   "words": 19289
+  },
+  "High School DxD x Rosario + Vampire": {
+   "works": 3,
+   "words": 19271
+  },
+  "Negima! Magister Negi Magi x Puella Magi Madoka Magica": {
+   "works": 2,
+   "words": 19257
+  },
+  "Ranma ½ x Zatch Bell": {
+   "works": 2,
+   "words": 19203
+  },
+  "Black Butler x Soul Eater": {
+   "works": 6,
+   "words": 19159
+  },
+  "Attack on Titan x Princess Tutu": {
+   "works": 1,
+   "words": 19051
+  },
+  "Katekyo Hitman Reborn! x Yu Yu Hakusho": {
+   "works": 3,
+   "words": 18966
+  },
+  "From Eroica with Love": {
+   "works": 5,
+   "words": 18928
+  },
+  "Shingeki no Kyojin x Tokyo Ghoul": {
+   "works": 1,
+   "words": 18877
+  },
+  "Hetalia x Black Butler": {
+   "works": 5,
+   "words": 18868
+  },
+  "Brothers Conflict x Inuyasha": {
+   "works": 2,
+   "words": 18799
+  },
+  "Soul Eater x Touhou": {
+   "works": 1,
+   "words": 18692
+  },
+  "Blue Exorcist x Vampire Knight": {
+   "works": 1,
+   "words": 18676
+  },
+  "Free! x Naruto": {
+   "works": 3,
+   "words": 18602
+  },
+  "Ranma ½ x Sasamekikoto": {
+   "works": 1,
+   "words": 18601
+  },
+  "Beelzebub x Naruto": {
+   "works": 1,
+   "words": 18599
+  },
+  "Fairy Tail x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 18561
+  },
+  "Familiar of Zero x One Piece": {
+   "works": 3,
+   "words": 18445
+  },
+  "ManHua x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 18378
+  },
+  "Gundam x Inuyasha": {
+   "works": 4,
+   "words": 18376
+  },
+  "Mushishi": {
+   "works": 5,
+   "words": 18313
+  },
+  "Haikyu x Inuyasha": {
+   "works": 1,
+   "words": 18288
+  },
+  "Bleach x Kuroko no Basuke": {
+   "works": 1,
+   "words": 18214
+  },
+  "Hellsing x Vampire Hunter D": {
+   "works": 1,
+   "words": 18152
+  },
+  "Bleach x Pandora Hearts": {
+   "works": 1,
+   "words": 18133
+  },
+  "DanMachi": {
+   "works": 1,
+   "words": 18040
+  },
+  "One Piece x To Love-Ru": {
+   "works": 1,
+   "words": 17993
+  },
+  "Kill la Kill x Magical Girl Lyrical Nanoha": {
+   "works": 1,
+   "words": 17957
+  },
+  "Bleach x Guilty Crown": {
+   "works": 1,
+   "words": 17954
+  },
+  "Code Geass x Tekkaman Blade": {
+   "works": 1,
+   "words": 17916
+  },
+  "Dragon Ball x To Love-Ru": {
+   "works": 1,
+   "words": 17818
+  },
+  "Kämpfer": {
+   "works": 4,
+   "words": 17760
+  },
+  "Gakuen Heaven": {
+   "works": 2,
+   "words": 17727
+  },
+  "Guilty Crown x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 17644
+  },
+  "Dragon Ball x Strike Witches": {
+   "works": 1,
+   "words": 17576
+  },
+  "Naruto x Toaru Majutsu no Index": {
+   "works": 2,
+   "words": 17545
+  },
+  "Katekyo Hitman Reborn! x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 17513
+  },
+  "Naruto x Yami no Matsuei": {
+   "works": 5,
+   "words": 17420
+  },
+  "Inuyasha x Sekirei": {
+   "works": 1,
+   "words": 17412
+  },
+  "Fairy Tail x Fruits Basket": {
+   "works": 3,
+   "words": 17386
+  },
+  "Naruto x Pretty Cure": {
+   "works": 3,
+   "words": 17168
+  },
+  "Claymore x Ranma ½": {
+   "works": 3,
+   "words": 17134
+  },
+  "GALS!": {
+   "works": 4,
+   "words": 17112
+  },
+  "Lagoon Engine": {
+   "works": 1,
+   "words": 17096
+  },
+  "Familiar of Zero x Tenchi Muyo": {
+   "works": 1,
+   "words": 16997
+  },
+  "Infinite Stratos x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 16927
+  },
+  "Attack on Titan x Fairy Tail": {
+   "works": 2,
+   "words": 16875
+  },
+  "Arrietty x Astro Boy": {
+   "works": 1,
+   "words": 16846
+  },
+  "Bleach x Toriko": {
+   "works": 1,
+   "words": 16668
+  },
+  "Inuyasha x Kyo kara Maoh!": {
+   "works": 1,
+   "words": 16574
+  },
+  "Kill la Kill x Naruto": {
+   "works": 2,
+   "words": 16512
+  },
+  "Fate x Tokyo Ravens": {
+   "works": 1,
+   "words": 16499
+  },
+  "Inuyasha x Kuroko no Basuke": {
+   "works": 3,
+   "words": 16494
+  },
+  "Hellsing x Inuyasha": {
+   "works": 1,
+   "words": 16307
+  },
+  "Campione! x Mahouka Koukou no Rettousei": {
+   "works": 1,
+   "words": 16250
+  },
+  "Hetalia x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 16197
+  },
+  "Muv-Luv x Strike Witches": {
+   "works": 1,
+   "words": 16134
+  },
+  "Nightwalker": {
+   "works": 2,
+   "words": 16111
+  },
+  "D.N.Angel x Hunter x Hunter": {
+   "works": 1,
+   "words": 16006
+  },
+  "Anime Sanjushi": {
+   "works": 3,
+   "words": 15964
+  },
+  "Fairy Tail x Slayers": {
+   "works": 1,
+   "words": 15920
+  },
+  "Claymore x Pokémon": {
+   "works": 1,
+   "words": 15814
+  },
+  "Hellsing x Rosario + Vampire": {
+   "works": 2,
+   "words": 15782
+  },
+  "D.Gray-man x Soul Eater": {
+   "works": 4,
+   "words": 15744
+  },
+  "Love Hina x Magical Girl Lyrical Nanoha": {
+   "works": 1,
+   "words": 15702
+  },
+  "Tekkaman Blade": {
+   "works": 2,
+   "words": 15685
+  },
+  "Familiar of Zero x Toradora!": {
+   "works": 2,
+   "words": 15628
+  },
+  "Yu-Gi-Oh x xxxHOLiC": {
+   "works": 1,
+   "words": 15598
+  },
+  "Beyblade x Metal Fight Beyblade": {
+   "works": 2,
+   "words": 15575
+  },
+  "Negima! Magister Negi Magi x School Rumble": {
+   "works": 1,
+   "words": 15569
+  },
+  "Inuyasha x Vampire Knight": {
+   "works": 3,
+   "words": 15565
+  },
+  "Death Note x Soul Eater": {
+   "works": 1,
+   "words": 15545
+  },
+  "Attack on Titan x Bleach": {
+   "works": 2,
+   "words": 15454
+  },
+  "Sakura Trick": {
+   "works": 5,
+   "words": 15411
+  },
+  "Maid Sama! x Special A": {
+   "works": 1,
+   "words": 15400
+  },
+  "Seven Deadly Sins": {
+   "works": 8,
+   "words": 15356
+  },
+  "Pokémon x Prince of Tennis": {
+   "works": 4,
+   "words": 15304
+  },
+  "Gundam x Zoids": {
+   "works": 3,
+   "words": 15290
+  },
+  "Digimon x Metal Fight Beyblade": {
+   "works": 3,
+   "words": 15255
+  },
+  "Kingdom": {
+   "works": 1,
+   "words": 15234
+  },
+  "Dazzle": {
+   "works": 3,
+   "words": 15179
+  },
+  "Fairy Tail x Hunter x Hunter": {
+   "works": 4,
+   "words": 15169
+  },
+  "Ghost Hunt x Pokémon": {
+   "works": 2,
+   "words": 15028
+  },
+  "D.Gray-man x Kyo kara Maoh!": {
+   "works": 1,
+   "words": 14929
+  },
+  "My Neighbor Seki": {
+   "works": 5,
+   "words": 14864
+  },
+  "Manhwa x Naruto": {
+   "works": 2,
+   "words": 14769
+  },
+  "Kuroko no Basuke x Naruto": {
+   "works": 1,
+   "words": 14741
+  },
+  "Rave Master": {
+   "works": 6,
+   "words": 14629
+  },
+  "Black Rock Shooter x Vocaloid": {
+   "works": 2,
+   "words": 14608
+  },
+  "Naruto x Shakugan no Shana": {
+   "works": 1,
+   "words": 14531
+  },
+  "Blast of Tempest": {
+   "works": 8,
+   "words": 14505
+  },
+  "Durarara!! x Hetalia": {
+   "works": 3,
+   "words": 14435
+  },
+  "Bubblegum Crisis x Outlaw Star": {
+   "works": 1,
+   "words": 14434
+  },
+  "Fullmetal Alchemist x Ouran High School Host Club": {
+   "works": 3,
+   "words": 14340
+  },
+  "Beelzebub x Devil is a Part-Timer": {
+   "works": 1,
+   "words": 14250
+  },
+  "Liar Game": {
+   "works": 3,
+   "words": 14199
+  },
+  "Higurashi / Umineko x Inuyasha": {
+   "works": 2,
+   "words": 14188
+  },
+  "Kanon": {
+   "works": 2,
+   "words": 14162
+  },
+  "Code Geass x Soul Eater": {
+   "works": 2,
+   "words": 14125
+  },
+  "Magical Girl Lyrical Nanoha x Pokémon": {
+   "works": 2,
+   "words": 14025
+  },
+  "Bleach x Tokyo Ghoul": {
+   "works": 2,
+   "words": 14008
+  },
+  "Cardcaptor Sakura x Slayers": {
+   "works": 2,
+   "words": 13995
+  },
+  "Fullmetal Alchemist x Black Butler": {
+   "works": 2,
+   "words": 13933
+  },
+  "Cowboy Bebop x Pokémon": {
+   "works": 1,
+   "words": 13885
+  },
+  "Sailor Moon x Saiyuki": {
+   "works": 1,
+   "words": 13873
+  },
+  "Godannar x Shaman King": {
+   "works": 1,
+   "words": 13812
+  },
+  "Fate x Shugo Chara!": {
+   "works": 1,
+   "words": 13808
+  },
+  "Gurren Lagann x Kill la Kill": {
+   "works": 1,
+   "words": 13808
+  },
+  "Fate x Majikoi - Oh! Samurai Girls!": {
+   "works": 2,
+   "words": 13800
+  },
+  "Umi no Misaki": {
+   "works": 1,
+   "words": 13725
+  },
+  "Black Cat x D.Gray-man": {
+   "works": 2,
+   "words": 13679
+  },
+  "Tenchi Muyo": {
+   "works": 5,
+   "words": 13657
+  },
+  "Date A Live x Fate": {
+   "works": 1,
+   "words": 13639
+  },
+  "Pet Girl of Sakurasou": {
+   "works": 2,
+   "words": 13630
+  },
+  "Durarara!! x Highschool of the Dead": {
+   "works": 1,
+   "words": 13623
+  },
+  "Cardcaptor Sakura x Shugo Chara!": {
+   "works": 2,
+   "words": 13597
+  },
+  "Blue Exorcist x Noragami": {
+   "works": 2,
+   "words": 13420
+  },
+  "Dragon Ball x Inazuma Eleven": {
+   "works": 1,
+   "words": 13360
+  },
+  "Manhwa x One Piece": {
+   "works": 1,
+   "words": 13317
+  },
+  "Bleach x Sasamekikoto": {
+   "works": 1,
+   "words": 13298
+  },
+  "My Little Sister Can't Be This Cute x My Teen Romantic Comedy SNAFU": {
+   "works": 1,
+   "words": 13294
+  },
+  "Bakugan x Princess Mononoke": {
+   "works": 1,
+   "words": 13234
+  },
+  "Dragon Ball x Hellsing": {
+   "works": 4,
+   "words": 13201
+  },
+  "Jormungand": {
+   "works": 3,
+   "words": 13171
+  },
+  "Koko ni Iru yo!": {
+   "works": 4,
+   "words": 13158
+  },
+  "Dragon Ball x Soul Eater": {
+   "works": 1,
+   "words": 13138
+  },
+  "Shuffle! x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 13127
+  },
+  "Hunter x Hunter x Spirited Away": {
+   "works": 1,
+   "words": 13120
+  },
+  "Digimon x Loveless": {
+   "works": 1,
+   "words": 13104
+  },
+  "Oh My Goddess! x Queen's Blade": {
+   "works": 1,
+   "words": 13040
+  },
+  "Bleach x RIN-NE": {
+   "works": 1,
+   "words": 13028
+  },
+  "Fate x Hellsing": {
+   "works": 4,
+   "words": 13014
+  },
+  "Dragon Ball x Freezing": {
+   "works": 1,
+   "words": 12946
+  },
+  "Boku wa Tomodachi ga Sukunai x High School DxD": {
+   "works": 1,
+   "words": 12872
+  },
+  "Hikaru no Go x Kuroko no Basuke": {
+   "works": 1,
+   "words": 12866
+  },
+  "Magical Girl Lyrical Nanoha x Tsukihime": {
+   "works": 1,
+   "words": 12859
+  },
+  "Kuroko no Basuke x Ouran High School Host Club": {
+   "works": 1,
+   "words": 12811
+  },
+  "Fate x Tsukihime": {
+   "works": 2,
+   "words": 12786
+  },
+  "Girls und Panzer x Hellsing": {
+   "works": 1,
+   "words": 12765
+  },
+  "Bleach x Revolutionary Girl Utena": {
+   "works": 1,
+   "words": 12720
+  },
+  "Sky Crawlers": {
+   "works": 1,
+   "words": 12683
+  },
+  "Kimi ni Todoke": {
+   "works": 1,
+   "words": 12666
+  },
+  "Gundam x Lagrange -The Flower of Rin-ne": {
+   "works": 2,
+   "words": 12535
+  },
+  "A.I. Love You": {
+   "works": 6,
+   "words": 12529
+  },
+  "Inuyasha x Katekyo Hitman Reborn!": {
+   "works": 3,
+   "words": 12318
+  },
+  "Akame ga Kiru x Fairy Tail": {
+   "works": 3,
+   "words": 12273
+  },
+  "Legal Drug": {
+   "works": 3,
+   "words": 12208
+  },
+  "Starry Sky": {
+   "works": 7,
+   "words": 12164
+  },
+  "Corpse Party x Ouran High School Host Club": {
+   "works": 1,
+   "words": 12151
+  },
+  "Cardfight!! Vanguard x Future Card Buddyfight": {
+   "works": 2,
+   "words": 12146
+  },
+  "Black Butler x Shingeki no Kyojin": {
+   "works": 4,
+   "words": 12126
+  },
+  "K-ON! x Pokémon": {
+   "works": 1,
+   "words": 12056
+  },
+  "Gundam x Hetalia": {
+   "works": 2,
+   "words": 11978
+  },
+  "From the New World": {
+   "works": 5,
+   "words": 11958
+  },
+  "Gintama x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 11958
+  },
+  "Girls Bravo": {
+   "works": 3,
+   "words": 11937
+  },
+  "The Law of Ueki": {
+   "works": 4,
+   "words": 11865
+  },
+  "Highschool of the Dead x Kore wa Zombie Desu ka?": {
+   "works": 1,
+   "words": 11857
+  },
+  "Blood+ x Familiar of Zero": {
+   "works": 1,
+   "words": 11852
+  },
+  "Gakuen Alice x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 11818
+  },
+  "Gundam x Sekirei": {
+   "works": 1,
+   "words": 11798
+  },
+  "Fate x Slayers": {
+   "works": 2,
+   "words": 11791
+  },
+  "Ghost Hunt x Vampire Knight": {
+   "works": 1,
+   "words": 11737
+  },
+  "Maria-sama ga Miteru x Skip Beat!": {
+   "works": 1,
+   "words": 11731
+  },
+  "Twin Signal": {
+   "works": 1,
+   "words": 11718
+  },
+  "Gokusen x Inuyasha": {
+   "works": 2,
+   "words": 11682
+  },
+  "Fate x Sailor Moon": {
+   "works": 3,
+   "words": 11620
+  },
+  "Cardcaptor Sakura x Fruits Basket": {
+   "works": 1,
+   "words": 11608
+  },
+  "Ranma ½ x You're Under Arrest": {
+   "works": 1,
+   "words": 11582
+  },
+  "Gundam x Vocaloid": {
+   "works": 2,
+   "words": 11525
+  },
+  "Dragon Ball x One Piece": {
+   "works": 5,
+   "words": 11515
+  },
+  "Fairy Tail x Tokyo Ghoul": {
+   "works": 1,
+   "words": 11503
+  },
+  "Digimon x Magical Girl Lyrical Nanoha": {
+   "works": 2,
+   "words": 11459
+  },
+  "Highschool of the Dead x Pokémon": {
+   "works": 2,
+   "words": 11398
+  },
+  "Samurai Deeper Kyo": {
+   "works": 1,
+   "words": 11320
+  },
+  "Lord Marksman and Vanadis": {
+   "works": 1,
+   "words": 11302
+  },
+  "Brothers Conflict x Uta no Prince-sama": {
+   "works": 2,
+   "words": 11278
+  },
+  "Linebarrels of Iron x Naruto": {
+   "works": 1,
+   "words": 11278
+  },
+  "Black Butler x Pandora Hearts": {
+   "works": 2,
+   "words": 11247
+  },
+  "Naruto x Seirei Tsukai no Blade Dance": {
+   "works": 1,
+   "words": 11192
+  },
+  "Familiar of Zero x Sekirei": {
+   "works": 1,
+   "words": 11169
+  },
+  "Naruto x One Punch Man": {
+   "works": 2,
+   "words": 11165
+  },
+  "Dragon Ball x Girls Bravo": {
+   "works": 1,
+   "words": 11152
+  },
+  "Code Geass x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 11135
+  },
+  "Katekyo Hitman Reborn! x To Love-Ru": {
+   "works": 1,
+   "words": 10988
+  },
+  "Highschool of the Dead x Persona": {
+   "works": 1,
+   "words": 10972
+  },
+  "Deadman Wonderland x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 10963
+  },
+  "Familiar of Zero x Strike Witches": {
+   "works": 1,
+   "words": 10946
+  },
+  "Horimiya": {
+   "works": 2,
+   "words": 10927
+  },
+  "Bleach x Inazuma Eleven": {
+   "works": 1,
+   "words": 10913
+  },
+  "Blood Lad": {
+   "works": 2,
+   "words": 10897
+  },
+  "Last Game": {
+   "works": 1,
+   "words": 10892
+  },
+  "Bleach x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 10840
+  },
+  "X-Day": {
+   "works": 1,
+   "words": 10834
+  },
+  "Sailor Moon x Tsukihime": {
+   "works": 1,
+   "words": 10828
+  },
+  "Rurouni Kenshin x Shaman King": {
+   "works": 2,
+   "words": 10800
+  },
+  "Cowboy Bebop x Sailor Moon": {
+   "works": 1,
+   "words": 10792
+  },
+  "Alice in the Country of Hearts x Pretty Cure": {
+   "works": 3,
+   "words": 10780
+  },
+  "Campione! x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 10751
+  },
+  "D.N.Angel x Hellsing": {
+   "works": 2,
+   "words": 10606
+  },
+  "Break Blade": {
+   "works": 1,
+   "words": 10597
+  },
+  "Rosario + Vampire x Vampire Knight": {
+   "works": 2,
+   "words": 10580
+  },
+  "Familiar of Zero x Mai-HiME": {
+   "works": 1,
+   "words": 10551
+  },
+  "Dragon Ball x Pretty Cure": {
+   "works": 3,
+   "words": 10537
+  },
+  "Inuyasha x Nurarihyon no Mago": {
+   "works": 1,
+   "words": 10477
+  },
+  "Hiiro no Kakera": {
+   "works": 3,
+   "words": 10470
+  },
+  "Black Blood Brothers": {
+   "works": 1,
+   "words": 10444
+  },
+  "ManHua x Naruto": {
+   "works": 3,
+   "words": 10404
+  },
+  "Doraemon": {
+   "works": 4,
+   "words": 10380
+  },
+  "Valvrave the Liberator x Vandread": {
+   "works": 1,
+   "words": 10374
+  },
+  "Fate x Mai-HiME": {
+   "works": 1,
+   "words": 10373
+  },
+  "Hayate the Combat Butler x Black Butler": {
+   "works": 1,
+   "words": 10373
+  },
+  "Aquarion Evol": {
+   "works": 3,
+   "words": 10347
+  },
+  "Black Butler x Vampire Knight": {
+   "works": 1,
+   "words": 10340
+  },
+  "Familiar of Zero x Hunter x Hunter": {
+   "works": 1,
+   "words": 10285
+  },
+  "Negima! Magister Negi Magi x Sailor Moon": {
+   "works": 2,
+   "words": 10259
+  },
+  "Kill la Kill x One Piece": {
+   "works": 1,
+   "words": 10258
+  },
+  "Cowboy Bebop x Ranma ½": {
+   "works": 2,
+   "words": 10216
+  },
+  "Clannad x Naruto": {
+   "works": 1,
+   "words": 10172
+  },
+  "Fate x Gurren Lagann": {
+   "works": 2,
+   "words": 10160
+  },
+  "Naruto x Strike Witches": {
+   "works": 2,
+   "words": 10109
+  },
+  "Full Moon wo Sagashite": {
+   "works": 3,
+   "words": 10103
+  },
+  "Shaman King x Soul Eater": {
+   "works": 1,
+   "words": 10058
+  },
+  "Dragon Ball x Hell Girl": {
+   "works": 1,
+   "words": 10041
+  },
+  "Magical Girl Lyrical Nanoha x Shuffle!": {
+   "works": 1,
+   "words": 10031
+  },
+  "Inuyasha x Pokémon": {
+   "works": 3,
+   "words": 10024
+  },
+  "Gugure! Kokkuri-san": {
+   "works": 5,
+   "words": 9993
+  },
+  "Fairy Tail x Gakuen Alice": {
+   "works": 1,
+   "words": 9981
+  },
+  "Katekyo Hitman Reborn! x Natsume's Book of Friends": {
+   "works": 3,
+   "words": 9965
+  },
+  "Blue Exorcist x Soul Eater": {
+   "works": 2,
+   "words": 9959
+  },
+  "Kimi to Boku": {
+   "works": 2,
+   "words": 9949
+  },
+  "Campione! x Nisekoi": {
+   "works": 1,
+   "words": 9943
+  },
+  "High School DxD x Kenichi the Mightiest Disciple": {
+   "works": 1,
+   "words": 9870
+  },
+  "Gokusen x La Corda d'Oro": {
+   "works": 1,
+   "words": 9829
+  },
+  "Howl's Moving Castle x Spirited Away": {
+   "works": 1,
+   "words": 9823
+  },
+  "Cowboy Bebop x Samurai Champloo": {
+   "works": 2,
+   "words": 9779
+  },
+  "Muhyo & Roji": {
+   "works": 4,
+   "words": 9775
+  },
+  "Devil & Devil": {
+   "works": 6,
+   "words": 9713
+  },
+  "Hetalia x Puella Magi Madoka Magica": {
+   "works": 4,
+   "words": 9697
+  },
+  "Inuyasha x Noragami": {
+   "works": 1,
+   "words": 9693
+  },
+  "Attack on Titan x Ouran High School Host Club": {
+   "works": 2,
+   "words": 9652
+  },
+  "Hareluya II Boy": {
+   "works": 4,
+   "words": 9630
+  },
+  "Dragon Knights": {
+   "works": 1,
+   "words": 9621
+  },
+  "Love So Life": {
+   "works": 3,
+   "words": 9610
+  },
+  "Horitsuba Gakuen": {
+   "works": 2,
+   "words": 9603
+  },
+  "Gakeun Heaven": {
+   "works": 1,
+   "words": 9594
+  },
+  "Ib x Inuyasha": {
+   "works": 1,
+   "words": 9592
+  },
+  "Dengeki Daisy": {
+   "works": 3,
+   "words": 9555
+  },
+  "Blue Exorcist x Inuyasha": {
+   "works": 1,
+   "words": 9545
+  },
+  "Record of a Fallen Vampire": {
+   "works": 1,
+   "words": 9511
+  },
+  "My Hero Academia x One Punch Man": {
+   "works": 1,
+   "words": 9497
+  },
+  "Naruto x No. 6": {
+   "works": 1,
+   "words": 9483
+  },
+  "Hyperdimension Neptunia x World Only God Knows": {
+   "works": 1,
+   "words": 9455
+  },
+  "Lucky Star x Vocaloid": {
+   "works": 1,
+   "words": 9447
+  },
+  "Fairy Tail x Free!": {
+   "works": 1,
+   "words": 9436
+  },
+  "Durarara!! x Kuroko no Basuke": {
+   "works": 1,
+   "words": 9394
+  },
+  "Hunter x Hunter x Yu Yu Hakusho": {
+   "works": 2,
+   "words": 9375
+  },
+  "Fate x Tsubasa: Reservoir Chronicle": {
+   "works": 3,
+   "words": 9350
+  },
+  "Code Geass x Freezing": {
+   "works": 1,
+   "words": 9340
+  },
+  "Fate x Hell Girl": {
+   "works": 1,
+   "words": 9272
+  },
+  "Fairy Tail x Mahouka Koukou no Rettousei": {
+   "works": 2,
+   "words": 9260
+  },
+  "Faster than a Kiss": {
+   "works": 1,
+   "words": 9251
+  },
+  "Digimon x Fairy Tail": {
+   "works": 3,
+   "words": 9234
+  },
+  "Maria Holic": {
+   "works": 2,
+   "words": 9234
+  },
+  "Dance In The Vampire Bund x Naruto": {
+   "works": 1,
+   "words": 9229
+  },
+  "Love Hina x Noir": {
+   "works": 1,
+   "words": 9227
+  },
+  "Karin": {
+   "works": 4,
+   "words": 9226
+  },
+  "Fate x Kore wa Zombie Desu ka?": {
+   "works": 2,
+   "words": 9219
+  },
+  "Digimon x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 9173
+  },
+  "Hotarubi no Mori e x Natsume's Book of Friends": {
+   "works": 1,
+   "words": 9166
+  },
+  "Corpse Party x Hetalia": {
+   "works": 1,
+   "words": 9130
+  },
+  "Bleach x Blue Exorcist": {
+   "works": 1,
+   "words": 9099
+  },
+  "Majikoi - Oh! Samurai Girls! x Persona": {
+   "works": 1,
+   "words": 9086
+  },
+  "Fushigi Yuugi x Saiunkoku Monogatari": {
+   "works": 1,
+   "words": 9084
+  },
+  "Aikatsu": {
+   "works": 3,
+   "words": 9053
+  },
+  "Lupin III x Magic Kaito": {
+   "works": 1,
+   "words": 9044
+  },
+  "Familiar of Zero x Senki Zesshō Symphogear": {
+   "works": 1,
+   "words": 9024
+  },
+  "Fate x Hunter x Hunter": {
+   "works": 1,
+   "words": 8975
+  },
+  "Kuroko no Basuke x Prince of Tennis": {
+   "works": 3,
+   "words": 8964
+  },
+  "Durarara!! x Ouran High School Host Club": {
+   "works": 1,
+   "words": 8938
+  },
+  "Ronin Warriors x Weiss Kreuz": {
+   "works": 1,
+   "words": 8913
+  },
+  "Dragon Ball x Kenichi the Mightiest Disciple": {
+   "works": 1,
+   "words": 8903
+  },
+  "Cowboy Bebop x Vocaloid": {
+   "works": 4,
+   "words": 8889
+  },
+  "Hatoful Boyfriend x Hetalia": {
+   "works": 1,
+   "words": 8876
+  },
+  "Maid Sama! x Ouran High School Host Club": {
+   "works": 2,
+   "words": 8809
+  },
+  "Meganebu!": {
+   "works": 3,
+   "words": 8807
+  },
+  "Persona x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 8803
+  },
+  "Code Geass x One Piece": {
+   "works": 1,
+   "words": 8803
+  },
+  "Cowboy Bebop x Space Dandy": {
+   "works": 1,
+   "words": 8792
+  },
+  "Attack on Titan x Death Note": {
+   "works": 1,
+   "words": 8786
+  },
+  "Hayate the Combat Butler x Vocaloid": {
+   "works": 2,
+   "words": 8753
+  },
+  "Fafner in the Azure": {
+   "works": 4,
+   "words": 8725
+  },
+  "Digimon x Monster Rancher series": {
+   "works": 1,
+   "words": 8691
+  },
+  "Bleach x Manhwa": {
+   "works": 1,
+   "words": 8665
+  },
+  "D.N.Angel x Gundam": {
+   "works": 1,
+   "words": 8630
+  },
+  "One Piece x Strawberry Panic!": {
+   "works": 1,
+   "words": 8620
+  },
+  "Kara no Kyoukai": {
+   "works": 2,
+   "words": 8609
+  },
+  "Oresama Teacher": {
+   "works": 2,
+   "words": 8600
+  },
+  "Hands Off!": {
+   "works": 2,
+   "words": 8575
+  },
+  "Powerpuff Girls Z x Shugo Chara!": {
+   "works": 1,
+   "words": 8572
+  },
+  "Angel Beats! x Corpse Party": {
+   "works": 1,
+   "words": 8572
+  },
+  "Saint Knight's Tale": {
+   "works": 1,
+   "words": 8544
+  },
+  "Moribito": {
+   "works": 2,
+   "words": 8540
+  },
+  "Nukoduke": {
+   "works": 1,
+   "words": 8478
+  },
+  "Seikon No Qwaser": {
+   "works": 3,
+   "words": 8410
+  },
+  "Kantai Collection x Naruto": {
+   "works": 1,
+   "words": 8393
+  },
+  "Cardfight!! Vanguard x Vocaloid": {
+   "works": 1,
+   "words": 8348
+  },
+  "Love Lab": {
+   "works": 1,
+   "words": 8318
+  },
+  "Bleach x Chobits": {
+   "works": 1,
+   "words": 8298
+  },
+  "Dragon Ball x Needless": {
+   "works": 1,
+   "words": 8286
+  },
+  "Banana Fish": {
+   "works": 4,
+   "words": 8250
+  },
+  "Code Geass x Gakuen Alice": {
+   "works": 1,
+   "words": 8229
+  },
+  "Guin Saga": {
+   "works": 2,
+   "words": 8208
+  },
+  "Bleach x Vocaloid": {
+   "works": 1,
+   "words": 8201
+  },
+  "Cardcaptor Sakura x Vampire Knight": {
+   "works": 2,
+   "words": 8169
+  },
+  "Black Rock Shooter x Negima! Magister Negi Magi": {
+   "works": 1,
+   "words": 8112
+  },
+  "Okane ga Nai": {
+   "works": 3,
+   "words": 8108
+  },
+  "Blue Exorcist x Black Butler": {
+   "works": 2,
+   "words": 8104
+  },
+  "Familiar of Zero x Kill la Kill": {
+   "works": 2,
+   "words": 8099
+  },
+  "Ichigo Mashimaro": {
+   "works": 4,
+   "words": 8082
+  },
+  "Dog Days": {
+   "works": 3,
+   "words": 8081
+  },
+  "Hellsing x Vampire Knight": {
+   "works": 1,
+   "words": 8075
+  },
+  "Strike the Blood": {
+   "works": 3,
+   "words": 8059
+  },
+  "Bubblegum Crisis x Claymore": {
+   "works": 1,
+   "words": 8054
+  },
+  "Bleach x Guyver": {
+   "works": 1,
+   "words": 8048
+  },
+  "Gokusen x Rookies": {
+   "works": 1,
+   "words": 8028
+  },
+  "Fairy Tail x Ranma ½": {
+   "works": 1,
+   "words": 8016
+  },
+  "Familiar of Zero x Girls und Panzer": {
+   "works": 1,
+   "words": 8012
+  },
+  "Katekyo Hitman Reborn! x Uta no Prince-sama": {
+   "works": 1,
+   "words": 7996
+  },
+  "Togainu no Chi": {
+   "works": 2,
+   "words": 7977
+  },
+  "Rurouni Kenshin x X (CLAMP)": {
+   "works": 1,
+   "words": 7974
+  },
+  "Oh My Goddess! x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 7916
+  },
+  "Fate x Higurashi / Umineko": {
+   "works": 3,
+   "words": 7909
+  },
+  "Bleach x Prince of Tennis": {
+   "works": 1,
+   "words": 7887
+  },
+  "Polar Bear's Café": {
+   "works": 1,
+   "words": 7870
+  },
+  "Fate x Seirei Tsukai no Blade Dance": {
+   "works": 1,
+   "words": 7846
+  },
+  "Fate x Seikon No Qwaser": {
+   "works": 1,
+   "words": 7836
+  },
+  "Gokusen x Orthros no Inu": {
+   "works": 1,
+   "words": 7812
+  },
+  "Dragon Ball x Hamtaro": {
+   "works": 1,
+   "words": 7795
+  },
+  "Barajou no Kiss": {
+   "works": 3,
+   "words": 7763
+  },
+  "Magical Girl Lyrical Nanoha x Ro-Kyu-Bu!": {
+   "works": 1,
+   "words": 7715
+  },
+  "Honey x Honey Drop": {
+   "works": 2,
+   "words": 7671
+  },
+  "Fairy Tail x Kagerou Days": {
+   "works": 1,
+   "words": 7669
+  },
+  "D.Gray-man x Gakuen Alice": {
+   "works": 1,
+   "words": 7656
+  },
+  "Detective Conan x Inazuma Eleven": {
+   "works": 1,
+   "words": 7635
+  },
+  "Fate x Legend of the Legendary Heroes": {
+   "works": 1,
+   "words": 7611
+  },
+  "Hakushaku to Yousei": {
+   "works": 3,
+   "words": 7610
+  },
+  "High School DxD x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 7601
+  },
+  "Medaka Box x Naruto": {
+   "works": 1,
+   "words": 7588
+  },
+  "Arpeggio of Blue Steel": {
+   "works": 1,
+   "words": 7584
+  },
+  "Dragon Ball x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 7530
+  },
+  "Campione! x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 7498
+  },
+  "Gakuen Alice x Prince of Tennis": {
+   "works": 1,
+   "words": 7374
+  },
+  "Eiken": {
+   "works": 2,
+   "words": 7354
+  },
+  "Bleach x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 7317
+  },
+  "Tail of the Moon": {
+   "works": 2,
+   "words": 7294
+  },
+  "Rosario + Vampire x Yu Yu Hakusho": {
+   "works": 2,
+   "words": 7293
+  },
+  "Oh My Goddess! x Sailor Moon": {
+   "works": 1,
+   "words": 7288
+  },
+  "Dragon Ball x Queen's Blade": {
+   "works": 1,
+   "words": 7277
+  },
+  "Fruits Basket x Hellsing": {
+   "works": 1,
+   "words": 7272
+  },
+  "The Girl Who Leapt Through Time": {
+   "works": 3,
+   "words": 7253
+  },
+  "Fullmetal Alchemist x Hetalia": {
+   "works": 2,
+   "words": 7245
+  },
+  "Bakuman": {
+   "works": 4,
+   "words": 7226
+  },
+  "Dazzle x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 7222
+  },
+  "Bleach x Mononoke": {
+   "works": 1,
+   "words": 7217
+  },
+  "Fate x Katawa Shoujo": {
+   "works": 1,
+   "words": 7202
+  },
+  "D.Gray-man x Persona": {
+   "works": 1,
+   "words": 7183
+  },
+  "Fairy Tail x Shugo Chara!": {
+   "works": 3,
+   "words": 7151
+  },
+  "Hamtaro": {
+   "works": 3,
+   "words": 7144
+  },
+  "Ghost Hunt x Black Butler": {
+   "works": 1,
+   "words": 7137
+  },
+  "Black Rock Shooter x Kämpfer": {
+   "works": 1,
+   "words": 7136
+  },
+  "Bleach x Wolf's Rain": {
+   "works": 1,
+   "words": 7131
+  },
+  "Sakura Hime Kaden": {
+   "works": 2,
+   "words": 7127
+  },
+  "Inazuma Eleven x Metal Fight Beyblade": {
+   "works": 1,
+   "words": 7089
+  },
+  "Digimon x Soul Eater": {
+   "works": 4,
+   "words": 7071
+  },
+  "CROSS ANGE Rondo of Angel and Dragon x Naruto": {
+   "works": 1,
+   "words": 7058
+  },
+  "Angel's Feather": {
+   "works": 1,
+   "words": 7053
+  },
+  "Snow White with the Red Hair": {
+   "works": 1,
+   "words": 7048
+  },
+  "Psychic Academy": {
+   "works": 3,
+   "words": 7045
+  },
+  "Familiar of Zero x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 7041
+  },
+  "Gundam x Touhou": {
+   "works": 1,
+   "words": 7033
+  },
+  "Bookmark of Demise Project": {
+   "works": 6,
+   "words": 7017
+  },
+  "Familiar of Zero x Sora no Otoshimono": {
+   "works": 1,
+   "words": 7004
+  },
+  "Guilty Crown x Infinite Stratos": {
+   "works": 1,
+   "words": 6978
+  },
+  "One Outs": {
+   "works": 1,
+   "words": 6939
+  },
+  "Cardfight!! Vanguard x To Love-Ru": {
+   "works": 1,
+   "words": 6933
+  },
+  "My Forged Wedding x My Sweet Bodyguard": {
+   "works": 1,
+   "words": 6931
+  },
+  "Attack on Titan x Familiar of Zero": {
+   "works": 1,
+   "words": 6930
+  },
+  "Hayate x Blade": {
+   "works": 4,
+   "words": 6895
+  },
+  "Dog Days x Infinite Stratos": {
+   "works": 1,
+   "words": 6892
+  },
+  "Inuyasha x Letter Bee": {
+   "works": 1,
+   "words": 6860
+  },
+  "Attack on Titan x Dragon Ball": {
+   "works": 1,
+   "words": 6859
+  },
+  "Inuyasha x Shugo Chara!": {
+   "works": 3,
+   "words": 6847
+  },
+  "Grave of the Fireflies": {
+   "works": 1,
+   "words": 6832
+  },
+  "Akame ga Kiru x D.Gray-man": {
+   "works": 2,
+   "words": 6829
+  },
+  "Attack on Titan x Fullmetal Alchemist": {
+   "works": 2,
+   "words": 6801
+  },
+  "Death Note x Pokémon": {
+   "works": 2,
+   "words": 6773
+  },
+  "Code Geass x Fruits Basket": {
+   "works": 1,
+   "words": 6750
+  },
+  "Fullmetal Alchemist x Hellsing": {
+   "works": 1,
+   "words": 6740
+  },
+  "Arrietty": {
+   "works": 2,
+   "words": 6737
+  },
+  "JoJo's Bizarre Adventure x Negima! Magister Negi Magi": {
+   "works": 1,
+   "words": 6712
+  },
+  "Bloody Monday": {
+   "works": 4,
+   "words": 6705
+  },
+  "Kyo kara Maoh! x Persona": {
+   "works": 1,
+   "words": 6698
+  },
+  "Love Hina x One Piece": {
+   "works": 1,
+   "words": 6686
+  },
+  "Gravitation x Junjou Romantica": {
+   "works": 1,
+   "words": 6679
+  },
+  "Bleach x Death Parade": {
+   "works": 1,
+   "words": 6679
+  },
+  "Negima! Magister Negi Magi x Rozen Maiden": {
+   "works": 1,
+   "words": 6672
+  },
+  "Ichiban Ushiro no Dai Maō x Rosario + Vampire": {
+   "works": 1,
+   "words": 6659
+  },
+  "Wolf Girl and Black Prince": {
+   "works": 3,
+   "words": 6658
+  },
+  "Guyver x Ranma ½": {
+   "works": 1,
+   "words": 6654
+  },
+  "Fruits Basket x Hirunaka no Ryuusei": {
+   "works": 1,
+   "words": 6652
+  },
+  "Bleach x World Only God Knows": {
+   "works": 1,
+   "words": 6637
+  },
+  "Rewrite": {
+   "works": 1,
+   "words": 6631
+  },
+  "Dragon Ball x Kill la Kill": {
+   "works": 1,
+   "words": 6599
+  },
+  "Magical Girl Lyrical Nanoha x Slayers": {
+   "works": 1,
+   "words": 6595
+  },
+  "Hetalia x Alice in the Country of Hearts": {
+   "works": 1,
+   "words": 6563
+  },
+  "A Certain Scientific Railgun x Highschool of the Dead": {
+   "works": 1,
+   "words": 6560
+  },
+  "Baka and Test - Summon the Beasts x Deadman Wonderland": {
+   "works": 1,
+   "words": 6528
+  },
+  "D.N.Angel x Get Backers": {
+   "works": 1,
+   "words": 6470
+  },
+  "Eyeshield 21 x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 6421
+  },
+  "Welcome to the NHK": {
+   "works": 1,
+   "words": 6414
+  },
+  "Mawaru Penguindrum": {
+   "works": 3,
+   "words": 6367
+  },
+  "Oh My Goddess! x Sgt. Frog": {
+   "works": 1,
+   "words": 6352
+  },
+  "D.Gray-man x Gintama": {
+   "works": 3,
+   "words": 6327
+  },
+  "Bleach x Touhou": {
+   "works": 1,
+   "words": 6305
+  },
+  "Clover": {
+   "works": 2,
+   "words": 6293
+  },
+  "Magical Girl Lyrical Nanoha x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 6289
+  },
+  "Zaregoto Series": {
+   "works": 1,
+   "words": 6284
+  },
+  "Inuyasha x Record of a Fallen Vampire": {
+   "works": 2,
+   "words": 6278
+  },
+  "Horizon in the Middle of Nowhere": {
+   "works": 1,
+   "words": 6239
+  },
+  "Hanayamata": {
+   "works": 2,
+   "words": 6238
+  },
+  "Familiar of Zero x Ubel Blatt": {
+   "works": 1,
+   "words": 6234
+  },
+  "Fruits Basket x Ghost Hunt": {
+   "works": 1,
+   "words": 6180
+  },
+  "Gravitation x Inuyasha": {
+   "works": 1,
+   "words": 6174
+  },
+  "Kuroko no Basuke x Natsume's Book of Friends": {
+   "works": 1,
+   "words": 6168
+  },
+  "Baka and Test - Summon the Beasts x Danganronpa": {
+   "works": 1,
+   "words": 6110
+  },
+  "Kamigami No Asobi x Uta no Prince-sama": {
+   "works": 1,
+   "words": 6092
+  },
+  "Bleach x Gintama": {
+   "works": 2,
+   "words": 6069
+  },
+  "Fairy Tail x Kenichi the Mightiest Disciple": {
+   "works": 1,
+   "words": 6056
+  },
+  "Black Cat x Death Note": {
+   "works": 1,
+   "words": 6043
+  },
+  "Kamisama Dolls": {
+   "works": 1,
+   "words": 6033
+  },
+  "Cardcaptor Sakura x Tai Chi Chasers": {
+   "works": 1,
+   "words": 5996
+  },
+  "Kiki's Delivery Service": {
+   "works": 1,
+   "words": 5986
+  },
+  "Gakuen Alice x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 5915
+  },
+  "Gakuen Alice x Mermaid Melody": {
+   "works": 1,
+   "words": 5911
+  },
+  "Durarara!! x Hunter x Hunter": {
+   "works": 1,
+   "words": 5892
+  },
+  "One Piece x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 5863
+  },
+  "Toaru Majutsu no Index x Touhou": {
+   "works": 1,
+   "words": 5861
+  },
+  "Digimon x Rosario + Vampire": {
+   "works": 1,
+   "words": 5858
+  },
+  "Cat's Eye": {
+   "works": 1,
+   "words": 5857
+  },
+  "Hetalia x Soul Eater": {
+   "works": 2,
+   "words": 5851
+  },
+  "Kodomo no Jikan": {
+   "works": 1,
+   "words": 5844
+  },
+  "Astro Boy x Pokémon": {
+   "works": 1,
+   "words": 5826
+  },
+  "Sailor Moon x Space Battleship Yamato": {
+   "works": 1,
+   "words": 5813
+  },
+  "Aishiteruze Baby": {
+   "works": 2,
+   "words": 5806
+  },
+  "Black Rock Shooter x Code Geass": {
+   "works": 1,
+   "words": 5797
+  },
+  "Another x Corpse Party": {
+   "works": 1,
+   "words": 5796
+  },
+  "Hetalia x Naruto": {
+   "works": 3,
+   "words": 5795
+  },
+  "Duel Masters x Pokémon": {
+   "works": 1,
+   "words": 5787
+  },
+  "Devil and Lovesongs": {
+   "works": 3,
+   "words": 5745
+  },
+  "Magical Girl Lyrical Nanoha x Shugo Chara!": {
+   "works": 1,
+   "words": 5734
+  },
+  "Cardfight!! Vanguard x Love Live!": {
+   "works": 1,
+   "words": 5724
+  },
+  "Ayashi no Ceres": {
+   "works": 2,
+   "words": 5709
+  },
+  "Shaman King x Vampire Knight": {
+   "works": 1,
+   "words": 5702
+  },
+  "Code Geass x Touhou": {
+   "works": 1,
+   "words": 5701
+  },
+  "Gintama x Hetalia": {
+   "works": 1,
+   "words": 5669
+  },
+  "Digimon x Maburaho": {
+   "works": 1,
+   "words": 5657
+  },
+  "Bleach x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 5606
+  },
+  "Boku wa Ookami": {
+   "works": 1,
+   "words": 5603
+  },
+  "Hellsing x Pokémon": {
+   "works": 2,
+   "words": 5598
+  },
+  "Garden of Words": {
+   "works": 1,
+   "words": 5582
+  },
+  "Bleach x Negima! Magister Negi Magi": {
+   "works": 1,
+   "words": 5571
+  },
+  "Fate x Kaze no Stigma": {
+   "works": 1,
+   "words": 5569
+  },
+  "Corpse Party x Fairy Tail": {
+   "works": 1,
+   "words": 5507
+  },
+  "Boku wa Tomodachi ga Sukunai": {
+   "works": 2,
+   "words": 5494
+  },
+  "Death Note x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 5485
+  },
+  "Mononoke": {
+   "works": 1,
+   "words": 5483
+  },
+  "Cantarella": {
+   "works": 1,
+   "words": 5442
+  },
+  "Aphorism": {
+   "works": 1,
+   "words": 5435
+  },
+  "Campione! x Touhou": {
+   "works": 1,
+   "words": 5423
+  },
+  "Hellsing x Hetalia": {
+   "works": 1,
+   "words": 5413
+  },
+  "Magical Girl Lyrical Nanoha x s-CRY-ed": {
+   "works": 1,
+   "words": 5406
+  },
+  "W Juliet": {
+   "works": 1,
+   "words": 5398
+  },
+  "From Up on Poppy Hill": {
+   "works": 2,
+   "words": 5380
+  },
+  "Highschool of the Dead x Jormungand": {
+   "works": 1,
+   "words": 5336
+  },
+  "Naruto x Rose of Versailles": {
+   "works": 1,
+   "words": 5324
+  },
+  "Vassalord": {
+   "works": 3,
+   "words": 5324
+  },
+  "One Piece x Tokyo Ghoul": {
+   "works": 1,
+   "words": 5316
+  },
+  "Fate x Queen's Blade": {
+   "works": 1,
+   "words": 5304
+  },
+  "Fate x Tiger & Bunny": {
+   "works": 1,
+   "words": 5296
+  },
+  "Fate x Gintama": {
+   "works": 1,
+   "words": 5295
+  },
+  "Strobe Edge": {
+   "works": 1,
+   "words": 5275
+  },
+  "Tumbling": {
+   "works": 2,
+   "words": 5246
+  },
+  "Familiar of Zero x Rave Master": {
+   "works": 1,
+   "words": 5240
+  },
+  "Red Data Girl": {
+   "works": 3,
+   "words": 5231
+  },
+  "My Little Sister Can't Be This Cute x Naruto": {
+   "works": 2,
+   "words": 5231
+  },
+  "ManHua x Saiyuki": {
+   "works": 1,
+   "words": 5221
+  },
+  "Outlaw Star x Pokémon": {
+   "works": 1,
+   "words": 5210
+  },
+  "Natsume's Book of Friends x xxxHOLiC": {
+   "works": 2,
+   "words": 5181
+  },
+  "Naruto x Tai Chi Chasers": {
+   "works": 1,
+   "words": 5178
+  },
+  "Date A Live x Hyperdimension Neptunia": {
+   "works": 1,
+   "words": 5162
+  },
+  "B-Daman": {
+   "works": 3,
+   "words": 5154
+  },
+  "Oda Nobuna no Yabou": {
+   "works": 2,
+   "words": 5154
+  },
+  "Brothers Conflict x Clannad": {
+   "works": 1,
+   "words": 5143
+  },
+  "Zettai Karen Children": {
+   "works": 1,
+   "words": 5142
+  },
+  "Digimon x Pokémon x Love Live!": {
+   "works": 1,
+   "words": 5126
+  },
+  "Morenatsu": {
+   "works": 2,
+   "words": 5119
+  },
+  "Code Geass x Wolf's Rain": {
+   "works": 1,
+   "words": 5118
+  },
+  "Detective Conan x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 5064
+  },
+  "Naruto x Seven Deadly Sins": {
+   "works": 1,
+   "words": 5052
+  },
+  "Bleach x Black Butler": {
+   "works": 1,
+   "words": 5033
+  },
+  "Gundam x Ouran High School Host Club": {
+   "works": 1,
+   "words": 5021
+  },
+  "Puella Magi Madoka Magica x Yumeiro Pâtissière": {
+   "works": 1,
+   "words": 5008
+  },
+  "Ping Pong": {
+   "works": 2,
+   "words": 5003
+  },
+  "Honey Hunt": {
+   "works": 2,
+   "words": 4992
+  },
+  "Fullmetal Alchemist x High School DxD": {
+   "works": 1,
+   "words": 4991
+  },
+  "Bleach x Darker than Black": {
+   "works": 1,
+   "words": 4975
+  },
+  "Negima! Magister Negi Magi x Ouran High School Host Club": {
+   "works": 2,
+   "words": 4943
+  },
+  "Darker than Black x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 4926
+  },
+  "Code Geass x Kyo kara Maoh!": {
+   "works": 2,
+   "words": 4918
+  },
+  "Noir x Revolutionary Girl Utena": {
+   "works": 1,
+   "words": 4914
+  },
+  "Sugar Sugar Rune": {
+   "works": 2,
+   "words": 4901
+  },
+  "Maiden Rose": {
+   "works": 4,
+   "words": 4891
+  },
+  "Haunted Junction": {
+   "works": 1,
+   "words": 4891
+  },
+  "Durarara!! x Tokyo Babylon": {
+   "works": 1,
+   "words": 4889
+  },
+  "Fate x Gunslinger Girl": {
+   "works": 1,
+   "words": 4887
+  },
+  "Senki Zesshō Symphogear": {
+   "works": 3,
+   "words": 4887
+  },
+  "You Are Umasou": {
+   "works": 1,
+   "words": 4882
+  },
+  "Ranma ½ x Ronin Warriors": {
+   "works": 1,
+   "words": 4861
+  },
+  "Star Driver 輝きのタクト": {
+   "works": 1,
+   "words": 4854
+  },
+  "Hetalia x Tokyo Ghoul": {
+   "works": 2,
+   "words": 4843
+  },
+  "Sasamekikoto": {
+   "works": 1,
+   "words": 4839
+  },
+  "Familiar of Zero x Gundam": {
+   "works": 1,
+   "words": 4830
+  },
+  "Beelzebub x Lucky Star": {
+   "works": 1,
+   "words": 4816
+  },
+  "Angel Beats! x High School DxD": {
+   "works": 1,
+   "words": 4814
+  },
+  "Familiar of Zero x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 4802
+  },
+  "Bleach x Record of Lodoss War": {
+   "works": 1,
+   "words": 4791
+  },
+  "Darker than Black x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 4764
+  },
+  "Fruits Basket x Black Butler": {
+   "works": 1,
+   "words": 4763
+  },
+  "Eden of The East": {
+   "works": 3,
+   "words": 4761
+  },
+  "Chobits": {
+   "works": 3,
+   "words": 4750
+  },
+  "Bleach x Hetalia": {
+   "works": 1,
+   "words": 4745
+  },
+  "Fate x Full Metal Panic!": {
+   "works": 1,
+   "words": 4735
+  },
+  "Brothers Conflict x D.Gray-man": {
+   "works": 1,
+   "words": 4733
+  },
+  "Naruto x Speed Racer": {
+   "works": 1,
+   "words": 4721
+  },
+  "Naruto x Pet Shop of Horrors": {
+   "works": 3,
+   "words": 4693
+  },
+  "Legend of the Legendary Heroes x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 4692
+  },
+  "Dragon Ball x Space Dandy": {
+   "works": 1,
+   "words": 4682
+  },
+  "Gundam Build Fighters x Naruto": {
+   "works": 2,
+   "words": 4677
+  },
+  "Bakugan x Dinosaur King": {
+   "works": 1,
+   "words": 4674
+  },
+  "Wolf Guy": {
+   "works": 2,
+   "words": 4660
+  },
+  "MÄR": {
+   "works": 1,
+   "words": 4635
+  },
+  "Hellsing x Kill la Kill": {
+   "works": 1,
+   "words": 4625
+  },
+  "Gosick": {
+   "works": 2,
+   "words": 4601
+  },
+  "Angel Beats! x Another": {
+   "works": 1,
+   "words": 4599
+  },
+  "Attack on Titan x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 4588
+  },
+  "Day Break Illusion": {
+   "works": 1,
+   "words": 4585
+  },
+  "Seraph of the End": {
+   "works": 1,
+   "words": 4574
+  },
+  "Battle Girls - Time Paradox": {
+   "works": 1,
+   "words": 4563
+  },
+  "Naruto x Sora no Otoshimono": {
+   "works": 2,
+   "words": 4535
+  },
+  "Naruto x Vocaloid": {
+   "works": 1,
+   "words": 4535
+  },
+  "Kenichi the Mightiest Disciple x Ranma ½": {
+   "works": 1,
+   "words": 4525
+  },
+  "Aitsu no Daihonmei": {
+   "works": 2,
+   "words": 4498
+  },
+  "Kokoro Connect": {
+   "works": 3,
+   "words": 4492
+  },
+  "Bleach x Problem Children Are Coming from Another World": {
+   "works": 1,
+   "words": 4483
+  },
+  "Baka and Test - Summon the Beasts x Boku wa Tomodachi ga Sukunai": {
+   "works": 1,
+   "words": 4481
+  },
+  "Is the Order a Rabbit?": {
+   "works": 2,
+   "words": 4472
+  },
+  "JoJo's Bizarre Adventure x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 4452
+  },
+  "Detective Conan x Naruto": {
+   "works": 2,
+   "words": 4451
+  },
+  "Bleach x Vampire Knight": {
+   "works": 1,
+   "words": 4449
+  },
+  "Devilman": {
+   "works": 1,
+   "words": 4445
+  },
+  "Gintama x Nurarihyon no Mago": {
+   "works": 1,
+   "words": 4431
+  },
+  "D.N.Angel x Hetalia": {
+   "works": 1,
+   "words": 4429
+  },
+  "Princess Tutu x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 4428
+  },
+  "Familiar of Zero x Higurashi / Umineko": {
+   "works": 1,
+   "words": 4415
+  },
+  "CROSS ANGE Rondo of Angel and Dragon": {
+   "works": 1,
+   "words": 4414
+  },
+  "Great Teacher Onizuka": {
+   "works": 1,
+   "words": 4387
+  },
+  "Tamako Market": {
+   "works": 3,
+   "words": 4367
+  },
+  "Rosario + Vampire x School Days": {
+   "works": 1,
+   "words": 4361
+  },
+  "Fairy Tail x Hamtaro": {
+   "works": 1,
+   "words": 4355
+  },
+  "Infinite Stratos x Sekirei": {
+   "works": 1,
+   "words": 4354
+  },
+  "Blue Exorcist x Danganronpa": {
+   "works": 2,
+   "words": 4350
+  },
+  "Deltora Quest": {
+   "works": 2,
+   "words": 4345
+  },
+  "One Piece x Working!!": {
+   "works": 1,
+   "words": 4339
+  },
+  "Negima! Magister Negi Magi x Prince of Tennis": {
+   "works": 1,
+   "words": 4335
+  },
+  "Captain Tsubasa x Pretty Cure": {
+   "works": 1,
+   "words": 4325
+  },
+  "Asobi ni Iku yo!": {
+   "works": 1,
+   "words": 4320
+  },
+  "Monthly Girls' Nozaki-kun x Ouran High School Host Club": {
+   "works": 1,
+   "words": 4317
+  },
+  "To Love-Ru x World Only God Knows": {
+   "works": 1,
+   "words": 4316
+  },
+  "Warui Koto Shitai": {
+   "works": 1,
+   "words": 4310
+  },
+  "Black Butler x Rosario + Vampire": {
+   "works": 1,
+   "words": 4291
+  },
+  "Fruits Basket x Naruto": {
+   "works": 1,
+   "words": 4262
+  },
+  "Gundam Build Fighters x Love Live!": {
+   "works": 1,
+   "words": 4256
+  },
+  "Glass Mask": {
+   "works": 2,
+   "words": 4255
+  },
+  "Hetalia x Vampire Knight": {
+   "works": 2,
+   "words": 4246
+  },
+  "El Cazador de la Bruja": {
+   "works": 2,
+   "words": 4245
+  },
+  "Code Breaker x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 4229
+  },
+  "Love Celeb": {
+   "works": 1,
+   "words": 4228
+  },
+  "Inuyasha x My Little Monster": {
+   "works": 1,
+   "words": 4206
+  },
+  "Bleach x Deadman Wonderland": {
+   "works": 1,
+   "words": 4205
+  },
+  "Amagi Brilliant Park": {
+   "works": 2,
+   "words": 4201
+  },
+  "Ghost Hunt x Soul Eater": {
+   "works": 2,
+   "words": 4199
+  },
+  "My Teen Romantic Comedy SNAFU x Naruto": {
+   "works": 1,
+   "words": 4189
+  },
+  "Chobits x Naruto": {
+   "works": 1,
+   "words": 4184
+  },
+  "Metal Fight Beyblade x Pokémon": {
+   "works": 2,
+   "words": 4179
+  },
+  "s-CRY-ed": {
+   "works": 1,
+   "words": 4179
+  },
+  "Dragon Ball x Negima! Magister Negi Magi": {
+   "works": 3,
+   "words": 4171
+  },
+  "Beck": {
+   "works": 2,
+   "words": 4162
+  },
+  "Digimon x Senki Zesshō Symphogear": {
+   "works": 1,
+   "words": 4145
+  },
+  "Digimon x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 4123
+  },
+  "Ranma ½ x Shaman King": {
+   "works": 1,
+   "words": 4122
+  },
+  "Inuyasha x Kamisama Hajimemashita": {
+   "works": 2,
+   "words": 4112
+  },
+  "Matantei Loki Ragnarok": {
+   "works": 1,
+   "words": 4112
+  },
+  "Arashi no Yoru ni": {
+   "works": 2,
+   "words": 4086
+  },
+  "Burst Angel": {
+   "works": 3,
+   "words": 4070
+  },
+  "Evillious Chronicles x Vocaloid": {
+   "works": 1,
+   "words": 4070
+  },
+  "Fate x Shingeki no Kyojin": {
+   "works": 2,
+   "words": 4027
+  },
+  "Katekyo Hitman Reborn! x Zombie-Loan": {
+   "works": 1,
+   "words": 4016
+  },
+  "Fate x Princess Lover!": {
+   "works": 2,
+   "words": 3994
+  },
+  "Jackals": {
+   "works": 1,
+   "words": 3987
+  },
+  "Familiar of Zero x Vandread": {
+   "works": 1,
+   "words": 3986
+  },
+  "Ib x Kagerou Days": {
+   "works": 1,
+   "words": 3982
+  },
+  "Gundam x Squid Girl": {
+   "works": 1,
+   "words": 3973
+  },
+  "Higurashi / Umineko x Persona": {
+   "works": 1,
+   "words": 3969
+  },
+  "Fate x Highschool of the Dead": {
+   "works": 1,
+   "words": 3967
+  },
+  "Gundam x Valvrave the Liberator": {
+   "works": 1,
+   "words": 3964
+  },
+  "Saiunkoku Monogatari": {
+   "works": 2,
+   "words": 3957
+  },
+  "Fullmetal Alchemist x Nurarihyon no Mago": {
+   "works": 1,
+   "words": 3939
+  },
+  "Kuragehime": {
+   "works": 1,
+   "words": 3925
+  },
+  "Mai-HiME x Rurouni Kenshin": {
+   "works": 1,
+   "words": 3914
+  },
+  "K-ON! x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 3910
+  },
+  "Digimon x One Piece": {
+   "works": 1,
+   "words": 3898
+  },
+  "Witch Craft Works": {
+   "works": 3,
+   "words": 3893
+  },
+  "Rurouni Kenshin x Touhou": {
+   "works": 1,
+   "words": 3880
+  },
+  "Fate x Hayate the Combat Butler": {
+   "works": 1,
+   "words": 3868
+  },
+  "D.Gray-man x Pokémon": {
+   "works": 1,
+   "words": 3846
+  },
+  "Code Geass x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 3806
+  },
+  "La Corda d'Oro x Yumeiro Pâtissière": {
+   "works": 1,
+   "words": 3795
+  },
+  "Free! x Prince of Tennis": {
+   "works": 1,
+   "words": 3791
+  },
+  "Campione! x Megami Tensei": {
+   "works": 1,
+   "words": 3783
+  },
+  "Fushigi Yuugi x Vampire Knight": {
+   "works": 1,
+   "words": 3759
+  },
+  "Kaze Hikaru": {
+   "works": 1,
+   "words": 3750
+  },
+  "Gakuen Alice x Yumeiro Pâtissière": {
+   "works": 1,
+   "words": 3739
+  },
+  "Fate x Hetalia": {
+   "works": 2,
+   "words": 3732
+  },
+  "Naruto x Prince of Tennis": {
+   "works": 2,
+   "words": 3718
+  },
+  "Claymore x Dragon Ball": {
+   "works": 1,
+   "words": 3714
+  },
+  "Read or Die": {
+   "works": 1,
+   "words": 3682
+  },
+  "Gintama x Kuroko no Basuke": {
+   "works": 1,
+   "words": 3671
+  },
+  "Devil Lady": {
+   "works": 2,
+   "words": 3660
+  },
+  "Dragon Ball x Princess Tutu": {
+   "works": 1,
+   "words": 3605
+  },
+  "Claymore x Rosario + Vampire": {
+   "works": 1,
+   "words": 3599
+  },
+  "D-Frag": {
+   "works": 2,
+   "words": 3585
+  },
+  "One Piece x Sailor Moon": {
+   "works": 1,
+   "words": 3582
+  },
+  "The Cat Returns x Spirited Away": {
+   "works": 1,
+   "words": 3579
+  },
+  "DRAMAtical Murder x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 3579
+  },
+  "Code Geass x Gargantia on the Verdurous Planet": {
+   "works": 1,
+   "words": 3576
+  },
+  "Sekirei x World Only God Knows": {
+   "works": 1,
+   "words": 3573
+  },
+  "Free! x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 3565
+  },
+  "Familiar of Zero x Shugo Chara!": {
+   "works": 1,
+   "words": 3564
+  },
+  "Astro Boy x Powerpuff Girls Z": {
+   "works": 1,
+   "words": 3531
+  },
+  "Toaru Majutsu no Index x Tsukihime": {
+   "works": 1,
+   "words": 3529
+  },
+  "Blue Exorcist x Durarara!!": {
+   "works": 2,
+   "words": 3525
+  },
+  "Dragon Ball x MÄR": {
+   "works": 1,
+   "words": 3518
+  },
+  "Inuyasha x Skip Beat!": {
+   "works": 1,
+   "words": 3516
+  },
+  "Digimon x Dragon Ball": {
+   "works": 1,
+   "words": 3509
+  },
+  "Puella Magi Madoka Magica x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 3491
+  },
+  "Corpse Party x Saint Seiya": {
+   "works": 1,
+   "words": 3489
+  },
+  "Cardcaptor Sakura x Majin Tantei Nougami Neuro": {
+   "works": 1,
+   "words": 3482
+  },
+  "Bleach x Ouran High School Host Club": {
+   "works": 2,
+   "words": 3465
+  },
+  "D.Gray-man x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 3465
+  },
+  "Saint Tail": {
+   "works": 1,
+   "words": 3463
+  },
+  "Angel Beats! x Tokyo Ravens": {
+   "works": 1,
+   "words": 3448
+  },
+  "Fate x Lucifer and Biscuit Hammer": {
+   "works": 1,
+   "words": 3447
+  },
+  "Katekyo Hitman Reborn! x Prince of Tennis": {
+   "works": 2,
+   "words": 3438
+  },
+  "Squid Girl": {
+   "works": 1,
+   "words": 3433
+  },
+  "One Piece x Squid Girl": {
+   "works": 1,
+   "words": 3427
+  },
+  "Cardcaptor Sakura x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 3425
+  },
+  "Sweet Pool": {
+   "works": 2,
+   "words": 3421
+  },
+  "Dragon Ball x School Days": {
+   "works": 1,
+   "words": 3411
+  },
+  "Hellsing x High School DxD": {
+   "works": 1,
+   "words": 3398
+  },
+  "Hunter x Hunter x Medaka Box": {
+   "works": 1,
+   "words": 3395
+  },
+  "Fairy Tail x Noragami": {
+   "works": 1,
+   "words": 3359
+  },
+  "Acchi Kocchi": {
+   "works": 1,
+   "words": 3359
+  },
+  "Evillious Chronicles x Fate": {
+   "works": 1,
+   "words": 3348
+  },
+  "AMNESIA": {
+   "works": 2,
+   "words": 3343
+  },
+  "Ranma ½ x Spirited Away": {
+   "works": 1,
+   "words": 3338
+  },
+  "Cowboy Bebop x Rurouni Kenshin": {
+   "works": 1,
+   "words": 3324
+  },
+  "Only the Ring Finger Knows": {
+   "works": 2,
+   "words": 3323
+  },
+  "Fate x Kuroko no Basuke": {
+   "works": 1,
+   "words": 3322
+  },
+  "Blue Exorcist x D.N.Angel": {
+   "works": 1,
+   "words": 3308
+  },
+  "Maburaho": {
+   "works": 1,
+   "words": 3307
+  },
+  "Gundam x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 3305
+  },
+  "My Neighbor Totoro": {
+   "works": 2,
+   "words": 3285
+  },
+  "Sekirei x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 3275
+  },
+  "Gundam x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 3256
+  },
+  "Gurren Lagann x High School DxD": {
+   "works": 1,
+   "words": 3254
+  },
+  "Cardcaptor Sakura x Suki": {
+   "works": 1,
+   "words": 3242
+  },
+  "High School DxD x Higurashi / Umineko": {
+   "works": 1,
+   "words": 3239
+  },
+  "Persona x Tokyo Ghoul": {
+   "works": 1,
+   "words": 3230
+  },
+  "Naruto x Strawberry Panic!": {
+   "works": 2,
+   "words": 3215
+  },
+  "Kara no Kyoukai x Selector Infected Wixoss": {
+   "works": 1,
+   "words": 3214
+  },
+  "Alice in the Country of Hearts x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 3202
+  },
+  "Aki Sora": {
+   "works": 2,
+   "words": 3202
+  },
+  "Bleach x Hayate the Combat Butler": {
+   "works": 1,
+   "words": 3199
+  },
+  "Sgt. Frog x Soul Eater": {
+   "works": 1,
+   "words": 3197
+  },
+  "Arago": {
+   "works": 2,
+   "words": 3191
+  },
+  "Lucky Star x WataMote": {
+   "works": 1,
+   "words": 3170
+  },
+  "Fairy Tail x Rave Master": {
+   "works": 2,
+   "words": 3155
+  },
+  "Megami Tensei x Rosario + Vampire": {
+   "works": 1,
+   "words": 3145
+  },
+  "Digimon x Megami Tensei": {
+   "works": 1,
+   "words": 3137
+  },
+  "Aesthetica of a Rogue Hero x Rosario + Vampire": {
+   "works": 1,
+   "words": 3124
+  },
+  "Servant × Service": {
+   "works": 2,
+   "words": 3119
+  },
+  "Fushigi Yuugi x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 3100
+  },
+  "Touhou x Vocaloid": {
+   "works": 1,
+   "words": 3099
+  },
+  "Durarara!! x Pokémon": {
+   "works": 1,
+   "words": 3094
+  },
+  "Black Lagoon x Hetalia": {
+   "works": 1,
+   "words": 3080
+  },
+  "Alice in the Country of Hearts x Rozen Maiden": {
+   "works": 1,
+   "words": 3079
+  },
+  "Bleach x Strike Witches": {
+   "works": 2,
+   "words": 3077
+  },
+  "Black Bird": {
+   "works": 2,
+   "words": 3077
+  },
+  "Tokyo Babylon": {
+   "works": 2,
+   "words": 3074
+  },
+  "Attack on Titan x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 3073
+  },
+  "Bastard!!": {
+   "works": 1,
+   "words": 3071
+  },
+  "Tokyo Ravens": {
+   "works": 1,
+   "words": 3064
+  },
+  "Sailor Moon x Vocaloid": {
+   "works": 3,
+   "words": 3063
+  },
+  "AnoHana": {
+   "works": 1,
+   "words": 3058
+  },
+  "Gakuen Alice x This Ugly Yet Beautiful World": {
+   "works": 1,
+   "words": 3036
+  },
+  "Ranma ½ x Tekken Chinmi": {
+   "works": 1,
+   "words": 3017
+  },
+  "Ouran High School Host Club x Wolf Children": {
+   "works": 1,
+   "words": 3004
+  },
+  "Inuyasha x Vampire Hunter D": {
+   "works": 1,
+   "words": 3004
+  },
+  "Devil is a Part-Timer x High School DxD": {
+   "works": 1,
+   "words": 3002
+  },
+  "Haikyu x Tokyo Ghoul": {
+   "works": 1,
+   "words": 3001
+  },
+  "Fate x Muv-Luv": {
+   "works": 2,
+   "words": 2997
+  },
+  "Fu-fu": {
+   "works": 1,
+   "words": 2978
+  },
+  "Bakugan x Digimon x Pokémon": {
+   "works": 1,
+   "words": 2970
+  },
+  "Major": {
+   "works": 1,
+   "words": 2966
+  },
+  "Ghost Hunt x xxxHOLiC": {
+   "works": 1,
+   "words": 2965
+  },
+  "Haikyu x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 2956
+  },
+  "Puella Magi Madoka Magica x Uta no Prince-sama": {
+   "works": 1,
+   "words": 2950
+  },
+  "Katekyo Hitman Reborn! x Nabari no Ou": {
+   "works": 1,
+   "words": 2948
+  },
+  "Naruto x Ristorante Paradiso": {
+   "works": 1,
+   "words": 2930
+  },
+  "Fate x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 2930
+  },
+  "Fullmetal Alchemist x Inuyasha": {
+   "works": 2,
+   "words": 2922
+  },
+  "Ib x Naruto": {
+   "works": 1,
+   "words": 2905
+  },
+  "Bleach x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 2904
+  },
+  "Bleach x Corpse Party": {
+   "works": 1,
+   "words": 2892
+  },
+  "Cowboy Bebop x Tokyo Babylon": {
+   "works": 1,
+   "words": 2887
+  },
+  "Ranma ½ x Yakitate!! Japan": {
+   "works": 2,
+   "words": 2880
+  },
+  "Megami Tensei x Morenatsu": {
+   "works": 1,
+   "words": 2879
+  },
+  "Hell Girl x Hozuki no Reitetsu": {
+   "works": 1,
+   "words": 2865
+  },
+  "Gundam x Magical Girl Lyrical Nanoha": {
+   "works": 1,
+   "words": 2857
+  },
+  "Fullmetal Alchemist x Kaze no Stigma": {
+   "works": 1,
+   "words": 2851
+  },
+  "Rurouni Kenshin x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 2848
+  },
+  "High School DxD x Negima! Magister Negi Magi": {
+   "works": 1,
+   "words": 2848
+  },
+  "Familiar of Zero x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 2825
+  },
+  "Gokusen x Katekyo Hitman Reborn!": {
+   "works": 2,
+   "words": 2819
+  },
+  "Needless": {
+   "works": 2,
+   "words": 2803
+  },
+  "Code Geass x Squid Girl": {
+   "works": 1,
+   "words": 2799
+  },
+  "Free! x Black Butler": {
+   "works": 2,
+   "words": 2797
+  },
+  "Bubblegum Crisis x Moldiver": {
+   "works": 1,
+   "words": 2797
+  },
+  "Needless x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 2795
+  },
+  "Fate x Ronin Warriors": {
+   "works": 1,
+   "words": 2787
+  },
+  "Hetalia x Hikaru no Go": {
+   "works": 1,
+   "words": 2772
+  },
+  "Ginban Kaleidoscope": {
+   "works": 1,
+   "words": 2770
+  },
+  "La Corda d'Oro x Prince of Tennis": {
+   "works": 1,
+   "words": 2770
+  },
+  "Cross Over x Naruto": {
+   "works": 1,
+   "words": 2770
+  },
+  "Okane ga Nai x Vampire Knight": {
+   "works": 1,
+   "words": 2770
+  },
+  "Danganronpa x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 2762
+  },
+  "Saint Oniisan": {
+   "works": 1,
+   "words": 2748
+  },
+  "Fairy Tail x Hellsing": {
+   "works": 1,
+   "words": 2747
+  },
+  "Asobi ni Iku yo! x Naruto": {
+   "works": 1,
+   "words": 2744
+  },
+  "Darker than Black x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 2739
+  },
+  "Nurse Witch Komugi": {
+   "works": 1,
+   "words": 2733
+  },
+  "CANAAN": {
+   "works": 2,
+   "words": 2732
+  },
+  "Slayers x Soul Eater": {
+   "works": 1,
+   "words": 2722
+  },
+  "A Channel": {
+   "works": 1,
+   "words": 2716
+  },
+  "Dragon Ball x Karin": {
+   "works": 2,
+   "words": 2712
+  },
+  "Mirage of Blaze": {
+   "works": 2,
+   "words": 2710
+  },
+  "Fate x Fushigi Yuugi": {
+   "works": 1,
+   "words": 2706
+  },
+  "One Piece x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 2703
+  },
+  "Cardcaptor Sakura x My Neighbor Totoro": {
+   "works": 1,
+   "words": 2702
+  },
+  "Gurren Lagann x Naruto": {
+   "works": 1,
+   "words": 2699
+  },
+  "From Far Away": {
+   "works": 1,
+   "words": 2694
+  },
+  "Hetalia x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 2688
+  },
+  "Alice 19th": {
+   "works": 1,
+   "words": 2683
+  },
+  "High School DxD x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 2678
+  },
+  "Chaika - The Coffin Princess": {
+   "works": 1,
+   "words": 2678
+  },
+  "Gintama x Naruto": {
+   "works": 2,
+   "words": 2671
+  },
+  "World Trigger": {
+   "works": 2,
+   "words": 2662
+  },
+  "Inuyasha x Yami no Matsuei": {
+   "works": 2,
+   "words": 2662
+  },
+  "15Love": {
+   "works": 1,
+   "words": 2660
+  },
+  "Servamp": {
+   "works": 1,
+   "words": 2657
+  },
+  "Amnesia x Diabolik Lovers": {
+   "works": 1,
+   "words": 2652
+  },
+  "Gakuen Alice x Black Butler": {
+   "works": 1,
+   "words": 2652
+  },
+  "Pretty Cure x Sailor Moon": {
+   "works": 1,
+   "words": 2643
+  },
+  "Elfen Lied x Sailor Moon": {
+   "works": 1,
+   "words": 2640
+  },
+  "Toaru Majutsu no Index x World Only God Knows": {
+   "works": 1,
+   "words": 2627
+  },
+  "Basara": {
+   "works": 1,
+   "words": 2623
+  },
+  "Kamisama no Iutoori": {
+   "works": 1,
+   "words": 2617
+  },
+  "Binbogami ga": {
+   "works": 1,
+   "words": 2613
+  },
+  "Blue Exorcist x Pokémon": {
+   "works": 1,
+   "words": 2612
+  },
+  "Death Note x One Piece": {
+   "works": 1,
+   "words": 2597
+  },
+  "Durarara!! x Ib": {
+   "works": 1,
+   "words": 2580
+  },
+  "Black Rock Shooter x Powerpuff Girls Z": {
+   "works": 1,
+   "words": 2569
+  },
+  "Ranma ½ x Read or Die": {
+   "works": 1,
+   "words": 2556
+  },
+  "Naruto x Pumpkin Scissors": {
+   "works": 1,
+   "words": 2541
+  },
+  "Digimon x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 2514
+  },
+  "Kiki's Delivery Service x Nausicaa of the Valley of the Wind": {
+   "works": 1,
+   "words": 2504
+  },
+  "Donten ni Warau": {
+   "works": 2,
+   "words": 2501
+  },
+  "D.Gray-man x Darker than Black": {
+   "works": 1,
+   "words": 2493
+  },
+  "Hokenshitsu no Shinigami": {
+   "works": 1,
+   "words": 2473
+  },
+  "Yukikaze": {
+   "works": 1,
+   "words": 2471
+  },
+  "Death Note x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 2470
+  },
+  "Cardfight!! Vanguard x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 2466
+  },
+  "D.Gray-man x Hunter x Hunter": {
+   "works": 1,
+   "words": 2458
+  },
+  "Corpse Party x Pokémon": {
+   "works": 2,
+   "words": 2456
+  },
+  "Elfen Lied x Nurse Witch Komugi": {
+   "works": 1,
+   "words": 2455
+  },
+  "Fantastic Children": {
+   "works": 1,
+   "words": 2450
+  },
+  "Eve no Jikan": {
+   "works": 2,
+   "words": 2447
+  },
+  "Dragonar Academy": {
+   "works": 1,
+   "words": 2446
+  },
+  "Negima! Magister Negi Magi x UQ Holder!": {
+   "works": 1,
+   "words": 2413
+  },
+  "High School DxD x Tokyo Ghoul": {
+   "works": 1,
+   "words": 2411
+  },
+  "Mujin Wakusei Survive": {
+   "works": 1,
+   "words": 2374
+  },
+  "Durarara!! x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 2356
+  },
+  "Naruto x Nausicaa of the Valley of the Wind": {
+   "works": 1,
+   "words": 2350
+  },
+  "Tenjho Tenge": {
+   "works": 1,
+   "words": 2335
+  },
+  "Hikaru no Go x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 2334
+  },
+  "D.N.Angel x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 2320
+  },
+  "Black Rock Shooter x Soul Eater": {
+   "works": 1,
+   "words": 2318
+  },
+  "Ayashi no Ceres x Fushigi Yuugi": {
+   "works": 1,
+   "words": 2310
+  },
+  "Gintama x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 2304
+  },
+  "Heroic Age": {
+   "works": 1,
+   "words": 2293
+  },
+  "Gintama x Black Butler": {
+   "works": 1,
+   "words": 2287
+  },
+  "Katekyo Hitman Reborn! x Kyo kara Maoh!": {
+   "works": 1,
+   "words": 2259
+  },
+  "Someday's Dreamers": {
+   "works": 1,
+   "words": 2232
+  },
+  "Bleach x Hunter x Hunter": {
+   "works": 1,
+   "words": 2230
+  },
+  "Kagerou Days x Pokémon": {
+   "works": 1,
+   "words": 2211
+  },
+  "Freezing Flame": {
+   "works": 1,
+   "words": 2193
+  },
+  "Bleach x Majikoi - Oh! Samurai Girls!": {
+   "works": 1,
+   "words": 2180
+  },
+  "Kuroko no Basuke x Pokémon": {
+   "works": 1,
+   "words": 2170
+  },
+  "Magical Girl Lyrical Nanoha x Sailor Moon": {
+   "works": 1,
+   "words": 2168
+  },
+  "Kare Kano": {
+   "works": 1,
+   "words": 2168
+  },
+  "Bleach x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 2155
+  },
+  "Say I love You": {
+   "works": 2,
+   "words": 2150
+  },
+  "Gundam x Saiyuki": {
+   "works": 1,
+   "words": 2146
+  },
+  "Puella Magi Madoka Magica x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 2139
+  },
+  "Bleach x Dance In The Vampire Bund": {
+   "works": 1,
+   "words": 2135
+  },
+  "Fate x One Piece": {
+   "works": 1,
+   "words": 2128
+  },
+  "Detective Conan x Samurai Flamenco": {
+   "works": 1,
+   "words": 2126
+  },
+  "C: Control": {
+   "works": 1,
+   "words": 2124
+  },
+  "Cross Epoch x One Piece": {
+   "works": 1,
+   "words": 2121
+  },
+  "Akame ga Kiru x Dragon Ball": {
+   "works": 1,
+   "words": 2115
+  },
+  "Hana To Akuma": {
+   "works": 2,
+   "words": 2103
+  },
+  "Kore wa Zombie Desu ka? x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 2096
+  },
+  "Prince of Tennis x Ōkiku Furikabutte": {
+   "works": 1,
+   "words": 2095
+  },
+  "Dragon Ball x Zoids": {
+   "works": 1,
+   "words": 2088
+  },
+  "Minami-ke": {
+   "works": 1,
+   "words": 2085
+  },
+  "Darker than Black x Black Butler": {
+   "works": 1,
+   "words": 2079
+  },
+  "Mayo Chiki!": {
+   "works": 2,
+   "words": 2076
+  },
+  "Daily Lives of High School Boys": {
+   "works": 1,
+   "words": 2076
+  },
+  "Dragon Ball x Golgo 13": {
+   "works": 1,
+   "words": 2076
+  },
+  "Full Moon wo Sagashite x Shugo Chara!": {
+   "works": 1,
+   "words": 2068
+  },
+  "Corpse Party x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 2058
+  },
+  "Haikyu x Kamigami No Asobi": {
+   "works": 1,
+   "words": 2052
+  },
+  "Death Note x Yu Yu Hakusho": {
+   "works": 1,
+   "words": 2050
+  },
+  "Hellsing x Rurouni Kenshin": {
+   "works": 1,
+   "words": 2047
+  },
+  "Seirei Tsukai no Blade Dance": {
+   "works": 1,
+   "words": 2047
+  },
+  "Bleach x Danganronpa": {
+   "works": 1,
+   "words": 2033
+  },
+  "Inuyasha x Maid Sama!": {
+   "works": 1,
+   "words": 2027
+  },
+  "Pokémon x xxxHOLiC": {
+   "works": 1,
+   "words": 2021
+  },
+  "Absolute Boyfriend": {
+   "works": 1,
+   "words": 2008
+  },
+  "Haruhi Suzumiya x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 2005
+  },
+  "No Touching at All": {
+   "works": 1,
+   "words": 2003
+  },
+  "Fairy Tail x xxxHOLiC": {
+   "works": 1,
+   "words": 1992
+  },
+  "Magical Girl Lyrical Nanoha x Togainu no Chi": {
+   "works": 1,
+   "words": 1990
+  },
+  "Bleach x DRAMAtical Murder": {
+   "works": 1,
+   "words": 1989
+  },
+  "Highschool of the Dead x Soul Eater": {
+   "works": 1,
+   "words": 1988
+  },
+  "Heat Guy J": {
+   "works": 1,
+   "words": 1988
+  },
+  "Naruto x Ninja Nonsense": {
+   "works": 1,
+   "words": 1982
+  },
+  "Devil is a Part-Timer x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 1982
+  },
+  "Inuyasha x Majin Tantei Nougami Neuro": {
+   "works": 1,
+   "words": 1974
+  },
+  "Highschool of the Dead x K-ON!": {
+   "works": 1,
+   "words": 1972
+  },
+  "Gundam Build Fighters x Kill la Kill": {
+   "works": 1,
+   "words": 1950
+  },
+  "Our Happy Time": {
+   "works": 2,
+   "words": 1929
+  },
+  "10 Days With My Devil": {
+   "works": 1,
+   "words": 1929
+  },
+  "Gargantia on the Verdurous Planet": {
+   "works": 1,
+   "words": 1922
+  },
+  "Eyeshield 21 x Naruto": {
+   "works": 1,
+   "words": 1918
+  },
+  "Kore wa Zombie Desu ka?": {
+   "works": 1,
+   "words": 1894
+  },
+  "Familiar of Zero x Hayate the Combat Butler": {
+   "works": 1,
+   "words": 1880
+  },
+  "Naruto x Omamori Himari": {
+   "works": 1,
+   "words": 1866
+  },
+  "Natsume's Book of Friends x Touhou": {
+   "works": 1,
+   "words": 1864
+  },
+  "Bunny Drop": {
+   "works": 1,
+   "words": 1852
+  },
+  "Ghost Hunt x Sailor Moon": {
+   "works": 1,
+   "words": 1852
+  },
+  "Boku wa Tomodachi ga Sukunai x Toradora!": {
+   "works": 1,
+   "words": 1852
+  },
+  "Marmalade Boy": {
+   "works": 1,
+   "words": 1844
+  },
+  "Bobobo-bo Bo-bobo x Rosario + Vampire": {
+   "works": 1,
+   "words": 1841
+  },
+  "Shugo Chara! x Vampire Knight": {
+   "works": 1,
+   "words": 1826
+  },
+  "Ouran High School Host Club x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1824
+  },
+  "Naruto x Tactics": {
+   "works": 1,
+   "words": 1809
+  },
+  "Fort of Apocalypse": {
+   "works": 1,
+   "words": 1808
+  },
+  "Cardcaptor Sakura x Revolutionary Girl Utena": {
+   "works": 1,
+   "words": 1806
+  },
+  "Sorcerous Stabber Orphen": {
+   "works": 1,
+   "words": 1800
+  },
+  "Bleach x Burst Angel": {
+   "works": 1,
+   "words": 1797
+  },
+  "Naruto x Yumekui Merry": {
+   "works": 1,
+   "words": 1790
+  },
+  "Pretty Cure x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 1781
+  },
+  "Danganronpa x Free!": {
+   "works": 1,
+   "words": 1772
+  },
+  "Love and Affection": {
+   "works": 1,
+   "words": 1765
+  },
+  "Katekyo Hitman Reborn! x Zettai Karen Children": {
+   "works": 1,
+   "words": 1761
+  },
+  "Digimon x Pokémon x Ouran High School Host Club": {
+   "works": 1,
+   "words": 1760
+  },
+  "Date A Live x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 1756
+  },
+  "Rurouni Kenshin x Slam Dunk": {
+   "works": 1,
+   "words": 1748
+  },
+  "Danganronpa x Gatchaman": {
+   "works": 1,
+   "words": 1742
+  },
+  "Be My Princess x Ouran High School Host Club": {
+   "works": 1,
+   "words": 1738
+  },
+  "Bloody Cross": {
+   "works": 1,
+   "words": 1728
+  },
+  "Little Witch Academia": {
+   "works": 1,
+   "words": 1724
+  },
+  "Free! x Nagi no Asukara": {
+   "works": 1,
+   "words": 1719
+  },
+  "Paranoia Agent": {
+   "works": 1,
+   "words": 1715
+  },
+  "MPD-Psycho": {
+   "works": 1,
+   "words": 1711
+  },
+  "Gundam x Gundam x Sailor Moon": {
+   "works": 1,
+   "words": 1697
+  },
+  "Naruto x Special A": {
+   "works": 1,
+   "words": 1693
+  },
+  "Katekyo Hitman Reborn! x Nisekoi": {
+   "works": 1,
+   "words": 1686
+  },
+  "Black Cat x Claymore": {
+   "works": 1,
+   "words": 1675
+  },
+  "Ben-To": {
+   "works": 1,
+   "words": 1673
+  },
+  "Ouran High School Host Club x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 1672
+  },
+  "Mezzo": {
+   "works": 1,
+   "words": 1671
+  },
+  "Omamori Himari": {
+   "works": 1,
+   "words": 1669
+  },
+  "Crows ZERO": {
+   "works": 1,
+   "words": 1660
+  },
+  "One Punch Man": {
+   "works": 1,
+   "words": 1652
+  },
+  "Basilisk": {
+   "works": 1,
+   "words": 1651
+  },
+  "Inuyasha x Special A": {
+   "works": 1,
+   "words": 1640
+  },
+  "Inuyasha x The Twelve Kingdoms": {
+   "works": 1,
+   "words": 1640
+  },
+  "Upotte!!": {
+   "works": 1,
+   "words": 1637
+  },
+  "Metal Hero Series x Naruto": {
+   "works": 1,
+   "words": 1630
+  },
+  "Fushigi Yuugi x Slayers": {
+   "works": 1,
+   "words": 1621
+  },
+  "Strike Witches x Touhou": {
+   "works": 1,
+   "words": 1621
+  },
+  "Natsume's Book of Friends x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 1620
+  },
+  "Ben-To x Ranma ½": {
+   "works": 1,
+   "words": 1618
+  },
+  "Sword of the Stranger": {
+   "works": 1,
+   "words": 1616
+  },
+  "Blue Exorcist x Detective Conan": {
+   "works": 1,
+   "words": 1611
+  },
+  "Hetalia x Ranma ½": {
+   "works": 1,
+   "words": 1595
+  },
+  "Oh My Goddess! x Soul Eater": {
+   "works": 1,
+   "words": 1591
+  },
+  "Ranma ½ x Shugo Chara!": {
+   "works": 1,
+   "words": 1590
+  },
+  "Flame of Recca": {
+   "works": 1,
+   "words": 1585
+  },
+  "Hetalia x Ouran High School Host Club": {
+   "works": 1,
+   "words": 1581
+  },
+  "Bubblegum Crisis x Oh My Goddess!": {
+   "works": 1,
+   "words": 1577
+  },
+  "Majikoi - Oh! Samurai Girls!": {
+   "works": 1,
+   "words": 1571
+  },
+  "D.N.Angel x Detective Conan": {
+   "works": 1,
+   "words": 1571
+  },
+  "Bleach x Shugo Chara!": {
+   "works": 1,
+   "words": 1568
+  },
+  "Selector Infected Wixoss": {
+   "works": 1,
+   "words": 1567
+  },
+  "Gate Keepers": {
+   "works": 1,
+   "words": 1567
+  },
+  "Ouran High School Host Club x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 1561
+  },
+  "D.N.Angel x Haruhi Suzumiya": {
+   "works": 1,
+   "words": 1548
+  },
+  "Digimon x Tokyo Babylon": {
+   "works": 1,
+   "words": 1545
+  },
+  "Inuyasha x Alice in the Country of Hearts": {
+   "works": 1,
+   "words": 1539
+  },
+  "Dazzle x Naruto": {
+   "works": 1,
+   "words": 1517
+  },
+  "Bakugan x Love Live!": {
+   "works": 1,
+   "words": 1516
+  },
+  "Cowboy Bebop x Gurren Lagann": {
+   "works": 1,
+   "words": 1512
+  },
+  "Crescent Moon": {
+   "works": 1,
+   "words": 1504
+  },
+  "Mermaid Melody x To Love-Ru": {
+   "works": 1,
+   "words": 1503
+  },
+  "Genshiken": {
+   "works": 1,
+   "words": 1503
+  },
+  "Seven Deadly Sins x Toriko": {
+   "works": 1,
+   "words": 1503
+  },
+  "Negima! Magister Negi Magi x Pet Shop of Horrors": {
+   "works": 1,
+   "words": 1490
+  },
+  "Ability Shop": {
+   "works": 1,
+   "words": 1489
+  },
+  "Pokémon x Pretty Rhythm": {
+   "works": 1,
+   "words": 1488
+  },
+  "D.Gray-man x Pandora Hearts": {
+   "works": 1,
+   "words": 1478
+  },
+  "Gundam x Hamtaro": {
+   "works": 1,
+   "words": 1476
+  },
+  "Sailor Moon x Tenjho Tenge": {
+   "works": 1,
+   "words": 1473
+  },
+  "Tokyo Babylon x X (CLAMP)": {
+   "works": 1,
+   "words": 1471
+  },
+  "Black Cat x Burst Angel": {
+   "works": 1,
+   "words": 1469
+  },
+  "Bleach x Chrono Crusade": {
+   "works": 1,
+   "words": 1467
+  },
+  "Yu Yu Hakusho x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 1461
+  },
+  "Gundam x Hell Girl": {
+   "works": 1,
+   "words": 1455
+  },
+  "Dazzle x Vampire Knight": {
+   "works": 1,
+   "words": 1450
+  },
+  "Cowboy Bebop x Weiss Kreuz": {
+   "works": 1,
+   "words": 1442
+  },
+  "D.Gray-man x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1438
+  },
+  "Cross Game": {
+   "works": 1,
+   "words": 1419
+  },
+  "Heaven's Memo Pad": {
+   "works": 1,
+   "words": 1418
+  },
+  "Monochrome Factor": {
+   "works": 1,
+   "words": 1416
+  },
+  "One Punch Man x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 1409
+  },
+  "Infinite Stratos x JoJo's Bizarre Adventure": {
+   "works": 1,
+   "words": 1406
+  },
+  "Naruto x Nodame Cantabile": {
+   "works": 1,
+   "words": 1390
+  },
+  "Kamisama Hajimemashita x Black Butler": {
+   "works": 1,
+   "words": 1389
+  },
+  "Bleach x Uta no Prince-sama": {
+   "works": 1,
+   "words": 1388
+  },
+  "Lucky Dog 1": {
+   "works": 1,
+   "words": 1387
+  },
+  "Fairy Tail x Oh My Goddess!": {
+   "works": 1,
+   "words": 1387
+  },
+  "Gundam x Hayate the Combat Butler": {
+   "works": 1,
+   "words": 1385
+  },
+  "Medaka Box": {
+   "works": 1,
+   "words": 1379
+  },
+  "Baka and Test - Summon the Beasts x Sket Dance": {
+   "works": 1,
+   "words": 1375
+  },
+  "Aesthetica of a Rogue Hero": {
+   "works": 1,
+   "words": 1370
+  },
+  "Qin's Moon": {
+   "works": 1,
+   "words": 1369
+  },
+  "Ninja Scroll": {
+   "works": 1,
+   "words": 1362
+  },
+  "Shingeki no Kyojin x Soul Eater": {
+   "works": 1,
+   "words": 1360
+  },
+  "Bokura No Oukoku": {
+   "works": 1,
+   "words": 1360
+  },
+  "Naruto x Romeo x Juliet": {
+   "works": 1,
+   "words": 1353
+  },
+  "Sankarea": {
+   "works": 1,
+   "words": 1353
+  },
+  "Princess Nine": {
+   "works": 1,
+   "words": 1345
+  },
+  "One Piece x Sekirei": {
+   "works": 1,
+   "words": 1339
+  },
+  "Barakamon": {
+   "works": 1,
+   "words": 1336
+  },
+  "Black Butler x xxxHOLiC": {
+   "works": 1,
+   "words": 1334
+  },
+  "Fruits Basket x Vocaloid": {
+   "works": 1,
+   "words": 1333
+  },
+  "Magical Girl Lyrical Nanoha x Strike Witches": {
+   "works": 1,
+   "words": 1327
+  },
+  "Code Geass x GaoGaiGar": {
+   "works": 1,
+   "words": 1326
+  },
+  "Cowboy Bebop x WataMote": {
+   "works": 1,
+   "words": 1324
+  },
+  "Beyond the Boundary x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1321
+  },
+  "Black Cat x Detective Conan": {
+   "works": 1,
+   "words": 1312
+  },
+  "Ogawa to Yukai na Saitoutachi": {
+   "works": 1,
+   "words": 1302
+  },
+  "Claymore x Slayers": {
+   "works": 1,
+   "words": 1301
+  },
+  "Reimei no Arcana": {
+   "works": 1,
+   "words": 1286
+  },
+  "Ranma ½ x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 1283
+  },
+  "D.Gray-man x Vampire Knight": {
+   "works": 1,
+   "words": 1281
+  },
+  "Maria-sama ga Miteru x Sailor Moon": {
+   "works": 1,
+   "words": 1269
+  },
+  "One Piece x Skip Beat!": {
+   "works": 1,
+   "words": 1260
+  },
+  "Pet Shop of Horrors": {
+   "works": 1,
+   "words": 1260
+  },
+  "Fate x Saiyuki": {
+   "works": 1,
+   "words": 1259
+  },
+  "Jigoku Sensei Nube": {
+   "works": 1,
+   "words": 1258
+  },
+  "Detective Conan x Liar Game": {
+   "works": 1,
+   "words": 1254
+  },
+  "Hatsune Mix": {
+   "works": 1,
+   "words": 1253
+  },
+  "Fruits Basket x Inuyasha": {
+   "works": 1,
+   "words": 1224
+  },
+  "Tsubasa: Reservoir Chronicle x xxxHOLiC": {
+   "works": 1,
+   "words": 1221
+  },
+  "Prince & Hero": {
+   "works": 1,
+   "words": 1218
+  },
+  "Comic Party": {
+   "works": 1,
+   "words": 1213
+  },
+  "Tsuritama": {
+   "works": 1,
+   "words": 1211
+  },
+  "Azumanga Daioh x Hell Girl": {
+   "works": 1,
+   "words": 1208
+  },
+  "Corpse Party x Durarara!!": {
+   "works": 1,
+   "words": 1207
+  },
+  "Fushigi Yuugi x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 1206
+  },
+  "Inuyasha x Upotte!!": {
+   "works": 1,
+   "words": 1203
+  },
+  "D.N.Angel x Pokémon": {
+   "works": 1,
+   "words": 1200
+  },
+  "Fairy Tail x Shaman King": {
+   "works": 1,
+   "words": 1197
+  },
+  "Kakurenbo": {
+   "works": 1,
+   "words": 1194
+  },
+  "Burst Angel x Hello Kitty": {
+   "works": 1,
+   "words": 1193
+  },
+  "D.Gray-man x Rosario + Vampire": {
+   "works": 1,
+   "words": 1188
+  },
+  "El Hazard x Familiar of Zero": {
+   "works": 1,
+   "words": 1177
+  },
+  "Shugo Chara! x Tokyo Mew Mew": {
+   "works": 1,
+   "words": 1175
+  },
+  "D.Gray-man x Gundam": {
+   "works": 1,
+   "words": 1174
+  },
+  "Arata the Legend": {
+   "works": 1,
+   "words": 1172
+  },
+  "Teppuu": {
+   "works": 1,
+   "words": 1169
+  },
+  "Bleach x Strawberry Panic!": {
+   "works": 1,
+   "words": 1153
+  },
+  "Kaiji": {
+   "works": 1,
+   "words": 1150
+  },
+  "Only the Ring Finger Knows x Ouran High School Host Club": {
+   "works": 1,
+   "words": 1149
+  },
+  "Yuki Yuna is a Hero": {
+   "works": 1,
+   "words": 1149
+  },
+  "Mahoromatic x This Ugly Yet Beautiful World": {
+   "works": 1,
+   "words": 1145
+  },
+  "Digimon x Pokémon x Naruto": {
+   "works": 1,
+   "words": 1145
+  },
+  "Ichi the Killer x Pokémon": {
+   "works": 1,
+   "words": 1144
+  },
+  "Highschool of the Dead x Metal Fight Beyblade": {
+   "works": 1,
+   "words": 1132
+  },
+  "Bleach x Clannad": {
+   "works": 1,
+   "words": 1131
+  },
+  "Dance In The Vampire Bund": {
+   "works": 1,
+   "words": 1123
+  },
+  "Elfen Lied x Fairy Tail": {
+   "works": 1,
+   "words": 1120
+  },
+  "Happy Marriage!?": {
+   "works": 1,
+   "words": 1119
+  },
+  "Ouran High School Host Club x Shugo Chara!": {
+   "works": 1,
+   "words": 1116
+  },
+  "Ageha": {
+   "works": 1,
+   "words": 1116
+  },
+  "Ef: A Fairy Tale of the Two": {
+   "works": 1,
+   "words": 1115
+  },
+  "Itsuwaribito": {
+   "works": 1,
+   "words": 1111
+  },
+  "High School DxD x JoJo's Bizarre Adventure": {
+   "works": 1,
+   "words": 1109
+  },
+  "Nana to Kaoru": {
+   "works": 1,
+   "words": 1109
+  },
+  "Naruto x The Wallflower": {
+   "works": 1,
+   "words": 1106
+  },
+  "Ouran High School Host Club x Pokémon": {
+   "works": 1,
+   "words": 1103
+  },
+  "Nyan Koi!": {
+   "works": 1,
+   "words": 1101
+  },
+  "K-ON! x Your lie in April": {
+   "works": 1,
+   "words": 1097
+  },
+  "Puella Magi Madoka Magica x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1096
+  },
+  "Magic Kaito x Sekirei": {
+   "works": 1,
+   "words": 1096
+  },
+  "Cardcaptor Sakura x Kyo kara Maoh!": {
+   "works": 1,
+   "words": 1095
+  },
+  "Legend of Galactic Heroes": {
+   "works": 1,
+   "words": 1092
+  },
+  "Highschool of the Dead x Katekyo Hitman Reborn!": {
+   "works": 1,
+   "words": 1091
+  },
+  "Black Butler x Vocaloid": {
+   "works": 1,
+   "words": 1091
+  },
+  "AnoHana x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 1088
+  },
+  "Hyperdimension Neptunia x Pokémon": {
+   "works": 1,
+   "words": 1081
+  },
+  "Fairy Tail x Hell Girl": {
+   "works": 1,
+   "words": 1081
+  },
+  "The Girl Who Leapt Through Time x Hetalia": {
+   "works": 1,
+   "words": 1079
+  },
+  "Phantom: Requiem for the Phantom": {
+   "works": 1,
+   "words": 1075
+  },
+  "Kagerou Days x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1070
+  },
+  "Sable Prince": {
+   "works": 1,
+   "words": 1068
+  },
+  "Durarara!! x Naruto": {
+   "works": 1,
+   "words": 1067
+  },
+  "Yotsuba&!": {
+   "works": 1,
+   "words": 1054
+  },
+  "Daily Life with a Monster Girl x Naruto": {
+   "works": 1,
+   "words": 1052
+  },
+  "Soul Eater x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 1051
+  },
+  "Tari Tari": {
+   "works": 1,
+   "words": 1049
+  },
+  "Katekyo Hitman Reborn! x Tokimeki Memorial": {
+   "works": 1,
+   "words": 1046
+  },
+  "Zone-00": {
+   "works": 1,
+   "words": 1043
+  },
+  "Digimon x Gurren Lagann": {
+   "works": 1,
+   "words": 1042
+  },
+  "Deadman Wonderland x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 1041
+  },
+  "Mai-HiME x Maria Holic": {
+   "works": 1,
+   "words": 1038
+  },
+  "Familiar of Zero x Shingeki no Kyojin": {
+   "works": 1,
+   "words": 1037
+  },
+  "Fushigi Yuugi x Mai-HiME": {
+   "works": 1,
+   "words": 1029
+  },
+  "Tokimeki Memorial": {
+   "works": 1,
+   "words": 1028
+  },
+  "Familiar of Zero x Black Butler": {
+   "works": 1,
+   "words": 1023
+  },
+  "Kagerou Days x Naruto": {
+   "works": 1,
+   "words": 1020
+  },
+  "My Little Sister Can't Be This Cute x Toaru Majutsu no Index": {
+   "works": 1,
+   "words": 1017
+  },
+  "Beauty Pop": {
+   "works": 1,
+   "words": 1017
+  },
+  "Bookmark of Demise Project x Vocaloid": {
+   "works": 1,
+   "words": 1013
+  },
+  "Immortal Rain": {
+   "works": 1,
+   "words": 1012
+  },
+  "Ouran High School Host Club x Say I love You": {
+   "works": 1,
+   "words": 1011
+  },
+  "Bitter Virgin": {
+   "works": 1,
+   "words": 1006
+  },
+  "Gun x Sword": {
+   "works": 1,
+   "words": 1004
+  },
+  "Gundam x Sailor Moon x Sailor Moon": {
+   "works": 1,
+   "words": 1000
+  },
+  "Hana-Kimi": {
+   "works": 1,
+   "words": 995
+  },
+  "Hungry Joker": {
+   "works": 1,
+   "words": 995
+  },
+  "Persona x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 987
+  },
+  "Terraformars": {
+   "works": 1,
+   "words": 985
+  },
+  "Sailor Moon x Soul Eater": {
+   "works": 1,
+   "words": 980
+  },
+  "B'tX x Slam Dunk": {
+   "works": 1,
+   "words": 977
+  },
+  "Yakitate!! Japan": {
+   "works": 1,
+   "words": 973
+  },
+  "Chrome Shelled Regios": {
+   "works": 1,
+   "words": 971
+  },
+  "Gundam x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 967
+  },
+  "Bleach x Puella Magi Madoka Magica": {
+   "works": 1,
+   "words": 965
+  },
+  "Cantarella x Naruto": {
+   "works": 1,
+   "words": 965
+  },
+  "UFO Ultramaiden Valkyrie": {
+   "works": 1,
+   "words": 958
+  },
+  "Shingeki no Kyojin x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 953
+  },
+  "Code Geass x Ouran High School Host Club": {
+   "works": 1,
+   "words": 949
+  },
+  "Blue": {
+   "works": 1,
+   "words": 946
+  },
+  "Neo Angelique Abyss": {
+   "works": 1,
+   "words": 945
+  },
+  "Gakuen Babysitters": {
+   "works": 1,
+   "words": 945
+  },
+  "Cardcaptor Sakura x Gundam": {
+   "works": 1,
+   "words": 943
+  },
+  "Sailor Moon x Tsubasa: Reservoir Chronicle": {
+   "works": 1,
+   "words": 936
+  },
+  "Touhou x Yu-Gi-Oh": {
+   "works": 1,
+   "words": 932
+  },
+  "Gundam x Kagerou Days": {
+   "works": 1,
+   "words": 926
+  },
+  "Oumagadoki Doubutsuen": {
+   "works": 1,
+   "words": 923
+  },
+  "Gundam x Space Battleship Yamato": {
+   "works": 1,
+   "words": 921
+  },
+  "Gangsta.": {
+   "works": 1,
+   "words": 920
+  },
+  "Black Lagoon x Fullmetal Alchemist": {
+   "works": 1,
+   "words": 910
+  },
+  "Hetalia x Ib": {
+   "works": 1,
+   "words": 909
+  },
+  "Fate x Kill la Kill": {
+   "works": 1,
+   "words": 908
+  },
+  "Fate x Karin": {
+   "works": 1,
+   "words": 890
+  },
+  "Code Geass x Spice and Wolf": {
+   "works": 1,
+   "words": 889
+  },
+  "Digimon x Familiar of Zero": {
+   "works": 1,
+   "words": 888
+  },
+  "Maid Sama! x Shugo Chara!": {
+   "works": 1,
+   "words": 887
+  },
+  "Chibi Devi!": {
+   "works": 1,
+   "words": 880
+  },
+  "Heroic Legend of Arslan": {
+   "works": 1,
+   "words": 806
+  },
+  "Hetalia x Higurashi / Umineko": {
+   "works": 1,
+   "words": 805
+  },
+  "Sekaiichi Hatsukoi x Sket Dance": {
+   "works": 1,
+   "words": 770
+  },
+  "Dragon Ball x Sora no Otoshimono": {
+   "works": 1,
+   "words": 765
+  },
+  "Kids on the Slope": {
+   "works": 1,
+   "words": 757
+  },
+  "Sister Princess": {
+   "works": 1,
+   "words": 747
+  },
+  "Inuyasha x Karin": {
+   "works": 1,
+   "words": 734
+  },
+  "Blood Lad x Blue Exorcist": {
+   "works": 1,
+   "words": 665
+  },
+  "Hetalia x Kagerou Days": {
+   "works": 1,
+   "words": 616
+  },
+  "Attack on Titan x Blue Exorcist": {
+   "works": 1,
+   "words": 507
+  }
+ }
+}

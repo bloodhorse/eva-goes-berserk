@@ -48,8 +48,24 @@ def parse_args():
     p.add_argument("--compile", action="store_true")
     p.add_argument("--bench", action="store_true")
     p.add_argument("--fresh", action="store_true")
+    p.add_argument("--init", default="")
     p.add_argument("--seed", type=int, default=1234)
     return p.parse_args()
+
+
+DEV = "cuda" if torch.cuda.is_available() else "cpu"
+SHAPE = ["arch", "layers", "heads", "kv_heads", "width", "ffn", "ctx", "vocab", "no_tie"]
+
+
+def sync():
+    if DEV == "cuda":
+        torch.cuda.synchronize()
+
+
+def peak_mem(reserved=False):
+    if DEV != "cuda":
+        return 0.0
+    return (torch.cuda.max_memory_reserved() if reserved else torch.cuda.max_memory_allocated()) / 2**30
 
 
 def log(msg):
@@ -79,7 +95,9 @@ def build_model(a, meta):
 
 
 def to_cuda(rows):
-    t = torch.from_numpy(np.stack(rows)).pin_memory().to("cuda", non_blocking=True)
+    t = torch.from_numpy(np.stack(rows))
+    if DEV == "cuda":
+        t = t.pin_memory().to("cuda", non_blocking=True)
     return t[:, :-1], t[:, 1:]
 
 
@@ -153,7 +171,30 @@ def main():
         a = cli
         if not (a.hours or a.steps or a.seconds):
             raise SystemExit("give --hours, --steps or --seconds")
+    init_sd = None
+    if not state and a.init:
+        if not os.path.exists(a.init):
+            raise SystemExit(f"--init {a.init}: no such file")
+        src = torch.load(a.init, map_location="cpu", weights_only=False)
+        src_args = dict(src["args"])
+        src_args["vocab"] = src["config"]["vocab_size"]
+        ignored = [f"--{k.replace('_', '-')} {getattr(a, k)} (checkpoint {src_args.get(k)})" for k in SHAPE if getattr(a, k) != src_args.get(k) and not (k == "vocab" and getattr(a, k) == 0)]
+        for k in SHAPE:
+            setattr(a, k, src_args.get(k, getattr(a, k)))
+        a.init = os.path.abspath(a.init)
+        a.init_step = src["step"]
+        a.init_tokens = src.get("tokens")
+        init_sd = {k.replace("_orig_mod.", ""): v for k, v in src["model"].items()}
+        src_meta = src["meta"]
+        log(f"INIT weights from {a.init} source_step={src['step']} source_tokens={src.get('tokens', 0):,} source_eval={src.get('last_eval')}; fresh optimizer and schedule; shape from checkpoint: " + " ".join(f"{k}={getattr(a, k)}" for k in SHAPE))
+        if ignored:
+            log("INIT ignoring shape flags: " + ", ".join(ignored))
+        del src
     parts, val_paths, meta = parse_data(a.data, a.val)
+    if init_sd is not None:
+        for k in ("vocab", "bos", "eos"):
+            if meta[k] != src_meta[k]:
+                raise SystemExit(f"--init: data {k}={meta[k]} but checkpoint was trained on {k}={src_meta[k]}; different tokenizer")
     torch.manual_seed(a.seed)
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
@@ -161,14 +202,18 @@ def main():
     model, cfg = build_model(a, meta)
     if state:
         model.load_state_dict(state["model"])
-    model.to("cuda")
+    elif init_sd is not None:
+        model.load_state_dict(init_sd)
+        log(f"INIT loaded {len(init_sd)} tensors")
+        del init_sd
+    model.to(DEV)
     n_params = sum(p.numel() for p in model.parameters())
     n_emb = model.get_input_embeddings().weight.numel()
     log(f"MODEL {a.arch} layers={a.layers} width={a.width} heads={a.heads} ctx={a.ctx} vocab={cfg.vocab_size} params={n_params / 1e6:.1f}M non_embedding={(n_params - n_emb) / 1e6:.1f}M")
 
     decay = [p for p in model.parameters() if p.dim() >= 2]
     no_decay = [p for p in model.parameters() if p.dim() < 2]
-    opt = torch.optim.AdamW([{"params": decay, "weight_decay": a.wd}, {"params": no_decay, "weight_decay": 0.0}], lr=a.lr, betas=(0.9, 0.95), fused=True)
+    opt = torch.optim.AdamW([{"params": decay, "weight_decay": a.wd}, {"params": no_decay, "weight_decay": 0.0}], lr=a.lr, betas=(0.9, 0.95), fused=DEV == "cuda")
     if state:
         opt.load_state_dict(state["opt"])
 
@@ -204,12 +249,12 @@ def main():
     del state
 
     def chunk_loss(h, y):
-        with torch.autocast("cuda", dtype=torch.bfloat16):
+        with torch.autocast(DEV, dtype=torch.bfloat16):
             logits = head(h)
         return F.cross_entropy(logits.float(), y, reduction="sum")
 
     def loss_of(x, y):
-        with torch.autocast("cuda", dtype=torch.bfloat16):
+        with torch.autocast(DEV, dtype=torch.bfloat16):
             h = fwd(input_ids=x, use_cache=False).last_hidden_state
         h = h.reshape(-1, h.size(-1))
         y = y.reshape(-1)
@@ -237,10 +282,10 @@ def main():
         model.eval()
         with torch.no_grad(), open(os.path.join(a.out, "samples.jsonl"), "a", encoding="utf-8") as f:
             for pr in prompts:
-                ids = torch.tensor([[meta["bos"]] + tok(pr, add_special_tokens=False)["input_ids"]], device="cuda")
+                ids = torch.tensor([[meta["bos"]] + tok(pr, add_special_tokens=False)["input_ids"]], device=DEV)
                 start = ids.size(1)
                 for _ in range(a.sample_tokens):
-                    with torch.autocast("cuda", dtype=torch.bfloat16):
+                    with torch.autocast(DEV, dtype=torch.bfloat16):
                         logits = model(input_ids=ids[:, -a.ctx :], use_cache=False).logits[:, -1].float()
                     nxt = torch.multinomial(torch.softmax(logits, -1), 1)
                     ids = torch.cat([ids, nxt], 1)
@@ -305,13 +350,13 @@ def main():
         train_seconds += time.time() - t_step
 
         if step == 10:
-            torch.cuda.synchronize()
+            sync()
             calib_t = time.time()
             bench_t0, bench_tok = time.time(), 0
         elif step > 10:
             bench_tok += tokens_per_step
         if phase == "calibrating" and step == a.calib:
-            torch.cuda.synchronize()
+            sync()
             step_time = (time.time() - calib_t) / (a.calib - 10)
             overhead = 1 + a.eval_iters / (3 * a.eval_every * a.accum)
             left = a.hours * 3600 - train_seconds
@@ -325,27 +370,27 @@ def main():
         if step % a.eval_every == 0 or (total and step == total):
             last_eval, last_eval_step, evaled = evaluate(), step, True
         if step % a.log_every == 0 or evaled or step == 1:
-            torch.cuda.synchronize()
+            sync()
             now = time.time()
             rate = tok_win / max(now - t_win, 1e-9)
             t_win, tok_win = now, 0
             train_loss = loss_win / max(loss_n, 1)
             loss_win, loss_n = 0.0, 0
             eta = (total - step) * tokens_per_step / rate if total and rate else None
-            mem = torch.cuda.max_memory_allocated() / 2**30
+            mem = peak_mem()
             ev = f"{last_eval:.4f}@{last_eval_step}" if last_eval is not None else "-"
             if per_file and len(per_file) > 1:
                 ev += " (" + " ".join(f"{k} {v:.3f}" for k, v in per_file.items()) + ")"
             log(f"step {step}/{total or '?'} | loss {train_loss:.4f} | eval {ev} | lr {lr:.2e} | {rate / 1e3:.1f}k tok/s | mem {mem:.1f}G | elapsed {hms(train_seconds)} | eta {hms(eta) if eta is not None else '?'}")
             if not a.bench:
-                write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": now, "pid": os.getpid(), "phase": phase, "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": train_loss, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "lr": lr, "tok_per_s": rate, "elapsed_s": train_seconds, "wall_s": now - t_start, "eta_s": eta, "peak_mem_gib": mem, "ckpt_step": ckpt_step, "params": n_params})
+                write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": now, "pid": os.getpid(), "phase": phase, "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": train_loss, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "lr": lr, "tok_per_s": rate, "elapsed_s": train_seconds, "wall_s": now - t_start, "eta_s": eta, "peak_mem_gib": mem, "ckpt_step": ckpt_step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
         if not a.bench and time.time() - t_ckpt >= a.ckpt_minutes * 60:
             save_ckpt()
             ckpt_step, t_ckpt = step, time.time()
 
-    torch.cuda.synchronize()
-    mem = torch.cuda.max_memory_allocated() / 2**30
-    res = torch.cuda.max_memory_reserved() / 2**30
+    sync()
+    mem = peak_mem()
+    res = peak_mem(True)
     if a.bench:
         dt = time.time() - bench_t0 if bench_t0 else 0
         log("BENCH " + json.dumps({"params_m": round(n_params / 1e6, 1), "layers": a.layers, "width": a.width, "ctx": a.ctx, "batch": a.batch, "accum": a.accum, "compile": a.compile, "steps": step, "tok_per_s": round(bench_tok / dt) if dt else None, "peak_alloc_gib": round(mem, 2), "peak_reserved_gib": round(res, 2)}))
@@ -354,7 +399,7 @@ def main():
         last_eval, last_eval_step = evaluate(), step
     save_ckpt()
     done = total and step >= total
-    write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": time.time(), "pid": os.getpid(), "phase": "done" if done else "stopped", "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": None, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "tok_per_s": rate, "elapsed_s": train_seconds, "eta_s": 0 if done else None, "peak_mem_gib": mem, "ckpt_step": step, "params": n_params})
+    write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": time.time(), "pid": os.getpid(), "phase": "done" if done else "stopped", "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": None, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "tok_per_s": rate, "elapsed_s": train_seconds, "eta_s": 0 if done else None, "peak_mem_gib": mem, "ckpt_step": step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
     log(f"{'DONE' if done else 'STOPPED'} step={step} tokens={tokens:,} eval_loss={last_eval} elapsed={hms(train_seconds)} peak_mem={mem:.2f}GiB alloc {res:.2f}GiB reserved")
 
 

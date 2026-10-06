@@ -1,0 +1,3600 @@
+Harry Potter	183707
+Naruto	108227
+Glee	42292
+Inuyasha	29803
+Bleach	24496
+Pokémon	22353
+Vampire Diaries	20018
+Wrestling	18808
+Dragon Ball Z	17639
+Supernatural	17900
+Once Upon a Time	17766
+Mass Effect	11877
+Sailor Moon	16744
+Star Wars	12719
+Lord of the Rings	12346
+Kingdom Hearts	13143
+Walking Dead	10590
+Dragon Age	9826
+One Piece	11541
+One Tree Hill	10109
+Hunger Games	11567
+My Little Pony	10521
+Avengers	10945
+Yu-Gi-Oh	10178
+Digimon	9388
+Power Rangers	9046
+Fairy Tail	11500
+Legend of Zelda	9021
+Ranma	7004
+Phantom of the Opera	7267
+Final Fantasy VII	8232
+Kim Possible	7327
+Grey's Anatomy	7342
+Card Captor Sakura	9439
+RWBY	6811
+Frozen	6599
+Twilight	4964
+Hobbit	5577
+Elder Scroll series	5799
+Criminal Minds	6376
+General Hospital	5107
+Sonic the Hedgehog	5580
+Merlin	5677
+Katekyo Hitman Reborn!	5812
+Charmed	5203
+Sookie Stackhouse/Southern Vampire Mysteries	2965
+Batman Begins/Dark Knight	4834
+Gundam Seed	3996
+Vampire Academy	5121
+Gundam Wing/AC	4909
+Doctor Who	5129
+How to Train Your Dragon	4737
+Hetalia - Axis Powers	7545
+NCIS	5086
+Evangelion	3978
+Ninja Turtles	5062
+Sherlock	5748
+Castle	4800
+Gilmore Girls	4233
+D.Gray-Man	4767
+Final Fantasy VIII	3839
+Janet Evanovich	3336
+Fifty Shades Trilogy	2073
+Labyrinth	4159
+High School Musical	3803
+Sons of Anarchy	2404
+Beyblade	4617
+Pirates of the Caribbean	3614
+Teen Wolf	3606
+Fullmetal Alchemist	4279
+Mega Man	3354
+Percy Jackson and the Olympians	4811
+Buffy X-overs	3112
+Bones	3796
+Fire Emblem	3345
+Persona Series	2572
+Code Geass	2739
+Yu Yu Hakusho	2924
+Chuck	2527
+Rizzoli & Isles	3061
+Pride and Prejudice	2366
+Assassin's Creed	2944
+Inheritance Cycle	3043
+Yu-Gi-Oh GX	2467
+Resident Evil	3041
+Danny Phantom	2975
+Ouran High School Host Club	3059
+Warcraft	2762
+Justice League	2696
+Rurouni Kenshin	3006
+South of Nowhere	2314
+Vampire Knight	2845
+X-Men	2425
+Super Smash Brothers	2178
+Downton Abbey	2597
+Smallville	2468
+Fallout	2376
+A song of Ice and Fire	2049
+Game of Thrones	1938
+Gossip Girl	2434
+Mortal Instruments	2575
+Spyro the Dragon	1825
+Kuroshitsuji	2730
+Lost Girl	1789
+Escaflowne	2018
+Star Fox	1892
+Arrow	2395
+Cartoon X-overs	1913
+Pretty Little Liars	2234
+Yu-Gi-Oh! 5D's	1707
+JAG	1996
+Mai HiME	1870
+Big Time Rush	2201
+Divergent Trilogy	1974
+Prince of Tennis	2543
+Young Justice	2486
+Fast and the Furious	2022
+Death Note	2344
+Rise of the Guardians	2396
+Legend of Korra	2340
+Final Fantasy XIII	1967
+Chronicles of Narnia	2092
+Roswell	1505
+Aliens/Predator	1581
+Rosario + Vampire	1493
+Scandal	1228
+Skins	1554
+Love Hina	1679
+Transformers/Beast Wars	1773
+Days of Our Lives	1265
+Kung Fu Panda	1832
+Covenant	1734
+Hawaii Five-0	1667
+Veronica Mars	1442
+Game X-overs	871
+Halo	1305
+Ghost Hunt	1887
+Big Bang Theory	1598
+Home & Away	1135
+Batman	1605
+Lion King	1421
+Anime X-overs	1338
+Rookie Blue	1580
+Captain America	1481
+Thor	1570
+Sailor Moon X-overs	1385
+King Arthur	1266
+Teen Titans	1658
+Detective Conan/Case Closed	1610
+Slayers	1324
+Pitch Perfect	1517
+Jak and Daxter	1360
+Instant Star	1201
+Gundam Wing/Sailor Moon	1446
+Total Drama series	1229
+Hey Arnold	1429
+Fate/stay night	1068
+W.I.T.C.H.	1203
+Pitch Black / Riddick	1132
+Bonanza	1250
+Vampires	1071
+Lost	1196
+Skip Beat!	1205
+Dark Angel	1155
+Baldur's Gate	644
+Avatar	931
+Misc.  Hurt-Comfort	33
+Warriors	1775
+CSI	1310
+Wicked	1089
+South Park	1424
+Fushigi Yuugi	983
+Mario	991
+Gargoyles	1164
+Neverwinter Nights	551
+Hellsing	1259
+Soul Eater	1439
+Robin Hood BBC	1033
+League of Legends	1153
+Victorious	1217
+Highlander	1146
+Hardy Boys/Nancy Drew	1069
+Magical Girl Lyrical Nanoha	965
+Hunter X Hunter	950
+Voltron	765
+Ronin Warriors	997
+Maximum Ride	1130
+Transformers	600
+Teenage Mutant Ninja Turtles	902
+Devil May Cry	1039
+Alias	834
+Agents of S.H.I.E.L.D.	1468
+Spider-Man	742
+Hollyoaks	807
+Orange Is the New Black	777
+Mighty Ducks	940
+Fosters	916
+Code Lyoko	944
+Five Nights at Freddy´s	1017
+Dr. Quinn Medicine Woman	751
+Heroes	848
+All My Children	629
+Winx Club	953
+Warhammer	777
+Emergency	875
+Invader Zim	772
+Oh My Goddess!	447
+Dragon Ball Z/Sailor Moon	733
+Babylon 5	650
+Rio	757
+Harvest Moon	850
+Free! - Iwatobi Swim Club	1274
+Ninjago	749
+Mummy	684
+Final Fantasy X-2	707
+Powerpuff Girls	904
+Les Misérables	806
+Ashes to Ashes	811
+G. I. Joe	765
+Highschool of the Dead	640
+Originals	619
+Fable	763
+Homestuck	1381
+Adventure Time with Finn and Jake	810
+Vocaloid	1259
+Chrono Trigger	590
+Hogan's Heroes	714
+Gravity Falls	916
+X-overs	683
+Mentalist	877
+Minecraft	816
+Hellboy	604
+iCarly	536
+Gunsmoke	724
+Band of Brothers	411
+Queer as Folk	534
+Chicago Fire	498
+Familiar of Zero	500
+Lilo & Stitch	604
+He-Man	428
+Yu-Gi-Oh! ZEXAL	648
+Superman	649
+Zoids	590
+Dynasty Warriors	691
+Redwall	495
+Austin & Ally	869
+Flashpoint	692
+Dukes of Hazzard	613
+Forgotten Realms	688
+Gone with the Wind	556
+Zorro	546
+Lois and Clark	555
+Final Fantasy I-VI	523
+Chalkzone	125
+Street Fighter	477
+Fruits Basket	716
+Boondock Saints	587
+Mechwarrior/Battletech	355
+True Blood	369
+Revolution	579
+Dungeons and Dragons	439
+Moonlight	471
+Final Fantasy X	516
+Web Shows	1191
+Final Fantasy XII	556
+Disney	592
+Alpha and Omega	556
+EastEnders	495
+Wild Wild West	437
+Big Hero 6	673
+Sekirei	292
+Beverly Hills 90210	420
+Golden Sun	629
+Pretender	471
+Full Metal Panic	541
+Xiaolin Showdown	577
+Lucky Star	435
+Final Fantasy X-overs	212
+Beauty and the Beast	471
+Gakuen Alice	757
+Red Eye	485
+Patriot	330
+Megami Tensei	524
+Breath of Fire	418
+DarkWing Duck	461
+Sky High	530
+C.I.D.	545
+Shugo Chara!	639
+One Life To Live	437
+Daria	502
+Storm Hawks	448
+Degrassi	453
+Guiding Light	418
+Finder Series	477
+Outsiders	494
+Legend of Dragoon	422
+White Collar	406
+StarCraft	372
+Passions	473
+Inception	526
+Boondocks	457
+Junjō Romantica	552
+Dangan Ronpa Kibou no Gakuen to Zetsubou no Koukousei	401
+Darkest Powers	498
+Ragnarok Online	435
+In Plain Sight	375
+Mortal Kombat	441
+Gravitation	646
+Pretty Cure	342
+O.C.	418
+Van Helsing	388
+Doc Martin	219
+Elfen Lied	323
+Hana Yori Dango	488
+Animaniacs	391
+Diagnosis Murder	271
+Soul Calibur	426
+Call of Duty	373
+Valdemar universe	402
+Falling Skies	395
+Saint Seiya	521
+Devil Wears Prada	405
+SWAT Kats	347
+Megamind	440
+Major Crimes	416
+Robotech/Macross	296
+Angel	392
+Beetlejuice	416
+MI-5/Spooks	419
+Airwolf	414
+Leverage	398
+Starsky and Hutch	370
+Ace Combat	331
+Once Upon a Time in Mexico	278
+24	389
+Musketeers	413
+Jackie Chan Adventures	338
+Marvel	416
+Young Riders	286
+Matt Houston	234
+Star Ocean	406
+Numb3rs	421
+Strawberry Panic!	378
+Four Brothers	391
+Maria-sama ga Miteru	286
+Joker/Clover/Heart no Kuni no Alice	428
+Dark Shadows	260
+Life With Derek	386
+Haruhi Suzumiya series	357
+Resident Evil series	365
+Person of Interest	382
+Dragonriders of Pern series	353
+Wreck-It Ralph	422
+Ghost Busters (Real/Extreme)	471
+Final Fantasy IX	322
+Covert Affairs	354
+Battle Royale	300
+Gundam UC	289
+Kamen Rider	346
+Ben 10	537
+Monkees	286
+Dawson's Creek	324
+Emmerdale	374
+SeaQuest	261
+Sly Cooper	269
+Strike Witches	219
+Once and Again	256
+Quantum Leap	252
+Gintama	453
+Mediator	365
+Mutant X	347
+Warehouse 13	339
+Brokeback Mountain	228
+SD Gundam	209
+X-Files	224
+Charlie and the Chocolate Factory	250
+Borderlands	323
+Underworld	291
+Lost Boys	312
+Sound of Music	290
+Jurassic Park	275
+Initial D	251
+Maleficent	318
+Magnificent Seven	375
+Scarecrow and Mrs. King	311
+Newsies	387
+Orphan Black	406
+Love Live! School idol project	373
+Red vs. Blue	355
+Chicago PD	291
+Make It or Break It	329
+Greek Mythology	322
+Last of Us	301
+Torchwood	415
+Demashitaa! Powerpuff Girls Z	315
+As the World Turns	255
+Voyage to the Bottom of the Sea	246
+Battlestar Galactica	171
+Alias Smith & Jones	219
+Land Before Time	177
+Elsword	400
+Carpathian Series	226
+Sherlock Holmes	373
+Grimm	287
+Lancer	299
+Candy Candy	137
+Spirited Away	272
+DC Elseworlds	176
+Super Sentai	271
+Bubblegum Crisis	198
+Suite Life series	265
+Hunchback of Notre Dame	274
+Guardians of the Galaxy	351
+Friday Night Lights	285
+Across the Universe	297
+Princess Diaries	258
+Touhou Project	251
+Earth's Children	84
+Captain Planet	258
+Blacklist	383
+Alex Rider	317
+Shaman King	356
+Zatch Bell	224
+Maze Runner Trilogy	293
+Christy	212
+Ironman	339
+Godzilla	259
+Monsters Inc.	314
+Phineas and Ferb	286
+Saiyuki	243
+Silmarillion	181
+A-Team	282
+White Wolf	226
+Protector of the Small Quartet	236
+Misc. Plays/Musicals	449
+Legacy of Kain	274
+Metroid	265
+Lost World	268
+Azumanga Daioh	273
+Urusei Yatsura	37
+Firefly	277
+Perry Mason	240
+Kick-Ass	193
+Legend of the Seeker	197
+Gallagher Girls	313
+Seven Brides for Seven Brothers	124
+Monster Hunter	151
+Friends	270
+Hyperdimension Neptunia	132
+Bully	286
+American Horror Story	311
+Maple Story	215
+Shadow	165
+Les Miserables	268
+Far Cry	229
+Faking It	322
+Closer	223
+Host	199
+Slam Dunk	297
+Dawn of the Dead	222
+Casualty	295
+Blue Bloods	248
+Worm	69
+Misc. Tv Shows	327
+My So Called Life	198
+D N Angel	268
+Just My Luck	279
+Inglourious Basterds	245
+World Ends With You	237
+BioShock	222
+Cat Returns	192
+Kantai Collection	20
+Wild at Heart	177
+Ratchet and Clank	237
+Diablo	169
+Fright Night	175
+Valkyria Chronicles	141
+Baby Sitters Club	237
+October Road	79
+Suits	270
+Team Fortress 2	326
+Claymore	196
+Bakugan Battle Brawlers	241
+Grand Chase	253
+Without a Trace	231
+Birds Of Prey	168
+Gods Eater Burst	194
+Corpse Party	260
+Nashville	239
+Starblazers	71
+Medabots	195
+Monster High	238
+Prison Break	233
+How I Met Your Mother	261
+Alexander	187
+Thunderbirds	174
+Digimon/Pokemon	99
+Private Practice	185
+Eureka Seven	159
+Biker Mice From Mars	197
+Coronation Street	215
+Ai no Kusabi	133
+Flash	239
+Gunslinger Girl	194
+Girl Meets World	257
+Cold Case	165
+Kyle XY	165
+Gokusen	142
+Infinite Stratos/IS	175
+Lorien Legacies	187
+Hannibal	240
+Women of the Otherworld	129
+Hikaru no Go	175
+Reba	192
+Reign	312
+Detective School Q	101
+Sakura Wars	144
+FAKE	178
+Fantasy Island	105
+Sanctuary	213
+Bridget Jones' Diary	173
+Chip and Dale's Rescue Rangers	116
+Port Charles	118
+Skies of Arcadia	147
+Sunset Beach	77
+Alvin and the chipmunks	195
+Maid Sama!	170
+Mythology	247
+Care Bears	173
+Waterloo Road	148
+Eyeshield 21	201
+Professor Layton	222
+Animorphs	134
+Finding Sky	123
+Back to the Future	195
+Yami no Matsuei	161
+Earth 2	180
+Balto	172
+Duel Masters	67
+Fairly OddParents	183
+Uta no Prince-sama	180
+Ojamajo Doremi	127
+Wild Arms	138
+Lazytown	189
+Anne of Green Gables series	178
+Misc. Games	253
+Hart of Dixie	147
+Battle of the Planets	175
+Tales of Xillia	139
+Recess	158
+Sea Patrol	164
+Tales of Symphonia	132
+Blood+	155
+Ultimate Spider-Man	76
+Road Rovers	153
+Andromeda	152
+La Corda D'Oro	196
+Kannazuki no Miko	165
+Xenosaga	167
+Knight Rider	180
+Loonatics Unleashed	179
+Left 4 Dead	175
+Smash	164
+Castlevania	100
+Charlie's Angels	88
+Dempsey and Makepeace	93
+McLeod’s Daughters	141
+Advance Wars	154
+National Treasure	170
+Warframe	103
+Angelic Layer	163
+Sekaiichi Hatsukoi	194
+Incredibles	163
+Skylanders	102
+Miracle	63
+Ocean's 11	96
+Song of the Lioness	164
+Dirty Pair	37
+ER	152
+Justified	114
+Hollywood Heights	135
+Psych	184
+Armored Core	111
+Metalocalypse	130
+Peter Pan	181
+UFO	157
+Nadesico	82
+Black Lagoon	129
+Laramie	101
+Expendables	109
+Good Wife	202
+Black Cat	131
+Darkstalkers	139
+Guyver	84
+Burn Notice	110
+Smurfs	88
+Gnomeo & Juliet	97
+Voyagers!	137
+Viva Piñata	87
+Due South	123
+Vandread	137
+Misc. Anime/Manga	177
+Het Huis Anubis/House of Anubis	225
+Misc. Movies	203
+Chrono Crusade	147
+Fringe	155
+Higurashi/Umineko series	118
+Grand Theft Auto	109
+Star Wars Rebels	109
+North and South	107
+James Bond	138
+Legion	61
+100	131
+Tekken	109
+Regular Show	171
+Mermaid Melody Pichi Pichi Pitch	79
+House of Night	114
+Real Adventures of Jonny Quest	84
+Nightmare Before Christmas	121
+Death Sentence	88
+Fossil Fighters	99
+Sleepy Hollow	98
+Dead or Alive	134
+Secret Life of the American Teenager	109
+Watership Down	47
+Dragon Quest Series	75
+Gotham	87
+Bad Girls	77
+Gorillaz	159
+Grojband	216
+Book X-overs	93
+Chaotic	115
+Fablehaven	96
+Holby City	129
+Gears of War	104
+Dallas	86
+West Wing	122
+Ever After High	188
+Crash Bandicoot	105
+Cars	93
+Inspector Gadget	76
+Lawless	69
+Our Girl	122
+Final Fantasy XIII-2	157
+School Rumble	79
+Big Valley	101
+Penguins of Madagascar	143
+Last Tango in Halifax	72
+Tokyo Mew Mew	218
+Katawa Shoujo	109
+Iron Fey Series	101
+Gilligan's Island	208
+Tudors	68
+Destiny	80
+Heavy Rain	80
+Hercules	74
+Phantasy Star	86
+Aladdin	111
+Rango	85
+Marvel vs Capcom	65
+Metal Gear	109
+Morganville Vampires	127
+Tales of Vesperia	122
+Okami	97
+Twisted	64
+Witchblade	85
+Lie to Me	120
+Nikita	124
+Gummi Bears	88
+Artemis Fowl	95
+Persuasion	75
+King Kong	83
+Sweeney Todd	104
+Gundam 00	102
+Hannah Montana	115
+Homeworld	69
+10th Kingdom	62
+Jedi Knight	31
+Disgaea	92
+Super Robot Wars	38
+Kaleido Star	105
+Shuffle!	51
+Silence of the Lambs/Hannibal	80
+Titanic	72
+Equalizer	50
+Hangover	78
+Love Never Dies	80
+Calvin & Hobbes	93
+Lost In Space	51
+Saints Row	81
+7th Heaven	84
+Prototype	97
+When Calls the Heart	19
+Prince of Persia	79
+Steven Universe	91
+Pacific Rim	83
+Magical Diary	58
+Relic Hunter	82
+Ghostbusters	120
+Jericho	86
+Adam-12	96
+Confessions of Georgia Nicolson	77
+Necessary Roughness	86
+Amazing World of Gumball	98
+Tsubasa Chronicle	142
+M.I. High	110
+Miss Fisher's Murder Mysteries	109
+Shining Force	71
+Mummies Alive!	101
+Captain Power	55
+Farscape	80
+Batman Beyond	110
+Silent Witness	89
+Invisible Man	80
+Wolf Lake	71
+Final Fantasy XI	57
+Race to Witch Mountain	96
+Bolt	124
+Wolverine & the X-Men	96
+Wheel of Time	95
+Princess and the Frog	80
+Fairy Tales	115
+Jem	97
+Tangled	143
+District 9	83
+Guilty Gear	97
+LXG	88
+Monsters vs. Aliens	82
+Mercy Thompson series	85
+Camp Rock	101
+Hunter	88
+Tinkerbell	135
+Outlast	63
+Dynasty	31
+Ella Enchanted	76
+Hanna is not a Boys Name	91
+Mulan	100
+Valkyrie Profile	105
+Everwood	73
+Cyberchase	93
+Holes	82
+Step Up	90
+Lupin III	84
+Raccoons	75
+Starman	29
+Tron	72
+Forever Knight	89
+Kickin' It	134
+Ugly Betty	91
+Radio Dramas	253
+Dead Space	76
+Static Shock	91
+Bloody Roar	67
+My Candy Love	102
+Longmire	58
+Kirby	51
+Servants	26
+Secret Circle series	66
+Carmilla	113
+Wizard of Oz	18
+Blood Ties	84
+Black Magician Trilogy	82
+Silent Hill	88
+Mamma Mia!	74
+Bourne series	80
+Will and Grace	85
+X-Com	64
+Noir	63
+Katherine Kurtz	45
+Chrono Cross	75
+Guild Wars	102
+Overlord	77
+Ever After	78
+Hills Have Eyes	90
+Vampire Kisses	79
+Miles Vorkosigan	77
+Captain Tsubasa	71
+MacGyver	96
+Revenge	116
+Samurai Pizza Cats	73
+Shadow Hearts	87
+Outlaw Star	86
+Kingdom of Heaven	60
+Majin Tantei Nōgami Neuro	88
+Partridge Family	32
+Hawaii Five-O	91
+Graceland	75
+Bobobo-bo Bo-bobo	67
+Night at the Museum	57
+Summerland	88
+Green Street Hooligans	61
+Portal	106
+Hayate the Combat Butler	90
+21 Jump Street	82
+That '70s Show	84
+Dragon Heart	78
+X/1999	65
+Skulduggery Pleasant series	72
+Lego Movie	83
+El Hazard	48
+Cruel Intentions	57
+Record of Lodoss War	63
+Peacemaker Kurogane	64
+Robin Hood	91
+Air Gear	77
+Summon Night	78
+Sofia the First	81
+Tomb Raider	100
+MASK	65
+Gurren Lagann	89
+Paradise	28
+Lords of Dogtown	66
+Rugrats/All Grown Up!	128
+Get Backers	71
+Osmosis Jones	56
+To Love-Ru	33
+Tales of the Abyss	71
+Fusion Fall	70
+Elementary	86
+Last Ship	35
+9	89
+BlazBlue	69
+ThunderCats	59
+Evil Within	70
+Secret/Legend of Mana	69
+Family Guy	68
+Legacy	8
+Treasure Planet	40
+Dark-Hunter series	66
+F-Zero	1
+Honor Harrington	37
+Gone In 60 Seconds	33
+Pandora Hearts	92
+Little White Horse	77
+Thomas the Tank Engine	82
+Ballykissangel	61
+Galactik Football	59
+Oban Star-Racers	88
+Green Hornet	45
+Breakfast Club	54
+Gen13	40
+Atlantis	28
+My Mad Fat Diary	53
+Bravely Default	80
+Dark Souls	89
+World of Darkness	88
+Little Mermaid	69
+Captain Harlock	71
+Foyle's War	46
+Darksiders	31
+Mahoromatic	15
+Forever	106
+Ogre Battle	6
+Kid Icarus	60
+Underland Chronicles	27
+Fault in Our Stars	129
+GunSmith Cats	37
+Batman the Animated Series	46
+New Girl	102
+Grim and Evil	27
+My Babysitter's a Vampire	66
+Primeval	55
+Hell on Wheels	2
+D.E.B.S.	4
+Be My Princess	72
+DC Superheroes	63
+Mindy Project	135
+King of Fighters	69
+Misc.  Adventure	106
+Saber Rider and the Star Sheriffs	34
+Lineage	12
+Wizard101	56
+Call the Midwife	134
+Mr. Peabody & Sherman	92
+Rocket Power	60
+Earthbound	88
+K	82
+Ranger's Apprentice	86
+Following	82
+Misc.  Fantasy	51
+Super Robot Monkey Team	60
+Weiss Kreuz	74
+Cats	88
+Pirates in Love	57
+City Homicide	51
+Bates Motel	40
+Misc. Cartoons	71
+Grisha Trilogy	46
+inFAMOUS	48
+Captain Scarlet	62
+Private	51
+Gunnm/Battle Angel	24
+Trigun	66
+Wuthering Heights	7
+Star-Crossed	28
+Secret Window	33
+MISSING	46
+Wild Kratts	107
+Happy Tree Friends	70
+Newsroom	82
+Watch Dogs	30
+Slender	65
+No. 6	80
+Good Luck Charlie	48
+Planet of the Apes	20
+Pirates of Dark Water	19
+Haven	53
+Broadchurch	56
+Donkey Kong Country	3
+Stand By Me	19
+Vampire	49
+Who's the Boss?	41
+Yu-Gi-Oh! Arc-V	31
+Ni No Kuni	18
+Heartland	28
+T.U.F.F. Puppy	24
+Vikings	51
+Streets Of San Francisco	29
+Community	64
+Frasier	156
+Every Witch Way	97
+Jimmy Neutron	35
+Generator Rex	69
+Ice Age	43
+Murdoch Mysteries	40
+Wolf Among Us	69
+Elite Beat Agents	38
+Shark Tale	39
+Intelligence	50
+Sharpe Series	26
+Dota 2	35
+Bionicle	39
+Clique	97
+Penryn & the End of Days	11
+The Santa Clause	16
+Nanny	40
+Man From UNCLE	157
+Terraria	26
+Lunar Chronicles	57
+Screenplays	77
+Seven Days	40
+Gone	70
+Dexter	38
+Scooby Doo	54
+Wolfblood	77
+Em Família	20
+Max Steel	14
+Lewis	51
+Book of Life	64
+City Hunter	41
+Toriko	24
+Space 1999	24
+Inspector Lynley Mysteries	46
+Virals	26
+Star Trek Online	48
+Natsume Yūjin-Chō	33
+Dominion	29
+Black★Rock Shooter	23
+Casper's Scare School	52
+Clannad	29
+You're Under Arrest	41
+Tribe	8
+Fraggle Rock	52
+Resurrection	15
+Totally Spies	20
+Princess Tutu	32
+Jessie	66
+Home Alone	14
+L Word	15
+Darren Shan Saga/Cirque Du Freak	33
+xxxHOLiC	23
+Freedom Planet	18
+Great Mouse Detective	32
+Over the Garden Wall	57
+RENT	74
+Tenkai Knights	68
+Breaking Bad	51
+Even Stevens	17
+Rose of Versailles	56
+Parks and Recreation	19
+Boy Meets World	28
+Green Lantern	63
+Lords Of The Underworld series	34
+Being Human	41
+Guardians of Ga'Hoole	20
+World of Tanks	19
+Slugterra	42
+Gundam AGE	9
+Young Avengers	38
+Rose Red	31
+Scorpion	59
+Addams Family	34
+Misc. Comics	51
+Jeepers Creepers	36
+Rocky Horror	22
+Bubble Guppies	70
+Tales of Graces	62
+Black Cauldron	1
+Sisters Grimm	54
+Night World series	22
+Commander in Chief	32
+Red Band Society	57
+Shakespeare	25
+Brooklyn Nine-Nine	76
+Ib	76
+Mondaijitachi ga Isekai kara Kuru sou desu yo?	16
+Deadpool	24
+Kissed by the Baddest Bidder	17
+Tiny Toon Adventures	21
+I Didn't Do It	53
+Sam & Cat	53
+Jack the Giant Slayer	10
+Darker than BLACK	28
+Worst Witch	22
+Teen Beach Movie	16
+Homeland	53
+Gekkan Shōjo Nozaki-kun	75
+Dishonored	28
+Mako Mermaids	20
+Verbotene Liebe	3
+Dino Crisis	3
+Pair of Kings	75
+Agent Carter	47
+Fangirl	64
+Epic	32
+Reboot	4
+Bill	14
+Almost Human	42
+Good Omens	31
+Jane and the Dragon	58
+Kingdom Keepers	29
+PAW Patrol	37
+Whitechapel	15
+Cowboy Bebop	27
+Misc.  Horror	43
+Men In Black	43
+Wander over Yonder	38
+Metal Slug	5
+Hotel Transylvania	20
+Once Upon a Time in Wonderland	53
+Jake and the Never Land Pirates	13
+Common Law	25
+Magic School Bus	18
+Tenchi Muyo	11
+Ghost Whisperer	13
+Misc.  Friendship	32
+Caroline In The City	39
+Thick of It	24
+A Nightmare on Elm Street	8
+Ghost and Mrs. Muir	11
+Barbie	33
+Dragon Booster	13
+Toy Story	48
+Crimson Field	30
+Mighty Boosh	22
+AcceleRacers	6
+Young Rebels	17
+Muppet Show	28
+Titanfall	15
+Dredd	20
+Two Kinds	11
+Cory in the House	36
+Last Story	34
+Wolf's Rain	34
+Life on Mars	66
+Misc.  Drama	66
+Shelter	16
+Tin Man	21
+Drake & Josh	11
+King Of The Hill	7
+Producers	43
+Littlest Pet Shop	73
+Patlabor	20
+Veggie Tales	32
+Death in Paradise	30
+Toontown	29
+Danganronpa	34
+Bitten	16
+New Jedi Order	3
+Sons Of Thunder	34
+Cinderella	30
+Neighbors	5
+Children of the Lamp	3
+x-men	42
+Matrix	22
+Penny Dreadful	11
+Pirate101	14
+Don't Starve	16
+Leviathan series	15
+Misc.  Family	19
+SpongeBob SquarePants	52
+Class of the Titans	25
+Jane Eyre	13
+Dragon Cave	2
+Parodies and Spoofs	60
+Despicable Me	41
+Arthur	81
+Wizards of Waverly Place	39
+Bold and the Beautiful	26
+Shenmue	27
+Simpsons	25
+MAGNUM P.I.	20
+Left Right Left	8
+Silverwing	9
+Cool World	1
+Record of Agarest War	17
+Now You See Me	35
+Brady Bunch	15
+Carrie	31
+Young Dracula	27
+Remember the Titans	8
+Sleeping Beauty	18
+Zoey 101	52
+Green Rider	32
+Bread	16
+Elysium	6
+Xenoblade Chronicles	35
+Dracula	28
+Ghost Bird Series	16
+Twin Peaks	16
+Club penguin	20
+Who Framed Roger Rabbit	29
+Futurama	21
+Sonny with a Chance	24
+Pocahontas	8
+In the Flesh	32
+Gamera	12
+Child's Play	31
+Goosebumps	10
+Ergo Proxy	6
+Shadow Children series	49
+Maverick	12
+Last Apprentice series/Wardstone Chronicles	13
+Ghost in the Shell	20
+Psy-Changelings Series	25
+Love Letter From Thief X	11
+Chalet School	69
+Chasing Life	34
+Prince of Egypt	24
+Misc.  Romance	50
+Inkheart	10
+Saw	14
+Dark City	21
+Time Warp Trio	14
+M*A*S*H	30
+Secrets of the Immortal Nicholas Flamel	9
+Happy Feet	11
+Gemma Doyle Trilogy	38
+Dragon Ball GT	19
+Kane Chronicles	26
+Thundermans	36
+Priest	6
+Black Jewels Trilogy	2
+Black Sails	27
+Dresden Files	21
+Master and Commander	17
+Bible	51
+All Dogs go to Heaven	3
+Southland	30
+Tarzan	18
+Fury	4
+Metro 2033	9
+Toradora!	27
+Constantine	30
+Brave Frontier	24
+Watashi ga Motenai no wa Dou Kangaete mo Omaera ga Warui!	16
+Mighty Med	15
+Howl's Moving Castle	29
+Worldwar series	2
+Need for Speed series	14
+Queen of Swords	27
+Hemlock Grove	31
+Alice in Wonderland	31
+Lord of the Flies	47
+Nancy Drew series	28
+Eureka	18
+Borrowers series	1
+Terra Nova	13
+Dance Central	31
+Fanboy and Chum Chum	24
+Epic Mickey	6
+Misc.  Humor	38
+An Unfortunate Fairy Tale	18
+Dracula Untold	10
+Annie	9
+Legion of Super Heroes	20
+Bomb Girls	21
+New Tricks	49
+Looney Tunes	24
+Final Fantasy XIV	15
+American Dad	15
+Book Thief	31
+Astro Boy	15
+Scott Pilgrim	8
+Trixie Belden	22
+Naked Brothers Band	28
+Tale Spin	10
+Not Going Out	36
+Evillious Chronicles	10
+Dr. Seuss series	27
+Neopets	21
+Loveless	36
+Little Vampire	12
+Monsuno	18
+Doom	6
+Wakfu	18
+Young and the Restless	8
+Halloween	20
+Animal Crossing	53
+Prey	3
+Throne of Glass series	33
+Switched at Birth	21
+Freedom Wars	4
+Dead Like Me	5
+Dazzle	18
+Home and Away	15
+Citrus	21
+Nightwing	22
+Cheers	37
+The Music Man	9
+Aliens in the Attic	25
+Terminator	17
+Trinity Blood	8
+NiGHTS	13
+Tiger's Curse Series	26
+Elizabeth	8
+Forbidden Game series	9
+Great Gatsby	40
+Nut Job	15
+H.I.V.E.	11
+Firebreather	4
+Oliver Twist	4
+Robin	2
+Virtue's Last Reward	27
+Stargate	17
+Dead Snow/Død snø	1
+Final Destination	8
+OFF	22
+Ginga series	10
+Paul	14
+Inazuma Eleven	34
+Into the Woods	8
+Shake It Up!	30
+Chaos	15
+Wagon Train	3
+Lost In Austen	7
+Equilibrium	19
+PlayStation All-Stars Battle Royale	7
+Puzzle & Dragons	1
+Law and Order	11
+Japanese Mythology	26
+Egyptian Mythology	8
+Skullgirls	11
+Drop Dead Fred	12
+Blade	14
+Wild West C.O.W.-Boys of Moo Mesa	19
+Next Step	16
+Dungeon Keeper	2
+Freaks and Geeks	5
+Dragonlance	3
+FTL	10
+Armageddon	18
+Pac-Man and the Ghostly Adventures	7
+Peaky Blinders	9
+Croods	19
+Mad Men	16
+Secret of Moonacre	8
+Suikoden	12
+Chalion series	21
+Modern Family	12
+Wing Commander	1
+Misc.  Angst	21
+Appleseed	1
+Rozen Maiden	10
+Crusade	14
+Troy	8
+Hook	7
+Rockett's World	7
+Pikmin	15
+Fantastic 4	20
+Deus Ex	8
+Friday the 13th	17
+Doc	27
+Office	28
+Cosby Show	3
+American McGee's Alice	6
+Clarence	24
+Dragon Ball	13
+Misc. Books	35
+Daredevil	5
+Ravenloft	2
+WordGirl	12
+A Bugs Life	2
+Professionals	26
+Princess Mononoke	6
+Spectacular Spider-Man	6
+Splatalot	5
+Red Dwarf	17
+Motive	24
+Chuggington	4
+Rockford Files	3
+Left Behind	16
+Jhonen Vasquez	7
+Ginger Snaps	5
+Cloud 9	15
+Tanz der Vampire	6
+Galaxy Angel	13
+Interstellar	8
+Movie X-overs	16
+Rat Patrol	17
+Over the Hedge	10
+Sonic Underground	14
+Legendz	9
+Geneforge	7
+Storyteller	3
+Brave Saga	7
+Meet the Robinsons	18
+Cthulhu Mythos	17
+Itazura na Kiss	12
+Grim Adventures of Billy & Mandy	13
+Raven Cycle	47
+Outlander	5
+V for Vendetta	15
+House of 1000 Corpses/Devil's Rejects	5
+Bartimaeus Trilogy	15
+Mr Selfridge	11
+Repo! The Genetic Opera	26
+Vampire Hunter D	13
+Full House	17
+RuneScape	21
+Gormiti	10
+Women's Murder Club	1
+Captain Marvel/Shazam	8
+Only Lovers Left Alive	7
+Northanger Abbey	3
+Lloyd Alexander	4
+Trauma Center	22
+Clue	3
+Jersey Boys	3
+Brother Bear	8
+Pellinor	1
+Uncle Grandpa	5
+Waking the Dead	28
+Library War	12
+New Species series	5
+Mother Daughter Book Club	11
+Arrested Development	6
+Woman in White	14
+Final Fantasy Agito XIII	5
+Guys and Dolls	35
+Clare B. Dunkle	11
+Kingdoms of Amalur	4
+Wolves of the Beyond	12
+Texas Chainsaw Massacre	10
+Mabinogi	7
+Vertigo	18
+Cherub	14
+Starla and the Jewel Riders	9
+How to Rock	16
+Tales of Phantasia	3
+Legends of Chima	17
+Lovely Complex	15
+Rhythm Thief	13
+Starbound	10
+Beka Cooper series	6
+S.A	12
+Jupiter Ascending	14
+Little Red Riding Hood	13
+Tom and Jerry	8
+JoJo's Bizarre Adventure	31
+Grossology	2
+Ratatouille	28
+Deltora Quest	16
+Borgias	17
+Quick and the Dead	2
+It's Always Sunny in Philadelphia	10
+Plague Inc.	2
+This is The End	2
+Last Remnant	9
+Minutemen	17
+Life	6
+Madam Secretary	9
+ParaNorman	9
+Scott & Bailey	12
+Lockwood & Co.	16
+Clash of Clans	13
+My Soul to Take	13
+Continuum	19
+Binding of Isaac	3
+Urinetown	12
+Twenty Thousand Leagues Under the Sea	2
+Sims	19
+Believe	8
+CHIPs	18
+Conan series	11
+Aion	10
+El Tigre	15
+Snow White and the Huntsman	4
+Dragon Nest	11
+Utena	26
+Secret Saturdays	12
+Diary of a Wimpy Kid	17
+Corpse Bride	15
+Munsters	1
+Road to Avonlea	7
+Scream	15
+GALS!	6
+Treasure Island	3
+Witches of East End	15
+Heartbeat	9
+Starship Troopers	10
+Soredemo Sekai wa Utsukushii	5
+Combat!	18
+Speed Racer	6
+Good Son	3
+Emma	26
+Happy Days	6
+This Means War	3
+Emily Owens M.D.	1
+Madness Combat	3
+Transcendence	4
+War and Peace	8
+Phantom Stallion	12
+Hellraiser	7
+Saber Marionette J	8
+Vindictus	10
+Shakugan no Shana	6
+Matthew Reilly	11
+To Kill a Mockingbird	18
+Junior	4
+Adventures of Sinbad	6
+Halt and Catch Fire	5
+Turn	4
+Total War series	8
+How to Get Away with Murder	24
+Wild Adapter/Executive Committee	12
+Almighty Johnsons	9
+Under the Dome	14
+Rick and Morty	20
+Red Dead Redemption	16
+Oz the Great and Powerful	11
+House of Wax	6
+Book of Mormon	23
+Shiki	6
+Big Bad Beetleborgs Metallix	4
+Shadowrun	6
+Secret Garden	9
+Kenichi the Mightiest Disciple	10
+Hotline Miami	4
+Lawrence of Arabia	4
+Scribblenauts	4
+My Forged Wedding	9
+Qubool Hai	3
+Scrubs	15
+Plants vs. Zombies	6
+Challenge of the GoBots	10
+Mary Poppins	3
+Oliver!	8
+To the Moon	10
+Penderwicks series	15
+Witcher	8
+Ruby Gloom	10
+I Am Number Four	7
+Asterix	4
+Coldfire Trilogy	19
+The Prophecy	4
+Tomorrow People	3
+It	8
+High School Story	7
+AKB0048	4
+Along for the Ride	1
+Video Game High School	11
+Spirit Animals	13
+My Sister the Vampire	11
+Flipped	3
+Titan A.E.	1
+F.E.A.R.	8
+Pendergast series	2
+James and the Giant Peach	4
+Bob's Burgers	23
+Remington Steele	9
+Overwatch	9
+Phantom Brave	12
+Garrison's Gorillas	10
+Omen	2
+Young Samurai series	15
+Hansel & Gretel	9
+Red Hood and the Outlaws	12
+DC Universe Online	11
+Remember Me	18
+Hanna-Barbera	14
+Ender's Game series	18
+Eragon	5
+Flight of the Navigator	1
+Misc.  Spyro the Dragon	2
+Chess	7
+Starhunter	6
+A Goofy Movie	4
+Indiana Jones	6
+Odd Squad	5
+Dolphin Tale	5
+Yogventures!	15
+Punch-Out!!	6
+Hatfields & McCoys	5
+Fatal Frame	14
+07-Ghost	6
+Perception	8
+Casablanca	21
+Edge of Tomorrow	14
+Daa! Daa! Daa!	9
+Secret Circle	11
+Middle	9
+Lady and the Tramp	8
+Grim Tales	13
+Privileged	14
+Detentionaire	13
+Wentworth	8
+Max Headroom	12
+Liv and Maddie	20
+Anastasia	9
+A Separate Peace	3
+Blackadder	4
+Urban Rivals	17
+Mafia	1
+Secrets series	16
+Transistor	10
+PlanetSide	9
+Doctor Blake Mysteries	8
+Wadanohara and the Great Blue Sea	8
+Nodame Cantabile	3
+Twilight Zone	15
+Young Ones	13
+Tremors	7
+Adventures of Tintin	13
+Nausicaa of the Valley of the Wind	4
+Samurai Jack	10
+Bad Girls Don't Die series	4
+Facts of Life	8
+Killzone	1
+Hirunaka no Ryuusei	15
+Dance Academy	7
+A Million Ways to Die in the West	3
+Bambi	9
+Dr. Horrible's Sing-Along Blog	15
+Endeavour	19
+Soon I Will be Invincible	1
+Emily Windsnap series	1
+Champions	12
+Loving Annabelle	4
+Half-Life	17
+Baccano!	13
+Dinosaur King	8
+Road to Eldorado	15
+Rayman	11
+Samurai Deeper Kyo	2
+How the Grinch Stole Christmas	4
+Armitage	9
+Giver	17
+Time Tunnel	4
+Mirage of Blaze	3
+White Knight Chronicles	4
+Stanley Parable	17
+Shrek	26
+Samurai Champloo	13
+Norse Mythology	13
+Oliver & Company	7
+David Eddings	4
+Heist Society	10
+Casino	5
+Beavis and Butt-Head	9
+Spirit	7
+Zombie-Loan	2
+Neverwhere	16
+Seussical	8
+Cause of Death	9
+Monster Girl Quest	3
+Catherine	10
+As Told By Ginger	4
+Rock and Rule	2
+My Sweet Bodyguard	8
+Goddess Test series	5
+Marching Band	15
+Crossing Lines	3
+Ray Donovan	3
+Sherlock Holmes in the 22nd Century	10
+Black Sheep Squadron/Baa Baa Black Sheep	1
+Army of Two	8
+Buzz Lightyear of Star Command	12
+Quest for Camelot	1
+D.C. ~Da Capo~	6
+Luigi's Mansion	8
+Mouse Guard	2
+Ironside	9
+Munto	6
+Guardian	3
+Oddworld	4
+Chronicles of Vladimir Tod	11
+A Clockwork Orange	3
+School for Good and Evil	12
+EndWar	1
+Dance Dance Revolution	1
+Wizards vs. Aliens	15
+Ripper Street	22
+Superjail!	3
+Virus Buster Serge	10
+Fargo	12
+Starlight Express	7
+McKenna	8
+Charlie Bone	12
+Discworld	10
+Takers	5
+Old Kingdom/Abhorsen series	18
+Nine Lives of Chloe King	12
+Fantastic Four	10
+Sesame Street	25
+Wolves	1
+Ao Oni	5
+Justice Society of America	8
+Stomp the Yard	1
+Con Air	10
+Boardwalk Empire	15
+Freelancer	2
+Problem Solverz	14
+Taxi	3
+I.N.K. Invisible Network of Kids	6
+Final Fantasy Versus XIII	15
+Alien Nine	7
+Finding Carter	8
+Black Box	4
+Line of Duty	2
+Gray Garden	15
+Pompeii	9
+Hitman	7
+Tales of VS.	1
+Pound Puppies	12
+Sunset Boulevard	4
+Ghost Master	3
+Waltons	4
+God of War	4
+Mannix	2
+Romeo & Juliet	14
+Story of Tracy Beaker	9
+Zombie Fallout	5
+Misc.  Mystery	11
+Bonnie & Clyde	10
+Golden Girls	2
+Last of the Mohicans	2
+Sentinel	4
+Stoked	4
+Eleanor and Park	15
+Madagascar	18
+Ransom My Heart	6
+S.T.A.L.K.E.R.	3
+Cat Royal Adventure	4
+Hollow Crown	2
+Dork Diaries	13
+Sakura Trick	6
+Higher Ground	11
+MediEvil	1
+War Horse	10
+Tsukihime	3
+Paranatural	5
+Defiance	17
+Jeeves	3
+Lizzie McGuire	8
+Hit the Floor	5
+Mount&Blade	6
+Ghost Hunter	12
+Misc.  Misc. Tv Shows	2
+Silk	11
+Façade	10
+Battlezone	3
+Victoria	2
+Kingkiller Chronicle	2
+Miranda	6
+Two and a Half Men	10
+Phoenix Files	3
+Cowboys & Aliens	11
+Water Rats	20
+Evil Dead/Army of Darkness	5
+BoBoiBoy	7
+Witch's House	16
+Lost In Blue	15
+Misc.  X-overs	2
+DragonFable	11
+Alpha and Omega series	2
+WildStar	12
+Jimmy Two-Shoes	5
+Secret World	3
+Uncharted series	9
+Wallander	3
+Yin Yang Yo	14
+Man in the Iron Mask	2
+Grease	9
+Gamer	6
+A.N.T. Farm	17
+Civilization Series	6
+Gatchaman	8
+Max and Shred	4
+NANA	12
+Emperor's New Groove	4
+Watchmen	14
+Secret of Kells	4
+Takin’ Over the Asylum	3
+Lone Ranger	7
+NYPD Blue	1
+Doc Savage	2
+Get Smart	6
+Ghost Rider	3
+Kerbal Space Program	4
+Inbetweeners	5
+Peanuts	9
+Boku wa Tomodachi ga Sukunai	7
+Castle Crashers	3
+Liberty's Kids	10
+Texhnolyze	3
+Cyborg 009	14
+Bedknobs and Broomsticks	3
+Girl Genius	6
+A Coming Evil	8
+Pet Shop of Horrors	3
+Devious Maids	9
+Third Star	5
+Housepets!	5
+Cloudy with a Chance of Meatballs	9
+True Detective	3
+Princess Protection Program	1
+Thumbelina	4
+Bad News Bears	10
+Helix	8
+Da Vinci's Demons	8
+Cross Edge	7
+Human Target	3
+Bittersweet Candy Bowl	3
+Midsomer Murders	7
+Demon Headmaster	3
+Threads of Fate	2
+A Dream of Sadler's Wells	1
+Bollywood	10
+Scarlet Pimpernel	5
+Vampirates series	9
+Chronicle	3
+Outlanders	1
+Columbo	4
+39 Clues	4
+L.A. Noire	13
+Shovel Knight	1
+Ava's Demon	12
+Wonder Woman	7
+Octonauts	5
+Nabari no Ō	14
+Radiant Historia	5
+Austenland	5
+Riptide	4
+Starship	9
+Laurie R. King	9
+Gunnerkrigg Court	11
+Project X Zone	1
+Cape	1
+Republic of Doyle	12
+The Thing	6
+Dragnet	2
+Miss Peregrine's Home for Peculiar Children	6
+Hardcastle and McCormick	10
+I Dream of Jeannie	4
+Flushed Away	3
+Woman in Black	7
+Deep Blue Sea	1
+TV X-overs	10
+Dear Girl - Stories - Hibiki	1
+If/Then	5
+October Sky	3
+Of Mice and Men	19
+Streets of Rage	2
+Life Unexpected	10
+Bomberman	3
+Series Of Unfortunate Events	10
+City of Ember	4
+Follyfoot	3
+Big O	2
+Casper	14
+La Femme Nikita	2
+King and I	10
+Stargirl	5
+Galaxy Quest	2
+Frankenstein	11
+Snow White and the Seven Dwarfs	10
+Tokyo ESP	2
+Teen Idol	1
+Talon Saga	3
+Harukanaru Toki no Naka De	2
+Boxtrolls	5
+Selfie	8
+My Bloody Valentine	1
+Breed	4
+Misc.  Sci-Fi	10
+A Monster in Paris/Un monstre à Paris	4
+Honey I shrunk the kids	9
+Jackson Brodie series	3
+Coraline	11
+Violet Eden Chapters	3
+St. Trinian's	6
+Bayonetta	5
+Gakuen Heaven	3
+Samurai Warriors	9
+Smite	5
+Little Britain	8
+Need for Speed	12
+Remember Me?	11
+DragonVale	4
+Murder She Wrote	15
+Crossing Jordan	7
+Ascension	4
+Witch & Wizard	5
+Les tuniques bleues	2
+Rowan of Rin series	4
+Gladiator	4
+Young Guns	7
+Detectives	4
+WALL-E	7
+Runaways	4
+Temeraire	6
+EVE Online	6
+Martin Beck series	2
+Chronicles of Ancient Darkness	4
+Pillars of Eternity	1
+Turbo	14
+Sono Hanabira ni Kuchizuke wo	8
+Jane the Virgin	4
+Next to Normal	4
+Beverly Hillbillies	2
+Motorcity	7
+Eye Candy	5
+Hercule Poirot series	6
+Little House on the Prairie	8
+Alan Ford	5
+Tera	5
+Dead Poets Society	17
+Others	11
+Company of Heroes	1
+Destroy All Humans!	2
+Sket Dance	8
+Fall	8
+Camp Takota	5
+Letters to Juliet	2
+Pucca	6
+Jedi Quest series	7
+Dark Crystal	3
+Neighbours	6
+Would You Rather	3
+Wipeout	2
+Night Huntress series	2
+Jack Blank Adventure	6
+R.I.P.D.	1
+Robot Chicken	1
+Keys to the Kingdom	7
+Jade Empire	5
+Amulet	8
+Saving Private Ryan	5
+Rule of Rose	3
+The Mask	4
+Sandlot	5
+Boy/Girl Battle Series	6
+Pretty in Pink	1
+Wonderful Wizard of Oz	5
+Fables	11
+Angel's Friends	5
+Three's Company	10
+Archer	8
+Champions Online	1
+Webkinz	1
+Drawn to Life	3
+Moonlighting	2
+Twelve Kingdoms	6
+Dani’s Castle	6
+Misc.  Percy Jackson and the Olympians	4
+Beck	3
+Awkward.	9
+Cassandra Palmer Series	3
+Sym-Bionic Titan	4
+Reservoir Dogs	4
+Home Improvement	12
+His Dark Materials	7
+Pacific	3
+Homeward Bound	3
+Pushing Daisies	7
+Battle Bears	3
+Coyote Ugly	1
+Matthew Swift novels	1
+Gaia Online	6
+But I'm a Cheerleader	1
+Doug	2
+Love Stage!!	10
+Little Men	4
+Bullet to the Head	1
+Ultimate Marvel	4
+Red Road	2
+Re-Animator	2
+School Days	3
+Paradise Kiss	8
+IT Crowd	6
+Galaxy Rangers	1
+Code Breaker	7
+Roblox	16
+Hell Girl	10
+Batman/Superman Adventures	7
+Swallows and Amazons series	7
+NARC	2
+Dirty Dancing	1
+Iron Giant	3
+Complete Savages	10
+Lusternia	2
+Holy Musical B@man!	1
+Parade's End	5
+SubNautica	1
+Gugure! Kokkuri-san	7
+Lego	4
+Geronimo Stilton	2
+All Creatures Great and Small	3
+Anaconda	2
+Girls	3
+Napoleon Dynamite	13
+Ty the Tasmanian Tiger	6
+Tank Girl	1
+Dan Vs.	10
+Puppet Master	7
+Chained	3
+Haunted Mansion	2
+Horseland	5
+Land of the Giants	3
+Designing Women	9
+Drake Chronicles	6
+Dark Cloud	6
+Mercury Rising	1
+Kanon	3
+Raze	2
+Monarch of the Glen	2
+Presentable Liberty	2
+Falling Kingdoms series	4
+Estonian Mythology	2
+Suzuka	1
+Henry Danger	5
+Kirarin Revolution	4
+Command & Conquer	4
+Wanted	1
+Idolmaster	5
+Hex Hall	1
+Hart to Hart	2
+Star Vs. The Forces of Evil	9
+Big Wolf on Campus	4
+Psychonauts	4
+Foster's Home for Imaginary Friends	12
+Aquabats! Super Show!	14
+StarFront	1
+Supergirl	5
+Amazing Spiez!/SpieZ! Nouvelle Génération	5
+Street Sharks	2
+Johnny the Homicidal Maniac	8
+Swan Princess	3
+Jekyll & Hyde	3
+Eleventh Hour	2
+Cave Story	8
+Dragon's Dogma	10
+Atelier Rorona	2
+In a Savage Land	4
+Bad Education	7
+Jumper	3
+Johnny Test	12
+Losers	4
+Fangface	3
+Long Live the Queen	4
+Americans	6
+Handy Manny	7
+Raven Hill Mysteries	4
+Archipelago	3
+Taken	6
+Strange Magic	1
+Dark Harbor	5
+Royal Pains	8
+Romeo × Juliet	5
+Sense and Sensibility	3
+Orson Scott Card	6
+Battlefield	5
+Outnumbered	6
+Wrong Turn	6
+Odd Couple	1
+Lincoln Heights	2
+Vera	3
+Guardians of Childhood series	8
+Cainsville series	2
+Fireman Sam	1
+Shades of London	2
+Hatoful Boyfriend	10
+Dollanganger Saga	4
+Seven	9
+Crucible	5
+Tactics	5
+Fever Series	6
+Bottom	7
+Internship	2
+Velvet Goldmine	4
+Children's Hour	1
+Roswell High	3
+Kamichama Karin	8
+American Girl	3
+RG Veda	2
+Dog with a Blog	11
+Gregory Horror Show	6
+Space Channel 5	1
+Wallflower	2
+Queen's Thief series	2
+Tuck Everlasting	5
+Heathers	8
+WolfQuest	6
+Misc.  Crime	7
+Bye Bye Birdie	4
+Mask of Zorro/Legend of Zorro	8
+Amalgam Comics	5
+Path of Exile	5
+American Idiot	4
+Stalker	3
+Oklahoma!	2
+Waterworld	2
+Secret of NIMH	3
+Z Nation	3
+World War Z	5
+That's So Raven	1
+Valkyrie	11
+Mad Father	8
+Ringer	2
+Manhunt	3
+Romeo and Juliet	3
+Battle B-Daman	6
+Brothers & Sisters	2
+Avengers Academy	2
+Blue Water High	6
+NFL Rush Zone	2
+Magical DoReMi	10
+Animals	4
+Oracle trilogy	4
+High Mountain Rangers	1
+Power of Five series	4
+Better Off Ted	1
+Edgar Allan Poe	10
+City of Heroes	3
+GaoGaiGar	1
+Runemarks	2
+Wintergirls	2
+Edward Scissorhands	8
+Spice and Wolf	7
+Dirty Sexy Money	11
+Mr. Lucky	2
+Like Minds	7
+Sabrina the Teenage Witch	5
+Prétear	4
+Close to Home	5
+Wilfred	12
+My Fair Lady	4
+Dead Rising	2
+Hamtaro	4
+Crossroads	1
+Long Walk	6
+Neverwinter	5
+Drakengard	4
+Lord Of The Rings Online	4
+Adventures of Sir Lancelot	1
+John Carter	1
+Robert Langdon series	5
+Enchanted Arms	3
+Bridge to Terabithia	7
+X-Day	5
+My Life as a Teenage Robot	6
+Shoebox Zoo	1
+Romantically Apocalyptic	7
+Extreme Dinosaurs	3
+Mirror's Edge	3
+Mushishi	6
+Elisabeth	6
+A Cinderella Story	3
+Gattaca	3
+Venture Brothers	6
+Rocky and Bullwinkle	2
+Moby Dick	1
+Hugo	2
+DayZ	4
+Count Duckula	1
+Rocket Robin Hood	1
+Study series	3
+Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka	1
+From Eroica With Love	5
+MySims	6
+American Dreams	2
+Fame	3
+About a Boy	6
+Hocus Pocus	6
+A Witch's Tale	4
+Ben Drowned	4
+Sharpay's Fabulous Adventure	8
+Jungle Book	5
+Boston Legal	5
+Ten Inch Hero	2
+Rave Master	7
+Beautiful and Damned	2
+Hot in Cleveland	8
+Banjo-Kazooie	5
+Legal Drug	5
+High Chaparral	2
+Listener	2
+Wario Ware Inc.	4
+Ambition of Oda Nobuna/Oda Nobuna no Yabō	3
+Fragile Dreams	9
+Nightbreed	1
+Tour of Duty	2
+Lone Survivor	1
+Teacher's Pet	4
+Property of Hate	7
+Royal	3
+Song of the South	1
+Guild Hunter series	8
+ElfQuest	4
+Robin of Sherwood	2
+Rocket’s Island	6
+Oryx and Crake	8
+God's Not Dead	4
+Chrysalids	9
+West Side Story	3
+Sammy Keyes	6
+Winnie-the-Pooh	5
+Goof Troop	4
+Dark Heavens Trilogy	5
+Once on This Island	1
+Boy In the Striped Pajamas	7
+Gilgamesh	6
+B.J. and the Bear	1
+Emberverse series	2
+Gracepoint	6
+Jennifer's Body	5
+Books of Beginning	1
+Parappa the Rapper	2
+Harper's Island	1
+Ace Lightning	2
+Orphan	2
+Daughter of Smoke and Bone	9
+Mean Creek	1
+Immortals	1
+Subway Surfers	4
+Zombieland	4
+Space Jam	1
+Legally Blonde	9
+Emperor’s Edge  Humor	1
+Children of the Corn	4
+Blinx	2
+Iliad	3
+Body of Proof	7
+A Need So Beautiful	3
+Professional	1
+Darkness	2
+Lagoon Engine	1
+Grimm Fairy Tales	3
+Teknoman	2
+Hostages	4
+Forest of Drizzling Rain	6
+Legend of Grimrock	1
+Catcher in the Rye	8
+Blue Murder	2
+Lying Game series	4
+Blood And Chocolate	3
+Patty Duke Show	2
+If I Stay	7
+Camp Lazlo	6
+I Am Legend	2
+Legend of Eli Monpress	5
+Bucky O'Hare and the Toad Wars	2
+John Wick	1
+T*Witches	2
+A.I. Love You	7
+Dogs	5
+Bastion	5
+Grudge	2
+Baby Daddy	5
+VG Cats	4
+Lexx	4
+Hitchhiker's Guide to the Galaxy	6
+Last Samurai	2
+Push	4
+Winnie the Pooh	1
+Oggy and the Cockroaches	5
+Gates	1
+Bravest Warriors	5
+Pinocchio	3
+Flight 29 Down	9
+SSX Tricky	3
+Route 66	4
+Caster Chronicles	7
+Phantom ~Requiem for the Phantom~	2
+Kid vs Kat	4
+Sucker Punch	2
+Arcana Chronicles	2
+Seinfeld	2
+Ultraman	5
+Starquest series	2
+Nightrunner series	1
+Gran Turismo	1
+Canterwood Crest series	3
+Meri Aashiqui Tumse Hi	4
+Count of Monte Cristo	2
+Departed	5
+DuckTales	9
+Jagged Alliance	2
+Twister	3
+Chasing Amy	6
+Red Sonja	3
+Lord of War	5
+Style Savvy	1
+Wild Card	3
+Martin Mystery	4
+Liar Game	3
+REC	3
+Wolf Chronicles	1
+Fantasy Life	7
+Showdown In Little Tokyo	1
+Mysterious Benedict Society series	5
+Brittas Empire	1
+Gone Girl	2
+Touched by an Angel	5
+Monster	4
+Muhyo & Roji	5
+Arsenic and Old Lace	3
+Adventures in Babysitting	1
+Where on Earth is Carmen Sandiego	5
+Darkest Minds	8
+Crooked Man	5
+Tour of the Merrimack	1
+Franklin	2
+Goodnight Sweetheart	3
+Supah Ninjas	3
+Cal Leandros	6
+Freakazoid	3
+Darkhouse	2
+White Queen	4
+Much Ado About Nothing	3
+Adventure Quest	3
+Dragon Knights	1
+Misc.  Supernatural	5
+Azure Striker Gunvolt	2
+Day After Tomorrow	1
+Dr. Jekyll and Mr. Hyde	1
+Angry Birds	2
+Cloud Atlas	4
+Shadow Falls series	5
+Ichigo Mashimaro	5
+Scorpio Races	4
+Rogue Galaxy	1
+Seventh Tower	1
+Spiral Knights	1
+Secret Show	3
+American President	2
+Bad Teacher	1
+Aristocats	1
+Doom Patrol	5
+Diana Wynne Jones	4
+Aki Sora	5
+Radio Rebel	3
+Misc.  Worm	1
+Redemption of Althalus	4
+War of the Worlds	1
+Tales of Legendia	4
+JumpStart	2
+Bubble Bobble	5
+Swing Kids	1
+Law of Ueki	4
+Gamer Girl	5
+Girls Bravo	3
+Starry Sky	7
+Entourage	1
+Unforgiven	1
+A Dirty Job	1
+Secret Series	2
+Septimus Heap	4
+Bots Master	1
+A Knight's Devotion	1
+UBOS/Ultimate Book of Spells	3
+Rocko's Modern Life	5
+Homer	1
+In The Forests of the Night	1
+Diana Gabaldon	2
+Third Watch	2
+Kohan	1
+Line of Fire	2
+M.A.G.U.S.	1
+Thoroughbred	1
+RocknRolla	2
+Up	5
+Young & Hungry	2
+Scion	1
+Paradise Lost	7
+Monk	3
+Ferris Bueller's Day Off	6
+Kaze Hikaru	3
+Division	1
+Into the Storm	2
+Miami Medical	2
+Freefonix	1
+Gone Home	6
+Foundation	4
+Rebel Without A Cause	1
+Marathon	3
+Unknown	2
+American Gothic	1
+Europa Universalis	2
+Chain Chronicle	3
+Wonderful 101	5
+Saved By The Bell	5
+Shattered	2
+Unit One/Rejseholdet	1
+Mrs. Brown's Boys	1
+Book of Amber	3
+Las Vegas	1
+Judy Blume	2
+Awesomenauts	3
+Collector	2
+LaTale	3
+Mayonaka no Tantei	1
+Another World	4
+State of Decay	1
+Crazy Ones	4
+Episodes	1
+Sam & Max	4
+Project DIVA	5
+Cutthroat Island	1
+An American Tail	2
+Salad Fingers	6
+Black Blood Brothers	1
+Yume Nikki	6
+Jesus Christ Superstar	6
+Rock of Ages	6
+Doraemon	4
+Raptor Red	3
+Company	2
+Dark Duet Series	4
+Saboteur	2
+Melissa & Joey	6
+Ruby Red/Rubinrot Trilogy	4
+Simon and Simon	1
+Virtual Families	2
+Misc.  My Little Pony	1
+Starfighter	2
+Saiunkoku Monogatari	3
+Prep & Landing	1
+Beyond the Valley of the Dolls	1
+Matilda	3
+Other Side of the Story	1
+Cats Don't Dance	1
+Escape from Furnace	3
+Buck Rogers	1
+Jumanji	4
+Paranormal Activity	1
+Beyond the Western Deep	1
+Fox and the Hound	3
+Inspector George Gently	4
+A-List	1
+While You Were Sleeping	1
+Level Up	2
+Privilege series	6
+Divine Divinity	1
+Sevenwaters Trilogy	2
+Summer I Turned Pretty	1
+Lemonade Mouth	3
+Seven Realms series	5
+Goon	3
+Satan and Me	2
+Twin Signal	1
+Maurice	2
+Honey Hunt	3
+Anna Dressed in Blood	3
+Shiritsu Horitsuba Gakuen	2
+Aura Kingdom	2
+Crash and Bernstein	2
+Political Animals	4
+Devil & Devil	6
+League of Extraordinary Gentlemen	4
+No More Heroes	2
+Young Sherlock Holmes	1
+AdventureQuest Worlds	3
+Leap Year	4
+Ally McBeal	2
+Misc.  Poetry	3
+Ned's Declassified SSG	1
+Hareluya II Boy	4
+Conagher	2
+Fortysomething	2
+Alphas	1
+Karin	4
+Full Moon wo Sagashite	3
+300	1
+Island at War	1
+Serei no Moribito	2
+Avenue Q	5
+Three Musketeers	4
+Incredible Hulk	3
+Keeping Up Appearances	1
+Kids Incorporated	1
+Hairspray	5
+John Dies at the End	2
+Singin' in the Rain	1
+Goonies	2
+Aveyond	3
+Ender's Game	4
+Graveyard Book	5
+Me & My Brothers	4
+Disco Bloodbath/Party Monster	2
+Generation X	2
+Punisher	3
+Watershed Trilogy	2
+Misao	2
+Shameless	7
+Sins of a Solar Empire	2
+Everybody Loves Raymond	1
+Are You Afraid of the Dark	1
+Edge Chronicles	2
+Sarah Jane Adventures	2
+Dragon Keepers Chronicles	1
+Seven Kingdoms Trilogy	5
+Bionic Woman	1
+Robocop	4
+Hands Off!	2
+Alexandre Dumas	3
+Cupid	3
+Mickey Mouse & Friends	2
+Lovely Bones	4
+Fafner in the Azure	4
+Romance of the 3  Kingdoms	4
+King's Quest	3
+Doctor Lautrec and the Forgotten Knights	4
+Dex Hamilton	2
+Midnight Castle	1
+Parent Trap	3
+Lincoln	2
+Hedwig and the Angry inch	6
+Leave It To Beaver	2
+Perks of Being a Wallflower	5
+Parade	3
+Eastern Promises	3
+Dragon Slippers Trilogy	2
+Circle of Magic	3
+Nostalgia	1
+Legend	1
+Josie and the Pussycats	2
+Kara no Kyōkai	2
+Beastmaster	3
+Incarnate Trilogy	1
+Creatures	2
+SheZow	1
+Thief Lord	3
+Lethal Weapon	1
+Were the World Mine	1
+Black Beauty	2
+American Psycho	2
+Olympus Has Fallen	2
+Graceling Realm Trilogy	3
+Darkangel Trilogy	2
+Taggart	5
+Beverly Hills Teens	3
+Land of the Dead	2
+Magic Adventures of Mumfie	1
+Clifford the Big Red Dog	2
+Adventures in Wonderland	2
+C.O.P.S.	1
+Zombie Survival Guide	4
+Bonus Poetry/Bónus ljóð	1
+Banana Fish	4
+Noughts and Crosses	2
+Saddle Club	3
+Bad Boy	3
+Girl who Leapt Through Time	3
+Starhyke	2
+Dark Life	3
+Luminous Arc	1
+Wonder Years	3
+Salem	3
+Perfect Strangers	1
+Thin Man	1
+Life Goes On	2
+Fritz the Cat	4
+Sinister	1
+Okane ga Nai	3
+Parenthood	3
+Tristan + Isolde	1
+Rage	1
+Jumper series	4
+Sanrio	2
+I Love Lucy	5
+Macross Frontier	1
+Red Dawn	1
+O'Grady	4
+SkiFree	5
+Event	1
+Ramona Series	2
+Chronicles of Nick	6
+Princess Bride	3
+Lucy	2
+Los hombres de Paco	1
+Kite Runner	5
+Dexter's Laboratory	5
+Bone Season series	2
+Notre Dame de Paris	2
+Spec Ops series	1
+Rome	2
+Zone of The Enders	3
+Secret Warriors	3
+Homestar Runner	1
+Berserk	5
+Chaos Walking series	3
+Tru Calling	5
+Mistborn Trilogy	4
+Ascendance Trilogy	2
+Borrowers	1
+Splinter Cell	4
+True Jackson	1
+Clarissa Explains It All	3
+Forbidden Kingdom	1
+Bakuman	4
+Mulberry	2
+A Few Good Men	1
+Jack Reacher series	2
+Lollipop Chainsaw	4
+Books of the Raksura	1
+Bojack Horseman	1
+Thirteen Reasons Why	4
+Shadow of the Colossus	2
+Hakushaku to Yōsei	3
+Maude	2
+Sadda Haq	1
+Spring Breakers	2
+Dwarf Fortress	2
+Friends with Better Lives	2
+Misc.  Powerpuff Girls	1
+Christmas Shoes	3
+We Will Rock You	2
+Anna and the French Kiss	2
+Wonder	3
+Green Mile	1
+Alexandra Cooper series	1
+Honk!	2
+Bare	2
+Wow! Wow! Wubbzy!	2
+Tales of Rowan Hood	1
+Poptropica	1
+Sakura Hime Kaden	2
+LittleBIGPlanet	2
+Spore	1
+Faery Rebels	1
+School of Rock	5
+Tail of the Moon	2
+Fairly Legal	1
+Ring/Ringu	3
+Trick 'r Treat	1
+Megatokyo	1
+Enchanted	3
+Fahrenheit 451	3
+Grave of the Fireflies	1
+His fair Assassin Trilogy	2
+Saint Tail	3
+CatDog	4
+Novels of the Others	1
+Cloverfield	1
+Army Wives	5
+Making Fiends	2
+Akagami no Shirayukihime	1
+Lost Odyssey	1
+Aquaman	2
+Psychic Academy	3
+Pump Up The Volume	1
+Crow	3
+Megas XLR	2
+Kodomo no Jikan	2
+Benidorm	1
+Trickster series	2
+Supernaturalist	1
+Felidae	1
+Rewrite	1
+And Then There Were None	1
+Epic Battle Fantasy	4
+Dreamy Days in West Tokyo	3
+Easy A	2
+Remember the Daze	1
+Heroes of the Valley	1
+Knightmare	1
+Cat Lady	1
+Arthur C. Clarke	2
+Ghost and the Goth	1
+Scryed	2
+Life with Boys	3
+Remains of the Day	1
+Daniel Boone	4
+Arthur Christmas	2
+Spring Awakening	3
+Eternal Sonata	3
+C – Control – The Money and Soul of Possibility	3
+Flame of Recca	3
+Young Wizards	3
+Leonardo	2
+Suburgatory	1
+Au Pairs	2
+Animals of Farthing Wood	3
+In Secret	1
+Familiars	3
+The Tomorrow series	3
+Grey Wolves Series	2
+Moulin Rouge	2
+Patriot Games	1
+Get Ed	1
+Burst Angel	4
+Step by Step	2
+Big Love	1
+Love Monster	3
+Books of Elsewhere	1
+G-Gundam	5
+Four Loves	1
+Aishiteruze Baby	2
+Charles Dickens	4
+All for the Game Trilogy	1
+Keith	2
+Attack the Block	2
+Partholon series	2
+To Save a Life	2
+Never Been Kissed	2
+Cantarella	1
+Triple Dog	2
+blazeblue	1
+Forged Bloodlines	3
+White Shadow	3
+Radiata Stories	3
+License to Drive	3
+Eddsworld	3
+Linguini Incident	3
+Misc.  Mythology	1
+Hexyz Force	1
+Enchanted in the Moonlight	2
+Five Little Peppers series	1
+Enid Blyton	2
+Pearl Harbor	1
+Elektra	2
+Bunheads	5
+Rifts	4
+ClayFighters	1
+Bonkers	1
+Bloody Jack Adventures	2
+Mara Dyer Trilogy	4
+Ayashi no Ceres	2
+Gunparade March	1
+Sandman	3
+Iss Pyaar Ko Kya Naam Doon?/इस प्यार को क्या नाम दूं	1
+Wonderland	2
+Blue's Clues	2
+Pianist	2
+Eve no Jikan	3
+Signs	1
+OZ	1
+Gunstar Heroes	1
+Psycho	1
+Warriors Orochi	4
+Fractured Space	1
+Rocky	3
+Hi Hi Puffy Ami Yumi	3
+Kiki's Delivery Service	1
+Namesake	3
+Matched	3
+My Blood Approves series	1
+Doctor Mordrid	1
+Jewel Kingdom series	1
+Othello	4
+Rabbids Invasion	3
+Zevo-3	3
+Daughters of the Moon	4
+Let the Right One In	2
+Vassalord	3
+In Your Arms Tonight	3
+Night Court	2
+Medal of Honor	1
+Daybreakers	1
+Odd Thomas series	1
+Godspell	2
+A Certain Slant of Light	1
+Sleepover Club	1
+Scandinavia and the World	3
+Saving Hope	3
+Uglies	3
+Magic Mike	1
+Hunger	3
+Flying Nun	1
+Lincoln Rhyme series	3
+Sugar Sugar Rune	2
+Killer Instinct	2
+Avernum	1
+Mononoke	1
+Blood Diamond	1
+Dexter series	3
+Zettai Karen Children	1
+Avalon Code	2
+Super Hero Squad Show	1
+Sift Heads	3
+Amelia Peabody Series	1
+Kiesha'ra	1
+Scarab Beetle Series	1
+Cat's Eye	1
+Three Ninja's	3
+Last House on the Left	2
+Guardians of Time	2
+Jaws	3
+Roughnecks	2
+W Juliet	1
+Mi pecado	1
+Pepper Ann	2
+Conception	3
+White Christmas	1
+Hoot	1
+Dennis the Menace	2
+Deathstroke the Terminator	2
+Hancock	1
+Little Women	3
+I Know What You Did Last Summer	3
+Jack and the Cuckoo-Clock Heart/Jack et la mécanique du coeur	1
+White Rabbit Chronicles	2
+Haunted Junction	1
+Demon Cycle series	1
+Wayside	2
+Ferngully	2
+Devil's Carnival	3
+Before I Die	2
+Scan2go	1
+Tower of Terror	1
+Chronicles of Elantra	1
+Drillbit Taylor	2
+A Midsummer's Night Dream	1
+Legendsong Saga	3
+Little Monsters	1
+Gremlins	3
+Jet Grind Radio	3
+Black Donnellys	1
+Adventures of Sharkboy and Lavagirl	4
+Six of Hearts series	3
+Knight and Rogue series	2
+Dazed and Confused	1
+Chobits	3
+Ready Player One	2
+Rifleman	1
+Strange Days at Blake Holsey High	1
+Abarat series	2
+Dark Blue	1
+Lux-Pain	2
+My Most Excellent Year	1
+Outsourced	1
+Here Come the Brides	2
+Gotham City Sirens	2
+Nier	2
+Mean Girls	4
+Boy Meets Girl	2
+Power Girl	2
+Oh. My. Gods. Series	1
+Love at Stake series	1
+Wereworld	2
+Selector Infected Wixoss	3
+Magic Thief	2
+Pom Gets Wi-Fi	1
+Galerians	1
+Buffy the Vampire Slayer	2
+Unwind	3
+Horatio Hornblower	2
+Vampire High	3
+Country Bears	1
+Powers	1
+Dobie Gillis	1
+Malcolm in the Middle	2
+Anime Club	3
+Prehistoric Park	2
+Masters of Sex	2
+Tales of Zestiria	2
+Enchanted Forest	1
+Little Shop of Horrors	1
+Mork & Mindy	2
+Beyond Illusion series/Myona Moltmaker	3
+Alex Cross series	1
+Snowpiercer	2
+Every Day	2
+Blair Witch Project	1
+Far and Away	1
+MÄR	1
+Reno 911	1
+Oz Series	2
+Free Birds	3
+Crank	1
+Bratz	2
+Grantchester	3
+Wicked Lovely	3
+Flight Rising	3
+OGame	1
+Alfred J. Kwak	4
+Elite	1
+Voyage of the Unicorn	3
+Amazing Chan and the Chan Clan	1
+Matantei Loki Ragnarok	1
+Christmas Cupid	3
+Misc.  Naked Brothers Band	1
+Greek	3
+Maya and Miguel	2
+Monsterkind	2
+El Cazador de la Bruja	2
+Franklin & Bash	1
+Eternal Darkness	1
+GTO	1
+Fresh Prince of Bel Air	3
+My Dad the Rock Star	1
+Young Hercules	1
+Caillou	3
+Blade Runner	2
+Dying Light	1
+Ladyhawke	1
+Garfield	2
+Classic Jonny Quest	1
+Dilbert	2
+Early Edition	1
+Things They Carried	1
+Garasu no Kamen	2
+Footloose	1
+Horrible Histories	1
+Laws of Magic	1
+X-Force	1
+Dinosaur Train	3
+Deadly Premonition	2
+Dragaera	1
+Cry of Fear	2
+Ice Climber	1
+Love in the Library	1
+Shadows of The Apt	1
+Nightwalker	1
+Princess Nine	1
+Starsiege	1
+Riddle School	2
+Path	1
+Life is Strange	1
+Wings	2
+Infinite Undiscovery	1
+Curious Incident of the Dog at Night-Time	2
+Starlancer	1
+Event Horizon	1
+Tomodachi Life	1
+Gordan Korman	1
+Heart of Darkness	1
+World's End	2
+Akira	1
+Horrible Bosses	1
+Quest For Glory	1
+Cirque du Soleil	2
+Ozzy & Drix	2
+A Christmas Carol	3
+A Knight's Honor	1
+Flappy Bird	3
+Super 8	1
+Worms	1
+Traveler	1
+As Time Goes By	1
+Battle Spirits	1
+.hack/SIGN	1
+Zom-B	3
+Dragonkeeper Trilogy	1
+Dark Parables	2
+Princess Sissi	1
+Cedar Cove series	1
+TeniMyu	1
+Curtains	3
+Okage	3
+Dante's Inferno	1
+Paper Towns	3
+Keeper of the Lost Cities	1
+Dead Island	3
+Bride Wars	1
+Another Cinderella Story	2
+Steambot Chronicles/Bumpy Trot	1
+Brave Little Toaster	3
+Wanted!	1
+Saga	2
+Dil Dosti Dance	2
+Alpha Centauri	2
+Wire in the Blood	2
+Free Fall/Freier Fall	2
+Ghostwriter	1
+Airman	2
+Obernewtyn	2
+Time Squad	2
+Life and Times of Juniper Lee	1
+Brave New World	1
+Living Single	1
+Johnny Bravo	3
+Bad Piggies	1
+Where's Waldo?	2
+Goddess Girls series	2
+Excalibur	2
+Mod Squad	1
+Welcome to the Dollhouse	1
+Welcome Back Kotter	1
+Angela Anaconda	1
+Misc.  Transformers/Beast Wars	1
+Evolution	1
+Jade Cocoon	3
+Bad Seed	1
+Black  Red Dwarf	1
+Teletubbies	3
+By Any Means	1
+Something Borrowed	1
+Miss Saigon	2
+Beowulf	2
+Great Expectations	2
+Legend of the Five Rings	2
+Dusty's Trail	1
+Devil Lady	2
+Mixels	2
+Counter-Strike	2
+Rags	1
+Sneakers	1
+Zero Day	1
+A Kid in King Arthur's Court/A Kid in Aladdin's Palace	1
+Doctors	1
+Foxtrot	1
+Robots	1
+Once Upon a Time in America	1
+Pretty Little Liars series	2
+Ninja Assassin	1
+Brandy & Mr. Whiskers	1
+Serenity	2
+Teahouse	1
+Pendragon	2
+Mugen Souls	1
+Sopranos	2
+A Voice in the Distance	1
+Ren & Stimpy Show	3
+Super Friends	1
+The Uninvited	2
+Farseer Trilogy	1
+Nuclear Throne	1
+Fiddler on the Roof	1
+Rainbow Magic	3
+Trick	1
+Georgette Heyer novels	1
+Read or Die	1
+Take the Lead	1
+Slaughterhouse-Five	3
+Monty Python	1
+Railway Man	1
+Gravity	2
+Wringer	1
+Mighty Max	1
+Rumble Roses	1
+Logan Family Series	2
+Shaun of the Dead	1
+Maburaho	1
+Dollhouse	1
+Shawshank Redemption	1
+Earth Defense Force	1
+Weetzie Bat	1
+Legends of the Dragonrealm	1
+Crisis	1
+Backyardigans	1
+Companions Quartet	1
+Thrashin'	1
+Unreal Tournament	1
+Half-Minute Hero	3
+Moral Orel	1
+Spectacular!	1
+Shield	2
+Gossip	2
+Misc.  Naruto	1
+Immortals After Dark series	1
+Halloweentown	2
+Forrest Gump	2
+Monstrumologist series	2
+Tokyo Babylon	2
+I Hunt Killers	1
+Picture of Dorian Gray	2
+Me and Mrs Jones	1
+British Comedy	2
+Schindler's List	1
+Odd Life of Timothy Green	1
+William Gibson	1
+Folklore	1
+Banshee	1
+Picture Perfect	1
+Goldbergs	1
+Spooksville	1
+Only the Ring Finger Knows	2
+Misc.  Tragedy	1
+Geography Club	2
+Sweet Pool	2
+Wacky Races	1
+Cowgirls n' Angels	1
+China Beach	1
+New Warriors	2
+Splintered Series	1
+Last Action Hero	1
+AnoHana	1
+Public Enemies	2
+Laverne and Shirley	2
+St Clare's	1
+Fear Street series	1
+Bastard	1
+Wife and Wife/Fu-fu	1
+Kings	2
+Vampire Beach series	3
+Enlisted	2
+Last Vampire series	2
+Animal Show	2
+House of Mouse	2
+Lufia	1
+Shadow Warrior	1
+Escape from NY/LA	1
+Puyo Puyo	2
+Pathology	2
+Mrs. Santa Claus	2
+6teen	1
+Nicktoons Unite!	1
+Darkman	1
+She's the Man	1
+War and Rememberance	1
+One Night with the King	1
+Echo Bazaar	1
+True Romance	1
+Taxi Brooklyn	1
+Skulls	1
+Macbeth	2
+Gathering Blue	1
+Yukikaze	1
+Ingo	1
+Tenchu	1
+Animal Farm	1
+One Chance	1
+Atelier Escha & Logy	1
+Now and Then	1
+Thrill Kill	1
+Major Crush	1
+Bletchley Circle	1
+Space Engineers	2
+Judging Amy	1
+Let the Right One In/Låt den rätte komma in	2
+Paranormalcy	1
+Cruel Beauty	1
+Timothy Wilde series	1
+Chop Socky Chooks	1
+Kodomo No Omocha	1
+City Girl Life	1
+Misc.  World Ends With You	1
+Shifters series	1
+Connor Undercover	2
+Braveheart	1
+Gate 7	1
+UQ Holder!	1
+Undying Hope	1
+What's Up Warthogs!	1
+Sweet Trilgoy	1
+Albert the Fifth Musketeer	1
+Swingtown	1
+Trylle Trilogy	2
+Point Pleasant	1
+Lock's Quest	1
+Alice 19th	1
+Beyond Good & Evil	1
+Crysis	1
+Pillars of the Earth	1
+Conker's Bad Fur Day	1
+Pandorum	1
+TiMER	2
+Billy Elliot	2
+Monster Buster Club	2
+Broken Empire	2
+Miss Pettigrew Lives for a Day	1
+From Far Away	1
+Demonata	1
+Incarceron series	2
+Dreamcatcher	1
+Adventures of Huckleberry Finn	1
+Mousetrap	2
+Floating	1
+Reaper	1
+Elephant Princess	2
+Charlie Parker Mysteries	1
+Remedy	2
+Rosencranz and Guilderstern Are Dead	1
+Chronicles of Prydain	1
+Girl Vs. Monster	1
+Strawberry Shortcake series	1
+Ginban Kaleidoscope	1
+Private Peaceful	1
+Kamisama no Iutoori	1
+Wake series	1
+15Love	1
+1-800-Where-R-You	1
+Austin Powers	1
+Deadlands	2
+Ninja Gaiden	1
+Poker Night at the Inventory	1
+Hi-de-Hi!	1
+Surviving High School	1
+Sweet Valley series	1
+Kinetica	1
+Animal Dance	1
+Dora the Explorer	2
+Bewitched	1
+Gravity Rush	1
+A to Z Mysteries	1
+Fantastic Children	1
+Meditation on Space-Time	1
+Magic of Ordinary Days	1
+Ape Escape	1
+Mujin Wakusei Survive	1
+Muppets Tonight	2
+Heroic Age	1
+Don Quixote	2
+Little King's Story	1
+Sister Princess	1
+Handmaid's Tale	2
+A Christmas Story	1
+Someday's Dreamers	1
+Horrid Henry series	1
+Last Dragon Chronicles	1
+Imscared	1
+Everlost	1
+Finnish Mythology	1
+Dangerous Days of Daniel X	1
+Happy Endings	1
+Just Like Heaven	1
+Encyclopedia Brown series	1
+War of the Monsters	1
+Young Badlands	1
+Slumdog Millionaire	1
+Do No Harm	1
+Infinity Ring series	1
+Tooth Fairy	2
+Night Circus	1
+Misc.  Misc. Movies	2
+Basara	1
+Urban Reign	1
+Anarchy Online	1
+Scarface	1
+TV Commercials	1
+Bill & Ted's Excellent Adventure/Bogus Journey	2
+I Spy	1
+Le Silence de la Mer	1
+The Unlimited - Hyōbu Kyōsuke	1
+Fallen	2
+Tales of Destiny	1
+Chopping Mall	1
+News Radio	1
+George Smiley series	1
+Bear In The Big Blue House	1
+Fillmore	2
+Trailer Park Boys	1
+Police Quest	1
+Doctor Dolittle	1
+Diary of a Serial Killer	1
+Riyria Revelations	2
+Thomas Was Alone	1
+Hellblazer	2
+Pinky and the Brain	2
+Green Arrow	1
+Battleship	1
+Don Jon	1
+O'Malley series	1
+Scanguards Vampires	1
+Regeneration	1
+Bloomington	1
+Usagi Yojimbo	1
+Minami-ke	1
+ZombiU	1
+Captain N	1
+Rudolph the Red Nosed Reindeer	1
+Witch and the Hundred Knight	1
+Centennial	1
+Baten Kaitos	1
+Psyren	1
+Peacemakers	1
+My Bodyguard	1
+Lackadaisy	1
+Wallace and Gromit	1
+Breadwinners	2
+TUGS	1
+Extant	1
+Curious George	2
+Home Movies	1
+Killing Floor	1
+His and Her Circumstances	1
+Tenjho Tenge	1
+Marvel Zombies	1
+Wii Sports Resort	1
+Little Vampire/Der kleine Vampir	1
+Deer Hunter	1
+Scarlett Letter	1
+Cheaper by the Dozen	1
+Your Highness	2
+Bone	1
+Absolute Boyfriend	1
+Virginian	1
+Tales from the Crypt	1
+Cinderella Man	1
+Interstate '76	1
+Pagemaster	1
+Legend of Heroes	1
+Black Stallion	1
+Zoo Tycoon	1
+Insignia Trilogy	1
+Homeless Bird	1
+Funny Games U.S.	1
+Misc.  Suspense	2
+Heat Guy J	1
+Love Drops	2
+Mr. Men Show	1
+Fried Green Tomatoes at the Whistle Stop Cafe	1
+School of Fear	1
+Tower Prep	1
+Forgive My Fins	1
+Tales of the Ketty Jay	1
+Junie B. Jones Collection	2
+Roseanne	1
+King of Queens	1
+Way of the Samurai	1
+Speak	1
+Berenstian Bears	1
+Demon Diary	1
+Tamagotchi	1
+Through the Looking Glass	1
+Rambo series	1
+Adventureland	1
+Forest Of Hands And Teeth	1
+Gentleman Bastard Sequence	1
+Juliet Marillier	2
+Flintstones	1
+Against the Wall	1
+Little Nicky	1
+Tom Clancy	1
+Gettysburg	1
+A Wrinkle in Time Trilogy	1
+Dogfight	1
+SEGA Superstars	1
+Love Actually	1
+Beastly	2
+Small Wonder	2
+Finding Nemo	2
+Butterfly Effect	1
+ChuChu Rocket!	1
+Dinosaur	1
+Lenore the Cute Little Dead Girl	1
+Truth About Forever	1
+Kathy Tyers	1
+Fourth Stall series	1
+California Dreams	1
+Elm Stone Saga	1
+Honeymooners	1
+Basilisk	1
+Shortland Street	1
+Flight of the Phoenix	1
+Muppet Babies	1
+Meet Joe Black	1
+Dangerous Liaisons	1
+Dear John	1
+Atomic Betty	1
+Press Gang	2
+Magicka	1
+Tudor series	1
+Five Ancestors series	1
+Never Back Down	1
+Tangle	1
+Silver Linings Playbook	1
+Evermoor	1
+Redeeming Love	2
+Rainbow Brite	1
+Emily the Strange	1
+Umbrella Academy	1
+Moonrise Kingdom	1
+Once Upon a Time series	1
+10 Days With My Devil	1
+Blackpool	1
+NaPolA/Before the Fall	1
+Fat Albert	1
+Marmalade Boy	1
+Dave the Barbarian	1
+Paranoia Agent	1
+Aeneid	1
+Orphans series	1
+Growing Up Creepie	1
+Generation Kill	1
+Cover Me	1
+Smuggler	1
+Last Unicorn	1
+Nowhere Boys	1
+Sorceror Stabber Orphen	1
+Open Season	1
+Space Trilogy	1
+Doomsday	1
+Gatekeepers 21	1
+Tweenies	1
+Mezzo	1
+Offspring	1
+Misc.  Warriors	1
+Days of Thunder	1
+Django Unchained	1
+This Side of Paradise	1
+Haunting in Connecticut	1
+Westing Game	1
+Sword of the Stranger	1
+Seven Wonders series	1
+League of Angels	1
+Birdy the Mighty	1
+Weber Show	1
+Burger Wuss	1
+Crescent Moon	1
+World of Quest	1
+Sons of Tucson	1
+Dream of Mirror Online	1
+Faeries' Landing	1
+Oedipus the King	1
+Kiss an Angel	1
+Kiss Kiss Bang Bang	1
+Evus	1
+Perils of Penelope Pitstop	1
+Black and White	1
+Under Night In-Birth	1
+Define "Normal"	1
+Flatland	1
+Jigoku Sensei Nube	1
+Seven Psychopaths	1
+Will of the Empress	1
+Jonah Hex	1
+Fish Hooks	1
+Number the Stars	1
+Man of La Mancha	1
+Importance Of Being Earnest	1
+Donnie Darko	1
+Legends	1
+Doctor Zhivago/До́ктор Жива́го	1
+Cell	1
+Story Girl	1
+Odin Sphere	1
+Exorcist	1
+Hamish Macbeth	1
+Pastel	1
+Lucifer	1
+Young Blades	1
+From Beginning to End/Do Começo ao Fim	1
+Assassination of Jesse James by the Coward Robert Ford	1
+Comic Party	1
+Shaun the Sheep	1
+Little Einsteins	1
+Everybody Hates Chris	1
+Dog Soldiers	1
+Bubsy	1
+Little Dorrit	1
+Angry Beavers	1
+Locus	1
+Moomins	1
+Robot and Monster	1
+Little Prince	1
+Fever 1793	1
+BattleCON	1
+Cyberbully	1
+Hot Fuzz	1
+Top Cat	1
+Millennium Trilogy	1
+Latest Buzz	1
+Mad World	1
+Neverending Story	1
+Belgariad/Mallorean series	1
+Gauntlet	1
+River of Time Series	1
+Magical Starsign	1
+Open Range	1
+A Gentleman's Guide to Love and Murder	1
+Angel Star	1
+Shopaholic series	1
+Custodes Noctis series	1
+Zoom	1
+Chaos Legion	1
+On the Jellicoe Road	1
+This Lullaby	1
+Igor	1
+Friends With Benefits Series	1
+Super Why	1
+Young Frankenstein	1
+A Place to Call Home	1
+Jonathan Creek	1
+Mia and Me	1
+Lonesome Dove	1
+Karate Kid	1
+Martha Speaks	1
+Amelie	1
+Dreamhouse Kings Series	1
+Mansfield Park	1
+Skinned Trilogy	1
+Oh My Goth	1
+Dragon Rider	1
+Bedlam	1
+Saving Grace	1
+Independence Day	1
+Flicka	1
+Once Upon a Mattress	1
+Misc.  Parody	1
+Ain't Even Done With The Night	1
+Welcome to Night Vale	1
+Newsflesh Trilogy	1
+Monochrome Factor	1
+Extremely Loud and Incredibly Close	1
+Undeclared	1
+Cranford	1
+Talking Friends	1
+Mistmantle Chronicles	1
+Rumor Has It...	1
+Megan Meade's Guide to the McGowan Boys	1
+Seekers series	1
+Oni	1
+Halfblood Chronicles	1
+Unforgettable	1
+Homefront	1
+Wolves of Mercy Falls Trilogy	1
+Blues Brothers	1
+Vampire Stalker	1
+Tough Luck	1
+Friends with Benefits	1
+Venus Versus Virus	1
+Pandora's Tower	1
+White Squall	1
+Chocolate Box Girls	1
+Act Of War	1
+Ninja Scroll	1
+Blue Castle	1
+Red	1
+Sparticle Mystery	1
+Crazy Taxi	1
+Tracey Beaker Trilogy	1
+Californication	1
+Blackwell Pages	1
+Beauty Pop	1
+Finishing School Series	1
+Tale of Despereaux	1
+Doctor Proctor series	1
+Lioden	1
+Black Swan Green	1
+Duchess	1
+Peter Rabbit series	1
+Adventure Inc.	1
+Aaahh!!! Real Monsters	1
+Red Dragon	1
+Kate Thompson	1
+Manhattan	1
+Bella and the Bulldogs	1
+Heroes of the Storm	1
+Ponderosa	1
+BloodRayne	1
+Leprechaun	1
+Katamari Damacy	1
+Grim Fandango	1
+Four Horsemen of the Apocalypse	1
+Spirou et Fantasio	1
+Big Lebowski	1
+Heir Chronicles	1
+Legend of Galactic Heroes	1
+EverQuest	1
+Murder by Numbers	1
+Dune	1
+Iron Wind/Teppuu	1
+Godspeaker Trilogy	1
+Pac-Man	1
+Sail Weaver	1
+Tokimeki Memorial	1
+Brace Face	1
+Project I.G.I.	1
+She Spies	1
+Rio Bravo	1
+Little House series	1
+Fight Club	1
+Nim’s Island	1
+Now You See It . . .	1
+Happy Valley	1
+Myst/Riven	1
+Todd Allison and the Petunia Violet	1
+Inspector	1
+Biggles series	1
+Icemark Chronicles	1
+Nanny McPhee	1
+Tales of Hearts	1
+Kaiji	1
+August Rush	1
+Brotherband Chronicles	1
+Monty Python's Spamalot	1
+Song for a Raggy Boy	1
+Dumbo	1
+Insomnia	1
+Drama! series	1
+Trebizon series	1
+Marvin Marvin	1
+Fighting Vipers	1
+Dystopian Razorland Trilogy	1
+Shantae	1
+Alpha Force	1
+Courageous	1
+Outer Limits	1
+Immortal Rain	1
+Awake	1
+BLACK & WHITE	1
+Crackdown	1
+Loom	1
+Pulp Fiction	1
+Amazing Days of Abby Hayes	1
+Mad Dogs	1
+Imperial Radch	1
+Amadeus	1
+Sleeping Dogs	1
+Spawn	1
+High School	1
+Frankenweenie	1
+Twelfth Night	1
+Good Night Mr Tom	1
+Truly Madly Yours	1
+House of Mystery	1
+Alice series	1
+Heroes of Might and Magic	1
+As I Lay Dying	1
+Allo Allo!	1
+After	1
+System Shock	1
+Ted	1
+Ghost Only	1
+Journey	1
+American Gods	1
+Antigone	1
+Ef - A Fairy Tale of the Two	1
+Blindspot	1
+Tari Tari	1
+Murphy Brown	1
+Angel Sanctuary	1
+Rush Hour	1
+Time of Our Lives	1
+Big Nate	1
+Commander Keen	1
+Keeping the Moon	1
+My Parents are Aliens	1
+Hana-Kimi	1
+Shrimp	1
+Lurlene McDaniel	1
+Odds	1
+My Life in Film	1
+Wild Grinders	1
+Breakout Kings	1
+Re:Kinder	1
+Sledge Hammer!	1
+K.C. Undercover	1
+Ann Rinaldi	1
+Age of Fire series	1
+Blackthorne	1
+Romantics	1
+Yakitate! Japan	1
+Animal Ark Series	1
+Geisters	1
+Copper	1
+Gods and Generals	1
+Broken Age	1
+Zenonia	1
+Back at the Barnyard	1
+Otherworld Series	1
+Rogue Agent series	1
+A Kind of Magic	1
+Penelope	1
+Strife	1
+Chrome Shelled Regios	1
+Ys series	1
+Extras	1
+Dark is Rising Sequence	1
+Bitter Virgin	1
+A Knight's Tale	1
+Charlie St. Cloud	1
+Knights of the Silver Dragon	1
+Edgar & Ellen	1
+Crumbs	1
+Goose Girl	1
+Blakes 7	1
+Ghost Recon series	1
+Wives and Daughters	1
+Black Ships	1
+It's Kind of a Funny Story	1
+Saga of Larten Crepsley	1
+GUNxSWORD	1
+Felicity	1
+Strike Back	1
+7D	1
+Action Man	1
+World Heroes	1
+Earth to Echo	1
+Immortal Zero	1
+Baroque	1
+Night Angel Trilogy	1
+Green Acres	1
+Dark Tower series	1
+Winter Trilogy	1
+Tetris	1

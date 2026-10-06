@@ -68,6 +68,24 @@ of work since the last checkpoint is lost.
 bx 'cd ~/eva-olmo/school && (nohup ~/eva-olmo/.venv-train/bin/python train.py --data bins/fantasy.bin:1 bins/scifi.bin:1 bins/anime.bin:1 --out runs/r1 >> runs/r1.log 2>&1 < /dev/null & echo $! > runs/r1.pid)'
 ```
 
+## 4b. warm start: a new run from an old run's weights
+
+`--init <ckpt.pt>` into a new `--out`: loads only the model weights, then trains with a fresh
+optimizer and a fresh schedule from this command line (`--data`, weights, `--lr`, `--warmup`,
+`--hours`, all of it). The shape (`--layers --width --heads --ctx --vocab ...`) is taken from the
+checkpoint and shape flags are ignored; the log says which (`INIT ...` lines). The data must use
+the same tokenizer. `status.json` carries `init` and `init_step`. `--init` is read only when the
+new `--out` has no `ckpt.pt`, so resuming the new run is the step 4 command with its own `--out`.
+
+```bash
+bx 'cd ~/eva-olmo/school && (nohup ~/eva-olmo/.venv-train/bin/python train.py \
+  --data bins/fantasy.bin:1 bins/scifi.bin:1 bins/anime.bin:1 bins/picks.bin:1 \
+  --out runs/r2 --init runs/night1/ckpt.pt \
+  --batch 12 --accum 2 --lr 1e-4 --warmup 200 --hours 2 \
+  --log-every 50 --eval-every 500 --ckpt-minutes 20 \
+  --prompts prompts.txt --compile > runs/r2.log 2>&1 < /dev/null & echo $! > runs/r2.pid)'
+```
+
 ## 5. export the latest checkpoint and generate a page
 
 ```bash
