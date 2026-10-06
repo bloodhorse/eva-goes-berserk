@@ -303,7 +303,13 @@ machine.
 **7.1 Stopping the trainer stops everything.** SIGTERM makes the trainer save and exit, the
 wrapper exits with it, the guard sees that and shuts down, and the watcher and the puller end on
 `guard down`. To change prompts or recipe mid-run: stop, wait for `STOPPED` and `guard down`,
-move `runs/<name>.guard.log` aside, start all five again.
+move `runs/<name>.guard.log` aside, start all five again. Done once on ds-dev2 (2026-10-07,
+to add seeds at step 911): the stop took a minute including the guard's last snapshot, the
+resume kept the plan (`RESUME from … step=911 total=84103`). Two things the chain does not do
+by itself: the puller is asleep for six hours and never sees `guard down`, so the mac's watcher
+and puller are killed by pid; and the mac's own copy `night/<name>/guard.log` still says
+`guard down`, so it is moved aside too before the watcher starts again. The trainer reads
+`prompts.txt` only at start — new seeds need this whole dance.
 
 **7.2 The clock is not in my head.** Hours pass between bekh's messages. Read the run
 (`night/mon.py <run> --once`) before saying anything about it; two wrong statements in one day
