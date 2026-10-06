@@ -55,7 +55,14 @@ never a sentence here):
 - **Next: ds-dev2** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5 3500X, 30 GB RAM,
   Ubuntu 26.04, a team box with the team's green light for LLM work, ours lives under
   `/opt/llama`). Expected 9–12k tok/s at half our batch (the 16 GB holds batch 6 compiled, ~12
-  GB); teenage is two to three days there. `HANDOFF.md` at the root has the move.
+  GB); teenage is two to three days there. Already there since 2026-10-06, checksums matched:
+  `/opt/llama/magdra/` holds `ckpt-7896.pt`, `bins/`, day2's last snapshot and the kit — the kit
+  still written for the box (its paths, its address, the guard's work-flag line), and no venv
+  yet (torch for sm_120, transformers, numpy, `gguf`, a llama.cpp checkout). The card is held by
+  the work project's `llama-server.service` (15.3 of 16.3 GB when looked at); freeing it is
+  bekh's and the team's call. The default host rule holds there — each command shown, then a
+  yes. Before a run: `train.py --bench` for the batch that fits (`--ctx 512` if none does), and
+  the measured speed said to bekh; warm start at `--lr 8e-5 --warmup 300`, never 2e-4.
 
 The shelves, tokens in millions, and `day2`'s recipe (weights in `night/run2.sh`):
 
