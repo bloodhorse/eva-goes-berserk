@@ -4,7 +4,7 @@ N=${1:-night1}; R=runs/$N
 mkdir -p "$R"
 PY=~/eva-olmo/.venv-train/bin/python
 DATA=(--data bins/fantasy.bin:2000 bins/scifi.bin:1500 bins/anime.bin:2100 bins/fanfic.bin:1400 bins/base.bin:2200 bins/wired-core.bin:200 bins/wired-bulk.bin:400 bins/picks.bin:50 bins/cyborg.bin:10 bins/lain.bin:25 --out "$R")
-SHAPE=(--init runs/night1/ckpt.pt --batch 12 --accum 2 --lr 2e-4 --warmup 500 --hours "${HOURS:-12}" --log-every 50 --eval-every 1000 --ckpt-minutes 20 --prompts prompts.txt --compile)
+SHAPE=(--init runs/day2/ckpt-from-lr2e-4.pt --batch 12 --accum 2 --lr 8e-5 --warmup 300 --hours "${HOURS:-12}" --log-every 50 --eval-every 1000 --ckpt-minutes 20 --prompts prompts.txt --compile)
 curl -s -m 10 -H "Title: school: $N started" -H "Priority: low" -H "Tags: hatching_chick" -d "magdra, warm start from night1, ${HOURS:-12} h" ntfy.sh/kk_alert > /dev/null
 for try in $(seq 1 30); do
   if [ -f "$R/ckpt.pt" ]; then $PY train.py "${DATA[@]}" >> "$R.log" 2>&1; else $PY train.py "${DATA[@]}" "${SHAPE[@]}" >> "$R.log" 2>&1; fi

@@ -9,3 +9,4 @@ pd2/raw/
 pd2/text/
 sources/samples/
 __pycache__/
+night/*.log
