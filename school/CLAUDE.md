@@ -42,9 +42,20 @@ never a sentence here):
   and already a wrong thing said straight (*"it was lighted by no lamps. It was pitch darkness. It
   was all very dark, but not very dark."*). Hourly snapshots `model-<step>-q8_0.gguf` from one
   hour old to the end are on the mac — her whole first night at every age.
-- **`day2`** (2026-10-06 05:34 UTC, twelve hours): warm start from night1's end, ten shelves,
-  reading toward teenage. The box was expected to last about twelve more hours; if it goes, the
-  latest trainable save continues on rented iron (the shelves are on the mac too).
+- **`day2`** (2026-10-06, stopped by bekh at 10:05 UTC when the box's time ran out): warm start
+  from night1's end on ten shelves. Two attempts: the first at lr 2e-4 knocked the held-out
+  numbers up a quarter point and crawled back (kept as `runs/day2-lr2e-4`, 98 M tokens); the
+  second from that save at lr 8e-5 (`runs/day2`, 194 M tokens, stopped at step 7,896 of a planned
+  26,946). **A warm start's rate must be well under the old run's peak** — 8e-5 recovered half the
+  knock in twenty-five minutes. At the stop: fantasy 3.46, sci-fi 3.44, anime 2.63 (night1 ended
+  3.37 / 3.32 / 2.35), fan fiction 3.08, base 3.34, lain 3.10, net core 4.25 — the new shelves
+  learned, the old ones not yet back to night1's sharpness, every number still falling. About
+  0.95 billion tokens read in her life. Final snapshot `model-7896` and trainable `ckpt-7896.pt`
+  on the mac; the mac serves `model-7896` to the loom.
+- **Next: ds-dev2** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5 3500X, 30 GB RAM,
+  Ubuntu 26.04, a team box with the team's green light for LLM work, ours lives under
+  `/opt/llama`). Expected 9–12k tok/s at half our batch (the 16 GB holds batch 6 compiled, ~12
+  GB); teenage is two to three days there. `HANDOFF.md` at the root has the move.
 
 The shelves, tokens in millions, and `day2`'s recipe (weights in `night/run2.sh`):
 

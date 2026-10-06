@@ -217,8 +217,9 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    chose: dark fantasy in the voice of dark souls, visionary science fiction and the net as a
    new world, anime-world fiction. `school/CLAUDE.md` is the state and the runbook; what she is
    doing right now is `school/night/mon.py <run>`, never a sentence here. Her first night read
-   0.66 billion tokens (an infant: sentence shapes, wobbling); the second run reads toward
-   teenage. **Her reading is the open work**: the shelves are the limit, not the card — more
+   0.66 billion tokens (an infant: sentence shapes, wobbling); the second run was cut short by
+   the box's time at 0.95 billion; **the training moves to ds-dev2** (RTX 5060 Ti 16 GB), where
+   teenage is two to three days of nobody paying by the hour. **Her reading is the open work**: the shelves are the limit, not the card — more
    books, not more passes. Then the finishing school (prophecies and the cyborgism wiki, Lain,
    bekh's six books) on whichever hour of her he picks, read through the loom (`eva.x` points at
    her when she is served on the mac).
