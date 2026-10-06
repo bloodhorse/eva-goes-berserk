@@ -42,6 +42,7 @@ td:first-child,th:first-child{text-align:left;color:#e8ecec}
 td svg{display:block;margin-left:auto}
 .said{font:italic 19px/1.45 Georgia,'Iowan Old Style',serif;color:#e8ecec;margin:14px 0 4px;padding:14px 16px;background:#131717;
 border-left:3px solid #f5c8fe;border-radius:0 4px 4px 0}
+.said .ctx{color:#9cc}
 .said b{font:400 12px ui-monospace,Menlo,monospace;color:#9cc;font-style:normal;display:block;margin-top:10px;letter-spacing:.04em}
 pre{background:#131717;color:#cfd8d8;font:13px/1.5 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:4px;white-space:pre-wrap;
 overflow-wrap:anywhere;border-left:2px solid #1f2a2a;margin:4px 0 12px}
@@ -168,17 +169,88 @@ if points:
         rows.append(f"<tr><td>{html.escape(k)}</td><td>{spark(vals)}</td><td>{span('ctx', f'{vals[0]:.3f}')}</td><td>{now}</td><td>{move}</td></tr>")
     rows.append("</tbody></table>")
     out.append("".join(rows) + "\n")
+
+
+def sentence(text):
+    parts = re.findall(r"""[^.!?]+[.!?]+["”’']?""", " ".join(text.split()))
+    first = parts[0].strip() if parts else ""
+    if len(first) < 40 and len(parts) > 1:
+        first += " " + parts[1].strip()
+    return first if 25 < len(first) < 220 else ""
+
+
+def feature(rows):
+    short = [(r["prompt"], sentence(r["text"])) for r in rows if len(r["prompt"]) < 60]
+    short = [(p, t) for p, t in short if t]
+    if short:
+        p, t = max(short, key=lambda x: len(x[1]))
+        return f'<span class="ctx">{html.escape(p)}</span> {html.escape(t)}'
+    best = max((sentence(r["text"]) for r in rows), key=len, default="")
+    return html.escape(best)
+
+
+def loomed():
+    cache = f"{D}/loomed.jsonl"
+    rows = [json.loads(l) for l in lines("loomed.jsonl")]
+    try:
+        snap = open(f"models/{N}/latest").read().strip()
+    except Exception:
+        return rows
+    model, tool = f"models/{N}/model-latest-q8_0.gguf", "/opt/homebrew/bin/llama-completion"
+    if any(r["snapshot"] == snap for r in rows) or not os.path.exists(model) or not os.path.exists(tool):
+        return rows
+    seeds = [l.strip() for l in open("night/prompts.txt", encoding="utf-8") if l.strip()]
+    import subprocess
+    new = []
+    for i, seed in enumerate(seeds):
+        try:
+            r = subprocess.run([tool, "-m", model, "-ngl", "99", "-c", "1024", "-p", seed, "-n", "110", "--temp", "1.0", "--min-p", "0.08",
+                                "--top-k", "0", "--top-p", "1", "--dry-multiplier", "0.8", "--dry-base", "1.75", "--dry-allowed-length", "2",
+                                "--seed", str(1000 + i), "-no-cnv", "--no-display-prompt", "--simple-io"],
+                               capture_output=True, text=True, timeout=90, stdin=subprocess.DEVNULL)
+            text = r.stdout.strip()
+        except Exception as e:
+            print(f"loomed: {e}", file=sys.stderr)
+            text = ""
+        if text:
+            new.append({"snapshot": snap, "time": time.time(), "prompt": seed, "text": text})
+    if new:
+        with open(cache, "a", encoding="utf-8") as f:
+            for r in new:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    return rows + new
+
+
+lm = loomed()
+snaps = list(dict.fromkeys(r["snapshot"] for r in lm))
 sm = [json.loads(l) for l in lines("samples.jsonl")]
 steps = sorted({s["step"] for s in sm}, reverse=True)
 keep = steps[:2] + [s for i, s in enumerate(steps[2:]) if i % 3 == 0]
-if steps:
+def stepof(snap):
+    m = re.search(r"model-(\d+)-", snap)
+    return int(m.group(1)) if m else 0
+
+
+if snaps:
+    cur = [r for r in lm if r["snapshot"] == snaps[-1]]
+    said = feature(cur)
+    if said:
+        out.append("\n## the last thing she said\n")
+        out.append(f'<p class="said">{said}<b>snapshot at step {stepof(snaps[-1]):,} · through the sampler</b></p>\n')
+    out.append("\n## through the loom's sampler\n")
+    out.append(f"<small>one draw per seed from the newest hourly snapshot (step {stepof(snaps[-1]):,}), the absurd tail cut and a brake on repetition: her fair face · the seed's last sentence in blue</small>\n")
+    for r in cur:
+        tail = re.split(r"(?<=[.!?])\s+", r["prompt"].strip())[-1]
+        out.append(f'<p class="seed">…{html.escape(tail)}</p><pre class="says">{html.escape(r["text"].strip())}</pre>\n')
+elif steps:
     newest = [x for x in sm if x["step"] == steps[0]]
-    best = max(newest, key=lambda x: len(re.split(r"(?<=[.!?])\s+", x["text"].strip())[0]) if 40 < len(re.split(r"(?<=[.!?])\s+", x["text"].strip())[0]) < 240 else 0)
-    first = re.split(r"(?<=[.!?])\s+", best["text"].strip())[0][:240]
-    out.append("\n## the last thing she said\n")
-    out.append(f'<p class="said">{html.escape(first)}<b>step {steps[0]:,} · {newest[0]["tokens_seen"] / 1e6:,.0f} million tokens into {N}</b></p>\n')
-    out.append("\n## what she writes\n")
-    out.append("<small>the same four seeds at each save, newest first · the seed's last sentence in blue, the rest hers, drawn raw at temperature 1 with no cut-off: her worst face</small>\n")
+    said = feature(newest)
+    if said:
+        out.append("\n## the last thing she said\n")
+        out.append(f'<p class="said">{said}<b>step {steps[0]:,} · raw</b></p>\n')
+if steps:
+    out.append("\n## raw, at every save\n")
+    out.append("<small>the same seeds at each save, newest first, drawn at temperature 1 from all fifty thousand tokens with no cut-off: her worst face</small>\n")
 for s in keep:
     rows = [x for x in sm if x["step"] == s]
     out.append(f"\n### after {rows[0]['tokens_seen'] / 1e6:,.0f} million tokens · step {s:,}\n")
