@@ -73,6 +73,14 @@ that for ~$0.40/h, one H100 four to five times for ~$2.50/h — so teenage from 
 30 box-hours or $20 of H100. **Past about 10 B tokens on this diet more reading is reciting**;
 the next step is more text, not more hours.
 
+**The text is the accumulated knowledge** (bekh, 2026-10-06): nothing tokenised or cleaned is
+ever deleted — shelves, bins, the cut text, the fan-fiction cuts, the books — because the next
+model reuses them, and a rented card costs money while text costs only the gathering. The archive
+is **`bek@100.69.218.90:/srv/music/school-archive/`**, the mini's big disk (`night/archive.sh`
+mirrors `school/` there and pulls the box's `bins/`, `data/` and `fanfic/` first; rerun it after
+any new shelf or run). Renting iron is out of the question for now; the next bigger model waits
+for a borrowed card and for more text.
+
 ## Watching and running
 
 ```bash
