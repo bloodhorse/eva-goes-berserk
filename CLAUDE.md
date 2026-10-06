@@ -304,7 +304,7 @@ couple of sentences in his register, no prose from Claude, no web markers.
 Open, small: codex dropped out halfway through the ration of 2026-09-27 (from 14:24, `failed to
 refresh available models: request timed out` toward chatgpt.com, not auth) — the reader fell
 back to opus 43 times, the analyst has no fallback and 44 of that day's 68 portraits failed;
-`codex login status` was fine again on 2026-10-03, nothing was changed; the sheets site on the mini (`~/sheets/sheets-serve.py`, now a full-screen home-screen app with a way back injected into every article) still runs as a bare background process and will not come back after a reboot of the mini; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
+`codex login status` was fine again on 2026-10-03, nothing was changed; berserk's picker calls load bekh's global `~/.claude/CLAUDE.md` into the picker's head (headless `claude -p` does, unless given `--setting-sources project` — found and fixed for the stream's voices in `eva/stream/opus.py`, not touched in berserk); eva should show room titles, and treats any argument as a room name (`eva --help`
 made a room called `--help`); bekh hasn't said whether export's head should carry more of the
 sampler, or whether a second button should write the whole fan; the cyborgism crowd (janus,
 ampdot) is reachable only by a person — every channel is invite-only, ampdot's contacts are on

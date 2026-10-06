@@ -53,7 +53,7 @@ never a sentence here):
   learned, the old ones not yet back to night1's sharpness, every number still falling. About
   0.95 billion tokens read in her life. Final snapshot `model-7896` and trainable `ckpt-7896.pt`
   on the mac; the mac serves `model-7896` to the loom.
-- **`day3`, not started: ds-dev2** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5
+- **`day3`, running on ds-dev2 since 2026-10-06 19:22 UTC** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5
   3500X, 30 GB RAM, Ubuntu 26.04, a team box, ours lives in `/opt/llama/magdra/`). Ready there:
   `ckpt-7896.pt` (md5 matched), the old `bins/`, the new `bins2/`, the kit, the text in `data/`
   and a venv (`.venv`, python 3.12 through uv in the home directory, torch 2.14.1+cu130). The
@@ -66,14 +66,16 @@ never a sentence here):
   fresh export match the box's `model-7896` tensor for tensor (ds-dev2's exports set
   `add_bos_token`, the box's did not — a prompt served from a new snapshot starts a document).
   bekh's yes that day covered the stop, the venv and work inside `/opt/llama/magdra/`;
-  anything else on that host is shown and asked first. **What it waits for**: the mix (below)
-  and bekh's books. Warm start at `--lr 8e-5 --warmup 300`, never 2e-4.
+  anything else on that host is shown and asked first. The run: warm start from `ckpt-7896.pt`
+  at 8e-5 with 300 warm-up steps, fifty hours planned as 84,103 steps and 2.07 billion tokens,
+  11.8k tok/s at the hundredth step, 15.3 GB of the card in use; the recipe is in
+  `night/run3.sh`. Its page is `school-day3.html` on the sheets site.
 
 The shelves, tokens in millions. `bins2/` holds the ones cut again or new on 2026-10-06, `bins/`
-the rest as the box made them; `day2`'s weights are what she has read by, the last column is a
-**proposal for `day3`, not agreed**:
+the rest as the box made them; the last two columns are the weights of `day2` and of `day3`
+(bekh's go, 2026-10-07):
 
-| shelf | what | M tok | day2 | day3? |
+| shelf | what | M tok | day2 | day3 |
 |---|---|---|---|---|
 | fantasy (`bins2`) | 1,550 books: Gutenberg fantasy, horror, gothic, sagas, Arthurian, myth, plus Faded Page / Gutenberg Australia (Peake, Eddison, Dunsany's later books, Howard, Charles Williams, Treece) | 126 | 2000 | 2000 |
 | scifi (`bins2`) | 3,144 pulp stories and novels plus Stapledon complete, Cordwainer Smith, Kuttner, Wyndham, Lewis's space trilogy (Fearn left out) | 77 | 1500 | 1500 |
@@ -86,16 +88,16 @@ the rest as the box made them; `day2`'s weights are what she has read by, the la
 | released (`bins2`) | fiction its authors serve free: Rucker, Watts, qntm, Scott Alexander, Roger Williams | 3.95 | — | 80 |
 | wired-core | the visionary net: Barlow, Bey, the Ccru, hyperstition, EFF essays, the cyberpunk project, small zines | 8 | 200 | 160 |
 | wired-bulk | the lists (extropians, cypherpunks, nettime), the magazines, Phrack, the BBS erotica | 107 | 400 | 400 |
-| picks (`bins2`) | Blood Meridian, Perdido Street Station, Neuromancer, Count Zero, Mona Lisa Overdrive, Do Androids Dream — converted again without covers, blurbs and an afterword; the library replaces this shelf when it arrives | 0.94 | 50 | 20 |
+| library (`bins2`) | 55 books: bekh's six and what had arrived of the three lists in `library.md` — the finishing school's shelf, read about twice here so that pass has room | 7.5 | 50 (the six) | 72 |
 | lain | everything Lain in English (`lain/`) | 0.96 | 25 | 20 |
 | cyborg | the finishing corpus at tier 1, fit ≥ 1 (`corpus.jsonl`) | 0.18 | 10 | 4 |
 
-The proposal holds every small shelf to about four readings over two billion tokens (a weight
-point is 200,000 tokens read): at `day2`'s weights the picks would have been read ten times and
-the cyborg corpus eleven. So the share of chosen modern prose is set by how much of it there is —
-the new shelves carry about 9% — and the weight they take comes out of the ballast. Still to
-place: the library (about 5 M tokens, read last and heavily, not thin throughout) and a **spine**
-of modern plain prose in bekh's worlds (A Song of Ice and Fire, Wildbow's Pact).
+`day3` holds every small shelf to about four readings over two billion tokens (a weight point
+is 200,000 tokens read): at `day2`'s weights the six would have been read ten times and the
+cyborg corpus eleven. So the share of chosen modern prose is set by how much of it there is —
+the new shelves carry about 9% — and the weight they take came out of the ballast. Not placed
+yet: a **spine** of modern plain prose in bekh's worlds (A Song of Ice and Fire, Wildbow's
+Pact), and the books of `library.md` that had not arrived, which join at the finishing school.
 
 **The fantasy, sci-fi and base text she read until now was half glued**: 3,505 of 7,320
 Gutenberg books had reached her as one paragraph per chapter or per book. `data/cut2.py` cut the
@@ -190,7 +192,8 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   `health.py <dir>` is the verdict on any folder of text before it is tokenised (glued, shredded,
   nested, dirt).
   `books.py` turns the epubs in `inbox/` into body text in `inbox/clean/` with a ledger of
-  every section it dropped and why (mobi and pdf paths written, never run on a real file).
+  every section it dropped and why, a language gate, a check that a file is what its extension
+  says, and `inbox/skip.txt`; `pages.py` joins a book that arrived as scanned-page text files.
   `jsonl2dir.py`, `build*.sh` (the tokenising batches; `build5.sh` on ds-dev2 made `bins2/`).
 - `modern/` — text fetched on 2026-10-06, one folder a source, each with its scripts and a
   ledger (text and raw pages not in git, mirrored to the mini): `fadedpage/` 261 books of
@@ -231,15 +234,15 @@ that shape every day:
 
 ## Next
 
-**`day3` on ds-dev2**, when two things are in: bekh's books (`library.md`; he gets them by
-hand, `data/books.py` converts them, they become a `library` shelf and the picks' replacement)
-and his yes to a mix. Then: tokenise the books into `bins2/`, put the mix and the hours into
-`night/run3.sh`, say the plan back with the numbers above, start, and watch every twenty minutes
-(he wants that). The finishing school after it: the cyborg corpus, Lain and the library's five
-(Wolfe, VALIS, Borges, Hard-Boiled Wonderland, Viriconium — four of them told by an *i* who
-remembers and cannot be trusted), read heavily, as a short low-rate pass or an adapter with a
-dial (`SERVE.md` was never written; check the per-request LoRA scale on our llama.cpp builds
-first). More text: Harvard's Institutional Books on Hugging Face (gated, non-commercial; it
+**Watch `day3`** (`night/mon.py day3 --once`, the page, a look every twenty minutes — bekh wants
+that): each shelf's held-out number separately, the first hourly snapshot, the first six-hourly
+save on the mini (`night/day3/pull.log` says MATCH). Then pick her age by the numbers and by
+reading her through the loom. The finishing school after it: the cyborg corpus, Lain and the
+library — its five first (Wolfe, VALIS, Borges, Hard-Boiled Wonderland, Viriconium; four of them
+told by an *i* who remembers and cannot be trusted) — read heavily, as a short low-rate pass or
+an adapter with a dial (`SERVE.md` was never written; check the per-request LoRA scale on our
+llama.cpp builds first). Books still to come are listed in `library.md`; `inbox/held/` has one
+that converted without paragraphs (The Bloody Chamber). More text: Harvard's Institutional Books on Hugging Face (gated, non-commercial; it
 carries the unrenewed American books of 1930–63 — count its fiction from the metadata first;
 bekh has to accept the gate), an ask to Escape Pod / PodCastle / PseudoPod (2,800 stories,
 already CC BY-NC-ND, crawlers blocked — an email from bekh), `common-pile/project_gutenberg`
