@@ -6,6 +6,7 @@ import re
 import unicodedata
 import warnings
 import zipfile
+from collections import Counter
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -865,6 +866,297 @@ def load_ledger(path):
     return rows
 
 
+STOP_EN = set("the and of to a in that it was he i his you with for as on had is but at not her she be they by this from have my which or all were one we so said an there what are me when been their no would if who out him them up into".split())
+STOP_OTHER = {
+    "es": set("de la que el en los del las por con una para como más pero sus le ya fue este ha sí porque esta son entre cuando muy sin sobre también se lo".split()),
+    "it": set("di che il la non per un una del della con sono le gli si ma come anche alla nel questo ha era io mi ti lo è".split()),
+    "pl": set("nie się że na jak to jest do za po ale tak już czy jego od mnie przez tylko był jej go mu co".split()),
+    "fr": set("le la les de des et un une est que qui dans pour pas sur au avec il elle ce ne se je".split()),
+    "de": set("der die das und ist nicht ein eine zu den mit sich des auf für ich er sie es dem".split()),
+}
+SCAN = re.compile(r"proofed|scann(ed|er'?s)|#bookz|this document is unfinished|needs formatting|scan notes|\bv\d\.\d\b|\bocr\b", re.I)
+SCAN_STRONG = re.compile(r"#bookz|proofed (by|for)|scanned (by|for)|scan notes|scanner's (quick )?note|\bv\d\.\d+ proofed", re.I)
+COPY = re.compile(r"copyright|all rights reserved|\bisbn\b|e-book to you|without (the )?(prior )?(written )?permission|\bDRM\b|piracy|electronic sharing", re.I)
+NAMES = [
+    ("ROADSIDE PICNIC", "Arkady Strugatsky", "Roadside Picnic"),
+    ("M. John Harrison - Viriconium 2", "M. John Harrison", "A Storm of Wings"),
+    ("Vernor Vinge_ True Names", "Vernor Vinge", "True Names"),
+    ("Light_ M. John Harrison", "M. John Harrison", "Light"),
+]
+FIXES = {
+    "simmons-fall-of-hyperion": {"lead_fragment": True, "end": r"^\* \* \*\n\nThe shattering saga",
+                                 "warn": "the source epub lacks the novel's opening pages (it begins mid-sentence); kept from the first whole sentence"},
+    "vinge-true-names": {"start": r"^In the once-upon-a-time days of the First Age of Magic", "end_after": r"were millennia\. And Ery\."},
+    "strugatsky-roadside-picnic": {"start": r"^You have to make the good out of the bad"},
+    "stephenson-diamond-age": {"start": r"^By nature, men are"},
+    "sterling-schismatrix-plus": {"end": r"^A Shaper/Mechanist Chronology$"},
+    "delany-dhalgren": {"end": r"^ABOUT THE AUTHOR"},
+    "dick-ubik": {"start": r"^ONE$"},
+    "tanigawa-melancholy-of-haruhi-suzumiya": {"end": r"^CHECK OUT A PREVIEW"},
+    "schulz-fictions-of-bruno-schulz": {
+        "sub": [(r"\s*\b\d{1,3}\s+(?:THE STREET OF CROCODILES|SANATORIUM UNDER THE SIGN OF THE HOURGLASS)(?:\s+[A-Z][A-Z' ,.-]*[A-Z])?\s+\d{1,3}\b\s*", " "),
+                (r"(?m)^(?:THE STREET OF CROCODILES|SANATORIUM UNDER THE SIGN OF THE HOURGLASS)\s+(?=[a-z])", "")],
+        "start": r"In July my father went"},
+    "vance-eyes-of-the-overworld": {"start": r"^I\n\nThe Overworld!"},
+    "carter-bloody-chamber-and-other": {"end": r"About The Author: Angela Carter was born"},
+    "ballard-atrocity-exhibition": {"end": r"^AN INVESTIGATIVE SPIRIT$"},
+    "calvino-invisible-cities": {"start": r"Kublai Khan does not necessarily"},
+}
+
+
+def language(text):
+    letters = re.findall(r"[^\W\d_]", text[:400000])
+    if letters and sum(1 for c in letters if "Ѐ" <= c <= "ӿ") / len(letters) > 0.3:
+        return "ru"
+    words = re.findall(r"[^\W\d_]+", text.lower())
+    if len(words) > 60000:
+        words = words[len(words) // 10: len(words) // 10 + 60000]
+    if not words:
+        return "und"
+    en = sum(w in STOP_EN for w in words) / len(words)
+    if en >= 0.2:
+        return "en"
+    best = max(STOP_OTHER, key=lambda k: sum(w in STOP_OTHER[k] for w in words))
+    return best if sum(w in STOP_OTHER[best] for w in words) / len(words) > en else "und"
+
+
+def sniff(path):
+    ext = path.suffix.lower()
+    with open(path, "rb") as f:
+        head = f.read(65536)
+    if head.startswith(b"Rar!"):
+        what = "a RAR archive"
+    elif head.startswith(b"\xd0\xcf\x11\xe0"):
+        what = "a Word/OLE document"
+    elif head.startswith(b"7z\xbc\xaf"):
+        what = "a 7z archive"
+    elif head.startswith(b"%PDF"):
+        what = "a PDF"
+    elif head.startswith(b"{\\rtf"):
+        what = "RTF"
+    elif re.match(rb"\s*(<\?xml[^>]*>\s*)?(<!doctype html|<html)", head, re.I):
+        what = "HTML"
+    elif head.startswith(b"PK"):
+        what = "zip"
+    elif head[60:68] in (b"BOOKMOBI", b"TEXtREAd"):
+        what = "mobi"
+    else:
+        txt = head.decode("utf-8", "ignore")
+        what = f"plain text in '{language(txt)}'" if txt.strip() else "binary data"
+    if ext == ".epub":
+        if what != "zip":
+            return f"not a readable epub ({what})"
+        try:
+            with zipfile.ZipFile(path) as z:
+                names = [n for n in z.namelist() if not n.endswith("/")]
+        except zipfile.BadZipFile:
+            return "not a readable epub (a damaged zip)"
+        if not any(n.lower().endswith(".opf") for n in names):
+            kinds = sorted({posixpath.splitext(n)[1].lower() or "no extension" for n in names})
+            return f"not a readable epub (a zip of {', '.join(kinds[:5])} files with no OPF)"
+    elif ext == ".txt" and what in ("RTF", "HTML"):
+        return f"markup, not plain text ({what})"
+    elif ext == ".pdf" and what != "a PDF":
+        return f"not a readable pdf ({what})"
+    elif ext in (".mobi", ".azw", ".azw3") and what != "mobi":
+        return f"not a readable {ext[1:]} ({what})"
+    return None
+
+
+def file_names(src):
+    for key, a, t in NAMES:
+        if key in src:
+            return a, t
+    stem = re.sub(r"(\.(epub|txt|fb2|pdf|mobi))+$", "", src, flags=re.I)
+    stem = re.sub(r"\[[^\]]*\]|\([^)]*\)|\bv\d+(\.\d+)?\b", " ", stem, flags=re.I)
+    stem = WATERMARK.sub(" ", stem).replace("__", " ").strip(" _-")
+    stem = re.sub(r"\s+", " ", re.sub(r"_(?! )", " ", stem))
+    m = re.match(r"^([^,_-]+),\s*([^-_]+?)\s+-\s+(?:.+?\s+\d+(?:\.\d+)?\s+-\s+)?(.+)$", stem)
+    if m:
+        return f"{m.group(2).strip()} {m.group(1).strip()}", m.group(3).strip(" -")
+    m = re.match(r"^(.+?)_\s+(.+)$", stem)
+    if m and re.fullmatch(r"([A-Z][\w.'’]*\s?){2,4}", m.group(2).strip()):
+        return m.group(2).strip(), m.group(1).strip()
+    m = re.match(r"^(.+?)\s+-\s+(.+)$", stem)
+    if m:
+        return m.group(1).strip(), re.sub(r"^[-\s]+", "", m.group(2)).strip()
+    return "", stem.strip()
+
+
+def junk_meta(title, author):
+    t, a = (title or "").strip(), (author or "").strip()
+    if not a or a.lower() in ("unknown", "unknown author") or not t:
+        return True
+    if re.search(r"\s-\s|_|\.\w{3,4}$|\bv\d", t) or re.search(r"\d|\s-\s|\bv\d", a):
+        return True
+    at = set(re.findall(r"\w+", a.lower()))
+    return bool(at) and at <= set(re.findall(r"\w+", t.lower())) | {"the", "a", "of"}
+
+
+def surname_of(author):
+    a = re.sub(r"\s*[\(\[].*?[\)\]]", "", author or "").strip()
+    a = re.split(r"\s*(?:&|;| and )\s*", a)[0]
+    if "," in a:
+        return a.split(",")[0].strip()
+    parts = [p for p in a.split() if not re.match(r"^(jr|sr|ii|iii|phd)\.?$", p, re.I)]
+    if len(parts) >= 3 and parts[-2].lower() in ("le", "de", "van", "von", "der", "du", "la", "di"):
+        return parts[-2] + " " + parts[-1]
+    return parts[-1] if parts else "unknown"
+
+
+def book_slug(title, author):
+    t = clean_title(title)
+    t = re.split(r"\s*[:;]\s+|\s+[-–—]\s+", t)[0]
+    words = [w for w in ascii_slug(t).split("-") if w]
+    if len(words) > 1 and words[0] in {"the", "a", "an"}:
+        words = words[1:]
+    return "-".join([ascii_slug(surname_of(author)) or "unknown"] + (words[:4] or ["untitled"]))
+
+
+def polish(text, slug, title, author, src, warns):
+    drops = []
+
+    def drop(p, why):
+        if p.strip():
+            drops.append({"file": "text", "words": len(p.split()), "reason": why, "start": p.strip()[:60]})
+
+    fx = FIXES.get(slug, {})
+    if fx.get("warn"):
+        warns.append(fx["warn"])
+    for pat, rep in fx.get("sub", []):
+        text, n = re.subn(pat, rep, text)
+        if n:
+            drops.append({"file": "text", "words": 0, "reason": f"per-book: {n} running heads cut out of paragraphs", "start": ""})
+    if fx.get("start"):
+        m = re.search(fx["start"], text, re.M)
+        if m:
+            drop(text[:m.start()], "per-book: everything before the work's first sentence")
+            text = text[m.start():]
+        else:
+            warns.append("per-book start marker not found")
+    for key in ("end", "end_after"):
+        if fx.get(key):
+            m = re.search(fx[key], text, re.M)
+            if m:
+                cut = m.start() if key == "end" else m.end()
+                drop(text[cut:], "per-book: everything after the work's last sentence")
+                text = text[:cut]
+            else:
+                warns.append(f"per-book {key} marker not found")
+    paras = [p.strip() for p in text.split("\n\n") if p.strip()]
+    if fx.get("lead_fragment") and paras and re.match(r"^[a-z]", paras[0]):
+        m = re.search(r"[.!?]\s+(?=[A-Z“\"])", paras[0])
+        if m:
+            drop(paras[0][:m.end()], "a fragment of a sentence whose start is missing from the source")
+            paras[0] = paras[0][m.end():]
+    cnt = Counter(p for p in paras if len(p.split()) <= 8 and not BREAK_TEXT.match(p))
+    heads = {p for p, c in cnt.items() if c >= 6 and not CHAP_RE.match(p) and not re.search(r"[.!?…”\"’)\]]$", p)}
+    if heads:
+        for h in heads:
+            drops.append({"file": "text", "words": len(h.split()) * cnt[h], "reason": f"running head x{cnt[h]}", "start": h[:60]})
+        paras = [p for p in paras if p not in heads]
+    open_end = sum(1 for a, b in zip(paras, paras[1:]) if not re.search(r"[.!?…:;”\"’)\]*—-]$", a) and re.match(r"^[a-z]", b))
+    if paras and open_end / len(paras) > 0.1:
+        joined = []
+        for p in paras:
+            if joined and re.match(r"^[a-z]", p) and not re.search(r"[.!?…”\"’)\]*—]$", joined[-1]):
+                joined[-1] = joined[-1][:-1] + p if joined[-1].endswith("-") else joined[-1] + " " + p
+            else:
+                joined.append(p)
+        drops.append({"file": "text", "words": 0, "reason": f"{len(paras) - len(joined)} paragraphs broken at line ends joined back", "start": ""})
+        paras = joined
+    keep = []
+    for p in paras:
+        if len(p.split()) < 40 and (SCAN_STRONG.search(p) or re.fullmatch(r"\W*(https?://|www\.)\S+\W*", p)):
+            drop(p, "scanner/proofing note or url")
+        else:
+            keep.append(p)
+    paras = keep
+    toks = set(re.findall(r"[a-z]+", f"{title} {author} {src}".lower())) | {
+        "of", "the", "a", "an", "and", "or", "by", "volume", "book", "new", "edition", "novel", "stories", "complete"}
+    sur = surname_of(author)
+    prev = None
+    while paras:
+        p = paras[0]
+        w = re.findall(r"[a-z]+", p.lower())
+        why = None
+        if SCAN.search(p) and len(w) < 60:
+            why = "scanner/proofing note"
+        elif COPY.search(p) and len(w) < 150:
+            why = "copyright/DRM notice"
+        elif len(w) <= 14 and w and all(x in toks for x in w):
+            why = "title/author line"
+        elif len(w) <= 16 and re.match(r"^(\(?\d{4}\)?\s|(?i:translated|first published)|[Bb]y\s+[A-Z][\w.]*(\s+[A-Z][\w.]*){0,3}$)", p):
+            why = "publication line"
+        elif len(w) <= 14 and re.match(r"^(?i:to|for)\s+[A-Z]|^(?i:this book is dedicated|dedicated to)", p) and not re.search(r"[?!]", p):
+            why = "dedication"
+        elif len(w) <= 90 and p[:1] in "“\"" and len(paras) > 1 and re.match(r"^[—–-]\s*\S", paras[1]):
+            why = "review blurb"
+        elif prev == "review blurb" and re.match(r"^[—–-]\s*\S", p) and len(w) <= 14:
+            why = "review blurb"
+        elif prev == "dedication" and p.upper() == p and len(w) <= 6:
+            why = "dedication"
+        elif sur != "unknown" and len(w) < 200 and re.search(rf"\b{re.escape(sur)}\b.{{0,80}}\b(was born|is the author|lives in|died in)", p, re.I):
+            why = "about the author"
+        if not why:
+            k = 0
+            while k < len(paras) and re.fullmatch(r"(?i)(chapter|part|book)\s+[\w-]+", paras[k]):
+                k += 1
+            if k >= 3:
+                drop("\n".join(paras[:k]), "opening: table of contents")
+                del paras[:k]
+                continue
+            break
+        drop(p, f"opening: {why}")
+        paras.pop(0)
+        prev = why
+    blurb = False
+    while paras:
+        p = paras[-1]
+        w = re.findall(r"\w+", p.lower())
+        why = None
+        if SCAN.search(p) and len(w) < 60:
+            why = "scanner/proofing note"
+        elif re.fullmatch(r"(the end|fin|notes?|(<\.?p>)+|\d{1,2}[/.]\d{1,2}[/.]\d{2,4}|[\W_]*)", p.strip(), re.I):
+            why = "end marker, date or stray line"
+        elif re.match(r"^(about the author|acknowledg|also by|books by|praise for|other books|by the same author)", p, re.I):
+            why = "back matter"
+        elif re.match(r"^[—–-]\s*\S", p) and len(w) <= 14:
+            why, blurb = "review blurb", True
+        elif re.search(r"(?i)now on sale|books are sold|loved this book|users also downloaded|creative commons|unported license|licensed under", p) and len(w) < 80:
+            why, blurb = "distributor's note or advert", True
+        elif blurb and len(w) <= 8 and not re.search(r"[.!?…”\"’]$", p):
+            why = "advert/blurb block"
+        elif blurb and (p[:1] in "“\"" or HYPE.search(p)) and len(w) < 90:
+            why = "review blurb"
+        elif re.fullmatch(r"([A-Z][\w.'’-]*\s?){2,3}", p) and len(paras) > 50:
+            why = "name line after the text"
+        elif re.match(r"^[“\"][^”\"]{1,60}[”\"],?\s", p) and len(w) <= 12:
+            why = "list of other books"
+        elif re.search(r"\s\d{1,4}$", p) and len(w) <= 10 and not CHAP_RE.match(p):
+            why = "table of contents line"
+        elif COPY.search(p) and len(w) < 120:
+            why = "copyright notice"
+        if not why:
+            break
+        drop(p, f"ending: {why}")
+        paras.pop()
+    return finish_text(paras), drops
+
+
+def shingles(text):
+    words = re.findall(r"\w+", text.lower())
+    return {hash(" ".join(words[i:i + 8])) for i in range(0, max(len(words) - 8, 1))}
+
+
+def skip_list(inbox):
+    for d in (inbox, Path(__file__).resolve().parent.parent / "inbox"):
+        f = d / "skip.txt"
+        if f.exists():
+            return [ln.strip() for ln in f.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    return []
+
+
 def main():
     ap = argparse.ArgumentParser(description="ebooks in a folder -> clean body text")
     ap.add_argument("inbox", nargs="?", default=str(Path(__file__).resolve().parent.parent / "inbox"))
@@ -883,23 +1175,57 @@ def main():
         names = {p.name for p in files}
         ledger = [r for r in ledger if r["source"] not in names]
         done = {r["source"] for r in ledger}
+    skips = skip_list(inbox)
     results = []
     for p in files:
         if p.name in done:
             continue
+        fmt = p.suffix.lower()[1:]
+        hit = next((k for k in skips if k in p.name), None)
+        if hit:
+            results.append({"source": p.name, "status": "skipped", "reason": "skipped: on the skip list", "format": fmt})
+            continue
+        bad = sniff(p)
+        if bad:
+            results.append({"source": p.name, "status": "skipped", "reason": f"skipped: {bad}", "format": fmt})
+            continue
         try:
             title, author, lang, text, kept, dropped, warns = handlers[p.suffix.lower()](p)
         except Exception as e:
-            results.append({"source": p.name, "status": "error", "error": f"{type(e).__name__}: {e}", "format": p.suffix.lower()[1:]})
+            results.append({"source": p.name, "status": "error", "error": f"{type(e).__name__}: {e}", "format": fmt})
             continue
         title = clean_title(title) or name_guess(p)[0]
-        rec = {"source": p.name, "status": "ok", "slug": make_slug(title, author), "title": title, "author": author,
-               "language": lang, "format": p.suffix.lower()[1:], "words": len(text.replace("* * *", "").split()),
-               "sections_kept": kept, "sections_dropped": dropped, "warnings": warns,
-               "fingerprint": fingerprint(text), "_text": text}
+        if fmt == "txt" or junk_meta(title, author):
+            fa, ft = file_names(p.name)
+            title, author = clean_title(ft) or title, fa or author
+        else:
+            for key, fa, ft in NAMES:
+                if key in p.name:
+                    title, author = ft, fa
+        slug = book_slug(title, author)
+        text, more = polish(text, slug, title, author, p.name, warns)
+        lang = language(text)
+        if lang != "en":
+            results.append({"source": p.name, "status": "skipped", "reason": f"skipped: language {lang}", "format": fmt,
+                            "title": title, "author": author})
+            continue
+        rec = {"source": p.name, "status": "ok", "slug": slug, "title": title, "author": author,
+               "language": lang, "format": fmt, "words": len(text.replace("* * *", "").split()),
+               "sections_kept": kept, "sections_dropped": dropped + more, "warnings": warns,
+               "fingerprint": fingerprint(text), "_text": text, "_sh": shingles(text)}
         if rec["words"] < 5000:
             warns.append(f"only {rec['words']} words kept")
         results.append(rec)
+    oks = sorted([r for r in results if r.get("status") == "ok"], key=lambda r: r["words"])
+    for i, r in enumerate(oks):
+        for o in oks[i + 1:]:
+            if o.get("status") != "ok" or not r["_sh"]:
+                continue
+            if len(r["_sh"] & o["_sh"]) / len(r["_sh"]) >= 0.8:
+                r["status"] = "duplicate"
+                r["duplicate_of"] = o["source"]
+                r["reason"] = f"duplicate: contained in {o['slug']}"
+                break
     pool = [r for r in ledger if r.get("status") == "ok"] + [r for r in results if r.get("status") == "ok"]
     for r in results:
         if r.get("status") != "ok":
@@ -915,8 +1241,7 @@ def main():
                 if loser.get("status") == "ok":
                     loser["status"] = "duplicate"
                     loser["duplicate_of"] = winner["source"]
-                    loser.setdefault("warnings", []).append(
-                        f"duplicate of {winner['source']} ({'same title+author' if same_meta else 'near-identical text'}); shorter one dropped")
+                    loser["reason"] = f"duplicate: {'same title and author as' if same_meta else 'near-identical to'} {winner.get('slug')}"
                     if loser in ledger:
                         old = out / f"{loser['slug']}.txt"
                         if old.exists() and loser["slug"] != winner["slug"]:
@@ -937,13 +1262,16 @@ def main():
     final = ledger + results
     with ledger_path.open("w", encoding="utf-8") as f:
         for r in final:
-            f.write(json.dumps({k: v for k, v in r.items() if k != "_text"}, ensure_ascii=False) + "\n")
+            f.write(json.dumps({k: v for k, v in r.items() if k not in ("_text", "_sh")}, ensure_ascii=False) + "\n")
     for r in results:
         if r.get("status") == "error":
             print(f"ERROR  {r['source']}: {r['error']}")
             continue
+        if r["status"] == "skipped":
+            print(f"SKIP {r['source'][:60]:60} {r['reason']}")
+            continue
         flag = "DUP  " if r["status"] == "duplicate" else "ok   "
-        print(f"{flag}{r['slug']:40} {r['words']:7}w  kept {len(r['sections_kept']):3}  dropped {len(r['sections_dropped']):3}  warnings {len(r['warnings'])}")
+        print(f"{flag}{r['slug']:40} {r['words']:7}w {r.get('reason', '')}  kept {len(r['sections_kept']):3}  dropped {len(r['sections_dropped']):3}  warnings {len(r['warnings'])}")
     if not results:
         print("nothing new (use --force to redo)")
 
