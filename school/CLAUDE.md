@@ -187,6 +187,8 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   those two chose and cuts the same books again with the paragraphs right (its `cut2.tsv` has
   every book's mode, paragraph count and longest paragraph), running each through `recut.py`,
   which drops image captions (`p029.jpg (285K) Full Size`), Gutenberg boilerplate and urls.
+  `health.py <dir>` is the verdict on any folder of text before it is tokenised (glued, shredded,
+  nested, dirt).
   `books.py` turns the epubs in `inbox/` into body text in `inbox/clean/` with a ledger of
   every section it dropped and why (mobi and pdf paths written, never run on a real file).
   `jsonl2dir.py`, `build*.sh` (the tokenising batches; `build5.sh` on ds-dev2 made `bins2/`).
@@ -215,32 +217,17 @@ batch 12 × 2 at 18.6k and 18.9 GB.
 
 ## Lessons
 
-- **Judge her through the loom's sampler, never the raw page draws.** Both of us called her bad
-  from temperature-1 samples that were drawn from all 50,000 tokens; the same snapshot through
-  min_p and DRY read as whole sentences.
-- **The clock is not in my head.** Hours pass between messages; check the run before speaking of
-  it.
-- Gutenberg's `sedthh` dump marks paragraphs four ways, and the first cut knew one: a blank
-  line after every text line with the paragraph break as the *missing* blank (most books), the
-  same with a double blank, no blank lines at all, and one line per paragraph. Half the fantasy,
-  sci-fi and base text reached her as whole novels in one paragraph — her first 0.95 billion
-  tokens were read that way. **Measure a cut by its paragraphs** (median length, the longest,
-  the share of a book in paragraphs over 20,000 characters), not by reading its first page.
-- **Audit a filter by its largest removals.** The first caption filter dropped any paragraph that
-  mentioned Project Gutenberg, and in glued books a paragraph was 400 KB of novel.
-- **A site's own word comes before a fetch.** Nine magazines with free archives had each refused
-  AI training in robots.txt, a header or their terms (Clarkesworld, Lightspeed, Nightmare,
-  Uncanny, Beneath Ceaseless Skies, Reactor, Apex, The Dark; also Egan, Stross, Small Beer
-  Press, Escape Pod); read robots.txt and the terms first. Strange Horizons had posted nothing
-  and was taken on bekh's word. `docs/research/text-sources-2026-10-06.md` is what an agent
-  found about where homegrown models get text.
-- The GGUF converter needs `sentencepiece` in the venv even for a GPT-2 alphabet; without it
-  every hourly snapshot fails and only the guard's log says so. Test an export before a run.
-- `prep.py` wants flat directories. Harness
-  subagents could not write `.md` reports into the shared checkout; their reports were saved by
-  hand (`.claude/settings.json` turns the guard off for this session's own writes).
-- Every shelf's held-out loss, separately, is the memorising alarm: a shelf that turns and climbs
-  while the others fall is being recited.
+**`PITFALLS.md` is the list** — everything that bit, in the order the work happens (finding
+text, cutting, tokenising, the mix, the machine, starting, running), each with how to catch it.
+Read the stage you are entering before you enter it; put a new one there, not here. The three
+that shape every day:
+
+- **Measure a shelf by its paragraphs** (`data/health.py <dir>`), not by its first page: half
+  the Gutenberg text went in glued and nobody saw it for two runs.
+- **Judge her through the loom's sampler, never the raw page draws**, and read the run before
+  speaking of it — the clock is not in my head.
+- **A site's own word comes before a fetch**, and the readings per shelf get multiplied out
+  before a run.
 
 ## Next
 
