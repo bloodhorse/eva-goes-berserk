@@ -46,6 +46,7 @@ border-left:3px solid #f5c8fe;border-radius:0 4px 4px 0}
 .seed{color:#9cc;font-size:14px;margin:14px 0 4px}
 pre{background:#131717;color:#cfd8d8;font:13px/1.5 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:4px;white-space:pre-wrap;
 overflow-wrap:anywhere;border-left:2px solid #1f2a2a;margin:4px 0 12px}
+pre.says{font-size:15px}
 .foot{color:#9cc;opacity:.6;font:11px ui-monospace,Menlo,monospace;margin-top:28px}
 </style>
 """
@@ -183,7 +184,7 @@ for s in keep:
     out.append(f"\n### after {rows[0]['tokens_seen'] / 1e6:,.0f} million tokens · step {s:,}\n")
     for x in rows:
         tail = re.split(r"(?<=[.!?])\s+", x["prompt"].strip())[-1]
-        out.append(f'<p class="seed">…{html.escape(tail)}</p><pre>{html.escape(x["text"].strip())}</pre>\n')
+        out.append(f'<p class="seed">…{html.escape(tail)}</p><pre class="says">{html.escape(x["text"].strip())}</pre>\n')
 g = lines("guard.log")
 if g:
     rows = []
