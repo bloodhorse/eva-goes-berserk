@@ -43,10 +43,10 @@ td svg{display:block;margin-left:auto}
 .said{font:italic 19px/1.45 Georgia,'Iowan Old Style',serif;color:#e8ecec;margin:14px 0 4px;padding:14px 16px;background:#131717;
 border-left:3px solid #f5c8fe;border-radius:0 4px 4px 0}
 .said b{font:400 12px ui-monospace,Menlo,monospace;color:#9cc;font-style:normal;display:block;margin-top:10px;letter-spacing:.04em}
-.seed{color:#9cc;font-size:14px;margin:14px 0 4px}
 pre{background:#131717;color:#cfd8d8;font:13px/1.5 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:4px;white-space:pre-wrap;
 overflow-wrap:anywhere;border-left:2px solid #1f2a2a;margin:4px 0 12px}
-pre.says{font-size:15px}
+pre.says{font:19px/1.6 Georgia,'Iowan Old Style','Times New Roman',serif;color:#f1f4f4;background:#111515;padding:14px 16px;margin:6px 0 22px;border-left:2px solid #2f4a44}
+.seed{color:#9cc;font:italic 16px/1.4 Georgia,'Iowan Old Style',serif;margin:18px 0 6px}
 .foot{color:#9cc;opacity:.6;font:11px ui-monospace,Menlo,monospace;margin-top:28px}
 </style>
 """
