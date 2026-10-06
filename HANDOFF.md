@@ -15,7 +15,15 @@ green light for LLM work from 2026-08-25, everything ours under `/opt/llama`, it
 the mini and not the box: **the default host rule applies — show each command, wait for yes**,
 until bekh gives a standing word for it the way he did for the box.
 
-What has to get there, all of it on the mac already (and mirrored on the mini at
+**Already there** (2026-10-06 13:20 UTC, sent box → ds-dev2 with `nc` at ~120 MB/s, checksums
+matched): `/opt/llama/magdra/` holds `ckpt-7896.pt` (the trainable save), `bins/` (the ten
+shelves), `runs/day2/model-7896-q8_0.gguf` + its `status.json` and `samples.jsonl`, and the kit
+(`train.py`, `prep.py`, `export.sh`, `export_hf.py`, `bench.sh`, `run2.sh`, `guard.sh`,
+`prompts.txt`). The folder is ours (`chown BekmemetevVO`). **The card there is busy**: when
+looked at, 15.3 of 16.3 GB were held — the work project's `llama-server.service` is live on it.
+Training needs that off; that is bekh's and the team's call, not yours. The disk had 157 GB free.
+
+What had to get there, also on the mac (and mirrored on the mini at
 `bek@100.69.218.90:/srv/music/school-archive/`):
 
 - the trainable save: `school/models/day2/ckpt-7896.pt` (4.3 GB, the pull may still be finishing
