@@ -13,8 +13,8 @@ STYLE = """<meta name="color-scheme" content="dark light">
 --dot-glow:0 0 10px currentColor;--dot-dim:0 0 2px currentColor;--track:#161b1b;--past-a:#4d6b63;--past-b:#5f837a;--now:#b9e8c4;
 --now-mark:0 0 12px rgba(185,232,196,.6);--plan-a:#1e2b29;--plan-b:#161b1b;--pre-fg:#cfd8d8;--says-fg:#f1f4f4;--says-bg:#111515;
 --says-line:#2f4a44;--dim:.7;--faint:.6;--lo:.55}
-@media (prefers-color-scheme: light){:root{color-scheme:light;--bg:#f6f4ee;--fg:#1d2021;--pink:#9a2aa6;--mint:#37796a;--ctx:#2b6190;--card:#fbfaf6;
---line:#dcd7c9;--line-soft:#e9e5da;--epi-line:#a9c4cf;--said-line:#b452c4;--name-glow:none;--age-glow:none;
+@media (prefers-color-scheme: light){:root{color-scheme:light;--bg:#f6f4ee;--fg:#1d2021;--pink:#a8556f;--mint:#37796a;--ctx:#2b6190;--card:#fbfaf6;
+--line:#dcd7c9;--line-soft:#e9e5da;--epi-line:#a9c4cf;--said-line:#cf93a8;--name-glow:none;--age-glow:none;
 --dot-glow:0 0 0 3px #c3ded3;--dot-dim:0 0 0 1px #c3ded3;--track:#e8e4d8;--past-a:#9fb3ac;--past-b:#829c93;--now:#6fb09b;
 --now-mark:inset 0 0 0 1px #37796a;--plan-a:#bcd9cd;--plan-b:#e8e4d8;--pre-fg:#33393a;--says-fg:#17191a;--says-bg:#fdfcf8;
 --says-line:#a9cdbf;--dim:.85;--faint:.85;--lo:.75}}
