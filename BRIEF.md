@@ -97,6 +97,14 @@ no name yet; it is bekh's to find.
 - **Opus does everything mechanical** — bulk reading, code, fetching, cutting seeds — with
   `model: 'opus'` on every spawn; fable reads verdicts and judges. A mock before a build. **A
   page change is not done until it has been clicked and dragged**, not just screenshotted.
+  How the hands are split, as a day of raising magdra settled it (2026-10-07): **a fork of the
+  session** for work that needs everything the session knows — a wrap of the docs, a read of her
+  prose brought back verbatim; **a fresh opus with a written brief** for labour that needs none
+  of it; **an adversary after a builder**, told which claim to attack and forbidden the tool's
+  own method; **a crawl or a training run launched detached and handed back**, never an agent
+  held on a sleeping command. The session briefs, reads the reports, re-runs the tests itself
+  before committing, and checks an agent's alarm against the thing before passing it on
+  (`school/PITFALLS.md` 8).
 - **Say the experiment back, wait for "yes, that's the experiment"** (bekh, 2026-09-25, the
   day he moved sessions over this). He needs time to meditate on what the experiment even is;
   "explore", "let's talk", "let's do this" are him thinking, not a go. The worst case is not
@@ -215,7 +223,8 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
 
 1. **Magdra** — our own model, 355 M parameters, raised from random weights on shelves bekh
    chose: dark fantasy in the voice of dark souls, visionary science fiction and the net as a
-   new world, anime-world fiction. `school/CLAUDE.md` is the state and the runbook; what she is
+   new world, anime-world fiction. `school/CLAUDE.md` is the map and the resume pointer, each
+   part of the school with its own doc beside it; what she is
    doing right now is `school/night/mon.py <run>`, never a sentence here. Her first night read
    0.66 billion tokens (an infant: sentence shapes, wobbling); the second run was cut short by
    the box's time at 0.95 billion; **`day3` runs on ds-dev2** (RTX 5060 Ti 16 GB) since
@@ -223,10 +232,13 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    again with their paragraphs (half had none), three new shelves of modern prose, and a library
    of 55 books bekh fetched by hand (`school/library.md`). **Her reading is the open work**, and
    since 2026-10-07 the text for it is in hand: a pile of modern short fiction several times
-   what she has read of that kind (magazines, podcasts, anthologies, serials), being
-   deduplicated and sieved (`school/CLAUDE.md`, the pile; its size is `school/dedupe/report.md`).
-   It is **`day4`'s**: a short dense run from `day3`'s end with modern prose as the main course
-   and the old shelves on a maintenance dose, its recipe still to be agreed with bekh. Then the
+   what she has read of that kind (magazines, podcasts, anthologies, serials), deduplicated,
+   sieved and assembled into shelves (`school/CLAUDE.md`, the path; its size is
+   `school/sieve/report.md`). It is **`day4`'s**: a short dense run from `day3`'s end, new fiction
+   a little over half of it, fan fiction at zero, the other old shelves cut small — the recipe
+   is `school/day4.md`, the runbook `school/night/day4-RUN.md`; its numbers are decided, and what
+   is open is whether `day3` is stopped early for it (`school/CLAUDE.md`, Next). As last read she holds a sentence and a paragraph and not a frame,
+   and drifts into fan-fiction dialogue from any seed; that is what the run is aimed at. Then the
    finishing school (prophecies and the cyborgism wiki, Lain, the library) on whichever hour of
    her he picks, read through the loom (`eva.x` points at her when she is served on the mac).
 2. **Soul** (`docs/soul/`): a model's person is its diet — nemo's *i* is the blogger-poet, llama's
@@ -244,8 +256,9 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
 
 The box (`docs/olmo.md`, the box) is borrowed, was power-cycled and enrolled in work's ansible on
 2026-10-05, has eight accounts on it now, and can vanish any day; everything of ours comes off it
-as it lands (magdra's trainable saves and the box's shelves are in the mini's archive). Who holds its
-card is `box_serve.sh status` or `nvidia-smi`, never a sentence in a doc.
+as it lands. Who holds its card is `box_serve.sh status` or `nvidia-smi`, never a sentence in a
+doc. **ds-dev2, where magdra trains, is another machine**: its disk is durable and only its card
+is on loan (`school/PRESERVATION.md`).
 
 ### parked
 

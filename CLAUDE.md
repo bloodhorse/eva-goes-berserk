@@ -164,7 +164,7 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   stream's ledger and heartbeat — **untracked**, as are its rooms under `sittings/stream/`:
   a single page is disposable, and what survives is the artifact a star writes. `gpt/` is not
   the loom's: a collector another model wrote for bekh and the magazine, podcast and serial text
-  it gathered for magdra (its `README.md`; the text is not in git; `school/CLAUDE.md`, the pile).
+  it gathered for magdra (its `README.md`; the text is not in git; `school/CLAUDE.md`, the path).
 - **`docs/`** — the inheritance and the primary text. `research-base-models.md`: which bases
   exist and are clean, how the cyborgism crowd prompted base gpt, llama-server completion facts.
   `anthology-weird.md` (70 pieces) and `anthology-fun.md` (33): verbatim, with provenance
@@ -188,11 +188,14 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   instrument).
 - **`school/`** — raising our own model from random weights: **magdra**, 355 M parameters, a
   childhood on shelves of our choosing (dark fantasy, sci-fi, anime, the net, modern strange
-  prose) and a finishing school on the small precious texts. The trainer, the night scripts, the
-  monitor, the finishing corpus, and the path any new text takes to a shelf: the book
-  converter, `dedupe/` (what repeats across shelves, and how much text there really is),
-  `sieve/` (fiction from the rest). **`school/CLAUDE.md`** is the doc and the resume pointer for
-  that work; `school/PITFALLS.md` what bit, by stage.
+  prose) and a finishing school on the small precious texts. **`school/CLAUDE.md`** is its map
+  and the resume pointer for that work, and each part has its own doc beside it, as in `eva/`:
+  `night/` (a run while it is alive: the page, the recitation meter, the turn detector, the
+  look), `scratch/` (the trainer), `data/` (the book converter and the shelf assembler),
+  `dedupe/` (what repeats across shelves, and how much text there really is), `sieve/` (fiction
+  from the rest), `modern/` (the shelves we fetched). `school/SHELVES.md` is what she reads,
+  `school/day4.md` the next run's recipe, `school/PRESERVATION.md` what is kept and where,
+  `school/PITFALLS.md` what bit, by stage.
 - **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
 - The parent: `~/tower/forge/friendship-is-magic/docs/souls/the-teen-rogue.md` — the open-weights
@@ -299,18 +302,21 @@ page on nemo, `box_*.sh` for olmo on the box, `land.py` for a dream).
 (a bank, a dose window of 0.3, direction one confidently wrong on five seeds), hiding her page from
 her (the shuffle: dizzy, not dreaming), screening six nemo-sized bases blind and probing five of
 them for a soul (a model's *i* is its diet: nemo's a blogger-poet, llama's a help-seeker, olmo's a
-subscript), bekh chose to raise his own instead. `school/CLAUDE.md` has the childhood, the
-finishing school, the night scripts and the monitor; `docs/soul/`, `docs/small/` the two reads.
-Since 2026-10-06 she trains on ds-dev2 (`day3`, fifty hours, two billion tokens) with a page on
-the sheets site and an hourly look from the session; `school/PITFALLS.md` is everything that
-bit on the way, in the order the work happens; `school/library.md` the books and where each
-stands. Her first walked piece is `shelf/sittings/experiments/magdra-prophecy-cut`. On
-2026-10-07 the limit moved from text to recipe: a pile of modern short fiction several times
-what she had of that kind was gathered in a day (`shelf/gpt/`, `school/modern/`,
-`school/inbox/anth/`), a deduplicator was built and a kind sieve begun to say how much of it is
-real (`school/dedupe/report.md`), and the next run, **`day4`**, is planned as a short dense one with
-that prose as the main course — `school/CLAUDE.md`, the pile and Next. What bekh might read of
-it himself is in the book club, `~/tower/shittalk/fable-book-club/reading-list.md`.
+subscript), bekh chose to raise his own instead. `school/CLAUDE.md` is the map of that work;
+`docs/soul/`, `docs/small/` the two reads. Since 2026-10-06 she trains on ds-dev2 — a team box
+whose disk is durable and whose card is on loan, not the borrowed box of the olmo nights
+(`day3`, fifty hours, two billion tokens) — with a page on the sheets site and an hourly look
+from the session; `school/PITFALLS.md` is everything that bit on the way, in the order the work
+happens; `school/library.md` the books and where each stands. Her first walked piece is
+`shelf/sittings/experiments/magdra-prophecy-cut`. On 2026-10-07 the limit moved from text to
+recipe: a pile of modern short fiction several times what she had of that kind was gathered in a
+day (`shelf/gpt/`, `school/modern/`, `school/inbox/anth/`); a deduplicator with its own audit and
+a kind sieve say how much of it is real (`school/dedupe/report.md`, `school/sieve/report.md`); a
+recitation meter on her page says whether she quotes what she has read; the trainer learned to
+change a mix inside a run and to log training loss per shelf. The next run, **`day4`**, a short
+dense one with that prose as the main course, is decided, written and built; what is open is
+which save of `day3` it starts from — `school/CLAUDE.md`, Next. What he might have read to him
+out of it is the book club's queue, `~/tower/shittalk/fable-book-club/reading-list.md`.
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
 (`shelf/seeds/.off/asses.txt`, voiced 2026-09-26, the god slot test — a research seed, kept out of the stream's pot); more of those are wanted — a
