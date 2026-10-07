@@ -1,0 +1,156 @@
+[
+ {
+  "url": "subterraneanpress.com/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260130091846",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1175"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260201013506",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1277"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260301004113",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1281"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260314021340",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1581"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260318224321",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1190"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260326153023",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1201"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260401003133",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1300"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260501011428",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "O4PNI4APG7WQBSPSMM47WVE3JF44ZCQH",
+    "length": "1645"
+   }
+  ]
+ },
+ {
+  "url": "www.subterraneanpress.com/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260130091846",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1175"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260201013506",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1277"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260301004113",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1281"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260314021340",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1581"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260318224321",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1190"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260326153023",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1201"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260401003133",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "J6MV7ANN4H3ILCAFX4KJR72ENBMNLRNE",
+    "length": "1300"
+   },
+   {
+    "urlkey": "com,subterraneanpress)/robots.txt",
+    "timestamp": "20260501011428",
+    "original": "https://subterraneanpress.com/robots.txt",
+    "mimetype": "text/plain",
+    "statuscode": "200",
+    "digest": "O4PNI4APG7WQBSPSMM47WVE3JF44ZCQH",
+    "length": "1645"
+   }
+  ]
+ }
+]

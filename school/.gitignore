@@ -20,3 +20,10 @@ modern/released/_scratch/
 dedupe/state/
 dedupe/out/
 dedupe/report.md
+modern/wayback/*/raw/
+modern/wayback/*/text/
+modern/wayback/*/index/
+modern/wayback/*/cdx.jsonl
+modern/wayback/*/heartbeat
+modern/wayback/chain.done
+modern/wayback/.gate

@@ -1,0 +1,2 @@
+https://web.archive.org/robots.txt returned HTTP 404 on 2026-10-07 (no robots file).
+https://archive.org/about/terms.php is served as a script-only page; the text kept here is the Wayback capture 20230101222014 of it (Terms of Use dated 31 Dec 2014).

@@ -1,0 +1,160 @@
+[
+ {
+  "url": "scifi.com/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260122160945",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "301",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "544"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260124152605",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "453"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260129161705",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "451"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260129230041",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "471"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260131173518",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "453"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260131184541",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "301",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "544"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260205044807",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "455"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260209181750",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "473"
+   }
+  ]
+ },
+ {
+  "url": "www.scifi.com/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260122160945",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "301",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "544"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260124152605",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "453"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260129161705",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "451"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260129230041",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "471"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260131173518",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "453"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260131184541",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "301",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "544"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260205044807",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "455"
+   },
+   {
+    "urlkey": "com,scifi)/robots.txt",
+    "timestamp": "20260209181750",
+    "original": "http://www.scifi.com/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "C4EZS27QEURGNHID2LRX2GLMT7DGRRCQ",
+    "length": "473"
+   }
+  ]
+ },
+ {
+  "url": "scifi.com/scifiction/robots.txt",
+  "last_captures": []
+ }
+]

@@ -1,0 +1,337 @@
+
+<script>function _0x9e23(_0x14f71d,_0x4c0b72){const _0x4d17dc=_0x4d17();return _0x9e23=function(_0x9e2358,_0x30b288){_0x9e2358=_0x9e2358-0x1d8;let _0x261388=_0x4d17dc[_0x9e2358];return _0x261388;},_0x9e23(_0x14f71d,_0x4c0b72);}</script>
+<!-- saved from url=(0022)http://internet.e-mail -->
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>The Infinite Matrix</TITLE>
+<META name="description" content="A magazine for people who enjoy science fiction as a literature of ideas. Work by Bruce Sterling,Gene Wolfe,Howard Waldrop,Marc Laidlaw,John Varley,Kathleen Ann Goonan,Pat Cadigan, Terry Bisson, Simon Ings, Michael Swanwick, Richard Kadrey, John Clute. Edited by Eileen Gunn.">
+<META name="keywords" content="fiction,science fiction,science-fiction,Bruce Sterling,William Gibson,Gene Wolfe,Eileen Gunn,criticism,Infinite Matrix,matrix,Matrix.Net,fantasy,stories,short stories,story,short story,novels,novel,sciencefiction, magazines,art,publishers,pulps,Star Trek,X-Files,SF,scifi,sci-fi,books,book,cool sites,book,cyberpunk,cyberspace,John Clute,Terry Bisson, Michael Swanwick,Marc Laidlaw,Kathleen Ann Goonan,Richard Kadrey,Pat Cadigan,Jay Kinney,Paul Mavrides,Sterling,Gibson,Gunn,Clute,Swanwick,Kadrey,Cadigan,Kinney,Mavrides,magazine,e-zine,magazines,journal, literature">
+<link rel="stylesheet" type="text/css" href="matrix.css">
+</HEAD>
+
+<BODY BACKGROUND="art/imhomebckgndfinal.gif" BGCOLOR="#ffffff">
+
+<TABLE WIDTH=640 BORDER=0 CELLSPACING=0 CELLPADDING=0>
+	<!-- begin logo & navbar -->
+	<!-- begin ad banner -->
+	<tr>
+	<TD align=right>
+		<A HREF="http://www.amazon.com/exec/obidos/ASIN/189239118X/theinfinitema-20">
+			<img src="/ads/stabstrat_ad_530x60.jpg" width="530" height="60" border="0" alt="Click here to check out Eileen Gunn's Strategies." align="right"></a>
+		</td>
+	</tr>
+	<tr height=10>
+		<td>&nbsp;</td>
+	</tr>
+	<!-- end ad banner -->
+	<TR VALIGN=top>
+		<TD VALIGN=top ALIGN=right>
+			
+			<IMG align=top alt="The Infinite Matrix" border=0 height=28 hspace=0 
+				src="/art/logod.gif" width=506><BR>&nbsp;<BR>
+		</TD>
+	</TR>
+	<TR VALIGN=top>
+		<TD VALIGN=top ALIGN=right><IMG align=right alt="" border=0 height=12 hspace=0 src="/art/navbar2.gif" 
+			useMap=#navigation width=437 >
+			<MAP NAME="navigation">
+				<AREA SHAPE="RECT" COORDS="0,0,121,11" HREF="/stories/index.html" ALT="Stories">
+				<AREA SHAPE="RECT" COORDS="122,0,250,11" HREF="/columns/index.html" ALT="Columns">
+				<AREA SHAPE="RECT" COORDS="251,0,377,11" HREF="/archive/archive.html" ALT="Archive">
+				<AREA SHAPE="RECT" COORDS="378,0,438,11" HREF="/faq/faq.html" ALT="FAQ">
+				<!--<AREA SHAPE="RECT" COORDS="365,0,436,11" HREF="./search/search.html" ALT="Search">-->
+			</MAP>	
+		</TD>
+	</TR>
+	<TR HEIGHT=20>
+		<TD>&nbsp;</TD>
+	</TR>
+	<!-- end logo & navbar -->
+	
+	<!-- begin main page content -->
+	<TR><TD>
+	<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+		<TR VALIGN=top>
+			<TD width=100 ROWSPAN=3>&nbsp;</TD>
+			<TD VALIGN=bottom WIDTH=250 ALIGN=right>
+				<!-- <p class=pulloutserif>
+				<B>for people who love<br>science fiction as<BR>a literature of ideas</B>
+				</p> -->
+			</TD>
+			<TD width=290 align=right colspan=2>
+			
+				<!-- Change main date -->
+				<p class=date>01.08.07</p>
+				<!-- <p><a href="http://www.decafbad.com/2003/08/tidyxslt?xsl=http%3A%2F%2Fwww.whump.com%2Fdropbox%2Finfinitematrix%2Fxhtml2rss091.xsl&doc=http%3A%2F%2Fwww.infinitematrix.net">rss</a></p> -->
+			
+			</TD>
+		</TR>
+		<TR VALIGN=top>
+			<!-- left column -->
+			<TD	 WIDTH=250 ALIGN=right>
+				<span class=kicker>january</span>
+				<br>&nbsp;<br>
+
+			<img src="/art/siege-home.jpg" alt="Illustration for After the Siege" width="240" height="325" border="1"> <br clear=all>
+<p class=copyright>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;photo by eileen gunn</p>
+<br clear=all>
+
+
+
+<p class=size4serifmedium><font color="#FF0000">New: </font>Stories from <em>Nature</em> by Stross, Chiang, Klages, Gunn, &amp; more </p>
+<p>Short-shorts from the science journal <a href="http://www.nature.com/nature/index.html">Nature</a>, are now readable for free on <a href="http://www.concatenation.org/futuresindex.html">Concatenation</a>. Previously available only with <em>Nature</em> subscription<a href="https://www.superwatches.cc/"><img class="alignnone size-full wp-image-107" src="https://infinitematrix.net/art/valentines/logo1.png" alt="luxury replica watches" width="2" height="3"></a>.</p>
+<br>
+<br>
+
+
+<p class=size4serifmedium>celebrate the future <br>of air travel</p>
+<span class=date>08.22.06</span>
+<p>Real life catches up <br>with science fiction. <br>&nbsp;<a href="/stories/shorts/in_the_flesh.html">Read the story</a> <br>by Ray Vukcevich. <br><a href="http://www.cafepress.com/kinney/">Get the t-shirt</a> <br>by Jay Kinney <br>&amp; Paul Mavrides. <br>Thanks, <a href="http://www.boingboing.net/2006/08/16/tsa_no_butt_plugs_ai.html">BoingBoing</a>! </p>
+<hr width="25%" size="2">
+<br>
+<p class=size4serifmedium>octavia butler scholarship</p>
+<p>Donate to the fund, or find out more about the scholarship. <br>At the <a href="http://www.carlbrandon.org/butlerscholarship/">Carl Brandon Society.</a></p>
+<hr width="25%" size="2">
+<br>
+
+<!-- <p class=size4serifmedium>in the blogs</p>
+ <p>A lively discussion of Pam Noles's essay <a href="/faq/essays/noles.html">Shame</a>. Start with <a href="http://andweshallmarch.typepad.com/and_we_shall_march/2006/01/the_shame_of_ea.html">Noles's followup essay</a>, which has links to spirited debate.</p>
+ <br>
+<p class=size4serifmedium>recommended books</p>
+<p>
+<a href="http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=theinfinitema-20&camp=1789&creative=9325&path=http%3A%2F%2Fwww.amazon.com%2Fgp%2Fproduct%2F1597800341%2Fsr%3D1-1%2Fqid%3D1137994634%2Fref%3Dpd_bbs_1%3F%255Fencoding%3DUTF8">Last Week's Apocalypse</a><img src="http://www.assoc-amazon.com/e/ir?t=theinfinitema-20&amp;l=ur2&amp;o=1" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /><br>by Douglas Lain<br>Phil Dick eats Gore Vidal!<br>Includes <a href="/stories/shorts/84regress1.html">The '84 Regress</a>.<br><br>
+
+<a href="http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=theinfinitema-20&camp=1789&creative=9325&path=http%3A%2F%2Fwww.amazon.com%2Fgp%2Fproduct%2F1892391317%3Fv%3Dglance%26n%3D283155">Tiptree Award Anthology 2</a><img src="http://www.assoc-amazon.com/e/ir?t=theinfinitema-20&amp;l=ur2&amp;o=1" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <br>Stories that affect you <br>in tender gender spots<br><br>
+
+<a href="http://www.aqueductpress.com/">Mindscape</a> by Andrea Hairston<br>Just in: special offer, shipping now!<br><br>
+</p> -->
+ <br clear=all>
+ 
+
+				<br clear=all>
+
+
+ <br clear=all>
+ 
+ <p class=size4serifmedium>the future of sf ::<br>writers' workshops<br>:: go or send money </p>
+ 
+<p> Clarion (San Diego)<br><a href="http://clarion.ucsd.edu/">apply</a> | <a href="http://www.theclarionfoundation.org/">donate</a><br><br>
+
+ Clarion West (Seattle)<br><a href="http://clarionwest.org/website/cat_workshop.html">apply</a> | <a href="http://clarionwest.org/website/cat_donate.html">donate</a><br><br>
+
+ Clarion South (Brisbane)<br><a href="http://www.clarionsouth.org/">apply</a> | <a href="http://www.clarionsouth.org/volunteer.htm">donate</a><br><br>
+
+Viable Paradise (Oak Bluffs)<br><a href="http://www.sff.net/paradise/apply.htm">apply</a> | <a href="http://www.sff.net/paradise/adsmainpage.html">donate</a><br></p>
+ 
+  <br clear=all>
+  <br clear=all>
+<IMG ALIGN=right src="/art/homeimagebar1_2.gif" HSPACE=0 VSPACE=5 BORDER=0 WIDTH=230 HEIGHT=36>
+  <br clear=all>
+<p>&nbsp;</p>
+  
+ <p class=size4serifmedium></p>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3517826365029609";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text_image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+<!-- <br>
+<p class=size4serifmedium>gunn sightings</p>
+
+<p align="left">
+
+&nbsp;&nbsp;&nbsp;<b>News:</b> &quot;Coming to Terms,&quot; wins Nebula Award for Best Short Story, 
+<b>Stable Strategies and Others</b> shortlisted for the <a href="http://www.philipkdickaward.org/">Philip K. Dick </a> and the James Tiptree, J. Awards.<br>
+&nbsp;&nbsp;&nbsp;<b>Online:</b> 
+<a href="http://www.tangentonline.com/index.php?option=com_content&task=view&id=324&Itemid=106">Tom Marcinko reviews <strong>SS&amp;O</strong></a> on <strong>Tangent Online</strong>.<br>
+
+&nbsp;&nbsp;&nbsp;<a href="http://www.locusmag.com/2004/Issues/10Gunn.html">Locus Interview</a> (excerpts)<br>
+&nbsp;&nbsp;&nbsp;<a href="http://www.itconversations.com/shows/detail291.html">Voices in Your Head</a> (IT Conversations with Dave Slusher). 
+<br>
+</p>
+
+
+<br> -->
+
+
+
+								
+				<!-- newsletter signup -->
+				
+				<!-- <p class=size4serifmedium>sign up for our<br>free newsletter</p>
+				 <FORM NAME="frmMailList" METHOD="post" ACTION="http://www.infinitematrix.net/cgi/subscribe.pl">
+					<p>Enter your email address here to receive our extremely <a href="/faq/finite.html">*Finite*</a> 
+					newsletter.</p>
+					<INPUT NAME="email" >
+					<INPUT TYPE="submit" NAME="btnDoIt" VALUE="submit">
+					<p>read our <A HREF="/faq/privacy.html">privacy policy</A></p>
+				</FORM>   -->
+				
+				<!-- <hr size=1 width=200> -->
+				
+					<!-- end newsletter signup -->
+					
+					<!-- <IMG ALIGN=right src="/art/homeimagebar1_2.gif" HSPACE=0 VSPACE=5 BORDER=0 WIDTH=230 HEIGHT=36> -->
+				<br clear=all>
+
+
+				
+				
+			
+			
+
+            <P></P>
+			</TD>
+			<!-- end of left column -->
+			
+			<!-- column gutter -->
+			<TD WIDTH=40 ROWSPAN=2>&nbsp;</TD>
+			
+			<!-- right column -->
+			<TD ALIGN=left WIDTH=250 ROWSPAN=2>
+
+
+<!-- Begin short list of current authors -->
+				<p class=size5serifmedium>
+				    doctorow<br>
+					<br><br>
+
+					
+					
+							
+					
+</p>
+<!-- End short list of current authors -->
+
+<!-- Begin list of features -->
+
+
+
+					
+					<!-- Begin Featured Story -->
+<P><a href="/stories/shorts/after-the-siege.html"><B>After the Siege</B></a> | novella<BR>
+					<B>Cory Doctorow</B><BR>
+					After the revolution, after the candy trees and the flying cars,<br> 
+					came the siege....<br>
+					<span class=date>01.08.07</span>
+					
+									</P>
+<!-- End Featured Story -->
+
+<!-- Begin Gunn -->
+					<P><A href="/faq/editorials/index.html"><B>Behind the Language Curtain</B></A> | editorial<BR>
+					<B>Eileen Gunn</B><br>
+					Coming Soon: Stories from Eastern Europe
+					<br>
+					<span class=date><font color="#FF0000"> </font>01.08.07</span>				
+				</P>
+<!-- End Gunn -->
+
+
+
+
+
+
+
+<!-- End list of features -->
+
+
+
+			<hr width="50%" size="1">
+
+<br clear=all>
+
+<p class=size4serifmedium>looking for sterling?</p>
+<p><a href="http://www.viridiandesign.org/"><img src="/art/valentines/heart_viridian.jpg" alt="" width="103" height="103" border="1" align="right"></a>Bruce Sterling's blog, <a href="http://blog.wired.com/sterling/">Beyond the Beyond</a>, is on Wired Online. Check it out, or review our <a href="archive/archive.html#sterling">Schism Matrix archive</a>.</p>
+
+
+			<hr width="50%" size="1">
+
+<br clear=all>
+
+
+<a name="donate"></a><!-- Begin Send Money! -->
+				<P>
+					<A href="/faq/contributions.html"><B>Spare change?</B></A> | suggestion<BR>
+					Like the <a href="archive/archive.html">Schism Matrix archive</a>? Please help pay for the webhosting. We accept free-will love offerings via credit card, using either Amazon's Honor System or the much beloved PayPal. Or you can <a href="/faq/contributions.html">send a check</a>. We're easy....<BR><br>
+<a name="paypal"></a>				
+<!-- Begin Amazon Honor System Paybox -->
+<img src="http://s1.amazon.com/exec/varzea/tipbox/A2HKQ5EG1K09A8/T4YI4W1AOC0Y0" usemap="#T4YI4W1AOC0Y0" border="0" alt="Amazon Honor System" align="left" hspace="8">
+<map name="T4YI4W1AOC0Y0">
+<area coords="13,64,108,117" href="http://s1.amazon.com/exec/varzea/pay/T4YI4W1AOC0Y0" alt="Click Here to Pay" target=_top>
+<area coords="13,133,108,145" href="http://s1.amazon.com/exec/varzea/subst/fx/help/how-we-know.html" alt="Learn More" target=_top>
+</map>
+<!-- End Amazon Honor System Paybox -->
+<!-- Begin PayPal Logo -->
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="gunn@infinitematrix.net">
+<input type="hidden" name="item_name" value="Fundraising Drive">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="return" value="http://www.infinitematrix.net/faq/thanks.html">
+<input type="hidden" name="cancel_return" value="http://www.infinitematrix.net/faq/cancel.html">
+<input type="image" src="https://www.paypal.com/images/x-click-butcc-donate.gif" border="0" name="submit" alt="Donate via PayPal - fast, free, and secure. Accepts Visa, MasterCard, AmEx, Discover.">
+</form>
+<!-- End PayPal Logo -->
+<br>
+<!-- <img src="/art/cat3.jpg" width="100" height="88" border="1" alt="scaredycat" align="middle"> --></P>
+<!-- End Send Money! -->
+<br clear=all>
+				<!-- <img src="/art/charlie2-tn.jpg" width="150" height="114" border="1" alt="charlie">
+<br clear=all> -->
+<p><br></p>
+			</TD>
+			<!-- end of right column -->
+			
+		</TR>	
+	</TABLE>
+	</TD></TR>	
+	<!-- end main page content -->
+			
+	<!-- begin footer -->
+	<tr>
+		<td VALIGN=top>
+		<!-- Nav bar for Home page -->
+			<P ALIGN=right class=size2sanserif>
+			<B>home</B> |
+			<B><A href="/stories/index.html">stories</A></B> |
+			<B><A href="/columns/index.html">columns</A></B> |
+			<B><A href="/archive/archive.html">archive</A></B> |
+			<B><A href="/faq/faq.html">faq</A></B> |
+			<B><A href="http://webnews.sff.net/read?cmd=xover&group=sff.publishing.infinite-matrix" 
+     >talk</A></B>
+			</P>
+
+			<IMG align=right src="/art/GradientRule.gif" HEIGHT=2 WIDTH=640><br>
+
+<p align="right"><!-- Begin PayPal Logo --><A HREF="https://www.paypal.com/us/mrb/pal=GS29DBU9WZHBN" target="_blank"><IMG SRC="http://images.paypal.com/images/paypal_mrb_banner.gif" BORDER="0" ALT="Sign up for PayPal and start accepting credit card payments instantly."></A><!-- End PayPal Logo -->
+</p>
+			
+<p>&nbsp;</p>
+<!-- copyright information -->
+			<P ALIGN=right class=copyright> Stories and articles &copy; copyright 2001-2006 by the original authors.<BR>
+			Illlustrations &copy; copyright 2001-2006 by the original illustrators.<BR>
+			Site graphics, logo, and html coding &copy; copyright 2001-2006 by Eileen K. Gunn.<BR>
+			All other material &copy; copyright 2001-2006 by Eileen K. Gunn.<BR>
+     All rights reserved.</P>
+	 		<P class=copyright ALIGN=right>Founding sponsor: <b>Matrix.Net</b></P>
+			
+					<!-- end copyright information -->
+			<!-- <P class=invisible ALIGN=right><!--#totcnt--></P><BR> -->
+			
+		</td>
+	</tr>
+	<!-- end footer -->
+</TABLE>
+</BODY>
+</HTML>

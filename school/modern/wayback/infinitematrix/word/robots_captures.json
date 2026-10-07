@@ -1,0 +1,156 @@
+[
+ {
+  "url": "infinitematrix.net/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20240903164701",
+    "original": "https://infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "Q773QKR62AEXXISRXJANDHR4GNFV6GQ2",
+    "length": "463"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20241007150404",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "Q773QKR62AEXXISRXJANDHR4GNFV6GQ2",
+    "length": "466"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20250707095759",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "200",
+    "digest": "3RZHKSGC446LV6LUEWZEFNBP3N7NHLJM",
+    "length": "5846"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20251226013301",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "447"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260106060024",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "450"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260107055937",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "584"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260108064626",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "441"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260117052200",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "584"
+   }
+  ]
+ },
+ {
+  "url": "www.infinitematrix.net/robots.txt",
+  "last_captures": [
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20240903164701",
+    "original": "https://infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "Q773QKR62AEXXISRXJANDHR4GNFV6GQ2",
+    "length": "463"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20241007150404",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "Q773QKR62AEXXISRXJANDHR4GNFV6GQ2",
+    "length": "466"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20250707095759",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "200",
+    "digest": "3RZHKSGC446LV6LUEWZEFNBP3N7NHLJM",
+    "length": "5846"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20251226013301",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "447"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260106060024",
+    "original": "https://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "450"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260107055937",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "584"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260108064626",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "warc/revisit",
+    "statuscode": "-",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "441"
+   },
+   {
+    "urlkey": "net,infinitematrix)/robots.txt",
+    "timestamp": "20260117052200",
+    "original": "http://www.infinitematrix.net/robots.txt",
+    "mimetype": "text/html",
+    "statuscode": "404",
+    "digest": "CG76GDHEIWC2CWRY5BV4BFBCJXP6FQEO",
+    "length": "584"
+   }
+  ]
+ }
+]
