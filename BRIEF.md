@@ -227,17 +227,20 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    part of the school with its own doc beside it; what she is
    doing right now is `school/night/mon.py <run>`, never a sentence here. Her first night read
    0.66 billion tokens (an infant: sentence shapes, wobbling); the second run was cut short by
-   the box's time at 0.95 billion; **`day3` runs on ds-dev2** (RTX 5060 Ti 16 GB) since
-   2026-10-06, two billion tokens in fifty hours on fourteen shelves — the Gutenberg shelves cut
-   again with their paragraphs (half had none), three new shelves of modern prose, and a library
-   of 55 books bekh fetched by hand (`school/library.md`). **Her reading is the open work**, and
+   the box's time at 0.95 billion; **`day3` ran on ds-dev2** (RTX 5060 Ti 16 GB) from
+   2026-10-06 on fourteen shelves — the Gutenberg shelves cut again with their paragraphs (half
+   had none), three new shelves of modern prose, and a library of 55 books bekh fetched by hand
+   (`school/library.md`) — and was stopped by decision two fifths through, at about 1.77
+   billion, when it had gone flat on a diet the next run abandons. **Her reading is the open work**, and
    since 2026-10-07 the text for it is in hand: a pile of modern short fiction several times
    what she has read of that kind (magazines, podcasts, anthologies, serials), deduplicated,
    sieved and assembled into shelves (`school/CLAUDE.md`, the path; its size is
-   `school/sieve/report.md`). It is **`day4`'s**: a short dense run from `day3`'s end, new fiction
-   a little over half of it, fan fiction at zero, the other old shelves cut small — the recipe
-   is `school/day4.md`, the runbook `school/night/day4-RUN.md`; its numbers are decided, and what
-   is open is whether `day3` is stopped early for it (`school/CLAUDE.md`, Next). As last read she holds a sentence and a paragraph and not a frame,
+   `school/sieve/report.md`). It is **`day4`'s**, running since 2026-10-07: a short dense run from `day3`'s
+   save, new fiction a little over half of it, fan fiction at zero, the other old shelves cut
+   small — the recipe is `school/day4.md`; what comes after it is bekh's call once he has read
+   her (`school/CLAUDE.md`, Next). The limit is text again: at a safe number of reads the pile is
+   ten hours of training, and the next large work is choosing a library of thousands of books by
+   his taste (`docs/brief-six-thousand.md`). As last read she holds a sentence and a paragraph and not a frame,
    and drifts into fan-fiction dialogue from any seed; that is what the run is aimed at. Then the
    finishing school (prophecies and the cyborgism wiki, Lain, the library) on whichever hour of
    her he picks, read through the loom (`eva.x` points at her when she is served on the mac).

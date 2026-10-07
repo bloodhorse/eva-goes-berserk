@@ -1,7 +1,7 @@
 # the shelves
 
 What she reads: every shelf, what it is, how big, and what each run gave it. The rules a mix is
-made by are at the bottom. The recipe of the next run is `day4.md`; how a shelf is made is
+made by are at the bottom. The recipe of the run now going is `day4.md`; how a shelf is made is
 `data/CLAUDE.md`; where the text and the bins are kept is `PRESERVATION.md`.
 
 ## The shelves she has read
@@ -37,12 +37,15 @@ books again from the source; the three shelves in `bins2/` are that cut, and the
 are new, so fantasy, sci-fi and base do not compare with `day2`'s numbers. Her held-out numbers at
 `day3`'s smoke test, before any reading on ds-dev2: fantasy 3.14, sci-fi 3.25, anime 2.03, fan
 fiction 2.99, base 3.42, literary 3.25, horizons 3.70, released 3.74, the library 2.87, lain 3.22,
-net core 3.86.
+net core 3.86 — each on six fixed windows, `day3`'s ruler, so good for following `day3` and off by
+up to tenths as her level (`PITFALLS.md` 7.4). Where she stood on every shelf when `day3` stopped,
+on forty-eight windows, is `day4`'s baseline in `day4.md`.
 
 ## The shelves that are new for day4
 
-Text on the mac in `shelves/day4/<shelf>/`, built by `data/shelves.py` from the sieve's output,
-not tokenised yet. What they hold is `shelves/day4/summary.json` and the table `shelves.py build`
+Text on the mac in `shelves/day4/<shelf>/`, built by `data/shelves.py` from the sieve's output;
+uploaded to the host's `data/day4/` and tokenised into `bins2/` on 2026-10-07, token for token
+what the mac counted. What they hold is `shelves/day4/summary.json` and the table `shelves.py build`
 prints; `day4.md` has them described and measured.
 
 - **`modern`** — eleven magazines, three podcasts' transcripts, GigaNotoSaurus, SCI FICTION and

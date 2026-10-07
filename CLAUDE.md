@@ -306,18 +306,19 @@ her (the shuffle: dizzy, not dreaming), screening six nemo-sized bases blind and
 them for a soul (a model's *i* is its diet: nemo's a blogger-poet, llama's a help-seeker, olmo's a
 subscript), bekh chose to raise his own instead. `school/CLAUDE.md` is the map of that work;
 `docs/soul/`, `docs/small/` the two reads. Since 2026-10-06 she trains on ds-dev2 — a team box
-whose disk is durable and whose card is on loan, not the borrowed box of the olmo nights
-(`day3`, fifty hours, two billion tokens) — with a page on the sheets site and an hourly look
-from the session; `school/PITFALLS.md` is everything that bit on the way, in the order the work
+whose disk is durable and whose card is on loan, not the borrowed box of the olmo nights — with
+a page per run on the sheets site and an hourly look from the session; `school/PITFALLS.md` is everything that bit on the way, in the order the work
 happens; `school/library.md` the books and where each stands. Her first walked piece is
 `shelf/sittings/experiments/magdra-prophecy-cut`. On 2026-10-07 the limit moved from text to
 recipe: a pile of modern short fiction several times what she had of that kind was gathered in a
 day (`shelf/gpt/`, `school/modern/`, `school/inbox/anth/`); a deduplicator with its own audit and
 a kind sieve say how much of it is real (`school/dedupe/report.md`, `school/sieve/report.md`); a
 recitation meter on her page says whether she quotes what she has read; the trainer learned to
-change a mix inside a run and to log training loss per shelf. The next run, **`day4`**, a short
-dense one with that prose as the main course, is decided, written and built; what is open is
-which save of `day3` it starts from — `school/CLAUDE.md`, Next. What he might have read to him
+change a mix inside a run and to log training loss per shelf. `day3` was stopped two fifths through, flat on
+the old diet, and **`day4`**, a short dense run with that prose as the main course, started from
+its save the same night — `school/CLAUDE.md`, Next. At a safe number of reads the whole pile is
+ten hours of training, so the limit is text again, and `docs/brief-six-thousand.md` is the next
+large work. What he might have read to him
 out of it is the book club's queue, `~/tower/shittalk/fable-book-club/reading-list.md`.
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf

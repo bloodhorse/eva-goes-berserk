@@ -24,8 +24,8 @@ the newest trainable save, and the kit. Everything else is weight.
    are not history: the guard keeps one.
 2. **Trainable saves exist for two runs at most**: the run in progress and the one it started
    from, as the way back — on the training host. One copy goes to the mini when a run ends,
-   against a plain disk failure. The six-hourly pull (`night/pull_ckpt.sh`) finishes out `day3`
-   and is not started for `day4`. When a new run is safely under way, the save before its parent
+   against a plain disk failure. The six-hourly pull (`night/pull_ckpt.sh`) ran for `day3` and is
+   not started from `day4` on. When a new run is safely under way, the save before its parent
    is deleted, on bekh's word (a remote host has no Trash).
 3. **The text has two homes**, the mac and the archive on the mini. It is what a day of gathering
    costs and what nothing can rebuild: every shelf's source text, the fetchers' raw pages, the
@@ -71,16 +71,24 @@ are.
 
 ## At the end of a run
 
+The final save gets a name of its own on the host, so no later run writes over the way back, and
+one copy is streamed from the host straight to the mini with a sha256 verdict (4.3 GB, about half
+an hour through the VPN; it never touches the mac's disk):
+
 ```bash
-N=day3; cd ~/tower/forge/eva-goes-berserk/school
-tail -n 2 night/$N/pull.log                                                   # where the puller ran: MATCH on the final copy
-ssh bek@100.69.218.90 "ls -la /srv/music/school-archive/models/$N/"            # ckpt.pt, at the size of the host's
-ls -la models/$N/model-latest-q8_0.gguf && cat models/$N/latest               # the final snapshot on the mac
+N=day4; H=BekmemetevVO@ds-dev2.x340.org; M=bek@100.69.218.90
+ssh -i $KEY $H "cd /opt/llama/magdra && { [ -e ckpt-$N-final.pt ] || cp runs/$N/ckpt.pt ckpt-$N-final.pt; }"
+ssh $M "mkdir -p /srv/music/school-archive/models/$N"
+ssh -i $KEY $H "cat /opt/llama/magdra/ckpt-$N-final.pt" | ssh $M "cat > /srv/music/school-archive/models/$N/ckpt.pt.part && mv /srv/music/school-archive/models/$N/ckpt.pt.part /srv/music/school-archive/models/$N/ckpt.pt"
+a=$(ssh -i $KEY $H "sha256sum /opt/llama/magdra/ckpt-$N-final.pt | cut -d' ' -f1"); b=$(ssh $M "sha256sum /srv/music/school-archive/models/$N/ckpt.pt | cut -d' ' -f1")
+[ -n "$a" ] && [ "$a" = "$b" ] && echo "MATCH the mini holds $N's final save" || echo "MISMATCH"
+ls -la ~/tower/forge/eva-goes-berserk/school/models/$N/model-latest-q8_0.gguf && cat ~/tower/forge/eva-goes-berserk/school/models/$N/latest   # the final snapshot on the mac
 ```
 
-Without the puller, the one copy is a stream from the host straight to the mini, with the same
-MATCH-by-size check `pull_ckpt.sh` makes (its loop body is the command). Then the final snapshot
-is copied into the archive's `models/<run>/` under its own name.
+This is how `day3`'s save went when it was stopped. Then the final snapshot is copied into the
+archive's `models/<run>/` under its own name, and the save two runs back is deleted on the host
+on bekh's word (`runs/<run>/ckpt.pt` of the run just ended holds the same bytes as its named
+copy; it is the resume path for that run and goes when nobody would resume it).
 
 What is where today is three commands, never a list in a doc:
 

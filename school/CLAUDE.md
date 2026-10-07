@@ -35,9 +35,12 @@ window are fixed for good; everything else is more reading. `--init` warm-starts
 from any save with a fresh schedule, so she keeps what she has and continues on any card.
 
 **Where she stands** is a query, never a sentence here: `night/mon.py <run> --once`, the run's
-page, `night/turn.py <run>` (`night/CLAUDE.md`). Three runs so far — `night1` from random weights,
-`day2`, and `day3` on ds-dev2, which ends on the evening of 2026-10-08 UTC by its log; what each
-was is in `night/CLAUDE.md`, what each read in `SHELVES.md`.
+page, `night/turn.py <run>` (`night/CLAUDE.md`). Four runs so far — `night1` from random weights,
+`day2`, `day3` on ds-dev2 (stopped by decision two fifths through), and `day4`, started from
+`day3`'s save on 2026-10-07; what each was is in `night/CLAUDE.md`, what each read in
+`SHELVES.md`. Her age in tokens is `tokens_seen` summed over the runs (about 1.77 billion when
+`day3` stopped); it counts any tokens and says how much she has eaten, not what she has become
+(`night/CLAUDE.md`, the machines).
 
 **How she writes**, as last read (2026-10-07, the sampled draws of steps 911, 15,947 and 25,780;
 to be overwritten by the next read): she holds a sentence every time and a paragraph most times,
@@ -77,8 +80,9 @@ read — and that is the recitation meter on the run page.
 
 ## What is running
 
-`day3` on ds-dev2, five processes (`night/CLAUDE.md`), looked at once an hour by a session cron
-that a fresh session re-arms with the prompt in `night/CLAUDE.md`. Nothing on ds-dev2 is
+`day4` on ds-dev2: wrapper, trainer and guard on the host, the watcher on the mac, no puller
+(`night/CLAUDE.md`), looked at once an hour by a session cron that a fresh session re-arms with
+the prompt in `night/CLAUDE.md`. Nothing on ds-dev2 is
 restarted, stopped or changed without bekh's word.
 
 ## Where things are
@@ -86,7 +90,7 @@ restarted, stopped or changed without bekh's word.
 - **`night/`** — a run while it is alive: the wrappers, the guard, the watcher, the page with its
   light and dark schemes, the recitation meter, the turn detector, `weights.json`, the hourly
   look, stopping and ending, the runs so far, the machines. **`night/CLAUDE.md`**; the runbook
-  for the next run is `night/day4-RUN.md`.
+  `day4` was started from is `night/day4-RUN.md`.
 - **`scratch/`** — the kit as it runs on the host: `train.py`, `prep.py`, the exporters, the
   trainer's tests, and what changed for `day4`. **`scratch/CLAUDE.md`**.
 - **`data/`** — the book converter, the health verdict, the assembler of a run's shelves, the
@@ -142,44 +146,38 @@ health, dedupe it, shelve it, with the same care whatever door it came through.
 
 ## Next
 
-**`day4`: decided, built, and nothing has gone to the host.** The recipe is **`day4.md`**, the
-hands are **`night/day4-RUN.md`** (upload, tokenise, start, stop, rollback as copy-paste, every
-check a MATCH or a MISMATCH), the new shelves are on the mac in `shelves/day4/`, the new trainer
-and `run4.sh` are tested and in git (`scratch/CLAUDE.md`).
+**`day4` is running on ds-dev2.** Where it is: `night/mon.py day4 --once`, the page
+`school-day4.html`, `night/turn.py day4`. The recipe is **`day4.md`** (with the baseline every
+shelf started from), the hands were **`night/day4-RUN.md`**, the watching is `night/CLAUDE.md`
+(the hourly look's prompt is `day4`'s). It started on 2026-10-07 about 15:25 UTC from
+`ckpt-day3-final.pt`, `day3`'s save at the step it was stopped on, and is planned as 16,215 steps;
+its end is now plus the newest log line's `eta`.
 
-Decided with bekh on 2026-10-07: a warm start from a save of `day3`, an experiment with that save
-as its fallback, a somewhat inflated character acceptable; **short and dense**, about four hundred
-million tokens, an overnight run; **new fiction a little over half of it** at about two and a half
-reads; **poems in**; **the serials their own shelf, read about once**; **the anthologies their own
-shelf**; **fan fiction at zero**; pulp sci-fi and plain Gutenberg fiction a few percent together;
-**the light novels kept small**, about 3%, so the anime-adjacent register does not vanish; **old
-fantasy way down but not out**, about a tenth, for the grave cadence; and, that evening, the last
-five: **a peak rate of 8e-5**, `day3`'s own, with 300 warm-up steps, so that the diet is the only
-thing that changes; **Strange Horizons and the released authors at one read**, not two;
-**forty-eight held-out windows a shelf** (`EVAL_ITERS=152`), accepting that `day4`'s curves do not
-continue `day3`'s point for point; **the rough anthologies out**, on the line at weight zero. The
-table that says it back in weights, shares and reads is in `day4.md`; the length follows from it.
-
-**Open: which save of `day3` it starts from.** Under discussion and not decided: stopping `day3`
-early — it is about two fifths through and its overall number has been level for three evals
-(`PITFALLS.md` 7.9) — and starting `day4` that night, in place of waiting for `day3` to finish on
-the evening of 2026-10-08 UTC. What makes it safe to consider: a SIGTERM makes the trainer write a
-save it can be resumed from, so a stopped `day3` can be picked up again (`night/CLAUDE.md`,
-stopping). What it changes for `day4`: from a save stopped now she is living at about 5.7e-5 and
-8e-5 is a small step up, as `day3`'s own start was; from the finished run's save, annealed to
-8e-6, the same 8e-5 is ten times her resting rate and a knock at the first evals is likely. That
-second fact was not part of the argument the rate was chosen on (`day4.md`, the learning rate):
-say it to him with this question.
+What it is, decided with bekh on 2026-10-07: an experiment with `day3`'s save as its fallback, a
+somewhat inflated character acceptable; **short and dense**, about four hundred million tokens;
+**new fiction a little over half of it** at about two and a half reads; **poems in**; **the
+serials their own shelf, read about once**; **the anthologies their own shelf**; **fan fiction at
+zero**; pulp sci-fi and plain Gutenberg fiction a few percent together; **the light novels kept
+small**, about 3%, so the anime-adjacent register does not vanish; **old fantasy way down but not
+out**, about a tenth, for the grave cadence; **a peak rate of 8e-5**, `day3`'s own, with 300
+warm-up steps, so that the diet is the only thing that changes; **Strange Horizons and the
+released authors at one read**; **forty-eight held-out windows a shelf** (`EVAL_ITERS=152`), so
+`day4`'s curves do not continue `day3`'s; **the rough anthologies out**, on the line at weight
+zero. The old shelves drifting up is the plan; the new fiction getting worse, or a long lifted
+run on the meter, is not.
 
 Still a guess, and what the run measures: **the reading limit**, about two and a half reads of new
-fiction; `day4.md` shows the run at four reads beside it, and the recitation meter is the gauge
-for pushing it.
+fiction; the recitation meter and the gap between training and held-out loss on `modern` and
+`anth` are the gauges.
 
-**When `day3` ends or is stopped** (`night/CLAUDE.md`, when a run ends): build its page once by
-hand so the last snapshot is drawn and metered; see the trainable save on the mini say MATCH;
-bekh reads her; then `night/day4-RUN.md` from the top, with his yes to the numbers said back for
-that machine (`PITFALLS.md` 6.5). The save `day3` started from (`ckpt-7896.pt` on the host) goes
-on bekh's word once `day4` is under way (`PRESERVATION.md`).
+**When `day4` ends** (`night/CLAUDE.md`, when a run ends): build its page once by hand so the last
+snapshot is drawn and metered; one trainable copy to the mini with a sha256 verdict
+(`PRESERVATION.md`); bekh reads her through the sampler and the meter. Then his call between
+three: the four-read run (`day4.md`, the variant), more hours from where she lands, or a gentler
+mix from `day3`'s save.
+
+**The next large piece of work is `docs/brief-six-thousand.md`**: choosing a library of thousands
+of books by bekh's taste. The session that takes it up begins by rewriting that brief with him.
 
 **Smaller things open**: the books still to come and the downloads to fetch again
 (`library.md`); the mirror after each batch (`PRESERVATION.md`); the dedupe's plan is slow since

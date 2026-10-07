@@ -26,8 +26,8 @@ Three on the training host, two on the mac. The mac's scripts and `mon.py` find 
 
 - **`run3.sh <name>`** / **`run4.sh <run> [init.pt] [hours]`** (host) — the trainer in a restart
   loop: it resumes from `runs/<name>/ckpt.pt`, stops on DONE or on a deliberate STOPPED, pushes
-  silently at start and end. `run3.sh` is `day3` as it runs (batch 6 × 4, 8e-5, `--init
-  ckpt-7896.pt`, the mix and fifty hours written in the file). `run4.sh` is the same loop with
+  silently at start and end. `run3.sh` is `day3` as it ran (batch 6 × 4, 8e-5, `--init
+  ckpt-7896.pt`, the mix and fifty hours written in the file); `day4` runs under `run4.sh`. `run4.sh` is the same loop with
   nothing hard-coded: the mix from `MIX`, else `MIXFILE`, else `night/<run>/mix.txt`, else
   `runs/<run>/mix.txt` (one `bin:weight` a line); `STEPS=` or hours; `LR`, `WARMUP`, `BATCH`,
   `ACCUM`, `EVAL_EVERY`, `EVAL_ITERS`, `LOG_EVERY`, `CKPT_MINUTES` as environment overrides with
@@ -45,9 +45,9 @@ Three on the training host, two on the mac. The mac's scripts and `mon.py` find 
   Ends on `guard down`. It is a long-lived bash loop: never edit the file while it runs.
 - **`pull_ckpt.sh <name>`** (mac) — every six hours (`EVERY=` seconds) streams the trainable
   `ckpt.pt` from the host straight to the mini's archive, never touching the mac's disk, and
-  writes MATCH or MISMATCH by size to `night/<name>/pull.log`; once more at the end. It runs for
-  `day3`; from `day4` on it is not started, and the end-of-run copy is made by hand
-  (`../PRESERVATION.md`).
+  writes MATCH or MISMATCH by size to `night/<name>/pull.log`; once more at the end. It ran for
+  `day3`; from `day4` on it is not started, so a run is four processes, and the end-of-run copy
+  is made by hand (`../PRESERVATION.md`).
 
 The mac's half needs the mac: awake, on the VPN, `KEY` in the environment the scripts were started
 from. When it sleeps the page goes stale while the run is fine.
@@ -110,14 +110,19 @@ three before against the shelf's own swing (1.5 × its median eval-to-eval move,
 - `--json` for the page (keys are only ever added); `--ledger PATH` for another file.
 - When the ledger carries `train_per_file` (the new trainer), each shelf also gets its **gap**,
   held-out minus training loss, and the gap's trend over the same windows: a turn with a widening
-  gap reads `memorising`, a turn with a flat gap `drift or noise`.
+  gap reads `memorising`, a turn with a flat gap `drift or noise`. A hint to read the first gaps
+  of `day4` by, and no more than a hint (forty steps of the smoke test, a few rows a shelf): on
+  the small shelves `day3` read hardest — Strange Horizons, the released authors, the net core,
+  each about one and a half times by its stop — training loss sat about half a point under
+  held-out before `day4` had taught her anything, so those gaps start wide and it is their widening that would mean something.
 - `--weights` prints, and does not write, the `weights.json` that would zero the confirmed shelves,
   with the one command that puts it on the host.
 
 A `turned` is a reason to look, never by itself a reason to act: a human or the session decides.
-In `day3` the verdicts are blunt for a reason that is not the detector's — each shelf is graded on
-six fixed sequences (`PITFALLS.md` 7.4) — and "confirmed" only filters a spike the next reading
-undoes, since the windows are three evals wide.
+In `day3` the verdicts were blunt for a reason that is not the detector's — each shelf was graded
+on six fixed sequences (`PITFALLS.md` 7.4); from `day4` it is forty-eight — and "confirmed" only
+filters a spike the next reading undoes, since the windows are three evals wide. It says nothing
+until a run has six evals.
 
 ## Changing the mix inside a run — `weights.json`
 
@@ -141,31 +146,41 @@ bekh wants a run looked at on a clock. It is a session cron and dies with the se
 session re-arms it at twelve past the hour (`12 * * * *`; why hourly and why that minute is
 `PITFALLS.md` 7.7) with this prompt, the run's name changed as needed:
 
-> Check magdra's day3 run (read school/PITFALLS.md section 7 once if you have not this session).
-> On ds-dev2 (ssh -o ConnectTimeout=15 -i $KEY BekmemetevVO@ds-dev2.x340.org, read-only, inside
-> /opt/llama/magdra): runs/day3/status.json (step, total_steps, tok_per_s, eval_per_file,
-> heartbeat age from its unix field), the last two lines of runs/day3.log, the tail of
-> runs/day3.guard.log, nvidia-smi memory and temperature, df free, and whether train.py, run3.sh
-> and guard.sh are alive. On the mac: age of school/night/day3/status.json, tail of
-> school/night/day3/pull.log and watch.err, and that night/watch.sh and night/pull_ckpt.sh for
-> day3 are still running. Run the turn detector: cd ~/tower/forge/eva-goes-berserk/school && uv
-> run -q --python 3.12 python night/turn.py day3 (exit 2: a shelf reads turned on this eval only;
-> exit 3: a turn confirmed on two evals running). Compare each shelf's held-out number with the
-> previous check's (there are usually two new evals). Report to bekh in at most five short lines:
-> alive or not, step and percent, speed from the log's elapsed deltas, the shelf numbers that
-> moved (falling is good; name any shelf that rose across two evals in a row) with the detector's
-> verdicts, anything odd. If nothing is wrong and nothing moved outside its band, say so in one
-> line. Push to ntfy.sh/kk_alert (Priority high) only if something is wrong: trainer or guard
-> dead, heartbeat older than five minutes, a snapshot failed, a confirmed turn (exit 3; once per
-> shelf, again only if it has climbed more than 0.03 since that push), disk under 30 GB, card
-> memory at the limit, or the work llama-server active again. A shelf merely rising, or turned
-> on one eval only (exit 2), is reported in chat, not pushed. Never restart, stop or change
-> anything on ds-dev2 without bekh's word; if the run is dead, say what the log shows and wait.
-> When status says the run is done, report the final numbers, push once at default priority, and
-> end the loop.
+> Check magdra's day4 run (read school/night/CLAUDE.md and school/PITFALLS.md section 7 once if
+> you have not this session). day4 started 2026-10-07 about 15:25 UTC from day3's save at step
+> 33509, 16,215 steps, 8e-5, new trainer, evals every 500 steps on 48 windows per shelf. On
+> ds-dev2 (ssh -o ConnectTimeout=15 -i $KEY BekmemetevVO@ds-dev2.x340.org, read-only, inside
+> /opt/llama/magdra): runs/day4/status.json (step, total_steps, tok_per_s, eval_per_file,
+> train_per_file, weights, heartbeat age from its unix field), the last two lines of runs/day4.log
+> (and any MIX line), the tail of runs/day4.guard.log, nvidia-smi memory and temperature, df free,
+> and whether train.py, run4.sh and guard.sh are alive. On the mac: age of
+> school/night/day4/status.json, tail of school/night/day4/watch.err, that night/watch.sh day4 is
+> still running (there is no puller for day4), and the newest meter line on the page
+> (school/night/day4/meter.jsonl: share of her words in lifted runs of 12+). Run the turn
+> detector: cd ~/tower/forge/eva-goes-berserk/school && uv run -q --python 3.12 python
+> night/turn.py day4 (exit 2: a shelf reads turned on this eval only; exit 3: a turn confirmed on
+> two evals running; it needs six evals before it says anything). The baseline at step 40 of the
+> smoke test was: fantasy 3.153 scifi 3.085 anime 2.383 fanfic 3.043 base 3.053 wired-core 4.102
+> wired-bulk 3.826 literary 3.036 horizons 3.368 released 3.558 library 3.283 lain 2.959
+> horizons-verse 4.015 modern 3.143 anth 3.270 serials 3.048 verse2 4.138. Report to bekh in at
+> most six short lines: alive or not, step and percent, speed from the log's elapsed deltas, how
+> the NEW shelves moved (modern, anth, serials, verse2) against the baseline and the previous
+> check, which old shelves are rising (expected: fanfic at weight 0, anime, base, scifi drifting
+> up is the plan; say how much), the train-minus-held-out gap for modern and anth and whether it
+> is widening, the detector's verdicts, the meter, anything odd. Push to ntfy.sh/kk_alert
+> (Priority high) only if something is wrong: trainer or guard dead, heartbeat older than five
+> minutes, a snapshot failed, the detector exits 3 for modern or anth or library (once per shelf),
+> any 12+ word lifted run on the meter, the overall or modern held-out loss above its baseline by
+> more than 0.15 after step 2000, disk under 30 GB, card memory at the limit, or the work
+> llama-server active again. An old shelf rising is the plan and is reported in chat, not pushed.
+> Never restart, stop or change anything on ds-dev2 without bekh's word, including weights.json;
+> if the run is dead, say what the log shows and wait. When status says the run is done, report
+> the final numbers per shelf against the baseline, push once at default priority, and end the
+> loop.
 
-For a run on the new trainer (`day4`): `run4.sh` in place of `run3.sh`, no `pull_ckpt.sh` to look
-for, and the detector's gap reading goes into the report.
+For another run: its name in place of `day4`, its own start line and baseline, `run3.sh` and
+`night/pull_ckpt.sh` back in the lists if it is an old-kit run with a puller, and its own idea of
+which shelves are expected to rise.
 
 ## Sitting with her on the loom
 
@@ -220,15 +235,30 @@ What any run is doing is `mon.py`, never a sentence here; this is what each was.
   quarter point; the second at 8e-5 recovered half the knock in twenty-five minutes and was
   stopped at step 7,896 of 26,946. About 0.95 billion tokens read in her life at that point. Last
   snapshot `model-7896`; its trainable save `ckpt-7896.pt` is what `day3` started from.
-- **`day3`** (ds-dev2, started 2026-10-06 19:22 UTC): warm start from `ckpt-7896.pt` at 8e-5 with
-  300 warm-up steps, batch 6 × accum 4 (24,576 tokens a step; batch 8 benches and dies at the
-  first eval), fourteen shelves at the weights in `run3.sh`, fifty hours planned as 84,103 steps
-  and 2.07 billion tokens, about 11.8k tok/s, 15.0 of the card's 16.3 GB. Stopped once at step
-  911 to add three one-line seeds. It ends on the evening of 2026-10-08 UTC by the log. How its
-  evals read: the overall number fell two and gave a little back on the third, the floor lower
-  each time, until about step 30,000, from where twelve of thirteen shelves read `flat` and the
-  overall number moved in thousandths. The detector called fantasy `turned` once, at step 25,000,
-  and the next eval took it back; the run was left alone and that was right.
+- **`day3`** (ds-dev2, 2026-10-06 19:22 UTC to 2026-10-07 15:15 UTC, stopped by decision): warm
+  start from `ckpt-7896.pt` at 8e-5 with 300 warm-up steps, batch 6 × accum 4 (24,576 tokens a
+  step; batch 8 benches and dies at the first eval), fourteen shelves at the weights in
+  `run3.sh`, planned as fifty hours, 84,103 steps and 2.07 billion tokens, about 11.8k tok/s,
+  15.0 of the card's 16.3 GB. Stopped once at step 911 to add three one-line seeds, and for good
+  at step 33,509 — 823.5 million tokens, about 1.77 billion in her life — with its overall
+  held-out number at 3.253 on its own ruler of six windows a shelf. Why it was stopped: from
+  about step 30,000 twelve of thirteen shelves read `flat` and the overall number moved in
+  thousandths; the thirty hours left would have fed her the diet `day4` abandons; a stop writes
+  a save that resumes; and it freed the card. The detector called fantasy `turned` once, at step
+  25,000, and the next eval took it back. Its numbers per shelf were readings on six fixed
+  windows and several were off by tenths (the light novels read "under 2" there and 2.38 on
+  forty-eight windows; the net core 3.6–3.7 there and 4.1): `day4`'s baseline in `../day4.md` is
+  where she really stood. Last snapshot `model-33509`; its save is `ckpt-day3-final.pt` on the
+  host and in the mini's archive, and `runs/day3/ckpt.pt` holds the same bytes, which is where a
+  resume of `day3` itself would start from.
+- **`day4`** (ds-dev2, started 2026-10-07 about 15:25 UTC): warm start from `ckpt-day3-final.pt`
+  at 8e-5 with 300 warm-up steps — a small step up from the 5.6e-5 she was living at — batch
+  6 × accum 4, 16,215 steps, 398.5 million tokens, about ten hours. Nineteen shelves on the line
+  (`../day4.md`, the mix; on the host `runs/day4/mix.txt`): new fiction a little over half at two
+  and a half reads, fan fiction and the rough anthologies at zero, the other old shelves cut
+  small. The first run on the new trainer (`weights.json`, training loss per shelf) and under
+  `run4.sh`, with evals every 500 steps on forty-eight windows a shelf. No puller. The old kit
+  is `kit-before-day4/` on the host.
 
 ## The machines
 
@@ -249,7 +279,10 @@ What any run is doing is `mon.py`, never a sentence here; this is what each was.
   it, context 1024, compiled: 30 M parameters 101k tok/s, 124 M 43k (14.6 GB), 355 M 18.9k at
   batch 16 (21 GB); the runs there used batch 12 × 2 at 18.6k and 18.9 GB.
 - **What she costs to grow up.** About 20 tokens per parameter is adult (7 B); teenage for her is
-  2.5–3 B. The first box did 19k tok/s (0.67 B in ten hours), ds-dev2 does 11.8k; a rented 4090
+  2.5–3 B. That rule counts any tokens: it says how much she has eaten, not what she has become,
+  and thirty more hours of fan fiction would have crossed the line without changing how she
+  writes. She was about 1.77 B when `day3` stopped and is about 2.17 B after `day4`; read her,
+  not her age. The first box did 19k tok/s (0.67 B in ten hours), ds-dev2 does 11.8k; a rented 4090
   roughly twice the first box for ~$0.40/h, one H100 four to five times for ~$2.50/h. Renting is
   out of the question for now.
 
@@ -257,8 +290,8 @@ What any run is doing is `mon.py`, never a sentence here; this is what each was.
 
 `prompts.txt` — the seeds (four paragraphs: a late train, the firekeepers' bell, the forum girl,
 the figment's line; three one-liners since step 911 of `day3`). `fans/` — fans drawn through the
-loom's sampler by hand. `day4-RUN.md` — the runbook for `day4`: upload, tokenise, start, stop,
-rollback, every check a MATCH or a MISMATCH. `archive.sh` — the first box's mirror script, from
+loom's sampler by hand. `day4-RUN.md` — the runbook `day4` was started from: upload, tokenise,
+start, stop, rollback, every check a MATCH or a MISMATCH; the shape to copy for the next run. `archive.sh` — the first box's mirror script, from
 before the pile; it copies `models/` and everything derived, so it is not the mirror any more
 (`../PRESERVATION.md` has the one that is). A run's pulled files land in `night/<name>/`, not in
 git: `status.json`, `ledger.jsonl`, `samples.jsonl`, `guard.log`, `loomed.jsonl`, `meter.jsonl`,

@@ -46,15 +46,17 @@ as the old one, and an old save resumes under it unchanged:
   on the eval log lines as a trailing `| train fantasy 2.951 …`. Held-out rising while a shelf's
   training loss falls is memorising; both drifting together is trade. `night/turn.py` reads it.
 - **`--eval-iters`** was always there and never set: at its default of 20, split over fourteen
-  shelves, each shelf's held-out number in `day3` is one batch of six sequences, at positions
+  shelves, each shelf's held-out number in `day3` was one batch of six sequences, at positions
   drawn once from seed 0 — the same six every eval. `run4.sh` passes `EVAL_ITERS`; eight batches
   a shelf is 8 × the number of shelves on the line (`../PITFALLS.md` 7.4).
 
-**It goes to the host only after `day3` has written DONE**, with `night/run4.sh`, keeping the old
-trainer beside it as the way back (`cp -p train.py train.py.day3`); the copy step with its MATCH
-or MISMATCH lines is in `../night/day4-RUN.md`. What the mac cannot prove is the card: the first
-thing the new trainer does on the host is the forty-step smoke test (`../PITFALLS.md` 6.2), which
-is also `day4`'s baseline, mainly for memory at 15 of 16 GB.
+**It is on the host since 2026-10-07**, with `night/run4.sh`, put there once `day3` had stopped
+(a trainer copied over a live run is picked up at its next restart); the kit `day3` ran on is
+`kit-before-day4/` beside it, and the copy step with its MATCH or MISMATCH lines is in
+`../night/day4-RUN.md`. What the mac could not prove was the card: the forty-step smoke test
+(`../PITFALLS.md` 6.2) ran clean at 13.7 GiB peak and 14.7 reserved of 16, the same as the old
+trainer, and its eval is `day4`'s baseline. The md5 check above takes `run4.sh` in place of
+`run3.sh` for a run on this kit.
 
 Known and left alone: after a resume `eval_per_file` and `train_per_file` are empty until the next
 eval, and the first interval is partial (`train_rows` shows how partial).
