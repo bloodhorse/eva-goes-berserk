@@ -2,7 +2,7 @@
 cd "${SCHOOL:-/opt/llama/magdra}" || exit 1
 N=${1:-}; INIT=${2:-${INIT:-}}; HOURS=${3:-${HOURS:-}}
 die() { echo "run4: $*" >&2; exit 1; }
-[ -n "$N" ] || die "usage: run4.sh <run> [init.pt] [hours]   (env: MIX or MIXFILE, INIT, HOURS or STEPS, BATCH ACCUM LR WARMUP LOG_EVERY EVAL_EVERY CKPT_MINUTES PROMPTS COMPILE TRIES PAUSE NTFY DRY)"
+[ -n "$N" ] || die "usage: run4.sh <run> [init.pt] [hours]   (env: MIX or MIXFILE, INIT, HOURS or STEPS, BATCH ACCUM LR WARMUP LOG_EVERY EVAL_EVERY EVAL_ITERS CKPT_MINUTES PROMPTS COMPILE TRIES PAUSE NTFY DRY)"
 R=runs/$N
 PY=${PY:-$PWD/.venv/bin/python}
 if [ -z "${MIX:-}" ]; then
@@ -23,7 +23,7 @@ if [ ! -f "$R/ckpt.pt" ]; then
 fi
 if [ -n "${STEPS:-}" ]; then BUDGET=(--steps "$STEPS"); SAY="$STEPS steps"; else BUDGET=(--hours "$HOURS"); SAY="$HOURS h"; fi
 DATA=(--data "${PARTS[@]}" --out "$R")
-SHAPE=(--init "$INIT" --batch "${BATCH:-6}" --accum "${ACCUM:-4}" --lr "${LR:-8e-5}" --warmup "${WARMUP:-300}" "${BUDGET[@]}" --log-every "${LOG_EVERY:-50}" --eval-every "${EVAL_EVERY:-1000}" --ckpt-minutes "${CKPT_MINUTES:-20}")
+SHAPE=(--init "$INIT" --batch "${BATCH:-6}" --accum "${ACCUM:-4}" --lr "${LR:-8e-5}" --warmup "${WARMUP:-300}" "${BUDGET[@]}" --log-every "${LOG_EVERY:-50}" --eval-every "${EVAL_EVERY:-1000}" --eval-iters "${EVAL_ITERS:-20}" --ckpt-minutes "${CKPT_MINUTES:-20}")
 PROMPTS=${PROMPTS-prompts.txt}; [ -z "$PROMPTS" ] || SHAPE+=(--prompts "$PROMPTS")
 [ "${COMPILE-1}" = 1 ] && SHAPE+=(--compile)
 NTFY=${NTFY-ntfy.sh/kk_alert}

@@ -388,25 +388,40 @@ pile through its stages. What is open in it, in order:
 - **bekh's first reading list** out of all this is in the book club
   (`~/tower/shittalk/fable-book-club/reading-list.md`).
 
-**`day4`, as planned and not yet agreed in its numbers.** The pile changes what the next run
-can be, and the size of the change is why it did not go into `day3` mid-run. A warm start from
-`day3`'s final save. **Short and dense**: on the order of half a billion tokens, an overnight
-run, because the reading cap sets how many tokens the modern shelves can take, and the only way
-to make them the main course is a smaller meal (`PITFALLS.md` 4.6). **Modern text as the main
-course**: the sieve's fiction from the magazines, podcasts, anthologies and small shelves,
-beside the modern shelves she already has. **The old shelves on a maintenance dose**: she has
-read them for three billion tokens and they only need keeping — the fan fiction and the pulp
-sci-fi cut hardest, the light novels hard (her loss there is under 2; it is teaching her
-nothing), the old fantasy least, since Dunsany, Eddison, Morris and Clark Ashton Smith carry
-the grave cadence. Open with bekh: **the serials** — Claude's view is their own shelf at a low
-weight for long-range coherence, with the spine, and out of the modern shelf (five of eight are
-one author; `PITFALLS.md` 4.5); **how hard** the old shelves come down; **the reading limit**
-— about two and a half passes of a small shelf is a guess from how the library behaved in
-`day3`, to be measured per shelf by the turn detector, not believed; and whether the
-anthologies are one shelf or split by kind. The recipe is written from `sieve/report.md` and
-`dedupe/report.md`, said back in shares and readings (`PITFALLS.md` 4.1, 4.4), and started on
-bekh's yes to those numbers (6.5). New held-out sets are cut when the new shelves are
-tokenised, before she has read a word of them.
+**`day4`, its shape agreed on 2026-10-07, its numbers written and waiting for bekh's yes.** The
+recipe is **`day4.md`** — every shelf's size measured with her tokenizer, the weights said back
+in shares and reads and multiplied out (`PITFALLS.md` 4.1, 4.4), the length, the rate, what the
+numbers should do, when to stop — and the hands are **`night/day4-RUN.md`**: upload, tokenise,
+start, stop and rollback as copy-paste, every check a `MATCH` or a `MISMATCH`. The pile changes
+what the next run can be, and the size of the change is why it did not go into `day3` mid-run. A
+warm start from `day3`'s final save, an experiment with that save as its fallback. **Short and
+dense**: about four hundred million tokens, an overnight run, because the reading cap sets how
+many tokens the modern shelves can take, and the only way to make them the main course is a
+smaller meal (`PITFALLS.md` 4.6). **Modern text as the main course**, about half the run: the
+sieve's fiction from the magazines, podcasts, anthologies and small shelves, beside the modern
+shelves she already has. **The old shelves on a maintenance dose**: she has read them for three
+billion tokens and they only need keeping. Decided with bekh that day: **poems are in** (the
+verse the sieve set aside, with the Strange Horizons poems); **the serials are their own shelf,
+read about once** (two authors wrote all of it — `PITFALLS.md` 4.5 — so their weight is chosen
+and they have their own held-out number; Katalepsis stays with them for now and is the candidate
+for promotion); and **how hard the old shelves come down** — fan fiction to zero, pulp sci-fi and
+base to a few percent together, the light novels kept small at about 3% so the anime-adjacent
+register does not vanish, old fantasy way down but not out at about 10%, since Dunsany, Eddison,
+Morris and Clark Ashton Smith carry the grave cadence. Still a guess, and the thing the run
+measures: **the reading limit** — about two and a half reads of the new fiction, from how the
+library behaved in `day3`, to be read off the turn detector per shelf, not believed; `day4.md`
+shows the run at four reads beside it. Proposed in `day4.md` and not agreed yet: the anthologies
+as a shelf of their own, cut into their stories; the rate; the eval cadence; the stop conditions.
+The new shelves are built on the mac by `data/shelves.py` into `shelves/day4/` (not in git), a
+work a file, with **held-out sets cut by whole works before she has read a word of them** and
+checked against everything she trains on or has read; what they hold is
+
+```bash
+cd ~/tower/forge/eva-goes-berserk/school && uv run -q --python 3.12 --with tokenizers python data/shelves.py build --deep
+```
+
+(the table it prints, and `shelves/day4/summary.json`), never a number here. It starts on bekh's
+yes to `day4.md`'s numbers (6.5).
 
 **The four jobs bekh set on 2026-10-07, and where each stands.** *The turn, acted on*: for
 `day3` it is a push and a human (the look's prompt); for `day4` and the finishing school, the
