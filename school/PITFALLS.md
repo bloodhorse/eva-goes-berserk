@@ -464,6 +464,16 @@ around it; the way to make it a large share is a *shorter* run. And on a warm st
 she has already read for billions of tokens do not need to teach, only to be kept — a
 maintenance dose, not zero: a register she stops seeing she drifts from.
 
+**4.7 A run's length is not chosen; it falls out.** Length = a shelf's tokens × the reads it can
+take ÷ the share it is to have. Ninety million tokens of new fiction at two and a half reads and
+a little over half the diet is four hundred million tokens, ten hours on ds-dev2 — where `day3`
+was two billion and fifty, because eighty-five percent of it was shelves she could read for days
+without seeing a page twice. bekh braced for a long run and got a short one. So "how long is the
+next run" is really "how much of the right text is there", and the only ways to lengthen one are
+more reads (recitation) or padding with the shelves just cut. Say the length with its arithmetic
+when the mix is said back. And her age in tokens is not the measure the length should chase: it
+counts any tokens (`night/CLAUDE.md`, the machines).
+
 ## 5. The machine
 
 **5.1 The card may be somebody's, and it comes back on its own.** ds-dev2's card was held whole
@@ -540,9 +550,14 @@ Trash folder that nothing empties (5 GB had gathered in it) and no `trash` comma
 
 ## 6. Starting a run
 
-**6.1 A warm start's rate must be well under the old run's peak.** `day2` first started at
-2e-4 and knocked every held-out number up a quarter point; 8e-5 with 300 warm-up steps
-recovered half of it in twenty-five minutes. Never 2e-4 on a model that already reads.
+**6.1 A warm start's rate must be well under the old run's peak — and is judged against the rate
+the save was living at.** `day2` first started at 2e-4 and knocked every held-out number up a
+quarter point; 8e-5 with 300 warm-up steps recovered half of it in twenty-five minutes. Never
+2e-4 on a model that already reads. The same 8e-5 was argued for `day4` as "`day3` ran on it for
+nineteen hours", which left out that a *finished* `day3` would have been annealed to 8e-6: ten
+times the resting rate, more than the 6.7 times that knocked `day2`. It came out a small step
+only because `day3` was stopped at two fifths, living at 5.6e-5. Read the save's last `lr` from
+its log before choosing the next peak.
 
 **6.2 Smoke-test the real start path.** Forty steps with the real `--init`, every shelf of the
 mix, batch and accum as planned, prompts on, into `runs/smoke`:
@@ -556,7 +571,28 @@ grep -E "^INIT|^DATA|Traceback|Error|DONE" runs/smoke.log | cut -c1-400; grep "^
 
 It has to end in `DONE`, list every shelf with a token count in `DATA`, print a held-out number
 for each shelf, write `samples.jsonl`, and stay under the card's memory. It caught nothing on
-2026-10-06 only because the path problem (3.2) had been fixed an hour before.
+2026-10-06 only because the path problem (3.2) had been fixed an hour before. For `day4` it was
+also the first run of a new trainer on the card (13.7 GiB peak, 14.7 reserved, as before) and
+its step-40 eval became the run's baseline (`day4.md`).
+
+**6.2b A runbook is not proven until it has run on the host it is for.** `night/day4-RUN.md` was
+written and checked on the mac — every block parsed, the upload check returned MATCH against the
+local tree — and its first use found two things no reading would have. One check started worker
+processes from a script fed on stdin, which the host's system python 3.14 refuses (its default
+start method is forkserver; `multiprocessing.set_start_method("fork")` before the pool fixes
+it). And the checks of three steps expected a *finished* `day3` (`step=84103` written into
+them), when the run was stopped early and they had to be adapted by hand at eleven at night.
+A check takes what it compares against from the save or the log, never from the plan; and a
+runbook gets one dry pass on the real host, the read-only steps at least, before the night it is
+needed.
+
+**6.2c A check that compares across two rulers fails for the ruler's reason.** The smoke test's
+"old shelves read near where `day3` left them" said MISMATCH: the light novels 0.42 over, the
+net core 0.62. Nothing was wrong with the save — the trainer's `INIT … source_step=… source_eval=…`
+line is the proof of whose weights they are. `day3`'s numbers were six windows a shelf and the
+smoke test's forty-eight, and the differences ran both ways. When the instrument changes, the
+old readings stop being a thing to check against; print the comparison and let the identity of
+the save carry the verdict.
 
 **6.3 Test an export before the run, and know that exports differ by host.**
 
@@ -587,8 +623,9 @@ machine.
 SIGTERM makes the trainer save and exit, the wrapper exits with it, the guard sees that and shuts
 down, and the watcher and the puller end on `guard down`. To change the prompts mid-run: stop,
 wait for `STOPPED` and `guard down`, move `runs/<name>.guard.log` aside, start all five again.
-Done once on ds-dev2 (2026-10-07, to add seeds at step 911): the stop took a minute including
-the guard's last snapshot, the resume kept the plan (`RESUME from … step=911 total=84103`). Two
+Done twice on ds-dev2 (2026-10-07: to add seeds at step 911, and for good at step 33,509): the
+stop took a minute including the guard's last snapshot, and the first time the resume kept the
+plan (`RESUME from … step=911 total=84103`). Two
 things the chain does not do by itself: the puller is asleep for six hours and never sees `guard
 down`, so the mac's watcher and puller are killed by pid; and the mac's own copy
 `night/<name>/guard.log` still says `guard down`, so it is moved aside too before the watcher
@@ -616,7 +653,7 @@ came from assuming no time had passed.
 all 50,000 tokens. bekh and Claude both called her bad from those; the same snapshot through the
 loom's sampler wrote whole sentences. Judge from the loom, and do not oversell her either.
 
-**7.4 Each shelf's held-out number is the memorising alarm — and in `day3` it is six
+**7.4 Each shelf's held-out number is the memorising alarm — and in `day3` it was six
 passages.** A shelf that turns and climbs while the others fall is being recited. Watch them
 separately; the average hides it. But know what the number is made of. This file used to say
 every eval was a fresh random draw of the held-out set. It is the opposite: `--eval-iters`
@@ -639,9 +676,14 @@ What came of it:
 
 - **`day3`'s verdicts are blunt and stay blunt**: a ruler of six passages cannot be fixed inside
   the run. Read `flat` and `rising` there as weather. The run is not acted on from them.
-- **For `day4` the ruler changes**: `EVAL_ITERS` at eight batches a shelf (48 sequences), a few
+- **For `day4` the ruler changed**: `EVAL_ITERS` at eight batches a shelf (48 sequences), a few
   seconds an eval. The price is that `day4`'s curves do not continue `day3`'s point for point —
   different passages — and the smoke test's eval is the only bridge.
+- **Six windows were wrong about her level, not only her movement.** On forty-eight, the same
+  weights read up to six tenths away from `day3`'s last numbers, in both directions: the light
+  novels 2.38 where the page had said "under 2" all day, the net core 4.10 where it had said
+  3.6–3.7, base and Strange Horizons a quarter point *lower*. A per-shelf number from `day3`
+  is a curve to follow and never her level on that shelf; `day4.md` has the baseline.
 - **A shelf she has read less than once in the run cannot be reciting**, whatever its number
   does.
 - **A turn has to stand for two evals** before it is pushed or acted on (`turn.py` exit 3; exit
@@ -702,7 +744,11 @@ the run ended as. After the watcher stops, run `page.py <run>` once by hand and 
 thirteen shelves read `flat` and the overall number moved in thousandths, on shelves she had
 already read for a billion tokens at a rate still falling. The ruler is blunt (7.4), but the
 overall number says the same. Look at the curve at a third of a run and ask what the rest buys;
-the answer shaped `day4` — short, and on text she has not read.
+the answer shaped `day4` — short, and on text she has not read — and then ended `day3` itself,
+stopped at step 33,509 with thirty hours of the abandoned diet unspent. What the end of a run
+does buy is a last small drop as the rate winds down; it is polish on the old voice, and a fresh
+schedule at the next start shakes most of it loose. A stop is safe to choose because it writes a
+save that resumes.
 
 ## 8. Hands and tools
 
