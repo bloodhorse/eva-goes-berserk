@@ -31,8 +31,9 @@ rejected by the converter's hash check; our own SentencePiece would pass). Size,
 window are fixed for good; everything else is more reading. `--init` warm-starts a new run
 from any save with a fresh schedule, so she keeps what she has and continues on any card.
 
-**Runs** (`night1` and `day2` ran on the box in `~/eva-olmo/school/runs/<name>/`, their
-snapshots and trainable saves in `school/models/<name>/` on the mac; from `day3` on a run lives
+**Runs** (`night1` and `day2` ran on the box in `~/eva-olmo/school/runs/<name>/`; the mac keeps
+each one's last snapshot in `school/models/<name>/`, and their trainable saves and earlier
+snapshots are in the mini's archive under `models/<name>/`; from `day3` on a run lives
 in `/opt/llama/magdra/runs/<name>/` on ds-dev2; what any run is doing is `night/mon.py <name>`,
 never a sentence here):
 
@@ -42,7 +43,8 @@ never a sentence here):
   sentence shapes, dialogue that turns, fused words; through the loom's sampler, whole sentences
   and already a wrong thing said straight (*"it was lighted by no lamps. It was pitch darkness. It
   was all very dark, but not very dark."*). Hourly snapshots `model-<step>-q8_0.gguf` from one
-  hour old to the end are on the mac — her whole first night at every age.
+  hour old to the end are in the mini's archive — her whole first night at every age — and the
+  mac keeps the last, `model-26800`.
 - **`day2`** (2026-10-06, stopped by bekh at 10:05 UTC when the box's time ran out): warm start
   from night1's end on ten shelves. Two attempts: the first at lr 2e-4 knocked the held-out
   numbers up a quarter point and crawled back (kept as `runs/day2-lr2e-4`, 98 M tokens); the
@@ -51,8 +53,8 @@ never a sentence here):
   knock in twenty-five minutes. At the stop: fantasy 3.46, sci-fi 3.44, anime 2.63 (night1 ended
   3.37 / 3.32 / 2.35), fan fiction 3.08, base 3.34, lain 3.10, net core 4.25 — the new shelves
   learned, the old ones not yet back to night1's sharpness, every number still falling. About
-  0.95 billion tokens read in her life. Final snapshot `model-7896` and trainable `ckpt-7896.pt`
-  on the mac; the mac serves `model-7896` to the loom.
+  0.95 billion tokens read in her life. Final snapshot `model-7896` on the mac; the trainable
+  `ckpt-7896.pt` and the four earlier snapshots in the mini's archive.
 - **`day3`, running on ds-dev2** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5 3500X,
   30 GB RAM, Ubuntu 26.04, a team box; ours lives in `/opt/llama/magdra/` — the kit flat, `bins/`
   the shelves as the box tokenised them, `bins2/` the re-cut and new ones, `data/` the text and
@@ -132,7 +134,11 @@ ever deleted — shelves, bins, the cut text, the fan-fiction cuts, the books �
 model reuses them, and a rented card costs money while text costs only the gathering. The archive
 is **`bek@100.69.218.90:/srv/music/school-archive/`**, the mini's big disk (`night/archive.sh`
 mirrors `school/` there and pulls the box's `bins/`, `data/` and `fanfic/` first; rerun it after
-any new shelf or run). Renting iron is out of the question for now; the next bigger model waits
+any new shelf or run). The archive is the only home of the box's copies and of the trainable
+saves: on the mac `models/box/` holds just the two recut shelves (`data/base-r2`,
+`data/shelves/fantasy-r2`), the rest having gone to the Trash on 2026-10-07 after a sha256 match
+against the mini. `archive.sh` never deletes on the mini, and it pulls the box's 13 GB back onto
+the mac if the box still answers. Renting iron is out of the question for now; the next bigger model waits
 for a borrowed card and for more text.
 
 ## Watching and running
@@ -260,7 +266,8 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   not in git. `inbox/` — the books: `clean/` the converted library with its ledger, `held/` what converted
   without paragraphs, `rescued/` plain-text rescues of misnamed files (Word, RTF, HTML, RAR,
   scanned pages), `preview*/` the converter's test runs, `skip.txt` the files never converted; `models/` —
-  snapshots, trainable saves and `bins/` the tokenised shelves copied from the box. `sources/` —
+  each run's last snapshot, `bins/` the tokenised shelves copied from the box, and `box/` the two
+  recut shelves; trainable saves and older snapshots live in the mini's archive. `sources/` —
   the scout's notes.
 
 ## Lessons
