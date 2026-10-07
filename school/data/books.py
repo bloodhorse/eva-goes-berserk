@@ -104,6 +104,21 @@ BREAK_CLASS = re.compile(r"break|scene|space|separ|orn|asterisk|salto|dingbat|di
 BREAK_TEXT = re.compile(r"^[\s*·•∙~#◊⁂§❧☙✦✧❦❖⸙◆◇○●□■_=+\-–—.]*$")
 SMALLCAP_CLASS = re.compile(r"small|smcap|\bsc\b|caps", re.I)
 FOOTREF = re.compile(r"^\[?\(?[0-9ivx]{1,4}\)?\]?$|^[*†‡§]+$", re.I)
+NOTE_TYPES = {"footnote", "footnotes", "endnote", "endnotes", "rearnote", "rearnotes"}
+MARK_TYPES = {"pagebreak", "page-break", "noteref", "backlink"}
+INLINE_TYPED = {"a", "link", "script", "style", "input", "ol", "li", "span", "aside", "sup"}
+SECTION_SHARE = 0.9
+HEAD_LIMIT = 5000
+UNIT_ORD = "first second third fourth fifth sixth seventh eighth ninth".split()
+TEEN_ORD = ("tenth eleventh twelfth thirteenth fourteenth fifteenth sixteenth seventeenth eighteenth "
+            "nineteenth").split()
+TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50}
+TENTH_ORD = {"twentieth": 20, "thirtieth": 30, "fortieth": 40, "fiftieth": 50}
+ANNUAL = re.compile(r"\b(?:(?:(" + "|".join(TENS) + r")[\s-]*)?(" + "|".join(UNIT_ORD) + r")|(" + "|".join(TEEN_ORD)
+                    + r")|(" + "|".join(TENTH_ORD) + r")|(\d{1,2})(?:st|nd|rd|th))\s+annual\s+"
+                    r"(?:collection|edition|anthology)\b", re.I)
+SUMMATION = re.compile(r"\bsummation\s*:?\s*((?:19|20)\d\d)\b", re.I)
+SAME_PAGES = 5
 
 
 def norm_ws(s):
@@ -260,14 +275,31 @@ def collect_blocks(node, out):
             out.append(Block(t))
 
 
-def epub_types(soup):
+def type_tokens(el, keys=("epub:type", "role")):
     found = set()
-    for el in soup.find_all(True):
-        for k in ("epub:type", "type", "role"):
-            v = el.get(k)
-            if v and el.name not in ("a", "link", "script", "style", "input", "ol", "li", "span", "aside", "sup"):
-                for t in re.split(r"\s+", v):
-                    found.add(t.split(":")[-1].replace("doc-", "").lower())
+    for k in keys:
+        v = el.get(k)
+        if isinstance(v, (list, tuple)):
+            v = " ".join(v)
+        for t in (v or "").split():
+            found.add(t.split(":")[-1].replace("doc-", "").lower())
+    return found
+
+
+def text_size(el):
+    return len("".join(el.get_text().split()))
+
+
+def epub_types(soup):
+    root = soup.body or soup
+    total = text_size(root)
+    found = set()
+    for el in [x for x in root.parents if isinstance(x, Tag)] + [root] + root.find_all(True):
+        if el.name in INLINE_TYPED:
+            continue
+        toks = type_tokens(el, ("epub:type", "type", "role"))
+        if toks and text_size(el) >= SECTION_SHARE * total:
+            found |= toks
     return found
 
 
@@ -280,8 +312,7 @@ def preclean(soup):
     for t in soup.find_all(True):
         if t.attrs is None:
             continue
-        et = (t.get("epub:type") or "") + " " + (t.get("role") or "")
-        if re.search(r"pagebreak|page-break|noteref|footnote|endnote|rearnote|doc-backlink", et):
+        if type_tokens(t) & (NOTE_TYPES | MARK_TYPES):
             t.decompose()
     for t in soup.find_all("aside"):
         t.decompose()
@@ -619,6 +650,9 @@ def strong_reason(sec):
         if val and KEEP_LABELS.match(re.sub(r"^[\d\W_]+", "", val.lower())):
             return None, True
         r = label_reason(val)
+        if r and src == "heading" and sec["words"] > HEAD_LIMIT:
+            sec["note"] = f"first line {val[:40]!r} reads as {r} but heads {sec['words']} words; kept"
+            continue
         if r:
             return f"{src} {val[:40]!r} ({r})", False
     r = file_reason(sec["href"])
@@ -720,13 +754,44 @@ def finish_text(lines):
     return text.strip() + "\n"
 
 
+def annual_number(s):
+    m = ANNUAL.search(s or "")
+    if not m:
+        return None
+    tens, unit, teen, tenth, digits = m.groups()
+    if digits:
+        return int(digits)
+    if teen:
+        return 10 + TEEN_ORD.index(teen.lower())
+    if tenth:
+        return TENTH_ORD[tenth.lower()]
+    return TENS.get((tens or "").lower(), 0) + 1 + UNIT_ORD.index(unit.lower())
+
+
+def summation_year(pages):
+    for t in pages:
+        m = SUMMATION.search(t)
+        if m:
+            return int(m.group(1))
+    return None
+
+
+def same_pages(secs, warns):
+    cnt = Counter(s["text"] for s in secs if s["words"] >= 5)
+    for t, n in cnt.most_common(1):
+        if n >= SAME_PAGES:
+            warns.append(f"{n} sections are one and the same {len(t.split())}-word page ({t[:50]!r}): a broken file")
+
+
 def from_epub(path):
     title, author, lang, secs, warns = process_epub(path)
+    year = summation_year(s["text"] for s in secs)
+    same_pages(secs, warns)
     lo = classify(title, author, secs, warns)
     lines, kept, dropped = assemble(secs, lo, warns, clean_title(title))
     if len(secs) <= 4 and sum(s["words"] for s in secs) > 20000:
         warns.append(f"only {len(secs)} spine files for the whole book: matter inside them is judged by line heuristics only")
-    return title, author, lang, finish_text(lines), kept, dropped, warns
+    return title, author, lang, finish_text(lines), kept, dropped, warns, year
 
 
 def from_mobi(path):
@@ -761,9 +826,10 @@ def from_mobi(path):
         sec["head"] = head if len(head.split()) <= 12 else ""
         secs.append(sec)
     warns = ["mobi (old format): sections split on page breaks, matter judged by heuristics only"]
+    year = summation_year(s["text"] for s in secs)
     lo = classify(title, author, secs, warns)
     lines, kept, dropped = assemble(secs, lo, warns, clean_title(title))
-    return title, author, "", finish_text(lines), kept, dropped, warns
+    return title, author, "", finish_text(lines), kept, dropped, warns, year
 
 
 def name_guess(path):
@@ -805,9 +871,10 @@ def from_plain(path, raw, warns, fmt):
         sec.update(section_record(blocks))
         sec["head"] = blocks[0].text if blocks[0].words <= 12 else ""
         secs.append(sec)
+    year = summation_year(s["text"] for s in secs)
     lo = classify(title, author, secs, warns)
     lines, kept, dropped = assemble(secs, lo, warns, clean_title(title))
-    return title, author, "", finish_text(lines), kept, dropped, warns
+    return title, author, "", finish_text(lines), kept, dropped, warns, year
 
 
 def from_txt(path):
@@ -1006,13 +1073,15 @@ def surname_of(author):
     return parts[-1] if parts else "unknown"
 
 
-def book_slug(title, author):
-    t = clean_title(title)
+def book_slug(title, author, year=None):
+    number = annual_number(title)
+    t = clean_title(title).replace("’", "'")
     t = re.split(r"\s*[:;]\s+|\s+[-–—]\s+", t)[0]
     words = [w for w in ascii_slug(t).split("-") if w]
     if len(words) > 1 and words[0] in {"the", "a", "an"}:
         words = words[1:]
-    return "-".join([ascii_slug(surname_of(author)) or "unknown"] + (words[:4] or ["untitled"]))
+    tail = [str(year)] if year else [f"{number:02d}"] if number else []
+    return "-".join([ascii_slug(surname_of(author)) or "unknown"] + (words[:4] or ["untitled"]) + tail)
 
 
 def polish(text, slug, title, author, src, warns):
@@ -1192,7 +1261,7 @@ def main():
             results.append({"source": p.name, "status": "skipped", "reason": f"skipped: {bad}", "format": fmt})
             continue
         try:
-            title, author, lang, text, kept, dropped, warns = handlers[p.suffix.lower()](p)
+            title, author, lang, text, kept, dropped, warns, year = handlers[p.suffix.lower()](p)
         except Exception as e:
             results.append({"source": p.name, "status": "error", "error": f"{type(e).__name__}: {e}", "format": fmt})
             continue
@@ -1204,7 +1273,10 @@ def main():
             for key, fa, ft in NAMES:
                 if key in p.name:
                     title, author = ft, fa
-        slug = book_slug(title, author)
+        named, filed = annual_number(title), annual_number(re.sub(r"[_\W]+", " ", p.stem))
+        if named and filed and named != filed:
+            warns.append(f"the file name says annual {filed}, the title says annual {named}")
+        slug = book_slug(title, author, year)
         text, more = polish(text, slug, title, author, p.name, warns)
         lang = language(text)
         if lang != "en":
@@ -1215,6 +1287,8 @@ def main():
                "language": lang, "format": fmt, "words": len(text.replace("* * *", "").split()),
                "sections_kept": kept, "sections_dropped": dropped + more, "warnings": warns,
                "fingerprint": fingerprint(text), "_text": text, "_sh": shingles(text)}
+        if year:
+            rec["year"] = year
         if rec["words"] < 5000:
             warns.append(f"only {rec['words']} words kept")
         results.append(rec)
