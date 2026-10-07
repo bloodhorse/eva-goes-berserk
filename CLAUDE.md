@@ -172,7 +172,9 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   attractor because the frame asked for it, which is why "AI" never goes in a document.
   `cyborgism-map.md`, `research-cyborgism-methods.md`: who the scene is, how they worked base
   models. `brief-storyloom.md`: the brief handed to an outside model to work the loom blind;
-  `storyloom-20260916/` is what came back. `olmo.md`: the next dreamer — the checkpoint, the
+  `storyloom-20260916/` is what came back. `brief-six-thousand.md`: the starting position for
+  choosing magdra's next library at the size of thousands of books, by bekh's taste talked into
+  focus; the session that takes it up begins by rewriting it with him. `olmo.md`: the next dreamer — the checkpoint, the
   gguf, the RunPod endpoint and its lore, the pod that worked, what heat and rope did.
   `olmo-seeds/`: the ten mystical seeds as fed; `attic/olmo/`: everything olmo wrote on
   2026-09-24 (the ten, the last fifty at their heats, the shelf, heat, rope) with its reads.
