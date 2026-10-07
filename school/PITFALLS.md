@@ -90,14 +90,17 @@ Collection* held the Fifteenth, one named *Twelfth* the Seventeenth), an epub wh
 chapter is the same error page ("sorry something went wrong loading your content", 53k words of
 front matter and nothing else), a zip of loose text files named `.epub`, RTF named `.txt`, one
 story of five thousand words under an anthology's title, a PDF of volume two of a two-volume
-book, and a novel nobody asked for. Establish what a file is from inside it: a Dozois annual
-opens "Summation: <year>"; an anthology's contents page lists the stories that should then be
-found in the text. The cheap alarm is the word count against the kind's norm (an annual is
-280–370k words, an Infinity book about 97k, a novel 60–150k): a book at a tenth of its norm is
-not that book. The converter's own duplicate check (`books.py`: same title and editor, or a
-near-identical fingerprint) is what caught the two mislabelled annuals — and the same rule would
-eat a real sibling volume whose metadata gives only the series title, so read every `DUP` line
-it prints and check the pair by their opening pages.
+book, a novel nobody asked for, and a different book altogether (a 2011 novel called *Silver
+Moon* under the title of the anthology *Silver Birch, Blood Moon*). Series are the worst: of
+eighteen Dozois files five held another volume than their name said, of the Datlow and Windling
+annuals one named *Second* was the Thirteenth, and one had no text layer at all. Establish what a
+file is from inside it: a Dozois annual opens "Summation: <year>" (the Nth collection covers
+1982+N); an anthology's contents page lists the stories that should then be found in the text.
+The cheap alarm is the word count against the kind's norm (an annual is 280–370k words, an
+Infinity book about 97k, a novel 60–150k): a book at a tenth of its norm is not that book. The
+converter now names a series volume by the year its own text gives and keeps volumes of one
+series apart (`data/CLAUDE.md`); read every `DUP` and `SKIP` line it prints all the same, and
+check a pair by their opening pages.
 
 **1.5c For fetching by hand, the anthology is the unit.** A year's-best is about 300k words in
 one file against 90k for a novel, already chosen by an editor, and it brings the print
@@ -244,35 +247,38 @@ characters of its text. What the converter gets wrong: an unlabelled introductio
 else is kept; a book packed into one or two files is judged line by line only; footnotes are
 removed even where they are part of the fiction; front matter labelled in another language
 slips through; an edition that lost its scene breaks (*Count Zero*, *Mona Lisa Overdrive*)
-cannot get them back — a better edition can. What the first forty anthologies added
-(2026-10-07):
-- **It took stories for footnotes.** The full *Big Book of Cyberpunk* lost about 50,000 words —
-  seven whole stories and the section introductions — dropped under an `epub:type` note reason,
-  because the test for note apparatus matched an element that only *contained* notes. The repair
-  belongs in `books.py` (`preclean` and wherever a section is judged to be notes); whether it has
-  landed is `git log --oneline -3 data/books.py`. The catch, on any ledger, whatever the fix: list
-  every dropped section over 1,500 words and look at it — front matter is short, a story is
-  not.
+cannot get them back — a better edition can. What eighty-odd anthologies added (2026-10-07;
+how the converter works now is `data/CLAUDE.md`):
+- **It took stories for packaging, three ways.** A small footnote block at a chapter's end marked
+  the whole chapter as notes (*The Big Book of Cyberpunk* lost seven stories and five part
+  introductions, 42k words). A file whose first line said "PREFACE" or "contents" was dropped
+  whole whatever its size (one annual lost three and a half stories and its Summation, 55k
+  words). And a label rule took a story for matter by its title ("… (Excerpt)", "… Book Club").
+  The first two are fixed by rule, the third by a per-book `keep` line. The catch on any ledger,
+  whatever is fixed: **list every dropped section over 1,500 words and look at it** — front
+  matter is short, a story is not.
+- **It treated the years of a series as copies of one book** (same title, same editor) and kept
+  the longest: six annuals were lost that way before anyone read the `DUP` lines.
 - **It died on its own cleaning.** Removing a tag while walking the list of tags leaves the
   removed tag's children in the list with no attributes; two epubs crashed on it. Fixed; a crash
   is written to the ledger as `error`, and the converter then calls that file done — take the
-  `error` lines out of the ledger before running it again.
-- **mobi and PDF now have real files behind them.** An old-format mobi is split on page breaks
-  and its matter judged by heuristics only (the three Infinity books came through clean). A PDF
-  is the last resort: one paragraph per page, running heads, hyphens at line ends; when an epub
-  of the same book exists, get it.
-- **A slug says nothing when a series shares a title.** Sixteen Dozois annuals came out as
-  `dozois-year-s-best-science`, `-2` … `-13`; which volume a file is has to be read from its
-  ledger line, and the numbers are the order of arrival.
+  `error` lines out of the ledger before running it again. The same goes for a book caught
+  half-downloaded, which is recorded as `skipped` for good.
+- **A PDF is the last resort**, and its damage is invisible to the health check (2.13). When an
+  epub of the same book exists, get it.
+- **A copy of a library book must not be "repaired".** The fix that restores a lost section
+  would also change files she has already read; the library is reported on and left as it is.
 - **Things land in the wrong folder.** A novel (*Ubik*) arrived among the anthologies; the
   converter writes wherever `--out` points and does not know a library book from an anthology.
-- **Dependencies are named on the command line**, since the script is run bare:
-  `uv run --python 3.12 --with mobi --with pymupdf --with beautifulsoup4 --with lxml python data/books.py <folder> --out <dir>`.
 
-**2.8 Nothing cleaned is deleted.** A new cut goes beside the old one, and to the archive
-(`bek@100.69.218.90:/srv/music/school-archive/`). The Gutenberg source itself had been left out
-of the archive and lived only on the borrowed box; it is public (`sedthh/gutenberg_english`, 11
-GB) and now also in `/opt/llama/magdra/data/gutenberg/`.
+**2.8 No text is deleted, and text is the only thing that rule covers.** A new cut goes beside
+the old one, and to the archive on the mini (`PRESERVATION.md` has the rule and the mirror).
+Bins and indexes are made from text in minutes and are not kept twice. The Gutenberg source
+itself had been left out of the archive and lived only on the first box; it is public
+(`sedthh/gutenberg_english`, 11 GB) and now also in `/opt/llama/magdra/data/gutenberg/`. And the
+other way round: a whole day's gathering sat on the mac alone, because the mirror script predated
+it and its newest folder was outside what the script covered — after a day of collecting, ask
+where the second copy is before asking what to delete.
 
 **2.9 The same story arrives four times, and where it does was guessed wrong.** A magazine page,
 a podcast's transcript, a year's-best, the author's collection, a chapter of the novel it grew
@@ -283,7 +289,7 @@ as more magazines arrive, so its size is not known until the pile is whole. Dupl
 mostly *inside* a file (a story in a book), so dropping whole files cannot do it.
 `dedupe/` does: eight-word shingles over every shelf, a plan of drops, paragraph-span cuts and
 boilerplate strips, a clean copy built from the plan in `dedupe/out/`, sources never touched
-(`dedupe/README.md`). A cold pass over everything is about a minute, a daily one seconds:
+(`dedupe/CLAUDE.md`):
 
 ```bash
 cd ~/tower/forge/eva-goes-berserk/school/dedupe && uv run --python 3.12 dedupe.py daily   # scan, plan, apply, report.md
@@ -319,12 +325,19 @@ What bit while building it, each of which the next cleaning tool will meet again
 - **Same name, same size, same mtime, new content** was served stale forever; the index is
   keyed by the bytes now. And fifty thousand tiny files that open alike were all stripped as
   "boilerplate" until that was bounded.
+- **Run within ninety seconds of a conversion and it reads nothing.** A file that has just
+  changed is set aside as still settling; the run finishes, the report looks like yesterday's,
+  and nothing is loud about it. Wait two minutes, or read `state/skipped.jsonl`.
+- **A wider index is paid for in every run.** Adding the old fantasy, base and net-list text as
+  reference roots, so the recitation meter could check her against what she mostly reads, took
+  `plan` from half a minute to nearly ten and the state from 2 GB to 10. Know what a root is for
+  before adding it, and measure the run before and after.
 - **Its limits**: verbatim only (a translation, a text reworded in most sentences, heavy OCR
   damage are different texts to it); works under a hundred words are never cut from a book; and
-  the big shelves on ds-dev2 (Gutenberg, the light novels, the fan fiction) are not in its
-  index, so a pre-1930 story inside a modern anthology is not checked against them.
-  `dedupe.py lookup <file>` — every run of eight words a page shares with the corpus, with its
-  source — is the recitation meter's engine, with the same blind spot.
+  the light novels, the fan fiction and most of the pulp sci-fi are not in its index, because
+  their text is not on the mac. `dedupe.py lookup <file>` — every run of eight words a page
+  shares with the corpus, with its source — is the recitation meter's engine, with the same
+  blind spot.
 
 **2.10 A folder of "stories" is not all stories, and duplication is not the sieve for it.** A
 collector files whatever the site lists under fiction. By cheap signals, about a quarter of
@@ -336,9 +349,15 @@ closes with "Honorable Mentions", and puts an editor's note on the author before
 web-serial chapters carry author's notes, vote lines and next-chapter links, and some whole
 files are announcements. A low average length per file is the first sign (Apex 2,700 words,
 Deadlands 1,500) — and Fireside's 2,000 is flash fiction, so the sign is a question, not an
-answer. Kind is its own stage after the dedupe (`sieve/`, with its README once it is there):
-fiction, non-fiction, verse, stub, each kept in its own tree so nothing is decided by deletion,
-and unsure means keep — a lost story costs more than a kept essay.
+answer. Kind is its own stage after the dedupe (`sieve/CLAUDE.md`): fiction, non-fiction, verse,
+stub, each kept in its own tree so nothing is decided by deletion, and unsure means keep — a
+lost story costs more than a kept essay. Measured, the cheap count was low: Apex is 645 files of
+non-fiction, not the 430 guessed, and the whole sieve moved under 3% of the words, nearly all of
+it that one magazine and the annuals' apparatus. What its builder found by reading: a story in a
+costume (library rules, a product review) gets thrown out by its title; an essay that never
+mentions writing reads as a first-person story; dialogue lines like "Next." were taken for a
+serial's navigation and the chapter's end cut. Every judgment made by reading is an entry in
+`sieve/overrides.toml`, so a change of thresholds cannot silently flip a file somebody has read.
 
 **2.11 A scraped archive can be poisoned, and broken characters hide a text from a matcher.**
 GigaNotoSaurus's archive has injected SEO spam in about sixty stories: casino, loan and
@@ -356,6 +375,15 @@ and normalise apostrophes of every shape, the broken ones too, before comparing 
 looked like findings: a `stat`'s last-read date (5.8) and an open robots.txt (1.1). A verdict
 from one signal gets its second signal before it is said aloud.
 
+**2.13 Text out of a PDF passes the health check and is not healthy.** Fifteen anthologies came
+only as PDFs: one paragraph a page, running heads fused into the sentence they interrupt,
+letter-spaced OCR, hyphens at line ends. `health.py` calls a paragraph glued at 20,000
+characters and a page is 3,000, so it says OK; the sieve cannot find where a story starts in
+such a book, so the Summation and every editor's note stay in and the whole book is counted as
+fiction. The catch is the ledger, not the text: `format` `pdf` or the converter's PDF warning.
+`data/shelves.py` holds those books on a shelf of their own (`anth-rough`) by that mark; whether
+they are read at all is bekh's call, and the cure is an epub.
+
 ## 3. Tokenising
 
 **3.1 `prep.py` reads a flat folder of `.txt` and nothing else.** Nested folders and `.jsonl`
@@ -371,7 +399,11 @@ sample and the exporter at every snapshot. `train.py` and `export_hf.py` now fal
 `prep.py` holds out every hundredth document (or 4 MB piece of a long one); a shelf with fewer
 than a hundred gets its last 1% instead, so `picks` is watched through the end of one book and
 `released` through two files. A shelf that is cut again gets a new held-out set: fantasy 3.46
-before and 3.14 after are not a gain.
+before and 3.14 after are not a gain. From `day4` the new shelves' held-out sets are cut on the
+mac instead, by whole works, saved as a list and checked against everything she trains on or has
+read (`data/CLAUDE.md`, `shelves.py`): ten of the first 217 works drawn shared text with
+something and had to go back to training, three of them old stories already on the fantasy
+shelf.
 
 **3.4 Tokenise where the run will be.** The bins have to end on the training host, the mac has
 no room, and the source is 11 GB. The venv there needs `pyarrow` for the cut.
@@ -379,6 +411,14 @@ no room, and the source is 11 GB. The venv there needs `pyarrow` for the cut.
 **3.5 rsync carries the repo's file modes.** `scratch/export.sh` was not executable in the
 repo; copied over a working kit it gave `Permission denied` on the first export. After sending
 the kit: `chmod +x export.sh guard.sh run3.sh`.
+
+**3.6 A size is a count with her tokenizer, never words times a constant.** For a whole day
+every size the session said was words × 1.39. The constant was a slip (the library's *training*
+tokens over all its words) and wrong by shelf: the magazines and anthologies are 1.45 tokens a
+word, the serials 1.59, the library 1.41 — so the pile was 6% bigger than every number given,
+and the serials 14%. `data/shelves.py count <folder>` counts with the real tokenizer the way
+`prep.py` does and reproduces the host's totals to the token; it takes a minute. A guess is
+allowed for an afternoon; before it goes into a recipe it is measured.
 
 ## 4. The mix
 
@@ -457,10 +497,13 @@ held-out sets and sampling, reserved 14.7 GB at batch 6 on a 16.3 GB card. Batch
 died at the first eval. Choose the batch from the smoke test (6.2), not from the bench.
 
 **5.5 Disks.** The mac is tight (`df -h /System/Volumes/Data`): it keeps one snapshot per run
-and no trainable save, which goes to the mini. On the mini, big things go under `/srv/music/`
-(the external WD: one USB drive, shingled, good for large sequential files and cold storage,
-slow under many small rewrites, and no second copy of anything on it), never under the root.
-Check before a run: `df -h` on all three.
+and no trainable save. On the mini, big things go under `/srv/music/` (the external WD: one USB
+drive, shingled, good for large sequential files and cold storage, slow under many small
+rewrites, and no second copy of anything on it), never under the root. Check before a run:
+`df -h` on all three. What is kept where, and the rule for it, is `PRESERVATION.md` — written
+after finding two old runs kept whole, twice over, and a superseded copy of the entire folder
+beside them, seventy gigabytes nobody had asked for, because "keep the history" had been
+cancelled by bekh and nobody had carried the cancelling out on what was already saved.
 
 **5.5b A full btrfs root refuses writes while it shows free space.** The mini's root is btrfs
 with subvolumes; on 2026-10-07 every block was allocated with 3.4 GB "free", and the run page's
@@ -482,11 +525,18 @@ then send the destructive command, as a second command. A deleted file can be co
 of `/proc/<pid>/fd/` only while a process still holds it open; this one did not, and the file
 came back from the mac's copy, checked by sha256.
 
-**5.6 Borrowed iron vanishes.** The box was lent for days and its time ran out mid-run. Whatever
-exists only there is copied off before the next thing starts, not after.
+**5.6 Borrowed iron vanishes — and know which iron is borrowed.** The first box
+(`10.4.65.34`) was lent for days and its time ran out mid-run; whatever exists only on such a
+machine is copied off before the next thing starts, not after. ds-dev2 is not that machine: its
+disk is durable and only its card is on loan. The session carried the first box's warning over
+to ds-dev2 from a line in the docs and built a preservation plan on it (bins mirrored to the
+mini as insurance, a 4 GB save pulled through the VPN every six hours) until bekh said so. A
+fact about one host is checked before it is applied to another.
 
 **5.7 Remote hosts have no Trash.** Test leftovers (`runs/smoke`, `runs/.exporttest-…`) stay
-until bekh says delete for good; name them so they are recognisable.
+until bekh says delete for good; name them so they are recognisable. The mini has a freedesktop
+Trash folder that nothing empties (5 GB had gathered in it) and no `trash` command; a dated
+`_trash-<date>/` folder on the same disk is the habit there.
 
 ## 6. Starting a run
 
@@ -520,9 +570,12 @@ but ds-dev2's files set `add_bos_token` and the box's did not: a prompt served f
 snapshot begins a document, one from night1 or day2 continues mid-stream. Fans drawn from the
 two are not the same experiment.
 
-**6.4 `run3.sh` takes the mix from outside.** It refuses to start without `MIX` and `HOURS`;
-once bekh has said yes to a mix, write both into the file so the run's recipe is in git.
-`--init` is read only while the run folder has no `ckpt.pt`.
+**6.4 The mix comes from outside, and has to be in git all the same.** `run3.sh` refuses to
+start without `MIX` and `HOURS`; once bekh has said yes to a mix, both were written into the
+file so the run's recipe is in git. `run4.sh` reads `night/<run>/mix.txt`, and `night/<run>/` is
+ignored by git: the tracked copy of a run's mix is its recipe doc (`day4.md`) and the runbook
+step that writes the file on the host. `--init`, like every other argument, is read only while
+the run folder has no `ckpt.pt` (7.1).
 
 **6.5 A yes to the mix is not a yes to the run.** Say the plan back with the measured speed, the
 batch, the hours and the readings per shelf; bekh starts runs on numbers he has seen for that
@@ -530,16 +583,30 @@ machine.
 
 ## 7. While it runs
 
-**7.1 Stopping the trainer stops everything.** SIGTERM makes the trainer save and exit, the
-wrapper exits with it, the guard sees that and shuts down, and the watcher and the puller end on
-`guard down`. To change prompts or recipe mid-run: stop, wait for `STOPPED` and `guard down`,
-move `runs/<name>.guard.log` aside, start all five again. Done once on ds-dev2 (2026-10-07,
-to add seeds at step 911): the stop took a minute including the guard's last snapshot, the
-resume kept the plan (`RESUME from … step=911 total=84103`). Two things the chain does not do
-by itself: the puller is asleep for six hours and never sees `guard down`, so the mac's watcher
-and puller are killed by pid; and the mac's own copy `night/<name>/guard.log` still says
-`guard down`, so it is moved aside too before the watcher starts again. The trainer reads
-`prompts.txt` only at start — new seeds need this whole dance.
+**7.1 Stopping the trainer stops everything, and starting it again changes only the seeds.**
+SIGTERM makes the trainer save and exit, the wrapper exits with it, the guard sees that and shuts
+down, and the watcher and the puller end on `guard down`. To change the prompts mid-run: stop,
+wait for `STOPPED` and `guard down`, move `runs/<name>.guard.log` aside, start all five again.
+Done once on ds-dev2 (2026-10-07, to add seeds at step 911): the stop took a minute including
+the guard's last snapshot, the resume kept the plan (`RESUME from … step=911 total=84103`). Two
+things the chain does not do by itself: the puller is asleep for six hours and never sees `guard
+down`, so the mac's watcher and puller are killed by pid; and the mac's own copy
+`night/<name>/guard.log` still says `guard down`, so it is moved aside too before the watcher
+starts again. The trainer reads `prompts.txt` only at start — new seeds need this whole dance.
+**It does not change the recipe.** A resume takes every argument from the save — batch, rate,
+schedule, and the `--data` line with its shelves and weights — and ignores the command line; a
+relaunch "with a new mix" resumes the old one and says nothing. Inside a run the mix changes
+only through `runs/<name>/weights.json`, which the trainer reads at each eval, and only the
+trainer written for `day4` has it (`night/CLAUDE.md`). A new shelf needs a new run.
+
+**7.1b What the code does is read off the code, not remembered from it.** When bekh asked
+whether `day3` could be paused to take new text, the session answered from a quick look at the
+trainer: "a resume takes the shelves fresh from the command line, so a new shelf is one more
+entry on the wrapper's line." The lines it had looked at built the data from arguments; the line
+above them had replaced the arguments with the save's. The plan would have run, resumed the old
+mix, and been believed. It was dropped for another reason. Before saying what a program will do
+with someone's run: quote the line, or run it on a toy and show the output. The agent that
+later changed the trainer found this in its first hour, because it had to make a test pass.
 
 **7.2 The clock is not in my head.** Hours pass between bekh's messages. Read the run
 (`night/mon.py <run> --once`) before saying anything about it; two wrong statements in one day
@@ -549,32 +616,47 @@ came from assuming no time had passed.
 all 50,000 tokens. bekh and Claude both called her bad from those; the same snapshot through the
 loom's sampler wrote whole sentences. Judge from the loom, and do not oversell her either.
 
-**7.4 Each shelf's held-out number is the memorising alarm — read against its own noise.** A
-shelf that turns and climbs while the others fall is being recited. Watch them separately; the
-average hides it. But every eval is a different random draw of the held-out set, so each shelf
-has a swing of its own: in `day3` the big shelves moved ±0.03 from eval to eval, the small new
-ones ±0.015, and net core ±0.1 (its held-out set is 54k tokens). The first night of `day3`
-produced three "two rises in a row" that were all noise or drift (lain, base, the library), and
-one low-priority push that should not have been sent. The rule that survived: a shelf has to
-rise two evals running by more than its own swing, and a shelf she has read less than once
-cannot be reciting. The overall number's rhythm was two evals down, one a little back, the floor
-lower each time.
+**7.4 Each shelf's held-out number is the memorising alarm — and in `day3` it is six
+passages.** A shelf that turns and climbs while the others fall is being recited. Watch them
+separately; the average hides it. But know what the number is made of. This file used to say
+every eval was a fresh random draw of the held-out set. It is the opposite: `--eval-iters`
+defaults to 20, that is split over the fourteen shelves, and each shelf gets **one batch of six
+sequences, at positions drawn once from seed 0 — the same six thousand tokens at every eval**,
+whatever the size of the held-out set behind them. So a shelf's "swing" (±0.03 on the big ones,
+±0.015 on the small new ones, ±0.1 on net core) is not sampling noise, it is her moving on six
+fixed passages; a shelf's number says how she does on those, and "the fantasy shelf turned" was
+six passages of fantasy. The first night of `day3` produced three "two rises in a row" that were
+all of that kind (lain, base, the library), and one low-priority push that should not have been
+sent.
 
-`night/turn.py <run>` applies that rule (last three evals against the three before, against
-1.5 × the shelf's own median move; `turned` is rising twice over; exit 2). On its first real
-call it said fantasy had `turned` at step 25,000 (3.049, up three hundredths over six evals
-while the overall number made a new low) and one eval later fantasy read 3.025 and the flag was
-gone: a slow wobble with one noisy eval on top. The run was left alone, on three grounds that
-held — the move was 1% of the loss, she had read under one pass of that shelf in the run, and
-the same evals showed other shelves taking what fantasy gave (trade, in a model with a fixed
-budget). So a `turned` is a reason to look and never by itself a reason to act: for `day4`,
-where the trainer is meant to act on it, the verdict has to stand for a second eval first, and
-the detector's minimum is one fluke away from a false alarm for as long as an outlier low (her
-2.977 at 16,000) sits in its window. Push once for a turn and say in the watcher's prompt what
-would count as worse; a flag that pushes every hour teaches bekh to ignore the phone.
-**The missing instrument is training loss per shelf**: held-out rising while that shelf's
-training loss falls is memorising, both drifting together is trade, and the trainer logs one
-training loss for the whole mix, so the two cannot be told apart yet.
+`night/turn.py <run>` reads the numbers by rule (last three evals against the three before,
+against 1.5 × the shelf's own median move; `turned` is rising twice over). On its first real call
+it said fantasy had `turned` at step 25,000 (3.049, up three hundredths over six evals while the
+overall number made a new low) and one eval later fantasy read 3.025 and the flag was gone. The
+run was left alone, on grounds that held — the move was 1% of the loss, she had read under one
+pass of that shelf in the run, and the same evals showed other shelves taking what fantasy gave.
+What came of it:
+
+- **`day3`'s verdicts are blunt and stay blunt**: a ruler of six passages cannot be fixed inside
+  the run. Read `flat` and `rising` there as weather. The run is not acted on from them.
+- **For `day4` the ruler changes**: `EVAL_ITERS` at eight batches a shelf (48 sequences), a few
+  seconds an eval. The price is that `day4`'s curves do not continue `day3`'s point for point —
+  different passages — and the smoke test's eval is the only bridge.
+- **A shelf she has read less than once in the run cannot be reciting**, whatever its number
+  does.
+- **A turn has to stand for two evals** before it is pushed or acted on (`turn.py` exit 3; exit
+  2 is this eval only). Even that is weaker than it sounds: the windows are three evals wide, so
+  one large outlier can hold `turned` for up to three, and an outlier low in the window (her
+  2.977 at step 16,000) keeps the minimum one fluke away from a false alarm.
+- **The instrument that tells memorising from trade is training loss per shelf**: held-out
+  rising while that shelf's training loss falls is memorising, both drifting together is trade.
+  The new trainer logs it and `turn.py` reads the gap; `day3` has one training loss for the
+  whole mix and cannot tell.
+- **Nothing acts by itself.** A `turned` is a reason to look. The trainer can now zero a shelf
+  without a restart (`weights.json`), and a detector that cried wolf on its first call does not
+  get the switch: a person writes the file.
+- Push once for a turn and say in the look's prompt what would count as worse; a flag that pushes
+  every hour teaches bekh to ignore the phone.
 
 **7.4b The trainer's speed is a fifty-step window.** `status.json`'s `tok_per_s` and `eta`
 cover the last fifty steps; when a save, an eval and the samples fall in that window the line
@@ -590,13 +672,13 @@ worth keeping has to be copied aside while it is the newest.
 **7.5b The loom's server loads a file once.** `eva.x` fans on whatever `llama-server` on 8086
 had when it started, not on `models/<run>/model-latest-q8_0.gguf` as it changes under it; the
 walk at step 911 was made that way on purpose, and a day later the loom was still her at step
-911. Restart the server for a new hour (`school/CLAUDE.md`, watching and running) until the job
-that follows her exists.
+911. Restart the server by hand for a new hour (`night/CLAUDE.md`, sitting with her on the
+loom). A job that follows every snapshot was written and taken out again: bekh does not want it.
 
 **7.6 The mac's half needs the mac.** `watch.sh` and `pull_ckpt.sh` run under `caffeinate`, need
 the VPN up and `KEY` in the environment they are started from; when the mac sleeps the page
-goes stale while the run is fine. The trainable save crosses the VPN at 4.3 GB a time —
-that is why it goes every six hours and not every hour.
+goes stale while the run is fine. The trainable save crosses the VPN at 4.3 GB a time, half an
+hour of it; from `day4` it crosses once, at the end (`PRESERVATION.md`).
 
 **7.7 The hourly look is part of the run.** The bad learning rate was caught by bekh asking,
 not by a monitor, so a run is looked at on a clock. It began as every twenty minutes and bekh
@@ -605,11 +687,22 @@ thousand steps and about thirty-five minutes, so two checks in three had nothing
 said it into his chat. At twelve past the hour a check sees two new evals and the hourly
 snapshot with its pull. It is a session cron at `12 * * * *` (`/loop 1h` asks first whether to
 make it a cloud schedule — no: it needs this machine's VPN and key; the prompt is in
-`school/CLAUDE.md`): it fires only while the session is idle, so a check lands late when
+`night/CLAUDE.md`): it fires only while the session is idle, so a check lands late when
 we have been talking, and it dies with the session — a fresh session re-arms it. The report is
 five lines, one when nothing moved outside its band. What is given up is the dead-trainer alarm:
 the look is the only thing that pushes when the trainer dies, and the worst case is now an hour
 of cold card.
+
+**7.8 The last snapshot of a run is never drawn.** `watch.sh` builds the page and then pulls the
+newest snapshot, and it leaves its loop on `guard down`; so the final snapshot arrives after the
+last page was built, and neither the sampled draws nor the recitation meter ever see the model
+the run ended as. After the watcher stops, run `page.py <run>` once by hand and post the page.
+
+**7.9 A run stops paying before it ends.** From about step 30,000 of `day3`'s 84,103, twelve of
+thirteen shelves read `flat` and the overall number moved in thousandths, on shelves she had
+already read for a billion tokens at a rate still falling. The ruler is blunt (7.4), but the
+overall number says the same. Look at the curve at a third of a run and ask what the rest buys;
+the answer shaped `day4` — short, and on text she has not read.
 
 ## 8. Hands and tools
 
@@ -637,3 +730,21 @@ of cold card.
   "no git", "no code comments" and "write only under …".
 - **Count what an agent reports.** `wc -w` over its folder agreed with every report to within
   3%; that is the cost of knowing.
+- **An agent's alarm is checked against the thing, not passed on.** One reported that the run
+  page "has not reached the sheets site since 17:08"; it had read the last line of an error log
+  whose last error was hours old, and the page had uploaded four minutes earlier. Look at the
+  file's time on the server before telling bekh something is broken. The same holds for good
+  news: the session re-runs an agent's tests itself before committing its work.
+- **A page is looked at before it is called done, and by the element that changed.** The run
+  page's light scheme was shipped from a table of contrast ratios; bekh met a forest green and a
+  beet magenta. Then the check for "is the new colour live" grepped the served page for the new
+  hex value and found it — in the back-link the sheets server injects, which had been recoloured
+  a minute earlier — while the page itself was still the old build. Take the screenshot, read
+  it, and test for a string only the changed thing can contain. Before that, the hub was
+  restyled when bekh meant the run page: which page he is looking at is one `osascript` away
+  (his browser's open tabs), cheaper than building the wrong one.
+- **Who reads, who builds.** A fork of the session for work that needs everything the session
+  knows and little else — a wrap of the docs, a read of her prose with the verdict brought back
+  verbatim: it starts with the whole conversation, so it is not small, and it keeps what it
+  reads out of the session. A fresh opus with a written brief for labour that needs none of
+  that. The session writes briefs, reads reports, checks, and decides.
