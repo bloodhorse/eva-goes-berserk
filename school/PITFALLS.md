@@ -17,9 +17,11 @@ The two that cost the most, so nobody skips them:
 
 **1.1 Know what a site says before the agents leave.** "Free to read" was taken for "nobody
 minds" and a shelf was promised on it; every magazine checked turned out to have a position, and
-three fetch agents were already out when it was looked up. Whether a site's position changes what
-we do is a call for the session and bekh, per site — the point is to have the facts first. The
-three places a position lives, in one minute:
+three fetch agents were already out when it was looked up. What goes on her shelves is bekh's
+call (`CLAUDE.md`, where the text comes from) — the point here is to have the facts first, and
+to have all three of them: on 2026-10-07 Beneath Ceaseless Skies was reported "open" from its
+robots.txt alone, while every response it sends carries `x-robots-tag: noai`. The three places a
+position lives, in one minute:
 
 ```bash
 S=example.com
@@ -47,16 +49,28 @@ What was found (2026-10-06):
   trained on), qntm.org, unsongbook.com and slatestarcodex.com, localroger.com, Wildbow's blog.
 - **Not wanted**: the SCP wiki (bekh does not like the writing).
 
-**1.2 Count before promising.** The guess was "40–60 million tokens of modern weird fiction".
-What arrived was 40 million tokens, three quarters of it literary prose from 1920–1971. A size
-said before the sources are checked gets planned on. Send the census (what exists, how big, what
-it allows) before the fetch, and say an estimate is an estimate every time it is repeated.
+**1.2 Count before promising, and size a source before arguing for it.** The guess was "40–60
+million tokens of modern weird fiction". What arrived was 40 million tokens, three quarters of it
+literary prose from 1920–1971. A size said before the sources are checked gets planned on. Send
+the census (what exists, how big, what it allows) before the fetch, and say an estimate is an
+estimate every time it is repeated. The sizing is one line of arithmetic — years × issues a year
+× stories an issue × words a story × 1.39 tokens a word — and it comes before the opinion: The
+Infinite Matrix was defended on its names (Gibson, Sterling, Le Guin) and kept in a crawl for
+twenty more minutes; five years at a story or two a month is a third of a million words, and
+what came back was 32 stories and 150 short-shorts, 0.4 M tokens, the famous names having
+written columns there, which the brief excluded. SCI FICTION (five years, a story a week, long
+ones) was 3.4 M and paid for the trip. The tokens-a-word figure is her own tokenizer on the
+library: 5.4 M words came out as 7.5 M tokens.
 
-**1.3 There is no clean bulk source of modern strange prose.** `docs/research/text-sources-2026-10-06.md`
-is the survey: every careful corpus stops at 1930, hobbyists train on web crawls, the famous
-book sets were scraped or pirated. Do not spend another day looking for the trick. What exists:
-author-released fiction, a few sites with no stated position, asking, and Harvard's
-Institutional Books (gated, non-commercial; the unrenewed American books of 1930–63).
+**1.3 There is no clean bulk source of modern strange prose; there is a pile to be gathered.**
+`docs/research/text-sources-2026-10-06.md` is the survey: every careful corpus stops at 1930,
+hobbyists train on web crawls, the famous book sets were scraped or pirated. Do not spend
+another day looking for the trick. What exists, and what each turned into, is in
+`docs/research/text-sources-2026-10-07.md`: the magazines' own archives, the podcasts'
+transcripts, author-released backlists, dead magazines in the Wayback Machine, web serials, and
+anthologies fetched by hand; still untried, Harvard's Institutional Books (gated,
+non-commercial; the unrenewed American books of 1930–63). How much of it there is now is the
+last table of `dedupe/report.md`, never a number in a doc.
 
 **1.4 Public-domain traps.** An unrenewed magazine issue can hold individually renewed stories
 (*If* from March 1952, *Galaxy* from October 1950), so each story needs its own check;
@@ -67,7 +81,30 @@ Creative Commons release can be withdrawn: one of Kelly Link's two was.
 **1.5 Books fetched by hand arrive in batches of about thirty, and a third of them are wrong.**
 Of 62 files from one night's fetching, nine were the wrong language or the wrong book and six
 were not the format their name said. Budget for that: the converter's gates catch it, but the
-re-fetch list has to go back to bekh.
+re-fetch list has to go back to bekh (`library.md` keeps it).
+
+**1.5b A download's name is a claim, and the text is the evidence.** The fetcher
+(`~/tower/ephemeral/booox/`, a title list in, files out) matches by title, and what it brings
+back under a title has been: another volume of the same series (a file named *Fourteenth Annual
+Collection* held the Fifteenth, one named *Twelfth* the Seventeenth), an epub whose every
+chapter is the same error page ("sorry something went wrong loading your content", 53k words of
+front matter and nothing else), a zip of loose text files named `.epub`, RTF named `.txt`, one
+story of five thousand words under an anthology's title, a PDF of volume two of a two-volume
+book, and a novel nobody asked for. Establish what a file is from inside it: a Dozois annual
+opens "Summation: <year>"; an anthology's contents page lists the stories that should then be
+found in the text. The cheap alarm is the word count against the kind's norm (an annual is
+280–370k words, an Infinity book about 97k, a novel 60–150k): a book at a tenth of its norm is
+not that book. The converter's own duplicate check (`books.py`: same title and editor, or a
+near-identical fingerprint) is what caught the two mislabelled annuals — and the same rule would
+eat a real sibling volume whose metadata gives only the series title, so read every `DUP` line
+it prints and check the pair by their opening pages.
+
+**1.5c For fetching by hand, the anthology is the unit.** A year's-best is about 300k words in
+one file against 90k for a novel, already chosen by an editor, and it brings the print
+magazines' best (Asimov's, F&SF, Interzone) that no web archive holds. The cost is that its
+stories also arrive as magazine pages and in other anthologies; that is what `dedupe/` is for
+(2.9), and without it an anthology shelf cannot be sized. One series per genre per year: Dozois,
+Hartwell and Strahan reprint the same stories in the same year.
 
 **1.6 Fetching, once a source is chosen.**
 - Look for a ready dump on Hugging Face first (none existed for any magazine; it is a two-minute
@@ -81,6 +118,47 @@ re-fetch list has to go back to bekh.
   agent what it fetched and have it trashed; three of them had.
 - Agents add sources nobody named (Wildbow's Pact, Scott Alexander) and tag files with Finder
   tags. Read each ledger for what is in it beyond the brief.
+- A WordPress site usually answers `/wp-json/wp/v2/posts?categories=<n>`: GigaNotoSaurus's 180
+  stories were ten requests. A custom post type may not be exposed (Beneath Ceaseless Skies'
+  stories are not in `wp/v2/types`), and then the sitemap lists the pages.
+- Text gathered by another hand comes with its own doc. `shelf/gpt/` is a collector another
+  model wrote (its `README.md` is the doc, its `summary.json` the counts per source): read what
+  it says it did *not* do — there, validation, language, dates, deduplication and kind were all
+  left to us (2.9, 2.10).
+
+**1.7 A rate-limited crawl is wall-clock, not work.** SCI FICTION was about 1,100 pages; at one
+request every four seconds (5.5 in practice) that is over an hour before a word is cleaned, and
+the agent that started the fetcher sat on it for three hours and thirteen minutes of a session
+for 3.8 M tokens of text. The tokens spent waiting are few; the session's attention is not. A
+crawl is launched detached, resumable (skip what is already in `raw/`), with a heartbeat file
+(time, count, total, the url in hand), and the agent hands back; the cleaning is a second,
+short job when the pages have landed.
+
+**1.8 The Wayback Machine, for a magazine that no longer exists.** What worked
+(`modern/wayback/`, `wb.py` and each source's `fetch.py`):
+- Enumerate with the CDX API
+  (`https://web.archive.org/cdx/search/cdx?url=<prefix>*&output=json&filter=statuscode:200&filter=mimetype:text/html&collapse=urlkey`)
+  and fetch `https://web.archive.org/web/<timestamp>id_/<url>` — `id_` returns the page as it
+  was served, without the archive's toolbar.
+- One request at a time; the API throws 503 and 504 often and once a "Temporarily Offline"
+  page, and a sixty-second back-off carried every one of them. The CDX query for a large
+  prefix can time out for good (Subterranean's later years never enumerated).
+- The index page of the dead site is the census: count its links before fetching, and report
+  recovered against indexed, with the missing listed by title. The archive can hold more than
+  the index does (131 "classics" folders against 103 listed, and a 118-piece series the index
+  never mentioned).
+- **A capture can be a stale copy of another page.** The first capture of one story's opening
+  page was the second page of a different story, and half of "Abimagique" was filed under "The
+  Emperor"; it was found by the dedupe's audit, not by the fetcher. Check every page's own
+  title against the work it is being joined to, and record the rejected ones in the ledger.
+- Stories were split over several pages under names nobody would guess (`index2.html`,
+  `newman01.html`, `waldrop2.1.html`, a root page that is really page one): join by the links on
+  the page, never by a filename pattern.
+- A reprint's first-publication year is printed only on its page, and may be a collection's
+  date; a year set from memory goes in a file of its own (`scifiction/years.json`) so it can be
+  seen and checked.
+- Pages of that age are windows-1252 served as something else; repair the encoding in the
+  cleaner (2.11).
 
 ## 2. Cutting and cleaning
 
@@ -165,13 +243,118 @@ with every section it dropped and why: read that for each new book, and the firs
 characters of its text. What the converter gets wrong: an unlabelled introduction by someone
 else is kept; a book packed into one or two files is judged line by line only; footnotes are
 removed even where they are part of the fiction; front matter labelled in another language
-slips through; mobi and pdf were never run on a real file; an edition that lost its scene breaks
-(*Count Zero*, *Mona Lisa Overdrive*) cannot get them back — a better edition can.
+slips through; an edition that lost its scene breaks (*Count Zero*, *Mona Lisa Overdrive*)
+cannot get them back — a better edition can. What the first forty anthologies added
+(2026-10-07):
+- **It took stories for footnotes.** The full *Big Book of Cyberpunk* lost about 50,000 words —
+  seven whole stories and the section introductions — dropped under an `epub:type` note reason,
+  because the test for note apparatus matched an element that only *contained* notes. The repair
+  belongs in `books.py` (`preclean` and wherever a section is judged to be notes); whether it has
+  landed is `git log --oneline -3 data/books.py`. The catch, on any ledger, whatever the fix: list
+  every dropped section over 1,500 words and look at it — front matter is short, a story is
+  not.
+- **It died on its own cleaning.** Removing a tag while walking the list of tags leaves the
+  removed tag's children in the list with no attributes; two epubs crashed on it. Fixed; a crash
+  is written to the ledger as `error`, and the converter then calls that file done — take the
+  `error` lines out of the ledger before running it again.
+- **mobi and PDF now have real files behind them.** An old-format mobi is split on page breaks
+  and its matter judged by heuristics only (the three Infinity books came through clean). A PDF
+  is the last resort: one paragraph per page, running heads, hyphens at line ends; when an epub
+  of the same book exists, get it.
+- **A slug says nothing when a series shares a title.** Sixteen Dozois annuals came out as
+  `dozois-year-s-best-science`, `-2` … `-13`; which volume a file is has to be read from its
+  ledger line, and the numbers are the order of arrival.
+- **Things land in the wrong folder.** A novel (*Ubik*) arrived among the anthologies; the
+  converter writes wherever `--out` points and does not know a library book from an anthology.
+- **Dependencies are named on the command line**, since the script is run bare:
+  `uv run --python 3.12 --with mobi --with pymupdf --with beautifulsoup4 --with lxml python data/books.py <folder> --out <dir>`.
 
 **2.8 Nothing cleaned is deleted.** A new cut goes beside the old one, and to the archive
 (`bek@100.69.218.90:/srv/music/school-archive/`). The Gutenberg source itself had been left out
 of the archive and lived only on the borrowed box; it is public (`sedthh/gutenberg_english`, 11
 GB) and now also in `/opt/llama/magdra/data/gutenberg/`.
+
+**2.9 The same story arrives four times, and where it does was guessed wrong.** A magazine page,
+a podcast's transcript, a year's-best, the author's collection, a chapter of the novel it grew
+into. The guess was that the magazines would overlap each other heavily; measured, twelve
+magazines lose about 1% to each other (they publish originals, and reprint from print), the
+three podcasts about a sixth, the anthologies about a fifth — and an anthology's share rises
+as more magazines arrive, so its size is not known until the pile is whole. Duplication is
+mostly *inside* a file (a story in a book), so dropping whole files cannot do it.
+`dedupe/` does: eight-word shingles over every shelf, a plan of drops, paragraph-span cuts and
+boilerplate strips, a clean copy built from the plan in `dedupe/out/`, sources never touched
+(`dedupe/README.md`). A cold pass over everything is about a minute, a daily one seconds:
+
+```bash
+cd ~/tower/forge/eva-goes-berserk/school/dedupe && uv run --python 3.12 dedupe.py daily   # scan, plan, apply, report.md
+uv run --python 3.12 crosscheck.py all                                                   # the audit, below
+```
+
+What bit while building it, each of which the next cleaning tool will meet again:
+- **"Almost no duplicates" is also what a weak matcher reports.** The first run's low numbers
+  were true, and nobody could know that from the tool. The audit shares no code with the
+  matcher: every title-and-author found in two places, every pair of files sharing twenty whole
+  sentences, and every removed sentence that survives in no output (`crosscheck.py titles | text
+  | losses`); and once, forty real stories planted back under seventeen kinds of damage
+  (re-wrapped, hyphenated, British spelling, half the sentences edited, a new ending, one
+  paragraph per PDF page, inside a 300k-word book). Two independent scrapes of one source are a
+  free audit when they turn up: both copies of GigaNotoSaurus had to pair 180 for 180.
+- **The cut is safer than what is done around the cut.** The matcher never removed unique
+  prose; the rules for tidying after it did — a 444-word Pynchon excerpt taken for the next
+  story's introduction, a contributor list taken for a heading, an editor's 78-word note
+  removed for being small, a sign-off line taken for a title. Now an introduction goes only if
+  it names the story it introduces, and nothing goes for being small. Audit a remover by what
+  it takes *beside* its target.
+- **Shelves she has already read are never rewritten.** The first plan cut read shelves
+  against each other (a Watts novel lost its opening to the story it grew from, a Maugham
+  volume 84k words to another book): their held-out sets were cut from those exact files and
+  their bins exist. A later cleaning pass reports overlaps between read shelves and leaves both
+  alone; what she has read beats what is incoming, and every incoming-against-read hit is the
+  contamination check, in its own section of the report.
+- **Prose only one copy has, stays.** A copy is dropped whole only when the other holds
+  everything in it; a revised ending, an afterword, a hundred words the kept copy lacks, keep
+  that part of the file.
+- **A clean copy beats a rough one, by rule.** A PDF extraction or a scrape with dirt in it
+  ranks below a clean copy of the same work whatever arrived first (`rough` in `sources.toml`).
+- **Same name, same size, same mtime, new content** was served stale forever; the index is
+  keyed by the bytes now. And fifty thousand tiny files that open alike were all stripped as
+  "boilerplate" until that was bounded.
+- **Its limits**: verbatim only (a translation, a text reworded in most sentences, heavy OCR
+  damage are different texts to it); works under a hundred words are never cut from a book; and
+  the big shelves on ds-dev2 (Gutenberg, the light novels, the fan fiction) are not in its
+  index, so a pre-1930 story inside a modern anthology is not checked against them.
+  `dedupe.py lookup <file>` — every run of eight words a page shares with the corpus, with its
+  source — is the recitation meter's engine, with the same blind spot.
+
+**2.10 A folder of "stories" is not all stories, and duplication is not the sieve for it.** A
+collector files whatever the site lists under fiction. By cheap signals, about a quarter of
+Apex's files are interviews, reviews and columns; a third of The Deadlands' are poems; the three
+podcasts hold hundreds of pages under 300 words that are show notes for an episode with no
+transcript; extraction stubs exist (a Clarkesworld story of 21 words, an Infinity Plus entry of
+47); a year's-best opens with 10–27 thousand words of "Summation" on the year in publishing,
+closes with "Honorable Mentions", and puts an editor's note on the author before every story;
+web-serial chapters carry author's notes, vote lines and next-chapter links, and some whole
+files are announcements. A low average length per file is the first sign (Apex 2,700 words,
+Deadlands 1,500) — and Fireside's 2,000 is flash fiction, so the sign is a question, not an
+answer. Kind is its own stage after the dedupe (`sieve/`, with its README once it is there):
+fiction, non-fiction, verse, stub, each kept in its own tree so nothing is decided by deletion,
+and unsure means keep — a lost story costs more than a kept essay.
+
+**2.11 A scraped archive can be poisoned, and broken characters hide a text from a matcher.**
+GigaNotoSaurus's archive has injected SEO spam in about sixty stories: casino, loan and
+locksmith links as sentences appended to real paragraphs, clauses spliced into real sentences,
+whole fake paragraphs in Latin letters swapped for Cyrillic look-alikes. `health.py` sees none
+of it (it is prose-shaped). Catch it by outbound links inside a story body and by mixed-script
+words; the cleaner there keeps every edited paragraph, before and after, in
+`modern/giganotosaurus/spam_removed.jsonl`. A grep for the spam's words afterwards will hit the
+stories' own casinos and locksmiths — read the hits. Mojibake is the quiet cousin: a copy with
+`don?™t` in every contraction sat at 75–77% shingle overlap with its clean twin, in the band
+where nothing was decided. Repair encoding in the cleaner (ftfy did, on the Wayback pages),
+and normalise apostrophes of every shape, the broken ones too, before comparing anything.
+
+**2.12 Check the tool that checks.** Two of this stage's instruments were wrong in ways that
+looked like findings: a `stat`'s last-read date (5.8) and an open robots.txt (1.1). A verdict
+from one signal gets its second signal before it is said aloud.
 
 ## 3. Tokenising
 
@@ -229,6 +412,18 @@ a handoff as a job; the mix was 58% light novels, fan fiction and ballast and 3%
 had picked. Say the mix back in shares and readings before every run, even when it is "the
 agreed one".
 
+**4.5 One author can take a shelf without anyone choosing it.** Eight web serials arrived as
+one kind of thing; five of them are Wildbow, 9.7 M of 13 M words. Poured into the modern shelf
+he would have been a sixth of everything modern she reads, in plain fast serial prose. Before a
+pile becomes a shelf, count it by author as well as by source (the collector's metadata has the
+bylines), and give a body of work that size its own shelf and its own weight.
+
+**4.6 Cutting the big shelves does not hand their share to the small ones.** With the reading
+cap of 4.1, a shelf of chosen prose can take only so many tokens of a run whatever is cut
+around it; the way to make it a large share is a *shorter* run. And on a warm start the shelves
+she has already read for billions of tokens do not need to teach, only to be kept — a
+maintenance dose, not zero: a register she stops seeing she drifts from.
+
 ## 5. The machine
 
 **5.1 The card may be somebody's, and it comes back on its own.** ds-dev2's card was held whole
@@ -261,9 +456,31 @@ only: batch 6 took 12.4 GB, batch 8 took 14.85 and "fitted". The real start, wit
 held-out sets and sampling, reserved 14.7 GB at batch 6 on a 16.3 GB card. Batch 8 would have
 died at the first eval. Choose the batch from the smoke test (6.2), not from the bench.
 
-**5.5 Disks.** The mac runs at 97% full: it cannot hold a run's snapshots or a second trainable
-save, so the watcher keeps one snapshot and the trainable save goes to the mini. The mini's root
-is nearly full — write only under `/srv/music/`. Check before a run: `df -h` on all three.
+**5.5 Disks.** The mac is tight (`df -h /System/Volumes/Data`): it keeps one snapshot per run
+and no trainable save, which goes to the mini. On the mini, big things go under `/srv/music/`
+(the external WD: one USB drive, shingled, good for large sequential files and cold storage,
+slow under many small rewrites, and no second copy of anything on it), never under the root.
+Check before a run: `df -h` on all three.
+
+**5.5b A full btrfs root refuses writes while it shows free space.** The mini's root is btrfs
+with subvolumes; on 2026-10-07 every block was allocated with 3.4 GB "free", and the run page's
+uploads to `~/sheets` failed with `scp: write remote … Failure` while `df` looked survivable.
+`sudo btrfs filesystem usage /` is the real reading (`Device unallocated` near zero is the
+alarm), and `du -x` lies there too: it stops at each subvolume, so `/home` and the music
+library were invisible to it (`findmnt -t btrfs` lists them). What was on that disk and is not
+any more: the music library and three attic folders, now on the WD with symlinks left in
+`/srv/attic`; what is where today is `ssh bek@100.69.218.90 'df -h / /srv/music; ls -la /srv/attic'`.
+`/srv/backups/tower` there is the rustic repository itself — a backup, never scratch.
+
+**5.8 A last-read date is not "unused", and a check never shares a command line with the
+delete it guards.** A model file on the mini looked idle by its access time (five days) and
+was called unused. `nemo.service` loads it once at start and then sleeps: the date said nothing.
+The command that deleted it began with a grep for services naming the file — which printed the
+service — and went on to the `rm` on the same line. Ask who *opens* a file (`grep -rl <name>
+/etc/systemd/system ~/.config/systemd`, `pgrep -af <name>`, `lsof`), read the answer, and only
+then send the destructive command, as a second command. A deleted file can be copied back out
+of `/proc/<pid>/fd/` only while a process still holds it open; this one did not, and the file
+came back from the mac's copy, checked by sha256.
 
 **5.6 Borrowed iron vanishes.** The box was lent for days and its time ran out mid-run. Whatever
 exists only there is copied off before the next thing starts, not after.
@@ -343,11 +560,29 @@ rise two evals running by more than its own swing, and a shelf she has read less
 cannot be reciting. The overall number's rhythm was two evals down, one a little back, the floor
 lower each time.
 
+`night/turn.py <run>` applies that rule (last three evals against the three before, against
+1.5 × the shelf's own median move; `turned` is rising twice over; exit 2). On its first real
+call it said fantasy had `turned` at step 25,000 (3.049, up three hundredths over six evals
+while the overall number made a new low) and one eval later fantasy read 3.025 and the flag was
+gone: a slow wobble with one noisy eval on top. The run was left alone, on three grounds that
+held — the move was 1% of the loss, she had read under one pass of that shelf in the run, and
+the same evals showed other shelves taking what fantasy gave (trade, in a model with a fixed
+budget). So a `turned` is a reason to look and never by itself a reason to act: for `day4`,
+where the trainer is meant to act on it, the verdict has to stand for a second eval first, and
+the detector's minimum is one fluke away from a false alarm for as long as an outlier low (her
+2.977 at 16,000) sits in its window. Push once for a turn and say in the watcher's prompt what
+would count as worse; a flag that pushes every hour teaches bekh to ignore the phone.
+**The missing instrument is training loss per shelf**: held-out rising while that shelf's
+training loss falls is memorising, both drifting together is trade, and the trainer logs one
+training loss for the whole mix, so the two cannot be told apart yet.
+
 **7.4b The trainer's speed is a fifty-step window.** `status.json`'s `tok_per_s` and `eta`
 cover the last fifty steps; when a save, an eval and the samples fall in that window the line
 reads 8.9k instead of 11.9k and the eta jumps fifteen hours, and the page repeats it. The
 log's own `elapsed` deltas are the truth (1:43 per fifty steps, every line). Three checks in a
-row happened to land on such windows before anyone looked at the deltas.
+row happened to land on such windows before anyone looked at the deltas. An end time is
+arithmetic on the newest log line (now + its `eta`, in UTC), done each time it is said: one
+written into a doc goes stale, and one worked out in the head came out seven hours wrong.
 
 **7.5 Only the newest snapshot exists.** By bekh's word the guard deletes the older ones. An age
 worth keeping has to be copied aside while it is the newest.
@@ -363,13 +598,18 @@ the VPN up and `KEY` in the environment they are started from; when the mac slee
 goes stale while the run is fine. The trainable save crosses the VPN at 4.3 GB a time —
 that is why it goes every six hours and not every hour.
 
-**7.7 The twenty-minute look is part of the run.** The bad learning rate was caught by bekh
-asking, not by a monitor. He wants a check every twenty minutes while a run is on. It is a
-session cron (`/loop 20m`, the prompt is in `school/CLAUDE.md`): it fires only while the session
-is idle, so a check lands a few minutes after the mark when we have been talking, and it dies
-with the session — a fresh session re-arms it. The twenty-minute report is five lines; the
-numbers that matter are the per-shelf evals, and they come every thousand steps, so two checks in
-three have nothing new to say and should say so in one line.
+**7.7 The hourly look is part of the run.** The bad learning rate was caught by bekh asking,
+not by a monitor, so a run is looked at on a clock. It began as every twenty minutes and bekh
+cut it to hourly on 2026-10-07: the numbers that matter are the per-shelf evals, one every
+thousand steps and about thirty-five minutes, so two checks in three had nothing to say and
+said it into his chat. At twelve past the hour a check sees two new evals and the hourly
+snapshot with its pull. It is a session cron at `12 * * * *` (`/loop 1h` asks first whether to
+make it a cloud schedule — no: it needs this machine's VPN and key; the prompt is in
+`school/CLAUDE.md`): it fires only while the session is idle, so a check lands late when
+we have been talking, and it dies with the session — a fresh session re-arms it. The report is
+five lines, one when nothing moved outside its band. What is given up is the dead-trainer alarm:
+the look is the only thing that pushes when the trainer dies, and the worst case is now an hour
+of cold card.
 
 ## 8. Hands and tools
 
@@ -381,8 +621,17 @@ three have nothing new to say and should say so in one line.
 - **A foreground command gets about five minutes.** Anything longer on a remote host starts
   under `nohup` with a log that ends in a marker (`BUILD5-DONE`), and is waited for with
   `timeout 420 tail -n +1 -f <log> | grep -m1 <marker>`.
-- **Agents**: every spawn names `model: 'opus'`; each has about 100,000 tokens, so a fetch that
-  will outlast it runs detached with a ledger and a heartbeat; they could not write `.md` into
+- **A build gets a second agent whose only job is to break it.** The dedupe's builder passed
+  its own 61 tests and its own reading; the breaker found unique prose lost around the cuts, a
+  stale-file bug and a wipe-out on tiny files, and proved the headline number true by a method
+  the builder did not own. Give the breaker the claim to attack first and forbid it the tool's
+  own matcher.
+- **Tell a running agent when its ground moves.** Sources kept arriving under two agents;
+  a message naming the new folders (and which of them are a free test) cost a line and saved a
+  re-run. Do not change a root under an agent mid-run without saying so.
+- **Agents**: every spawn names `model: 'opus'`; a job with a long wait in it (a crawl, a
+  training run) runs detached with a ledger and a heartbeat and the agent hands back, since an
+  agent held on a sleeping command holds the session's clock too (1.7); they could not write `.md` into
   the shared checkout, so reports come back as text (the untracked `.claude/settings.json` with
   `worktree.bgIsolation: none` is what lets the main session write in the checkout at all); the brief says what to do at a site that blocks crawlers (1.1),
   "no git", "no code comments" and "write only under …".
