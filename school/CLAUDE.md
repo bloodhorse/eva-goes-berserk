@@ -53,23 +53,28 @@ never a sentence here):
   learned, the old ones not yet back to night1's sharpness, every number still falling. About
   0.95 billion tokens read in her life. Final snapshot `model-7896` and trainable `ckpt-7896.pt`
   on the mac; the mac serves `model-7896` to the loom.
-- **`day3`, running on ds-dev2 since 2026-10-06 19:22 UTC** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5
-  3500X, 30 GB RAM, Ubuntu 26.04, a team box, ours lives in `/opt/llama/magdra/`). Ready there:
-  `ckpt-7896.pt` (md5 matched), the old `bins/`, the new `bins2/`, the kit, the text in `data/`
-  and a venv (`.venv`, python 3.12 through uv in the home directory, torch 2.14.1+cu130). The
-  work project's `llama-server.service` was holding the card, idle since 2026-08-29 by its
-  journal; **bekh had it stopped on 2026-10-06** — `sudo systemctl start llama-server.service`
-  brings it back, and a reboot does too (it is enabled), which would take the card from a run.
-  Benched at her shape, compiled, training steps only: batch 8 gives 11.6k tok/s at 14.85 GB
-  reserved, batch 6 about 11.4k at 12.4 GB — **the run is batch 6 × accum 4**, the same 24,576 tokens a step as the box
-  runs; two billion tokens are about fifty hours. Export was tested there: the weights of a
-  fresh export match the box's `model-7896` tensor for tensor (ds-dev2's exports set
-  `add_bos_token`, the box's did not — a prompt served from a new snapshot starts a document).
-  bekh's yes that day covered the stop, the venv and work inside `/opt/llama/magdra/`;
-  anything else on that host is shown and asked first. The run: warm start from `ckpt-7896.pt`
-  at 8e-5 with 300 warm-up steps, fifty hours planned as 84,103 steps and 2.07 billion tokens,
-  11.8k tok/s at the hundredth step, 15.3 GB of the card in use; the recipe is in
-  `night/run3.sh`. Its page is `school-day3.html` on the sheets site.
+- **`day3`, running on ds-dev2** (`~/.claude/docs/hosts.md`: RTX 5060 Ti 16 GB, Ryzen 5 3500X,
+  30 GB RAM, Ubuntu 26.04, a team box; ours lives in `/opt/llama/magdra/` — the kit flat, `bins/`
+  the shelves as the box tokenised them, `bins2/` the re-cut and new ones, `data/` the text and
+  the Gutenberg source, `.venv` python 3.12 through uv with torch 2.14.1+cu130, `runs/day3/`).
+  Started 2026-10-06 19:22 UTC as a warm start from `ckpt-7896.pt` at 8e-5 with 300 warm-up
+  steps, batch 6 × accum 4 (24,576 tokens a step; batch 8 benches but dies at the first eval),
+  fourteen shelves at the weights in `night/run3.sh`, fifty hours planned as 84,103 steps and
+  2.07 billion tokens, about 11.9k tok/s, 15.0 GB of the card. Stopped once at step 911 to add
+  three one-line seeds and resumed from the save (`PITFALLS.md` 7.1 has how). It ends around
+  2026-10-08 20:00 UTC, with a push to the phone; **where she is right now is
+  `night/mon.py day3 --once` or the page, never a sentence here**; every status she has written
+  is `night/day3/ledger.jsonl`, and the page's sparklines are that file. How to read the evals
+  (one every 1,000 steps, about 35 minutes): the overall number falls for two and gives a little
+  back on the third, with the floor lower each time; a big shelf swings ±0.03 from eval to eval,
+  net core ±0.1 (its held-out set is tiny), the small new shelves ±0.015 — a shelf has to rise
+  two evals running by more than its own swing before it means anything, and none has yet.
+  The work project's `llama-server.service` is stopped for the run (idle since 2026-08-29 by
+  its journal; bekh's word, 2026-10-06); `sudo systemctl start llama-server.service` brings it
+  back, and a reboot does too (it is enabled), which would take the card from a run. bekh's
+  yes covered that stop, the venv and work inside `/opt/llama/magdra/`; anything else on that
+  host is shown and asked first. Test leftovers there, 6 GB, waiting for his "delete for good":
+  `runs/smoke`, `runs/smoke2`, `runs/.exporttest-20261006`.
 
 The shelves, tokens in millions. `bins2/` holds the ones cut again or new on 2026-10-06, `bins/`
 the rest as the box made them; the last two columns are the weights of `day2` and of `day3`
@@ -137,10 +142,47 @@ cd ~/tower/forge/eva-goes-berserk/school && uv run --python 3.12 night/mon.py <r
 open https://miniarch.tail004a72.ts.net:8446/school-<run>.html                        # the page, rebuilt every 2 min while the mac is awake
 ```
 
-The page's samples are the trainer's own raw draws (temperature 1, no cut-off) from four
-paragraph seeds in `night/prompts.txt` — the worst view of her; **read her through the loom's
-sampler before judging** (`llama-server -m models/<run>/model-<step>-q8_0.gguf -c 1024 -ngl 99
---port 8086`, then point the loom at 8086 — `eva/CLAUDE.md`). On ds-dev2 everything is
+The page (`night/page.py`, in the house palette: mint good, pink fail, light blue context) shows
+her age in tokens with a life bar, the stat cards, one row per shelf with a sparkline and the last
+move, **"the last thing she said"** and **"through the loom's sampler"** — the seven seeds of
+`night/prompts.txt` drawn once each from the newest hourly snapshot with min_p 0.08 and a
+repetition brake (`page.py` runs `/opt/homebrew/bin/llama-completion` on the mac when
+`models/<run>/latest` changes, and keeps the draws in `night/<run>/loomed.jsonl`) — then the
+trainer's own raw draws (temperature 1, no cut-off: her worst face) and the guard log. **Read her
+through a sampler before judging her**; the raw draws made both of us call her bad twice. To sit
+with her on the loom, serve the newest snapshot and `eva.x` fans on her (the server loads a file
+once — it has to be restarted for each new snapshot, which nothing does yet):
+
+```bash
+cd ~/tower/forge/eva-goes-berserk/school && kill $(lsof -tnP -iTCP:8086 -sTCP:LISTEN) ; \
+  (nohup llama-server -m models/day3/model-latest-q8_0.gguf -c 1024 -ngl 99 --host 127.0.0.1 --port 8086 --no-jinja > night/day3/serve.out 2>&1 < /dev/null &)
+```
+
+A walk on her is the walk scripts with `LOOM_LLAMA=http://127.0.0.1:8086` (`eva/cli/walk/README.md`);
+her first, `experiments/magdra-prophecy` and its cut, was made at step 911 (2026-10-07).
+
+**The twenty-minute look** bekh wants during a run is a session cron, and it dies with the
+session; a fresh session re-arms it with `/loop 20m` and this prompt:
+
+> Check magdra's day3 run (read school/PITFALLS.md section 7 once if you have not this session).
+> On ds-dev2 (ssh -o ConnectTimeout=15 -i $KEY BekmemetevVO@ds-dev2.x340.org, read-only, inside
+> /opt/llama/magdra): runs/day3/status.json (step, total_steps, tok_per_s, eta, eval_per_file,
+> heartbeat age from its unix field), the last two lines of runs/day3.log, the tail of
+> runs/day3.guard.log, nvidia-smi memory and temperature, df free, and whether train.py, run3.sh
+> and guard.sh are alive. On the mac: age of school/night/day3/status.json, tail of
+> school/night/day3/pull.log and watch.err, and that night/watch.sh and night/pull_ckpt.sh for
+> day3 are still running. Compare each shelf's held-out number with the previous check's. Report
+> to bekh in at most five short lines: alive or not, step and percent, speed, the shelf numbers
+> that moved (falling is good; name any shelf that rose across two evals in a row), anything odd.
+> Push to ntfy.sh/kk_alert (Priority high) only if something is wrong: trainer or guard dead,
+> heartbeat older than five minutes, a snapshot failed, a shelf climbing across two evals, disk
+> under 30 GB, card memory at the limit, or the work llama-server active again. Never restart,
+> stop or change anything on ds-dev2 without bekh's word; if the run is dead, say what the log
+> shows and wait. When status says the run is done, report the final numbers, push once at
+> default priority, and end the loop.
+
+The sheets site that serves the page is `sheets.service`, a systemd user unit on the mini since
+2026-10-07 (it had died with a reboot before that). On ds-dev2 everything is
 `/opt/llama/magdra/`, the kit flat in it: `bins/` the shelves as the box tokenised them and
 `bins2/` the re-cut and new ones (`<name>.bin`, `.val.bin`, `.json`, `.tokenizer/`), `data/` the
 text and the Gutenberg source, `runs/<name>/` (`ckpt.pt` trainable, `status.json` heartbeat,
@@ -153,9 +195,9 @@ find the host through `BOX` (default `BekmemetevVO@ds-dev2.x340.org`), `BOXDIR` 
 
 - `night/run3.sh <name>` — the trainer in a restart loop (resumes from `ckpt.pt`; the loop
   stops on DONE or on a deliberate STOPPED), silent pushes at start and end. Batch 6 × 4, the
-  warm-start rate and `--init ckpt-7896.pt` are in the file; the recipe and the hours come in as
-  `MIX="bins2/fantasy.bin:2000 …"` and `HOURS=`, and get written into the file once bekh has
-  said yes to a mix. `run.sh` and `run2.sh` are night1 and day2 as they ran on the box. **To
+  warm-start rate, `--init ckpt-7896.pt`, the mix and the fifty hours are in the file (`MIX=` and
+  `HOURS=` in the environment override them). `run.sh` and `run2.sh` are night1 and day2 as they
+  ran on the box. **To
   change prompts or recipe mid-run**: `kill -TERM` the trainer (it saves), wait for STOPPED and
   for the guard to write `guard down`, rotate `runs/<name>.guard.log` aside, relaunch all five.
 - `night/guard.sh <name>` — pauses the trainer above 88 °C until 75 °C, exports a servable
@@ -183,7 +225,8 @@ batch 12 × 2 at 18.6k and 18.9 GB.
 - `night/` — the run scripts above, `prompts.txt` (four paragraph seeds: a late train, the
   firekeepers' bell, the forum girl, the figment's line), `mon.py`, `page.py`, `fans/` (fans
   drawn through the loom's sampler, e.g. `magdra-26800.txt`); a run's pulled status, samples and
-  page land in `night/<name>/` (not in git).
+  page land in `night/<name>/` (not in git), with `loomed.jsonl` (the sampled draws per snapshot)
+  and `page-preview*.png` (the page as screenshotted at phone width).
 - `data/` — `cut.py` and `base.py` chose the books of the fantasy, sci-fi and base shelves out of
   `sedthh/gutenberg_english`; **`cut2.py` is the cut that is used** — it takes the lists of ids
   those two chose and cuts the same books again with the paragraphs right (its `cut2.tsv` has
@@ -214,7 +257,9 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   the pulp-OCR verdict); `fanfic/` — the fan-fiction cut's scripts, mapping and minors rule (the
   shelves themselves are `~/eva-olmo/school/fanfic/*.jsonl` on the box, and the "souls" and
   "wired" fan shelves were not used: Dragon Age and Mass Effect are not the blend). Raw text
-  not in git. `inbox/` — books bekh drops in (epub best), converted by script; `models/` —
+  not in git. `inbox/` — the books: `clean/` the converted library with its ledger, `held/` what converted
+  without paragraphs, `rescued/` plain-text rescues of misnamed files (Word, RTF, HTML, RAR,
+  scanned pages), `preview*/` the converter's test runs, `skip.txt` the files never converted; `models/` —
   snapshots, trainable saves and `bins/` the tokenised shelves copied from the box. `sources/` —
   the scout's notes.
 
@@ -234,18 +279,33 @@ that shape every day:
 
 ## Next
 
-**Watch `day3`** (`night/mon.py day3 --once`, the page, a look every twenty minutes — bekh wants
-that): each shelf's held-out number separately, the first hourly snapshot, the first six-hourly
-save on the mini (`night/day3/pull.log` says MATCH). Then pick her age by the numbers and by
-reading her through the loom. The finishing school after it: the cyborg corpus, Lain and the
-library — its five first (Wolfe, VALIS, Borges, Hard-Boiled Wonderland, Viriconium; four of them
-told by an *i* who remembers and cannot be trusted) — read heavily, as a short low-rate pass or
-an adapter with a dial (`SERVE.md` was never written; check the per-request LoRA scale on our
-llama.cpp builds first). Books still to come are listed in `library.md`; `inbox/held/` has one
-that converted without paragraphs (The Bloody Chamber). More text: Harvard's Institutional Books on Hugging Face (gated, non-commercial; it
-carries the unrenewed American books of 1930–63 — count its fiction from the metadata first;
-bekh has to accept the gate), an ask to Escape Pod / PodCastle / PseudoPod (2,800 stories,
-already CC BY-NC-ND, crawlers blocked — an email from bekh), `common-pile/project_gutenberg`
-(670 shelf books newer than our dump), Roy Glashan's Library (hand-typed pulps). Then the soul
-probe on her, the three dials from her shelf states, and the made-up world where "does it know
-what the text is about" is a readout.
+**While `day3` runs** (until about 2026-10-08 20:00 UTC): the twenty-minute look (above). bekh
+gets the books that are still missing (`library.md`, the gaps section) into
+`~/tower/ephemeral/booox/souls_lain_library/`; `data/books.py <that folder> --out inbox/clean`
+converts them, `data/health.py inbox/clean` is the verdict, and they join the library shelf at
+the finishing school. Make the loom follow her: a small job that restarts the 8086 server when
+`models/day3/latest` changes, so `eva.x` is always her newest hour. And the finishing-school talk,
+not yet had — the open questions: a short low-rate pass against an adapter with a dial
+(`SERVE.md` was never written; check the per-request LoRA scale on our llama.cpp builds first);
+how many tokens; the weights of the library's five (Wolfe, VALIS, Borges, Hard-Boiled Wonderland,
+Viriconium — four told by an *i* who remembers and cannot be trusted) against the cyborg corpus
+and Lain; whether the poems go in at all. Claude's view, held loosely: a pass, not an adapter,
+at a quarter of day3's rate; the library and the cyborg corpus roughly equal, Lain under them;
+read the result through the loom before any number is believed.
+
+**When it ends**: the trainer writes DONE and pushes; the guard takes a last snapshot and
+writes `guard down`; the watcher pulls it and stops; the puller makes one last copy to the mini
+(`night/day3/pull.log` says MATCH). Then: copy `runs/day3/ckpt.pt` to the mac if there is room
+(there is not, at 97% full — the mini's copy is the trainable save), serve the final snapshot to
+the loom, bekh reads her and marks, and whether the work project's llama-server goes back on is
+his and the team's call (one line, above). Then the finishing school on ds-dev2 from the final
+save, and `library.md`'s gaps as they arrive.
+
+**More text, later**: Harvard's Institutional Books on Hugging Face (gated, non-commercial; the
+unrenewed American books of 1930–63 — count its fiction from the metadata first; bekh has to
+accept the gate), an ask to Escape Pod / PodCastle / PseudoPod (2,800 stories, already
+CC BY-NC-ND, crawlers blocked — an email from bekh), `common-pile/project_gutenberg` (670 shelf
+books newer than our dump), Roy Glashan's Library (hand-typed pulps);
+`docs/research/text-sources-2026-10-06.md` is the survey. Then the soul probe on her, the three
+dials from her shelf states, and the made-up world where "does it know what the text is about" is
+a readout.
