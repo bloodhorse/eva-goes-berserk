@@ -241,3 +241,44 @@ class Crashes(Case):
         self.assertIn("rebuild", refused.stderr)
         self.assertEqual(self.run_cli(self.bench, "rebuild").returncode, 0)
         self.assertEqual(self.run_cli(self.bench, "plan").returncode, 0)
+
+
+class Stamps(Case):
+    def test_content_replaced_under_the_same_name_size_and_mtime_is_seen(self):
+        first, second = text_of(story("st1")), text_of(story("st2"))
+        second = (second + " " * len(first))[:len(first)]
+        path = self.bench.put("mag", "a.txt", first)
+        before = os.stat(path)
+        self.bench.go()
+        time.sleep(0.02)
+        path.write_text(second, encoding="utf-8")
+        os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns))
+        self.assertEqual(os.stat(path).st_mtime_ns, before.st_mtime_ns)
+        self.assertEqual(os.stat(path).st_size, before.st_size)
+        self.assertEqual(self.bench.scan()["indexed"], 1)
+        self.bench.plan()
+        self.bench.apply()
+        self.assertEqual(self.bench.out("mag", "a.txt"), second)
+
+
+class ReadOnlyState(Case):
+    def test_commands_refuse_cleanly_and_lookup_still_answers(self):
+        import dedupe
+        tale = story("ro")
+        self.bench.put("mag", "a.txt", tale)
+        self.bench.go()
+        plan_before = (self.bench.dir / "state" / "plan.jsonl").read_bytes()
+        state = self.bench.dir / "state"
+        locked = [state] + [p for p in state.rglob("*")]
+        for p in locked:
+            os.chmod(p, 0o500 if p.is_dir() else 0o400)
+        try:
+            config = str(self.bench.dir / "sources.toml")
+            for command in ("scan", "plan", "apply", "daily", "compact"):
+                self.assertEqual(dedupe.main(["--config", config, command]), 2, command)
+            found = self.bench.lookup(" ".join(tale[3].split()[:14]))
+            self.assertEqual(len(found["runs"]), 1)
+        finally:
+            for p in locked:
+                os.chmod(p, 0o700 if p.is_dir() else 0o600)
+        self.assertEqual((state / "plan.jsonl").read_bytes(), plan_before)

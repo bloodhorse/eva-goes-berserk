@@ -1,4 +1,5 @@
 import argparse
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -76,6 +77,10 @@ def main(argv=None):
             lookup.run(cfg, args.file, args.json)
     except (Busy, ConfigError, StructureChanged, materialise.NoPlan, FileNotFoundError) as error:
         print(f"dedupe: {error}", file=sys.stderr)
+        return 2
+    except (PermissionError, sqlite3.OperationalError) as error:
+        print(f"dedupe: cannot write the state or the output ({error}); nothing was changed by this command",
+              file=sys.stderr)
         return 2
     return 0
 

@@ -12,11 +12,16 @@ REQUIRED = {
     "candidates": ("common_shingle_docs", "min_shared", "min_est_words", "min_est_containment"),
     "relations": ("min_match_words", "same_work_min", "contained_min", "unit_match_min", "gap_max_words", "edge_unit_min", "edge_unit_max_words",
                   "shared_block_min_words", "shared_block_purity_min", "shared_block_clean_min",
-                  "shares_max_containment", "unique_block_words"),
-    "remnants": ("remnant_max_words", "heading_min_cut_words", "heading_max_units", "intro_max_words", "intro_max_units", "second_heading_min_units"),
+                  "shares_max_containment", "unique_block_words", "container_clean_min", "spare_min_words", "same_work_cover_min", "rough_unique_block_words"),
+    "remnants": ("remnant_max_words", "heading_min_cut_words", "heading_max_units", "intro_max_words", "intro_max_units"),
     "ambiguous": ("min_containment", "min_words"),
     "lookup": ("max_docs_per_run", "context_chars"),
-    "report": ("tokens_per_word", "clusters", "boilerplate_rows"),
+    "report": ("tokens_per_word", "clusters", "boilerplate_rows", "read_pairs", "apparatus", "long_apparatus", "long_apparatus_min_words"),
+    "crosscheck": ("container_min_bytes", "heading_max_words", "author_reach_lines", "title_reach_lines",
+                   "pair_reach_lines", "title_only_min_words", "shared_heading_max_spots", "region_words",
+                   "same_min_sentences", "same_min_share", "same_sure_sentences", "partial_min_sentences",
+                   "caught_max_survival", "missed_min_survival", "same_spot_lines",
+                   "text_sentence_words", "text_max_files", "text_min_sentences", "loss_examples", "loss_rows", "loss_run_sentences"),
 }
 
 
@@ -40,6 +45,8 @@ class Source:
         self.kind = raw["kind"]
         self.priority = int(raw.get("priority", 0))
         self.container = bool(raw.get("container", False))
+        self.strip = bool(raw.get("boilerplate", raw["kind"] != "read"))
+        self.rough = bool(raw.get("rough", False))
         self.format = raw.get("format", "txt")
         self.text_field = raw.get("text_field", "text")
         self.id_field = raw.get("id_field", "id")
@@ -75,6 +82,33 @@ def glob_pattern(glob):
     return re.compile("".join(out) + r"\Z")
 
 
+def shelf_sources(base, raw):
+    missing = [k for k in ("path", "kind") if k not in raw]
+    if missing:
+        raise ConfigError(f"shelf {raw.get('path', '?')}: missing {', '.join(missing)}")
+    root = (base / raw["path"]).resolve()
+    skip = set(raw.get("skip", []))
+    priorities = raw.get("priorities", {})
+    try:
+        folders = sorted(e.name for e in root.iterdir() if e.is_dir() and not e.name.startswith("."))
+    except OSError:
+        folders = sorted(priorities)
+    out = []
+    for folder in sorted(set(folders) | set(priorities)):
+        if folder in skip:
+            continue
+        one = {k: v for k, v in raw.items()
+               if k not in ("path", "metadata", "priorities", "skip", "prefix", "rough")}
+        one["rough"] = folder in raw.get("rough", [])
+        one["name"] = raw.get("prefix", "") + folder
+        one["path"] = str(root / folder)
+        one["priority"] = priorities.get(folder, raw.get("priority", 0))
+        if raw.get("metadata"):
+            one["metadata"] = str((base / raw["metadata"]).resolve() / folder)
+        out.append(Source(base, one))
+    return out
+
+
 class Config:
     def __init__(self, path):
         self.file = Path(path).resolve()
@@ -94,10 +128,14 @@ class Config:
             if absent:
                 raise ConfigError(f"{thresholds_file}: [{table}] lacks {', '.join(absent)}")
             setattr(self, table, Section(tables[table]))
-        self.sources = sorted((Source(base, s) for s in raw.get("source", [])), key=lambda s: s.name)
+        found = [Source(base, s) for s in raw.get("source", [])]
+        for shelf in raw.get("shelf", []):
+            found.extend(shelf_sources(base, shelf))
+        self.sources = sorted(found, key=lambda s: s.name)
         names = [s.name for s in self.sources]
         if len(set(names)) != len(names):
-            raise ConfigError("two sources share a name")
+            twice = sorted({n for n in names if names.count(n) > 1})
+            raise ConfigError(f"two sources share a name: {', '.join(twice)} (give a shelf a prefix, or rename one)")
         self.by_name = {s.name: s for s in self.sources}
 
     def structure_key(self):

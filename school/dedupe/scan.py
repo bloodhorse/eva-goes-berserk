@@ -39,7 +39,7 @@ def stat_of(path):
         st = os.stat(path)
     except OSError:
         return None
-    return st.st_size, st.st_mtime_ns
+    return st.st_size, max(st.st_mtime_ns, st.st_ctime_ns), st.st_mtime_ns
 
 
 def read_settled(full, before):
@@ -167,13 +167,13 @@ class Scanner:
                 self.scan_jsonl(source, rel, full, stat, have, seen, settle_ns)
                 continue
             seen.add(rel)
-            if have.get(rel) == stat:
+            if have.get(rel) == stat[:2]:
                 self.counts["unchanged"] += 1
                 continue
-            if bad.get(rel) == stat:
+            if bad.get(rel) == stat[:2]:
                 self.counts["skipped"] += 1
                 continue
-            if time.time_ns() - stat[1] < settle_ns:
+            if time.time_ns() - stat[2] < settle_ns:
                 self.skip(source, rel, stat, "settling")
                 continue
             if stat[0] > self.cfg.scan.max_file_bytes:
@@ -212,11 +212,11 @@ class Scanner:
     def scan_jsonl(self, source, rel, full, stat, have, seen, settle_ns):
         prefix = rel + "#"
         mine = [p for p in have if p.startswith(prefix)]
-        if mine and all(have[p] == stat for p in mine):
+        if mine and all(have[p] == stat[:2] for p in mine):
             seen.update(mine)
             self.counts["unchanged"] += len(mine)
             return
-        if time.time_ns() - stat[1] < settle_ns:
+        if time.time_ns() - stat[2] < settle_ns:
             seen.update(mine)
             self.skip(source, rel, stat, "settling")
             return

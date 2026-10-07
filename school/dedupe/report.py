@@ -1,10 +1,48 @@
-import glob
 import json
 import os
+import re
 import time
 from collections import defaultdict
 
+import ledgers
+import words
 from store import read_jsonl, write_atomic
+
+
+def shape_of(text):
+    return " ".join(re.findall(r"[a-z0-9]+", text.casefold()))
+
+
+def long_sections(cfg, source, path):
+    try:
+        with open(source.path / path, encoding="utf-8-sig", errors="replace") as f:
+            units = [u[0] for u in words.units(f.read(), cfg.structure.long_paragraph_words)]
+    except OSError:
+        return []
+    wanted = [shape_of(name) for name in cfg.report.long_apparatus]
+    found = []
+    u = 0
+    while u < len(units):
+        first = units[u].strip().split("\n")[0]
+        shape = shape_of(first)
+        listed = u + 1 < len(units) and words.heading_shaped(units[u + 1], len(units[u + 1].split()),
+                                                             cfg.structure.heading_max_words)
+        if listed or not (len(shape.split()) <= 6 and any(shape == w or shape.startswith(w + " ") for w in wanted)):
+            u += 1
+            continue
+        count = 0
+        v = u + 1
+        while v < len(units):
+            size = len(units[v].split())
+            if count >= cfg.report.long_apparatus_min_words and words.heading_shaped(
+                    units[v], size, cfg.structure.heading_max_words):
+                break
+            count += size
+            v += 1
+        if count >= cfg.report.long_apparatus_min_words:
+            found.append((" ".join(units[u].split())[:60], count))
+        u = v
+    return found
 
 
 class Titles:
@@ -14,19 +52,14 @@ class Titles:
 
     def ledger(self, source):
         if source.name not in self.ledgers:
-            table = {}
-            for path in sorted(glob.glob(str(source.ledger))) if source.ledger else []:
-                for record in read_jsonl(path):
-                    title = record.get("title")
-                    if not title:
-                        continue
-                    author = record.get("author") or ", ".join(record.get("authors") or [])
-                    for key in (record.get("slug"), os.path.splitext(os.path.basename(record.get("file") or ""))[0],
-                                record.get("dir"), str(record.get("id", ""))):
-                        if key:
-                            table.setdefault(str(key), (title, author))
-            self.ledgers[source.name] = table
+            self.ledgers[source.name] = ledgers.table(source)
         return self.ledgers[source.name]
+
+    def record(self, name):
+        source = self.cfg.by_name.get(name["source"])
+        if source is None or not source.ledger:
+            return None
+        return ledgers.find(self.ledger(source), name["path"])
 
     def of(self, name):
         source = self.cfg.by_name.get(name["source"])
@@ -42,8 +75,9 @@ class Titles:
                     return record["title"], author
             except (OSError, ValueError):
                 pass
-        if source.ledger:
-            return self.ledger(source).get(stem) or self.ledger(source).get(name["path"].rpartition("#")[2])
+        record = self.record(name)
+        if record and record.get("title"):
+            return record["title"], record.get("author") or ", ".join(record.get("authors") or [])
         return None
 
     def show(self, name):
@@ -165,10 +199,25 @@ def run(cfg, say=print):
         return "edited" if r["action"] == "edit" else "kept"
 
     def pair_line(p):
-        return (f"- {p['relation']}{' (no action)' if not p['acted'] else ''}: {titles.show(p['a'])} "
+        return (f"- {p['relation']}{' (no action)' if not p['acted'] and not p.get('both_read') else ''}: "
+                f"{titles.show(p['a'])} "
                 f"[{outcome(p['a'])}, {n(p['words_a'])} w] ↔ {titles.show(p['b'])} "
                 f"[{outcome(p['b'])}, {n(p['words_b'])} w] — {n(p['matched_words'])} words matched, "
                 f"{p['of_a']:.0%} of the first, {p['of_b']:.0%} of the second")
+
+    settled = [p for p in pairs if p.get("both_read")]
+    settled.sort(key=lambda p: (-p["matched_words"], key_of(p["a"]), key_of(p["b"])))
+    add("## Read against read (left alone)")
+    add("")
+    add(f"{len(settled)} pairs, {n(sum(p['matched_words'] for p in settled))} matched words. Both texts are on "
+        "shelves she has read, with held-out splits cut from them: neither is dropped, cut or stripped for the "
+        "other. The largest:")
+    add("")
+    for p in settled[:cfg.report.read_pairs]:
+        add(pair_line(p))
+    if len(settled) > cfg.report.read_pairs:
+        add(f"- and {len(settled) - cfg.report.read_pairs} smaller pairs, in `state/pairs.jsonl` with `both_read`")
+    add("")
 
     crossing = [p for p in pairs if {kind.get(p["a"]["source"]), kind.get(p["b"]["source"])} == {"read", "incoming"}]
     crossing.sort(key=lambda p: (-p["matched_words"], key_of(p["a"]), key_of(p["b"])))
@@ -234,7 +283,7 @@ def run(cfg, say=print):
     containers.sort(key=lambda r: -sum(c["words"] for c in r["cuts"]))
     add("## Containers: what was cut out of each")
     add("")
-    add("| file | words in | works found inside | words cut | intros, headings, remnants removed | words kept |")
+    add("| file | words in | works found inside | words cut | intros and headings removed | words kept |")
     add("|---|---:|---:|---:|---:|---:|")
     for r in containers:
         works = [c for c in r["cuts"] if c.get("counterpart")]
@@ -245,13 +294,43 @@ def run(cfg, say=print):
     stranded = [(r, m) for r in plan for m in r.get("remnants", []) if m["words"] <= 600]
     add("### Remnants kept beside or between cuts")
     add("")
-    add(f"Unmatched text stranded next to a cut and longer than {cfg.remnants.remnant_max_words} words stays in "
-        f"the output; these are the ones under 600 words ({len(stranded)}).")
+    add(f"Unmatched text stranded next to a cut stays in the output unless it is nothing but headings; these are "
+        f"the ones under 600 words ({len(stranded)}).")
     add("")
     for r, m in sorted(stranded, key=lambda item: (key_of(item[0]), item[1]["units"])):
         add(f"- `{r['source']}:{r['path']}` paragraphs {m['units'][0]}–{m['units'][1]}: {n(m['words'])} words"
             f"{', between two cuts' if m['between_cuts'] else ', at an edge'}")
     add("")
+
+    shelves = [s for s in cfg.sources if s.container and s.ledger]
+    if shelves:
+        wanted = [" ".join(re.findall(r"[a-z0-9]+", name.casefold())) for name in cfg.report.apparatus]
+        add("### Editorial apparatus in container books")
+        add("")
+        add("Sections of a book that are the editor's and not a story, by the heading the converter's ledger "
+            "gives them. They are unique text, so nothing here removes them; the sizes are for deciding by hand.")
+        add("")
+        add("| book | section | words |")
+        add("|---|---|---:|")
+        for source in shelves:
+            for r in sorted((r for r in plan if r["source"] == source.name), key=key_of):
+                record = titles.record(r) or {}
+                total = 0
+                for section in record.get("sections_kept") or []:
+                    start = " ".join(str(section.get("start") or "").split())
+                    shape = " ".join(re.findall(r"[a-z0-9]+", start.casefold()))
+                    if any(shape == w or shape.startswith(w + " ") for w in wanted) and len(shape.split()) <= 8:
+                        add(f"| `{r['path']}` | {start[:60]} | {n(section.get('words', 0))} |")
+                        total += section.get("words", 0)
+                mine = [shape_of(row) for row in lines[-12:] if row.startswith(f"| `{r['path']}`")]
+                for start, count in long_sections(cfg, source, r["path"]):
+                    if any(shape_of(start).split()[0] in row.split() for row in mine):
+                        continue
+                    add(f"| `{r['path']}` | {start} (by its shape in the text) | {n(count)} |")
+                    total += count
+                if total:
+                    add(f"| `{r['path']}` | **all of the above** | {n(total)} of {n(r['words'])} |")
+        add("")
 
     band = sorted((p for p in pairs if p["ambiguous"]),
                   key=lambda p: (-p["matched_words"], key_of(p["a"]), key_of(p["b"])))

@@ -79,7 +79,7 @@ def run(cfg, say=print):
             target = target_of(cfg, source, record["path"])
             action = "kept" if record["action"] == "keep" else "edited"
             before = previous.get((record["source"], record["path"]))
-            if (before and before.get("plan_key") == key and before.get("source_stat") == list(stat)
+            if (before and before.get("plan_key") == key and before.get("source_stat") == list(stat[:2])
                     and before.get("action") == action and stat_of(target) is not None
                     and stat_of(target)[0] == before.get("out_bytes")):
                 ledger.append(before)
@@ -107,7 +107,7 @@ def run(cfg, say=print):
                 tally["written"] += 1
             expected.add(target)
             ledger.append(dict(entry, action=action, words_out=len(made.decode("utf-8-sig").split()),
-                               out=str(target.relative_to(cfg.out)), out_bytes=len(made), source_stat=list(stat)))
+                               out=str(target.relative_to(cfg.out)), out_bytes=len(made), source_stat=list(stat[:2])))
             tally[action] += 1
         trashed = sweep(cfg, expected)
         write_jsonl(cfg.out / "ledger.jsonl", ledger)

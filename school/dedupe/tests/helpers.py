@@ -84,9 +84,11 @@ class Bench:
             lines.append(f"[override.{table}]")
             lines.extend(f"{key} = {json.dumps(value)}" for key, value in patch.items())
             lines.append("")
-        for name, (kind, priority) in self.sources.items():
+        for name, (kind, priority, *more) in self.sources.items():
             lines += ["[[source]]", f'name = "{name}"', f'path = "roots/{name}"', 'glob = "**/*.txt"',
-                      f'kind = "{kind}"', f"priority = {priority}", f"container = {json.dumps(name == 'anth')}", ""]
+                      f'kind = "{kind}"', f"priority = {priority}", f"container = {json.dumps(name == 'anth')}"]
+            lines += [f"{key} = {json.dumps(value)}" for key, value in (more[0] if more else {}).items()]
+            lines.append("")
         lines.extend(self.extra)
         (self.dir / "sources.toml").write_text("\n".join(lines))
 

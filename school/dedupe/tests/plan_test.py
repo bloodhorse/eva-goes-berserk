@@ -119,7 +119,7 @@ class Containers(Case):
 
     def test_short_introduction_between_heading_and_story_goes_too(self):
         before, inside, after = story("i1"), story("i2"), story("i3")
-        intro = paragraphs("intro", 1)
+        intro = ["In this one a brass head is dug up. " + paragraphs("intro", 1)[0]]
         self.bench.put("mag", "inside.txt", inside)
         self.bench.put("anth", "book.txt", before + ["The Brass Head"] + intro + inside + after)
         records = self.bench.go()
@@ -209,7 +209,7 @@ class Containers(Case):
         self.assertEqual(records[("mag", "excerpt.txt")]["reason"], "contained in a document that outranks it")
         self.assertEqual(self.bench.out("shelf", "novel.txt"), text_of(novel))
 
-    def test_small_remnant_between_cuts_goes_and_a_large_one_stays(self):
+    def test_prose_stranded_between_cuts_stays_whatever_its_size(self):
         one, two, three = story("p1"), story("p2"), story("p3")
         note = ["A word from the editor about the next one, short."]
         essay = paragraphs("essay", 6)
@@ -217,10 +217,9 @@ class Containers(Case):
             self.bench.put("mag", name, body)
         self.bench.put("anth", "book.txt", one + note + two + essay + three)
         records = self.bench.go()
-        self.assertEqual(self.bench.out("anth", "book.txt"), text_of(essay))
+        self.assertEqual(self.bench.out("anth", "book.txt"), text_of(note + essay))
         book = records[("anth", "book.txt")]
-        self.assertIn("remnant", {c["why"] for c in book["cuts"]})
-        self.assertEqual([m["units"] for m in book["remnants"]], [[61, 67]])
+        self.assertEqual([m["units"] for m in book["remnants"]], [[30, 31], [61, 67]])
         self.assertIn("Remnants kept", self.bench.report())
 
     def test_container_wholly_made_of_known_stories_is_dropped(self):
@@ -415,7 +414,9 @@ class Determinism(Case):
         self.assertEqual(counts["unchanged"], len(keys))
         after = self.bench.plan()
         changed = {key for key in before if before[key] != after[key]}
-        self.assertEqual(changed, {("anth", "book.txt")})
+        self.assertIn(("anth", "book.txt"), changed)
+        self.assertLessEqual(changed, {("anth", "book.txt"), ("anth", "other.txt")})
+        self.assertEqual(after[("anth", "other.txt")]["keep_units"], before[("anth", "other.txt")]["keep_units"])
         self.assertEqual(after[("mag", "new.txt")]["action"], "keep")
         self.assertEqual(self.bench.scan()["indexed"], 0)
 

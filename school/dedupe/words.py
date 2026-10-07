@@ -4,13 +4,14 @@ import unicodedata
 
 import numpy as np
 
-NORMALISER_VERSION = 5
+NORMALISER_VERSION = 8
 
 ALNUM = r"[^\W_]"
 GLUE = "'’‘ʼ＇­​‌‍⁠﻿̀-ͯ"
 LINE_HYPHEN = r"[-‐‑]\n[ \t]*(?=[a-z])"
-WORD = re.compile(rf"{ALNUM}+(?:(?:[{GLUE}]+|{LINE_HYPHEN}){ALNUM}+)*")
-GLUE_RUN = re.compile(rf"[{GLUE}]+|[-‐‑]\n[ \t]*")
+BROKEN_APOSTROPHE = r"\?™|â€™|â€˜|Â´|\ufffd"
+WORD = re.compile(rf"{ALNUM}+(?:(?:[{GLUE}]+|{BROKEN_APOSTROPHE}|{LINE_HYPHEN}){ALNUM}+)*")
+GLUE_RUN = re.compile(rf"[{GLUE}]+|{BROKEN_APOSTROPHE}|[-‐‑]\n[ \t]*")
 PIECE = re.compile(rf"{ALNUM}+")
 BLANK_LINE = re.compile(r"\n[ \t\f\v]*(?:\n[ \t\f\v]*)+")
 SENTENCE_END = re.compile(r"[.!?…]+[\"'”’)\]]*\s+(?=[\"'“‘(\[]?[A-Z0-9])")
@@ -21,9 +22,13 @@ INNER_HEADINGS = {"chapter", "part", "book", "section", "act", "scene", "epilogu
                   "end", "fin"}
 NUMERAL = re.compile(r"[\divxlcdm]+", re.I)
 DIGIT = re.compile(r"\d")
+YEAR_LINE = re.compile(r"[\W_]*\d{4}[\W_]*")
+NAME_SUFFIX = re.compile(r"\b(?:Jr|Sr|JR|SR)\.$")
+DASHES = "-‐‑‒–—―"
 
 FLAG_CONTINUES = 1
 FLAG_HEADING = 2
+FLAG_SLIGHT = 4
 
 MIX_A = np.uint64(0xBF58476D1CE4E5B9)
 MIX_B = np.uint64(0x94D049BB133111EB)
@@ -108,7 +113,9 @@ def heading_shaped(unit_text, word_count, heading_max_words):
     stripped = unit_text.strip()
     if not stripped or "\n" in stripped or word_count == 0 or word_count > heading_max_words:
         return False
-    if not (stripped[-1].isalnum() or stripped[-1] in ")?!"):
+    if stripped[0] in DASHES:
+        return False
+    if not (stripped[-1].isalnum() or stripped[-1] in ")?!" or NAME_SUFFIX.search(stripped)):
         return False
     words = [w for w in stripped.split() if any(c.isalnum() for c in w)]
     if not words:
@@ -168,6 +175,8 @@ def encode(text, long_paragraph_words, heading_max_words):
         flag = FLAG_CONTINUES if continues else 0
         if not continues and heading_shaped(unit_text, count, heading_max_words):
             flag |= FLAG_HEADING
+        if not continues and YEAR_LINE.fullmatch(unit_text.strip()):
+            flag |= FLAG_SLIGHT
         flags.append(flag)
     enc = Encoded()
     enc.codes = np.asarray(codes, dtype="<u4")
@@ -198,3 +207,12 @@ def shingles(codes, size):
 
 def sampled(unique_hashes, modulus):
     return unique_hashes[unique_hashes % np.uint64(modulus) == 0]
+
+
+def name_tokens(unit_text):
+    out = set()
+    for raw in WORD.findall(unit_text):
+        for token in normalise_word(raw):
+            if len(token) >= 3 and token not in SMALL_WORDS and not token.isdigit():
+                out.add(token)
+    return out

@@ -62,12 +62,18 @@ min_est_containment = 0.25
 min_match_words = 100
 # two documents are the same work when each contains at least this share of the other's shingles
 same_work_min = 0.75
+# ... or when matched blocks cover this share of the words of both (one text under scattered damage: a mis-decoded apostrophe in every contraction)
+same_work_cover_min = 0.85
 # a document is contained in another when one block of the other holds at least this share of its shingles
 contained_min = 0.8
 # a paragraph counts as matched when this share of its words lie inside matched shingles
 unit_match_min = 0.75
 # matched paragraphs separated by at most this many unmatched words are one block (an edited sentence, a running head)
 gap_max_words = 300
+# ... but a run of unmatched paragraphs inside a block of at least this many words is not cut with it: it is prose only this copy has
+spare_min_words = 100
+# a rough copy (a root marked rough, or a ledger naming a PDF) is spared nothing inside a block and is dropped whole below this many unmatched words: what only a rough copy has is mostly damage
+rough_unique_block_words = 1500
 # the one paragraph touching a block's edge joins it when this share of its words are matched (a title glued to a first line)
 edge_unit_min = 0.5
 # ... and it is at most this many words
@@ -78,24 +84,24 @@ shared_block_min_words = 800
 shared_block_purity_min = 0.8
 # ... and this share of everything the pair has in common lies inside such blocks
 shared_block_clean_min = 0.9
+# in a container root the same holds from this share up: the rest of a casebook may quote the work it excerpts
+container_clean_min = 0.5
 # a shared block is cut only from a document that the other covers less than this, or that keeps a unique block of unique_block_words
 shares_max_containment = 0.5
-# a copy holding an unmatched block of at least this many words is not dropped whole: only its matched blocks are cut
-unique_block_words = 1500
+# a copy holding an unmatched block of at least this many words, or a spared run, is not dropped whole: only its matched blocks are cut
+unique_block_words = 250
 
 [remnants]
-# unmatched text stranded between two cuts, or between a cut and the file's edge, is removed when at most this many words
+# headings stranded between two cuts, or between a cut and the file's edge, are removed when together at most this many words; prose never is
 remnant_max_words = 80
 # headings and introductions are looked for only before a cut of at least this many words (a work, not a fragment)
 heading_min_cut_words = 1000
-# up to this many consecutive headings directly before a cut go with the cut (title, byline)
+# up to this many consecutive headings directly before a cut go with the cut (title, byline); a longer run is a contents page and stays
 heading_max_units = 4
-# text between such headings and the cut goes too when at most this many words (an editor's introduction)
+# text between such headings and the cut goes too when at most this many words and it names a word of the heading (an editor's introduction)
 intro_max_words = 500
 # ... and at most this many paragraphs
 intro_max_units = 6
-# a second heading block further up (author and title, then the introduction, then the title again) goes too when it has at least this many headings
-second_heading_min_units = 2
 
 [ambiguous]
 # a pair with no action is listed for a human when one document contains at least this share of the other
@@ -116,3 +122,55 @@ tokens_per_word = 1.39
 clusters = 50
 # how many recurring boilerplate paragraphs are listed per source
 boilerplate_rows = 8
+# how many of the largest read-against-read pairs are listed
+read_pairs = 40
+# where the ledger marks no such section, a line opening with one of these is looked for in the text itself
+long_apparatus = ["summation", "honorable mentions", "honourable mentions"]
+# ... and the section runs to the first heading after at least this many words
+long_apparatus_min_words = 1200
+# a section of a container book whose first line opens with one of these is listed as editorial apparatus
+apparatus = ["summation", "honorable mentions", "honourable mentions", "introduction", "foreword", "preface", "afterword", "acknowledgments", "acknowledgements", "permissions", "about the author", "about the authors", "about the editor", "about the editors", "about the authors and the translators", "contributors", "notes on contributors", "also edited by", "also by", "further reading", "recommended reading", "copyright", "contents"]
+
+[crosscheck]
+# a file of at least this many bytes is read for story headings inside it (a book, not a story)
+container_min_bytes = 90000
+# a line of at most this many words can be a title or a byline
+heading_max_words = 14
+# an author's surname must stand within this many lines of a title line
+author_reach_lines = 6
+# where a book heads a story with the author alone, the title must stand in the text of this many lines below
+title_reach_lines = 3
+# two books hold the same work when a heading they share has a second shared heading within this many lines
+pair_reach_lines = 3
+# a work whose source names no author is looked for by title alone when the title has at least this many words
+title_only_min_words = 3
+# a heading found in more places than this is furniture, not a title
+shared_heading_max_spots = 12
+# the text read after a heading inside a book, in words
+region_words = 8000
+# two places hold the same text when they share at least this many sentences of 8+ words
+same_min_sentences = 10
+# ... and that is at least this share of the smaller place
+same_min_share = 0.5
+# ... or they share at least this many sentences whatever the share
+same_sure_sentences = 60
+# fewer shared sentences than this is a different text under the same title
+partial_min_sentences = 5
+# a pair is caught when one output holds at most this share of the shared sentences
+caught_max_survival = 0.1
+# a pair is missed when both outputs still hold at least this share of them
+missed_min_survival = 0.9
+# two findings in the same two files whose headings stand within this many lines of each other are one work
+same_spot_lines = 12
+# the audit by text counts sentences of at least this many words
+text_sentence_words = 10
+# ... found in at most this many files (more is furniture)
+text_max_files = 6
+# ... and lists every two files that share at least this many of them
+text_min_sentences = 20
+# the audit of losses keeps this many example sentences per file
+loss_examples = 5
+# ... and prints this many of the files that lost most
+loss_rows = 40
+# ... and calls this many lost sentences in a row a passage
+loss_run_sentences = 3

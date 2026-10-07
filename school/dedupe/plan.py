@@ -4,6 +4,7 @@ from collections import OrderedDict, defaultdict
 
 import numpy as np
 
+import ledgers
 import words
 from config import KIND_RANK
 from scan import source_text
@@ -15,7 +16,7 @@ CACHE_BYTES = 400 * 1024 * 1024
 class Doc:
     __slots__ = ("num", "id", "words", "ends", "unit_words", "hashes", "prefixes", "flags", "sample", "files",
                  "rep", "reference", "kind_rank", "priority", "b0", "b1", "body_words", "body_key", "leader",
-                 "container", "position", "fate", "common")
+                 "container", "position", "fate", "common", "clean", "read")
 
     def unit_codes(self):
         return np.diff(self.ends.astype(np.int64), prepend=0)
@@ -49,6 +50,15 @@ def load_docs(cfg, index):
             doc.common = 0.0
             docs[doc_id] = doc
         doc.files.append((source, path))
+    tables = {}
+
+    def clean(f):
+        if cfg.by_name[f[0]].rough:
+            return False
+        if f[0] not in tables:
+            tables[f[0]] = ledgers.table(cfg.by_name[f[0]])
+        return not ledgers.rough(ledgers.find(tables[f[0]], f[1]))
+
     for doc in docs.values():
         doc.files.sort()
         real = [f for f in doc.files if cfg.by_name[f[0]].kind != "reference"]
@@ -57,6 +67,8 @@ def load_docs(cfg, index):
         best = max(cfg.by_name[f[0]].rank for f in pool)
         doc.rep = min(f for f in pool if cfg.by_name[f[0]].rank == best)
         doc.kind_rank, doc.priority = best
+        doc.read = doc.kind_rank == KIND_RANK["read"]
+        doc.clean = clean(doc.rep)
         doc.b0, doc.b1 = 0, len(doc.ends)
     return docs
 
@@ -164,7 +176,10 @@ def strip_edges(cfg, doc, sets):
     if not any(codes[u] > 0 for u in range(b0, b1)):
         loose = [u for u in list(range(0, b0)) + list(range(b1, n))
                  if codes[u] > 0 and u not in head_marks and u not in tail_marks]
-        if loose:
+        shaped = [u for u in head_marks | tail_marks
+                  if not (codes[u] >= b.min_words and (int(doc.hashes[u]) in identical[0]
+                                                       or int(doc.hashes[u]) in identical[1]))]
+        if loose or shaped:
             return 0, n
     return b0, b1
 
@@ -235,6 +250,8 @@ class Comparer:
         matched = np.flatnonzero((unit_len > 0) & (unit_cover >= r.unit_match_min * unit_len))
         if len(matched) == 0:
             return [], int(word_sum[-1])
+        is_matched = np.zeros(len(unit_len), dtype=bool)
+        is_matched[matched] = True
         gaps = word_sum[matched[1:]] - word_sum[matched[:-1] + 1]
         breaks = np.flatnonzero(gaps > r.gap_max_words)
         firsts = np.concatenate([[matched[0]], matched[breaks + 1]])
@@ -254,7 +271,24 @@ class Comparer:
             cursor = u1 + 1
             c0, c1 = int(starts[u0]), int(ends[u1])
             inside = ordered[c0:max(c0, c1 - self.size + 1)][hit[c0:max(c0, c1 - self.size + 1)]]
+            spared = []
+            run_start, run_words = None, 0
+            for u in range(u0, u1 + 2):
+                unmatched = u <= u1 and not is_matched[u]
+                if unmatched and (unit_len[u] > 0 or run_start is not None):
+                    if run_start is None:
+                        run_start = u
+                    run_words += int(unit_words[u])
+                    continue
+                if run_start is not None:
+                    stop = u
+                    while stop > run_start and unit_len[stop - 1] == 0:
+                        stop -= 1
+                    if run_words >= r.spare_min_words and run_start > u0 and stop <= u1:
+                        spared.append([run_start + doc.b0, stop + doc.b0])
+                    run_start, run_words = None, 0
             out.append({
+                "spared": spared,
                 "units": [u0 + doc.b0, u1 + 1 + doc.b0],
                 "words": int(word_sum[u1 + 1] - word_sum[u0]),
                 "held": int(len(np.unique(inside))),
@@ -291,10 +325,14 @@ class Comparer:
                     if k["words"] >= r.shared_block_min_words and k["purity"] >= r.shared_block_purity_min]
 
         big_a, big_b = big(blocks_a), big(blocks_b)
-        clean = bool(big_a and big_b
-                     and sum(k["held"] for k in big_a) >= r.shared_block_clean_min * len(shared)
-                     and sum(k["held"] for k in big_b) >= r.shared_block_clean_min * len(shared))
-        same = ca >= r.same_work_min and cb >= r.same_work_min
+        in_big = min(sum(k["held"] for k in big_a), sum(k["held"] for k in big_b)) / len(shared)
+        clean = bool(big_a and big_b and in_big >= r.shared_block_clean_min)
+        loose_clean = bool(big_a and big_b and in_big >= r.container_clean_min)
+        def covered(blocks, doc):
+            return sum(k["words"] * k["purity"] for k in big(blocks)) / max(1, doc.body_words)
+
+        same = (ca >= r.same_work_min and cb >= r.same_work_min) or (
+            covered(blocks_a, a) >= r.same_work_cover_min and covered(blocks_b, b) >= r.same_work_cover_min)
         a_in_b = None if same else holder(blocks_b, size_a)
         b_in_a = None if same else holder(blocks_a, size_b)
         if a_in_b and b_in_a:
@@ -303,14 +341,15 @@ class Comparer:
             else:
                 a_in_b = None
         amb = self.cfg.ambiguous
-        if not (same or a_in_b or b_in_a or clean or max(ca, cb) >= amb.min_containment
+        if not (same or a_in_b or b_in_a or clean or loose_clean or max(ca, cb) >= amb.min_containment
                 or matched_words >= amb.min_words):
             return None
         return {
             "a": a.id, "b": b.id, "matched_words": matched_words, "common": round(discount, 4),
-            "ca": round(ca, 4), "cb": round(cb, 4), "same": same, "clean": clean,
+            "ca": round(ca, 4), "cb": round(cb, 4), "same": same, "clean": clean, "loose_clean": loose_clean,
             "a_in_b": a_in_b, "b_in_a": b_in_a, "big_a": big_a, "big_b": big_b,
             "loose_a": loose_a, "loose_b": loose_b,
+            "spared_a": any(k["spared"] for k in blocks_a), "spared_b": any(k["spared"] for k in blocks_b),
         }
 
 
@@ -383,9 +422,11 @@ def candidate_pairs(cfg, leaders):
 def side(pair, doc_id):
     if pair["a"] == doc_id:
         return {"mine": pair["ca"], "theirs": pair["cb"], "inside_other": pair["a_in_b"],
-                "other_inside": pair["b_in_a"], "big": pair["big_a"], "loose": pair["loose_a"]}
+                "other_inside": pair["b_in_a"], "big": pair["big_a"], "loose": pair["loose_a"],
+                "spared": pair["spared_a"]}
     return {"mine": pair["cb"], "theirs": pair["ca"], "inside_other": pair["b_in_a"],
-            "other_inside": pair["a_in_b"], "big": pair["big_b"], "loose": pair["loose_b"]}
+            "other_inside": pair["a_in_b"], "big": pair["big_b"], "loose": pair["loose_b"],
+            "spared": pair["spared_b"]}
 
 
 def numbers(pair, view):
@@ -393,11 +434,14 @@ def numbers(pair, view):
             "common_discount": pair["common"]}
 
 
-def decide(cfg, doc, neighbours):
+def decide(cfg, doc, neighbours, in_container):
     r = cfg.relations
     for other, pair in neighbours:
         view = side(pair, doc.id)
-        whole = view["loose"] < r.unique_block_words
+        if doc.clean:
+            whole = view["loose"] < r.unique_block_words and not view["spared"]
+        else:
+            whole = view["loose"] < r.rough_unique_block_words
         if pair["same"] and whole:
             return {"action": "drop", "reason": "same work", "counterpart": other, "numbers": numbers(pair, view)}, []
         if view["inside_other"] and whole:
@@ -410,62 +454,116 @@ def decide(cfg, doc, neighbours):
             chosen, why = view["big"], "shares a work"
         elif view["other_inside"]:
             chosen, why = [view["other_inside"]], "contains"
-        elif pair["clean"] and (view["mine"] < r.shares_max_containment or view["loose"] >= r.unique_block_words):
+        elif (pair["clean"] or (in_container and pair["loose_clean"])) and (
+                view["mine"] < r.shares_max_containment or view["loose"] >= r.unique_block_words):
             chosen, why = view["big"], "shares a work"
         else:
             chosen, why = [], None
         if chosen:
             for block in chosen:
-                cuts.append({"units": list(block["units"]), "why": why, "counterpart": other,
-                             "numbers": numbers(pair, view)})
+                cuts.append({"units": list(block["units"]), "spared": block["spared"] if doc.clean else [],
+                             "why": why,
+                             "counterpart": other, "numbers": numbers(pair, view)})
         else:
             undecided.append((other, pair))
     return None, (cuts, undecided)
 
 
-def settle_units(cfg, doc, cuts, with_intros):
+def settle_units(cfg, doc, cuts, with_intros, texts=None):
     m = cfg.remnants
     n = len(doc.ends)
     codes = doc.unit_codes()
     unit_words = doc.unit_words
+    heading = (doc.flags & words.FLAG_HEADING) > 0
+    slight = ((doc.flags & words.FLAG_SLIGHT) > 0) | (codes == 0)
     gone = np.zeros(n, dtype=bool)
     notes = []
     for cut in sorted(cuts, key=lambda c: (c["units"], c["counterpart"].id)):
         u0, u1 = cut["units"]
-        fresh = int(unit_words[u0:u1][~gone[u0:u1]].sum())
-        gone[u0:u1] = True
+        wanted = np.zeros(n, dtype=bool)
+        wanted[u0:u1] = True
+        for s0, s1 in cut.get("spared", ()):
+            wanted[s0:s1] = False
+        fresh = int(unit_words[wanted & ~gone].sum())
+        gone |= wanted
         notes.append({"units": [u0, u1], "words": fresh, "why": cut["why"], "counterpart": cut["counterpart"],
                       "numbers": cut["numbers"]})
-    def absorb(u0, least_headings, allow_intro):
+
+    def heading_run(below):
+        j = below - 1
+        found = []
+        while j >= doc.b0 and not gone[j] and (heading[j] or slight[j]):
+            if heading[j]:
+                found.append(j)
+            j -= 1
+        return found, j + 1
+
+    def mentions(head_units, lo, hi):
+        if texts is None:
+            return False
+        names = set()
+        for u in head_units:
+            names |= words.name_tokens(texts[u])
+        said = set()
+        for u in range(lo, hi):
+            said |= words.name_tokens(texts[u])
+        return bool(names & said)
+
+    def take(lo, hi, why):
+        size = int(unit_words[lo:hi][~gone[lo:hi]].sum())
+        if size:
+            notes.append({"units": [lo, hi], "why": why, "words": size})
+        gone[lo:hi] = True
+
+    def absorb(u0):
+        found, top = heading_run(u0)
+        if len(found) > m.heading_max_units:
+            return None
+        if found:
+            top = min(found)
+            take(top, u0, "heading before a cut")
+            return top, found
+        if not with_intros:
+            return None
         j = u0 - 1
         intro_words = intro_paragraphs = 0
-        while j >= doc.b0 and not gone[j] and not (doc.flags[j] & words.FLAG_HEADING):
-            if codes[j] > 0:
+        while j >= doc.b0 and not gone[j] and not heading[j]:
+            if not slight[j]:
                 intro_words += int(unit_words[j])
                 intro_paragraphs += 0 if doc.flags[j] & words.FLAG_CONTINUES else 1
             if intro_words > m.intro_max_words or intro_paragraphs > m.intro_max_units:
                 return None
             j -= 1
-        if j < doc.b0 or gone[j] or (intro_words and not allow_intro):
-            return None
         intro_start = j + 1
-        headings = 0
-        while j >= doc.b0 and not gone[j] and headings < m.heading_max_units and (
-                doc.flags[j] & words.FLAG_HEADING or codes[j] == 0):
-            headings += 1 if doc.flags[j] & words.FLAG_HEADING else 0
-            j -= 1
-        while j + 1 < intro_start and codes[j + 1] == 0:
-            j += 1
-        head_start = j + 1
-        if headings < least_headings:
+        found, top = heading_run(intro_start)
+        if not found or len(found) > m.heading_max_units or not intro_words:
             return None
-        notes.append({"units": [head_start, intro_start], "why": "heading before a cut",
-                      "words": int(unit_words[head_start:intro_start].sum())})
-        if int(unit_words[intro_start:u0].sum()) > 0:
-            notes.append({"units": [intro_start, u0], "why": "introduction between a heading and a cut",
-                          "words": int(unit_words[intro_start:u0].sum())})
-        gone[head_start:u0] = True
-        return head_start, intro_words > 0
+        if not mentions(found, intro_start, u0):
+            return None
+        top = min(found)
+        take(top, intro_start, "heading before a cut")
+        take(intro_start, u0, "introduction between a heading and a cut")
+        return None
+
+    def absorb_second(first_top, first_found):
+        j = first_top - 1
+        intro_words = intro_paragraphs = 0
+        while j >= doc.b0 and not gone[j] and not heading[j]:
+            if not slight[j]:
+                intro_words += int(unit_words[j])
+                intro_paragraphs += 0 if doc.flags[j] & words.FLAG_CONTINUES else 1
+            if intro_words > m.intro_max_words or intro_paragraphs > m.intro_max_units:
+                return
+            j -= 1
+        intro_start = j + 1
+        found, _ = heading_run(intro_start)
+        mine = {int(doc.hashes[u]) for u in first_found}
+        again = [u for u in found if int(doc.hashes[u]) in mine]
+        if not intro_words or len(found) > m.heading_max_units or not again:
+            return
+        top = min(again)
+        take(top, intro_start, "heading before a cut")
+        take(intro_start, first_top, "introduction between a heading and a cut")
 
     starts = [u for u in range(doc.b0, doc.b1) if gone[u] and (u == doc.b0 or not gone[u - 1])]
     for u0 in starts:
@@ -474,9 +572,9 @@ def settle_units(cfg, doc, cuts, with_intros):
             u1 += 1
         if int(unit_words[u0:u1].sum()) < m.heading_min_cut_words:
             continue
-        first = absorb(u0, 1, with_intros)
-        if first and not first[1] and with_intros:
-            absorb(first[0], m.second_heading_min_units, True)
+        first = absorb(u0)
+        if first and with_intros:
+            absorb_second(*first)
     remnants = []
     u = doc.b0
     while u < doc.b1:
@@ -490,10 +588,11 @@ def settle_units(cfg, doc, cuts, with_intros):
         right_cut = v < doc.b1
         size = int(unit_words[u:v].sum())
         if (left_cut or right_cut) and gone[doc.b0:doc.b1].any():
-            if size <= m.remnant_max_words:
+            if (size <= m.remnant_max_words and bool((heading[u:v] | slight[u:v]).all())
+                    and int(heading[u:v].sum()) <= m.heading_max_units):
                 gone[u:v] = True
                 if size:
-                    notes.append({"units": [u, v], "why": "remnant", "words": size})
+                    notes.append({"units": [u, v], "why": "stranded heading", "words": size})
             else:
                 remnants.append({"units": [u, v], "words": size, "between_cuts": left_cut and right_cut})
         u = v
@@ -501,6 +600,19 @@ def settle_units(cfg, doc, cuts, with_intros):
     keep[:doc.b0] = False
     keep[doc.b1:] = False
     return keep, notes, remnants
+
+
+def unit_texts(cfg, doc):
+    try:
+        text, digest = source_text(cfg.by_name[doc.rep[0]], doc.rep[1])
+    except (OSError, UnicodeDecodeError):
+        return None
+    if digest != doc.id:
+        return None
+    found = words.units(text, cfg.structure.long_paragraph_words)
+    if len(found) != len(doc.ends):
+        return None
+    return [u[0] for u in found]
 
 
 def run(cfg, say=print):
@@ -527,7 +639,7 @@ def build(cfg, index, say):
     docs = load_docs(cfg, index)
     sets = boilerplate_sets(cfg, docs)
     for doc in docs.values():
-        if doc.reference:
+        if doc.reference or not cfg.by_name[doc.rep[0]].strip:
             continue
         doc.b0, doc.b1 = strip_edges(cfg, doc, sets[doc.rep[0]])
     groups = defaultdict(list)
@@ -540,9 +652,10 @@ def build(cfg, index, say):
         if doc.body_key is not None and not doc.reference:
             groups[doc.body_key].append(doc)
     for members in groups.values():
-        best = max(members, key=lambda d: (d.kind_rank, d.priority, d.body_words, d.id))
+        best = max(members, key=lambda d: (d.kind_rank, d.priority, d.clean, d.body_words, d.id))
         for doc in members:
-            doc.leader = best
+            if not doc.read:
+                doc.leader = best
     leaders = sorted((d for d in docs.values() if d.leader is d and d.body_key is not None), key=lambda d: d.id)
     common, candidates = candidate_pairs(cfg, leaders)
     comparer = Comparer(cfg, index, common)
@@ -560,7 +673,8 @@ def build(cfg, index, say):
         if pair["b_in_a"]:
             docs[pair["a"]].container = True
     order = sorted((d for d in leaders if not d.reference),
-                   key=lambda d: (d.kind_rank, d.priority, not d.container, d.body_words, d.id), reverse=True)
+                   key=lambda d: (d.kind_rank, d.priority, d.clean, d.container, d.body_words, d.id),
+                   reverse=True)
     for position, doc in enumerate(order):
         doc.position = position
     outcome = {}
@@ -570,6 +684,12 @@ def build(cfg, index, say):
             doc.fate = "drop"
             outcome[doc.id] = ({"action": "drop", "reason": "nothing but boilerplate"}, None, [], [])
             continue
+        if doc.read:
+            keep = np.zeros(len(doc.ends), dtype=bool)
+            keep[doc.b0:doc.b1] = True
+            doc.fate = "keep"
+            outcome[doc.id] = (None, keep, [], [])
+            continue
         neighbours = []
         for pair in related.get(doc.id, []):
             other = docs[pair["b"] if pair["a"] == doc.id else pair["a"]]
@@ -577,14 +697,16 @@ def build(cfg, index, say):
                 continue
             neighbours.append((other, pair))
         neighbours.sort(key=lambda item: item[0].position)
-        verdict, rest = decide(cfg, doc, neighbours)
+        in_container = cfg.by_name[doc.rep[0]].container
+        verdict, rest = decide(cfg, doc, neighbours, in_container)
         if verdict:
             doc.fate = "drop"
             outcome[doc.id] = (verdict, None, [], [])
             acted[(verdict["counterpart"].id, doc.id)] = verdict["reason"]
             continue
         cuts, _ = rest
-        keep, notes, remnants = settle_units(cfg, doc, cuts, cfg.by_name[doc.rep[0]].container)
+        texts = unit_texts(cfg, doc) if cuts and in_container else None
+        keep, notes, remnants = settle_units(cfg, doc, cuts, in_container, texts)
         for cut in cuts:
             acted[(cut["counterpart"].id, doc.id)] = cut["why"]
         if not keep.any() or int(doc.unit_words[keep].sum()) == 0:
@@ -643,7 +765,7 @@ def build(cfg, index, say):
             if cfg.by_name[source].kind == "reference":
                 continue
             record = dict(mine, source=source, path=path, kind=cfg.by_name[source].kind)
-            if (source, path) != doc.rep:
+            if (source, path) != doc.rep and cfg.by_name[source].kind != "read":
                 if mine["action"] != "drop":
                     record = dict(base, source=source, path=path, kind=cfg.by_name[source].kind, action="drop",
                                   reason="identical file", counterpart=name(doc), words_out=0)
@@ -666,11 +788,14 @@ def build(cfg, index, say):
         else:
             relation = "partial"
         action = acted.get((a.id, b.id)) or acted.get((b.id, a.id))
-        listed = (action is None and not a.reference and not b.reference and a.fate == "keep" and b.fate == "keep"
+        both_read = a.read and b.read and not a.reference and not b.reference
+        listed = (action is None and not both_read and not a.reference and not b.reference
+                  and a.fate == "keep" and b.fate == "keep"
                   and (max(pair["ca"], pair["cb"]) >= amb.min_containment or pair["matched_words"] >= amb.min_words))
         ambiguous += listed
         pairs_out.append({
             "a": name(a), "b": name(b), "relation": relation, "acted": action, "ambiguous": bool(listed),
+            "both_read": bool(both_read),
             "matched_words": pair["matched_words"], "of_a": pair["ca"], "of_b": pair["cb"],
             "words_a": a.body_words, "words_b": b.body_words, "common_discount": pair["common"],
             "fate_a": a.fate or "reference", "fate_b": b.fate or "reference",
@@ -680,9 +805,10 @@ def build(cfg, index, say):
             continue
         twins = [f for f in doc.files if f != doc.rep and cfg.by_name[f[0]].kind != "reference"]
         for source, path in twins:
-            pairs_out.append(identical_pair(name(doc), {"source": source, "path": path}, doc, "identical file"))
+            pairs_out.append(identical_pair(name(doc), {"source": source, "path": path}, doc, "identical file",
+                                            cfg.by_name[source].kind == "read"))
         if doc.leader is not doc:
-            pairs_out.append(identical_pair(name(doc.leader), name(doc), doc, "identical text"))
+            pairs_out.append(identical_pair(name(doc.leader), name(doc), doc, "identical text", False))
 
     boiler_out = []
     for source, (identical, templates) in sorted(sets.items()):
@@ -716,10 +842,11 @@ def build(cfg, index, say):
     return records, pairs_out, boiler_out, stats
 
 
-def identical_pair(a, b, doc, relation):
-    return {"a": a, "b": b, "relation": relation, "acted": relation, "ambiguous": False,
-            "matched_words": doc.body_words, "of_a": 1.0, "of_b": 1.0, "words_a": doc.body_words,
-            "words_b": doc.body_words, "common_discount": 0.0, "fate_a": "keep", "fate_b": "drop"}
+def identical_pair(a, b, doc, relation, both_read):
+    return {"a": a, "b": b, "relation": relation, "acted": None if both_read else relation, "ambiguous": False,
+            "both_read": both_read, "matched_words": doc.body_words, "of_a": 1.0, "of_b": 1.0,
+            "words_a": doc.body_words, "words_b": doc.body_words, "common_discount": 0.0, "fate_a": "keep",
+            "fate_b": "keep" if both_read else "drop"}
 
 
 def runs(keep):

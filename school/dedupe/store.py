@@ -159,6 +159,11 @@ class Index:
             if not (self.dir / "index.sqlite").exists():
                 raise FileNotFoundError(f"no index at {self.dir}; run scan first")
             self.db = sqlite3.connect(f"file:{self.dir / 'index.sqlite'}?mode=ro", uri=True, timeout=60)
+            try:
+                self.db.execute("select 1 from meta limit 1").fetchall()
+            except sqlite3.OperationalError:
+                self.db.close()
+                self.db = sqlite3.connect(f"file:{self.dir / 'index.sqlite'}?mode=ro&immutable=1", uri=True)
         else:
             self.segment_dir.mkdir(parents=True, exist_ok=True)
             self.db = sqlite3.connect(self.dir / "index.sqlite", timeout=60, isolation_level=None)
