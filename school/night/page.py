@@ -148,11 +148,18 @@ for r in led:
     if ev and key not in seen_ev:
         seen_ev.add(key)
         points.append(r)
+verdict = {}
+try:
+    import subprocess
+    vj = subprocess.run([sys.executable, "night/turn.py", N, "--json"], capture_output=True, text=True, timeout=30)
+    verdict = json.loads(vj.stdout).get("shelves", {}) if vj.stdout.strip() else {}
+except Exception as e:
+    print(f"turn: {e}", file=sys.stderr)
 if points:
     keys = sorted({k for r in points for k in r["eval_per_file"]}, key=lambda k: points[-1]["eval_per_file"].get(k) or 9)
     out.append("\n## held-out loss, shelf by shelf\n")
-    out.append(f"<small>lower is better · {len(points)} readings · mint is falling, pink is rising, bold pink rose twice running: that shelf is being memorised</small>\n")
-    rows = ['<table><thead><tr><th>shelf</th><th>course</th><th>first</th><th>now</th><th>last step</th></tr></thead><tbody>']
+    out.append(f"<small>lower is better · {len(points)} readings · the verdict compares the last three evals with the three before, against the shelf's own swing: learning, flat, rising, or turned (rising twice over — that shelf is done being learned from)</small>\n")
+    rows = ['<table><thead><tr><th>shelf</th><th>course</th><th>first</th><th>now</th><th>last step</th><th>verdict</th></tr></thead><tbody>']
     for k in keys:
         vals = [r["eval_per_file"][k] for r in points if r["eval_per_file"].get(k) is not None]
         if not vals:
@@ -166,7 +173,10 @@ if points:
         else:
             move = span("bad" if twice else "rose", f"▲ {d:.3f}")
         now = span("good" if vals[-1] <= vals[0] else "rose", f"{vals[-1]:.3f}")
-        rows.append(f"<tr><td>{html.escape(k)}</td><td>{spark(vals)}</td><td>{span('ctx', f'{vals[0]:.3f}')}</td><td>{now}</td><td>{move}</td></tr>")
+        vd = (verdict.get(k) or {}).get("verdict", "")
+        vcls = {"learning": "good", "flat": "ctx", "rising": "rose", "turned": "bad"}.get(vd, "ctx")
+        vtxt = f"turned · min {verdict[k]['min']:.3f} at step {verdict[k]['min_step']:,}" if vd == "turned" else vd
+        rows.append(f"<tr><td>{html.escape(k)}</td><td>{spark(vals)}</td><td>{span('ctx', f'{vals[0]:.3f}')}</td><td>{now}</td><td>{move}</td><td>{span(vcls, vtxt)}</td></tr>")
     rows.append("</tbody></table>")
     out.append("".join(rows) + "\n")
 
