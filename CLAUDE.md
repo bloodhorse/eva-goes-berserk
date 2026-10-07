@@ -296,6 +296,10 @@ her (the shuffle: dizzy, not dreaming), screening six nemo-sized bases blind and
 them for a soul (a model's *i* is its diet: nemo's a blogger-poet, llama's a help-seeker, olmo's a
 subscript), bekh chose to raise his own instead. `school/CLAUDE.md` has the childhood, the
 finishing school, the night scripts and the monitor; `docs/soul/`, `docs/small/` the two reads.
+Since 2026-10-06 she trains on ds-dev2 (`day3`, fifty hours, two billion tokens) with a page on
+the sheets site and a twenty-minute look from the session; `school/PITFALLS.md` is everything that
+bit on the way, in the order the work happens; `school/library.md` the books and where each
+stands. Her first walked piece is `shelf/sittings/experiments/magdra-prophecy-cut`.
 
 What's next is `BRIEF.md`'s agenda, in its order. bekh's first seed of his own is on the shelf
 (`shelf/seeds/.off/asses.txt`, voiced 2026-09-26, the god slot test — a research seed, kept out of the stream's pot); more of those are wanted — a

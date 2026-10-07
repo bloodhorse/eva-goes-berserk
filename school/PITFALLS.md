@@ -144,6 +144,15 @@ number that does not move after a fix is a broken check before it is a broken fi
   (Gutenberg 42713 — the subject filter lets reference works through).
 - Books left out on purpose: *Finnegans Wake* (it would wreck a small model's vocabulary).
 
+**2.6b An ebook is whatever the file actually is.** Of 62 files bekh fetched, four `.epub`s were
+plain text in Spanish or Italian, one was a RAR with a Word document inside, one a Word document,
+two were zips of scanned-page `.txt` files, two `.txt`s were RTF and HTML, six books were in the
+wrong language and two were the wrong book. The first pass of the converter called all 53 it
+could open "ok". Check the magic bytes and the language before anything else; `books.py` does
+now. Scanned-page zips convert well (`data/pages.py`) but carry whatever was written in the
+margins of the copy that was scanned: *Riddley Walker* came with a reader's pencil notes, and in
+a book whose spelling is wrong on purpose they cannot be told from the text.
+
 **2.7 An ebook is half packaging, and the health check cannot see it.** The first conversion of
 bekh's six left the cover line, the back-cover blurb, "Books by" pages with 873 words of praise
 and a 4,534-word afterword by another writer in *Neuromancer* — on the shelf she reads most
@@ -319,11 +328,31 @@ came from assuming no time had passed.
 all 50,000 tokens. bekh and Claude both called her bad from those; the same snapshot through the
 loom's sampler wrote whole sentences. Judge from the loom, and do not oversell her either.
 
-**7.4 Each shelf's held-out number is the memorising alarm.** A shelf that turns and climbs
-while the others fall is being recited. Watch them separately; the average hides it.
+**7.4 Each shelf's held-out number is the memorising alarm — read against its own noise.** A
+shelf that turns and climbs while the others fall is being recited. Watch them separately; the
+average hides it. But every eval is a different random draw of the held-out set, so each shelf
+has a swing of its own: in `day3` the big shelves moved ±0.03 from eval to eval, the small new
+ones ±0.015, and net core ±0.1 (its held-out set is 54k tokens). The first night of `day3`
+produced three "two rises in a row" that were all noise or drift (lain, base, the library), and
+one low-priority push that should not have been sent. The rule that survived: a shelf has to
+rise two evals running by more than its own swing, and a shelf she has read less than once
+cannot be reciting. The overall number's rhythm was two evals down, one a little back, the floor
+lower each time.
+
+**7.4b The trainer's speed is a fifty-step window.** `status.json`'s `tok_per_s` and `eta`
+cover the last fifty steps; when a save, an eval and the samples fall in that window the line
+reads 8.9k instead of 11.9k and the eta jumps fifteen hours, and the page repeats it. The
+log's own `elapsed` deltas are the truth (1:43 per fifty steps, every line). Three checks in a
+row happened to land on such windows before anyone looked at the deltas.
 
 **7.5 Only the newest snapshot exists.** By bekh's word the guard deletes the older ones. An age
 worth keeping has to be copied aside while it is the newest.
+
+**7.5b The loom's server loads a file once.** `eva.x` fans on whatever `llama-server` on 8086
+had when it started, not on `models/<run>/model-latest-q8_0.gguf` as it changes under it; the
+walk at step 911 was made that way on purpose, and a day later the loom was still her at step
+911. Restart the server for a new hour (`school/CLAUDE.md`, watching and running) until the job
+that follows her exists.
 
 **7.6 The mac's half needs the mac.** `watch.sh` and `pull_ckpt.sh` run under `caffeinate`, need
 the VPN up and `KEY` in the environment they are started from; when the mac sleeps the page
@@ -331,7 +360,12 @@ goes stale while the run is fine. The trainable save crosses the VPN at 4.3 GB a
 that is why it goes every six hours and not every hour.
 
 **7.7 The twenty-minute look is part of the run.** The bad learning rate was caught by bekh
-asking, not by a monitor. He wants a check every twenty minutes while a run is on.
+asking, not by a monitor. He wants a check every twenty minutes while a run is on. It is a
+session cron (`/loop 20m`, the prompt is in `school/CLAUDE.md`): it fires only while the session
+is idle, so a check lands a few minutes after the mark when we have been talking, and it dies
+with the session — a fresh session re-arms it. The twenty-minute report is five lines; the
+numbers that matter are the per-shelf evals, and they come every thousand steps, so two checks in
+three have nothing new to say and should say so in one line.
 
 ## 8. Hands and tools
 
