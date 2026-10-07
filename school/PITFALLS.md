@@ -61,9 +61,10 @@ Gutenberg's volunteers did that work for what is on the sci-fi shelf. The Intern
 pulp scans are OCR in two columns with adverts mixed in (`pd2/REPORT.md`, the verdict). A
 Creative Commons release can be withdrawn: one of Kelly Link's two was.
 
-**1.5 Bulk cannot come from a piracy site through Claude.** It will not write or drive a
-downloader for libgen or z-library, and no rephrasing changes that. Plan on it: books bekh wants
-that are not free arrive by his hand in `inbox/`, and that caps them at about thirty.
+**1.5 Books fetched by hand arrive in batches of about thirty, and a third of them are wrong.**
+Of 62 files from one night's fetching, nine were the wrong language or the wrong book and six
+were not the format their name said. Budget for that: the converter's gates catch it, but the
+re-fetch list has to go back to bekh.
 
 **1.6 Fetching, once a source is cleared.**
 - Look for a ready dump on Hugging Face first (none existed for any magazine; it is a two-minute

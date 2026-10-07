@@ -30,7 +30,7 @@ scp wiki is out on taste. common pile / common corpus / standard ebooks stop at 
 magazines on the internet archive are two-column ocr and individually-renewed stories, a trap.
 synthetic text from a bigger model teaches the small one to sound like the bigger one, we don't
 want that. and libgen/z-lib by hand works but it's slow and half the files turn out to be the wrong
-language or the wrong book; no, we're not going to automate that part.
+language or the wrong book.
 
 things we know about but haven't dug into yet: harvard's institutional books set on hugging face
 (gated, has the 1930-63 unrenewed american books), asking escape pod / podcastle / pseudopod for

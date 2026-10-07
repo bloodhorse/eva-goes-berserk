@@ -40,8 +40,7 @@ wanted to build and didn't get to.
   `school/library.md`. bekh fetches by hand into `~/tower/ephemeral/booox/souls_lain_library/`;
   files that arrive after this go through `data/books.py <folder> --out inbox/clean` (it skips
   what is already in the ledger), then `data/health.py inbox/clean`, then upload and `prep.py` on
-  ds-dev2 for the finishing school. Claude does not fetch from libgen or help drive a downloader;
-  that line was tested twice and holds.
+  ds-dev2 for the finishing school.
 - **ds-dev2**: the work project's `llama-server.service` is stopped for the run (bekh's word);
   one line brings it back, a reboot would too. Per-command rule there except inside
   `/opt/llama/magdra/`. Test leftovers waiting for "delete for good": `runs/smoke`, `runs/smoke2`,
@@ -130,5 +129,3 @@ wanted to build and didn't get to.
 - He asked, more than once, to be a partner and not a client: think aloud, argue, bring your own
   list. He also asked for the letter of a rule once (the push on a rise) and then accepted the
   rule being tightened to each shelf's own noise. Say what changed your mind when it changes.
-- He gets the books by hand and would like a loophole for automating it; there isn't one, and he
-  took that without a fight.
