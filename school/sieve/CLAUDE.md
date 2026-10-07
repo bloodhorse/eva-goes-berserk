@@ -5,6 +5,11 @@ decides what kind of text each file is, cuts the wrappers and the editors' appar
 writes each kind to its own tree. Its report's fiction column is what a training recipe counts on. It never
 changes a file under `dedupe/` or any source, and it never reads a `read` shelf.
 
+It is the fourth stage of the path a text takes to a shelf (`../CLAUDE.md`, the path). What reads its output
+is `../data/shelves.py`, which builds a run's shelves from `out/fiction/` and `out/mixed/` (the prose) and
+`out/verse/` (the poems, their own small shelf: bekh's word is that poems are in). `out/nonfiction/` and
+`out/stub/` are kept and feed nothing. Why kind is a stage of its own is `../PITFALLS.md` 2.10.
+
 ## Commands
 
 Run from `school/sieve` (a small uv project; numpy comes with it only because the deduper's modules are imported):
@@ -47,7 +52,7 @@ dedupe plan it was made from (time, records) and says so if the deduper's files 
 | `mixed` | a book whose essays are kept on purpose | with its cuts applied; the report splits its words into fiction and essays kept |
 | `unsure` | signals disagree | with its cuts applied, in its own tree; kept until someone reads it |
 | `nonfiction` | interview, review, editorial, column, essay, notice | whole |
-| `verse` | a poem (whether poems are trained on is the owner's call) | whole |
+| `verse` | a poem | whole |
 | `stub` | a failed extraction, show notes, a teaser, the opening paragraph of a podcast story, a remnant the deduper left | whole |
 
 A paragraph is a block between blank lines; cuts are spans of paragraphs. Anything not clearly something else is
@@ -148,6 +153,11 @@ that only confirm the signals too, so a change of thresholds cannot silently fli
   a note can stay; in the PDF-derived and broken annuals (1998, 2010, “-23”) about a third of the notes are missed;
   a story whose heading lost its byline keeps its note. Author biographies printed after a story are not looked for.
 - A book that arrived as glued paragraphs (*Digital Rapture*) cannot be segmented and is kept whole.
+- A book converted from a PDF is one paragraph a page, with running heads fused into sentences. It cannot be
+  segmented either, so it comes out as `fiction`, whole, with its Summation and every editor's note still in it
+  — fifteen books on 2026-10-07 (the Datlow and Windling annuals, *Semiotext(e) SF*). Nothing here flags them;
+  `../data/shelves.py` picks them out by the ledger's PDF mark and holds them on a shelf of their own
+  (`anth-rough`), out of the mix until bekh says otherwise or an epub replaces them.
 - Edge cuts need a marker or a recognisable paragraph. A note with neither stays; a wrapper longer than the limits
   stays and is listed in the report.
 - Only the head and tail of a magazine file are looked at: an advertisement in the middle of a story stays.

@@ -5,6 +5,11 @@ story arrives as a magazine page, a reprint, a chapter of a novel and a section 
 tool decides which copy stays, cuts the others out at paragraph edges, and says how much text there
 really is. It never changes, moves or deletes a source file.
 
+It is the third stage of the path a text takes to a shelf (`../CLAUDE.md`, the path): the converter
+(`../data/`) and the fetchers (`../modern/`, `shelf/gpt/` at the project root) feed it, the sieve
+(`../sieve/`) reads its `out/`. What bit while it was built, and what the next cleaning tool will meet
+again, is `../PITFALLS.md` 2.9.
+
 ## Commands
 
 Run from `school/dedupe` (the folder is a small uv project, so numpy comes with it):
@@ -26,6 +31,16 @@ uv run --python 3.12 -m unittest discover -s tests -p '*test.py'
 not start or could not write: another run holds the lock, the config is wrong, the state or the output
 is read-only, or the index was built with other `[structure]` numbers or another normaliser (then
 `rebuild`).
+
+**Run `daily` at least two minutes after the last file landed.** A file modified in the last 90
+seconds is set aside as still settling and nothing says so loudly: a `daily` started right after a
+conversion reads none of the new books and reports the old numbers. `state/skipped.jsonl` names what
+was set aside; run it again. The order of a full pass is `daily` here, then `daily` in `../sieve`,
+then `../data/shelves.py build` if a run's shelves are being assembled.
+
+How long it takes is set by the reference roots (below): with the big old shelves in the index,
+`plan` is about ten minutes and `state/` about 10 GB (`du -sh state`); without them half a minute
+and 2 GB.
 
 ## Files
 
@@ -144,6 +159,22 @@ Run it after new books land. A *missed* row is a bug or a different edition: the
   pid is dead is cleared.
 - `apply` checks each source file's sha256 against the plan. A file that changed after the scan is
   not written (`stale` in the ledger) until the next scan and plan.
+
+## The three kinds of root
+
+- **`read`** — a shelf she has already read. It always wins, and is never changed by anything here
+  (decision 4): its bins exist and its held-out set was cut from these exact files.
+- **`incoming`** — new text. Dropped, cut and stripped against everything ranked above it; its clean
+  copy in `out/` is what the sieve reads.
+- **`reference`** — text that is looked up but never cut and never the cause of a cut. `corpus.jsonl`
+  (the finishing corpus, short passages quoted from books) and, since 2026-10-07, the big old shelves
+  that exist as text on the mac: `shelf/fantasy` (`models/box/data/shelves/fantasy-r2`), `shelf/base`
+  (`models/box/data/base-r2`), `shelf/scifi-pd2` (`pd2/text/scifi`), `shelf/wired-bulk`. They are there
+  for `lookup`, so that the recitation meter on the run page (`../night/CLAUDE.md`) checks her against
+  what she mostly reads. Adding them left every plan record's decision unchanged (checked record by
+  record) and cost the minutes and gigabytes above. Still outside the index, because their text is not
+  on the mac: the light novels, the fan fiction and most of the Gutenberg pulp sci-fi. If the wait
+  starts to matter, the meter's index and the plan's can be split; nobody has.
 
 ## Adding a root
 
