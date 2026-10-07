@@ -237,8 +237,8 @@ def loomed():
             r = subprocess.run([tool, "-m", model, "-ngl", "99", "-c", "1024", "-p", seed, "-n", "110", "--temp", "1.0", "--min-p", "0.08",
                                 "--top-k", "0", "--top-p", "1", "--dry-multiplier", "0.8", "--dry-base", "1.75", "--dry-allowed-length", "2",
                                 "--seed", str(1000 + i), "-no-cnv", "--no-display-prompt", "--simple-io"],
-                               capture_output=True, text=True, timeout=90, stdin=subprocess.DEVNULL)
-            text = r.stdout.strip()
+                               capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=90, stdin=subprocess.DEVNULL)
+            text = r.stdout.strip().rstrip("�").rstrip()
         except Exception as e:
             print(f"loomed: {e}", file=sys.stderr)
             text = ""
