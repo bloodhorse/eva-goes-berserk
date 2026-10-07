@@ -278,13 +278,15 @@ def preclean(soup):
             continue
         t.decompose()
     for t in soup.find_all(True):
+        if t.attrs is None:
+            continue
         et = (t.get("epub:type") or "") + " " + (t.get("role") or "")
         if re.search(r"pagebreak|page-break|noteref|footnote|endnote|rearnote|doc-backlink", et):
             t.decompose()
     for t in soup.find_all("aside"):
         t.decompose()
     for t in soup.find_all(["span", "a"]):
-        if t.parent is None:
+        if t.parent is None or t.attrs is None:
             continue
         cls = " ".join(t.get("class") or []) + " " + (t.get("id") or "")
         txt = t.get_text().strip()
