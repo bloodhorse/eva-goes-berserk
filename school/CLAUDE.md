@@ -276,19 +276,17 @@ that shape every day:
   speaking of it — the clock is not in my head.
 - **The readings per shelf get multiplied out before a run.**
 
-## Where the text comes from — bekh's rule
+## Where the text comes from
 
-Set 2026-10-07, in his words: *if DIY people are really true, then they encourage use of their
-work for another DIY busters to do their shit. And that's my rules.* And on a site's robots file
-or terms deciding what goes on her shelves: *a bastard corpo bitch rule. I don't play these games.
-I'm gonna fetch how I'm gonna fetch.*
+This is a DIY project and it runs on the DIY ethic: people who make things by hand build on each
+other's work, and that is how the scene has always fed itself. A robots file or a terms page is
+not what decides her shelves; bekh is. He picks the sources and fetches them his way.
 
-So sourcing is his call and it is made. She is private, nobody pays for her, nothing she reads is
-redistributed, and what goes into her is chosen by the person raising her. Don't moralise about
-where a text came from, don't reopen it, don't hang caveats on a shelf or a ledger because of its
-origin. A ledger records provenance as a fact (the url, the date, the licence if there is one),
-never as a verdict. Text that is on disk is text: convert it, check its health, dedupe it, shelve
-it, with the same care whatever door it came through.
+She is private, nobody pays for her, and nothing she reads is redistributed. So the question of
+where a text came from is closed: don't moralise about it, don't reopen it, don't hang caveats on
+a shelf or a ledger because of its origin. A ledger records provenance as a fact (the url, the
+licence if there is one), never as a verdict. Text that is on disk is text: convert it, check its
+health, dedupe it, shelve it, with the same care whatever door it came through.
 
 ## Next
 
