@@ -1,6 +1,7 @@
 # the library
 
-Three lists and a shelf. The shelf is `inbox/clean/` — what has actually been converted
+Three lists and two shelves: the library, which is bekh's own picks book by book, and beside it
+since 2026-10-07 the anthology shelf (its own section below). The library is `inbox/clean/` — what has actually been converted
 (`inbox/clean/ledger.jsonl` says what each file was, how many words, what was dropped and why;
 `ls inbox/clean` is the count). bekh gets the books by hand into
 `~/tower/ephemeral/booox/souls_lain_library/`; `data/books.py <folder> --out inbox/clean`
@@ -33,6 +34,53 @@ finishing school has room.
 Decisions taken: Burning Chrome stays in (bekh's key is that voice; Claude withdrew the cut).
 The Ghost in the Shell novels stay out. A Song of Ice and Fire goes to a spine shelf with
 Wildbow's Pact, for the long run, not the finishing school. Not Tolkien.
+
+Stories from library books that never arrived whole are on other shelves all the same: Ligotti's
+"The Town Manager" and Borges's "The Aleph" inside *The Weird*, "Tlön, Uqbar, Orbis Tertius"
+inside *The Big Book of Science Fiction*, "Burning Chrome" inside *Storming the Reality Studio*,
+and Link's "The Faery Handbag" in the Apex folder of `shelf/gpt/text/`.
+
+## The anthology shelf
+
+`inbox/anth/`: year's-bests and big retrospective anthologies, one file a book, each holding
+twenty to a hundred and eighty stories. It is kept apart from the library on purpose — the
+library is bekh's thirty, chosen one at a time; this is other editors' taste in bulk — so the two
+get separate shelves and separate held-out numbers. An anthology is the best unit there is for
+fetching by hand (about 300k words a file) and the worst for counting, since its stories also
+arrive as magazine pages: what a book is worth after that is its row in `dedupe/report.md`
+("Containers: what was cut out of each"), and it shrinks as more magazines come in.
+
+- **The list it is fetched from**: `~/tower/ephemeral/booox/books.txt`, 103 lines in fetch
+  order — the first ten (the two Hartwell/Cramer renaissances, *The Big Book of Cyberpunk*, *The
+  Weird*, *Songs of the Dying Earth*, *The Big Book of Science Fiction*, *Mirrorshades*,
+  *Rewired*, *Digital Rapture*, *Semiotext(e) SF*), Dozois's annuals eighth through
+  twenty-fifth, a second pass of bricks, Datlow and Windling's twenty-one, Datlow's *Best
+  Horror* one to ten, *Year's Best Weird Fiction*, Strahan's annuals three to thirteen, the six
+  fairy-tale books, five Japanese ones. One editor a line; if a line misses, try the co-editor.
+  The older list of single books is `books2.txt` beside it.
+- **What has arrived**: `inbox/anth/ledger.jsonl` — one line per source file with its status
+  (`ok`, `skipped`, `duplicate`, `error`), title, words, and every section dropped. `ls
+  inbox/anth/*.txt | wc -l` is the count. Convert new arrivals with the command in
+  `CLAUDE.md` (The pile, stage 2), into `inbox/anth`, never into `inbox/clean`.
+- **Bad downloads, to fetch again by another route** (2026-10-07): Dozois's **twelfth**
+  (the file under that name holds the seventeenth), **thirteenth** (a broken epub: every chapter
+  is the same error page) and **fourteenth** (the file holds the fifteenth); ***Mirrorshades***
+  (a zip of loose text files, could be rescued by hand like the ones in `inbox/rescued/`);
+  ***The New Space Opera 2*** (plain text under an epub name, also rescuable); ***Feeling Very
+  Strange*** and ***Swords & Dark Magic*** (each came as a single story of under five thousand
+  words); ***Semiotext(e) SF*** (the match was one Rucker story in RTF); *The Big Book of
+  Cyberpunk* also came as a PDF of volume two alone, which the full epub replaces. Which
+  volume each Dozois file really is has to be read from the text — a volume opens "Summation:
+  <year>" — never from the file's name (`PITFALLS.md` 1.5b); five more annuals arrived after
+  this was checked and have not been identified.
+- **In the wrong folder**: *Ubik* landed among the anthologies; it is a novel and belongs with
+  the library (`inbox/clean`), where it would be a new book for the finishing school.
+- **Not fiction, by design**: *Storming the Reality Studio* and *Digital Rapture* are part
+  essays (Vinge's singularity talk, the cyberpunk criticism); those essays are wanted. The
+  "Summation" essays and per-story editor's notes of the annuals are not.
+
+What bekh might read of all this himself — some thirty pieces, most of them one sitting, each
+with the file it sits in — is in the book club: `~/tower/shittalk/fable-book-club/reading-list.md`.
 
 ## 1. the first thirty — the session that raised her, 2026-10-06
 
