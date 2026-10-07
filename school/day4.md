@@ -1,13 +1,17 @@
 # day4 — the recipe
 
-A warm start from `day3`'s final save: short, dense, the new modern fiction as the main course,
-the big old shelves on a maintenance dose. An experiment — a somewhat inflated character is
-acceptable, and `day3`'s final save is the fallback. The hands are `night/day4-RUN.md`; this file
+A warm start from `day3`'s save at the step it was stopped on (33,509 of 84,103): short, dense,
+the new modern fiction as the main course, the big old shelves on a maintenance dose. An
+experiment — a somewhat inflated character is acceptable, and that save (`ckpt-day3-final.pt`)
+is the fallback. The hands are `night/day4-RUN.md`; this file
 is the numbers and their reasons. Three marks run through it: **decided** (bekh with the session,
 2026-10-07, not reopened here), **proposed** (the recipe writer's, waiting for his yes), **guess**
 (nobody knows; the run measures it).
 
-Nothing here has run. The sizes of the new shelves are from `shelves/day4/summary.json`
+**It is running**: started 2026-10-07 about 15:25 UTC on ds-dev2 with exactly the mix, rate and
+length below (`night/CLAUDE.md` for how to look; where it is, is never written here). What this
+file holds that does not change is the recipe and **the baseline** (the section of that name):
+where she stood on every shelf before `day4` taught her anything. The sizes of the new shelves are from `shelves/day4/summary.json`
 (sha256 `96f77d3346318ef0dac8eb8198fad6b422ac076301b1fcddb955f5672830c711`), made by `data/shelves.py build --deep` from the sieve's plan of
 2026-10-07 21:05:06; the old shelves' are the `train_tokens` of their `.json` on ds-dev2.
 
@@ -102,9 +106,10 @@ What a yes would add at one read: 6.4 M tokens, a weight of 64, 1.6% on top of t
 ## The recipe, multiplied out
 
 **decided**: the shape — new fiction a little over half at about 2.5 reads; the library about 2
-reads; Strange Horizons and the released authors 1 (bekh, the evening of 2026-10-07: `day3` reads
-them four times, and two more would have ended past six in their life; the first writing of this
-table had them at two, weights 135 and 79); the 1920–71 literary shelf and the serials about 1; the
+reads; Strange Horizons and the released authors 1 (bekh, the evening of 2026-10-07, when a finished `day3` would have read
+them four times and two more would have ended past six in their life; the first writing of this
+table had them at two, weights 135 and 79. `day3` was then stopped at two fifths, so the one read
+is cautious, not forced); the 1920–71 literary shelf and the serials about 1; the
 net shelves and verse about 8%; old fantasy about 10%, down but not out; light novels about 3%;
 pulp sci-fi and base about 4% together; fan fiction 0.
 **proposed**: everything the shape leaves open, which is: the run's exact length (398.5 million tokens: the weights are the agreed reads and the agreed tokens of each old shelf, and the length is their sum; with Strange Horizons and the released authors at one read the sum fell from 4,092 to 3,985 and the run from 16,650 steps to 16,215, eleven million tokens and a quarter of an hour shorter, every other shelf reading exactly the tokens it did before and so taking a slightly larger share);
@@ -115,20 +120,20 @@ remainder went (nowhere: there is none; old fantasy stands at 10.3% and the ligh
 
 | shelf | what | bin | train tokens | weight | share | token-reads | reads | read in day3 | lifetime |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| fantasy | old fantasy, horror, gothic, myth | `bins2/fantasy.bin` | 126,216,244 | 409 | 10.26% | 40.9 M | 0.32 | 3.26 | 3.58 |
-| scifi | pulp sci-fi | `bins2/scifi.bin` | 76,909,682 | 82 | 2.06% | 8.2 M | 0.11 | 4.01 | 4.12 |
-| anime | light novels | `bins/anime.bin` | 241,196,917 | 123 | 3.09% | 12.3 M | 0.05 | 1.79 | 1.84 |
-| fanfic | anime fan fiction | `bins/fanfic.bin` | 550,111,074 | 0 | 0.00% | 0.0 M | 0.00 | 0.52 | 0.52 |
-| base | plain Gutenberg fiction | `bins2/base.bin` | 371,690,264 | 82 | 2.06% | 8.2 M | 0.02 | 0.86 | 0.88 |
-| wired-core | the visionary net | `bins/wired-core.bin` | 7,858,741 | 79 | 1.98% | 7.9 M | 1.01 | 4.19 | 5.20 |
-| wired-bulk | the lists, zines, BBS | `bins/wired-bulk.bin` | 107,067,581 | 228 | 5.72% | 22.8 M | 0.21 | 0.77 | 0.98 |
-| literary | 1920–71 literary | `bins2/literary.bin` | 30,892,390 | 309 | 7.75% | 30.9 M | 1.00 | 4.13 | 5.13 |
-| horizons | Strange Horizons stories | `bins2/horizons.bin` | 6,732,435 | 67 | 1.68% | 6.7 M | 1.00 | 4.12 | 5.12 |
-| released | author-released fiction | `bins2/released.bin` | 3,953,465 | 40 | 1.00% | 4.0 M | 1.01 | 4.16 | 5.17 |
-| library | bekh's library | `bins2/library.bin` | 7,530,165 | 151 | 3.79% | 15.1 M | 2.01 | 1.97 | 3.98 |
-| lain | everything Lain | `bins/lain.bin` | 955,926 | 10 | 0.25% | 1.0 M | 1.05 | 4.30 | 5.35 |
-| cyborg | the finishing corpus | `bins/cyborg.bin` | 182,957 | 2 | 0.05% | 0.2 M | 1.09 | 4.50 | 5.59 |
-| horizons-verse | Strange Horizons poems | `bins2/horizons-verse.bin` | 610,810 | 6 | 0.15% | 0.6 M | 0.98 | 4.04 | 5.02 |
+| fantasy | old fantasy, horror, gothic, myth | `bins2/fantasy.bin` | 126,216,244 | 409 | 10.26% | 40.9 M | 0.32 | 1.30 | 1.62 |
+| scifi | pulp sci-fi | `bins2/scifi.bin` | 76,909,682 | 82 | 2.06% | 8.2 M | 0.11 | 1.60 | 1.71 |
+| anime | light novels | `bins/anime.bin` | 241,196,917 | 123 | 3.09% | 12.3 M | 0.05 | 0.71 | 0.76 |
+| fanfic | anime fan fiction | `bins/fanfic.bin` | 550,111,074 | 0 | 0.00% | 0.0 M | 0.00 | 0.21 | 0.21 |
+| base | plain Gutenberg fiction | `bins2/base.bin` | 371,690,264 | 82 | 2.06% | 8.2 M | 0.02 | 0.34 | 0.36 |
+| wired-core | the visionary net | `bins/wired-core.bin` | 7,858,741 | 79 | 1.98% | 7.9 M | 1.01 | 1.67 | 2.68 |
+| wired-bulk | the lists, zines, BBS | `bins/wired-bulk.bin` | 107,067,581 | 228 | 5.72% | 22.8 M | 0.21 | 0.31 | 0.52 |
+| literary | 1920–71 literary | `bins2/literary.bin` | 30,892,390 | 309 | 7.75% | 30.9 M | 1.00 | 1.65 | 2.65 |
+| horizons | Strange Horizons stories | `bins2/horizons.bin` | 6,732,435 | 67 | 1.68% | 6.7 M | 1.00 | 1.64 | 2.64 |
+| released | author-released fiction | `bins2/released.bin` | 3,953,465 | 40 | 1.00% | 4.0 M | 1.01 | 1.66 | 2.67 |
+| library | bekh's library | `bins2/library.bin` | 7,530,165 | 151 | 3.79% | 15.1 M | 2.01 | 0.78 | 2.79 |
+| lain | everything Lain | `bins/lain.bin` | 955,926 | 10 | 0.25% | 1.0 M | 1.05 | 1.71 | 2.76 |
+| cyborg | the finishing corpus | `bins/cyborg.bin` | 182,957 | 2 | 0.05% | 0.2 M | 1.09 | 1.79 | 2.88 |
+| horizons-verse | Strange Horizons poems | `bins2/horizons-verse.bin` | 610,810 | 6 | 0.15% | 0.6 M | 0.98 | 1.61 | 2.59 |
 | modern | new: magazines, podcasts, small shelves | `bins2/modern.bin` | 70,694,476 | 1767 | 44.34% | 176.7 M | 2.50 | 0.00 | 2.50 |
 | anth | new: anthologies, by story | `bins2/anth.bin` | 17,081,565 | 427 | 10.72% | 42.7 M | 2.50 | 0.00 | 2.50 |
 | serials | new: web serials, by chapter | `bins2/serials.bin` | 20,085,628 | 201 | 5.04% | 20.1 M | 1.00 | 0.00 | 1.00 |
@@ -154,7 +159,7 @@ MIX="bins2/fantasy.bin:409 bins2/scifi.bin:82 bins/anime.bin:123 bins/fanfic.bin
 STEPS=16215
 ```
 
-*read in day3* is the same arithmetic on `run3.sh`'s weights over its 84,103 steps; *lifetime*
+*read in day3* is the same arithmetic on `run3.sh`'s weights over the 33,509 steps it ran; *lifetime*
 adds the two (and leaves out `night1` and `day2`, which read fantasy, sci-fi and the light novels
 a further one to three times and the net shelves under one).
 
@@ -163,20 +168,20 @@ reads in the main plan, only `modern` and `anth` grow, and the run grows with th
 
 | shelf | what | bin | train tokens | weight | share | token-reads | reads | read in day3 | lifetime |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|
-| fantasy | old fantasy, horror, gothic, myth | `bins2/fantasy.bin` | 126,216,244 | 409 | 7.71% | 40.9 M | 0.32 | 3.26 | 3.58 |
-| scifi | pulp sci-fi | `bins2/scifi.bin` | 76,909,682 | 82 | 1.55% | 8.2 M | 0.11 | 4.01 | 4.12 |
-| anime | light novels | `bins/anime.bin` | 241,196,917 | 123 | 2.32% | 12.3 M | 0.05 | 1.79 | 1.84 |
-| fanfic | anime fan fiction | `bins/fanfic.bin` | 550,111,074 | 0 | 0.00% | 0.0 M | 0.00 | 0.52 | 0.52 |
-| base | plain Gutenberg fiction | `bins2/base.bin` | 371,690,264 | 82 | 1.55% | 8.2 M | 0.02 | 0.86 | 0.88 |
-| wired-core | the visionary net | `bins/wired-core.bin` | 7,858,741 | 79 | 1.49% | 7.9 M | 1.01 | 4.19 | 5.20 |
-| wired-bulk | the lists, zines, BBS | `bins/wired-bulk.bin` | 107,067,581 | 228 | 4.30% | 22.8 M | 0.21 | 0.77 | 0.98 |
-| literary | 1920–71 literary | `bins2/literary.bin` | 30,892,390 | 309 | 5.83% | 30.9 M | 1.00 | 4.13 | 5.13 |
-| horizons | Strange Horizons stories | `bins2/horizons.bin` | 6,732,435 | 67 | 1.26% | 6.7 M | 1.00 | 4.12 | 5.12 |
-| released | author-released fiction | `bins2/released.bin` | 3,953,465 | 40 | 0.75% | 4.0 M | 1.01 | 4.16 | 5.17 |
-| library | bekh's library | `bins2/library.bin` | 7,530,165 | 151 | 2.85% | 15.1 M | 2.01 | 1.97 | 3.98 |
-| lain | everything Lain | `bins/lain.bin` | 955,926 | 10 | 0.19% | 1.0 M | 1.05 | 4.30 | 5.35 |
-| cyborg | the finishing corpus | `bins/cyborg.bin` | 182,957 | 2 | 0.04% | 0.2 M | 1.09 | 4.50 | 5.59 |
-| horizons-verse | Strange Horizons poems | `bins2/horizons-verse.bin` | 610,810 | 6 | 0.11% | 0.6 M | 0.98 | 4.04 | 5.02 |
+| fantasy | old fantasy, horror, gothic, myth | `bins2/fantasy.bin` | 126,216,244 | 409 | 7.71% | 40.9 M | 0.32 | 1.30 | 1.62 |
+| scifi | pulp sci-fi | `bins2/scifi.bin` | 76,909,682 | 82 | 1.55% | 8.2 M | 0.11 | 1.60 | 1.71 |
+| anime | light novels | `bins/anime.bin` | 241,196,917 | 123 | 2.32% | 12.3 M | 0.05 | 0.71 | 0.76 |
+| fanfic | anime fan fiction | `bins/fanfic.bin` | 550,111,074 | 0 | 0.00% | 0.0 M | 0.00 | 0.21 | 0.21 |
+| base | plain Gutenberg fiction | `bins2/base.bin` | 371,690,264 | 82 | 1.55% | 8.2 M | 0.02 | 0.34 | 0.36 |
+| wired-core | the visionary net | `bins/wired-core.bin` | 7,858,741 | 79 | 1.49% | 7.9 M | 1.01 | 1.67 | 2.68 |
+| wired-bulk | the lists, zines, BBS | `bins/wired-bulk.bin` | 107,067,581 | 228 | 4.30% | 22.8 M | 0.21 | 0.31 | 0.52 |
+| literary | 1920–71 literary | `bins2/literary.bin` | 30,892,390 | 309 | 5.83% | 30.9 M | 1.00 | 1.65 | 2.65 |
+| horizons | Strange Horizons stories | `bins2/horizons.bin` | 6,732,435 | 67 | 1.26% | 6.7 M | 1.00 | 1.64 | 2.64 |
+| released | author-released fiction | `bins2/released.bin` | 3,953,465 | 40 | 0.75% | 4.0 M | 1.01 | 1.66 | 2.67 |
+| library | bekh's library | `bins2/library.bin` | 7,530,165 | 151 | 2.85% | 15.1 M | 2.01 | 0.78 | 2.79 |
+| lain | everything Lain | `bins/lain.bin` | 955,926 | 10 | 0.19% | 1.0 M | 1.05 | 1.71 | 2.76 |
+| cyborg | the finishing corpus | `bins/cyborg.bin` | 182,957 | 2 | 0.04% | 0.2 M | 1.09 | 1.79 | 2.88 |
+| horizons-verse | Strange Horizons poems | `bins2/horizons-verse.bin` | 610,810 | 6 | 0.11% | 0.6 M | 0.98 | 1.61 | 2.59 |
 | modern | new: magazines, podcasts, small shelves | `bins2/modern.bin` | 70,694,476 | 2828 | 53.34% | 282.8 M | 4.00 | 0.00 | 4.00 |
 | anth | new: anthologies, by story | `bins2/anth.bin` | 17,081,565 | 683 | 12.88% | 68.3 M | 4.00 | 0.00 | 4.00 |
 | serials | new: web serials, by chapter | `bins2/serials.bin` | 20,085,628 | 201 | 3.79% | 20.1 M | 1.00 | 0.00 | 1.00 |
@@ -252,24 +257,19 @@ on that scale (84,103 steps at a mean of 4.4e-5):
 |---|---:|---:|---|
 | 2.5e-5 | 0.22 | 6% | an accent, not a change: the new shelves fall slowly, the old ones barely notice; the safe one and the dull one |
 | 5e-5 | 0.44 | 12% | the recipe writer's proposal |
-| **8e-5** | **0.71** | **19%** | **decided.** `day3`'s peak again; from `day3`'s finished save, ten times her resting rate: a real knock at the start (**guess** 0.10 or more), the new fiction learned fastest and memorised soonest, the old registers coming back on a 10–12% diet or not at all; the inflated one |
+| **8e-5** | **0.71** | **19%** | **decided.** `day3`'s peak again, and one and a half times the rate she was living at when `day3` was stopped: the new fiction learned fastest and memorised soonest, the old registers coming back on a 10–12% diet or not at all; the inflated one |
 
 **decided: peak 8e-5, 300 warm-up steps, cosine to a tenth (8e-6)** — bekh, the evening of
 2026-10-07, on the session's pick: it is `day3`'s own rate, so the diet is the only thing that
 changes between the two runs, and he asked for a bold, experimental run with `day3`'s save as the
 way back. `run4.sh`'s default is 8e-5, so the start line carries no `LR=`.
 
-**What the pick was argued without, to be said to him before the start.** The argument was
-"8e-5 is proven safe on her, `day3` has run on it for nineteen hours". That leaves out the first
-bullets of this section: `day3` took 8e-5 from a save that was *living* at about 7e-5, and a
-`day4` started from `day3`'s finished save starts from one annealed to 8e-6. Ten times the
-resting rate is a larger step than the 6.7 times that knocked `day2` a quarter point. So from the
-finished save a knock at the first evals is likely, and the stop condition for it (below) is live
-from step 500. **From a save of `day3` stopped early it is not**: at 40% of `day3` she is living
-at about 5.7e-5, and 8e-5 from there is one and a half times her rate, the same kind of step
-`day3` itself took with nothing moving. Which save `day4` starts from is open (`CLAUDE.md`, Next),
-and it decides how to read this. Either way the 300 warm-up steps stay, and the smoke test's eval
-against the first real eval is where the knock shows.
+**Why it is a small step and not a knock.** `day3` was stopped at two fifths, where she was
+living at about 5.6e-5, so 8e-5 is one and a half times her rate — the same kind of step `day3`
+itself took from `day2`'s save with nothing moving. From a *finished* `day3`, annealed to 8e-6,
+the same 8e-5 would have been ten times her resting rate, more than the 6.7 times that knocked
+`day2` a quarter point. A warm start's rate is judged against the rate the save was living at,
+never against the old run's peak alone (`PITFALLS.md` 6.1).
 
 ## Watching it
 
@@ -289,18 +289,46 @@ one) about 24 seconds, 2.3% of the run at an eval every 500 steps —
 **guess** until the smoke test's clock says so. Two things it changes: the old shelves' numbers
 **do not continue `day3`'s curves** (other windows; a shelf can sit a tenth higher or lower for
 no reason but the draw), and so the smoke test's eval at step 40 is the baseline for every shelf,
-old and new (`night/day4-RUN.md`, step 6). bekh accepted that price with the number. `run4.sh`
+old and new (the next section). bekh accepted that price with the number. `run4.sh`
 passes the environment variable **`EVAL_ITERS`** through as `--eval-iters`; the runbook checks
 that it does before anything starts.
 
 One read of the new fiction passes every 6,487 steps (step ÷ 6,487 is
 `modern`'s and `anth`'s reads so far).
 
+### The baseline
+
+Held-out loss per shelf at step 40 of the smoke test, with the rate still under a seventh of its
+peak, forty-eight windows a shelf. These are the weights `day3` stopped on, measured on `day4`'s
+ruler; every later number of this run is read against them.
+
+| shelf | baseline | shelf | baseline |
+|---|---:|---|---:|
+| fantasy | 3.153 | library | 3.283 |
+| scifi | 3.085 | lain | 2.959 |
+| anime | 2.383 | horizons-verse | 4.015 |
+| fanfic | 3.043 | **modern** | **3.143** |
+| base | 3.053 | **anth** | **3.270** |
+| wired-core | 4.102 | **serials** | **3.048** |
+| wired-bulk | 3.826 | **verse2** | **4.138** |
+| literary | 3.036 | horizons | 3.368 |
+| released | 3.558 | | |
+
+Two things it showed. **`day3`'s per-shelf numbers were off by up to tenths**, in both
+directions, because they were six windows: against `day3`'s last readings the same weights read
+anime +0.42, wired-core +0.62, fan fiction +0.16, fantasy +0.14, and base −0.28, horizons −0.21,
+lain and wired-bulk −0.15. So she never read the light novels "under 2"; and she already reads
+the new magazines about as well as her old shelves, before a step of them. **And a hint, not a
+finding** (forty steps, a few rows a shelf): on the small shelves `day3` read hardest — Strange
+Horizons, the released authors, the net core, each about one and a half times by the stop —
+training loss sat about half a point under held-out. Those gaps start wide; a gap that widens during `day4` is the thing to watch.
+
 **If it goes right**
 
 - `modern`, `anth` and `serials` fall from their baseline at every eval mean through at least the
   first read, fastest in the first two thousand steps; the detector says `learning`. **guess**:
-  `modern` starts near where Strange Horizons stands (3.6) and ends 0.15–0.25 under its baseline.
+  `modern` ends 0.15–0.25 under its baseline (it started at 3.14, not near the 3.6 guessed
+  from Strange Horizons' old reading).
 - With the new trainer, each of them has a training loss beside its held-out number and the gap
   between the two stays flat.
 - Old fantasy, the library, the literary shelf: within 0.08 of their baseline at the first eval,
@@ -322,8 +350,9 @@ One read of the new fiction passes every 6,487 steps (step ÷ 6,487 is
   than once. That is the measurement the 2.5 was a guess at — write down step ÷
   6,487.
 - *A small shelf with a long past turns*: Strange Horizons, the released authors, the visionary
-  core and Lain all pass five lifetime reads in this run. They are the likeliest to turn and the
-  cheapest to act on.
+  core and Lain are the small shelves she has read most (the *lifetime* column above), and the
+  baseline already shows a wide training-to-held-out gap on the first three. They are the
+  likeliest to turn and the cheapest to act on.
 - *The cadence is going*: old fantasy climbs all run and is more than 0.10 over its baseline at
   the halfway eval, and the bell seed on the page has gone flat and modern.
 - *Nothing happens*: the new shelves fall under 0.05 by halfway. The rate was too low; the run
@@ -431,11 +460,11 @@ shelves/day4/anth-rough/heldout: 0 files, 0.0 MB, paragraph median 0 p90 0 chars
   tenth; the light novels small; the fallback; **peak 8e-5 with 300 warm-up steps**; **Strange
   Horizons and the released authors at one read**; **48 eval windows a shelf**; **the rough
   anthologies out, at weight zero**.
-- **Open**: which save of `day3` it starts from — the finished run's, or one made by stopping
-  `day3` early (`CLAUDE.md`, Next).
-- **Proposed** (needs his yes with the table in front of him — `PITFALLS.md` 6.5): the exact
-  weights and the length; the split of the net group; evals every 500; `--steps` instead of
-  `--hours`; the stop conditions; fan fiction kept on the line at zero.
+- **Decided since, and done**: `day3` was stopped two fifths through and `day4` started from that
+  save the same night; the exact weights and the length, the split of the net group, evals every
+  500, `--steps` instead of `--hours` and fan fiction kept on the line at zero all went in as
+  written here, with his go.
+- **Proposed, still**: the stop conditions.
 - **Guessed**: that about 2.5 reads is where new fiction turns; the size of the knock at the
   start; every number under *if it goes right*.
 
@@ -443,8 +472,9 @@ shelves/day4/anth-rough/heldout: 0 files, 0.0 MB, paragraph median 0 p90 0 chars
 
 - **Strange Horizons and the released authors at two more reads end past six in their life**,
   and the rule of thumb in `PITFALLS.md` 4.1 is five. Answered: bekh took them down to one read
-  each (weights 67 and 40 in place of 135 and 79), which holds them at about five. `day3`'s last
-  verdicts on those two shelves (`night/turn.py day3`) are still worth a look before the start.
+  each (weights 67 and 40 in place of 135 and 79). Since `day3` stopped at two fifths they had
+  been read about one and a half times in it, not four, so they end `day4` under three; the wide
+  training-to-held-out gap the baseline hints at on them is the thing to watch instead.
 - **Forty-eight windows instead of six costs the thread back to `day3`.** With the default the
   fourteen old shelves, first on the line in `day3`'s order, would keep exactly the windows `day3`
   watched (checked: the draws are identical), and "did she lose fantasy" would be one curve
