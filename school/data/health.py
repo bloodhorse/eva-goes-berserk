@@ -7,7 +7,7 @@ DIRT = {
     "Full Size": re.compile(r"Full Size"),
     "url": re.compile(r"https?://|www\.", re.I),
     "Project Gutenberg": re.compile(r"Project Gutenberg", re.I),
-    "piracy watermark": re.compile(r"z-lib|1lib|OceanofPDF|libgen", re.I),
+    "site watermark": re.compile(r"z-lib|1lib|OceanofPDF|libgen", re.I),
     "copyright page": re.compile(r"All rights reserved|ISBN[ :-]*\d|Copyright ©", re.I),
     "page marker": re.compile(r"\[Pg\s*\w+\]"),
 }

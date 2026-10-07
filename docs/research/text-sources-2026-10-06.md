@@ -7,7 +7,7 @@ I can't give you a clean, bulk source of modern strange prose ready to download,
 | # | Source | What / era | Size | Label + quoted line | How to get it | Effort |
 |---|---|---|---|---|---|---|
 | 1 | **Institutional Books 1.0** (Harvard Library) | Harvard's scanned books. Copyright status comes from HathiTrust, so it includes US 1930–63 books HathiTrust opened after confirming they were never renewed. Mostly 19th–20th century. | 983K volumes / 242B tokens in total. **The 1930+ fiction subset is unknown.** | **Clean text, gated access:** "You may use the Service solely for noncommercial purposes"; "You may not share or redistribute." Fits private use. | Hugging Face `institutional/institutional-books-1.0`. It has `date1_src`, `genre_or_form_src` and `topic_or_subject_gen` fields to filter on. | Medium (large download) |
-| 2 | **Escape Pod / PodCastle / PseudoPod** | Modern SF, fantasy and horror short fiction, 2005–today. Much of PodCastle and PseudoPod is literary-weird. | ~2,800 stories, ~12M words (**my estimate** from episode counts) | **Off for scraping:** their robots.txt blocks GPTBot, CCBot and Google-Extended. Yet the text is "Attribution-Noncommercial-No Derivative Works 4.0". **The best thing to ask for.** | Ask (section 6) | Low if they say yes |
+| 2 | **Escape Pod / PodCastle / PseudoPod** | Modern SF, fantasy and horror short fiction, 2005–today. Much of PodCastle and PseudoPod is literary-weird. | ~2,800 stories, ~12M words (**my estimate** from episode counts) | **Robots.txt blocks crawlers:** their robots.txt blocks GPTBot, CCBot and Google-Extended. Yet the text is "Attribution-Noncommercial-No Derivative Works 4.0". **The best thing to ask for.** | Ask (section 6) | Low if they say yes |
 | 3 | **Rudy Rucker's free books** | Ware tetralogy, Postsingular, Juicy Ghosts, Spaceland, White Light, Jim and the Flims, Complete Stories, Journals. 1980s–2020s, gonzo-weird. | ~1.5M words of fiction (estimate). Journals extra. | **Clean, explicit permission:** "I want people to read these, and I want AIs and bots to read them, and to train on them." He forbids republishing or selling. | rudyrucker.com/blog/rudy-rucker-free-books | Low |
 | 4 | **Small Beer Press CC books** (Kessel, McHugh, Rosenbaum, Vukcevich) | 2000s literary-weird short fiction | ~0.5M words (estimate) | **Licence clean, website says no:** "licensed under a Creative Commons (Attribution-NonCommercial-ShareAlike 3.0)". But smallbeerpress.com's robots.txt blocks GPTBot and CCBot. The CC version of Link's *Magic for Beginners* was taken down. | Ask them, then download | Low |
 | 5 | **SmokeLong Quarterly** | Literary flash fiction, 2003–today. Sentence-conscious, often strange. | Low millions of words (estimate, not counted) | **Grey:** robots allows everyone (`crawl-delay: 20`); I found no AI statement | Slow crawl | Medium |
@@ -17,7 +17,7 @@ I can't give you a clean, bulk source of modern strange prose ready to download,
 | 9 | **Unpublished 1930–63 pulp and digest magazines** (Internet Archive's Pulp Magazine Archive: 12,000+ issues, Galaxy, If) | 1930s–60s SF, crime, weird | Tens of millions of words before checks; the public-domain share after per-story checks is unknown. Overlaps heavily with Gutenberg. | **Grey:** uploads by users; I could not re-check archive.org's terms | Scans plus OCR text, messy two-column layout | High |
 | 10 | **Web serials** (Unsong, Worm/Ward, A Practical Guide to Evil, The Wandering Inn) | 2010s. Large, but mostly not literary. | Sizes reported by the authors, not verified | **Grey:** wordpress.com / own-site robots have no AI blocks. I did not check what the authors have said about AI. | Crawl | Medium |
 
-**Off (checked this session):**
+**Sites whose robots.txt or terms say no to crawlers or training (checked this session):**
 - Royal Road, Archive of Our Own, Wattpad, SpaceBattles, Sufficient Velocity, The Dark, Weird Horror, BOMB, Paris Review, Baen: robots.txt blocks AI crawlers.
 - Smashwords: "expressly forbids scanning, scraping, and analysis of the Site and any book contents for AI training purposes, whether books are purchased or free."
 - Weightless Books: "We're strongly against the use of 'AI' in art or writing."
@@ -27,7 +27,7 @@ I can't give you a clean, bulk source of modern strange prose ready to download,
 - Daily Science Fiction: the archive is gone; the site says "Launching Soon".
 - Free SF Online (freesfonline.net): its own robots blocks AI bots, but it is a useful index for checking story hosts one by one.
 
-**Clean but no use for the gap:** Common Pile, Common Corpus, Standard Ebooks, PG-19 and US-PD-Books are all public domain by date, so almost nothing after 1929. Common Pile also leaves out NC/ND licences on purpose, so it can't hold the CC-NC modern fiction. The Internet Archive asked for US-PD-Books to be taken down because its metadata was "too unreliable" for public-domain calls, and the full texts were removed.
+**Open but no use for the gap:** Common Pile, Common Corpus, Standard Ebooks, PG-19 and US-PD-Books are all public domain by date, so almost nothing after 1929. Common Pile also leaves out NC/ND licences on purpose, so it can't hold the CC-NC modern fiction. The Internet Archive asked for US-PD-Books to be taken down because its metadata was "too unreliable" for public-domain calls, and the full texts were removed.
 
 ### 2. What the scene does
 
@@ -54,7 +54,7 @@ It is real, but it is mostly a route to mid-century books, not to modern prose.
 
 - **The law:** Bartz v. Anthropic (N.D. Cal., June 2025) held training "exceedingly transformative" fair use, and destructively scanning books Anthropic had bought was fair use too. Pirated copies were not cleared. This is one district judge in the US, it doesn't bind anyone else, and you're training from Vietnam, where it has no direct force.
 - **Price:** StoryBundle right now is $30 for 15 books, so $2 a book. Its terms forbid "copying, distributing… any part of the Products… including… 'scraping'". That reads as a redistribution ban, and I found no AI clause, so: grey. Humble: I couldn't fetch its terms.
-- **What's off:** Smashwords and Weightless (quotes above). Penguin Random House books printed since 2024 say "No part of this book may be used or reproduced in any manner for the purpose of training artificial intelligence technologies or systems". By your rules, that's off.
+- **Who says no in their terms:** Smashwords and Weightless (quotes above). Penguin Random House books printed since 2024 say "No part of this book may be used or reproduced in any manner for the purpose of training artificial intelligence technologies or systems". Their terms say no.
 - **What it costs in tokens** (estimate): one novel is ~120K tokens, so 5M tokens is ~40 books. Bundles cost ~$80 per 5M tokens, but their taste is indie genre. Small-press titles chosen for taste, at ~$8, cost ~$320 per 5M tokens.
 
 ### 5. The synthetic route
