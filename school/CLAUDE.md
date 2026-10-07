@@ -63,14 +63,18 @@ never a sentence here):
   steps, batch 6 × accum 4 (24,576 tokens a step; batch 8 benches but dies at the first eval),
   fourteen shelves at the weights in `night/run3.sh`, fifty hours planned as 84,103 steps and
   2.07 billion tokens, about 11.9k tok/s, 15.0 GB of the card. Stopped once at step 911 to add
-  three one-line seeds and resumed from the save (`PITFALLS.md` 7.1 has how). It ends around
-  2026-10-08 20:00 UTC, with a push to the phone; **where she is right now is
+  three one-line seeds and resumed from the save (`PITFALLS.md` 7.1 has how). It ends on the
+  evening of 2026-10-08 UTC (now plus the `eta` on the log's last line; `PITFALLS.md` 7.4b),
+  with a push to the phone; **where she is right now is
   `night/mon.py day3 --once` or the page, never a sentence here**; every status she has written
   is `night/day3/ledger.jsonl`, and the page's sparklines are that file. How to read the evals
   (one every 1,000 steps, about 35 minutes): the overall number falls for two and gives a little
   back on the third, with the floor lower each time; a big shelf swings ±0.03 from eval to eval,
   net core ±0.1 (its held-out set is tiny), the small new shelves ±0.015 — a shelf has to rise
-  two evals running by more than its own swing before it means anything, and none has yet.
+  two evals running by more than its own swing before it means anything. `night/turn.py day3`
+  gives that verdict per shelf (`learning` / `flat` / `rising` / `turned`, exit 2 on a turn); it
+  called fantasy `turned` once, at step 25,000, and the next eval took it back — the run was left
+  alone and that was right (`PITFALLS.md` 7.4).
   The work project's `llama-server.service` is stopped for the run (idle since 2026-08-29 by
   its journal; bekh's word, 2026-10-06); `sudo systemctl start llama-server.service` brings it
   back, and a reboot does too (it is enabled), which would take the card from a run. bekh's
@@ -103,8 +107,10 @@ the rest as the box made them; the last two columns are the weights of `day2` an
 is 200,000 tokens read): at `day2`'s weights the six would have been read ten times and the
 cyborg corpus eleven. So the share of chosen modern prose is set by how much of it there is —
 the new shelves carry about 9% — and the weight they take came out of the ballast. Not placed
-yet: a **spine** of modern plain prose in bekh's worlds (A Song of Ice and Fire, Wildbow's
-Pact), and the books of `library.md` that had not arrived, which join at the finishing school.
+yet: everything gathered since `day3` started (**the pile**, below — several times all the
+modern prose in this table), a **spine** of modern plain prose in bekh's worlds (A Song of Ice
+and Fire, Wildbow's Pact, and now the web serials, if bekh keeps them apart), and the books of
+`library.md` that had not arrived, which join at the finishing school.
 
 **The fantasy, sci-fi and base text she read until now was half glued**: 3,505 of 7,320
 Gutenberg books had reached her as one paragraph per chapter or per book. `data/cut2.py` cut the
@@ -141,6 +147,52 @@ against the mini. `archive.sh` never deletes on the mini, and it pulls the box's
 the mac if the box still answers. Renting iron is out of the question for now; the next bigger model waits
 for a borrowed card and for more text.
 
+## The pile
+
+Since 2026-10-07 the shelves are no longer the limit they were: a pile of modern short fiction
+has been gathered that is several times everything modern she has read — magazine archives,
+podcast transcripts, anthologies and year's-bests fetched by hand, two dead magazines out of the
+Wayback Machine, author-released backlists, web serials. None of it is tokenised and none of it
+is in `day3`; it is `day4`'s (Next). It goes through five stages, each with one command and one
+report, and a source file is never changed by any of them:
+
+1. **Collect.** Three doors. `shelf/gpt/` at the project root — a resumable collector another
+   model wrote for bekh (`README.md` there is its doc, `summary.json` its counts, `text/<source>/`
+   one file a story with `metadata/<source>/` beside it); it is read-only to us and its README
+   says what it left undone. `modern/<source>/` — our own fetchers, one folder a source with its
+   scripts, `raw/`, `text/` and `ledger.jsonl`. And books by hand: bekh's fetcher in
+   `~/tower/ephemeral/booox/` takes a title list (`books.txt`, the anthologies) and drops files
+   in `souls_lain_library/`.
+2. **Convert** the books (the rest is already text):
+   ```bash
+   cd ~/tower/forge/eva-goes-berserk/school && uv run --python 3.12 --with mobi --with pymupdf --with beautifulsoup4 --with lxml \
+     python data/books.py ~/tower/ephemeral/booox/souls_lain_library --out inbox/anth
+   ```
+   Anthologies to `inbox/anth/`, library books to `inbox/clean/` — the two are kept apart on
+   purpose (bekh's thirty against other editors' taste in bulk; separate shelves, separate
+   held-out numbers). It skips what its ledger already has. Read its `SKIP`, `DUP` and `ERROR`
+   lines and the ledger's dropped sections every time (`PITFALLS.md` 1.5b, 2.7), then
+   `data/health.py inbox/anth`.
+3. **Dedupe.** `cd dedupe && uv run --python 3.12 dedupe.py daily` — indexes every shelf named
+   in `dedupe/sources.toml` (a new folder under `shelf/gpt/text/` needs no edit; any other new
+   root is one block), writes the clean copy to `dedupe/out/<source>/` and `dedupe/report.md`.
+   The report is where the pile's size lives: words in and surviving per source, the overlap
+   matrix, what was cut out of each anthology, the incoming-against-read hits (the held-out
+   contamination check), the band it would not decide. `crosscheck.py all` audits it by a
+   method that is not its own (`PITFALLS.md` 2.9). `dedupe/README.md` is the doc.
+4. **Sieve** (`sieve/`, being built on 2026-10-07 — its `README.md` is the doc once it is
+   there): sorts `dedupe/out/` by kind (fiction, non-fiction, verse, stub), cuts host intros,
+   author bios and the editors' apparatus out of anthologies, and writes each kind to its own
+   tree, so its report's fiction column is what a recipe can count on.
+5. **Recipe, upload, tokenise.** Shelves are made from the sieve's fiction (which sources are
+   one shelf is a recipe decision, below), copied to ds-dev2 and tokenised there with `prep.py`
+   (`PITFALLS.md` 3); the readings are multiplied out before a run (4.1), and the archive on the
+   mini gets the new text (`night/archive.sh`).
+
+`dedupe.py lookup <file>` is the same index asked the other way: every run of eight or more
+words a page shares with the indexed corpus, with its source. That is the recitation meter's
+engine.
+
 ## Watching and running
 
 ```bash
@@ -167,25 +219,31 @@ cd ~/tower/forge/eva-goes-berserk/school && kill $(lsof -tnP -iTCP:8086 -sTCP:LI
 A walk on her is the walk scripts with `LOOM_LLAMA=http://127.0.0.1:8086` (`eva/cli/walk/README.md`);
 her first, `experiments/magdra-prophecy` and its cut, was made at step 911 (2026-10-07).
 
-**The twenty-minute look** bekh wants during a run is a session cron, and it dies with the
-session; a fresh session re-arms it with `/loop 20m` and this prompt:
+**The hourly look** bekh wants during a run is a session cron, and it dies with the session; a
+fresh session re-arms it at twelve past the hour (a cron at `12 * * * *`; it was every twenty
+minutes until 2026-10-07, why is `PITFALLS.md` 7.7) with this prompt:
 
 > Check magdra's day3 run (read school/PITFALLS.md section 7 once if you have not this session).
 > On ds-dev2 (ssh -o ConnectTimeout=15 -i $KEY BekmemetevVO@ds-dev2.x340.org, read-only, inside
-> /opt/llama/magdra): runs/day3/status.json (step, total_steps, tok_per_s, eta, eval_per_file,
+> /opt/llama/magdra): runs/day3/status.json (step, total_steps, tok_per_s, eval_per_file,
 > heartbeat age from its unix field), the last two lines of runs/day3.log, the tail of
 > runs/day3.guard.log, nvidia-smi memory and temperature, df free, and whether train.py, run3.sh
 > and guard.sh are alive. On the mac: age of school/night/day3/status.json, tail of
 > school/night/day3/pull.log and watch.err, and that night/watch.sh and night/pull_ckpt.sh for
-> day3 are still running. Compare each shelf's held-out number with the previous check's. Report
-> to bekh in at most five short lines: alive or not, step and percent, speed, the shelf numbers
-> that moved (falling is good; name any shelf that rose across two evals in a row), anything odd.
-> Push to ntfy.sh/kk_alert (Priority high) only if something is wrong: trainer or guard dead,
-> heartbeat older than five minutes, a snapshot failed, a shelf climbing across two evals, disk
-> under 30 GB, card memory at the limit, or the work llama-server active again. Never restart,
-> stop or change anything on ds-dev2 without bekh's word; if the run is dead, say what the log
-> shows and wait. When status says the run is done, report the final numbers, push once at
-> default priority, and end the loop.
+> day3 are still running. Run the turn detector: cd ~/tower/forge/eva-goes-berserk/school && uv
+> run -q --python 3.12 python night/turn.py day3 (exit 2 means some shelf reads turned). Compare
+> each shelf's held-out number with the previous check's (there are usually two new evals).
+> Report to bekh in at most five short lines: alive or not, step and percent, speed from the
+> log's elapsed deltas, the shelf numbers that moved (falling is good; name any shelf that rose
+> across two evals in a row) with the detector's verdicts, anything odd. If nothing is wrong and
+> nothing moved outside its band, say so in one line. Push to ntfy.sh/kk_alert (Priority high)
+> only if something is wrong: trainer or guard dead, heartbeat older than five minutes, a
+> snapshot failed, a shelf that reads turned on two checks running (once per shelf; again only
+> if it has climbed more than 0.03 since that push), disk under 30 GB, card memory at the limit,
+> or the work llama-server active again. A shelf merely rising, or turned for the first time, is
+> reported in chat, not pushed. Never restart, stop or change anything on ds-dev2 without bekh's
+> word; if the run is dead, say what the log shows and wait. When status says the run is done,
+> report the final numbers, push once at default priority, and end the loop.
 
 The sheets site that serves the page is `sheets.service`, a systemd user unit on the mini since
 2026-10-07 (it had died with a reboot before that). On ds-dev2 everything is
@@ -240,17 +298,30 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   which drops image captions (`p029.jpg (285K) Full Size`), Gutenberg boilerplate and urls.
   `health.py <dir>` is the verdict on any folder of text before it is tokenised (glued, shredded,
   nested, dirt).
-  `books.py` turns the epubs in `inbox/` into body text in `inbox/clean/` with a ledger of
-  every section it dropped and why, a language gate, a check that a file is what its extension
-  says, and `inbox/skip.txt`; `pages.py` joins a book that arrived as scanned-page text files.
+  `books.py` turns ebooks (epub, mobi, pdf, txt) into body text in the folder `--out` names,
+  with a ledger of every section it dropped and why, a language gate, a check that a file is
+  what its extension says, a duplicate check against what the ledger already holds, and
+  `inbox/skip.txt`; `pages.py` joins a book that arrived as scanned-page text files.
   `jsonl2dir.py`, `build*.sh` (the tokenising batches; `build5.sh` on ds-dev2 made `bins2/`).
-- `modern/` — text fetched on 2026-10-06, one folder a source, each with its scripts and a
-  ledger (text and raw pages not in git, mirrored to the mini): `fadedpage/` 261 books of
-  1920–1971 literary prose (`picks.tsv` is the selection), `strangehorizons/` 1,196 stories and
-  1,640 poems from the magazine's open API, `released/` fiction its authors serve themselves
-  (Rucker, who asks to be trained on; Watts; qntm; Scott Alexander; Roger Williams; one Kelly
-  Link story; Wildbow's Pact, kept apart for the spine). `library.md` — bekh's thirty for the
-  finishing school and where each stands.
+- `modern/` — text we fetched ourselves, one folder a source, each with its scripts and a
+  ledger (text and raw pages not in git, mirrored to the mini). Read by her already:
+  `fadedpage/` 261 books of 1920–1971 literary prose (`picks.tsv` is the selection),
+  `strangehorizons/` 1,196 stories and 1,640 poems from the magazine's open API, `released/`
+  fiction its authors serve themselves (Rucker, who asks to be trained on; Watts; qntm; Scott
+  Alexander; Roger Williams; one Kelly Link story; Wildbow's Pact, kept apart for the spine).
+  Part of the pile, not read yet: `released/shiner/` (Lewis Shiner's whole backlist, seven
+  novels and 68 stories, out of PDF and HTML), `giganotosaurus/` (180 long stories through the
+  site's API, with `spam_removed.jsonl`, every paragraph the cleaner edited), `wayback/` (SCI
+  FICTION and The Infinite Matrix out of the Internet Archive: `wb.py`, each source's `fetch.py`
+  and `clean.py`, `word/` what each site and the archive said of themselves; Subterranean was
+  enumerated and never fetched).
+- `dedupe/` — the deduplication tool and its audit (The pile, stage 3; `README.md`). `state/`
+  (the index, about 1.3 GB) and `out/` (the clean copy) are not in git and are rebuilt by
+  `dedupe.py rebuild` and `daily`.
+- `sieve/` — the kind sieve (stage 4), in the building on 2026-10-07.
+- `library.md` — bekh's lists for the finishing school, the anthology shelf, and where each
+  book stands. What he might read of all this himself is a list in the book club,
+  `~/tower/shittalk/fable-book-club/reading-list.md`.
 - **The finishing school**: `corpus.jsonl` / `corpus.md` — 960 passages of cyborgism prose with
   names and dates stripped, labelled `origin` (base, human, tuned, unknown), `tier`, `fit`
   (2 = visionary); `strip.py` rebuilds it from `raw/`; `grades/`, `passages.jsonl`,
@@ -263,7 +334,9 @@ batch 12 × 2 at 18.6k and 18.9 GB.
   the pulp-OCR verdict); `fanfic/` — the fan-fiction cut's scripts, mapping and minors rule (the
   shelves themselves are `~/eva-olmo/school/fanfic/*.jsonl` on the box, and the "souls" and
   "wired" fan shelves were not used: Dragon Age and Mass Effect are not the blend). Raw text
-  not in git. `inbox/` — the books: `clean/` the converted library with its ledger, `held/` what converted
+  not in git. `inbox/` — the books: `clean/` the converted library with its ledger (read by her; never
+  re-converted, since her held-out set was cut from these files), `anth/` the anthologies and
+  year's-bests with theirs (the pile), `held/` what converted
   without paragraphs, `rescued/` plain-text rescues of misnamed files (Word, RTF, HTML, RAR,
   scanned pages), `preview*/` the converter's test runs, `skip.txt` the files never converted; `models/` —
   each run's last snapshot, `bins/` the tokenised shelves copied from the box, and `box/` the two
@@ -297,13 +370,58 @@ health, dedupe it, shelve it, with the same care whatever door it came through.
 
 ## Next
 
-**While `day3` runs** (until about 2026-10-08 20:00 UTC): the twenty-minute look (above). bekh
-gets the books that are still missing (`library.md`, the gaps section) into
-`~/tower/ephemeral/booox/souls_lain_library/`; `data/books.py <that folder> --out inbox/clean`
-converts them, `data/health.py inbox/clean` is the verdict, and they join the library shelf at
-the finishing school. Make the loom follow her: a small job that restarts the 8086 server when
-`models/day3/latest` changes, so `eva.x` is always her newest hour. And the finishing-school talk,
-not yet had — the open questions: a short low-rate pass against an adapter with a dial
+**While `day3` runs** (into the evening of 2026-10-08 UTC): the hourly look (above), and the
+pile through its stages. What is open in it, in order:
+
+- **The converter** is being repaired for the stories it took for footnotes, the annuals are
+  being identified from their text and given honest names (`git log data/books.py`; then
+  `inbox/anth/ledger.jsonl`). After any re-conversion, `dedupe.py daily` again.
+- **The sieve** is being built. When it reports, bekh has three calls to make on its output:
+  verse in or out (about two hundred poems, sorted into their own tree; the same question as
+  the Strange Horizons poems); the editors' apparatus in the annuals (the "Summation" essays and
+  per-story notes on the author: cut, agreed 2026-10-07; the essays in *Storming the Reality
+  Studio* and *Digital Rapture* are kept on purpose — they are the prophecy register); and
+  what to do with the non-fiction tree.
+- **The books still to come**: `~/tower/ephemeral/booox/books.txt` is the anthology list
+  (103 lines, in fetch order), `library.md` has what has arrived and the bad downloads. New
+  files are converted as they land (stage 2) and the dedupe run again.
+- **bekh's first reading list** out of all this is in the book club
+  (`~/tower/shittalk/fable-book-club/reading-list.md`).
+
+**`day4`, as planned and not yet agreed in its numbers.** The pile changes what the next run
+can be, and the size of the change is why it did not go into `day3` mid-run. A warm start from
+`day3`'s final save. **Short and dense**: on the order of half a billion tokens, an overnight
+run, because the reading cap sets how many tokens the modern shelves can take, and the only way
+to make them the main course is a smaller meal (`PITFALLS.md` 4.6). **Modern text as the main
+course**: the sieve's fiction from the magazines, podcasts, anthologies and small shelves,
+beside the modern shelves she already has. **The old shelves on a maintenance dose**: she has
+read them for three billion tokens and they only need keeping — the fan fiction and the pulp
+sci-fi cut hardest, the light novels hard (her loss there is under 2; it is teaching her
+nothing), the old fantasy least, since Dunsany, Eddison, Morris and Clark Ashton Smith carry
+the grave cadence. Open with bekh: **the serials** — Claude's view is their own shelf at a low
+weight for long-range coherence, with the spine, and out of the modern shelf (five of eight are
+one author; `PITFALLS.md` 4.5); **how hard** the old shelves come down; **the reading limit**
+— about two and a half passes of a small shelf is a guess from how the library behaved in
+`day3`, to be measured per shelf by the turn detector, not believed; and whether the
+anthologies are one shelf or split by kind. The recipe is written from `sieve/report.md` and
+`dedupe/report.md`, said back in shares and readings (`PITFALLS.md` 4.1, 4.4), and started on
+bekh's yes to those numbers (6.5). New held-out sets are cut when the new shelves are
+tokenised, before she has read a word of them.
+
+**The four jobs bekh set on 2026-10-07, and where each stands.** *The turn, acted on*: for
+`day3` it is a push and a human (the look's prompt); for `day4` and the finishing school, the
+trainer re-reading a small weights file at every eval (`runs/<name>/weights.json`, written by
+the detector or by hand) so a turned shelf can be set to zero without a restart — not built,
+and the detector's verdict has to stand for two evals before anything acts on it
+(`PITFALLS.md` 7.4). *The recitation meter*: the engine exists (`dedupe.py lookup`); not yet
+run on her draws by `night/page.py`, and the big shelves on ds-dev2 are not in its index.
+*The loom following her*: not built — a few lines in `page.py` beside `loomed()` that restart
+the 8086 server when `models/<run>/latest` changes. *Where to get more text*: asked and
+answered (`docs/research/text-sources-2026-10-07.md`); the pile is the result. Still wanted and
+unbuilt beside them: training loss per shelf in `train.py`, the one instrument that tells
+memorising from trade.
+
+**The finishing-school talk**, not yet had — the open questions: a short low-rate pass against an adapter with a dial
 (`SERVE.md` was never written; check the per-request LoRA scale on our llama.cpp builds first);
 how many tokens; the weights of the library's five (Wolfe, VALIS, Borges, Hard-Boiled Wonderland,
 Viriconium — four told by an *i* who remembers and cannot be trusted) against the cyborg corpus
@@ -313,17 +431,18 @@ read the result through the loom before any number is believed.
 
 **When it ends**: the trainer writes DONE and pushes; the guard takes a last snapshot and
 writes `guard down`; the watcher pulls it and stops; the puller makes one last copy to the mini
-(`night/day3/pull.log` says MATCH). Then: copy `runs/day3/ckpt.pt` to the mac if there is room
-(there is not, at 97% full — the mini's copy is the trainable save), serve the final snapshot to
-the loom, bekh reads her and marks, and whether the work project's llama-server goes back on is
-his and the team's call (one line, above). Then the finishing school on ds-dev2 from the final
-save, and `library.md`'s gaps as they arrive.
+(`night/day3/pull.log` says MATCH). Then: the mini's copy is the trainable save (the mac keeps
+none), serve the final snapshot to the loom, bekh reads her and marks, and whether the work
+project's llama-server goes back on is his and the team's call (one line, above). Then `day4`
+from that save when its recipe is agreed, the finishing school after it, and `library.md`'s
+gaps as they arrive.
 
 **More text, later**: Harvard's Institutional Books on Hugging Face (gated, non-commercial; the
 unrenewed American books of 1930–63 — count its fiction from the metadata first; bekh has to
-accept the gate), an ask to Escape Pod / PodCastle / PseudoPod (2,800 stories, already
-CC BY-NC-ND, crawlers blocked — an email from bekh), `common-pile/project_gutenberg` (670 shelf
-books newer than our dump), Roy Glashan's Library (hand-typed pulps);
-`docs/research/text-sources-2026-10-06.md` is the survey. Then the soul probe on her, the three
+accept the gate), `common-pile/project_gutenberg` (670 shelf books newer than our dump), Roy
+Glashan's Library (hand-typed pulps), Subterranean's online magazine in the Wayback Machine
+(enumerated in `modern/wayback/subterranean/`, long novellas, never fetched);
+`docs/research/text-sources-2026-10-06.md` is the survey and `…-2026-10-07.md` what came of it.
+Size each before starting (`PITFALLS.md` 1.2). Then the soul probe on her, the three
 dials from her shelf states, and the made-up world where "does it know what the text is about" is
 a readout.
