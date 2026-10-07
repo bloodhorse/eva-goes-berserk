@@ -85,7 +85,9 @@ Not fiction. The register the prophecies are stitched from.
 | piece | why | where |
 |---|---|---|
 | Vernor Vinge, "The Coming Technological Singularity" | The 1993 talk. Total confidence about something nobody understood yet. | *Digital Rapture* |
-| Bruce Sterling, preface to *Mirrorshades* | The manifesto. *Mirrorshades* itself came as a broken file; the preface is reprinted here. | *Storming the Reality Studio* |
+
+Wanted here and not on a shelf: Sterling's preface to *Mirrorshades*, the manifesto. The book
+came as a broken file and the casebook that should reprint the preface does not have it.
 
 ## Not yet placed
 
