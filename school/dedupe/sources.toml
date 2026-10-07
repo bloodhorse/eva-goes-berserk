@@ -1,0 +1,208 @@
+# The text roots the deduper reads. Paths are relative to this file.
+#
+#   name      the folder the root gets under out/, and its label everywhere
+#   path      the root directory
+#   glob      which files under it, relative to path; * stays inside one folder, **/ crosses folders
+#   kind      read      she has already read this shelf and held-out splits exist: it always wins
+#             incoming  not yet read
+#             reference indexed for lookup and reported, never cut, never the cause of a cut, not written to out/
+#   priority  higher wins among roots of the same kind
+#   container true for a shelf of anthologies: there, an editor's introduction standing between a story's
+#             heading and a story that is cut goes with the cut (thresholds.toml, [remnants]); elsewhere only
+#             the heading goes
+#   metadata  a folder of <file stem>.json with title, authors (titles in the report only)
+#   ledger    a ledger.jsonl (or a glob of them) with slug or file, title, author (titles in the report only)
+#   format    txt (default) or jsonl: one document per line, text_field and id_field name the keys
+#
+# Thresholds live in thresholds.toml beside this file.
+
+[[source]]
+name = "library"
+path = "../inbox/clean"
+glob = "*.txt"
+kind = "read"
+priority = 90
+ledger = "../inbox/clean/ledger.jsonl"
+
+[[source]]
+name = "released/alexander"
+path = "../modern/released/alexander/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/alexander/ledger.jsonl"
+
+[[source]]
+name = "released/link"
+path = "../modern/released/link/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/link/ledger.jsonl"
+
+[[source]]
+name = "released/qntm"
+path = "../modern/released/qntm/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/qntm/ledger.jsonl"
+
+[[source]]
+name = "released/rucker"
+path = "../modern/released/rucker/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/rucker/ledger.jsonl"
+
+[[source]]
+name = "released/watts"
+path = "../modern/released/watts/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/watts/ledger.jsonl"
+
+[[source]]
+name = "released/williams"
+path = "../modern/released/williams/text"
+glob = "*.txt"
+kind = "read"
+priority = 80
+ledger = "../modern/released/williams/ledger.jsonl"
+
+[[source]]
+name = "strangehorizons"
+path = "../modern/strangehorizons/text"
+glob = "*.txt"
+kind = "read"
+priority = 70
+ledger = "../modern/strangehorizons/ledger.jsonl"
+
+[[source]]
+name = "strangehorizons-verse"
+path = "../modern/strangehorizons/poetry"
+glob = "*.txt"
+kind = "read"
+priority = 69
+ledger = "../modern/strangehorizons/ledger.jsonl"
+
+[[source]]
+name = "fadedpage"
+path = "../modern/fadedpage/text"
+glob = "*.txt"
+kind = "read"
+priority = 60
+ledger = "../modern/fadedpage/ledger.jsonl"
+
+[[source]]
+name = "lain"
+path = "../lain/text"
+glob = "**/*.txt"
+kind = "read"
+priority = 40
+
+[[source]]
+name = "wired-core"
+path = "../wired-core"
+glob = "**/*.txt"
+kind = "read"
+priority = 30
+
+[[source]]
+name = "released/shiner"
+path = "../modern/released/shiner/text"
+glob = "*.txt"
+kind = "incoming"
+priority = 60
+ledger = "../modern/released/shiner/ledger.jsonl"
+
+[[source]]
+name = "clarkesworld"
+path = "../../shelf/gpt/text/clarkesworld"
+glob = "*.txt"
+kind = "incoming"
+priority = 58
+metadata = "../../shelf/gpt/metadata/clarkesworld"
+
+[[source]]
+name = "bcs"
+path = "../../shelf/gpt/text/bcs"
+glob = "*.txt"
+kind = "incoming"
+priority = 57
+metadata = "../../shelf/gpt/metadata/bcs"
+
+[[source]]
+name = "uncanny"
+path = "../../shelf/gpt/text/uncanny"
+glob = "*.txt"
+kind = "incoming"
+priority = 56
+metadata = "../../shelf/gpt/metadata/uncanny"
+
+[[source]]
+name = "giganotosaurus"
+path = "../modern/giganotosaurus/text"
+glob = "*.txt"
+kind = "incoming"
+priority = 55
+ledger = "../modern/giganotosaurus/ledger.jsonl"
+
+[[source]]
+name = "released/wildbow"
+path = "../modern/released/wildbow/text"
+glob = "*.txt"
+kind = "incoming"
+priority = 54
+ledger = "../modern/released/wildbow/ledger.jsonl"
+
+[[source]]
+name = "lightspeed"
+path = "../../shelf/gpt/text/lightspeed"
+glob = "*.txt"
+kind = "incoming"
+priority = 50
+metadata = "../../shelf/gpt/metadata/lightspeed"
+
+[[source]]
+name = "nightmare"
+path = "../../shelf/gpt/text/nightmare"
+glob = "*.txt"
+kind = "incoming"
+priority = 49
+metadata = "../../shelf/gpt/metadata/nightmare"
+
+[[source]]
+name = "infinityplus"
+path = "../../shelf/gpt/text/infinityplus"
+glob = "*.txt"
+kind = "incoming"
+priority = 40
+metadata = "../../shelf/gpt/metadata/infinityplus"
+
+[[source]]
+name = "wayback"
+path = "../modern/wayback"
+glob = "*/text/*.txt"
+kind = "incoming"
+priority = 35
+ledger = "../modern/wayback/*/ledger.jsonl"
+
+[[source]]
+name = "anth"
+path = "../inbox/anth"
+glob = "*.txt"
+kind = "incoming"
+priority = 10
+container = true
+ledger = "../inbox/anth/ledger.jsonl"
+
+[[source]]
+name = "cyborg"
+path = ".."
+glob = "corpus.jsonl"
+kind = "reference"
+priority = 0
+format = "jsonl"

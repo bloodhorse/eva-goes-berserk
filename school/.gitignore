@@ -17,3 +17,6 @@ modern/released/*/raw/
 modern/released/*/text/
 modern/**/*.log
 modern/released/_scratch/
+dedupe/state/
+dedupe/out/
+dedupe/report.md

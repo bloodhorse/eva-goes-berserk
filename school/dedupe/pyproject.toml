@@ -1,0 +1,8 @@
+[project]
+name = "dedupe"
+version = "1"
+requires-python = ">=3.12"
+dependencies = ["numpy>=2"]
+
+[tool.uv]
+package = false

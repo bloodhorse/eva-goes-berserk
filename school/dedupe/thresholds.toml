@@ -1,0 +1,118 @@
+# Every number the tool decides by. One line of meaning above each.
+# The four under [structure] are baked into the index: changing one needs `dedupe.py rebuild`.
+
+[structure]
+# words in one shingle, the unit of matching
+shingle_words = 8
+# the candidate index keeps shingle hashes with hash % sample_modulus == 0 (1 in N)
+sample_modulus = 8
+# a paragraph longer than this many words is cut into sentences, so a glued page can still be cut inside
+long_paragraph_words = 200
+# a one-line paragraph of at most this many words, capitalised and unpunctuated at its end, counts as a heading
+heading_max_words = 12
+
+[scan]
+# a file modified less than this many seconds ago is left for the next run (it may be half-written)
+settle_seconds = 90
+# a file larger than this many bytes is skipped
+max_file_bytes = 67108864
+# the index is committed, and a lookup segment written, every this many words
+batch_words = 3000000
+# lookup segments are merged into one when there are more than this many
+segment_merge_count = 8
+
+[boilerplate]
+# how many paragraphs from the head and from the tail count as the edge of a document
+edge_units = 12
+# an identical paragraph is boilerplate when it sits at the edge of at least this many documents of one source
+min_docs = 4
+# ... and of at least this share of the source's documents
+min_share = 0.005
+# ... and of the documents holding it, at least this share hold it at an edge rather than further in
+edge_share = 0.9
+# ... and it has at least this many words
+min_words = 4
+# a paragraph opening (its first two words, digits blanked) is a template when it opens an edge paragraph in this share of a source's documents
+template_min_share = 0.02
+# ... and in at least this many documents
+template_min_docs = 10
+# ... and of the documents with such a paragraph, at least this share have it at an edge rather than further in
+template_edge_share = 0.95
+# ... and only paragraphs of at most this many words are stripped as a template
+template_max_words = 60
+# unrecognised paragraphs lying between a boilerplate paragraph and the edge go with it when together they are at most this many words
+sandwich_max_words = 120
+# ... and none of them is longer than this many words (link lines, not prose)
+sandwich_unit_max_words = 25
+# ... at the head of a document the limit is this (a title or byline above a boilerplate line, never a paragraph)
+head_sandwich_unit_max_words = 12
+
+[candidates]
+# a shingle found in this many documents or more is common: it never proposes a pair and is discounted from every overlap
+common_shingle_docs = 20
+# a pair is compared exactly when it shares at least this many sampled shingles
+min_shared = 2
+# ... and the sample suggests at least this many shared words
+min_est_words = 50
+# ... or at least this containment of the smaller document
+min_est_containment = 0.25
+
+[relations]
+# no relation short of identical text is acted on with fewer matched words than this
+min_match_words = 100
+# two documents are the same work when each contains at least this share of the other's shingles
+same_work_min = 0.75
+# a document is contained in another when one block of the other holds at least this share of its shingles
+contained_min = 0.8
+# a paragraph counts as matched when this share of its words lie inside matched shingles
+unit_match_min = 0.75
+# matched paragraphs separated by at most this many unmatched words are one block (an edited sentence, a running head)
+gap_max_words = 300
+# the one paragraph touching a block's edge joins it when this share of its words are matched (a title glued to a first line)
+edge_unit_min = 0.5
+# ... and it is at most this many words
+edge_unit_max_words = 30
+# two documents share a work when a matched block is at least this many words
+shared_block_min_words = 800
+# ... and this share of the block's words are matched
+shared_block_purity_min = 0.8
+# ... and this share of everything the pair has in common lies inside such blocks
+shared_block_clean_min = 0.9
+# a shared block is cut only from a document that the other covers less than this, or that keeps a unique block of unique_block_words
+shares_max_containment = 0.5
+# a copy holding an unmatched block of at least this many words is not dropped whole: only its matched blocks are cut
+unique_block_words = 1500
+
+[remnants]
+# unmatched text stranded between two cuts, or between a cut and the file's edge, is removed when at most this many words
+remnant_max_words = 80
+# headings and introductions are looked for only before a cut of at least this many words (a work, not a fragment)
+heading_min_cut_words = 1000
+# up to this many consecutive headings directly before a cut go with the cut (title, byline)
+heading_max_units = 4
+# text between such headings and the cut goes too when at most this many words (an editor's introduction)
+intro_max_words = 500
+# ... and at most this many paragraphs
+intro_max_units = 6
+# a second heading block further up (author and title, then the introduction, then the title again) goes too when it has at least this many headings
+second_heading_min_units = 2
+
+[ambiguous]
+# a pair with no action is listed for a human when one document contains at least this share of the other
+min_containment = 0.2
+# ... or when they share at least this many matched words
+min_words = 500
+
+[lookup]
+# at most this many source documents are named for one run
+max_docs_per_run = 5
+# the surrounding sentence is trimmed to this many characters each side of the run
+context_chars = 160
+
+[report]
+# tokens are estimated as words times this
+tokens_per_word = 1.39
+# how many of the largest duplicate clusters are listed
+clusters = 50
+# how many recurring boilerplate paragraphs are listed per source
+boilerplate_rows = 8
