@@ -1,0 +1,385 @@
+# Every number and every pattern the sieve decides by. One line of meaning above each.
+# Rates are "per thousand words". Patterns are regular expressions, matched without regard to case.
+
+[shape]
+# a line of at most this many words is a short line (verse is made of them)
+verse_line_max_words = 12
+# rates are not trusted, and count for nothing, in a text shorter than this many words
+min_words_for_rates = 120
+# a speaker label ("AM:", "Apex Magazine:") is at most this many words before its colon
+label_max_words = 5
+# an anthology is read through a sliding window of this many paragraphs when a narrative stretch is looked for
+window_paragraphs = 12
+
+[stub]
+# a file with fewer words than this is a stub whatever it says (an extraction that failed)
+tiny_words = 60
+# a podcast page with fewer words than this is a stub: show notes, credits, or the first paragraph or two of a story whose text the site does not carry
+podcast_words = 300
+# a file the deduper left at most this share of ...
+remnant_share = 0.25
+# ... and at most this many words is a remnant, a stub
+remnant_words = 450
+# a file under this many words that ends by pointing elsewhere ("continues", "read the rest") is a teaser, a stub
+teaser_words = 600
+# a file under this many words whose title is a notice (hiatus, schedule, eligibility list) is a stub
+notice_words = 400
+
+[verse]
+# a text is verse when at least this share of its words stands in stanzas (paragraphs of two or more short lines)
+stanza_share_min = 0.6
+# ... or when at least this share of all its lines are short and unpunctuated at the end, one line a paragraph
+short_line_share_min = 0.55
+# ... and its lines average at most this many words
+max_line_words_mean = 9.5
+# ... and it has at least this many lines
+min_lines = 6
+# a text that is not verse by the rules above is listed as unsure when its stanza share is at least this ...
+unsure_stanza_share = 0.5
+# ... its lines average at most this many words ...
+unsure_line_words_mean = 12.5
+# ... and it has at most this many words (a long text with broken lines is a story set as chat, letters or lists)
+unsure_max_words = 1500
+
+[nonfiction]
+# the non-fiction score minus the fiction score must reach this for a file to be called non-fiction
+decide_min = 3.5
+# ... and a difference of at least this, short of the line above, puts the file in the unsure band
+unsure_min = 1.5
+# words about writing and publishing per thousand: at or above this the text talks about fiction instead of being it
+meta_high = 22.0
+# ... a weaker version of the same signal
+meta_mid = 10.0
+# years, prizes, "edited by" and the like per thousand: at or above this the text is bibliography
+biblio_high = 14.0
+# a question-and-answer text has at least this share of its paragraphs opening with a speaker label
+qa_share_min = 0.2
+# ... and at least this many such paragraphs
+qa_min_turns = 6
+# said, he, she, was, had and the like per thousand: under this a text is not telling a story
+narrative_low = 30.0
+# ... at or above this it is
+narrative_high = 60.0
+# share of paragraphs opening with a quotation mark at or above which a text has spoken dialogue, a mark of fiction
+speech_share_high = 0.15
+# words about writing per thousand: under this the text hardly mentions its own trade, a mark of fiction
+meta_low = 3.0
+# "this issue", "our readers", "subscribe" and the like per thousand: at or above this an editor is talking
+address_high = 5.0
+# a file of at least this many words is long for an article, a small mark of fiction
+long_fiction_words = 6000
+
+[weights]
+# title says so outright ("Interview with", "Book Review:", "Editorial")
+title_strong = 4.0
+# title hints ("... : An Interview", "Notes on", "Introduction")
+title_weak = 1.5
+# the page itself carries a non-fiction label
+label = 8.0
+# the address says so (/interview-, /editorial/, /non-fiction/)
+url = 2.0
+# question-and-answer structure
+qa = 2.0
+# talk about writing at the high rate
+meta_high = 3.0
+# talk about writing at the middle rate
+meta_mid = 1.5
+# bibliography rate
+biblio_high = 1.5
+# an editor addressing readers
+address = 1.5
+# the byline belongs to someone who mostly writes columns in this source
+columnist = 1.0
+# fiction: the collector took this source from a fiction-only index
+fiction_index = 2.5
+# fiction: the page's own classes say fiction (the site filed it so: a title alone must not outvote that)
+fiction_class = 5.0
+# fiction: narrative rate at the high mark
+narrative_high = 1.5
+# fiction: spoken dialogue
+speech = 1.5
+# not telling a story: narrative rate under the low mark
+narrative_low = 1.5
+# fiction: never mentions its own trade
+meta_low = 1.5
+# fiction: long for an article
+long_fiction = 0.5
+# fiction: a ledger calls it a story or a novel
+ledger_story = 2.5
+
+[edges]
+# how many paragraphs from the head and from the tail of a file are looked at for wrappers
+zone_paragraphs = 14
+# a head cut is never longer than this many words
+head_max_words = 600
+# a tail cut by walking back from the end is at most this share of the file
+tail_max_share = 0.35
+# ... and at most this many words (comment threads are exempt: they are cut from their marker to the end)
+tail_max_words = 2500
+# an author's note cut from its marker to the end is at most this many words; a longer one is left and flagged
+note_max_words = 1500
+# unrecognised paragraphs caught between a wrapper paragraph and the edge go with it when each is at most this many words
+sandwich_words = 14
+# an author biography paragraph is at most this many words
+bio_max_words = 220
+# ... and scores at least this (name at the start, a biography verb, bibliography words, the author's name)
+bio_min_score = 3
+# a marker line ("About the Author", "Comments") is at most this many words
+marker_max_words = 8
+# a comment thread is only cut when it holds at least this many words
+comments_min_words = 20
+# a serial chapter's closing note, from its marker to the end, is at most this share of the chapter
+serial_note_max_share = 0.3
+# no edge cut may leave a body shorter than this many words; the file is left whole and flagged instead
+min_body_words = 150
+# a marker line counts only in the last part of the file: after this share of its words
+tail_marker_zone_share = 0.5
+
+[books]
+# a ledger's section start is compared over at most this many characters
+start_probe_chars = 60
+# ... and is ignored when shorter than this (a bare "II" matches anywhere)
+start_min_chars = 6
+# an editor's headnote is at most this many words
+headnote_max_words = 900
+# ... in at most this many paragraphs
+headnote_max_paragraphs = 8
+# a paragraph under a story heading is headnote when its score reaches this without the author's name (two points a presenting phrase, one for bibliography words, one for talk about writing; never when it opens with speech)
+headnote_min_score = 4
+# ... or this when it names the heading's author, capital letter and all
+headnote_named_score = 1
+# a section after the book's first story is judged editorial by its rates only at this talk-about-writing plus bibliography rate
+editorial_inner_meta_min = 22.0
+# a section is judged editorial by its rates only when it has at least this many words
+editorial_min_words = 120
+# ... or, down to this many words, when its talk-about-writing plus bibliography rate reaches the line after this one and nobody speaks in it
+editorial_short_words = 40
+editorial_short_meta_min = 25.0
+# ... its talk-about-writing plus bibliography rate is at least this
+editorial_meta_min = 10.0
+# ... and its narrative rate is under this (and it has no spoken dialogue: speech_share_high)
+editorial_narrative_max = 55.0
+# a stretch reads as narrative when its narrative rate is high, its talk about writing under the line above, and this share of its paragraphs open with speech
+narrative_speech_min = 0.1
+# a titled apparatus section (a Summation) ends early where this many paragraphs in a row ...
+apparatus_window_paragraphs = 12
+# ... of at least this many words read as narrative
+apparatus_window_words = 400
+# a section with at least this many words left after its headnote counts as a story in the report
+story_min_words = 300
+# at most this many heading lines in a row are a story's heading; more is a contents page
+heading_run_max = 5
+# a section is a list (honorable mentions, permissions, contents) when this share of its paragraphs are list lines
+list_line_share_min = 0.6
+# untitled matter before a book's first story heading is front matter and judged as one section up to this many words
+front_matter_max_words = 3000
+# in a book that keeps its essays, an editorial section of at least this many words is reported as an essay
+essay_min_words = 800
+# a byline is at most this many words
+name_max_tokens = 6
+# headings and a headnote left without a story (the deduper took it) are cut when the leftover is at most this many words
+orphan_max_words = 60
+
+[review]
+# how many decisions of each kind are sampled per source
+sample_per_stratum = 6
+# words shown from the head of a file
+head_words = 80
+# words shown from its tail
+tail_words = 40
+# words shown from each end of a cut
+cut_edge_words = 30
+# words shown of the paragraph on each side of a cut
+context_words = 40
+# the sample is drawn with this seed, so the same plan gives the same review
+seed = 7
+# how many cuts of each reason are sampled per source
+cut_samples_per_reason = 4
+
+[report]
+# tokens per word, measured on the shelves already tokenised
+tokens_per_word = 1.39
+# how many files of the unsure band the report lists
+unsure_rows = 400
+# how many overrides the report lists
+override_rows = 2000
+
+[patterns]
+# a title that says the page is not a story
+title_nonfiction_strong = [
+  '^\s*(an?\s+)?(author|artist|cover artist|editor|apex|short|mini)?[\s-]*interview\b',
+  '\binterview with\b', '^\s*interview\s*:', '\bauthor spotlight\b', '\bartist (spotlight|showcase)\b',
+  '^\s*(book|film|movie|game|short fiction|tv|comic)s?\s+reviews?\b', '^\s*reviews?\s*[:—–-]', '\breview\s*:',
+  '^\s*editorial\b', '\beditorial\s*$', '\beditorial[,:]', '^\s*(words )?from the editors?\b', '\beditor.s (note|desk|letter)\b',
+  '^\s*words for thought\b', '^\s*musings from\b', '\bletters? from the editor', '\baward[s]? eligib', '\beligibility\b',
+  '\bcall for submissions\b', '\bsubmission (call|guidelines)\b', '\bguidelines\b', '\bannounc(es?|ing|ement)s?\b', '\btable of contents\b',
+  '\byear in review\b', '\brecommended read', '\breader.s choice\b', '\bmetacast\b', '\bkickstarter\b',
+  '\bnonfiction\b', '\bnon-fiction\b', '\bessay\s*:', '^\s*essay\b', '\bcolumn\s*:', '\bpodcast (update|news|feed)\b',
+  '^\s*clavis aurea\b', '^\s*page advice\b', '\bpress release\b', '\bcover reveal\b', '^\s*apex (magazine )?in \w+( \d{4})?\s*$',
+  '\bannual report\b', '^\s*ask an? necroman', '\b(story|cover|artist|poem) of the year\b',
+  '^\s*about (the )?(author|editor|artist)s?\b', '\bsubscription drive\b', '\bsubscriber\b', '\bnewsletter\b',
+  '^\s*between the lines\b', '^\s*the apex (book )?blog\b', '\bblog tour\b', '\bgiveaway\b',
+]
+# a title that only hints at it
+title_nonfiction_weak = [
+  '\binterview\b', '\breview\b', '\bintroduction\b', '\bforeword\b', '\bpreface\b', '\bafterword\b', '\bnotes? on\b',
+  '\bconversation with\b', '\bin conversation\b', '\bq\s*&\s*a\b', '\broundtable\b', '\bwriting\b', '\bwriters?\b',
+  '\bhow to\b', '\bfor writers\b', '\bissue \d+\b', '\bupdate\b', '\bnews\b', '\bin memoriam\b', '\bobituary\b',
+  '\bspotlight\b', '\bpanel\b', '\bcolumn\b', '\bthoughts on\b', '\bin defense of\b', '\bwhy (i|we)\b', '\bapex\b',
+]
+# a title that is a notice from the publisher or the author, not a work
+title_notice = [
+  '\bhiatus\b', '\bschedule\b', '\bon pause\b', '\bback on\b', '\bno chapter\b', '\bupdate\b', '\bannouncement\b',
+  '\beligibility\b', '\bfan ?art\b', '\bthank you\b', '\bpatreon\b', '\bmetacast\b', '\bnew websites?\b',
+  '\bsubmissions? (are )?(open|closed)\b', '\breader.s choice\b', '\bcontest\b', '\bpromo\b', '\bcoming soon\b', '^\s*episode\s*#?\s*\d+\b',
+  '\bdrabble contest\b', '\bstaff changes?\b', '\bfeedback\b', '\bflash fiction contest\b', '\bnow available\b',
+]
+# an address that says the page is not a story
+url_nonfiction = [
+  '/(interview|interviews|editorial|editorials|non-?fiction|review|reviews|essay|essays|column|columns|news|blog-post|announcements?)(/|-)',
+  '/for-writers-', '/book-review-', '/words-for-thought', '/musings-from', '/author-interview', '/artist-interview',
+  '/cover-artist', '/apex-magazine-(issue|podcast|award)', '/category/(non-?fiction|interviews?|reviews?|editorials?)/',
+]
+# a label printed on the page that means verse
+label_verse = ['^\s*poetry\s*$', '^\s*poems?\s*$', '--poetry\b', '^\s*verse\s*$']
+# a label printed on the page that means non-fiction
+label_nonfiction = [
+  '^\s*non-?fiction\s*$', '^\s*editorials?\s*$', '^\s*for[- ]writers\s*$', '^\s*interviews?\s*$', '^\s*(book[- ])?reviews?\s*$',
+  '^\s*short fiction review\s*$', '^\s*announcements?\s*$', '^\s*apex-magazine-blog\s*$', '^\s*essays?\s*$', '--nonfiction\b',
+  'award[- ]eligib', '^\s*podcast\s*$', '^\s*author interview\s*$', '^\s*artist interview\s*$', '^\s*blog\s*$',
+]
+# a label printed on the page that means fiction (a bare "fiction" is not trusted: one site tags its essays with it)
+label_fiction = ['^\s*short stor(y|ies)\s*$', '^\s*flash( fiction)?\s*$', '^\s*novel(ette|la)\s*$']
+# a metadata class that means fiction
+class_fiction = ['^category-fiction$', '^article_type-fiction$', '^tag-(short-story|novelette|novella)$', '^category-(short-stories|flash-fiction)$']
+# a metadata class that means non-fiction
+class_nonfiction = ['^category-(non-?fiction|interviews?|reviews?|editorials?|essays?)$', '^article_type-(essay|interview|editorial|nonfiction)$']
+# a metadata class that means verse
+class_verse = ['^category-poe(try|ms?)$', '^article_type-poe(try|m)$', '^tag-poe(try|m)$']
+# words about writing and publishing
+meta_words = [
+  'stor(y|ies)', 'fiction', 'authors?', 'writers?', 'writing', 'readers?', 'novels?', 'novellas?', 'books?', 'genres?', 'publish\w*',
+  'antholog\w+', 'magazines?', 'editors?', 'edit(ed|ing)', 'issues?', 'interviews?', 'reviews?', 'characters?', 'narrat\w+',
+  'poems?', 'poetry', 'fantasy', 'horror', 'sci-?fi', 'essays?', 'protagonists?', 'plots?', 'prose', 'drafts?', 'manuscripts?',
+  'worldbuilding', 'tropes?', 'themes?', 'podcasts?', 'episodes?', 'sequels?', 'trilog\w+', 'collections?',
+]
+# words of bibliography
+biblio_words = [
+  '(1[89]|20)\d\d', 'edited by', 'published (by|in)', 'press', 'isbn', 'awards?', 'hugo', 'nebula', 'locus', 'finalists?',
+  'nominat\w+', 'reprint\w*', 'forthcoming', 'debut', 'best-?sell\w+', 'asimov.s', 'f&sf', 'interzone', 'analog', 'omni',
+  'tor(\.com)?', 'clarion', 'mfa', 'shortlist\w*', 'bram stoker', 'world fantasy', 'paperback', 'hardcover', 'e-?book', 'vol\.', 'pp\.',
+]
+# words of story-telling
+narrative_words = [
+  'said', 'asked', 'he', 'she', 'him', 'her', 'his', 'hers', 'was', 'were', 'had', 'did', 'went', 'came', 'looked', 'turned',
+  'felt', 'knew', 'thought', 'saw', 'heard', 'stood', 'sat', 'walked', 'took', 'told', 'smiled', 'nodded', 'whispered',
+  'eyes', 'hand', 'hands', 'door', 'face', 'voice', 'says', 'asks', 'looks', 'turns', 'feels', 'knows', 'thinks', 'sees',
+  'hears', 'stands', 'sits', 'walks', 'takes', 'tells', 'smiles', 'nods', 'whispers',
+]
+# words of an editor or a host talking to an audience
+address_words = [
+  'this (issue|month|episode|week|year)', 'our (readers|listeners|subscribers|contributors|authors|patrons)', 'subscri\w+', 'welcome to',
+  'thank you for (reading|listening|your support)', 'submissions?', 'patreon', 'kickstarter', 'newsletter', 'donat\w+', 'award season',
+  'table of contents', 'our (next|new|latest) issue', 'we are (pleased|proud|excited|thrilled)', 'slush', 'eligib\w+', 'in this issue',
+]
+# a speaker label opening a paragraph in an interview
+speaker_label = ['(?-i:^\s*(?:[A-Z][\w.’&-]*\.?\s+){0,4}[A-Z][\w.’&-]*\s*:\s+\S)', '^\s*(q|a|question|answer)\s*[:.]\s+\S']
+# navigation between pages (never a line with a quotation mark in it)
+nav = [
+  '^\W*(previous|next|last|first)\s+(chapter|part|episode|post)\W*$', '^\W*((<+|«|←)\s*(previous|prev)|(next)\s*(>+|»|→))\W*$',
+  '^\W*(previous|last) chapter\W+next chapter\W*$', '^\W*table of contents\W*$', '^\W*back to (top|index|contents|the story)\W*$',
+  '^\W*(index|home)\s*[|/]\s*', '^\W*continue reading\b', '^\W*read (more|the rest|part \w+)\W*$', '^\W*(to be continued|continued in part \w+)\W*\.?$',
+  '^\W*share (this|on)\b', '^\W*click here\b', '^\W*return to (the )?(index|contents|top|home)\b', '^\W*go to (the )?(next|previous) (chapter|part|page)\b',
+]
+# the navigation line that closes a serial chapter: what follows it is the author's note, what stands before it at the head is an announcement
+chapter_nav = ['^\W*(previous|last) chapter\b', '^\W*next chapter\W*$']
+# words of someone talking to an audience; a pitch paragraph must hold one beside its pitch words
+pitch_address = ['\byou(r|.ll|.re)?\b', '\bplease\b', '\b(my|our) (patreon|newsletter|store|site|website|discord|podcast|story|stories|book|books|work)\b', '\bthanks?\b', '\b(link|here)\b']
+# a pitch for money, votes or attention
+pitch = [
+  '\bpatreon\b', '\bko-?fi\b', '\btop ?web ?fiction\b', '\bvot(e|ing) for\b', '\bsubscrib(e|ing|ers?)\b', '\bnewsletter\b', '\bdonat(e|ions?)\b',
+  '\bsupport (us|the (story|magazine|show|podcast)|this (story|magazine|show|site))\b', '\bbuy (the|this) (issue|book|ebook)\b', '\bpaypal\b',
+  '\bkickstarter\b', '\bif you (enjoyed|liked|want more)\b', '\bleave (a|us a) (review|comment|rating)\b', '\bfollow (me|us) on\b', '\btip jar\b',
+  '\bmailing list\b', '\b(rate|review) (us|the show) on\b', '\bapple podcasts\b', '\bitunes\b', '\b(the|my|our) discord\b', '\bdiscord server\b', '\badvance chapters?\b',
+  '\bchapters? ahead\b', '\bpurchase (the|this|a) (issue|copy)\b', '\bavailable (now )?(at|from|on) (amazon|our store|weightless)\b',
+]
+# where and when a text was first published, and whose it is
+credit = [
+  '^\W*(originally|first|previously) (published|appeared|printed|posted|aired)\b', '^\W*[a-z]+ (19|20)\d\d, (short story|flash|flash fiction|novelette|novella), [\d,]+ words\W*$', '^\W*(this|the) (story|piece|work|novelette|novella) (first|originally|previously) (appeared|was published)\b',
+  '^\W*(copyright|©|\(c\))', '^\W*(text|story) (copyright|©)', '\ball rights reserved\b', '^\W*reprinted (by|with) (kind )?permission\b',
+  '^\W*(published|posted|added) (by|on|to)\b.{0,80}$', '^\W*first published in\b', '^\W*(this story )?(appears?|appeared) (here )?(by|with) (kind )?permission\b',
+  '\bcreative commons\b', '^\W*(translated|illustrated|narrated|read|produced|edited|cover art|art|audio) (from the \w+ )?by\b', '^\W*(translation|illustration)s? (copyright|©|by)\b',
+  '^\W*is published by\b', '\bis published by\b.{0,120}isbn', '^\W*(story|fiction) by\b.{0,60}$', '^\W*a (short story|novelette|novella|novel extract|story) by\b',
+  '^\W*(an? )?(extract|excerpt)s? from\b', '^\W*elsewhere (in|on)\b', '^\W*features? - ', '^\W*order (this|the|it) (book|novel|online|from)\b',
+]
+# a podcast host's talk and credits (a fictional radio host says "I'm your host" too, so only the show's own names and production words count)
+host = [
+  '\bwelcome (back )?to (escape pod|podcastle|pseudopod|cast of wonders|catscast)\b', '\b(today.s|this week.s) episode\b', '\bnarrated by\b', '\baudio produc(tion|er|ed)\b',
+  '\bshow notes\b', '\bescape artists\b', '\b(escape pod|podcastle|pseudopod|cast of wonders|catscast)\b', '^\W*rated (g|pg|pg-13|r|x)\b', '\b(our|the) closing quot(e|ation)\b',
+  '\bmusic (is )?by\b', '\b(author|narrator|host|producer)s? bios?\b', '^\W*host comment(s|ary)\b', '\bdiscuss on (the|our) forums?\b', '\bthanks? (you )?(all )?for listening\b',
+]
+# a content warning
+warning = ['^\W*(content|trigger) (warning|note|advisory|notes|warnings)s?\b', '^\W*(cw|tw|cn)\s*[:—–-]', '^\W*(this story|this chapter|this episode) (contains|deals with|includes)\b']
+# a line that opens an author's or translator's note
+note_marker = [
+  '^\W*(author|translator|editor|narrator)(.?s)?.?s? notes?\W*', '^\W*a/?n\s*[:—–-]', '^\W*(a )?note from the (author|translator|editor)\b', '^\W*notes?\W*$',
+  '^\W*afterword\W*$', '^\W*story notes?\W*$', '^\W*acknowledge?ments?\W*$', '^\W*(about|on) (this|the) (story|translation|piece)\W*$', '^\W*endnotes?\W*$',
+  '^\W*host commentary\b', '^\W*references\W*$', '^\W*works cited\W*$', '^\W*bibliography\W*$', '^\W*sources\W*$', '^\W*footnotes?\W*$',
+]
+# a line that opens an author biography
+bio_marker = ['^\W*about the (author|writer|translator|narrator|artist|contributor|editor)s?\W*', '^\W*(author|translator|narrator|artist|contributor)(.?s)? bio(graphy)?\W*', '^\W*bio\W*$', '^\W*biography\W*$']
+# a line that opens a comment thread
+comments_marker = [
+  '^\W*\d+\s+(comments?|responses?|replies|thoughts)\b', '^\W*(comments?|responses?|discussion)\W*$', '^\W*leave a (reply|comment)\b', '^\W*post a comment\b',
+  '^\W*\d+ thoughts on\b', '^\W*(one|two|three|four|five|six|seven|eight|nine|ten) (comments?|responses?|thoughts)\b', '^\W*comments? \(\d+\)', '^\W*reader comments?\b',
+]
+# verbs and phrases of an author biography
+bio_verbs = [
+  '\blives? (in|with|on|near)\b', '\bwas born\b', '\bgrew up\b', '\bis (a|an|the) [\w\s,-]{0,60}?(writer|author|poet|editor|novelist|translator|artist|graduate|teacher|professor|student|winner|finalist|member|native)\b',
+  '\b(fiction|work|stories|writing|poetry|poems) (has|have) (appeared|been published)\b', '\b(has|have) (appeared|been published) in\b', '\bis the author of\b',
+  '\bcan be found (at|on|online)\b', '\bfind (him|her|them) (at|on|online)\b', '\b(his|her|their) (first|debut|latest|newest|most recent) (novel|collection|book)\b',
+  '\b(his|her|their) (novels|stories|books|collections|short fiction|work) includ', '\bgraduate of\b', '\bwebsite\b', '\btwitter\b', '\b@\w{3,}', '\bwww\.', '\bhttps?://',
+  '\b(won|received|winner of|nominated for|finalist for) (the|a|an|two|three|several|multiple)\b', '\bmade (his|her|their) first sale\b', '\b(sold|published) (his|her|their) first\b',
+]
+# a line that sends the reader elsewhere for the rest
+teaser = [
+  '\.{3}\s*continues?\W*$', '\bcontinues?\s*\.{3}\W*$', '^\W*continues?\W*$', '\bread the (rest|full|whole|complete) (of )?(the |this )?(story|chapter|novel|book|piece)?\b',
+  '\b(to|you can) (read|hear|listen to) (the )?(rest|more|full)\b', '\bis published by\b', '\bcontinue reading\b', '\bavailable (now )?(in|from|at)\b', '\b(extract|excerpt)\b',
+  '\blisten to (this|the) (episode|story)\b', '\bhas been removed\b', '\bno longer available\b', '\bdon.t have the full text\b', '\bfull text (is|was) (not|un)available\b', '\bfull text (is )?(available|can be)\b', '\bend of (extract|excerpt|sample)\b', '\bbuy (the|this) (book|novel|issue)\b',
+]
+# a heading that names a part of a book that is not a story
+apparatus_titles = [
+  '^\W*summation\b', '^\W*honou?rable mentions?\b', '^\W*acknowledge?ments?\b', '^\W*(table of )?contents\W*$', '^\W*(copyright|permissions?)( acknowledge?ments?| notices?| page)?\W*$',
+  '^\W*(general )?introduction\b', '^\W*(foreword|foreweird|preface|prologue to the anthology|afterword|afterweird|editor.?s.? (note|preface|introduction))\b', '^\W*about the (editor|author|contributor|translator)s?\b',
+  '^\W*(notes on )?(the )?contributors?\b', '^\W*also (edited )?by\b', '^\W*(other )?(books|anthologies|titles) (edited )?by\b', '^\W*(recommended|further|suggested) reading\b', '^\W*(selected )?bibliography\b',
+  '^\W*dedication\W*$', '^\W*(story|publication|extended) (notes|credits|history|copyright)\b', '^\W*index\W*$', '^\W*(a )?(note|word) (on|about|from) the (text|translation|editors?)\b', '^\W*credits\W*$',
+  '^\W*permissions acknowledgments\b', '^\W*this page constitutes\b', '^\W*praise for\b', '^\W*title page\W*$', '^\W*colophon\W*$', '^\W*about the (book|publisher|type)\b', '^\W*in memoriam\b',
+]
+# phrases an editor uses when presenting a story
+headnote_phrases = [
+  '\b(that|which) follows\b', '\b(takes|took|gives|shows|offers|brings|introduces|treats|plunges|sweeps) us\b', '\bhere(.s| is) (a|an|another|one|his|her)\b',
+  '\bfirst (published|appeared) in\b', '\b(his|her|their) (first|most recent|latest|new|best-known|other|previous|many) (novel|collection|book|sale|story|stories|books|novels|work|works)\b',
+  '\b(his|her|their) (novels|books|stories|collections|short fiction|short stories) (include|have appeared|has appeared)\b', '\bmade (his|her|their) first sale\b',
+  '\bwon (the|a|an|two|three|several) (hugo|nebula|locus|world fantasy|campbell|sturgeon|tiptree|clarke|bsfa|philip k\. dick)\b', '\b(now )?lives (in|with)\b', '\bwas born (in|on)\b',
+  '\b(new|british|american|australian|canadian|scottish|irish|english|french|german|japanese|veteran|prolific|acclaimed|award-winning) (\w+ )?(writer|author|novelist)\b',
+  '\bhas (also )?(published|written|sold|won)\b', '\b(appeared|published|reprinted) in (our|this)\b', '\bannual collections?\b', '\bin this (anthology|collection|book|volume)\b',
+  '\(\s*(born )?(1[89]|20)\d\d\s*[-–—]?\s*((1[89]|20)\d\d)?\s*\)', '\bis (a|an|the) (\w+\s){0,5}(writer|author|novelist|poet|editor|critic)\b', '\b(stories|fiction|work) (have|has) appeared\b',
+  '\bis the author of\b', '\b(his|her|their) web ?site\b', '\bbest[- ]known for\b', '\bas you (shall|will) see\b', '\b(his|her|their) (story|stories) .{0,60}(appeared|appears|were|was) in our\b',
+]
+# phrases that only an editor presenting a story uses; one is enough for a paragraph that directly follows a headnote paragraph
+headnote_presenting = [
+  '\b(that|which) follows\b', '\b(takes|gives|shows|offers|brings|introduces|treats|plunges|sweeps) us\b', '\bhere(.s| is) (a|an|another|one)\b', '\bas you (shall|will) see\b',
+  '\bhere,? (he|she|they) \w+s\b', '\b(he|she|they) \w+s? (us )?here\b', '\b(this|the) (story|tale|novella|novelette) (first )?(appeared|was (first )?published)\b', '\bin (this|the) (story|tale|novella|novelette|one),? (he|she|they)\b',
+  '\b(his|her|their) (story|stories|novella|novelette) .{0,60}(appeared|appears|was|were) in our\b', '\bannual collections?\b',
+]
+# a list line: one entry of honorable mentions, a permissions list or a contents page
+list_line = [
+  '^.{0,160}[“"].{2,120}[”"],?\s.{0,100}\b(1[89]|20)\d\d\b.{0,80}$', '^.{0,80},\s*[“"].{2,120},?[”"],?\s.{2,80}\.?$', '^.{0,200}\bcopyright\b.{0,300}$', '^.{0,200}©.{0,300}$',
+  '^.{1,100}\.{3,}\s*\d+\s*$', '^.{1,100}\s\d{1,4}\s*$', '^.{0,200}\breprinted by permission\b.{0,200}$', '^.{0,120}\bfirst (published|appeared) in\b.{0,200}$',
+]
+# a byline
+byline = ['(?-i:^\W*[Bb][Yy]\s+[A-Z])', '^\W*(translated|edited|selected|introduced) by\b']
+# a line that closes a text
+end_marker = ['^\W*(the )?end\W*$', '^\W*fin\W*$', '^\W*(end of (the )?(story|chapter|part \w+|book \w+))\W*$', '^\W*[#*~•◊⁂§\-–—_=\s]{3,}\W*$']
+# a line that names a translator
+translator = ['^\W*translated (from (the )?[\w\s]+ )?by\b', '^\W*translation (by|©|copyright)\b', '^\W*translator.?s.? note']

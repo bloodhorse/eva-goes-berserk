@@ -27,3 +27,7 @@ modern/wayback/*/cdx.jsonl
 modern/wayback/*/heartbeat
 modern/wayback/chain.done
 modern/wayback/.gate
+sieve/state/
+sieve/out/
+sieve/report.md
+sieve/review.md

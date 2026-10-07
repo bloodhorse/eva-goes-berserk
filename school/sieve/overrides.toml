@@ -1,0 +1,2521 @@
+# Hand judgments the plan obeys. Every entry says why.
+#
+#   [[override]]
+#   path   = "apex/Some-Title--0123abcd.txt"   source/path under dedupe/out, shell wildcards allowed (* ? [])
+#   title  = "^Words for Thought"              or a regular expression on the title (case ignored); `source` narrows it
+#   source = "apex"
+#   kind   = "fiction"                         forces the kind: fiction, nonfiction, verse, stub, mixed, unsure
+#   cut    = { from = "first words of the first paragraph to cut", to = "first words of the last one" }
+#   keep   = { from = "...", to = "..." }      no automatic cut may touch these paragraphs
+#   as     = "summation"                       the reason a forced cut is recorded under (default "override")
+#   reason = "why"
+#
+# `to` may be left out (one paragraph) or be "$" (to the end of the file). Spans are found by their opening words, so
+# they survive a dedupe run that renumbers paragraphs; one that no longer finds its words is listed in the report.
+# Later entries win over earlier ones. `sieve.py overrides` lists what each entry matched.
+
+# The unsure band, read on 2026-10-07 (title and first 20–75 words of each)
+
+[[override]]
+path = "apex/2012-The-Good-the-Bad-and-the-Apocalyptic--a07f2f9beaadeb6f1a95.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/A-Believer-in-Fandom-Can-Geek-and-Christian-Mix--14199893f9be5c20ec71.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/A-Hammer-with-an-Edge-Swords-in-Fantasy-Literature--cacb0f6a1c0de3e55240.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/A-Whole-New-World--46230f977cfad51f2e01.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Always-and-Forever--2306d003715b1ad70f31.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/An-Exploration-of-Racism-in-Heart-of-Darkness--407d6d922717a893cb1c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Ancient-Aliens-Clones-and-Growing-Up-as-a-SFF-Reader-in-Brazil--563685589c6b77212396.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Behind-the-Convention-Curtain-Programming--89b6b210592be8cbcc0e.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Between-the-Dreaming-and-the-Dead--d2dd31f7ca3d2b943b93.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Black-Communities-of-the-30th-Century-Racial-Assimilation-and-Ahistoricity-in-Superhero-Comics--b3a531098ecf63eb7a34.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Boy-A-Girl-A-Slender-Man--2da2a023ee37c868fe0a.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/By-the-Cover--2f2f392c848182b8d6cd.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Cthulhu-Apocalypse-and-the-Terrifying-Tradition-of-Horror-Role-Playing-Games--c7410d72dcb0f3a44b61.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Dog-is-in-the-Details--e8c430e5f56ca2c52b50.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Entities-of-Modern-Evil--8e6106fd308722fba741.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Experiences-On-Not-Being-Creative-Enough-to-Be-Creative--3ca1defcb9e5b41fc31d.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Eye-based-Paternity-Testing-Other-Human-Genetics-Myths--5b6bfbdd11192d5358e3.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Faith-in-the-Fantastic--458900ec1e9d39899b2e.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Fandom-Not-Just-Funny-Business--e818204a3e0797040fc6.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Fangirl-Isn-t-a-Dirty-Word--135459621d38289f604f.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Fantasy-Art-Fishnets-and-Red-Sonja-s-Chainmail-Bikini--f679432fe8199c3bbd0d.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Girl-Meets-House-Kitchen-Sinks-Joanna-Russ-and-the-Female-Gothic--32b6a98089baff3c1c5e.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Haunt-Me-Then--7cc435dc72e5f5bcab1c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/How-Horror-Made-Me-More-Empathetic--1d253bd831853b5d2473.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/How-I-Learned-to-Follow-My-Own-Advice-and-Let-It-Go--d47c19bc205f32b5dae1.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/I-Like-Movies-Too-Loving-Movies-Made-for-the-Male-Gaze--0208fd1d3357f92a520c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/I-Married-A-Fake-Geek-Girl-A-Defense-of-Casual-Fandom--fb6e69bc36e4aba818a5.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Invisible-Bisexuality-in-Torchwood--0ccf54d06a48604069d4.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Jingle-Bells-Jingle-Bells-Genre-All-the-Way--3c4732687e9d8bd85b3e.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Let-s-Talk-About-Afrofuturism--a6010e0a07ce052e8178.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Lovecraft-and-the-Occult--74763438283c0fd7d56d.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/More-than-Lighting-Speculative-Noir--b98d6f231ba456970d27.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Never-Let-the-Light-Go-Out--d091a45111149ada8fc0.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/No-Mortals-Allowed--3083d2392628cd7d4ee2.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Not-Here-to-Check-Boxes--d6be8c904ae517df9451.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Not-a-Scab-But-a-Wound--709386b0cbd5a9314b74.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Orrin-Evans-The-Pioneer-of-Black-Comic-Book-Publishing--918037434bff2ade8a0c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Our-Audacity--ba87ca4bb6738015b61f.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Persistence-of-Vision-Black-Panther--2afaba3162873721d43a.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Readers-Role-Play-Experiencing-Your-Favorite-Stories-Through-Play--694d423c244e4010ddae.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/So-How-Does-It-End--1abeef16559e8336e0b6.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Story-Less-A-Forethought--ed4392679d55f5348c29.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Supposedly-True-but-Probably-Not-and-That-s-OK-Weird-Tales--7a262d0e027aa551c2e7.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Anatomy-of-a-Transracial-Child--8604ab3304e40f9eeafb.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Australian-Dark-Weird--37d7fb98b11bc4f44f6a.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-City-is-Breathing-Solarpunk-Noir.-Please-Don-t-Call-it-Cyberpunk--fc989482dade74394334.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Death-of-Captain-Kirk-Why-the-Illusory-Singularity-of-the-White-Hero-Must-Die--e707d7acdbfbdbb45981.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Ecumenical-the-Ersatz-and-the-Euphemistic-Three-Ways-to-Misunderstand-Identity--653b71543e0a040cd8cc.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Enduring-Ensorcellment-of-King-Arthur--502192a9eb2dc90cd586.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Fuzzy-Bunny-Squad-is-Standing-By--327941987e8519538172.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Importance-of-Presenting-Disabilities-in-Literature--729c7deab862cd743e10.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Improbable-Inevitable-Domestication-of-the-Great-Old-Ones-HP-Lovecraft-s-Iconic-Influence-on-21s--c1ee0911210fd29e0e71.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Many-Languages-of-Speculative-Fiction--1b7f1702520c7ff16dfe.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Nature-of-a-Natural-Future--1671f0e3b25b8441b74e.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Once-and-Future-Chief-Tecumseh-in-Science-Fiction--c57a5f72c7fbcf33b110.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Other-HP-Lovecraft-Alien-Ghost-Stories-Monstrifications-of-Dunbar-s-Number--69b6a0354a5cfbd1673c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Pros-and-Cons-of-Stage-Directions--48bf86d5e191aec586e4.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Radical-Nature-of-Slipstream-Fiction--a5255a68c3b9a69a38eb.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Two-World-Problem--c709fb743740680f91d3.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/The-Wonder-of-the-Weird-West--dcd71400b0fd84a83d34.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Time-to-Get-Serious-About-Diversity-and-Inclusion--557aa3a9a5c6a4c941d7.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Unreliable-Narrators-in-Kiernan-and-Chambers--a72838823dd97760393f.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Weird-Girl-Fiction--89084bb7e38dce9f4d7c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Why-it-Matters-When-I-Write-About-Space-Janitors--9e65718105ed4f4c056c.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Write-Me-a-Story-Without-Words--ca6804ad57c42fbd4fb1.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Writing-Wrongly--37f13743d141d05e8e37.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "apex/Flesh-Eggs--5143ef9e158ce57ed640.txt"
+kind = "nonfiction"
+reason = "read to the end: a personal essay (signals said unsure)"
+
+[[override]]
+path = "apex/Telling-Stories-of-Ghosts--4aa7c6674e978cd13d05.txt"
+kind = "nonfiction"
+reason = "read to the end: a personal essay (signals said unsure)"
+
+[[override]]
+path = "apex/You-in-Your-Headmeats--e026e5d32c36d9b95321.txt"
+kind = "nonfiction"
+reason = "read to the end: a personal essay (signals said unsure)"
+
+[[override]]
+path = "apex/My-Road-Trip-with-David-Koresh--df5597eaf3a97f9c304e.txt"
+kind = "nonfiction"
+reason = "read to the end: a promotional piece that closes on a teaser for the author's novel (signals said unsure)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--af2c2d40cd5564cb7bab.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said unsure)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--d68808a81ba089332cef.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said unsure)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--ddd1c1eaf5d00848aa98.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said unsure)"
+
+[[override]]
+path = "deadlands/Bruyn-s-Housefly--8a8efa46997e8202f3eb.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "deadlands/Dark-Souls-III-and-the-Exhaustion-of-a-Long-Life--0f26a8452c1b4ddd5b70.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "deadlands/On-Paranormal-Chaplaincy--d318e951f883c68ee0ca.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "deadlands/Seeing-Death-Exploring-Dark-Omens-from-Scottish-Folklore--acf1b9ccc904deba3d1a.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said unsure)"
+
+[[override]]
+path = "lightspeed/People-of-Colo-u-r-Destroy-Flash-Fiction--4fa35fa201e0b68f7975.txt"
+kind = "nonfiction"
+reason = "read: an editor's note announcing a flash section (signals said unsure)"
+
+[[override]]
+path = "lightspeed/Queers-Destroy-Flash-Fiction--467ff36dd613f63fc124.txt"
+kind = "nonfiction"
+reason = "read: an editor's note announcing a flash section (signals said unsure)"
+
+[[override]]
+path = "apex/A-Witch-s-Guide-to-Escape-A-Practical-Compendium-of-Portal-Fantasies--8cc6b5d220c3e33e58c2.txt"
+kind = "fiction"
+reason = "read: a story (a librarian narrating; catalogue lines as headings) (signals said unsure)"
+
+[[override]]
+path = "apex/Haruspicy-and-Other-Amatory-Divinations--9d627d1f983d25996fc3.txt"
+kind = "fiction"
+reason = "read: a story (signals said unsure)"
+
+[[override]]
+path = "apex/Next-Station-Shibuya--214698de409e09b22ca4.txt"
+kind = "fiction"
+reason = "read: a story (signals said unsure)"
+
+[[override]]
+path = "apex/each-thing-i-show-you-is-a-piece-of-my-death--2bd290f40750a8de75d7.txt"
+kind = "fiction"
+reason = "read: a story (signals said unsure)"
+
+[[override]]
+path = "apex/Heritage-or-This-Body-of-Folklore--c54b88504cfa6c4db7f0.txt"
+kind = "fiction"
+reason = "read to the end: flash fiction (signals said unsure)"
+
+[[override]]
+path = "apex/When-a-Crossroads-Is-a-Corner--52028d1d96fdea055b76.txt"
+kind = "fiction"
+reason = "read to the end: flash fiction (signals said unsure)"
+
+[[override]]
+path = "apex/Whispering-Waters--d26d8c3b8f043f4b819d.txt"
+kind = "fiction"
+reason = "read to the end: flash fiction (signals said unsure)"
+
+[[override]]
+path = "apex/How-to-Know-If-Your-House-Is-Haunted-and-What-to-Do--bf7f5ca7ac431fd3e524.txt"
+kind = "fiction"
+reason = "read to the end: a prose poem, kept as fiction (signals said unsure)"
+
+[[override]]
+path = "apex/Love-s-Idea-Envisioned-by-a-Satyr--4d5d1c8fa91676b24f8b.txt"
+kind = "fiction"
+reason = "read to the end: a prose poem, kept as fiction (signals said unsure)"
+
+[[override]]
+path = "apex/The-Glutton-A-GoxHat-Accounting-Chant--d453f34e27e1989e1ad8.txt"
+kind = "fiction"
+reason = "read: a story that opens with a fictional translator's note (signals said unsure)"
+
+[[override]]
+path = "deadlands/Death-Work--28497de87e2dc1ed0946.txt"
+kind = "fiction"
+reason = "read to the end: a story in one long instruction, with an author's note at its end (signals said unsure)"
+
+[[override]]
+path = "fireside/synthia.py--0c696722f6c39abab364.txt"
+kind = "fiction"
+reason = "read: a story written as a program listing (signals said unsure)"
+
+[[override]]
+path = "lightspeed/TrainFightTuesday--ec6c31e60a032f6c3ae1.txt"
+kind = "fiction"
+reason = "read: a story told as chat posts (signals said unsure)"
+
+[[override]]
+path = "apex/The-Witch-s-Heart--0c6cd81641a658d37e7c.txt"
+kind = "verse"
+reason = "read to the end: a poem in long lines (signals said unsure)"
+
+[[override]]
+path = "fantasy/Blackman-s-Flight-in-4-Parts--50ac4aaa2a69ed8de0b0.txt"
+kind = "verse"
+reason = "read: a poem on a fiction index (signals said unsure)"
+
+[[override]]
+path = "fireside/Roots-to-Touch-Sky--bbe7700833d231baaa99.txt"
+kind = "verse"
+reason = "read: a poem on a fiction index (signals said unsure)"
+
+[[override]]
+path = "nightmare/Ode-to-My-Brother-s-Sadness--6413e136981ab4747c49.txt"
+kind = "verse"
+reason = "read: a poem with the author's note above it (signals said unsure)"
+
+[[override]]
+path = "infinityplus/Dradin-in-Love--38db95bc776649a4c73d.txt"
+kind = "stub"
+reason = "read: a notice that the novella was taken down (signals said unsure)"
+
+[[override]]
+path = "podcastle/PodCastle-791-TALES-FROM-THE-VAULTS-Fine-Flying-Things--31a2b9d4b9b1b2616217.txt"
+kind = "stub"
+reason = "read to the end: an excerpt that says the full text is not there (signals said unsure)"
+
+# Escape Pod's "Flash From the Vault" summer-school pages: the host's commentary and the authors' bios; the stories themselves were already taken out by the deduper
+[[override]]
+title = "flash from the vault"
+source = "escapepod"
+kind = "nonfiction"
+reason = "read three of them: host commentary around stories that are no longer in the file"
+
+# Called non-fiction by the signals, read on 2026-10-07: three stories found among them, the rest confirmed
+
+[[override]]
+path = "lightspeed/Guidelines-for-Using-the-Harry-Elkins-Widener-Memorial-Library--a22f9857bdc80d798de0.txt"
+kind = "fiction"
+reason = "read: a story written as library guidelines (signals said nonfiction)"
+
+[[override]]
+path = "nightmare/Review-When-the-Baby-Sleeps--cac675ef77e392ac8a6e.txt"
+kind = "fiction"
+reason = "read: a story written as a product review, with the author's note above it (signals said nonfiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-471-Flash-On-The-Borderlands-XXX-Flash-Fiction-Contest-IV--7012f91dfb7e6431b860.txt"
+kind = "fiction"
+reason = "read to the end: a flash story under a narrator credit and the author's comment (signals said nonfiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-727-And-Never-Mind-the-Watching-Ones-Part-2-of-2--3186a1ef33b7f1ae98c8.txt"
+kind = "nonfiction"
+reason = "read: host comments for part two; the story is not in the file (signals said fiction)"
+
+[[override]]
+path = "deadlands/Ask-A-Necromancer--9336884a308c8355538a.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-A-Necromancer--bb83e80b6945d9797f8a.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-A-Necromander--69214354d09905b64c69.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--1e8928365c13bf7029f5.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--1fc692801106fce95afe.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--210920e5d9a04b8befa3.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--42994d5dbc2a20c19874.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--4b24461b41e641580be1.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--4bef3bd26c2b98100967.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--4d091e15565541e04a89.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--5c25b0400553b1bcb5df.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--6431654c4ed7374762ab.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--692ff05dc73908fa9350.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--876f113df210df5aa94c.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--8a8d910a401bd9112476.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--b20ed59a70e63b40b4fa.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--bd08f6cd3890e7c7643d.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--d342d1ddbfb4b6ce2c5a.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--dcefe3ef53134a90b9bb.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--e6eadd79736eb23c0f16.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--ef21729c8ee3aed2a8b8.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer--f8fbf57887f159cd75b1.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer-A-Brief-Anabasis--fb5af6726cf3145f67f7.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer-C-est-ici-de-l-empire-de-la-Mort--388af3e4c32019034e38.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer-Decay-Always-Wins--7dd575c2d07b30b150b2.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer-Fun-with-Formaldehyde--efc433eb4bfe9d106685.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Ask-a-Necromancer-The-Autopsy-of-a-Horror-Film--b99cbed829352b2f54de.txt"
+kind = "nonfiction"
+reason = "read: the Ask a Necromancer column (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Editor-s-Note--015c33441ed4e079409f.txt"
+kind = "nonfiction"
+reason = "read: editor's note, essay, interview (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/Five-Treasured-Tropes-of-SFF-K-Dramas--b0685ac529f2199e35fb.txt"
+kind = "nonfiction"
+reason = "read: editor's note, essay, interview (signals said nonfiction)"
+
+[[override]]
+path = "deadlands/The-Morbid-Life-An-Interview-with-Loren-Rhoads--84671d6e5797230a4010.txt"
+kind = "nonfiction"
+reason = "read: editor's note, essay, interview (signals said nonfiction)"
+
+[[override]]
+path = "escapepod/2020-Year-in-Review-and-Awards-Eligibility--9ecdc93f4de2480437eb.txt"
+kind = "nonfiction"
+reason = "read: a list of the year's episodes; a promotion with show notes (signals said nonfiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-507-The-Candy-Store--5cf1d95abae2c6deebab.txt"
+kind = "nonfiction"
+reason = "read: a list of the year's episodes; a promotion with show notes (signals said nonfiction)"
+
+[[override]]
+path = "infinityplus/Balzac-s-War--82afe8b5c197ae31e16c.txt"
+kind = "stub"
+reason = "read: a notice that the story was taken down (signals said nonfiction)"
+
+[[override]]
+path = "apex/Perfection-and-the-Bridges-Between--b2c2cc9c9a0319e6c8b9.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/The-Spanish-Scene--9f9c3a77a8e6b66b858d.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/The-Top-10-Experimental-Books-You-ve-Never-Heard-Of--23b76734a61c731f2286.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Jimi-Hendrix-Sang-It--fa14438afe09998d1a37.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Tropes-as-Erasers-A-Transgender-Perspective--dce1b79ca60dbb5fe82b.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Fear-of-Failure-2.0--7b0d024ba6d9f356dba2.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Writing-Flash-Fiction-Serve-Neat-With-a-Twist--adeeaf4cdbda1fdfdb46.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/The-Testosterone-Injection-That-Could-Ruin-Orphan-Black-And-how-to-make-sure-it-doesn-t--340fdfacd55212a48d70.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/INK-The-Frame-and-Christopher-Soren-Kelly--116da15fc005788a0685.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Outside-of-Language-Genndy-Tartakovsky-s-Primal--0da38e649da043a8e194.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Escapism-is-a-Lie--9d8f6b343d7ca2a1e5ec.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Interning-with-Apex-A-Chat-Between-Apex-Intern-Veronica-J.-Gilchrist-and-Managing-Editor-Rebecca-E.---04b95cf531d3d93567aa.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Apex-Magazine-Slush-Reader-Roundtable--7ca527d65789449fd7b5.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Winners-2012-Apex-Magazine-Short-Story-Readers-Poll--4c8c054775f237b632cf.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Grab-Your-Badge-Ready-Set-Meet--def4794937a7a4321124.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Shiny-Boots-and-Corinthians-Writing-Historical-Fiction-without-Cliches--a0be646969bf8fcc477a.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Statistics-vs.-Story--e7b31a83a0d186751c58.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/How-We-Island-Our-Writing-A-Deep-Dive-Into-Pacific-Islander-SFF--aa65e6851d7e65ed136a.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Why-Write--7d56dab6797a05d93100.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Alone-or-How-a-Survivalist-Reality-TV-Show-Defangs-Publishing-s-Narrow-Definition-of-Agency--4476facb39d40aefc547.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Tie-Me-to-the-Mast-Metaphorically-Speaking-Social-Writing-in-the-Age-of-the-Pandemic--4be804921f0b084196f6.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Science-Fiction-Poetry-Worlds-of-Potential--6db141b8355e3a81c59f.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Why-Do-You-Keep-Rejecting-Me--6dc27ac18e9e27451b00.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Treat-Em-Right-Science-Fiction-vs-Art-Classification--e45eb8daaa0c3a2040e4.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Words-from-the-Honorary-Special-Editor--d13f12f35b0658e1497b.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Review-of-The-Necessity-of-Stars-by-E.-Catherine-Tobler--f0aea688ed6bb5cb292b.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Self-Compassion-Toolkit-A-Conversation-on-Mental-Health-and-Writing--a39ec320b9bc1f41f750.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/The-Tyranny-of-High-Concept--9bce09999afa01a619b0.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Words-Wielded-by-Women--68d5add1d8cd364e3a94.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Nature-Abhors-a-Vacuum-Writing-in-Solitude--986ea958bd9b31299c0b.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Dust-Stars-and-Shadows-How-Western-Genre-Literature-Helped-Shape-Fantasy-Science-Fiction-and-Horror--5cc50368a369a1026c04.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/How-to-Write-a-Great-Author-Bio--b975c360a81e9fc67a77.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/How-Can-You-Be--0a7452363849290e1fe0.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Writing-in-Bits-Pieces--01a4762323e46765e6d1.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/What-It-Is-We-Miss-When-We-Don-t-Read-Fanzines--1e028a1a10ce125934c1.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/When-Science-Fiction-Meets-Horror-in-World-Building--24389263fb49044a2556.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Writing-About-Rape--a3314894521be1dbf86b.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Sex-Is-Great-But-Have-You-Ever-Seen-Your-Real-Life-Relationship-Depicted-in-Fiction--bc507ca2494506fc82e8.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Intellectual-Colonialism-and-the-Erasure-of-South-and-Eastern-European-Writing-Voices-Another-Tikka---d76f159810216d8ddb3a.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Review-of-The-Martial-Art-of-Writing-and-Other-Essays-by-Alan-Baxter--008d83e66b70cb1138e4.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/The-Benefits-of-Being-a-Small-Press-Intern--0a8707af0a78431dfc3c.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Mighty-Axes-and-Beer-Soaked-Beards-The-Portrayal-of-Dwarves-in-Fantasy--dc1f3428717363ae48d5.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Stabilized-Love-Triangles-Tips-on-Writing-OT3s-From-a-Real-Polyamorist--d77954c1f9c1530bdc42.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Indigenous-Wonderworks-and-the-Settler-Colonial-Imaginary--89b97880e7480094e0a2.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+[[override]]
+path = "apex/Apex-Magazine-Adds-Two-Associate-Editors--f6f8caf91c7f53d72e19.txt"
+kind = "nonfiction"
+reason = "read: an essay, column, review or notice (signals said nonfiction)"
+
+# Called verse, read on 2026-10-07: all poems
+
+[[override]]
+path = "apex/Ghosts-of-Oz--553d89726384ae384ca1.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Poe-Twist-The-Tell-Tale-Heart-by-Edgar-Allen-Poe--f430cb4c814f867f3daf.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/bonelight--f63557d4bf88c07d1ac6.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/prim-pressed-posies--8f820ac395ea534e844a.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Ghost-Ships--6fade0d17d89648e8da0.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/My-dead-aunt-visits-me-in-the-dream.-But-my-phone-autocorrects-Dead-Aunt-as-Dear-Ant--ff73fa188974f1e3cc39.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/the-golden-armor-of-science--524ff9f850aa2056e886.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/If-I-Only-Had-A--63c93c625f274291d890.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/A-Great-Clerk-of-Necromancy--baecdd674e6c9b6e6fd0.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Maybe--85dc8f356bc55ddc5d4f.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Inferno-guts-Manila--fec8dead934c84b21fef.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Wisdom--b3c96092071dbbc9f986.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Hook--0cf21be07c0eb230610e.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/A-Man-is-Two-Gravestones--99e376ce86ad5d5d87be.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Likeness--a3adda5c3d5606c72f99.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Baba-Yaga-Tries-to-Donate-Money--b318687cac4198677801.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Oddment-of-the-Damned--49671a7a3ea783abad12.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/flood-fish-pumpkin-moon--77c2b9d4be1c8581e7ae.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Second-Mouth--d65ccc9e88563f6e580f.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/After-the-Storm--309ad9bc579e7b1e5377.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Hot-Wet-Mess--07c1ff3fb26f3d859d68.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Time-Skip--bc6cdb4ccca0de932c70.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/On-Sailing-Homewards--e09d124a7560ddc43f1e.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/How-to-Fly-by-Neptune--ca1d3c7f9370c76d6aa7.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Semblance--61493ec816f8ef3ec868.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/The-Excavation-of-Troy--4c534f2a0bdfce594655.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Conservation-of-Energy--eb7dbb4e72a2b580f866.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Fet-Gedé--b081a79df29ebfb98677.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/she-s-alive-alive--ca917c93d777272ca2d1.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/What-it-is-to-be-a-dybbuk-who-has-travelled-from-Somerville-to-Brighton--b8a0638af5ebad66723d.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Rows-of-Houses--2ca2d6e8ea0fc8af1a2b.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/I-think-of-my-grandfather--51a0462f7ae8a895e306.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Inanna-1--f04cc083ce8191a465ea.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/The-High-Priestess-Falls-in-Love-with-Death--4b5e9f85a5e5e7682c65.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Alternate-Beginning-Alternate-Ending--fce2f144f40c5c8cc978.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/The-Annual-Scarecrow-Festival--40ed60869c604fe0d869.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/After-Thought-A-Pantoum--879670ebf5ad5a07c6be.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Moonwalk-on-A-Night-Sky--f03a2654c620aeb03230.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Babe--49b6cb3bb904794759c4.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/For-Kristen-Who-Would-Have-Turned-47-Today--04eed379c50a8d1a61fd.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Do-You-Believe-There-are-People-Who-Noticing-an-Insect-on-the-Sidewalk-Step-Out-of-Their-Way-to-Crus--c9e2bfe6704c7e94553b.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/Sleep-Lives-Inside-the-Bed--7ef3eb6230ab1e3cd37f.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "deadlands/Inverse-Requiem--e4d27174d5abc8dfe549.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+[[override]]
+path = "apex/He-Dreams-of-Salt-and-Sea--75acade3cdf20a2f4422.txt"
+kind = "verse"
+reason = "read: a poem (signals said verse)"
+
+# Called stub, read on 2026-10-07: show notes, notices, and podcast excerpts that stop after a paragraph or two
+
+[[override]]
+path = "apex/Episode-32-The-Four-Gardens-of-Fate--56a7f8d4ce81d9f6d819.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "pseudopod/PseudoPod-488-A-Thing-Of-Terrible-Beauty--5f4475f0d17c16f6c46a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-97-The-Big-Glass-Box-and-the-Boys-Inside--cbfa5c852ce2c1511afd.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/Podcastle-Miniature-40-Incubus--505dafba17dc28a210ec.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "infinityplus/The-Boys-Are-Back-in-Town--5761c398f4f8fe0cfdfe.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-162-God-Juice--d7eedd093c96d6ce2278.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-306-Radio-Nowhere--5354ff973efa6faa6ec3.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/For-Your-Consideration-PodCastle-Award-Eligibility-2019--29c9ccf30d016956347d.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/Podcastle-Miniature-43-In-Order-to-Conserve--ab768b47e0ebeab6580a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-34-The-Teratologist-s-Brother--35538d950fc36e769e19.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "infinityplus/Understand--a86f9c7a908f44ade0f6.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-71-Professor-Strong-and-the-Brass-Band-Boys--e967ffe56d340ed09dd4.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-177-Usurpers--f04934bf42cd3f95001b.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-124-Squonk-and-the-Horde-of-Apprentices--ab5ae4292b78758af3f6.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "infinityplus/The-World--95b2f45b957e91bc2f20.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "pseudopod/PseudoPod-357-Growth-Spurt--42d399bf499ac14c16d8.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-Giant-4-Captain-Fantasy-and-the-Secret-Masters--b1f9a387bb63ac4e121a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-205-Outlander--7a684c4ecf16b80cb620.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-246-Bride-of-Frankenstein--e4f142b281767f16c4e7.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "pseudopod/Pseudopod-261-Widdershins--c5ace375a1a295fc585a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-100-The-Matriarchs--fea7938b4619c14b1067.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-73-Root-Rot--a4e585081e86348e09d5.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-193-Fruit-Jar-Drinkin-Cheatin-Heart-Blues--2ab99d93860c391a098c.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "pseudopod/PseudoPod-504-Cuernavaca--03ab09b8e10735d4d6fc.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-154-Union-Dues-Freedom-With-a-Small-f--bcb619d456881d88b5dd.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PC012-Barrens-Dance--c268e56b207ca9c59649.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-Episode-287-Tiktok-and-the-Nome-King--85164311057a36c45670.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-90-How-Lonesome-a-Life-Without-Nerve-Gas--a17d82a9f19851680b98.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-65-Field-Biology-of-the-Wee-Fairies--cfb2a4d64d870ee1a017.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-390-Flash-Fiction-Extravaganza-Bears--9e49b5d2569eff0fbbb3.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-600-At-the-Rialto--fd7ea330510b3f769fde.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-Miniature-81-Crow-Gifts--bdc2cc9ffae272fd9912.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-39-The-Warrior-Boy-Who-Would-Not-Suffer--7b60cc7453103921e2bc.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-117-The-Wages-of-Salt--ae9af311c48890907de2.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-63-When-You-re-Ready--a275f97a0d40ffa1cc9a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-89-Hoodie--c1a7e7702a2efcba88d6.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "escapepod/Escape-Pod-222-Infestation--5191ce713774a3185e2f.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-37-Lazarus-and-the-Amazing-Kid-Phoenix--aaa36675377fb8436550.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PC026-Black-Ribbon--20cd094ad141bf02aa80.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-96-Observations-of-a-Small-Object-in-Decaying-Orbit--b1d424de2284e7e5e1e1.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "pseudopod/PseudoPod-023-Civilized-Monsters--ee3a265df4433739a38e.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-328-The-Old-Woman-With-No-Teeth--fc20c07533973b99e48a.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "apex/Episode-83-To-Seek-Himself-Again--045f2b374aefaf2d1414.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+[[override]]
+path = "podcastle/PodCastle-045-The-Annals-of-Eelin-Ok--0db2360868af9eec8eba.txt"
+kind = "stub"
+reason = "read: a stub (signals said stub)"
+
+# Called fiction in the sources that mix kinds (apex, the podcasts) and the fiction files that talk most about writing or tell least, read on 2026-10-07: four were not stories
+
+[[override]]
+path = "apex/First-Intermission-The-Day-the-Movies-Came-Knocking-at-My-Door-or-I-m-Ready-for-My-Close-up-Mr.-DeMi--15a2818cb240446f8e06.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said fiction)"
+
+[[override]]
+path = "apex/Young-Gifted-and-Black--86e4f805e50adb324165.txt"
+kind = "nonfiction"
+reason = "read: an essay (signals said fiction)"
+
+[[override]]
+path = "lightspeed/Women-Destroy-Flash-Fiction--f8a9a56c0413bef8eea6.txt"
+kind = "nonfiction"
+reason = "read: an editor's note announcing a flash section (signals said fiction)"
+
+[[override]]
+path = "infinityplus/Starship-Day--89e848b00f49887f0c6c.txt"
+kind = "stub"
+reason = "read to the end: only the author's afterword is left of the story (signals said fiction)"
+
+[[override]]
+path = "apex/The-Kraken-Sea--e5b2db114050c95944ee.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Field-Biology-of-the-Wee-Fairies--747d940e786cbf64bd23.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/The-Gentleman-of-Chaos--72a49920ade33a3517f0.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Talking-to-Cancer--9c88522da4b4045e688b.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Winter-Scheming--5e15a7319eea7707506d.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/A-Very-Short-History-of-the-Discovery-and-Origin-of-Homo-Sapiens-Microplasticus-in-Three-Parts--c907dd8905e2331a49ca.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/A-Rare-and-Exceptional-Delicacy--87a3902dde418cbd007f.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Useless-Things--1bb9b8ef97bb929ea2f0.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Sacrifice--be609ceb9f7406e3feea.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Sister-of-Mercy--da2b6dd7bc86a535ad39.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/The-Walking-Mirror-of-the-Soul--1d85d506b66b461c7329.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/The-First-Promise-We-Break--0cfdcead04d204b8b7b6.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Fungal-Gardens--7325e4d81ae4f512cac9.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/The-Rapid-Advance-of-Sorrow--1cb2ff1c4c91ab399c97.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Razorback--607a5389ecbcdaf84381.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Every-Shade-of-Healing--dcc0edf92d12d031e592.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Twenty-Pieces-of-Documentation-Presented-to-the-Emergency-Committee-on-the-Study-and-Understanding-o--333292f8f20bc9f0c054.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/King-of-the-Bastards-Excerpt--6a31322e91c98630feb5.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-587-ARTEMIS-RISING-4-When-the-Slipling-Comes-to-Call--40dcb6a2aa52f1f16cbe.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-848-An-Incident-on-Ishtar--093f0f039a0b3607aef8.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-412-Thirty-Seconds-From-Now--0131f9bf1c19760bfeb0.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-774-Yung-Lich-and-the-Dance-of-Death--d52074dd84fab9b71270.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-528-Unsent-Letter-From-An-Unnamed-Student--4c28e9b9718448e161f5.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-680-The-Wild-Wood--3f446a97d282c5f815cf.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-602-Franken-Puppy--0e858aa8839cce415753.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-540-The-Right-Answer--38ba18e1a4fcb63fcf5e.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-1022-Butter-Side-Down-Part-2-of-2--8905fda9e8ac60b60d0c.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-498-Chasing-Flowers--5544364253b0011fdf50.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-435-Made-of-Cats-A-Love-Story--1d2a6e8952ecb4f70a6c.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-482-The-Family-Ghost--324f417c52e51569a10a.txt"
+kind = "fiction"
+reason = "read: a story (signals said fiction)"
+
+[[override]]
+path = "apex/Let-Her-Collect-Stamps--9f83c48c34c4902502b1.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "apex/Out-of-Print--1cf649d792a2814f0076.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "clarkesworld/If-on-a-Winter-s-Night-a-Traveler--3e3634171ecee1bf04d2.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "clarkesworld/The-Other-Amazon--fc5ddbffedde8a511d10.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-328-Surviving-the-eBookalypse--ced44b802b664809a56f.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "fantasy/The-Matriarchs--93c53b5e3c8eee149563.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "fantasy/When-You-Hit-the-Poison-Ivy-Thicket-You-ve-Gone-Too-Far--5990bf4dfb489a2f1895.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "fireside/How-I-Got-Published-12-Tips-from-a-Bestselling-Author--75ae4880f689af35f349.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "fireside/Not-Quite-What-We-re-Looking-for-Right-Now--9c8460fbd6e34b678020.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "fireside/The-Heart-of-the-Story--8e8e5600f7b52f47b6bd.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "infinityplus/Words--69f9985f511032ad88f3.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/Printable--2340fb49d80ed60ecf2e.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/The-Incursus-by-Asimov-NN-71--30472e2802a638c802ee.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/The-Terrible-Secret-of-the-Immortal-Bards--ca6f8a3c82721ff004c3.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/The-Three-Books-and-What-They-Tell--8d506ab35677b1d7d59c.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/There-Are-No-Hot-Topics-on-Whukai--f6da52a01aee9c091646.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "lightspeed/We-Will-Teach-You-How-to-Read-We-Will-Teach-You-How-to-Read--3cdcc382a8f423d33dcd.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "nightmare/Courtney-Lovecraft-s-Book-of-the-Dead--15afe0098eb6bf5f1761.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "nightmare/Introduction-to-the-Horror-Story-Day-1--79198119f40fa44bc141.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-386-Flash-Fiction-Extravaganza-Ghostly-Interludes--44aee04b6237c8cbbaed.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "uncanny/A-Call-to-Arms-for-Deceased-Authors-Rights--021d93beeb4a8085bed0.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "uncanny/The-Life-and-Times-of-Alavira-the-Great-as-Written-by-Titos-Pavlou-and-Reviewed-by-Two-Lifelong-Frie--0da03b81d63d4d1fe2d9.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "uncanny/The-Thing-About-Ghost-Stories--a738198abc4928c2ec98.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "wayback/infinitematrix/text/kadrey-viper-wire.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "wayback/infinitematrix/text/oleary-the-yugoslavian-poetrymaker.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "wayback/scifiction/text/periodic-table-of-science-fiction-hassium-to-hass-and-hass-not.txt"
+kind = "fiction"
+reason = "read: a story, though it talks about books and writing (signals said fiction)"
+
+[[override]]
+path = "apex/Al-Manara-Dirge--9f1230b4d18bdb78913c.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/All-This-Darkness--2d2e451d7cc689282dff.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Black-Box-of-the-Terraworms--0e65e71d71ef3c1a03ae.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/During-the-Pause--49a44b820029ffb05d3d.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Inhabiting-Your-Skin--5569e7e2e348a9f24b39.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Inhale--20d3a69d119e0bcb3e09.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Optics--9008e77093f83a30972f.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Our-Daughters--8e25657b2b5a0673266b.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/River-Street--fd6b92dee99cc5c25395.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/Survival-After--fff3cdf5fac6712044fa.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Eight-Things-You-ll-Never-Be-Now-That-You-re-Slowly-Turning-Into-a-Giant-Spider-Creature--eb51b25fe8be060fda5c.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-1062-Extrasolar-Ghost-Tours-Safety-Questionable-Lizards-Guaranteed--ac986c689b8740e429e4.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-422-Deshaun-Stevens-Ship-Log--060153d478d6d8b2eef0.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-508-A-Day-Without-Sunshine--802648c9dbccc0fb5bed.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-590-Four-Seasons-in-the-Forest-of-Your-Mind--f81abc9ad8eba552fd9d.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-648-A-Handful-of-Dal--1386a0afb6e1a635aa2b.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-673-Optimizing-the-Verified-Good-Artemis-Rising--808adfecfeb270ab24af.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-696-The-Homunculi-s-Guide-to-Resurrecting-Your-Loved-One-From-Their-Electronic-Ghosts--c6514845344a0b937d9b.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-839-Universal-Archive-of-Human-History-FAQ--55d49b982add485d2496.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "escapepod/Escape-Pod-927-How-to-Pass-as-Human--0693c9c7509f28f3b0c0.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "podcastle/PC035-Winter-Solstice--da670716b05b519f2d01.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-228-The-Terror-of-Blue-John-Gap--f82bf4945153e6188e81.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-463-A-Dozen-by-Dunsany--706f226c711118c15f25.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-731-The-Travel-Guide-to-the-Dimension-of-Lost-Things--8663d9ee0bd310233f88.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "podcastle/PodCastle-Miniature-91-Love-Letters-on-the-Nightmare-Sea--b91ea8d8d4574139278b.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-361-The-Murmurous-Paleoscope--6cba0e58678e36bae34e.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-633-Hippocampus--40e41ba847cb6f6b4eef.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-737-Workday--ee9e8c4d5d936f367940.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+[[override]]
+path = "pseudopod/PseudoPod-869-Audio-Recording-Left-by-the-CEO-of-the-Ranvannian-Colony-to-Her-Daughter-on-the-Surviv--0d7d6977e7360bf6f9f9.txt"
+kind = "fiction"
+reason = "read: a story in an unusual form (log, guide, letter, second person) (signals said fiction)"
+
+# Apex files called fiction whose rates sit in the doubtful region (138 of them), openings read on 2026-10-07: thirteen essays and one poem found
+
+[[override]]
+path = "apex/A-Wave-on-the-Sea-Ursula-K.-Le-Guin--436a1219c0bfa1b09050.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Accost-Me-SFF-and-Waste-My-Time--3e6c12cc2a609a2c1c3a.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/After-Our-Bodies-Fail--f3eea934288920164e0d.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Get-Bored--2b1230f191a51570b283.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Welcome-to-the-Reformation-Bitches--63471664373c4cf43ac8.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/All-the-Real-Geek-Girls--e79d2ab8db7b202346fd.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Mindy-St.-Claire-and-the-Male-Gaze-Or-Lack-Thereof--4628f7571b93f26fa296.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Renfield-Blood-Is-the-Life-But-Only-if-Necessary--2258441409d57135d72d.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/The-Art-of-Peace-Mari-Evans-Legacy-of-Peaceful-and-Ethical-Engagement--a9469b815e5f32fa8f22.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/The-Power-of-Anger-Acceptance-and-Affirmation-in-Dirty-Computer--a479b17a2f2861d3c473.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/There-s-No-Racism-Here-A-Black-Woman-in-the-Dominican-Republic--40e4b122ea12b8347f19.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/We-Are-Comics-A-Visual-Message-for-Visual-Medium--d4fd6b08b4c24b66d74e.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/What-Underlies-Our-Conversations-About-Witches--e37d7821878ab009368d.txt"
+kind = "nonfiction"
+reason = "read: an essay with no talk of writing in it, which is why the rates missed it (signals said fiction)"
+
+[[override]]
+path = "apex/Afterwards--bc85e5c5046f1478caef.txt"
+kind = "verse"
+reason = "read to the end: a poem set as one paragraph per line (signals said fiction)"
+
+[[override]]
+path = "apex/A-Country-of-Eternal-Light--12437e0d65e5257f8fc8.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Letter-to-Santa--17c7b2f71038ca69f5de.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Life-in-Fictions--6574b19ffe07f15573b6.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Priest-of-Vast-and-Distant-Places--5b44c13c36238e1303fd.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Raggy-Dog-a-Shaggy-Dog--1c453e6bbeaea9df6229.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Revolution-of-One--2d0e57f95320ea330e15.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-Ten-Thousand-Year-Survey-Into-Seven-Stomachs-of-an-Ishta--bd2bcfc9bfb6e4c7c14c.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/A-World-Unto-Myself--0b17f2415071c472f4b5.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/All-I-Want-for-Christmas--1f61a3eadb0619960247.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Americana--8718f21eb7347451e480.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/An-Evening-in-the-City-Coffeehouse-With-Lydia-on-My-Mind--0e67e30f2bf8eee6127b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/As-Ephemeral-as-Bubbles--cbf35dfc0a7b70efc295.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/As-the-Sun-Dies--8e981b76ba2dbf63a866.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Bear-in-Contradicting-Landscape--e694bb8fbbc62e4f7b0b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Before-After-and-the-Space-Between--ee1546953de69ff58479.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Before-and-After--6e224844c88b81df00e8.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Black-Gold--aed9979e4e7c3904de91.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Black-Hole-Heart--79384132da512189d6be.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Boys-of-the-Fellwood--020584332fcb969560b6.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/COTTONMOUTH--16c7b6a974fef471b611.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Cassandra-and-the-Changeling--e93a10b220c35bb58bec.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Cervidae-New-and-Sharp--7d8432fc456e1a91470e.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Child-Funeral-Thief-Death--571a640bb299b00d65e8.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Christmas-is-Coming--1d2f3915c24bf1dd6dda.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Complete-Log-of-Week-893819---Dana-s-Story--b46cf2f01e66fa250021.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Dreamports--6f5d71b1cd04226687d5.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Enemy-States--ef9ae917e864e3e26465.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Experimental-Protocol-for-the-Coronal-Sectioning-and-Assessment-of-a-Human-Soul--eb4c62f275da357b0619.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Extenta--b110dd8f438c1db293d2.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Fall-to-Her--1794d1294bdf783746d9.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/For-Southern-Girls-When-the-Zodiac-Ain-t-Near-Enough--5ceac0d35c7bf0ddbabe.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Ghosts-of-Summer--df00042b3c2356d608d0.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Gim-of-P--1c7901072f949d18eff5.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Guided-Breathing-Exercise-Being-Mindful-of-the-Succubus-in-Your-Bedroom--04ca68936d099a558b16.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Harry-of-Five-Points--81ce0b02c8f51744334b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Holiday-Horrors-Feast-or-Famine-Rulebook--4348002039d9152d2d23.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Holiday-Horrors-Winner-Stringy--ac55b74e24a57aa647ed.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Homewrecker--75852407a4d5d4b0831f.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/I-Am-Thinking-of-You-in-the-Spaces-Between--6504eac01621d9657064.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/I-found-an-old-god-in-the-woods--7888bbad18e2713b7098.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/If-You-Were-a-Dinosaur-My-Love--0ca90e1cc4b131dcd952.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/In-Search-Of--57e2f2da49ed17d06bc6.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/In-Your-Diminishing-Tongue--2ab43e5b801bdb9d5ca4.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/It-Is-Healing-It-Is-Never-Whole--c281676bf55806da2bb3.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Kizimbani--46c14b098a57cd3da7bc.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Kɛrozin-Lamp-Kurfi--194dd5f7c4b81c5e3ee3.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Labyrinth--d1d23a582c6f2d20866d.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Lady-Koi-Koi-A-Book-Report--87c3f20837c74fe0e3a4.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Love-Is-a-Parasite-Meme--4d453ba592ffaaed4b7b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Love-That-Hungry-Thing--5a5c168a3ee579a8a265.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Measure-Twice-Cut-Once--ac928ca5304a10afc070.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Mo-con-Flash-Fiction-Contest-Winner--3c913022c1ebf2bcb82b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Mother-Jones-and-the-Nasty-Eclipse--539d61072bcf4cc1d9e3.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Mothers-Who-Consume--dae3001ca41201297003.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/My-Suicides--85cb0da098296533a3cf.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/N-Coin--112b1ee6e6526b1031e3.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Never-Chose-This-Way--52046abe37773012d51f.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Nine-Theories-of-Time--933c01dc10b5313ce22a.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Not-Smart-Not-Clever--8f5bd83c785342a5dca2.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Nothing-That-Bleeds--e1340537e7540f09333e.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Novel-Excerpt-Return-to-the-Lost-Level--c4c4cb712c41ab21a9ae.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Of-Brackens-and-Cowries--1f71e4591b5319f4c670.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Parts-and-Halves--a13e5d1f987a7f1e0155.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Prism--1041fe53db43c75b4d19.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Proximity--cb6ad354cfb7754fb862.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Rats--7b783ac0d645ddfdf72d.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Recipe-Collecting-in-the-Asteroid-Belt--9168a5123dad43208530.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Requiem-for-Solo-Cello--10da93ad1c454982f674.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Rosewater-Novel-Excerpt--8a4f80007dd81d59a4d9.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Shrinkage--11f86b26353e20563e4a.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Shrödinger-s-Pussy--8fee09e17495548b244d.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Signal-Intrusion--780082faf5fce4f23575.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Sinner-Baker-Fabulist-Priest-Red-Mask-Black-Mask-Gentleman-Beast--7201445ee72f194c8706.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Smoke-Fire-Wind-Sea--856e21cd933e50d0dce5.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Soft-Feather-Dance--90fce1c92f30092b3b1d.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Someone-to-Feed-You--f9c345bbd00aca153736.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Stone-Woman--63924f196cc2bf06fd10.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/THE-TURING-MACHINES-OF-BABEL--62695589df8fbb8228e0.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Ten-Steps-for-Effective-Mold-Removal--2fb741c0456cfb0dc05e.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Tenure--3a2e8d52c47f4af6eb06.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/That-Has-Such-People-in-It--231d66f4e5e6b4a8f124.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Art-the-Owls-Can-t-Swallow--286af088998e378c0526.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Beast-at-the-End-of-Time--418e36162da04dbac098.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Boy-Who-Loved-Death--3434a92c157ad08e8007.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Clown-Watches-the-Clown--b67d9f6f2d2d83525df5.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Creature-in-Your-Neighborhood--d3cdec2ed82a0074c775.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Days-of-Flaming-Motorcycles--f0dd3fc7280d8e5f6b41.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Dude-Who-Collected-Lovecraft--ad3d9d177ef892fe86dd.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Enduring--cb7c8e573d5196e1d916.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Face-of-Heaven-So-Fine--e033a76bb3e0890876c8.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Fairy-Library--36f9acf6ebabb276c03d.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Fate-You-Choose--9e19dc47e83f9869846f.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-First-Stone--3b5e7fdbc8f702cedc7f.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Green-Book--afcf2b040f6b7179c712.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Horrible-Conceit-of-Death-and-Night--f0288a6d36eb0e07d076.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Legacy-of-Alexandria--9fed97d05d8c4e7bb1eb.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Man-Who-Has-Been-Killing-Kittens--02fd48342f77b7736a76.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Price-of-Moss--c839f5e00ac6ad269675.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Speaking-Bone--806115a42b18523db6dd.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Tolling-of-Pavlov-s-Bells--b4e0d968415b670cabf0.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/The-Words--1c7b5923d91a35c4d98a.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/This-Is-a-Ghost-Story--eaccdefddc7a0df7d8ac.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/This-Is-the-Moment-Or-One-of-Them--c884cc5ac6a4fcc79387.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Through-Dreams-She-Moves--1764f47bf56fbf76d578.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Titanic--135b7992da7a8776b9f2.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/To-Kill-a-Language--2739596f7f05498decfc.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/To-Rise-Again--703a8839e077d94dea6a.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/To-the-Mistress-of-the-Labyrinth-Give-Honey--af5b733a21d373d1a4b4.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Walking-the-Deep-Down--c0b166ac202d13c71640.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/We-Were-Once-Twelve--d1734451b6ae6371c804.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Welcome-to-Astuna--12b4fe3b3aae9b696016.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Wet-Dry-Bitter--05373df1824021c8f9a2.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/What-Happens-When-a-Planet-Falls-From-the-Sky--afe7284edb651527ce79.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/What-I-Am--ea9f2247934d375b8c74.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/What-the-Crab-Apple-Tree-Near-Miranda-Spaceport-Saw--92f3ec7baeb9868d79cb.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/When-We-Dream-We-Are-Our-God--da623f85398588098f26.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Work-and-Ye-Shall-Eat--7f4533470c58d82cd732.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/You-Without-Me--3cf5dfbf1061fcd2b113.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/You-and-Me-and-The-End--81542b4d707fb656c20b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Your-Cities--72d05679e626e81892f8.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Your-Own-Undoing--0a301c4f19f384334a49.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Your-Return-to-the-Five-Ruins-of-the-Bog--98e25dd511f3652aae93.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/Your-Space-Between--3052a8b289fb9e62942b.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+[[override]]
+path = "apex/the-saddest-of-angels--a4db55b96d86d6360156.txt"
+kind = "fiction"
+reason = "read the opening: a story (the rates put it in the doubtful region) (signals said fiction)"
+
+# Ward, Heavens 12.x: the author hid the end of the chapter under the navigation line on purpose (the next chapter's note says so)
+[[override]]
+path = "ward/Heavens*12.x--*.txt"
+keep = { from = "Tori’s fuzzed senses heard March’s voice.", to = "$" }
+reason = "read: story text below the navigation line, not an author's note"
+
+# Digital Rapture arrived from a PDF as 267 glued paragraphs; it cannot be cut into sections, and its essays are wanted
+[[override]]
+path = "anth/anthology-james-patrick-kelly.txt"
+kind = "mixed"
+reason = "an essay-keeping book that cannot be segmented: stories and essays are kept together, uncut"

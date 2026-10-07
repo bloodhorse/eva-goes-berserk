@@ -1,0 +1,71 @@
+# What the sieve reads and how it groups it. Paths are relative to this file.
+#
+#   dedupe      the deduper's sources.toml: its `incoming` roots, read from its out/ folder, are what gets sieved
+#   state, out  where the plan and the sieved copy go
+#   jobs        worker processes for `plan` (0 = one per core); the plan is the same for any number
+#
+# [profiles]       source -> magazine (default), podcast, serial, anthology (default for a `container` root), plain
+#                  magazine   one work per file from a magazine site: kind decided per file, edges trimmed
+#                  podcast    the same, and a short page without a transcript is a stub
+#                  serial     one chapter per file: author's notes, navigation and pitches trimmed at the edges
+#                  anthology  one book per file: cut into sections, editorial sections and headnotes removed
+#                  plain      trusted fiction: only tiny files are stubs, only navigation and pitches are trimmed
+# fiction_index    sources whose collector walked a fiction-only index (the site says every page is a story)
+# [groups]         the report's five piles
+# [html_labels]    regexes with one group each, tried in order over a page's raw HTML (metadata raw_path), for sites
+#                  that print the kind on the page and nowhere in the metadata; the first non-empty group is the label
+# [books.<slug>]   keep_essays = true keeps a book's essays, introductions and headnotes as `nonfiction-kept`
+#                  (lists of contents, permissions and acknowledgments still go)
+
+dedupe = "../dedupe/sources.toml"
+state = "state"
+out = "out"
+thresholds = "thresholds.toml"
+overrides = "overrides.toml"
+review = "review.md"
+report = "report.md"
+# worker processes for plan; 0 is one per core
+jobs = 0
+
+fiction_index = ["bcs", "clarkesworld", "fantasy", "fireside", "giganotosaurus", "lightspeed", "nightmare",
+                 "thedark", "uncanny", "modern/giganotosaurus", "infinityplus", "wayback",
+                 "escapepod", "podcastle", "pseudopod"]
+
+[profiles]
+anth = "anthology"
+escapepod = "podcast"
+podcastle = "podcast"
+pseudopod = "podcast"
+katalepsis = "serial"
+necroepilogos = "serial"
+pact = "serial"
+pale = "serial"
+twig = "serial"
+wanderinginn = "serial"
+ward = "serial"
+worm = "serial"
+"released/shiner" = "plain"
+"released/wildbow" = "plain"
+"modern/giganotosaurus" = "plain"
+wayback = "plain"
+
+[groups]
+magazines = ["apex", "bcs", "clarkesworld", "deadlands", "fantasy", "fireside", "infinityplus", "lightspeed",
+             "nightmare", "thedark", "uncanny", "giganotosaurus"]
+podcasts = ["escapepod", "podcastle", "pseudopod"]
+anthologies = ["anth"]
+serials = ["katalepsis", "necroepilogos", "pact", "pale", "twig", "wanderinginn", "ward", "worm",
+           "released/wildbow"]
+small = ["released/shiner", "wayback", "modern/giganotosaurus"]
+
+[html_labels.apex]
+patterns = ['<span class="apex-story__type">\s*([^<]*?)\s*<']
+
+[html_labels.deadlands]
+patterns = ['class="dl-ui dl-story__meta">\s*([^<&]+?)\s*&middot;', '<article class="dl-story__body\s*([^"]+)"']
+
+[books.mccaffery-storming-the-reality-studio]
+keep_essays = true
+
+[books.anthology-james-patrick-kelly]
+keep_essays = true
