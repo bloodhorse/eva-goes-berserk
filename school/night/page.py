@@ -61,6 +61,13 @@ pre{background:var(--card);color:var(--pre-fg);font:13px/1.5 ui-monospace,Menlo,
 overflow-wrap:anywhere;border-left:2px solid var(--line);margin:4px 0 12px}
 pre.says{font:19px/1.6 Georgia,'Iowan Old Style','Times New Roman',serif;color:var(--says-fg);background:var(--says-bg);padding:14px 16px;margin:6px 0 22px;border-left:2px solid var(--says-line)}
 .seed{color:var(--ctx);font:italic 16px/1.4 Georgia,'Iowan Old Style',serif;margin:18px 0 6px}
+.meter{color:var(--ctx);font:13px/1.6 ui-monospace,Menlo,monospace;margin:10px 0 2px}
+.meter b{color:var(--fg);font-weight:600}.meter svg{display:inline-block;vertical-align:middle;margin:0 6px}
+.meter-note{color:var(--ctx);opacity:var(--dim);font:11px/1.5 ui-monospace,Menlo,monospace;margin:2px 0 14px}
+.lift{color:var(--pink);font:12px/1.5 ui-monospace,Menlo,monospace;background:var(--card);border-left:2px solid var(--said-line);
+border-radius:0 4px 4px 0;padding:6px 12px;margin:-16px 0 22px;overflow-wrap:anywhere}
+.lift i{color:var(--ctx);font-style:normal}
+.stock{color:var(--ctx);opacity:var(--dim);font:11px/1.5 ui-monospace,Menlo,monospace;margin:-16px 0 22px;padding-left:14px}
 .foot{color:var(--ctx);opacity:var(--faint);font:11px ui-monospace,Menlo,monospace;margin-top:28px}
 </style>
 """
@@ -244,6 +251,84 @@ def loomed():
     return rows + new
 
 
+OUTSIDE = "the light novels, the fan fiction and the Gutenberg pulp sci-fi (not on this mac as text)"
+
+
+def metered():
+    err = f"{D}/meter.err"
+    try:
+        if not os.path.exists(err) or time.time() - os.path.getmtime(err) > 1200:
+            import subprocess
+            try:
+                r = subprocess.run([sys.executable, "night/meter.py", N], capture_output=True, text=True, timeout=130, stdin=subprocess.DEVNULL)
+                if r.returncode != 0:
+                    print(f"meter: {(lines('meter.err') or ['failed'])[-1]}", file=sys.stderr)
+            except subprocess.TimeoutExpired:
+                with open(err, "w") as f:
+                    f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} timed out\n")
+                print("meter: timed out", file=sys.stderr)
+        return [json.loads(l) for l in lines("meter.jsonl")]
+    except Exception as e:
+        print(f"meter: {e}", file=sys.stderr)
+        return []
+
+
+def covered():
+    try:
+        import tomllib
+        with open("dedupe/sources.toml", "rb") as f:
+            src = tomllib.load(f).get("source", [])
+        old = [s["name"].split("/")[-1] for s in src if s.get("kind") == "reference" and s["name"].startswith("shelf/")]
+        return ("checked against the dedupe index: the modern shelves, the library, the pile"
+                + (", and of the old shelves " + ", ".join(old) if old else "") + f" · not against {OUTSIDE}: a clean score does not clear her there")
+    except Exception:
+        return ""
+
+
+def share(rows):
+    words = sum(r["words"] for r in rows)
+    return 100 * sum(r["in_runs"] for r in rows) / words if words else 0.0
+
+
+def lifts(row):
+    if not row:
+        return ""
+    text = ""
+    for run in row["runs"]:
+        if run["hers"] >= 12:
+            src = run["sources"][0]
+            others = run["more"] + len(run["sources"]) - 1
+            more = f" and {others} more" if others else ""
+            text += (f'<p class="lift">lifted, {run["hers"]} words: “{html.escape(run["text"])}” '
+                     f'<i>— {html.escape(src["source"])}: {html.escape(src["path"])}{more}</i></p>\n')
+    stock = sum(1 for run in row["runs"] if run["hers"] < 12)
+    if stock:
+        text += f'<p class="stock">{stock} stock phrase{"s" if stock > 1 else ""} of 8 to 11 words, counted and not listed</p>\n'
+    return text
+
+
+def meter_block(mt, snaps):
+    full = [s for s in snaps if sum(1 for r in mt if r["snapshot"] == s and r["kind"] == "loom") >= sum(1 for r in lm if r["snapshot"] == s)]
+    if not full or full[-1] != snaps[-1]:
+        return ""
+    series = [share([r for r in mt if r["snapshot"] == s and r["kind"] == "loom"]) for s in full]
+    now = [r for r in mt if r["snapshot"] == snaps[-1] and r["kind"] == "loom"]
+    raw = [r for r in mt if r["snapshot"] == snaps[-1] and r["kind"] == "raw"]
+    runs = [run for r in now for run in r["runs"]]
+    peak = max(range(len(series)), key=lambda i: series[i])
+    long = sum(run["hers"] for run in runs if run["hers"] >= 12)
+    words = sum(r["words"] for r in now) or 1
+    text = (f'<p class="meter"><b>recitation {series[-1]:.1f}%</b> of her words in these draws sit inside runs of 8+ words found verbatim in what the meter '
+            f'can see ({len(runs)} run{"" if len(runs) == 1 else "s"}) · <b>{100 * long / words:.1f}%</b> inside runs of 12+, the ones listed under a draw; shorter ones are stock phrases')
+    if raw:
+        text += f' · raw draws {share(raw):.1f}%'
+    if len(series) > 1:
+        text += f' · {spark(series)} {len(series)} snapshots, peak {series[peak]:.1f}% at step {stepof(full[peak]):,}'
+    text += "</p>"
+    note = covered()
+    return text + (f'\n<p class="meter-note">{html.escape(note)}</p>' if note else "") + "\n"
+
+
 lm = loomed()
 snaps = list(dict.fromkeys(r["snapshot"] for r in lm))
 sm = [json.loads(l) for l in lines("samples.jsonl")]
@@ -254,6 +339,8 @@ def stepof(snap):
     return int(m.group(1)) if m else 0
 
 
+mt = metered() if snaps else []
+found = {(r["step"], r["kind"], r["prompt"]): r for r in mt}
 if snaps:
     cur = [r for r in lm if r["snapshot"] == snaps[-1]]
     said = feature(cur)
@@ -262,9 +349,14 @@ if snaps:
         out.append(f'<p class="said">{said}<b>snapshot at step {stepof(snaps[-1]):,} · through the sampler</b></p>\n')
     out.append("\n## through the loom's sampler\n")
     out.append(f"<small>one draw per seed from the newest hourly snapshot (step {stepof(snaps[-1]):,}), the absurd tail cut and a brake on repetition: her fair face · the seed's last sentence in blue</small>\n")
+    try:
+        out.append(meter_block(mt, snaps))
+    except Exception as e:
+        print(f"meter: {e}", file=sys.stderr)
     for r in cur:
         tail = re.split(r"(?<=[.!?])\s+", r["prompt"].strip())[-1]
         out.append(f'<p class="seed">…{html.escape(tail)}</p><pre class="says">{html.escape(r["text"].strip())}</pre>\n')
+        out.append(lifts(found.get((stepof(snaps[-1]), "loom", r["prompt"]))))
 elif steps:
     newest = [x for x in sm if x["step"] == steps[0]]
     said = feature(newest)
@@ -280,6 +372,7 @@ for s in keep:
     for x in rows:
         tail = re.split(r"(?<=[.!?])\s+", x["prompt"].strip())[-1]
         out.append(f'<p class="seed">…{html.escape(tail)}</p><pre class="says">{html.escape(x["text"].strip())}</pre>\n')
+        out.append(lifts(found.get((s, "raw", x["prompt"]))))
 g = lines("guard.log")
 if g:
     rows = []

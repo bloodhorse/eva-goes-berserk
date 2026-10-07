@@ -214,6 +214,84 @@ class SlugTest(unittest.TestCase):
             rec = convert(src, out)["Some Editor - Broken.epub"]
             self.assertTrue(any("a broken file" in w for w in rec["warnings"]))
 
+    def test_a_clean_copy_beats_a_longer_rough_one(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "src", Path(tmp) / "out"
+            src.mkdir()
+            stories = [(f"c{k:02d}.xhtml", page(f"<h1>STORY {k}</h1>{prose(f'tale{k}', 2500)}")) for k in range(3)]
+            jacket = page(f"<p>V2.1 – fixed format, broken paragraphs; by somebody 2005-11-24</p>{prose('jacket', 300)}")
+            make_epub(src / "Some Editor - Rough Scan.epub", "Scan", "Some Editor", [("j.xhtml", jacket)] + stories)
+            make_epub(src / "Some Editor - Clean Edition.epub", "The Clean Edition", "Some Editor", stories)
+            make_epub(src / "Some Editor - Longer Edition.epub", "The Longer Edition", "Other Editor",
+                      [(f"d{k:02d}.xhtml", page(f"<h1>TALE {k}</h1>{prose(f'other{k}', 2500)}")) for k in range(3)])
+            make_epub(src / "Some Editor - Shorter Edition.epub", "The Shorter Edition", "Third Editor",
+                      [(f"d{k:02d}.xhtml", page(f"<h1>TALE {k}</h1>{prose(f'other{k}', 2500)}")) for k in range(2)])
+            got = convert(src, out)
+            rough, clean = got["Some Editor - Rough Scan.epub"], got["Some Editor - Clean Edition.epub"]
+            self.assertGreater(rough["words"], clean["words"])
+            self.assertEqual(clean["status"], "ok")
+            self.assertEqual(rough["status"], "duplicate")
+            self.assertEqual(rough["duplicate_of"], "Some Editor - Clean Edition.epub")
+            self.assertTrue((out / f"{clean['slug']}.txt").exists())
+            self.assertFalse((out / f"{rough['slug']}.txt").exists())
+            self.assertEqual(got["Some Editor - Longer Edition.epub"]["status"], "ok")
+            self.assertEqual(got["Some Editor - Shorter Edition.epub"]["status"], "duplicate")
+
+    def test_a_book_can_keep_a_section_its_label_would_drop(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "src", Path(tmp) / "out"
+            src.mkdir()
+            name = "Some Editor - The Casebook.epub"
+            make_epub(src / name, "The Casebook", "Some Editor", [
+                ("c01.xhtml", page(f"<h1>FIRST STORY</h1>{prose('first', 2500)}")),
+                ("p1.xhtml", page(f"<h1>Preface from Elsewhere</h1>{prose('manifesto', 900)}")),
+                ("p2.xhtml", page(f"<h1>Preface</h1>{prose('editorial', 900)}")),
+                ("c02.xhtml", page(f"<h1>SECOND STORY</h1>{prose('second', 2500)}")),
+            ])
+            plain = convert(src, out)[name]
+            self.assertEqual({d["file"] for d in plain["sections_dropped"]}, {"p1.xhtml", "p2.xhtml"})
+            with mock.patch.dict(books.FIXES, {"editor-casebook": {"keep": [r"^Preface from Elsewhere$"]}}):
+                held = convert(src, out, "--force")[name]
+            self.assertEqual({d["file"] for d in held["sections_dropped"]}, {"p2.xhtml"})
+            self.assertIn("p1.xhtml", {k["file"] for k in held["sections_kept"]})
+            self.assertIn("manifesto", (out / "editor-casebook.txt").read_text())
+            self.assertNotIn("editorial", (out / "editor-casebook.txt").read_text())
+            self.assertTrue(any("kept by name" in w for w in held["warnings"]))
+
+    def test_two_years_of_one_series_are_two_books(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "src", Path(tmp) / "out"
+            src.mkdir()
+            for volume, year in (("One", 2008), ("Two", 2009), ("Three", 2010)):
+                make_epub(src / f"Some Editor - The Best Dread of the Year Volume {volume}.epub", "The Best Dread of the Year", "Some Editor", [
+                    ("s.xhtml", page(f"<h1>SUMMATION {year}</h1>{prose(f'year{year}', 500)}")),
+                    ("c01.xhtml", page(f"<h1>FIRST STORY</h1>{prose(f'first{year}', 2500 + year - 2000)}")),
+                ])
+            got = convert(src, out)
+            self.assertEqual({r["status"] for r in got.values()}, {"ok"})
+            self.assertEqual({r["slug"] for r in got.values()}, {f"editor-best-dread-of-the-{y}" for y in (2008, 2009, 2010)})
+
+    def test_a_yearly_volume_without_a_year_carries_its_volume(self):
+        self.assertEqual(books.volume_number("The Best Odd Fiction of the Year: Volume Eight"), 8)
+        self.assertEqual(books.volume_number("Year's Best Odd Fiction, Vol. 4"), 4)
+        self.assertEqual(books.volume_number("The Best Odd Fiction of the Year Volume Thirteen"), 13)
+        self.assertIsNone(books.volume_number("Books of Blood Volume Three"))
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "src", Path(tmp) / "out"
+            src.mkdir()
+            for volume in ("Three", "Eleven"):
+                make_epub(src / f"Some Editor - The Best Odd Fiction of the Year Volume {volume}.epub", "The Best Odd Fiction of the Year", "Misc",
+                          [("c01.xhtml", page(f"<h1>FIRST STORY</h1>{prose(f'tale{volume}', 2600)}"))])
+            got = convert(src, out)
+            self.assertEqual({r["status"] for r in got.values()}, {"ok"})
+            self.assertEqual({r["slug"] for r in got.values()}, {"editor-best-odd-fiction-of-v03", "editor-best-odd-fiction-of-v11"})
+
+    def test_an_annual_in_a_file_name_is_not_an_author(self):
+        self.assertEqual(books.file_names("Some Editor - The Year's Best Odd Fiction_ Eighth Annual Collection.pdf"),
+                         ("Some Editor", "The Year's Best Odd Fiction: Eighth Annual Collection"))
+        self.assertTrue(books.junk_meta("The year's best odd fiction", "The Year's Best Odd Fiction  Ninth Annual Collection"))
+        self.assertEqual(books.file_names("Light_ M. John Harrison.epub"), ("M. John Harrison", "Light"))
+
 
 if __name__ == "__main__":
     unittest.main()

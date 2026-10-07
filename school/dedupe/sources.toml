@@ -190,3 +190,31 @@ glob = "corpus.jsonl"
 kind = "reference"
 priority = 0
 format = "jsonl"
+
+[[source]]
+name = "shelf/fantasy"
+path = "../models/box/data/shelves/fantasy-r2"
+glob = "*.txt"
+kind = "reference"
+priority = 0
+
+[[source]]
+name = "shelf/base"
+path = "../models/box/data/base-r2"
+glob = "*.txt"
+kind = "reference"
+priority = 0
+
+[[source]]
+name = "shelf/scifi-pd2"
+path = "../pd2/text/scifi"
+glob = "*.txt"
+kind = "reference"
+priority = 0
+
+[[source]]
+name = "shelf/wired-bulk"
+path = "../wired-bulk"
+glob = "**/*.txt"
+kind = "reference"
+priority = 0

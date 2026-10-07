@@ -117,6 +117,10 @@ TENTH_ORD = {"twentieth": 20, "thirtieth": 30, "fortieth": 40, "fiftieth": 50}
 ANNUAL = re.compile(r"\b(?:(?:(" + "|".join(TENS) + r")[\s-]*)?(" + "|".join(UNIT_ORD) + r")|(" + "|".join(TEEN_ORD)
                     + r")|(" + "|".join(TENTH_ORD) + r")|(\d{1,2})(?:st|nd|rd|th))\s+annual\s+"
                     r"(?:collection|edition|anthology)\b", re.I)
+NUMBER_WORDS = ("one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen "
+                "seventeen eighteen nineteen twenty").split()
+VOLUME = re.compile(r"\bvol(?:ume|\.)?[\s,]*(\d{1,2}|" + "|".join(NUMBER_WORDS) + r")\b", re.I)
+YEARLY = re.compile(r"\bbest\b.*\bof the year\b|\byear['’]?s best\b", re.I)
 SUMMATION = re.compile(r"\bsummation\s*:?\s*((?:19|20)\d\d)\b", re.I)
 SAME_PAGES = 5
 
@@ -661,9 +665,13 @@ def strong_reason(sec):
     return None, bool(keep_hit)
 
 
-def classify(title, author, secs, warns):
+def classify(title, author, secs, warns, keeps=()):
     for s in secs:
         s["reason"], s["kept_label"] = strong_reason(s)
+        if any(re.search(k, v.strip()) for k in keeps for v in (s["label"], s["head"]) if v):
+            if s["reason"]:
+                s["note"] = f"per-book: kept by name against {s['reason']}"
+            s["reason"], s["kept_label"], s["held"] = None, True, True
         if not s["linear"] and not s["reason"] and not s["kept_label"]:
             s["reason"] = "spine linear=no"
     body_idx = [i for i, s in enumerate(secs) if not s["reason"] and (s["words"] >= 300 or s["kept_label"]) and s["links"] < 0.6]
@@ -674,7 +682,7 @@ def classify(title, author, secs, warns):
     for i, s in enumerate(secs):
         zone = "front" if i < lo else "back" if i > hi else "body"
         s["zone"] = zone
-        if s["reason"]:
+        if s["reason"] or s.get("held"):
             continue
         r = content_reason(s, title, author, zone)
         if r:
@@ -768,6 +776,15 @@ def annual_number(s):
     return TENS.get((tens or "").lower(), 0) + 1 + UNIT_ORD.index(unit.lower())
 
 
+def volume_number(s):
+    s = s or ""
+    m = VOLUME.search(s) if YEARLY.search(s) else None
+    if not m:
+        return None
+    v = m.group(1).lower()
+    return int(v) if v.isdigit() else 1 + NUMBER_WORDS.index(v)
+
+
 def summation_year(pages):
     for t in pages:
         m = SUMMATION.search(t)
@@ -787,7 +804,9 @@ def from_epub(path):
     title, author, lang, secs, warns = process_epub(path)
     year = summation_year(s["text"] for s in secs)
     same_pages(secs, warns)
-    lo = classify(title, author, secs, warns)
+    volume = None if year else volume_number(title)
+    keeps = FIXES.get(book_slug(clean_title(title), author, year, volume), {}).get("keep", ())
+    lo = classify(title, author, secs, warns, keeps)
     lines, kept, dropped = assemble(secs, lo, warns, clean_title(title))
     if len(secs) <= 4 and sum(s["words"] for s in secs) > 20000:
         warns.append(f"only {len(secs)} spine files for the whole book: matter inside them is judged by line heuristics only")
@@ -945,12 +964,16 @@ STOP_OTHER = {
 }
 SCAN = re.compile(r"proofed|scann(ed|er'?s)|#bookz|this document is unfinished|needs formatting|scan notes|\bv\d\.\d\b|\bocr\b", re.I)
 SCAN_STRONG = re.compile(r"#bookz|proofed (by|for)|scanned (by|for)|scan notes|scanner's (quick )?note|\bv\d\.\d+ proofed", re.I)
+ROUGH = re.compile(r"^\W*v\d\.\d+\b|" + SCAN_STRONG.pattern, re.I)
 COPY = re.compile(r"copyright|all rights reserved|\bisbn\b|e-book to you|without (the )?(prior )?(written )?permission|\bDRM\b|piracy|electronic sharing", re.I)
 NAMES = [
     ("ROADSIDE PICNIC", "Arkady Strugatsky", "Roadside Picnic"),
     ("M. John Harrison - Viriconium 2", "M. John Harrison", "A Storm of Wings"),
     ("Vernor Vinge_ True Names", "Vernor Vinge", "True Names"),
     ("Light_ M. John Harrison", "M. John Harrison", "Light"),
+    ("Dozois - The Year's Best Science Fiction_ Fourteenth Annual", "Gardner Dozois",
+     "The Year's Best Science Fiction: Fifteenth Annual Collection"),
+    ("Rudy Rucker - Semiotext(e) SF", "Rudy Rucker", "Semiotext(e) SF"),
 ]
 FIXES = {
     "simmons-fall-of-hyperion": {"lead_fragment": True, "end": r"^\* \* \*\n\nThe shattering saga",
@@ -970,6 +993,9 @@ FIXES = {
     "carter-bloody-chamber-and-other": {"end": r"About The Author: Angela Carter was born"},
     "ballard-atrocity-exhibition": {"end": r"^AN INVESTIGATIVE SPIRIT$"},
     "calvino-invisible-cities": {"start": r"Kublai Khan does not necessarily"},
+    "mccaffery-storming-the-reality-studio": {"keep": [r"^Preface from Mirrorshades$"]},
+    "vandermeer-big-book-of-modern": {"keep": [r"^My Life in the Bush of Ghosts \(Excerpt\)"]},
+    "strahan-best-science-fiction-and-v10": {"keep": [r"^The Karen Joy Fowler Book Club$"]},
 }
 
 
@@ -1044,17 +1070,19 @@ def file_names(src):
     if m:
         return f"{m.group(2).strip()} {m.group(1).strip()}", m.group(3).strip(" -")
     m = re.match(r"^(.+?)_\s+(.+)$", stem)
-    if m and re.fullmatch(r"([A-Z][\w.'’]*\s?){2,4}", m.group(2).strip()):
+    if m and re.fullmatch(r"([A-Z][\w.'’]*\s?){2,4}", m.group(2).strip()) and not ANNUAL.search(m.group(2)):
         return m.group(2).strip(), m.group(1).strip()
     m = re.match(r"^(.+?)\s+-\s+(.+)$", stem)
     if m:
-        return m.group(1).strip(), re.sub(r"^[-\s]+", "", m.group(2)).strip()
+        return m.group(1).strip(), re.sub(r"_\s+", ": ", re.sub(r"^[-\s]+", "", m.group(2))).strip()
     return "", stem.strip()
 
 
 def junk_meta(title, author):
     t, a = (title or "").strip(), (author or "").strip()
-    if not a or a.lower() in ("unknown", "unknown author") or not t:
+    if not a or a.lower() in ("unknown", "unknown author", "misc") or not t:
+        return True
+    if ANNUAL.search(a) or re.search(r"[\x00-\x1f]", t):
         return True
     if re.search(r"\s-\s|_|\.\w{3,4}$|\bv\d", t) or re.search(r"\d|\s-\s|\bv\d", a):
         return True
@@ -1073,14 +1101,14 @@ def surname_of(author):
     return parts[-1] if parts else "unknown"
 
 
-def book_slug(title, author, year=None):
+def book_slug(title, author, year=None, volume=None):
     number = annual_number(title)
     t = clean_title(title).replace("’", "'")
     t = re.split(r"\s*[:;]\s+|\s+[-–—]\s+", t)[0]
     words = [w for w in ascii_slug(t).split("-") if w]
     if len(words) > 1 and words[0] in {"the", "a", "an"}:
         words = words[1:]
-    tail = [str(year)] if year else [f"{number:02d}"] if number else []
+    tail = [str(year)] if year else [f"{number:02d}"] if number else [f"v{volume:02d}"] if volume else []
     return "-".join([ascii_slug(surname_of(author)) or "unknown"] + (words[:4] or ["untitled"]) + tail)
 
 
@@ -1215,6 +1243,10 @@ def polish(text, slug, title, author, src, warns):
     return finish_text(paras), drops
 
 
+def rough_copy(text):
+    return any(len(p.split()) < 40 and ROUGH.search(p) for p in text.split("\n\n"))
+
+
 def shingles(text):
     words = re.findall(r"\w+", text.lower())
     return {hash(" ".join(words[i:i + 8])) for i in range(0, max(len(words) - 8, 1))}
@@ -1268,7 +1300,10 @@ def main():
         title = clean_title(title) or name_guess(p)[0]
         if fmt == "txt" or junk_meta(title, author):
             fa, ft = file_names(p.name)
-            title, author = clean_title(ft) or title, fa or author
+            if fmt != "txt" and ANNUAL.search(title) and not re.search(r"[\x00-\x1f]", title):
+                author = fa or author
+            else:
+                title, author = clean_title(ft) or title, fa or author
         else:
             for key, fa, ft in NAMES:
                 if key in p.name:
@@ -1276,7 +1311,9 @@ def main():
         named, filed = annual_number(title), annual_number(re.sub(r"[_\W]+", " ", p.stem))
         if named and filed and named != filed:
             warns.append(f"the file name says annual {filed}, the title says annual {named}")
-        slug = book_slug(title, author, year)
+        volume = None if year else volume_number(title) or volume_number(re.sub(r"[_\W]+", " ", p.stem))
+        slug = book_slug(title, author, year, volume)
+        rough = rough_copy(text)
         text, more = polish(text, slug, title, author, p.name, warns)
         lang = language(text)
         if lang != "en":
@@ -1286,18 +1323,28 @@ def main():
         rec = {"source": p.name, "status": "ok", "slug": slug, "title": title, "author": author,
                "language": lang, "format": fmt, "words": len(text.replace("* * *", "").split()),
                "sections_kept": kept, "sections_dropped": dropped + more, "warnings": warns,
-               "fingerprint": fingerprint(text), "_text": text, "_sh": shingles(text)}
+               "fingerprint": fingerprint(text), "_text": text, "_sh": shingles(text), "_rough": rough}
         if year:
             rec["year"] = year
+        if volume:
+            rec["volume"] = volume
         if rec["words"] < 5000:
             warns.append(f"only {rec['words']} words kept")
         results.append(rec)
     oks = sorted([r for r in results if r.get("status") == "ok"], key=lambda r: r["words"])
     for i, r in enumerate(oks):
         for o in oks[i + 1:]:
+            if r.get("status") != "ok":
+                break
             if o.get("status") != "ok" or not r["_sh"]:
                 continue
-            if len(r["_sh"] & o["_sh"]) / len(r["_sh"]) >= 0.8:
+            both = len(r["_sh"] & o["_sh"])
+            if both / len(r["_sh"]) >= 0.8:
+                if both / len(o["_sh"]) >= 0.8 and o["_rough"] and not r["_rough"]:
+                    o["status"] = "duplicate"
+                    o["duplicate_of"] = r["source"]
+                    o["reason"] = f"duplicate: a rough copy (scanner's note) of the same book as {r['slug']}"
+                    continue
                 r["status"] = "duplicate"
                 r["duplicate_of"] = o["source"]
                 r["reason"] = f"duplicate: contained in {o['slug']}"
@@ -1310,6 +1357,8 @@ def main():
             if o is r or o.get("status") != "ok":
                 continue
             same_meta = ascii_slug(o["title"]) == ascii_slug(r["title"]) and ascii_slug(author_surname(o["author"])) == ascii_slug(author_surname(r["author"]))
+            if any(o.get(k) and r.get(k) and o[k] != r[k] for k in ("year", "volume")):
+                same_meta = False
             near = similarity(o.get("fingerprint", []), r["fingerprint"]) >= 0.7
             if same_meta or near:
                 loser = r if r["words"] <= o["words"] else o
@@ -1338,7 +1387,7 @@ def main():
     final = ledger + results
     with ledger_path.open("w", encoding="utf-8") as f:
         for r in final:
-            f.write(json.dumps({k: v for k, v in r.items() if k not in ("_text", "_sh")}, ensure_ascii=False) + "\n")
+            f.write(json.dumps({k: v for k, v in r.items() if k not in ("_text", "_sh", "_rough")}, ensure_ascii=False) + "\n")
     for r in results:
         if r.get("status") == "error":
             print(f"ERROR  {r['source']}: {r['error']}")
