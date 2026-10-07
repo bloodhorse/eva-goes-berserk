@@ -12,8 +12,14 @@ H=BekmemetevVO@ds-dev2.x340.org
 hx() { ssh -o ConnectTimeout=15 -i $KEY $H "$@"; }
 ```
 
-Steps 1–3 only write new files on the host and may be done while `day3` is still running.
-Steps 4 onward need `day3` finished.
+Steps 1–3 only write new files on the host and may be done while the run before is still going.
+Steps 4 onward need it ended: `DONE`, or stopped by hand, which writes `STOPPED` and a save that
+resumes (`night/CLAUDE.md`, stopping).
+
+**This was run for real on 2026-10-07**, steps 0 to 7, with `day3` stopped at step 33,509 for it.
+What the first use found is written into the steps (a check that could not start on the host's
+python; checks that expected a finished `day3`; a comparison across two rulers) and into
+`PITFALLS.md` 6.2b and 6.2c. For another run, copy the shape and change the names.
 
 ## 0. the shelves on the mac are the ones the recipe was written from
 
@@ -66,7 +72,8 @@ the Gutenberg text on the host (fantasy, sci-fi, base). It reads only; about fiv
 
 ```bash
 hx 'cd /opt/llama/magdra/data && nice -n 10 python3 -' <<'EOF'
-import hashlib, os, re
+import hashlib, multiprocessing, os, re
+multiprocessing.set_start_method("fork")
 from multiprocessing import Pool
 WORD = re.compile(r"[a-z0-9]+")
 APOS = re.compile(r"(?<=[a-z])['’‘`´](?=[a-z])")
@@ -97,8 +104,9 @@ print(len(files), "files read;", "HELDOUT MATCH: no held-out work is on the old 
 EOF
 ```
 
-It was `MATCH` from the mac on 2026-10-07 (against the mac's copies of fantasy and base and a
-stream of the host's sci-fi). If it ever says `MISMATCH`, each named work goes to training
+The `set_start_method("fork")` line is needed: the host's system python is 3.14, whose default
+way of starting workers cannot run a script that came in on stdin. It was `MATCH` on the host on
+2026-10-07, 8,184 files read, and the trainer beside it did not slow. If it ever says `MISMATCH`, each named work goes to training
 instead, on the mac, and the upload is repeated (`--delete` only removes, inside `data/day4/`,
 the held-out copy of a file that now sits in `train/`):
 
@@ -206,19 +214,22 @@ print(f"sum of weights {total:g}, {STEPS * PER_STEP / 1e6:.1f} M tokens;", "MIX 
 EOF
 ```
 
-## 4. day3 has finished and its final save is on the mini (d)
+## 4. day3 has ended and its final save is on the mini (d)
+
+Ended is `DONE` or `STOPPED` as the log's last word, the guard down, no trainer alive. To stop a
+run that is still going, that is step 9's command with its name; wait for `STOPPED` and then for
+`guard down`, about a minute.
 
 ```bash
-hx 'cd /opt/llama/magdra && tail -n 1 runs/day3.log | grep -q "^DONE step=84103 " && grep -q "guard down" runs/day3.guard.log && ! pgrep -f "[t]rain.py" > /dev/null \
-  && echo "MATCH day3 is DONE, its guard is down, no trainer is alive" || echo "MISMATCH day3 is not finished: $(tail -n 1 runs/day3.log | cut -c1-60)"'
-tail -n 1 night/day3/pull.log
+hx 'cd /opt/llama/magdra && e=$(tail -n 3 runs/day3.log | grep -o -E "^(DONE|STOPPED) step=[0-9]+" | tail -1); [ -n "$e" ] && grep -q "guard down" runs/day3.guard.log && ! pgrep -f "[t]rain.py" > /dev/null \
+  && echo "MATCH day3 ended ($e), its guard is down, no trainer is alive" || echo "MISMATCH day3 has not ended: $(tail -n 1 runs/day3.log | cut -c1-60)"'
 a=$(hx 'sha256sum /opt/llama/magdra/runs/day3/ckpt.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bek@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
 [ -n "$a" ] && [ "$a" = "$b" ] && echo "MATCH the mini holds day3's final save" || echo "MISMATCH the mini's copy is not the final save"
 ```
 
-The puller's own line in `night/day3/pull.log` says `MATCH` by size; the sha256 above is the
-stronger word. On `MISMATCH` the mini has an older save (the puller sleeps six hours): copy it by
-hand, about half an hour, and run the check again:
+On `MISMATCH` the mini has an older save or none (a puller, where one ran, sleeps six hours):
+copy it by hand, about half an hour, and run the check again. It does not hold up the next
+steps; it may run beside them:
 
 ```bash
 hx 'cat /opt/llama/magdra/runs/day3/ckpt.pt' | ssh bek@100.69.218.90 'cat > /srv/music/school-archive/models/day3/ckpt.pt.part && mv /srv/music/school-archive/models/day3/ckpt.pt.part /srv/music/school-archive/models/day3/ckpt.pt'
@@ -286,9 +297,11 @@ hx 'cd /opt/llama/magdra && .venv/bin/python train.py --data $(tr -s "\n" " " < 
 ```
 
 Check — it ended in `DONE`, read 19 shelves, measured 17 (the cyborg corpus and
-`anth-rough` have no held-out set), wrote samples, stayed inside the card, and the thirteen old
-shelves read near what `day3` ended on (other windows, so not the same: more than 0.3 apart
-means the weights are not `day3`'s):
+`anth-rough` have no held-out set), wrote samples, stayed inside the card, and started from
+`day3`'s last save: the trainer's own `INIT … source_step=` line against the step `day3`'s log
+ended on is the proof of whose weights these are. The old shelves' numbers are printed beside
+`day3`'s last ones and **are not a check**: `day3` read six windows a shelf and this reads
+forty-eight, and on 2026-10-07 the same weights came out up to six tenths apart, both ways.
 
 ```bash
 hx 'cd /opt/llama/magdra && python3 -' <<'EOF'
@@ -299,14 +312,15 @@ data = re.search(r"^DATA (.*)$", log, re.M)
 last = [l for l in log.splitlines() if l.startswith("step 40/40")]
 ev = dict((k, float(v)) for k, v in re.findall(r"([a-z0-9-]+) ([0-9]\.[0-9]{3})", last[-1].split("| eval")[1].split("| lr")[0])) if last else {}
 old = json.load(open("runs/day3/status.json"))["eval_per_file"]
+END = (re.findall(r"^(?:DONE|STOPPED) (step=[0-9]+)", open("runs/day3.log").read(), re.M) or [""])[-1]
 checks = {
     "ended in DONE": bool(done),
     "19 shelves read": bool(data) and data.group(1).split("; val")[0].count(".bin:") == 19,
     "17 shelves measured": len(ev) == 17,
-    "init is day3's final save": "INIT weights from /opt/llama/magdra/ckpt-day3-final.pt source_step=84103" in log,
+    "init is day3's last save (%s)" % END: bool(END) and ("INIT weights from /opt/llama/magdra/ckpt-day3-final.pt source_step=%s " % END.split("=")[1]) in log,
     "under 15.6 GiB reserved": bool(done) and float(done.group(1)) < 15.6,
     "samples written": os.path.exists("runs/smoke-day4/samples.jsonl"),
-    "old shelves read near where day3 left them": bool(ev) and all(abs(ev[k] - old[k]) < 0.3 for k in old if k in ev) and all(k in ev for k in old),
+    "every old shelf measured": bool(ev) and all(k in ev for k in old),
     "no traceback": "Traceback" not in log,
 }
 for k, v in checks.items():
@@ -319,12 +333,16 @@ print("SMOKE", "MATCH" if all(checks.values()) else "MISMATCH")
 EOF
 ```
 
-`runs/smoke-day4/` keeps a 4.3 GB save; it stays until bekh says delete for good.
+`runs/smoke-day4/` keeps a 4.3 GB save that nothing needs once the check has passed; the log is
+the baseline and stays. On 2026-10-07 the save went at once, on bekh's word about the host's
+space (`hx 'rm -f /opt/llama/magdra/runs/smoke-day4/ckpt.pt'`, a delete for good: his word each
+time). Copy the "baseline, every shelf" line into the recipe.
 
 ## 7. start (e, f)
 
-`day4.md` has to have bekh's yes on its numbers first. Five processes: wrapper, trainer (the
-wrapper's child) and guard on the host; watcher and puller on the mac.
+`day4.md` has to have bekh's yes on its numbers first. Four processes: wrapper, trainer (the
+wrapper's child) and guard on the host; the watcher on the mac. No puller from `day4` on
+(`PRESERVATION.md`): the one trainable copy is made when the run ends.
 
 On the host — the wrapper and the guard (an old guard log would stop the new guard at once, so
 one is moved aside if it is there):
@@ -336,28 +354,29 @@ hx 'cd /opt/llama/magdra && { [ -f runs/day4.guard.log ] && mv runs/day4.guard.l
   && sleep 2 && (nohup ./guard.sh day4 > runs/day4.guard.out 2>&1 < /dev/null &) ; sleep 1; echo launched'
 ```
 
-On the mac — the watcher and the puller (every three hours instead of six: the run is short):
+On the mac — the watcher (and, if the run before had a puller, that one killed by its pid, since
+it sleeps six hours and never sees `guard down`):
 
 ```bash
 mkdir -p night/day4
 [ -f night/day4/guard.log ] && mv night/day4/guard.log night/day4/guard.log.$(date +%s)
 (nohup caffeinate -i night/watch.sh day4 > night/day4/watch.out 2>&1 < /dev/null &)
-(EVERY=10800 nohup caffeinate -i night/pull_ckpt.sh day4 > night/day4/pull.out 2>&1 < /dev/null &)
 ```
 
-Check, two minutes later — five alive, and the trainer started what the recipe says:
+Check, two minutes later — four alive, and the trainer started what the recipe says:
 
 ```bash
 hx 'cd /opt/llama/magdra && n=0; for p in "[r]un4.sh day4" "[t]rain.py --data" "[g]uard.sh day4"; do pgrep -f "$p" > /dev/null && n=$((n+1)); done; [ $n = 3 ] && echo "MATCH 3 of 3 alive on the host" || echo "MISMATCH $n of 3 alive on the host"'
-n=$(ps ax | grep -c -E "[b]ash night/(watch|pull_ckpt).sh day4"); [ "$n" = 2 ] && echo "MATCH 2 of 2 alive on the mac" || echo "MISMATCH $n of 2 alive on the mac"
+n=$(ps ax | grep -c -E "[b]ash night/watch.sh day4"); [ "$n" = 1 ] && echo "MATCH the watcher is alive on the mac" || echo "MISMATCH $n watchers alive on the mac"
 hx 'cd /opt/llama/magdra && python3 -' <<'EOF'
 import json, re
 log = open("runs/day4.log").read()
 data = re.search(r"^DATA (.*)$", log, re.M)
+END = (re.findall(r"^(?:DONE|STOPPED) (step=[0-9]+)", open("runs/day3.log").read(), re.M) or [""])[-1]
 mix = [line.split()[0].rsplit(":", 1) for line in open("runs/day4/mix.txt") if line.strip()]
 want = [f"{p}:{float(w):g} ({json.load(open(p[:-4] + '.json'))['train_tokens']:,} tok)" for p, w in mix]
 checks = {
-    "init is day3's final save": "INIT weights from /opt/llama/magdra/ckpt-day3-final.pt source_step=84103" in log,
+    "init is day3's last save (%s)" % END: bool(END) and ("INIT weights from /opt/llama/magdra/ckpt-day3-final.pt source_step=%s " % END.split("=")[1]) in log,
     "every shelf at its weight and size": bool(data) and all(x in data.group(1) for x in want),
     "24,576 tokens a step": bool(data) and "24,576 tokens per step" in data.group(1),
     "16215 steps planned": re.search(r"^step \d+/16215 ", log, re.M) is not None,
@@ -425,31 +444,35 @@ and goes down, the watcher ends on `guard down`:
 hx 'p=$(grep -o "\"pid\": [0-9]*" /opt/llama/magdra/runs/day4/status.json | grep -o "[0-9]*$"); ps -o args= -p "$p" | grep -q "[t]rain.py" && kill -TERM "$p" && echo "TERM sent to $p" || echo "no trainer at pid $p"'
 ```
 
-Check, two minutes later, and the mac's puller, which sleeps through the end and is ended by pid:
+Check, two minutes later; the mac's watcher ends by itself on `guard down`, and whatever of it
+is left is ended by pid:
 
 ```bash
 hx 'cd /opt/llama/magdra && tail -n 1 runs/day4.log | grep -q -E "^(STOPPED|DONE) step=" && grep -q "guard down" runs/day4.guard.log && ! pgrep -f "[t]rain.py --data" > /dev/null \
   && echo "MATCH stopped: $(tail -n 1 runs/day4.log | cut -c1-70)" || echo "MISMATCH not down yet"'
-kill $(ps ax | grep -E "[n]ight/(watch|pull_ckpt).sh day4" | awk '{print $1}') 2>/dev/null; sleep 1
-[ "$(ps ax | grep -c -E "[n]ight/(watch|pull_ckpt).sh day4")" = 0 ] && echo "MATCH the mac's two are down" || echo "MISMATCH"
+kill $(ps ax | grep -E "[n]ight/watch.sh day4" | awk '{print $1}') 2>/dev/null; sleep 1
+[ "$(ps ax | grep -c -E "[n]ight/watch.sh day4")" = 0 ] && echo "MATCH the mac's watcher is down" || echo "MISMATCH"
 ```
 
 To go on from where it stopped: step 7's host and mac commands again, unchanged (it resumes from
-`runs/day4/ckpt.pt` and keeps its plan). The save of a stopped or finished `day4` goes to the mini
-with the same pipe as step 4's, with `day4` for `day3`.
+`runs/day4/ckpt.pt` and keeps its plan). The save of a stopped or finished `day4` gets its own
+name on the host and goes to the mini with a sha256 verdict (`PRESERVATION.md`, at the end of a
+run).
 
 ## 10. rollback (h)
 
-`day4` is an experiment and `day3`'s final save is the fallback. Rolling back is: stop `day4`
-(step 9), and she is `day3`'s end again — nothing has to be trained for that.
+`day4` is an experiment and `day3`'s last save is the fallback: `day3` as it was stopped at step
+33,509. Rolling back is: stop `day4` (step 9), and she is that again — nothing has to be trained
+for it.
 
 Check — the fallback is where it should be, three times:
 
 ```bash
 a=$(hx 'sha256sum /opt/llama/magdra/ckpt-day3-final.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bek@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
 [ -n "$a" ] && [ "$a" = "$b" ] && echo "MATCH the trainable save: host and mini agree" || echo "MISMATCH"
-hx 'ls /opt/llama/magdra/runs/day3/model-84103-q8_0.gguf > /dev/null 2>&1 && echo "MATCH the servable snapshot is on the host" || echo "MISMATCH"'
-[ "$(cat models/day3/latest)" = "model-84103-q8_0.gguf" ] && echo "MATCH the mac serves day3's last snapshot" || echo "MISMATCH the mac's snapshot is $(cat models/day3/latest)"
+f=$(hx 'cd /opt/llama/magdra && s=$(grep -o -E "^(DONE|STOPPED) step=[0-9]+" runs/day3.log | tail -1 | grep -o "[0-9]*$"); ls runs/day3/model-$s-q8_0.gguf 2>/dev/null | xargs -n1 basename 2>/dev/null')
+[ -n "$f" ] && echo "MATCH the servable snapshot is on the host ($f)" || echo "MISMATCH no snapshot for the step day3 ended on"
+[ -n "$f" ] && [ "$(cat models/day3/latest)" = "$f" ] && echo "MATCH the mac holds day3's last snapshot" || echo "MISMATCH the mac's snapshot is $(cat models/day3/latest)"
 ```
 
 Serve her to the loom again:
@@ -458,18 +481,22 @@ Serve her to the loom again:
 kill $(lsof -tnP -iTCP:8086 -sTCP:LISTEN) 2>/dev/null; (nohup llama-server -m models/day3/model-latest-q8_0.gguf -c 1024 -ngl 99 --host 127.0.0.1 --port 8086 --no-jinja > night/day3/serve.out 2>&1 < /dev/null &)
 ```
 
-To train on from `day3`'s end with `day3`'s mix (a new run, `day3b`, ten hours here; the rate is
-2e-5, not `run3.sh`'s 8e-5, which is ten times what `day3` ended on):
+To train on from there with `day3`'s mix, there are two ways. **Resume `day3` itself**: its own
+save is still `runs/day3/ckpt.pt`, and `run3.sh day3` with its guard, watcher and puller picks
+the fifty-hour plan up at the step it stopped on, rate and all (`night/CLAUDE.md`, stopping and
+starting again; the old trainer is `kit-before-day4/train.py`, and the new one resumes an old
+save identically). **Or a new run from the save**, `day3b`, ten hours here at 5e-5, a little
+under the 5.6e-5 she was living at when `day3` stopped:
 
 ```bash
 hx 'cd /opt/llama/magdra && { [ -f runs/day3b.guard.log ] && mv runs/day3b.guard.log runs/day3b.guard.log.$(date +%s); true; } \
   && (MIX="bins2/fantasy.bin:2000 bins2/scifi.bin:1500 bins/anime.bin:2100 bins/fanfic.bin:1400 bins2/base.bin:1550 bins/wired-core.bin:160 bins/wired-bulk.bin:400 bins2/literary.bin:620 bins2/horizons.bin:135 bins2/released.bin:80 bins2/library.bin:72 bins/lain.bin:20 bins/cyborg.bin:4 bins2/horizons-verse.bin:12" \
-      HOURS=10 LR=2e-5 WARMUP=300 EVAL_EVERY=1000 nohup ./run4.sh day3b ckpt-day3-final.pt > runs/day3b.wrapper.out 2>&1 < /dev/null &) \
+      HOURS=10 LR=5e-5 WARMUP=300 EVAL_EVERY=1000 nohup ./run4.sh day3b ckpt-day3-final.pt > runs/day3b.wrapper.out 2>&1 < /dev/null &) \
   && sleep 2 && (nohup ./guard.sh day3b > runs/day3b.guard.out 2>&1 < /dev/null &) ; sleep 1; echo launched'
 ```
 
-Without `run4.sh`: `sed -e "s/--lr 8e-5/--lr 2e-5/" run3.sh > run3b.sh && chmod +x run3b.sh`, then
-`INIT=ckpt-day3-final.pt HOURS=10 nohup ./run3b.sh day3b …` in its place. The mac's two are
+Without `run4.sh`: `sed -e "s/--lr 8e-5/--lr 5e-5/" run3.sh > run3b.sh && chmod +x run3b.sh`, then
+`INIT=ckpt-day3-final.pt HOURS=10 nohup ./run3b.sh day3b …` in its place. The mac's watcher is
 step 7's with `day3b`.
 
 ## the 4-read variant
