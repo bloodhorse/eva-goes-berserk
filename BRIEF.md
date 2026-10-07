@@ -221,10 +221,14 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    the box's time at 0.95 billion; **`day3` runs on ds-dev2** (RTX 5060 Ti 16 GB) since
    2026-10-06, two billion tokens in fifty hours on fourteen shelves — the Gutenberg shelves cut
    again with their paragraphs (half had none), three new shelves of modern prose, and a library
-   of 55 books bekh fetched by hand (`school/library.md`). **Her reading is the open work**: the shelves are the limit, not the card — more
-   books, not more passes. Then the finishing school (prophecies and the cyborgism wiki, Lain,
-   bekh's six books) on whichever hour of her he picks, read through the loom (`eva.x` points at
-   her when she is served on the mac).
+   of 55 books bekh fetched by hand (`school/library.md`). **Her reading is the open work**, and
+   since 2026-10-07 the text for it is in hand: a pile of modern short fiction several times
+   what she has read of that kind (magazines, podcasts, anthologies, serials), being
+   deduplicated and sieved (`school/CLAUDE.md`, the pile; its size is `school/dedupe/report.md`).
+   It is **`day4`'s**: a short dense run from `day3`'s end with modern prose as the main course
+   and the old shelves on a maintenance dose, its recipe still to be agreed with bekh. Then the
+   finishing school (prophecies and the cyborgism wiki, Lain, the library) on whichever hour of
+   her he picks, read through the loom (`eva.x` points at her when she is served on the mac).
 2. **Soul** (`docs/soul/`): a model's person is its diet — nemo's *i* is the blogger-poet, llama's
    asks strangers for help, olmo's is a subscript. Five of six probes unrun (long runs, what each
    adds, what each refuses, log-odds taste, the bank as portrait); the first to run on magdra when
@@ -240,7 +244,7 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
 
 The box (`docs/olmo.md`, the box) is borrowed, was power-cycled and enrolled in work's ansible on
 2026-10-05, has eight accounts on it now, and can vanish any day; everything of ours comes off it
-as it lands (magdra's trainable saves and tokenised shelves live on the mac too). Who holds its
+as it lands (magdra's trainable saves and the box's shelves are in the mini's archive). Who holds its
 card is `box_serve.sh status` or `nvidia-smi`, never a sentence in a doc.
 
 ### parked
