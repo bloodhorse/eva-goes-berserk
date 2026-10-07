@@ -207,6 +207,18 @@ MIX="bins2/fantasy.bin:409 bins2/scifi.bin:82 bins/anime.bin:123 bins/fanfic.bin
 STEPS=21574
 ```
 
+### Changed while it ran
+
+One change, through `runs/day4/weights.json`, in force from the eval at step 3,500 (`MIX
+step=3500 fantasy 409->900`): **old fantasy from about a tenth of the mix to about a fifth.** The
+first snapshot answered the archaic seed in a flat modern voice where `day3`'s last had answered
+in the old cadence, and fantasy's held-out loss had risen at every eval from the baseline (3.153
+to 3.249 by step 3,500). bekh values that register above the rest; the rate was at its peak, so
+the lever had its most pull then and less with every hour of waiting. Every other shelf kept its
+weight, so each lost about a ninth of its share: new fiction goes from 2.5 readings toward about
+2.2 over the run. To undo it, write `{"fantasy": 409}` to the same file. What the mix is at any
+moment is `weights` in `runs/day4/status.json`, not this paragraph.
+
 ## Length
 
 Batch 6 × accum 4 × 1,024 = 24,576 tokens a step, as `day3` (batch 8 dies at the first eval).
