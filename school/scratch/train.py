@@ -120,18 +120,68 @@ class Data:
 class Mix:
     def __init__(self, parts, ctx):
         self.parts = [Data(p, d, ctx) for p, d, _ in parts]
-        w = torch.tensor([x for _, _, x in parts], dtype=torch.float)
-        self.w = w / w.sum()
+        self.names = [shelf_name(p) for p, _, _ in parts]
         self.ctx = ctx
+        self.last = [0] * len(self.parts)
+        self.set([x for _, _, x in parts])
+
+    def set(self, raw):
+        self.raw = [float(x) for x in raw]
+        self.live = [k for k, x in enumerate(self.raw) if x > 0]
+        w = torch.tensor([self.raw[k] for k in self.live], dtype=torch.float)
+        self.w = w / w.sum()
+
+    def weights(self):
+        return dict(zip(self.names, self.raw))
 
     def random(self, batch, gen):
         pick = torch.multinomial(self.w, batch, replacement=True, generator=gen).tolist()
         rows = []
-        for k, part in enumerate(self.parts):
-            n = pick.count(k)
+        self.last = [0] * len(self.parts)
+        for j, k in enumerate(self.live):
+            n = pick.count(j)
             if n:
+                part = self.parts[k]
+                self.last[k] = n
                 rows += [(part, s) for s in torch.randint(0, part.n - self.ctx - 1, (n,), generator=gen).tolist()]
         return to_cuda([x for part, st in rows for x in part.rows([st])])
+
+
+def shelf_name(path):
+    name = os.path.basename(path)
+    return name[:-4] if name.endswith(".bin") else name
+
+
+def read_weights(path, names, current):
+    try:
+        with open(path, encoding="utf-8") as f:
+            raw = f.read()
+    except FileNotFoundError:
+        return None, None, None
+    except (OSError, UnicodeDecodeError) as e:
+        return f"unreadable {type(e).__name__}", None, f"unreadable ({type(e).__name__}: {e})"
+    try:
+        obj = json.loads(raw)
+    except ValueError as e:
+        return raw, None, f"bad JSON ({e})"
+    if not isinstance(obj, dict):
+        return raw, None, f"not a map of shelf to weight (got {type(obj).__name__})"
+    new = list(current)
+    for k, v in obj.items():
+        if k not in names:
+            return raw, None, f"unknown shelf {k!r} (shelves: {' '.join(names)})"
+        if isinstance(v, bool) or not isinstance(v, (int, float)):
+            return raw, None, f"weight of {k} is not a number ({v!r})"
+        if not math.isfinite(v):
+            return raw, None, f"weight of {k} is not finite ({v!r})"
+        if v < 0:
+            return raw, None, f"weight of {k} is negative ({v!r})"
+        for i, name in enumerate(names):
+            if name == k:
+                new[i] = float(v)
+    if not sum(new) > 0:
+        return raw, None, "every shelf would be at zero"
+    return raw, new, None
 
 
 def parse_data(specs, vals):
@@ -223,6 +273,14 @@ def main():
     head = model.get_output_embeddings()
     fwd = torch.compile(body) if a.compile else body
     train = Mix(parts, a.ctx)
+    weights_path = os.path.join(a.out, "weights.json")
+    weights_seen = None
+    if state and state.get("weights"):
+        kept = [float(state["weights"].get(n, w)) for n, w in zip(train.names, train.raw)]
+        moved = [f"{n} {o:g}->{w:g}" for n, o, w in zip(train.names, train.raw, kept) if o != w]
+        if moved and sum(kept) > 0:
+            train.set(kept)
+            log(f"MIX step={state['step']} from checkpoint: " + " ".join(moved))
     vals = []
     vg = torch.Generator().manual_seed(0)
     for vp in val_paths:
@@ -253,17 +311,68 @@ def main():
     def chunk_loss(h, y):
         with torch.autocast(DEV, dtype=torch.bfloat16):
             logits = head(h)
-        return F.cross_entropy(logits.float(), y, reduction="sum")
+        lp = F.log_softmax(logits.float(), dim=1)
+        return F.nll_loss(lp, y, reduction="sum"), -lp.detach().gather(1, y[:, None]).squeeze(1)
 
-    def loss_of(x, y):
+    def loss_of(x, y, per=None):
         with torch.autocast(DEV, dtype=torch.bfloat16):
             h = fwd(input_ids=x, use_cache=False).last_hidden_state
         h = h.reshape(-1, h.size(-1))
         y = y.reshape(-1)
         tot = 0.0
         for i in range(0, h.size(0), 4096):
-            tot = tot + torch.utils.checkpoint.checkpoint(chunk_loss, h[i : i + 4096], y[i : i + 4096], use_reentrant=False)
+            part, each = torch.utils.checkpoint.checkpoint(chunk_loss, h[i : i + 4096], y[i : i + 4096], use_reentrant=False)
+            tot = tot + part
+            if per is not None:
+                per.append(each)
         return tot / y.numel()
+
+    pending = []
+    shelf_sum = [0.0] * len(train.parts)
+    shelf_rows = [0] * len(train.parts)
+    train_per_file, train_rows = {}, {}
+
+    def settle():
+        if not pending:
+            return
+        for row, (_, counts) in zip(torch.stack([m for m, _ in pending]).double().cpu().tolist(), pending):
+            i = 0
+            for k, n in enumerate(counts):
+                if n:
+                    shelf_sum[k] += sum(row[i : i + n])
+                    shelf_rows[k] += n
+                    i += n
+        pending.clear()
+
+    def close_shelves():
+        settle()
+        sums = shelf_sum
+        train_per_file.clear()
+        train_rows.clear()
+        for name in dict.fromkeys(train.names):
+            ks = [k for k, n in enumerate(train.names) if n == name]
+            rows = sum(shelf_rows[k] for k in ks)
+            if rows:
+                train_per_file[name] = sum(sums[k] for k in ks) / rows
+                train_rows[name] = rows
+        shelf_sum[:] = [0.0] * len(shelf_sum)
+        shelf_rows[:] = [0] * len(shelf_rows)
+
+    def remix():
+        nonlocal weights_seen
+        raw, new, err = read_weights(weights_path, train.names, train.raw)
+        if raw == weights_seen:
+            return
+        weights_seen = raw
+        if raw is None:
+            return
+        if err:
+            log(f"MIX step={step} weights.json ignored, mix unchanged: {err}")
+            return
+        moved = [f"{n} {o:g}->{w:g}" for n, o, w in zip(train.names, train.raw, new) if o != w]
+        if moved:
+            train.set(new)
+            log(f"MIX step={step} " + " ".join(moved))
 
     per_file = {}
 
@@ -301,7 +410,7 @@ def main():
     def save_ckpt():
         if a.bench:
             return
-        payload = {"model": model.state_dict(), "opt": opt.state_dict(), "step": step, "total_steps": total, "tokens": tokens, "train_seconds": train_seconds, "last_eval": last_eval, "last_eval_step": last_eval_step, "args": vars(a), "arch": a.arch, "config": cfg.to_dict(), "meta": meta, "rng": torch.get_rng_state()}
+        payload = {"model": model.state_dict(), "opt": opt.state_dict(), "step": step, "total_steps": total, "tokens": tokens, "train_seconds": train_seconds, "last_eval": last_eval, "last_eval_step": last_eval_step, "args": vars(a), "arch": a.arch, "config": cfg.to_dict(), "meta": meta, "rng": torch.get_rng_state(), "weights": train.weights()}
         tmp = ckpt_path + ".tmp"
         with open(tmp, "wb") as f:
             torch.save(payload, f)
@@ -337,9 +446,11 @@ def main():
         acc = 0.0
         for _ in range(a.accum):
             x, y = train.random(a.batch, gen)
-            loss = loss_of(x, y)
+            per = []
+            loss = loss_of(x, y, per)
             (loss / a.accum).backward()
             acc += loss.detach()
+            pending.append((torch.cat(per).view(x.size(0), -1).mean(1), train.last))
         if a.clip:
             torch.nn.utils.clip_grad_norm_(model.parameters(), a.clip)
         opt.step()
@@ -371,8 +482,11 @@ def main():
         evaled = False
         if step % a.eval_every == 0 or (total and step == total):
             last_eval, last_eval_step, evaled = evaluate(), step, True
+            close_shelves()
+            remix()
         if step % a.log_every == 0 or evaled or step == 1:
             sync()
+            settle()
             now = time.time()
             rate = tok_win / max(now - t_win, 1e-9)
             t_win, tok_win = now, 0
@@ -383,9 +497,9 @@ def main():
             ev = f"{last_eval:.4f}@{last_eval_step}" if last_eval is not None else "-"
             if per_file and len(per_file) > 1:
                 ev += " (" + " ".join(f"{k} {v:.3f}" for k, v in per_file.items()) + ")"
-            log(f"step {step}/{total or '?'} | loss {train_loss:.4f} | eval {ev} | lr {lr:.2e} | {rate / 1e3:.1f}k tok/s | mem {mem:.1f}G | elapsed {hms(train_seconds)} | eta {hms(eta) if eta is not None else '?'}")
+            log(f"step {step}/{total or '?'} | loss {train_loss:.4f} | eval {ev} | lr {lr:.2e} | {rate / 1e3:.1f}k tok/s | mem {mem:.1f}G | elapsed {hms(train_seconds)} | eta {hms(eta) if eta is not None else '?'}" + (" | train " + " ".join(f"{k} {v:.3f}" for k, v in train_per_file.items()) if evaled and train_per_file else ""))
             if not a.bench:
-                write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": now, "pid": os.getpid(), "phase": phase, "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": train_loss, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "lr": lr, "tok_per_s": rate, "elapsed_s": train_seconds, "wall_s": now - t_start, "eta_s": eta, "peak_mem_gib": mem, "ckpt_step": ckpt_step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
+                write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": now, "pid": os.getpid(), "phase": phase, "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": train_loss, "eval_loss": last_eval, "eval_per_file": dict(per_file), "train_per_file": dict(train_per_file), "train_rows": dict(train_rows), "weights": train.weights(), "eval_step": last_eval_step, "lr": lr, "tok_per_s": rate, "elapsed_s": train_seconds, "wall_s": now - t_start, "eta_s": eta, "peak_mem_gib": mem, "ckpt_step": ckpt_step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
         if not a.bench and time.time() - t_ckpt >= a.ckpt_minutes * 60:
             save_ckpt()
             ckpt_step, t_ckpt = step, time.time()
@@ -399,9 +513,10 @@ def main():
         return
     if last_eval_step != step:
         last_eval, last_eval_step = evaluate(), step
+        close_shelves()
     save_ckpt()
     done = total and step >= total
-    write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": time.time(), "pid": os.getpid(), "phase": "done" if done else "stopped", "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": None, "eval_loss": last_eval, "eval_per_file": dict(per_file), "eval_step": last_eval_step, "tok_per_s": rate, "elapsed_s": train_seconds, "eta_s": 0 if done else None, "peak_mem_gib": mem, "ckpt_step": step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
+    write_json(status_path, {"time": datetime.now(timezone.utc).isoformat(timespec="seconds"), "unix": time.time(), "pid": os.getpid(), "phase": "done" if done else "stopped", "step": step, "total_steps": total, "tokens_seen": tokens, "train_loss": None, "eval_loss": last_eval, "eval_per_file": dict(per_file), "train_per_file": dict(train_per_file), "train_rows": dict(train_rows), "weights": train.weights(), "eval_step": last_eval_step, "tok_per_s": rate, "elapsed_s": train_seconds, "eta_s": 0 if done else None, "peak_mem_gib": mem, "ckpt_step": step, "params": n_params, "init": getattr(a, "init", "") or None, "init_step": getattr(a, "init_step", None)})
     log(f"{'DONE' if done else 'STOPPED'} step={step} tokens={tokens:,} eval_loss={last_eval} elapsed={hms(train_seconds)} peak_mem={mem:.2f}GiB alloc {res:.2f}GiB reserved")
 
 
