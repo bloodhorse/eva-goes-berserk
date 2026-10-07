@@ -1,0 +1,16 @@
+HTTP/2 200 
+server: nginx
+date: Wed, 07 Oct 2026 08:32:45 GMT
+content-type: text/plain; charset=utf-8
+vary: Accept-Encoding
+x-robots-tag: noindex, follow
+link: <https://giganotosaurus.org/wp-json/>; rel="https://api.w.org/"
+x-cache-status: HIT
+x-rocket-nginx-serving-static: MISS
+strict-transport-security: max-age=31536000;
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer-when-downgrade
+content-security-policy: default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+

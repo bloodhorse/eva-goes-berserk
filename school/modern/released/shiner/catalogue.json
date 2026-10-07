@@ -1,0 +1,744 @@
+[
+ {
+  "section": "novel",
+  "title": "DARK TANGOS (2011)",
+  "blurb": "\"Not only a great entertainment, but a meditation on the true meaning of justice.\"",
+  "html": null,
+  "pdf": "dark_tangos.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "SAY GOODBYE (1999)",
+  "blurb": "\"The Citizen Kane of rock and roll novels.\"",
+  "html": null,
+  "pdf": "sgoodbye.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "SLAM (1990)",
+  "blurb": "\"Plot twists worthy of Thomas Pynchon.\"",
+  "html": null,
+  "pdf": "slam.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "GLIMPSES (1993)",
+  "blurb": "A \"surreal and riveting ode to the sixties.\"",
+  "html": null,
+  "pdf": "glimpses.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "FRONTERA (1984)",
+  "blurb": "\"Hard-edged and colorful and relentless.\"",
+  "html": null,
+  "pdf": "frontera.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "DESERTED CITIES OF THE HEART (1988)",
+  "blurb": "\"A taut political thriller and a transcendent apocalyptic fantasy.\"",
+  "html": null,
+  "pdf": "cities.pdf"
+ },
+ {
+  "section": "novel",
+  "title": "BLACK & WHITE (2008)",
+  "blurb": "\"Both a page-turner and an urban documentary with a big, fierce heart.\"",
+  "html": null,
+  "pdf": "blackwhite.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Gate of the Fallen Angel",
+  "blurb": "ISIS vs. Art",
+  "html": "fallen_angel.html",
+  "pdf": "fallen_angel.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Black Sun",
+  "blurb": "Stage magicians vs. Hitler, hosted by Subterranean Magazine.",
+  "html": "https://subterraneanpress.com/magazine/summer_2014",
+  "pdf": null
+ },
+ {
+  "section": "story",
+  "title": "Doctor Helios",
+  "blurb": "Spies in 1963 Egypt, hosted by Subterranean Magazine.",
+  "html": "https://subterraneanpress.com/magazine/fall_2013",
+  "pdf": null
+ },
+ {
+  "section": "story",
+  "title": "Canto MCML",
+  "blurb": "When are we, anyway?",
+  "html": "canto.html",
+  "pdf": "canto.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Application",
+  "blurb": "A good job is hard to find.",
+  "html": "application.html",
+  "pdf": "application.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Merry Christmas from the Kensingtons",
+  "blurb": "Ghosts of Christmas cards past.",
+  "html": "merry_xmas.html",
+  "pdf": "merry_xmas.pdf"
+ },
+ {
+  "section": "story",
+  "title": "A Box of Thunder",
+  "blurb": "Utopia vs. los narcos.",
+  "html": "http://strangehorizons.com/fiction/a-box-of-thunder/",
+  "pdf": null
+ },
+ {
+  "section": "story",
+  "title": "Primes",
+  "blurb": "The population of the world doubles in 24 hours.",
+  "html": "primes.html",
+  "pdf": "primes.pdf"
+ },
+ {
+  "section": "story",
+  "title": "White City",
+  "blurb": "Tesla and the Columbian Exhibition of 1893.",
+  "html": "whitecity.html",
+  "pdf": "whitecity.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Wild for You",
+  "blurb": "Some trips seem to last forever.",
+  "html": "wild4u.html",
+  "pdf": "wild4u.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Deserted Cities of the Heart",
+  "blurb": "A short-story warmup for the novel.",
+  "html": "dcities.html",
+  "pdf": "dcities.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Scales",
+  "blurb": "A lamia is loose on the SMU campus.",
+  "html": "scales.html",
+  "pdf": "scales.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Secrets",
+  "blurb": "Those lawyers--never did trust 'em.",
+  "html": "secrets.html",
+  "pdf": "secrets.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Death of Che Guevara",
+  "blurb": "Alternate history, hosted by Subterranean.",
+  "html": "https://subterraneanpress.com/magazine/fall_2009/fiction_the_death_of_che_guevara_by_lewis_shiner",
+  "pdf": null
+ },
+ {
+  "section": "story",
+  "title": "Odd Man Out",
+  "blurb": "Claustrophobia and paranoia in outer space.",
+  "html": "oddman.html",
+  "pdf": "oddman.pdf"
+ },
+ {
+  "section": "story",
+  "title": "His Girlfriend's Dog",
+  "blurb": "First published as a postcard insert.",
+  "html": "gfdog.html",
+  "pdf": "gfdog.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Omphalos",
+  "blurb": "Inspired by A.C. Doyle's goofier Professor Challenger stories.",
+  "html": "omphalos.html",
+  "pdf": "omphalos.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Best Part of Making Up",
+  "blurb": "Love in the Instant Replay generation.",
+  "html": "bestpart.html",
+  "pdf": "bestpart.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Oz",
+  "blurb": "One of those alternate universe Kennedy assassination deals.",
+  "html": "oz.html",
+  "pdf": "oz.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Duck",
+  "blurb": "Like Raymond Carver with stuffed animals.",
+  "html": "duck.html",
+  "pdf": "duck.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Kidding Around",
+  "blurb": "Teen torment in Tomball, Texas.",
+  "html": "kidding.html",
+  "pdf": "kidding.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Kiss",
+  "blurb": "My first spy story.",
+  "html": "kiss.html",
+  "pdf": "kiss.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Rake-Off",
+  "blurb": "A very early homage to the suspense stories of Walter Tevis.",
+  "html": "rakeoff.html",
+  "pdf": "rakeoff.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Plague",
+  "blurb": "A light-hearted end-of-life-as-we-know-it story.",
+  "html": "plague.html",
+  "pdf": "plague.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Promises",
+  "blurb": "Bobby meets the aliens.",
+  "html": "promises.html",
+  "pdf": "promises.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Blood Relations",
+  "blurb": "Some kind of man-thing shambles out of the East Texas swamps.",
+  "html": "bloodrel.html",
+  "pdf": "bloodrel.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Tinker's Damn",
+  "blurb": "An android in love in my 1977 SF debut.",
+  "html": "tinker.html",
+  "pdf": "tinker.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Language",
+  "blurb": "An eternal question, rephrased.",
+  "html": "language.html",
+  "pdf": "language.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Like the Gentle Rain",
+  "blurb": "Brains in boxes poke fun at philosopher J.D. Bernal.",
+  "html": "gentlerain.html",
+  "pdf": "gentlerain.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Long Denouement",
+  "blurb": "Hard-boiled scribes and editors in a Raymond Chandler spoof.",
+  "html": "denouement.html",
+  "pdf": "denouement.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Mystery Train",
+  "blurb": "\"Where's Elvis? What have you done with him?\"",
+  "html": "mystrain.html",
+  "pdf": "mystrain.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Shoemaker's Tale",
+  "blurb": "A bedtime story fit for a King.",
+  "html": "shoemaker.html",
+  "pdf": "shoemaker.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Relay",
+  "blurb": "Astronauts, malfunctions, parallel worlds, Kansas.",
+  "html": "relay.html",
+  "pdf": "relay.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Dancers",
+  "blurb": "Cancerous brains and dancing robots.",
+  "html": "dancers.html",
+  "pdf": "dancers.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Snowbirds",
+  "blurb": "Beware invaders from the future!",
+  "html": "snowbirds.html",
+  "pdf": "snowbirds.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Gene Drain",
+  "blurb": "By request, something a bit more \"cyberpunk.\"",
+  "html": "genedrain.html",
+  "pdf": "genedrain.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Brujo",
+  "blurb": "Casteñeda-style magic in 1980s Santa Fe",
+  "html": "brujo.html",
+  "pdf": "brujo.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Stompin' at the Savoy",
+  "blurb": "Knock-knock jokes, muties, and \"Bob.\"",
+  "html": "stompin.html",
+  "pdf": "stompin.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Jeff Beck",
+  "blurb": "Rock and roll dreams mix with working class angst.",
+  "html": "jeffbeck.html",
+  "pdf": "jeffbeck.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The War at Home",
+  "blurb": "The ghost of Vietnam haunts the 1980s US.",
+  "html": "warathome.html",
+  "pdf": "warathome.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Till Human Voices Wake Us",
+  "blurb": "A mad scientist, a Caribbean island, a mermaid.",
+  "html": "humanv.html",
+  "pdf": "humanv.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Nine Hard Questions about the Nature of the Universe",
+  "blurb": "More flying saucers, sex, and quantum physics.",
+  "html": "ninehard.html",
+  "pdf": "ninehard.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Gold",
+  "blurb": "A Western with pirates and Marxist economics.",
+  "html": "gold.html",
+  "pdf": "gold.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Soldier, Sailor",
+  "blurb": "The \"condensed novel\" that grew up to be Frontera.",
+  "html": "sailor.html",
+  "pdf": "sailor.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Tommy and the Talking Dog",
+  "blurb": "Answer 3 questions and wear the magic shoes.",
+  "html": "tommy.html",
+  "pdf": "tommy.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Kings of the Afternoon",
+  "blurb": "A surrealistic Western starring Dean, Bogart, and Dietrich.",
+  "html": "kings.html",
+  "pdf": "kings.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Dirty Work",
+  "blurb": "An ex-football player investigates a rape case.",
+  "html": "dirty.html",
+  "pdf": "dirty.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Buyin' My Heartaches A Beer",
+  "blurb": "Drinkin', cheatin', and dyin' in rural Texas.",
+  "html": "buyin.html",
+  "pdf": "buyin.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Prodigal Son",
+  "blurb": "The last of the Dan Sloane stories.",
+  "html": "prodigal.html",
+  "pdf": "prodigal.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Killing Season",
+  "blurb": "The second Dan Sloane story.",
+  "html": "killing.html",
+  "pdf": "killing.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Deep Without Pity",
+  "blurb": "First of the Dan Sloane, Private Eye stories.",
+  "html": "deep.html",
+  "pdf": "deep.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Stuff of Dreams",
+  "blurb": "What is more addictive than the inside of our own heads?",
+  "html": "stuff.html",
+  "pdf": "stuff.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Apparition",
+  "blurb": "A 1980 ghost story that still spooks me.",
+  "html": "apparition.html",
+  "pdf": "apparition.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Stoked",
+  "blurb": "Hot skateboard action in this warmup for my novel Slam.",
+  "html": "stoked.html",
+  "pdf": "stoked.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Twilight Time",
+  "blurb": "Travel to a 1961 with aliens, flying saucers, and a prom.",
+  "html": "twilight.html",
+  "pdf": "twilight.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Long Ride Out",
+  "blurb": "My first Western, from the 70s, buffed in the 90s.",
+  "html": "longride.html",
+  "pdf": "longride.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Americans",
+  "blurb": "Standalone version of Deserted Cities of the Heart, chapter 1.",
+  "html": "americans.html",
+  "pdf": "americans.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Rebels",
+  "blurb": "Chapter 2 of Deserted Cities, as published in Omni.",
+  "html": "rebels.html",
+  "pdf": "rebels.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Cabracan",
+  "blurb": "Chapter 3 of Deserted Cities, from Asimov's.",
+  "html": "cabracan.html",
+  "pdf": "cabracan.pdf"
+ },
+ {
+  "section": "story",
+  "title": "The Circle",
+  "blurb": "By request, a Halloween story from the Twilight Zone.",
+  "html": "circle.html",
+  "pdf": "circle.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Sitcom",
+  "blurb": "Any resemblance to a certain 70s TV show is...a conspiracy?",
+  "html": "sitcom.html",
+  "pdf": "sitcom.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Fractal Geometry",
+  "blurb": "A quick hit of postmodernism from the late 1980s.",
+  "html": "fractal.html",
+  "pdf": "fractal.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Straws",
+  "blurb": "Original for FLF about inner vs. outer reality.",
+  "html": "straws.html",
+  "pdf": "straws.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Fear Itself",
+  "blurb": "My first Christmas story. Not exactly a Hallmark card.",
+  "html": "fear.html",
+  "pdf": "fear.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Golfing Vietnam",
+  "blurb": "A wedding and some impromptu golf.",
+  "html": "golfing.html",
+  "pdf": "golfing.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Perfidia",
+  "blurb": "Based on mysteries surrounding the death of Glenn Miller.",
+  "html": "perfidia.html",
+  "pdf": "perfidia.pdf"
+ },
+ {
+  "section": "story",
+  "title": "You Never Know",
+  "blurb": "Contest entry for a 200-word romance involving a Beetle.",
+  "html": "uneverno.html",
+  "pdf": "uneverno.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Lizard Men of Los Angeles",
+  "blurb": "A tribute to H.P. Lovecraft and Robert E. Howard.",
+  "html": "lizard.html",
+  "pdf": "lizard.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Steam Engine Time",
+  "blurb": "A Western about Elvis.",
+  "html": "steam.html",
+  "pdf": "steam.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Sticks",
+  "blurb": "A very 80s rock and roll fantasy.",
+  "html": "sticks.html",
+  "pdf": "sticks.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Mark the Bunny",
+  "blurb": "My first children's story.",
+  "html": "markbun.html",
+  "pdf": "markbun.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Love In Vain",
+  "blurb": "Inspired by a long article about serial killer Henry Lee Lucas.",
+  "html": "vain.html",
+  "pdf": "vain.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Match",
+  "blurb": "Fantasy tennis, anyone?",
+  "html": "match.html",
+  "pdf": "match.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Castles Made of Sand",
+  "blurb": "Literal and otherwise.",
+  "html": "castles.html",
+  "pdf": "castles.pdf"
+ },
+ {
+  "section": "story",
+  "title": "Flagstaff",
+  "blurb": "More thinly veiled autobiography.",
+  "html": "flagstaff.html",
+  "pdf": "flagstaff.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Bob Welch and Avenue M",
+  "blurb": "1990 music journalism with new notes.",
+  "html": "ave_m.html",
+  "pdf": "ave_m.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Introduction to When the Music's Over",
+  "blurb": "From my 1991 non-violence anthology.",
+  "html": "musicover.html",
+  "pdf": "musicover.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Compassion in Clowes' Velvet Glove",
+  "blurb": "An academic paper on slackers.",
+  "html": "velvet.html",
+  "pdf": "velvet.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Confessions of an Ex-Cyberpunk",
+  "blurb": "New York Times op-ed piece from 1991.",
+  "html": "cyberpunk.html",
+  "pdf": "cyberpunk.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "History as Swiss Cheese",
+  "blurb": "Review of Greil Marcus's Lipstick Traces.",
+  "html": "lipstick.html",
+  "pdf": "lipstick.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Kafkaland",
+  "blurb": "Review of Thomas Palmer's Dream Science.",
+  "html": "dreamsci.html",
+  "pdf": "dreamsci.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Real Life",
+  "blurb": "Unpublished piece about Phil Dick (and other stuff).",
+  "html": "real.html",
+  "pdf": "real.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "The Short, Unhappy Career of Lew Shiner, Tough- Guy Writer",
+  "blurb": "Intro to the Dan Sloane stories (see above).",
+  "html": "tough.html",
+  "pdf": "tough.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Autosalvage",
+  "blurb": "Review of the brilliant 1968 psychedelic album.",
+  "html": "autosalvage.html",
+  "pdf": "autosalvage.pdf"
+ },
+ {
+  "section": "nonfiction",
+  "title": "Wouldn't It Be Nice",
+  "blurb": "Interviews with Brian Wilson and Van Dyke Parks.",
+  "html": "ocrate.html",
+  "pdf": "ocrate.pdf"
+ },
+ {
+  "section": "screenplay",
+  "title": "Glimpses",
+  "blurb": "Unsold adaptation of my World Fantasy Award-winning novel.",
+  "html": null,
+  "pdf": "glimpses_scr.pdf"
+ },
+ {
+  "section": "screenplay",
+  "title": "The Next",
+  "blurb": "Unsold action picture about vampire lawyers. Semifinalist in PAGE screenwriting awards.",
+  "html": null,
+  "pdf": "the_next.pdf"
+ },
+ {
+  "section": "translation",
+  "title": "Pestilenza",
+  "blurb": "Italian translation of \"Plague\" by my friend Aldo Carpanelli.",
+  "html": "plague_it.htm",
+  "pdf": null
+ },
+ {
+  "section": "translation",
+  "title": "Linguaggio",
+  "blurb": "Italian translation of \"Language\" by my friend Aldo Carpanelli.",
+  "html": "language_it.htm",
+  "pdf": null
+ },
+ {
+  "section": "translation",
+  "title": "Application",
+  "blurb": "French translation by my friend Guy d'Andigné.",
+  "html": "https://sfss.space/candidature-2012-lewis-shiner",
+  "pdf": null
+ },
+ {
+  "section": "translation",
+  "title": "The Best Part of Making Up",
+  "blurb": "French translation by my friend Guy d'Andigné.",
+  "html": "https://sfss.space/ce-quil-y-a-de-mieux-dans-une-separation-1999-lewis-shiner-k8tz",
+  "pdf": null
+ },
+ {
+  "section": "translation",
+  "title": "Les cités abandonnées du coeur",
+  "blurb": "French translation of \"Deserted Cities of the Heart\" by Claire Michel.",
+  "html": null,
+  "pdf": "cities_fr.pdf"
+ },
+ {
+  "section": "translation",
+  "title": "Perfidia",
+  "blurb": "French translation by Claire Michel.",
+  "html": null,
+  "pdf": "perfidia_fr.pdf"
+ },
+ {
+  "section": "translation",
+  "title": "Люди-Ящерицы из Лос-Анджелеса",
+  "blurb": "Russian translation of \"Lizard Men of Los Angeles\" by Sergey Artomov.",
+  "html": null,
+  "pdf": "lizard_ru.pdf"
+ },
+ {
+  "section": "translation",
+  "title": "Roba da sogno",
+  "blurb": "Italian translation of \"Stuff of Dreams\" by Aldo Carpanelli.",
+  "html": "stuff_it.html",
+  "pdf": null
+ },
+ {
+  "section": "translation",
+  "title": "Разочарование",
+  "blurb": "Russian translation of \"Perfida\" by Sergey Artomov.",
+  "html": null,
+  "pdf": "perfidia_ru.pdf"
+ },
+ {
+  "section": "translation",
+  "title": "Americanos",
+  "blurb": "Spanish translation of \"Americans\" by Mauricio-José Schwarz.",
+  "html": "http://www.nuevasinergia.com.ar/%20_cuentos_shiner.htm",
+  "pdf": null
+ },
+ {
+  "section": "interview",
+  "title": "Erik Jacobsen",
+  "blurb": "Brilliant producer of Tim Hardin, Spoonful, and others.",
+  "html": "erik_jacobsen.html",
+  "pdf": null
+ },
+ {
+  "section": "interview",
+  "title": "John Sebastian",
+  "blurb": "Singer, songwriter, multi-instrumentalist, and deeply funny guy.",
+  "html": "john_sebastian.html",
+  "pdf": null
+ }
+]
