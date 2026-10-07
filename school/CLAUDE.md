@@ -274,8 +274,7 @@ that shape every day:
   the Gutenberg text went in glued and nobody saw it for two runs.
 - **Judge her through the loom's sampler, never the raw page draws**, and read the run before
   speaking of it — the clock is not in my head.
-- **A site's own word comes before a fetch**, and the readings per shelf get multiplied out
-  before a run.
+- **The readings per shelf get multiplied out before a run.**
 
 ## Next
 
