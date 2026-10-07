@@ -10,14 +10,16 @@ The two that cost the most, so nobody skips them:
 
 - **Half the Gutenberg text had no paragraphs, and she read 0.95 billion tokens that way** before
   anyone measured a shelf instead of reading its first page (2.1).
-- **Nine magazines out of nine had already refused AI training**, found only after three fetch
-  agents were out (1.1).
+- **Nine magazines out of nine turned out to block AI crawlers or forbid scraping in their
+  terms**, found only after three fetch agents were out (1.1).
 
 ## 1. Finding text
 
-**1.1 A site's own word comes before a fetch.** "Free to read" was taken for "nobody minds" and
-a shelf was promised on it; every magazine checked had posted a refusal. Before any fetch, and
-*in the brief* of any agent that fetches:
+**1.1 Know what a site says before the agents leave.** "Free to read" was taken for "nobody
+minds" and a shelf was promised on it; every magazine checked turned out to have a position, and
+three fetch agents were already out when it was looked up. Whether a site's position changes what
+we do is a call for the session and bekh, per site — the point is to have the facts first. The
+three places a position lives, in one minute:
 
 ```bash
 S=example.com
@@ -26,23 +28,24 @@ curl -s -I -L -m 15 https://$S/ | grep -i -E 'x-robots-tag|tdm'
 curl -s -o /dev/null -w '%{http_code}\n' -m 15 https://$S/.well-known/tdmrep.json
 ```
 
-Then read the terms of use and any "anti-scraping" or AI policy linked from the footer. A
-blocklist of named AI crawlers is a refusal even though our own user-agent is not on it —
-"obey robots.txt" in a brief was not enough, the agents had to be told that a named refusal of
-the *use* counts. The answers already known (2026-10-06):
+Then the terms of use and any "anti-scraping" or AI policy linked from the footer. A blocklist of
+named AI crawlers does not stop a plain user-agent, so a fetch "obeying robots.txt" goes straight
+through it; say in the brief what the agent should do when it finds one, or it will decide alone.
+What was found (2026-10-06):
 
-- **Off:** Clarkesworld, Lightspeed, Nightmare (a written anti-scraping policy), Uncanny,
-  Beneath Ceaseless Skies (`x-robots-tag: noai` on every response), Reactor / Tor.com (terms
-  name AI training), Apex (terms forbid scraping), The Dark, Greg Egan, Charles Stross, Karl
-  Schroeder, Small Beer Press and lcrw.net (so Kelly Link's collections), Escape Pod /
-  PodCastle / PseudoPod (crawlers blocked, though the text is CC BY-NC-ND — the one worth an
-  email from bekh), Royal Road, AO3, Wattpad, SpaceBattles, Sufficient Velocity, Baen,
-  Smashwords, Weightless Books, Electric Literature, Orion's Arm, Reddit.
-- **Taken:** Faded Page, rifters.com (Watts, CC), rudyrucker.com (he asks to be trained on),
-  qntm.org, unsongbook.com and slatestarcodex.com, localroger.com, Wildbow's blog — and Strange
-  Horizons, which had posted nothing but whose editors wrote that they would block scrapers if
-  they could; Claude would have skipped it, bekh said take it.
-- **Not wanted:** the SCP wiki (bekh does not like the writing).
+- **Block AI crawlers in robots.txt**: Clarkesworld, Uncanny, The Dark, Greg Egan, Charles
+  Stross, Karl Schroeder, Small Beer Press and lcrw.net (Kelly Link's collections), Escape Pod /
+  PodCastle / PseudoPod (their text is CC BY-NC-ND — an email could settle it), Royal Road, AO3,
+  Wattpad, SpaceBattles, Sufficient Velocity, Baen, Reddit.
+- **Forbid it in their terms**: Lightspeed and Nightmare (a written anti-scraping policy),
+  Reactor / Tor.com (terms name AI training), Apex, Smashwords, Weightless Books, Electric
+  Literature, Orion's Arm.
+- **`x-robots-tag: noai` on every response**: Beneath Ceaseless Skies.
+- **Nothing posted**: Strange Horizons (an editorial says they would block scrapers if they had
+  the people). Taken, by bekh's call, through its open API.
+- **Open or offered**: Faded Page, rifters.com (Watts, CC), rudyrucker.com (he asks to be
+  trained on), qntm.org, unsongbook.com and slatestarcodex.com, localroger.com, Wildbow's blog.
+- **Not wanted**: the SCP wiki (bekh does not like the writing).
 
 **1.2 Count before promising.** The guess was "40–60 million tokens of modern weird fiction".
 What arrived was 40 million tokens, three quarters of it literary prose from 1920–1971. A size
@@ -66,7 +69,7 @@ Of 62 files from one night's fetching, nine were the wrong language or the wrong
 were not the format their name said. Budget for that: the converter's gates catch it, but the
 re-fetch list has to go back to bekh.
 
-**1.6 Fetching, once a source is cleared.**
+**1.6 Fetching, once a source is chosen.**
 - Look for a ready dump on Hugging Face first (none existed for any magazine; it is a two-minute
   check).
 - Use an API if the site has an open one: Strange Horizons' whole archive was 31 requests
@@ -381,7 +384,7 @@ three have nothing new to say and should say so in one line.
 - **Agents**: every spawn names `model: 'opus'`; each has about 100,000 tokens, so a fetch that
   will outlast it runs detached with a ledger and a heartbeat; they could not write `.md` into
   the shared checkout, so reports come back as text (the untracked `.claude/settings.json` with
-  `worktree.bgIsolation: none` is what lets the main session write in the checkout at all); the brief carries the refusal rule (1.1),
+  `worktree.bgIsolation: none` is what lets the main session write in the checkout at all); the brief says what to do at a site that blocks crawlers (1.1),
   "no git", "no code comments" and "write only under …".
 - **Count what an agent reports.** `wc -w` over its folder agreed with every report to within
   3%; that is the cost of knowing.

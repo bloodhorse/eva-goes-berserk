@@ -24,7 +24,7 @@ fetched by hand.
 
 dead ends we hit, don't suggest these either: clarkesworld, lightspeed, nightmare, uncanny,
 beneath ceaseless skies, reactor/tor.com, apex, the dark — all of them block ai crawlers or forbid
-scraping in their terms, and we don't take text from sites that have said no. same for egan's and
+scraping in their terms. same for egan's and
 stross's own sites, small beer press, smashwords, weightless books, royal road, ao3, wattpad. the
 scp wiki is out on taste. common pile / common corpus / standard ebooks stop at 1930. the old pulp
 magazines on the internet archive are two-column ocr and individually-renewed stories, a trap.
