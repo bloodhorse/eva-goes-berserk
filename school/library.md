@@ -59,28 +59,47 @@ arrive as magazine pages: what a book is worth after that is its row in `dedupe/
   fairy-tale books, five Japanese ones. One editor a line; if a line misses, try the co-editor.
   The older list of single books is `books2.txt` beside it.
 - **What has arrived**: `inbox/anth/ledger.jsonl` — one line per source file with its status
-  (`ok`, `skipped`, `duplicate`, `error`), title, words, and every section dropped. `ls
-  inbox/anth/*.txt | wc -l` is the count. Convert new arrivals with the command in
-  `CLAUDE.md` (The pile, stage 2), into `inbox/anth`, never into `inbox/clean`.
-- **Bad downloads, to fetch again by another route** (2026-10-07): Dozois's **twelfth**
-  (the file under that name holds the seventeenth), **thirteenth** (a broken epub: every chapter
-  is the same error page) and **fourteenth** (the file holds the fifteenth); ***Mirrorshades***
-  (a zip of loose text files, could be rescued by hand like the ones in `inbox/rescued/`);
-  ***The New Space Opera 2*** (plain text under an epub name, also rescuable); ***Feeling Very
-  Strange*** and ***Swords & Dark Magic*** (each came as a single story of under five thousand
-  words); ***Semiotext(e) SF*** (the match was one Rucker story in RTF); *The Big Book of
-  Cyberpunk* also came as a PDF of volume two alone, which the full epub replaces. Which
-  volume each Dozois file really is has to be read from the text — a volume opens "Summation:
-  <year>" — never from the file's name (`PITFALLS.md` 1.5b); five more annuals arrived after
-  this was checked and have not been identified.
-- **In the wrong folder**: *Ubik* landed among the anthologies; it is a novel and belongs with
-  the library (`inbox/clean`), where it would be a new book for the finishing school.
+  (`ok`, `skipped`, `duplicate`, `error`), title, words, the year or volume of an annual, and
+  every section dropped. `ls inbox/anth/*.txt | wc -l` is the count; an annual's slug carries the
+  year it covers (`ls inbox/anth | grep -E 'dozois|datlow'`). Convert new arrivals with the
+  command in `data/CLAUDE.md`, into `inbox/anth`, never into `inbox/clean`. What has not been
+  fetched yet, roughly (a file named differently from its line shows as missing):
+  ```bash
+  cd ~/tower/ephemeral/booox && while IFS= read -r l; do t=${l#* - }; ls souls_lain_library souls_lain_library_used | grep -qiF -- "${t//:/_}" || echo "$l"; done < books.txt
+  ```
+- **Bad downloads, to fetch again by another route.** The name of a file is a claim; these are
+  what the text said (`PITFALLS.md` 1.5b):
+  - Dozois's *Year's Best Science Fiction*, eighth to twenty-fifth (the Nth covers 1982+N):
+    **missing the 12th, 14th, 21st and 25th** — the files under those names held the 17th, the
+    15th, the 28th and the 26th — and **the 13th is a broken epub** (every chapter the same error
+    page). The 26th and 28th, which nobody asked for, are in.
+  - Datlow and Windling's *Year's Best Fantasy and Horror* (the Nth covers 1986+N): in are the
+    years 1989, 1990, 1992 and 1994 to 2004. **Missing the first, second, fifth, seventh and the
+    last three**: the file named *Second* held the thirteenth, and the *Seventh* has no text
+    layer. **All fourteen that are in came as PDFs** (below).
+  - ***Mirrorshades*** (a zip of loose text files, could be rescued by hand like the ones in
+    `inbox/rescued/`); ***The New Space Opera 2*** (plain text under an epub name, also
+    rescuable); ***Feeling Very Strange*** and ***Swords & Dark Magic*** (each came as a single
+    story of under five thousand words); ***Semiotext(e) SF*** (first one Rucker story in RTF,
+    then a PDF); ***Silver Birch, Blood Moon*** (the file is another book, a 2011 novel called
+    *Silver Moon*). *The Big Book of Cyberpunk* also came as a PDF of volume two alone, which the
+    full epub replaces.
+- **Rough, held out of the mix until an epub is found**: the fourteen Datlow and Windling
+  annuals and *Semiotext(e) SF* exist only as text out of a PDF — a paragraph a page, running
+  heads in the sentences, their editors' essays still inside. They are converted and counted,
+  and sit on a shelf of their own at weight zero (`day4.md`, the rough anthologies; whether they
+  are read at all is bekh's call). An epub of any of them replaces its rough copy by rule.
+- **In the wrong folder**: *Ubik* landed among the anthologies. It is a novel the library already
+  holds, so the dedupe drops the copy whole and nothing needs doing.
 - **Not fiction, by design**: *Storming the Reality Studio* and *Digital Rapture* are part
-  essays (Vinge's singularity talk, the cyberpunk criticism); those essays are wanted. The
-  "Summation" essays and per-story editor's notes of the annuals are not.
+  essays (Vinge's singularity talk, the cyberpunk criticism); those essays are wanted and kept.
+  The "Summation" essays, honorable mentions and per-story editor's notes of the annuals are
+  cut by the sieve. Sterling's preface to *Mirrorshades* is in the casebook and also, as its own
+  file, on the net shelf she has read (`wired-core/cyberpunkproject/mirrorshades_preface.txt`).
 
-What bekh might read of all this himself — some thirty pieces, most of them one sitting, each
-with the file it sits in — is in the book club: `~/tower/shittalk/fable-book-club/reading-list.md`.
+What bekh might have read to him out of all this — some thirty pieces, most of them one sitting,
+each with the file it sits in — is the book club's queue:
+`~/tower/shittalk/fable-book-club/reading-list.md`.
 
 ## 1. the first thirty — the session that raised her, 2026-10-06
 

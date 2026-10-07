@@ -171,8 +171,8 @@ bins2/base.bin:82
 bins/wired-core.bin:79
 bins/wired-bulk.bin:228
 bins2/literary.bin:309
-bins2/horizons.bin:135
-bins2/released.bin:79
+bins2/horizons.bin:67
+bins2/released.bin:40
 bins2/library.bin:151
 bins/lain.bin:10
 bins/cyborg.bin:2
@@ -190,11 +190,11 @@ Check — every shelf's readings worked out from the bins on the host, against t
 ```bash
 hx 'cd /opt/llama/magdra && python3 -' <<'EOF'
 import json
-STEPS, PER_STEP = 16650, 24576
-WANT = {"fantasy": 0.32, "scifi": 0.11, "anime": 0.05, "fanfic": 0.0, "base": 0.02, "wired-core": 1.01, "wired-bulk": 0.21, "literary": 1.0, "horizons": 2.01, "released": 2.0, "library": 2.01, "lain": 1.05, "cyborg": 1.09, "horizons-verse": 0.98, "modern": 2.5, "anth": 2.5, "serials": 1.0, "verse2": 2.05, "anth-rough": 0.0}
+STEPS, PER_STEP = 16215, 24576
+WANT = {"fantasy": 0.32, "scifi": 0.11, "anime": 0.05, "fanfic": 0.0, "base": 0.02, "wired-core": 1.01, "wired-bulk": 0.21, "literary": 1.0, "horizons": 1.0, "released": 1.01, "library": 2.01, "lain": 1.05, "cyborg": 1.09, "horizons-verse": 0.98, "modern": 2.5, "anth": 2.5, "serials": 1.0, "verse2": 2.05, "anth-rough": 0.0}
 mix = [line.split()[0].rsplit(":", 1) for line in open("runs/day4/mix.txt") if line.strip()]
 total = sum(float(w) for _, w in mix)
-ok = len(mix) == len(WANT) and total == 4092
+ok = len(mix) == len(WANT) and total == 3985
 for path, w in mix:
     name = path.split("/")[-1][:-4]
     n = json.load(open(path[:-4] + ".json"))["train_tokens"]
@@ -258,8 +258,8 @@ batches for each of the 19 shelves on the line); this runbook assumes `run4.sh` 
 the environment variable **`EVAL_ITERS`**, a knob it did not have when this was written:
 
 ```bash
-hx 'cd /opt/llama/magdra && o=$(STEPS=16650 LR=5e-5 WARMUP=300 EVAL_EVERY=500 EVAL_ITERS=152 MIXFILE=runs/day4/mix.txt DRY=1 ./run4.sh day4 ckpt-day3-final.pt | head -1); \
-  for want in "--init ckpt-day3-final.pt" "--batch 6 --accum 4" "--lr 5e-5 --warmup 300" "--steps 16650" "--eval-every 500" "--eval-iters 152" "--prompts prompts.txt" "--compile" "bins2/modern.bin:" "bins2/anth-rough.bin:0"; do \
+hx 'cd /opt/llama/magdra && o=$(STEPS=16215 LR=8e-5 WARMUP=300 EVAL_EVERY=500 EVAL_ITERS=152 MIXFILE=runs/day4/mix.txt DRY=1 ./run4.sh day4 ckpt-day3-final.pt | head -1); \
+  for want in "--init ckpt-day3-final.pt" "--batch 6 --accum 4" "--lr 8e-5 --warmup 300" "--steps 16215" "--eval-every 500" "--eval-iters 152" "--prompts prompts.txt" "--compile" "bins2/modern.bin:" "bins2/anth-rough.bin:0"; do \
     case "$o" in *"$want"*) ;; *) echo "MISMATCH run4.sh would not pass: $want"; bad=1;; esac; done; [ -z "$bad" ] && echo "MATCH run4.sh would start day4 as planned"'
 ```
 
@@ -281,7 +281,7 @@ instead of `day3`'s six, so `day3`'s last numbers are not their starting point. 
 ```bash
 hx 'cd /opt/llama/magdra && [ -e runs/smoke-day4 ] && echo "MISMATCH runs/smoke-day4 exists, pick another name" || echo "MATCH"'
 hx 'cd /opt/llama/magdra && .venv/bin/python train.py --data $(tr -s "\n" " " < runs/day4/mix.txt) --out runs/smoke-day4 --init ckpt-day3-final.pt \
-  --batch 6 --accum 4 --lr 5e-5 --warmup 300 --steps 40 --log-every 10 --eval-every 20 --eval-iters 152 \
+  --batch 6 --accum 4 --lr 8e-5 --warmup 300 --steps 40 --log-every 10 --eval-every 20 --eval-iters 152 \
   --ckpt-minutes 1000 --prompts prompts.txt --compile > runs/smoke-day4.log 2>&1; echo "exit $?"'
 ```
 
@@ -332,7 +332,7 @@ one is moved aside if it is there):
 ```bash
 hx 'cd /opt/llama/magdra && [ -e runs/day4/ckpt.pt ] && echo "MISMATCH runs/day4 already has a save: this would resume it, not start it" || echo "MATCH runs/day4 is new"'
 hx 'cd /opt/llama/magdra && { [ -f runs/day4.guard.log ] && mv runs/day4.guard.log runs/day4.guard.log.$(date +%s); true; } \
-  && (STEPS=16650 LR=5e-5 WARMUP=300 EVAL_EVERY=500 EVAL_ITERS=152 MIXFILE=runs/day4/mix.txt nohup ./run4.sh day4 ckpt-day3-final.pt > runs/day4.wrapper.out 2>&1 < /dev/null &) \
+  && (STEPS=16215 LR=8e-5 WARMUP=300 EVAL_EVERY=500 EVAL_ITERS=152 MIXFILE=runs/day4/mix.txt nohup ./run4.sh day4 ckpt-day3-final.pt > runs/day4.wrapper.out 2>&1 < /dev/null &) \
   && sleep 2 && (nohup ./guard.sh day4 > runs/day4.guard.out 2>&1 < /dev/null &) ; sleep 1; echo launched'
 ```
 
@@ -360,7 +360,7 @@ checks = {
     "init is day3's final save": "INIT weights from /opt/llama/magdra/ckpt-day3-final.pt source_step=84103" in log,
     "every shelf at its weight and size": bool(data) and all(x in data.group(1) for x in want),
     "24,576 tokens a step": bool(data) and "24,576 tokens per step" in data.group(1),
-    "16650 steps planned": re.search(r"^step \d+/16650 ", log, re.M) is not None,
+    "16215 steps planned": re.search(r"^step \d+/16215 ", log, re.M) is not None,
     "no traceback": "Traceback" not in log,
 }
 for k, v in checks.items():
@@ -379,8 +379,8 @@ eighteen minutes in. What the numbers should do, and when to stop, is `day4.md`.
 new:
 
 ```bash
-hx 'cd /opt/llama/magdra && sed -e "s/--lr 8e-5/--lr 5e-5/" -e "s/--hours \"\$HOURS\"/--steps 16650/" -e "s/--eval-every 1000/--eval-every 500 --eval-iters 152/" run3.sh > run4-plain.sh && chmod +x run4-plain.sh \
-  && grep -q -- "--batch 6 --accum 4 --lr 5e-5 --warmup 300 --steps 16650 --log-every 50 --eval-every 500 --eval-iters 152 --ckpt-minutes 20 --prompts prompts.txt --compile" run4-plain.sh \
+hx 'cd /opt/llama/magdra && sed -e "s/--hours \"\$HOURS\"/--steps 16215/" -e "s/--eval-every 1000/--eval-every 500 --eval-iters 152/" run3.sh > run4-plain.sh && chmod +x run4-plain.sh \
+  && grep -q -- "--batch 6 --accum 4 --lr 8e-5 --warmup 300 --steps 16215 --log-every 50 --eval-every 500 --eval-iters 152 --ckpt-minutes 20 --prompts prompts.txt --compile" run4-plain.sh \
   && echo "MATCH run4-plain.sh is run3.sh at day4 settings" || echo "MISMATCH"'
 hx 'cd /opt/llama/magdra && { [ -f runs/day4.guard.log ] && mv runs/day4.guard.log runs/day4.guard.log.$(date +%s); true; } \
   && (MIX="$(tr -s "\n" " " < runs/day4/mix.txt)" HOURS=9.4 INIT=ckpt-day3-final.pt nohup ./run4-plain.sh day4 > runs/day4.wrapper.out 2>&1 < /dev/null &) \
@@ -475,6 +475,6 @@ step 7's with `day3b`.
 ## the 4-read variant
 
 The same runbook with the variant's mix and length from `day4.md`: its two weights in
-`runs/day4/mix.txt` (`bins2/modern.bin` and `bins2/anth.bin`), `22009` for `16650`
-everywhere, and in step 3 `WANT` for those two shelves at 4.0 and `5409` for the sum of
+`runs/day4/mix.txt` (`bins2/modern.bin` and `bins2/anth.bin`), `21574` for `16215`
+everywhere, and in step 3 `WANT` for those two shelves at 4.0 and `5302` for the sum of
 the weights.
