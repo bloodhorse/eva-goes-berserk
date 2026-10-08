@@ -8,10 +8,10 @@ is the numbers and their reasons. Three marks run through it: **decided** (bekh 
 2026-10-07, not reopened here), **proposed** (the recipe writer's, waiting for his yes), **guess**
 (nobody knows; the run measures it).
 
-**It is running**: started 2026-10-07 about 15:25 UTC on ds-dev2 with exactly the mix, rate and
-length below (`night/CLAUDE.md` for how to look; where it is, is never written here). What this
-file holds that does not change is the recipe and **the baseline** (the section of that name):
-where she stood on every shelf before `day4` taught her anything. The sizes of the new shelves are from `shelves/day4/summary.json`
+**It ran**, 2026-10-07 15:25 UTC to 2026-10-08 01:09 UTC on ds-dev2, with the mix, rate and
+length below and one change on the way (*Changed while it ran*). **How it went** is the section
+of that name: where every shelf ended against **the baseline**, which is where she stood on
+every shelf before `day4` taught her anything. The sizes of the new shelves are from `shelves/day4/summary.json`
 (sha256 `96f77d3346318ef0dac8eb8198fad6b422ac076301b1fcddb955f5672830c711`), made by `data/shelves.py build --deep` from the sieve's plan of
 2026-10-07 21:05:06; the old shelves' are the `train_tokens` of their `.json` on ds-dev2.
 
@@ -369,6 +369,58 @@ training loss sat about half a point under held-out. Those gaps start wide; a ga
   the halfway eval, and the bell seed on the page has gone flat and modern.
 - *Nothing happens*: the new shelves fall under 0.05 by halfway. The rate was too low; the run
   is harmless and tells little.
+
+## How it went
+
+DONE at step 16,215: 398,499,840 tokens in 9 h 20 min of training, no restart, peak 13.73 GiB
+(14.73 reserved), overall held-out 3.250. Held-out loss per shelf at the end against the
+baseline, and the gap (held-out minus training loss) at the end where the trainer measured one:
+
+| shelf | baseline | end | change | gap at the end |
+|---|---:|---:|---:|---:|
+| modern | 3.143 | 3.011 | −0.132 | +0.21 |
+| anth | 3.270 | 3.181 | −0.089 | +0.30 |
+| serials | 3.048 | 2.745 | −0.303 | +0.09 |
+| verse2 | 4.138 | 4.009 | −0.129 | +0.30 |
+| library | 3.283 | 3.218 | −0.065 | +0.34 |
+| horizons | 3.368 | 3.255 | −0.113 | +0.24 |
+| released | 3.558 | 3.461 | −0.097 | +0.55 |
+| literary | 3.036 | 2.996 | −0.040 | +0.16 |
+| wired-core | 4.102 | 3.983 | −0.119 | +0.45 |
+| wired-bulk | 3.826 | 3.706 | −0.120 | −0.02 |
+| lain | 2.959 | 2.931 | −0.028 | −0.09 |
+| horizons-verse | 4.015 | 3.866 | −0.149 | +0.19 |
+| fantasy | 3.153 | 3.139 | −0.014 | +0.28 |
+| scifi | 3.085 | 3.087 | +0.002 | +0.07 |
+| base | 3.053 | 3.051 | −0.002 | −0.02 |
+| anime | 2.383 | 2.413 | +0.030 | −0.05 |
+| fanfic (weight 0) | 3.043 | 3.202 | +0.159 | — |
+
+- **The read limit showed, near the end.** `modern` and `anth` fell at every eval until about
+  step 13,000 and then read `flat` on held-out while their gaps kept opening by about three
+  hundredths an hour. With the mix as it actually ran (fantasy doubled at step 3,500, so the new
+  fiction's share fell by a ninth) that is a little under two reads, and the run ended at about
+  2.3: the limit for this pile is about two, the planned two and a half was slightly past it,
+  and four would be well past. The anthologies — the fewest and most famous stories — showed it
+  first and widest. This is stop condition 4 arriving as a flattening and not as a turn; the
+  detector never called either shelf `turned`.
+- **The serials fell most**: two authors, the easiest voice in the pile to pick up, at one read.
+- **Old fantasy** rose from 3.153 to 3.249 by step 3,500, turned at the first eval after its
+  weight doubled, and ended under its baseline (*Changed while it ran*). That was "the cadence is
+  going", answered at step 3,500 and not at the halfway look.
+- **The starved old shelves** rose through the first hours, as planned, and were level by step
+  6,500; only fan fiction, at weight zero, and by three hundredths the light novels ended above
+  where they began. The knock at the start was under a tenth on every shelf with weight.
+- **The gaps that are widest** (released, the net core, the library) began wide — she knew those
+  small shelves before `day4` — and widened least; they are not this run's doing.
+- **The recitation meter** found no lifted run of twelve words in any of the ten snapshots; the
+  share of her words inside eight-word runs moved between 1.7% and 10.1% with no direction, all
+  of it stock phrases and the Gibson line that is one of the seeds.
+- **The detector** read fantasy and the starved shelves `rising` in the first hours, the light
+  novels `turned` on one eval, and never confirmed anything.
+- **Not here**: a read of what she writes at the end. Loss says how she reads; the judgment of
+  the run is her sampled draws beside `day3`'s last, and it goes into `CLAUDE.md` ("How she
+  writes") when it is made.
 
 ## Stop conditions
 
