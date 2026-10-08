@@ -193,18 +193,25 @@ which shelves are expected to rise.
 
 ## Sitting with her on the loom
 
-`eva.x` fans on whatever `llama-server` on the mac's port 8086 loaded when it started; it loads a
-file once. bekh does not want it restarted at every snapshot, so it serves the hour it was last
-started on until someone runs this:
+She is served from the mini, not the mac and not the training host: `magdra.service` (a system
+unit, enabled, so it survives a reboot) runs the mini's `llama-server` on the cpu at
+`http://100.69.218.90:8086` with a finished run's final snapshot, a copy in `~/models/` there.
+The loom's job on the mac names that address (`LOOM_LLAMA` in
+`~/Library/LaunchAgents/com.bekh.eva-loom.plist`; `eva/CLAUDE.md` has the switch and the restart),
+so `eva.x` fans on her. bekh does not want her followed snapshot by snapshot during a run; she is
+moved by hand when a run ends. Which snapshot she is, and whether she answers:
 
 ```bash
-cd ~/tower/forge/eva-goes-berserk/school && kill $(lsof -tnP -iTCP:8086 -sTCP:LISTEN) ; \
-  (nohup llama-server -m models/day3/model-latest-q8_0.gguf -c 1024 -ngl 99 --host 127.0.0.1 --port 8086 --no-jinja > night/day3/serve.out 2>&1 < /dev/null &)
+ssh bek@100.69.218.90 'systemctl cat magdra.service | grep ExecStart; systemctl is-active magdra.service'
+curl -s http://100.69.218.90:8086/health; grep 'loom up' /tmp/eva-loom.log | tail -1
 ```
 
-Which hour it is serving is the snapshot's mtime against the server's start time
-(`ps -o lstart= -p $(lsof -tnP -iTCP:8086 -sTCP:LISTEN)`). A walk on her is the walk scripts with
-`LOOM_LLAMA=http://127.0.0.1:8086` (`eva/cli/walk/README.md`); her first, `experiments/magdra-prophecy`
+To serve another snapshot: copy the `.gguf` to the mini's `~/models/` (check it by sha256), put
+its name on the unit's `ExecStart` line, `sudo systemctl daemon-reload && sudo systemctl restart
+magdra.service`. About 76 tokens a second on the mini's cpu, which is plenty for a fan.
+
+A walk on her is the walk scripts with
+`LOOM_LLAMA=http://100.69.218.90:8086` (`eva/cli/walk/README.md`); her first, `experiments/magdra-prophecy`
 and its cut, was made at step 911. A snapshot exported on ds-dev2 sets `add_bos_token` and one
 from the first box did not, so fans from the two are not the same experiment (`PITFALLS.md` 6.3).
 

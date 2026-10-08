@@ -589,9 +589,11 @@ sed -i '' 's#<string>http://127.0.0.1:80[0-9][0-9]</string>#<string>http://127.0
 launchctl bootout gui/$(id -u)/com.bekh.eva-loom; sleep 2; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.bekh.eva-loom.plist
 ```
 
-**Magdra, our own model** (`school/CLAUDE.md`), is served on the mac itself when wanted —
-`llama-server -m school/models/<run>/model-<step>-q8_0.gguf -c 1024 -ngl 99 --port 8086` — and the
-loom was pointed at `127.0.0.1:8086` on 2026-10-06, the same one-line switch.
+**Magdra, our own model** (`school/CLAUDE.md`), is served from the mini: `magdra.service` there
+runs `llama-server` on a finished run's final snapshot at `http://100.69.218.90:8086`, on the
+cpu, and the loom's job names that address — the same one-line switch, with the mini's url in
+place of a local port. Which snapshot it serves and how to change it is
+`school/night/CLAUDE.md`, sitting with her on the loom.
 
 She writes 1.7 tok/s on one slot and the page draws a fan one branch after another, so a fan
 is `fan × n_predict ÷ 1.7` seconds: eight branches of 40 tokens is three minutes. Her window
