@@ -225,6 +225,9 @@ class Handler(BaseHTTPRequestHandler):
         # two-model census has to prove.
         getattr(self.server, "seen", []).append(body)
         if self.path == "/tokenize":
+            if getattr(self.server, "no_tokenize", False):
+                self._json(404, {"error": "not found"})
+                return
             # One id per whitespace-led word, so " the" is one token and "hello there" is
             # two — which is the only property the drawer's resolver depends on: a spelling
             # that comes back as more than one token cannot be biased and is dropped.

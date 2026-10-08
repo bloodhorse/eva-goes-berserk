@@ -230,6 +230,35 @@ LIVE_RETRY_MAX = float(os.environ.get("LOOM_LIVE_RETRY_MAX", "30"))
 # A passage is 170 tokens, a kilobyte or so. The cap is only there so a broken writer cannot
 # park megabytes in memory that every held client is then sent.
 LIVE_MAX = 64 * 1024
+TALK_PAGE = os.environ.get("LOOM_TALK_PAGE", os.path.join(ROOT, "eva", "front", "talk.html"))
+ROOMS = os.environ.get("LOOM_ROOMS", os.path.join(SHELF, "rooms"))
+TALKS = os.environ.get("LOOM_TALKS", os.path.join(SHELF, "talks"))
+TALK_MARGIN = 16
+TALK_LINE_MAX = 600
+TALK_HER_MAX = 4000
+TALK_HISTORY_MAX = 400
+TALK_WINDOW = 1024
+TALK_PREDICT = 90
+TALK_CONNECT_TIMEOUT = 10
+TALK_LOOM_MODEL = "loom"
+TALK_BUILTIN_NAME = "fallback"
+TALK_BUILTIN = {
+    "title": "the back step",
+    "seed": ("They sat on the back step after supper, the way they did most evenings, and "
+             "talked until the light went. He would say a thing and she would answer it, "
+             "and neither of them was in any hurry."),
+    "before": "\n\nHe said, \"",
+    "after": "\"\n\nShe said, \"",
+    "close": "\"",
+    "stop": ["\"", "\n"],
+    "sampler": {"temperature": 1.0, "min_p": 0.08, "dry_multiplier": 0.8, "dry_base": 1.75,
+                "dry_allowed_length": 2, "n_predict": 60},
+    "n_predict": 60,
+    "window": TALK_WINDOW,
+    "models": {},
+}
+TALK_COMPLAINED: dict[str, str] = {}
+TALK_SEED_COUNTS: dict[tuple[str, str], int] = {}
 # How much of a branch he did NOT keep rides along: enough to see what the model could have
 # said instead, not so much that the rejects outweigh what was kept.
 OPENING = 80
@@ -2218,6 +2247,283 @@ def pull_live(base: str) -> None:
         wait = min(wait * 2, LIVE_RETRY_MAX)
 
 
+class TalkDown(Exception):
+    pass
+
+
+class TalkGone(Exception):
+    pass
+
+
+def talk_shape(name: str, raw, folder: str) -> dict:
+    if not isinstance(raw, dict):
+        raise ValueError("room.json is not an object")
+    title = raw.get("title", name)
+    if not isinstance(title, str) or not title.strip():
+        raise ValueError("title is not a string")
+    seed_file = raw.get("seed", "seed.txt")
+    if (not isinstance(seed_file, str) or not seed_file or seed_file.startswith(".")
+            or re.search(r"[/\\\x00-\x1f]", seed_file)):
+        raise ValueError("seed is not a plain file name")
+    try:
+        with open(os.path.join(folder, seed_file), encoding="utf-8", newline="") as f:
+            seed = f.read()
+    except (OSError, UnicodeDecodeError):
+        raise ValueError(f"{seed_file} can't be read") from None
+    turn = raw.get("turn")
+    if (not isinstance(turn, dict) or not isinstance(turn.get("before"), str)
+            or not isinstance(turn.get("after"), str)):
+        raise ValueError("turn needs a before and an after string")
+    close = raw.get("close", "")
+    if not isinstance(close, str):
+        raise ValueError("close is not a string")
+    stop = raw.get("stop", [])
+    if not isinstance(stop, list) or not all(isinstance(x, str) and x for x in stop):
+        raise ValueError("stop is not a list of non-empty strings")
+    sampler = raw.get("sampler", {})
+    if not isinstance(sampler, dict):
+        raise ValueError("sampler is not an object")
+    window = raw.get("window", TALK_WINDOW)
+    n_predict = sampler.get("n_predict", TALK_PREDICT)
+    for label, v in (("window", window), ("sampler.n_predict", n_predict)):
+        if not isinstance(v, int) or isinstance(v, bool) or v <= 0:
+            raise ValueError(f"{label} is not a positive integer")
+    if n_predict >= window:
+        raise ValueError("sampler.n_predict does not fit the window")
+    models = raw.get("models", {})
+    if not isinstance(models, dict):
+        raise ValueError("models is not a name to url map")
+    for k, v in models.items():
+        if not k.strip() or not isinstance(v, str) or not re.match(r"https?://[^/\s]+", v):
+            raise ValueError("models is not a name to url map")
+    return {"name": name, "title": title.strip(), "seed": seed, "before": turn["before"],
+            "after": turn["after"], "close": close, "stop": list(stop),
+            "sampler": dict(sampler), "n_predict": n_predict, "window": window,
+            "models": {k: v.rstrip("/") for k, v in models.items()}}
+
+
+def talk_room(name) -> dict | None:
+    if not isinstance(name, str) or not NAME_RE.match(name) or name.startswith("."):
+        return None
+    folder = os.path.join(ROOMS, name)
+    path = os.path.join(folder, "room.json")
+    if not os.path.isfile(path):
+        return dict(TALK_BUILTIN, name=name) if name == TALK_BUILTIN_NAME else None
+    try:
+        with open(path, encoding="utf-8") as f:
+            raw = json.load(f)
+    except (OSError, ValueError):
+        raise ValueError("room.json isn't readable json") from None
+    return talk_shape(name, raw, folder)
+
+
+def talk_load(name) -> dict | None:
+    try:
+        room = talk_room(name)
+    except ValueError as exc:
+        if TALK_COMPLAINED.get(name) != str(exc):
+            TALK_COMPLAINED[name] = str(exc)
+            print(f"talk: room {name} is malformed and not listed: {exc}", flush=True)
+        return None
+    TALK_COMPLAINED.pop(name, None)
+    return room
+
+
+def talk_card(room: dict) -> dict:
+    return {"name": room["name"], "title": room["title"], "models": list(room["models"])}
+
+
+def talk_rooms() -> list[dict]:
+    try:
+        names = sorted(os.listdir(ROOMS))
+    except OSError:
+        names = []
+    out = []
+    for name in names:
+        if not os.path.isdir(os.path.join(ROOMS, name)):
+            continue
+        room = talk_load(name)
+        if room is not None:
+            out.append(talk_card(room))
+    if not out:
+        out.append(talk_card(talk_room(TALK_BUILTIN_NAME)))
+    return out
+
+
+def talk_line(text: str, stops: list[str]) -> str:
+    out = " ".join(text.split())
+    for s in sorted(stops, key=len, reverse=True):
+        if s.strip():
+            out = out.replace(s, " ")
+    return " ".join(out.split())
+
+
+def talk_reply(text: str, stops: list[str]) -> str:
+    cuts = [text.find(s) for s in stops if s and s in text]
+    if cuts:
+        text = text[:min(cuts)]
+    return text.strip()
+
+
+def talk_prompt(room: dict, history: list[dict], line: str) -> str:
+    parts = [room["seed"]]
+    for ex in history:
+        parts += [room["before"], ex["me"], room["after"], ex["her"], room["close"]]
+    parts += [room["before"], line, room["after"]]
+    return "".join(parts)
+
+
+def talk_http(base: str, timeout: float) -> tuple[http.client.HTTPConnection, str]:
+    u = urlparse(base)
+    if u.scheme == "https":
+        conn = http.client.HTTPSConnection(u.hostname or "127.0.0.1", u.port or 443,
+                                           timeout=timeout)
+    else:
+        conn = http.client.HTTPConnection(u.hostname or "127.0.0.1", u.port or 80,
+                                          timeout=timeout)
+    return conn, (u.path or "").rstrip("/")
+
+
+def talk_count(base: str, text: str) -> int | None:
+    if not text:
+        return 0
+    conn, prefix = talk_http(base, TALK_CONNECT_TIMEOUT)
+    try:
+        conn.request("POST", prefix + "/tokenize",
+                     body=json.dumps({"content": text, "add_special": False},
+                                     ensure_ascii=False).encode("utf-8"),
+                     headers={"Content-Type": "application/json"})
+        resp = conn.getresponse()
+        raw = resp.read()
+        if resp.status != 200:
+            return None
+        got = json.loads(raw).get("tokens")
+        return len(got) if isinstance(got, list) else None
+    except (OSError, http.client.HTTPException, ValueError, AttributeError):
+        return None
+    finally:
+        try:
+            conn.close()
+        except OSError:
+            pass
+
+
+def talk_guess(text: str) -> int:
+    return math.ceil(len(text) / 3.5)
+
+
+def talk_seed_count(base: str, seed: str) -> int:
+    key = (base, hashlib.sha1(seed.encode("utf-8")).hexdigest())
+    if key in TALK_SEED_COUNTS:
+        return TALK_SEED_COUNTS[key]
+    n = talk_count(base, seed)
+    if n is None:
+        return talk_guess(seed)
+    TALK_SEED_COUNTS[key] = n
+    return n
+
+
+def talk_fit(base: str, room: dict, history: list[dict], line: str) -> tuple[str, int, int]:
+    budget = room["window"] - room["n_predict"] - TALK_MARGIN
+    seed_n = talk_seed_count(base, room["seed"])
+    bare = dict(room, seed="")
+    dropped = 0
+    while True:
+        rest = talk_prompt(bare, history[dropped:], line)
+        n = talk_count(base, rest)
+        total = 1 + seed_n + (talk_guess(rest) if n is None else n)
+        if total <= budget or dropped >= len(history):
+            return room["seed"] + rest, total, dropped
+        dropped += 1
+
+
+def talk_shut(call: Call) -> None:
+    with INFLIGHT_LOCK:
+        INFLIGHT.discard(call)
+    try:
+        call.conn.close()
+    except OSError:
+        pass
+
+
+def talk_open(base: str, body: dict) -> Call:
+    conn, prefix = talk_http(base, TALK_CONNECT_TIMEOUT)
+    call = Call(conn)
+    with INFLIGHT_LOCK:
+        INFLIGHT.add(call)
+    try:
+        conn.connect()
+        conn.sock.settimeout(COMPLETE_TIMEOUT)
+        conn.request("POST", prefix + "/completion",
+                     body=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+                     headers={"Content-Type": "application/json"})
+        resp = conn.getresponse()
+        if resp.status != 200:
+            resp.read()
+            raise TalkDown(f"llama {resp.status}")
+    except (OSError, http.client.HTTPException) as exc:
+        talk_shut(call)
+        raise TalkDown("cancelled" if call.killed else f"unreachable ({type(exc).__name__})") from None
+    except TalkDown:
+        talk_shut(call)
+        raise
+    call.resp = resp
+    return call
+
+
+def talk_read(call: Call, on_piece) -> str:
+    text = []
+    try:
+        for raw in call.resp:
+            row = raw.strip()
+            if not row.startswith(b"data:"):
+                if row.startswith(b"error"):
+                    raise TalkDown("llama broke off")
+                continue
+            ev = json.loads(row[5:])
+            if not isinstance(ev, dict) or ev.get("error"):
+                raise TalkDown("llama broke off")
+            piece = ev.get("content") or ""
+            if piece:
+                text.append(piece)
+                on_piece(piece)
+            if ev.get("stop"):
+                break
+    except (OSError, http.client.HTTPException, ValueError) as exc:
+        raise TalkDown("cancelled" if call.killed else f"broke off ({type(exc).__name__})") from None
+    finally:
+        talk_shut(call)
+    return "".join(text)
+
+
+def talk_log(room: str, row: dict) -> None:
+    folder = os.path.join(TALKS, room)
+    try:
+        os.makedirs(folder, exist_ok=True)
+        with open(os.path.join(folder, time.strftime("%Y-%m-%d") + ".jsonl"), "a",
+                  encoding="utf-8") as f:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+    except OSError as exc:
+        print(f"talk: can't write the record of {room}: {exc}", flush=True)
+
+
+def talk_history(raw, stops: list[str]) -> list[dict] | None:
+    if raw is None:
+        return []
+    if not isinstance(raw, list) or len(raw) > TALK_HISTORY_MAX:
+        return None
+    out = []
+    for ex in raw:
+        if not isinstance(ex, dict):
+            return None
+        me, her = ex.get("me"), ex.get("her", "")
+        if (not isinstance(me, str) or not isinstance(her, str)
+                or len(me) > TALK_LINE_MAX or len(her) > TALK_HER_MAX):
+            return None
+        out.append({"me": talk_line(me, stops), "her": her})
+    return out
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a) -> None:
         pass  # the health poll is every 5s; access logs would be the only thing in the journal
@@ -2332,8 +2638,139 @@ class Handler(BaseHTTPRequestHandler):
         data = json.dumps(state, ensure_ascii=False)
         self.wfile.write(b"event: live\ndata: " + data.encode("utf-8") + b"\n\n")
 
+    def talk_event(self, kind: str, obj: dict) -> None:
+        try:
+            self.wfile.write(f"event: {kind}\ndata: ".encode("utf-8")
+                             + json.dumps(obj, ensure_ascii=False).encode("utf-8") + b"\n\n")
+            self.wfile.flush()
+        except OSError:
+            raise TalkGone() from None
+
+    def talk(self, payload: dict) -> None:
+        room = talk_load(payload.get("room"))
+        if room is None:
+            self._json(404, {"error": "no such room"})
+            return
+        raw_line = payload.get("line")
+        if not isinstance(raw_line, str):
+            self._json(400, {"error": "no line"})
+            return
+        if len(raw_line) > TALK_LINE_MAX:
+            self._json(400, {"error": f"that line is too long, {TALK_LINE_MAX} characters "
+                                      "is the most a line can be", "max": TALK_LINE_MAX})
+            return
+        line = talk_line(raw_line, room["stop"])
+        if not line:
+            self._json(400, {"error": "an empty line"})
+            return
+        history = talk_history(payload.get("history"), room["stop"])
+        if history is None:
+            self._json(400, {"error": "history is a list of {me, her} lines"})
+            return
+        model = payload.get("model")
+        if room["models"]:
+            if model is None:
+                model = next(iter(room["models"]))
+            if not isinstance(model, str) or model not in room["models"]:
+                self._json(400, {"error": "no such model in that room"})
+                return
+            base = room["models"][model]
+        elif model in (None, TALK_LOOM_MODEL):
+            model, base = TALK_LOOM_MODEL, LLAMA
+        else:
+            self._json(400, {"error": "no such model in that room"})
+            return
+
+        prompt, tokens, dropped = talk_fit(base, room, history, line)
+        body = dict(room["sampler"], prompt=prompt, stop=room["stop"], stream=True,
+                    cache_prompt=True, n_predict=room["n_predict"])
+        pinned = room["sampler"].get("seed")
+        stream = payload.get("stream") is True
+        head = {"line": line, "model": model, "tokens": tokens}
+        if dropped:
+            head["dropped"] = dropped
+        started = False
+        her, seed, tries = "", None, 0
+
+        def piece(text: str) -> None:
+            if stream:
+                self.talk_event("piece", {"text": text})
+
+        try:
+            for attempt in (0, 1):
+                tries = attempt + 1
+                fresh = secrets.randbelow(2 ** 31 - 1)
+                if attempt == 0 and isinstance(pinned, int) and pinned >= 0:
+                    fresh = pinned
+                while fresh == seed:
+                    fresh = secrets.randbelow(2 ** 31 - 1)
+                seed = fresh
+                try:
+                    call = talk_open(base, dict(body, seed=seed))
+                except TalkDown as exc:
+                    print(f"talk: {room['name']} · {model} · {exc}", flush=True)
+                    fail = {"error": "she is not answering", "detail": str(exc)}
+                    if stream and started:
+                        self.talk_event("error", fail)
+                    else:
+                        self._json(502, fail)
+                    return
+                if stream and not started:
+                    self.close_connection = True
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+                    self.send_header("Cache-Control", "no-cache")
+                    self.send_header("X-Accel-Buffering", "no")
+                    self.send_header("Connection", "close")
+                    self.end_headers()
+                    self.talk_event("start", head)
+                elif stream:
+                    self.talk_event("again", {})
+                started = True
+                try:
+                    her = talk_reply(talk_read(call, piece), room["stop"])
+                except TalkDown as exc:
+                    print(f"talk: {room['name']} · {model} · {exc}", flush=True)
+                    fail = {"error": "she is not answering", "detail": str(exc)}
+                    if stream:
+                        self.talk_event("error", fail)
+                    else:
+                        self._json(502, fail)
+                    return
+                if her:
+                    break
+        except TalkGone:
+            return
+
+        row = {"ts": round(time.time(), 3), "time": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+               "model": model, "me": line, "her": her, "seed": seed, "tokens": tokens,
+               "dropped": dropped, "tries": tries}
+        if payload.get("again") is True:
+            row["again"] = True
+        talk_log(room["name"], row)
+        out = dict(head, her=her, seed=seed)
+        if stream:
+            try:
+                self.talk_event("done", out)
+            except TalkGone:
+                pass
+        else:
+            self._json(200, out)
+
     def do_GET(self) -> None:
         u = urlparse(self.path)
+
+        if u.path in ("/talk", "/talk/", "/talk.html") or u.path.startswith("/talk/"):
+            try:
+                with open(TALK_PAGE, "rb") as f:
+                    self._send(200, f.read(), "text/html; charset=utf-8")
+            except OSError:
+                self._json(404, {"error": "no talk page"})
+            return
+
+        if u.path == "/api/rooms":
+            self._json(200, {"rooms": talk_rooms(), "line_max": TALK_LINE_MAX})
+            return
 
         if u.path in ("/", "/loom.html"):
             try:
@@ -2682,6 +3119,10 @@ class Handler(BaseHTTPRequestHandler):
             # one clears the other, and the page repaints a card off this answer.
             self._json(200, {"ok": True, "room": room, "node": nid, "mark": mark, "on": want,
                              "kept": done["kept"], "good": done["good"]})
+            return
+
+        if u.path == "/api/talk":
+            self.talk(payload)
             return
 
         if u.path == "/api/complete":

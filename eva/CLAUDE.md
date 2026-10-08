@@ -2,7 +2,9 @@
 
 The instrument, in five stances over one file format: `front/loom.html` (the page), `server/loom.py`
 (the store and the proxy), `cli/` (the repl, the census, the walk scripts), `berserk/` (the
-daemon — its own `CLAUDE.md`) and `stream/` (the dream stream — its own `CLAUDE.md`).
+daemon — its own `CLAUDE.md`) and `stream/` (the dream stream — its own `CLAUDE.md`) — and a
+sixth hand that is not a loom at all, `front/talk.html` at `/talk`, a conversation with the
+document hidden (the talk page, below).
 Everything imports `server/loom.py`; nothing else knows how a
 sitting is written. The rooms, the artifacts and the seeds live on `../shelf/`; `loom.SHELF` is
 the one place that path is spelled. Read the root `CLAUDE.md` first for what this is for.
@@ -28,7 +30,8 @@ while nemo writes, holds it in memory only and pushes it down that connection as
 (403 on the mirror, which pulls the mac's through `LOOM_LIVE_UPSTREAM`). Env: `LOOM_HOST`,
 `LOOM_PORT`, `LOOM_LLAMA`, and the scratch-dir overrides `LOOM_SITTINGS` / `LOOM_STORAGE` /
 `LOOM_ARTIFACTS` / `LOOM_LEDGER` / `LOOM_CANVASES` / `LOOM_PAGE` / `LOOM_STREAM_PAGE` /
-`STREAM_DIR` that the tests and the rigs set — production leaves them alone.
+`STREAM_DIR` / `LOOM_ROOMS` / `LOOM_TALKS` / `LOOM_TALK_PAGE` that the tests and the rigs set —
+production leaves them alone.
 
 **A room's name IS its path** under `sittings/`, without the `.json`:
 `experiments/basin/smoke-01` is one file two folders deep, and that string is also the `name`
@@ -437,6 +440,79 @@ it lands (`stream/push.py`), and `/api/stream/events` pushes the change on to wh
 reading — the 60s polls at both ends are gone.
 **`stream/CLAUDE.md`** is the doc and the runbook.
 
+## The talk page
+
+**talk** (`front/talk.html` at `/talk` and `/talk/<room>`, 2026-10-08): a person types a line and
+a base model answers, and the page shows a plain conversation and nothing else. She only
+continues documents, so the conversation IS a document: a **seed** — a page of fiction ending
+where a new exchange begins — kept on the server, each typed line wrapped as the next line of
+that fiction, her continuation cut at a stop string and shown alone. **The one law: the seed
+never leaves the server.** Not the seed, not the turn strings, not the stop strings, through no
+route and in no error — `talktest.py` reads every response it gets for them.
+
+A room is a folder, `shelf/rooms/<name>/`, written by hand: `seed.txt` and
+
+```json
+{
+  "title": "shown as the room's name",
+  "seed": "seed.txt",
+  "turn": {"before": "string before the visitor's line", "after": "string after it; the model writes from here"},
+  "close": "string appended after her reply when it goes back into the document",
+  "stop": ["stop strings"],
+  "sampler": {"temperature": 1.0, "min_p": 0.08, "dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 2, "n_predict": 90},
+  "window": 1024,
+  "models": {"magdra": "http://100.69.218.90:8086"}
+}
+```
+
+The prompt is `seed + Σ(before + his line + after + her reply + close) + before + new line +
+after`, the seed verbatim to its last byte, her reply as it was shown (edges trimmed — so
+`after` has to end where a trimmed reply reads right, on a quote mark and not on a space). The
+sampler goes to `/completion` as given, plus `stop`, a sampler seed drawn per call (a `seed` in
+the sampler is used for the first try) and `cache_prompt`. `models` is name → llama-server url;
+two or more and the page shows a chooser, none and the room talks to the loom's own
+`LOOM_LLAMA`, recorded as `loom`. A room.json that doesn't read is said **once** in the loom's
+log by the room's name and why, and that room is not listed and answers 404; a folder with no
+room.json yet is nobody's business. One room is built into `loom.py`, `fallback` — two people
+on a back step — listed only when the shelf has no room, always answering by name, and
+shadowed by a folder of that name.
+
+Routes: `GET /api/rooms` → `{rooms: [{name, title, models: [names]}], line_max}`;
+`POST /api/talk {"room", "model"?, "history": [{"me", "her"}, …], "line", "stream"?, "again"?}`
+→ `{"her", "line", "model", "tokens", "seed", "dropped"?}`. The server is stateless: the page
+owns the history (and keeps it in `localStorage` per room) and sends it every time. Before the
+call the prompt is counted on that model's own `/tokenize` — the seed's count cached, 3.5
+characters a token when `/tokenize` doesn't answer — and **the oldest exchanges are dropped,
+never the seed, until it fits `window − n_predict − 16`**; `dropped` says how many, and the page
+fades them above one thin line where her memory now begins and stops sending them. His line has
+its whitespace collapsed to single spaces and any stop string cut out of it (a `”` typed into a
+room whose turns are quoted speech would close the quote in the document), and `line` in the
+answer is what went in; over 600 characters is a 400 carrying `max`. An empty reply is asked
+once more on another seed, and two empties are a 200 with `her: ""`, which the page draws as
+silence. The model down is a 502 `she is not answering` (what llama actually said goes to the
+log, never to the page — an error body is a place a prompt can ride out in). A regenerate is the
+same call with the last exchange left out of `history` and its line sent again, `again: true`
+only marking it in the record. On the mirror the route is refused by the same gate and in the
+same words as every other POST.
+
+**It streams.** The loom's own `/api/complete` never did, so this is a second, small path:
+`talk_open` / `talk_read` always ask llama for a streamed completion, and with `"stream": true`
+the answer to the page is `text/event-stream` on the POST itself — `start` (the line as it went
+in, tokens, dropped), `piece` per token, `again` when an empty first try is being asked again,
+`done` with the same object the plain call returns, `error`. Everything that can be refused is
+refused as plain json with a status before the first event, the model being down included. A
+page that walks away mid-reply closes llama's socket with it, and that exchange is not recorded.
+
+**Every exchange is one line in `shelf/talks/<room>/<YYYY-MM-DD>.jsonl`** — `ts`, `time`,
+`model`, `me`, `her`, `seed`, `tokens`, `dropped`, `tries`, `again` — tracked like the sittings,
+never the seed. Begin again clears the page; the record stays.
+
+The page: her lines in a serif on bare ground, his smaller in the ui sans, mint, behind a hair
+rule; no names on either. Enter sends, shift+enter is a newline; a breathing mint caret while she
+writes; `↻` after her last line asks again; `begin again` in the corner. Its palette is its own
+(near-black / paper, mint, pink for what went wrong, light blue for the memory line), by
+`prefers-color-scheme`, no toggle; dom-built, never innerHTML.
+
 ## Tests
 
 `tests/` — `loomtest.py` (every server route, notes and artifacts included, plus `Canvas` and
@@ -450,10 +526,14 @@ it moves — and `StreamEvents` for the held connection: a room and its reading 
 keepalive after it, and a client that walks away leaving the loom serving), `evatest.py`,
 `censustest.py`, `wiretest.py` (the chain: the alternation, the whole document on the wire every
 turn, the newline seam, the empty-line retry and swap, the beats and the `--first` rule, the
-window stopping the chain), `berserktest.py`, all against `tests/stub_llama.py`, a fake
+window stopping the chain), `berserktest.py`, `talktest.py` (the talk page: the prompt for 0, 1
+and several exchanges, the trim and its count, the estimate when `/tokenize` is gone — the stub's
+`no_tokenize` — the stop cut, the empty retry, the model down, rooms unknown and malformed, the
+models map, the record, the stream, the mirror's refusal, and the seed in no response), all
+against `tests/stub_llama.py`, a fake
 llama-server — whose `serve()` takes `n_ctx`, `model_path` and `lines` (its own script of
 answers, in order, an empty string meaning it answered nothing) per server; scratch
-dirs via the env overrides, never the real shelf. One process, all four:
+dirs via the env overrides, never the real shelf. One process, all of them:
 
 ```bash
 uv run --python 3.12 -m unittest discover -s eva/tests -p '*test.py'

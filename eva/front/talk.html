@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" media="(prefers-color-scheme:dark)" content="#0d0f0f">
+<meta name="theme-color" media="(prefers-color-scheme:light)" content="#f6f4ee">
+<title>talk</title>
+<style>
+  :root{
+    --bg:#0d0f0f; --ink:#e8ecec; --ghost:#6f7b7b; --line:#1f2525;
+    --mint:#b9e8c4; --pink:#f5c8fe; --blue:#99cccc;
+    color-scheme:dark;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f4ee; --ink:#1d2021; --ghost:#8a8a80; --line:#dedacd;
+      --mint:#37796a; --pink:#a8556f; --blue:#2b6190;
+      color-scheme:light;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%; margin:0;}
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display:flex; flex-direction:column; height:100dvh; overflow:hidden;
+  }
+  .col{width:100%; max-width:680px; margin:0 auto; padding:0 20px;}
+  header{flex-shrink:0; padding-top:max(18px, env(safe-area-inset-top));}
+  header .col{display:flex; align-items:baseline; gap:18px; padding-bottom:14px;
+    font-size:13px; color:var(--ghost); text-transform:lowercase;}
+  #title{color:var(--ghost); letter-spacing:.02em; overflow:hidden; text-overflow:ellipsis;
+    white-space:nowrap; min-width:0;}
+  #others{display:flex; gap:12px; min-width:0; overflow:hidden; white-space:nowrap;}
+  #others a{color:var(--ghost); text-decoration:none; opacity:.6;}
+  #others a:hover{color:var(--blue); opacity:1;}
+  .gap{flex:1;}
+  #models{display:flex; gap:2px;}
+  button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;
+    text-transform:lowercase;}
+  #models button{padding:1px 8px; border-radius:9px; color:var(--ghost);}
+  #models button:hover{color:var(--ink);}
+  #models button.on{color:var(--mint); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--mint) 45%, transparent);}
+  #anew{color:var(--ghost); white-space:nowrap;}
+  #anew:hover{color:var(--blue);}
+  #anew[hidden]{display:none;}
+  main{flex:1; overflow-y:auto; overscroll-behavior:contain;}
+  #talk{padding-top:18px; padding-bottom:36px;}
+  .ex{margin-top:30px;}
+  .ex:first-child{margin-top:0;}
+  .ex.gone{opacity:.34;}
+  .me{font-size:14.5px; line-height:1.55; color:var(--mint); white-space:pre-wrap;
+    overflow-wrap:anywhere; padding-left:13px;
+    border-left:1px solid color-mix(in srgb, var(--mint) 38%, transparent);}
+  .her{font-family:"Iowan Old Style", Georgia, "Times New Roman", serif; font-size:19.5px;
+    line-height:1.6; margin-top:10px; white-space:pre-wrap; overflow-wrap:anywhere;}
+  .her.silent{color:var(--ghost); letter-spacing:.5em; font-size:15px; line-height:31px;}
+  .caret{display:inline-block; width:7px; height:.95em; margin-left:2px; vertical-align:-.12em;
+    background:var(--mint); border-radius:1px; animation:breathe 1.1s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:.15;} 50%{opacity:.9;}}
+  @media (prefers-reduced-motion: reduce){.caret{animation:none; opacity:.6;}}
+  .again{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size:15px;
+    margin-left:4px; color:var(--ghost); opacity:.45; vertical-align:.08em;}
+  .again:hover, .again:focus-visible{color:var(--blue); opacity:1;}
+  .mem{height:1px; border:0; margin:30px 0 0;
+    background:linear-gradient(90deg, transparent, var(--blue) 18%, var(--blue) 82%, transparent);
+    opacity:.55;}
+  #note{margin-top:22px; font-size:13px; color:var(--pink); text-transform:lowercase;}
+  #note:empty{display:none;}
+  footer{flex-shrink:0; border-top:1px solid var(--line);
+    padding-bottom:max(16px, env(safe-area-inset-bottom));}
+  footer .col{display:flex; align-items:flex-end; gap:12px; padding-top:14px;}
+  textarea{flex:1; min-width:0; resize:none; border:0; outline:0; background:transparent;
+    color:var(--mint); caret-color:var(--mint); font:inherit; font-size:16px; line-height:1.5;
+    padding:4px 0; max-height:40vh;}
+  textarea::placeholder{color:var(--ghost); opacity:.8; text-transform:lowercase;}
+  #send{color:var(--ghost); font-size:17px; line-height:32px; padding:0 4px;}
+  #send:hover{color:var(--mint);}
+  #send:disabled{opacity:.3; cursor:default;}
+  :focus-visible{outline:1px solid var(--blue); outline-offset:3px; border-radius:3px;}
+  textarea:focus-visible{outline:0;}
+  @media (max-width:480px){
+    .col{padding:0 16px;}
+    .her{font-size:18px;}
+    header .col{gap:12px;}
+  }
+</style>
+</head>
+<body>
+<header><div class="col">
+  <span id="title"></span>
+  <span id="others"></span>
+  <span class="gap"></span>
+  <span id="models"></span>
+  <button id="anew" type="button" title="clear this conversation from the page" hidden>begin again</button>
+</div></header>
+<main id="scroll"><div class="col" id="talk"></div></main>
+<footer><div class="col">
+  <textarea id="line" rows="1" placeholder="say something" autocomplete="off" autofocus></textarea>
+  <button id="send" type="button" title="send">↵</button>
+</div></footer>
+<script>
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => {
+  const n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(text != null) n.textContent = text;
+  return n;
+};
+
+const state = {room:'', title:'', rooms:[], models:[], model:null, lineMax:600,
+               history:[], forgot:0, pending:null, busy:false, ctl:null, note:''};
+
+const storeKey = () => 'talk:' + state.room;
+
+function load(){
+  try{
+    const d = JSON.parse(localStorage.getItem(storeKey()) || 'null');
+    if(d && Array.isArray(d.history)){
+      state.history = d.history.filter(x => x && typeof x.me === 'string' && typeof x.her === 'string');
+      state.forgot = Math.min(Math.max(0, d.forgot | 0), state.history.length);
+      if(typeof d.model === 'string') state.model = d.model;
+    }
+  }catch(e){}
+}
+
+function save(){
+  try{
+    localStorage.setItem(storeKey(), JSON.stringify(
+      {history: state.history, forgot: state.forgot, model: state.model}));
+  }catch(e){}
+}
+
+function exchange(ex, i, last){
+  const box = el('div', 'ex' + (i < state.forgot ? ' gone' : ''));
+  box.append(el('div', 'me', ex.me));
+  const her = el('div', 'her');
+  if(ex.writing){
+    her.append(document.createTextNode(ex.her.trimStart()), el('span', 'caret'));
+    her.setAttribute('aria-busy', 'true');
+  }else if(ex.her){
+    her.textContent = ex.her;
+  }else{
+    her.classList.add('silent');
+    her.textContent = '···';
+    her.title = 'she said nothing';
+  }
+  if(last && !ex.writing && !state.busy){
+    const again = el('button', 'again', '↻');
+    again.type = 'button';
+    again.title = 'ask her again';
+    again.setAttribute('aria-label', 'ask her again');
+    again.addEventListener('click', askAgain);
+    her.append(document.createTextNode('\u00a0'), again);
+  }
+  box.append(her);
+  return box;
+}
+
+function draw(){
+  const talk = $('talk');
+  const rows = state.pending ? state.history.concat([state.pending]) : state.history;
+  talk.replaceChildren();
+  rows.forEach((ex, i) => {
+    if(i === state.forgot && i > 0){
+      const mem = el('hr', 'mem');
+      mem.title = 'her memory begins here';
+      talk.append(mem);
+    }
+    talk.append(exchange(ex, i, i === rows.length - 1));
+  });
+  const note = el('div', '', state.note);
+  note.id = 'note';
+  talk.append(note);
+  $('anew').hidden = !rows.length;
+  $('send').disabled = state.busy;
+  $('scroll').scrollTop = $('scroll').scrollHeight;
+}
+
+function drawHead(){
+  $('title').textContent = state.title || state.room;
+  document.title = state.title || state.room || 'talk';
+  const others = $('others');
+  others.replaceChildren();
+  state.rooms.filter(r => r.name !== state.room).forEach(r => {
+    const a = el('a', '', r.title);
+    a.href = '/talk/' + encodeURIComponent(r.name);
+    others.append(a);
+  });
+  const models = $('models');
+  models.replaceChildren();
+  if(state.models.length > 1){
+    state.models.forEach(name => {
+      const b = el('button', name === state.model ? 'on' : '', name);
+      b.type = 'button';
+      b.addEventListener('click', () => { state.model = name; save(); drawHead(); });
+      models.append(b);
+    });
+  }
+}
+
+function grow(){
+  const t = $('line');
+  t.style.height = 'auto';
+  t.style.height = t.scrollHeight + 'px';
+}
+
+async function say(line, again, undo){
+  state.busy = true;
+  state.note = '';
+  state.pending = {me: line, her: '', writing: true};
+  state.ctl = new AbortController();
+  draw();
+  const fail = why => {
+    state.pending = null;
+    state.busy = false;
+    state.note = why;
+    undo();
+    draw();
+  };
+  const finish = d => {
+    state.history.push({me: typeof d.line === 'string' ? d.line : line, her: d.her || ''});
+    state.forgot = Math.min(state.history.length - 1, state.forgot + (d.dropped | 0));
+    state.pending = null;
+    state.busy = false;
+    save();
+    draw();
+    $('line').focus();
+  };
+  const body = {room: state.room, history: state.history.slice(state.forgot), line, stream: true};
+  if(state.models.length) body.model = state.model;
+  if(again) body.again = true;
+  let res;
+  try{
+    res = await fetch('/api/talk', {method: 'POST', signal: state.ctl.signal,
+      headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+  }catch(e){
+    if(e.name !== 'AbortError') fail('she is not answering');
+    return;
+  }
+  const ctype = res.headers.get('Content-Type') || '';
+  if(!ctype.includes('event-stream')){
+    let d = {};
+    try{ d = await res.json(); }catch(e){}
+    if(!res.ok || d.error || typeof d.her !== 'string') fail(d.error || 'she is not answering');
+    else finish(d);
+    return;
+  }
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let buf = '', done = null, broke = null;
+  try{
+    for(;;){
+      const got = await reader.read();
+      if(got.done) break;
+      buf += dec.decode(got.value, {stream: true});
+      let cut;
+      while((cut = buf.indexOf('\n\n')) >= 0){
+        const block = buf.slice(0, cut);
+        buf = buf.slice(cut + 2);
+        let kind = '', data = '';
+        block.split('\n').forEach(row => {
+          if(row.startsWith('event:')) kind = row.slice(6).trim();
+          else if(row.startsWith('data:')) data += row.slice(5).trim();
+        });
+        let d = {};
+        try{ d = JSON.parse(data || '{}'); }catch(e){}
+        if(kind === 'start'){
+          if(typeof d.line === 'string') state.pending.me = d.line;
+          draw();
+        }else if(kind === 'piece'){
+          state.pending.her += d.text || '';
+          draw();
+        }else if(kind === 'again'){
+          state.pending.her = '';
+          draw();
+        }else if(kind === 'done'){
+          done = d;
+        }else if(kind === 'error'){
+          broke = d.error || 'she is not answering';
+        }
+      }
+    }
+  }catch(e){
+    if(e.name === 'AbortError') return;
+    broke = broke || 'she is not answering';
+  }
+  if(done) finish(done);
+  else fail(broke || 'she is not answering');
+}
+
+function send(){
+  if(state.busy || !state.room) return;
+  const t = $('line');
+  const line = t.value.trim();
+  if(!line) return;
+  if(line.length > state.lineMax){
+    state.note = 'that line is too long, ' + state.lineMax + ' characters is the most a line can be';
+    draw();
+    return;
+  }
+  t.value = '';
+  grow();
+  say(line, false, () => { if(!t.value){ t.value = line; grow(); } });
+}
+
+function askAgain(){
+  if(state.busy || !state.history.length) return;
+  const old = state.history.pop();
+  const forgot = state.forgot;
+  state.forgot = Math.min(state.forgot, state.history.length);
+  say(old.me, true, () => { state.history.push(old); state.forgot = forgot; });
+}
+
+function beginAgain(){
+  if(state.ctl) state.ctl.abort();
+  state.history = [];
+  state.forgot = 0;
+  state.pending = null;
+  state.busy = false;
+  state.note = '';
+  save();
+  draw();
+  $('line').focus();
+}
+
+async function start(){
+  const tail = decodeURIComponent(location.pathname.replace(/^\/talk(\.html)?\/?/, '').replace(/\/+$/, ''));
+  let d = {rooms: []};
+  try{
+    const r = await fetch('/api/rooms');
+    d = await r.json();
+  }catch(e){
+    state.note = 'the rooms are not answering';
+  }
+  state.rooms = Array.isArray(d.rooms) ? d.rooms : [];
+  if(d.line_max > 0) state.lineMax = d.line_max;
+  const here = state.rooms.find(r => r.name === tail) || (tail ? null : state.rooms[0]);
+  state.room = here ? here.name : tail;
+  state.title = here ? here.title : tail;
+  state.models = here && Array.isArray(here.models) ? here.models : [];
+  $('line').maxLength = state.lineMax;
+  load();
+  if(!state.models.includes(state.model)) state.model = state.models[0] || null;
+  drawHead();
+  draw();
+}
+
+$('line').addEventListener('input', grow);
+$('line').addEventListener('keydown', e => {
+  if(e.key === 'Enter' && !e.shiftKey && !e.isComposing){
+    e.preventDefault();
+    send();
+  }
+});
+$('send').addEventListener('click', send);
+$('anew').addEventListener('click', beginAgain);
+start();
+</script>
+</body>
+</html>

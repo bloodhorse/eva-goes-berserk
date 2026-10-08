@@ -1,0 +1,25 @@
+{
+  "title": "hearth",
+  "seed": "seed.txt",
+  "turn": {
+    "before": "I said, “",
+    "after": "”\n\nShe said, “"
+  },
+  "close": "”\n\n",
+  "stop": [
+    "”",
+    "\n\n"
+  ],
+  "sampler": {
+    "temperature": 1.1,
+    "min_p": 0.08,
+    "dry_multiplier": 0.8,
+    "dry_base": 1.75,
+    "dry_allowed_length": 2,
+    "n_predict": 90
+  },
+  "window": 1024,
+  "models": {
+    "magdra": "http://100.69.218.90:8086"
+  }
+}
