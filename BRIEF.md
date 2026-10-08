@@ -235,7 +235,7 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    since 2026-10-07 the text for it is in hand: a pile of modern short fiction several times
    what she has read of that kind (magazines, podcasts, anthologies, serials), deduplicated,
    sieved and assembled into shelves (`school/CLAUDE.md`, the path; its size is
-   `school/sieve/report.md`). It is **`day4`'s**, running since 2026-10-07: a short dense run from `day3`'s
+   `school/sieve/report.md`). It was **`day4`'s**, 2026-10-07 to 2026-10-08: a short dense run from `day3`'s
    save, new fiction a little over half of it, fan fiction at zero, the other old shelves cut
    small — the recipe is `school/day4.md`; what comes after it is bekh's call once he has read
    her (`school/CLAUDE.md`, Next). The limit is text again: at a safe number of reads the pile is

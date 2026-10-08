@@ -85,10 +85,14 @@ a=$(ssh -i $KEY $H "sha256sum /opt/llama/magdra/ckpt-$N-final.pt | cut -d' ' -f1
 ls -la ~/tower/forge/eva-goes-berserk/school/models/$N/model-latest-q8_0.gguf && cat ~/tower/forge/eva-goes-berserk/school/models/$N/latest   # the final snapshot on the mac
 ```
 
-This is how `day3`'s save went when it was stopped. Then the final snapshot is copied into the
+This is how `day3`'s save went when it was stopped, and `day4`'s at its end (streamed from
+`runs/day4/ckpt.pt`; the first line above gives it its own name on the host). Then the final snapshot is copied into the
 archive's `models/<run>/` under its own name, and the save two runs back is deleted on the host
 on bekh's word (`runs/<run>/ckpt.pt` of the run just ended holds the same bytes as its named
-copy; it is the resume path for that run and goes when nobody would resume it).
+copy; it is the resume path for that run and goes when nobody would resume it). With no run in
+progress the two saves the rule keeps on the host are the last run's and the one it started from:
+`day4`'s and `day3`'s final. `runs/day3/ckpt.pt` is `ckpt-day3-final.pt` a second time; nobody
+would resume `day3` now, so it can go on bekh's word once the mini's copy of `day4` says MATCH.
 
 What is where today is three commands, never a list in a doc:
 

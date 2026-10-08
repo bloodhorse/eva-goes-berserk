@@ -36,10 +36,10 @@ from any save with a fresh schedule, so she keeps what she has and continues on 
 
 **Where she stands** is a query, never a sentence here: `night/mon.py <run> --once`, the run's
 page, `night/turn.py <run>` (`night/CLAUDE.md`). Four runs so far — `night1` from random weights,
-`day2`, `day3` on ds-dev2 (stopped by decision two fifths through), and `day4`, started from
-`day3`'s save on 2026-10-07; what each was is in `night/CLAUDE.md`, what each read in
+`day2`, `day3` on ds-dev2 (stopped by decision two fifths through), and `day4`, a short dense run from
+`day3`'s save that finished on 2026-10-08; what each was is in `night/CLAUDE.md`, what each read in
 `SHELVES.md`. Her age in tokens is `tokens_seen` summed over the runs (about 1.77 billion when
-`day3` stopped); it counts any tokens and says how much she has eaten, not what she has become
+`day3` stopped, about 2.17 billion after `day4`); it counts any tokens and says how much she has eaten, not what she has become
 (`night/CLAUDE.md`, the machines).
 
 **How she writes**, as last read (2026-10-07, the sampled draws of steps 911, 15,947 and 25,780;
@@ -80,10 +80,10 @@ read — and that is the recitation meter on the run page.
 
 ## What is running
 
-`day4` on ds-dev2: wrapper, trainer and guard on the host, the watcher on the mac, no puller
-(`night/CLAUDE.md`), looked at once an hour by a session cron that a fresh session re-arms with
-the prompt in `night/CLAUDE.md`. Nothing on ds-dev2 is
-restarted, stopped or changed without bekh's word.
+Nothing: `day4` wrote DONE on 2026-10-08 and its guard went down; the card is free and still
+ours. A run, when one is alive, is wrapper, trainer and guard on the host and the watcher on the
+mac, looked at once an hour by a session cron that a fresh session re-arms with the prompt in
+`night/CLAUDE.md`. Nothing on ds-dev2 is restarted, stopped or changed without bekh's word.
 
 ## Where things are
 
@@ -146,35 +146,26 @@ health, dedupe it, shelve it, with the same care whatever door it came through.
 
 ## Next
 
-**`day4` is running on ds-dev2.** Where it is: `night/mon.py day4 --once`, the page
-`school-day4.html`, `night/turn.py day4`. The recipe is **`day4.md`** (with the baseline every
-shelf started from), the hands were **`night/day4-RUN.md`**, the watching is `night/CLAUDE.md`
-(the hourly look's prompt is `day4`'s). It started on 2026-10-07 about 15:25 UTC from
-`ckpt-day3-final.pt`, `day3`'s save at the step it was stopped on, and is planned as 16,215 steps;
-its end is now plus the newest log line's `eta`.
+**`day4` is done, and the next thing is bekh reading her.** It ran its 16,215 steps without a
+restart and ended on 2026-10-08. What it was and how it went is **`day4.md`** (the recipe, the
+baseline, and the table of where every shelf ended) and `night/CLAUDE.md` (the runs so far). Her
+final snapshot is `models/day4/model-16215-q8_0.gguf`; her page, `school-day4.html`, was built
+once by hand after it and carries the last draws and the meter. No read of the final snapshot is
+written down yet: "How she writes" above is still `day3`'s and is overwritten by the next read.
 
-What it is, decided with bekh on 2026-10-07: an experiment with `day3`'s save as its fallback, a
-somewhat inflated character acceptable; **short and dense**, about four hundred million tokens;
-**new fiction a little over half of it** at about two and a half reads; **poems in**; **the
-serials their own shelf, read about once**; **the anthologies their own shelf**; **fan fiction at
-zero**; pulp sci-fi and plain Gutenberg fiction a few percent together; **the light novels kept
-small**, about 3%, so the anime-adjacent register does not vanish; **old fantasy way down but not
-out**, about a tenth, for the grave cadence; **a peak rate of 8e-5**, `day3`'s own, with 300
-warm-up steps, so that the diet is the only thing that changes; **Strange Horizons and the
-released authors at one read**; **forty-eight held-out windows a shelf** (`EVAL_ITERS=152`), so
-`day4`'s curves do not continue `day3`'s; **the rough anthologies out**, on the line at weight
-zero. The old shelves drifting up is the plan; the new fiction getting worse, or a long lifted
-run on the meter, is not.
+What the run settled: the new fiction fell at every eval for three quarters of the run, then went
+flat on held-out at a little under two reads while its gap to training loss kept opening, so the
+read limit for that shelf is about two, and the anthologies met it first and widest; old fantasy
+lost its cadence in the first hour at a tenth of the mix, was doubled through the weights file at
+step 3,500 and ended below where it started; no run of twelve words was lifted in any snapshot.
 
-Still a guess, and what the run measures: **the reading limit**, about two and a half reads of new
-fiction; the recitation meter and the gap between training and held-out loss on `modern` and
-`anth` are the gauges.
-
-**When `day4` ends** (`night/CLAUDE.md`, when a run ends): build its page once by hand so the last
-snapshot is drawn and metered; one trainable copy to the mini with a sha256 verdict
-(`PRESERVATION.md`); bekh reads her through the sampler and the meter. Then his call between
-three: the four-read run (`day4.md`, the variant), more hours from where she lands, or a gentler
-mix from `day3`'s save.
+**Then his call between three**: the four-read run (`day4.md`, the variant — though the run says
+four is past the limit for this pile), more hours from where she lands, or a gentler mix from
+`day3`'s save. To carry into whichever: Strange Horizons and the released authors were held to
+one read on a premise that turned out false (`day3` was to have read them four times and was
+stopped at about one and a half), so they have room; old fantasy wants about a fifth, not a
+tenth, if the archaic register is to hold against a diet this modern; and a change of mix has
+most pull early, at the top of the rate (`PITFALLS.md` 7.10).
 
 **The next large piece of work is `docs/brief-six-thousand.md`**: choosing a library of thousands
 of books by bekh's taste. The session that takes it up begins by rewriting that brief with him.
@@ -183,7 +174,8 @@ of books by bekh's taste. The session that takes it up begins by rewriting that 
 (`library.md`); the mirror after each batch (`PRESERVATION.md`); the dedupe's plan is slow since
 the big shelves joined its index (`dedupe/CLAUDE.md`); the sieve's known weak spots
 (`sieve/CLAUDE.md`); `night/watch.sh` builds the page before it pulls a snapshot, so a run's last
-snapshot needs the page built by hand.
+snapshot needs the page built by hand; the page does not say how old each of its blocks is
+(`night/CLAUDE.md`, the page).
 
 **The finishing-school talk**, not yet had — the open questions: a short low-rate pass against an
 adapter with a dial (`SERVE.md` was never written; check the per-request LoRA scale on our

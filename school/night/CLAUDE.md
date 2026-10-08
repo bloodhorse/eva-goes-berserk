@@ -27,7 +27,7 @@ Three on the training host, two on the mac. The mac's scripts and `mon.py` find 
 - **`run3.sh <name>`** / **`run4.sh <run> [init.pt] [hours]`** (host) — the trainer in a restart
   loop: it resumes from `runs/<name>/ckpt.pt`, stops on DONE or on a deliberate STOPPED, pushes
   silently at start and end. `run3.sh` is `day3` as it ran (batch 6 × 4, 8e-5, `--init
-  ckpt-7896.pt`, the mix and fifty hours written in the file); `day4` runs under `run4.sh`. `run4.sh` is the same loop with
+  ckpt-7896.pt`, the mix and fifty hours written in the file); `day4` ran under `run4.sh`. `run4.sh` is the same loop with
   nothing hard-coded: the mix from `MIX`, else `MIXFILE`, else `night/<run>/mix.txt`, else
   `runs/<run>/mix.txt` (one `bin:weight` a line); `STEPS=` or hours; `LR`, `WARMUP`, `BATCH`,
   `ACCUM`, `EVAL_EVERY`, `EVAL_ITERS`, `LOG_EVERY`, `CKPT_MINUTES` as environment overrides with
@@ -77,6 +77,13 @@ passes pandoc its own `header-includes`; the scheme itself is set in CSS and wor
 the real `night/<run>/` inputs to a temp path, replace the file only when that exits clean, then
 run it once the way `watch.sh` does (`uv run -q --python 3.12 python night/page.py <run> >
 /tmp/x.md`) and look at the exit status and the size.
+
+**Wanted, not built: each block saying how old it is.** The page runs on three clocks and labels
+none of them: the epigraph under her name is fixed (one of the first things she wrote, on
+`night1`); "the last thing she said" and the sampled draws change once an hour, with the
+snapshot, and can be an hour behind the step in the cards; the raw draws change at every save,
+about twenty minutes. bekh took the hourly ones for stale. It matters most after a change of mix:
+the first sampled draws that can show it are from the first snapshot cut after it.
 
 ## The recitation meter — `meter.py`
 
@@ -143,8 +150,10 @@ cd ~/tower/forge/eva-goes-berserk/school && uv run -q --python 3.12 python night
 ## The hourly look
 
 bekh wants a run looked at on a clock. It is a session cron and dies with the session; a fresh
-session re-arms it at twelve past the hour (`12 * * * *`; why hourly and why that minute is
-`PITFALLS.md` 7.7) with this prompt, the run's name changed as needed:
+session re-arms it with `12 * * * *`, which the scheduler runs about a quarter of an hour after
+that minute, every hour (why hourly, and that offset, are `PITFALLS.md` 7.7). No run is alive
+now, so nothing is armed; this is the prompt `day4` was watched with, and the template for the
+next:
 
 > Check magdra's day4 run (read school/night/CLAUDE.md and school/PITFALLS.md section 7 once if
 > you have not this session). day4 started 2026-10-07 about 15:25 UTC from day3's save at step
@@ -251,14 +260,23 @@ What any run is doing is `mon.py`, never a sentence here; this is what each was.
   where she really stood. Last snapshot `model-33509`; its save is `ckpt-day3-final.pt` on the
   host and in the mini's archive, and `runs/day3/ckpt.pt` holds the same bytes, which is where a
   resume of `day3` itself would start from.
-- **`day4`** (ds-dev2, started 2026-10-07 about 15:25 UTC): warm start from `ckpt-day3-final.pt`
-  at 8e-5 with 300 warm-up steps — a small step up from the 5.6e-5 she was living at — batch
-  6 × accum 4, 16,215 steps, 398.5 million tokens, about ten hours. Nineteen shelves on the line
-  (`../day4.md`, the mix; on the host `runs/day4/mix.txt`): new fiction a little over half at two
-  and a half reads, fan fiction and the rough anthologies at zero, the other old shelves cut
-  small. The first run on the new trainer (`weights.json`, training loss per shelf) and under
-  `run4.sh`, with evals every 500 steps on forty-eight windows a shelf. No puller. The old kit
-  is `kit-before-day4/` on the host.
+- **`day4`** (ds-dev2, 2026-10-07 15:25 UTC to 2026-10-08 01:09 UTC, ran to its end): warm
+  start from `ckpt-day3-final.pt` at 8e-5 with 300 warm-up steps — a small step up from the
+  5.6e-5 she was living at — batch 6 × accum 4, 16,215 steps, 398.5 million tokens in 9 h 20 min
+  with no restart, 13.7 of the card's 16.3 GB; about 2.17 billion tokens in her life at its end.
+  Nineteen shelves on the line (`../day4.md`, the mix): new fiction a little over half, fan
+  fiction and the rough anthologies at zero, the other old shelves cut small. The first run on
+  the new trainer and under `run4.sh`, with evals every 500 steps on forty-eight windows a shelf,
+  no puller, and the first use of `weights.json`: old fantasy from a tenth to a fifth at step
+  3,500, after her first snapshot answered the archaic seed in a flat modern voice; its held-out
+  number turned at the next eval and ended under its baseline. The new shelves fell for three
+  quarters of the run and then went flat on held-out while their gaps to training loss kept
+  opening; the starved old shelves rose for the first hours and were level by step 6,500; the
+  detector never confirmed a turn; the meter found no lifted run of twelve words in ten
+  snapshots. Overall held-out 3.250 at the end; every shelf's end against its baseline is the
+  table in `../day4.md`. Last snapshot `model-16215`, kept on the mac under that name; its save
+  is `runs/day4/ckpt.pt` on the host and in the mini's archive. The old kit is
+  `kit-before-day4/` on the host.
 
 ## The machines
 

@@ -196,7 +196,7 @@ surviving line already folded into the state file it fed (bekh, 2026-09-26).
   look), `scratch/` (the trainer), `data/` (the book converter and the shelf assembler),
   `dedupe/` (what repeats across shelves, and how much text there really is), `sieve/` (fiction
   from the rest), `modern/` (the shelves we fetched). `school/SHELVES.md` is what she reads,
-  `school/day4.md` the next run's recipe, `school/PRESERVATION.md` what is kept and where,
+  `school/day4.md` the last run's recipe and how it went, `school/PRESERVATION.md` what is kept and where,
   `school/PITFALLS.md` what bit, by stage.
 - **`dreamshit/`** — the dream stream's published face (`https://dreamshit.net`, public since 2026-09-22; `https://dreamshit.x` is its private twin): the
   front that reads `/api/stream`, its looks, fonts and screenshots. **`dreamshit/CLAUDE.md`** is the doc.
@@ -315,8 +315,8 @@ day (`shelf/gpt/`, `school/modern/`, `school/inbox/anth/`); a deduplicator with 
 a kind sieve say how much of it is real (`school/dedupe/report.md`, `school/sieve/report.md`); a
 recitation meter on her page says whether she quotes what she has read; the trainer learned to
 change a mix inside a run and to log training loss per shelf. `day3` was stopped two fifths through, flat on
-the old diet, and **`day4`**, a short dense run with that prose as the main course, started from
-its save the same night — `school/CLAUDE.md`, Next. At a safe number of reads the whole pile is
+the old diet, and **`day4`**, a short dense run with that prose as the main course, ran from
+its save the same night and finished by morning — `school/day4.md`, how it went; `school/CLAUDE.md`, Next. At a safe number of reads the whole pile is
 ten hours of training, so the limit is text again, and `docs/brief-six-thousand.md` is the next
 large work. What he might have read to him
 out of it is the book club's queue, `~/tower/shittalk/fable-book-club/reading-list.md`.

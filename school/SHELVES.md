@@ -1,7 +1,7 @@
 # the shelves
 
 What she reads: every shelf, what it is, how big, and what each run gave it. The rules a mix is
-made by are at the bottom. The recipe of the run now going is `day4.md`; how a shelf is made is
+made by are at the bottom. The recipe of the last run, and how it went, is `day4.md`; how a shelf is made is
 `data/CLAUDE.md`; where the text and the bins are kept is `PRESERVATION.md`.
 
 ## The shelves she has read
@@ -67,8 +67,8 @@ worlds with *Pact*; *Pact* has gone to `serials`.
 - **A small shelf read five times is being memorised.** The big plain shelves exist so the voice
   shelves can be read once or twice. Readings = the shelf's share × the run's tokens ÷ the
   shelf's tokens, multiplied out for every shelf before a run (`PITFALLS.md` 4.1). The limit is
-  a rule of thumb from `day3`; `day4` puts new fiction at two and a half reads to measure where
-  it really turns.
+  a rule of thumb from `day3`; `day4` put new fiction at two and a half reads to measure where
+  it really turns, and it went flat on held-out at a little under two (`day4.md`, how it went).
 - **A shelf's share is capped by its size**, and cutting the big shelves does not hand their
   share to the small ones: the way to make chosen prose the main course is a shorter run
   (`PITFALLS.md` 4.2, 4.6). `day3` held every small shelf to about four readings over two billion
