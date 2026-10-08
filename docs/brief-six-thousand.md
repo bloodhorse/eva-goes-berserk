@@ -19,6 +19,16 @@ the files stops being the hard part. Choosing them is. Nobody picks six thousand
 time, and the way he has thought about books until now, in ones and tens, does not reach that far.
 The task is to find a way of choosing at that size that is still his taste and not a blur.
 
+One thing that fourth run seems to say about what to choose, offered as a reading and not a
+finding: ten hours of short magazine fiction taught her to see a thing clearly and stay with it
+— one person, one place, an image held — and did nothing for the voice bekh wants most, a grand
+thing named in passing by someone who does not stop to admire it. That move seems to live in
+novels (Banks, Gibson, Rajaniemi) far more than in stories. If that holds, the library is not
+"more good prose"; it is chosen for what she still lacks, and the first thing to get clear with
+him is what those lacks are (`school/CLAUDE.md`, how she writes). The same run put a number on
+how far a book goes: text of this kind is worth about two readings at her size, so a library of
+N tokens is about 2N tokens of training (`school/SHELVES.md`).
+
 ## The stance
 
 **His taste, built up in conversation, is the source.** What he is going for can be talked into
