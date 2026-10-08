@@ -69,6 +69,11 @@ worlds with *Pact*; *Pact* has gone to `serials`.
   shelf's tokens, multiplied out for every shelf before a run (`PITFALLS.md` 4.1). The limit is
   a rule of thumb from `day3`; `day4` put new fiction at two and a half reads to measure where
   it really turns, and it went flat on held-out at a little under two (`day4.md`, how it went).
+- **A run's length is not chosen; it falls out of the text.** Prose of the kind she is being
+  made of is worth about two readings at her size, so a library of N tokens is about 2N tokens
+  of useful run, plus whatever share the kept shelves take: ninety million tokens of new fiction
+  was ten hours on ds-dev2, and seven hundred million of chosen books would be about thirty-five.
+  "How long is the next run" is "how much of the right text is there".
 - **A shelf's share is capped by its size**, and cutting the big shelves does not hand their
   share to the small ones: the way to make chosen prose the main course is a shorter run
   (`PITFALLS.md` 4.2, 4.6). `day3` held every small shelf to about four readings over two billion

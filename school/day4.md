@@ -163,8 +163,11 @@ STEPS=16215
 adds the two (and leaves out `night1` and `day2`, which read fantasy, sci-fi and the light novels
 a further one to three times and the net shelves under one).
 
-**The variant at 4 reads of the new fiction** — every other shelf reads exactly the tokens it
-reads in the main plan, only `modern` and `anth` grow, and the run grows with them:
+**The variant at 4 reads of the new fiction** — retired by the run itself: new fiction went flat
+on held-out at a little under two reads (*How it went*), so four would be two reads past the
+point where she stops learning from it. The arithmetic stays as it was worked out — every other
+shelf reads exactly the tokens it reads in the main plan, only `modern` and `anth` grow, and the
+run grows with them:
 
 | shelf | what | bin | train tokens | weight | share | token-reads | reads | read in day3 | lifetime |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|

@@ -711,11 +711,11 @@ written into a doc goes stale, and one worked out in the head came out seven hou
 **7.5 Only the newest snapshot exists.** By bekh's word the guard deletes the older ones. An age
 worth keeping has to be copied aside while it is the newest.
 
-**7.5b The loom's server loads a file once.** `eva.x` fans on whatever `llama-server` on 8086
-had when it started, not on `models/<run>/model-latest-q8_0.gguf` as it changes under it; the
-walk at step 911 was made that way on purpose, and a day later the loom was still her at step
-911. Restart the server by hand for a new hour (`night/CLAUDE.md`, sitting with her on the
-loom). A job that follows every snapshot was written and taken out again: bekh does not want it.
+**7.5b The loom's server loads a file once.** `eva.x` fans on whatever the server that serves
+her had when it started, not on the newest snapshot as it changes under it; the walk at step
+911 was made that way on purpose, and a day later the loom was still her at step 911. She is
+served from the mini now, moved by hand to a run's final snapshot when it ends
+(`night/CLAUDE.md`, sitting with her on the loom). A job that follows every snapshot was written and taken out again: bekh does not want it.
 
 **7.6 The mac's half needs the mac.** `watch.sh` and `pull_ckpt.sh` run under `caffeinate`, need
 the VPN up and `KEY` in the environment they are started from; when the mac sleeps the page

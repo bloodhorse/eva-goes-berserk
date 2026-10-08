@@ -92,7 +92,9 @@ on bekh's word (`runs/<run>/ckpt.pt` of the run just ended holds the same bytes 
 copy; it is the resume path for that run and goes when nobody would resume it). With no run in
 progress the two saves the rule keeps on the host are the last run's and the one it started from:
 `day4`'s and `day3`'s final. `runs/day3/ckpt.pt` is `ckpt-day3-final.pt` a second time; nobody
-would resume `day3` now, so it can go on bekh's word once the mini's copy of `day4` says MATCH.
+would resume `day3` now, and the mini's copy of `day4` said MATCH, so it can go on bekh's word;
+he has been told and has not given it. The snapshot the mini serves her from
+(`~/models/` there, on the SSD; `night/CLAUDE.md`) is a working copy and no part of the archive.
 
 What is where today is three commands, never a list in a doc:
 

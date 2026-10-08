@@ -475,7 +475,9 @@ f=$(hx 'cd /opt/llama/magdra && s=$(grep -o -E "^(DONE|STOPPED) step=[0-9]+" run
 [ -n "$f" ] && [ "$(cat models/day3/latest)" = "$f" ] && echo "MATCH the mac holds day3's last snapshot" || echo "MISMATCH the mac's snapshot is $(cat models/day3/latest)"
 ```
 
-Serve her to the loom again:
+Serve her to the loom again — she is served from the mini now (`night/CLAUDE.md`, sitting with
+her on the loom, has the three lines that put another snapshot there); the mac-local way, kept
+for a quick look without the mini:
 
 ```bash
 kill $(lsof -tnP -iTCP:8086 -sTCP:LISTEN) 2>/dev/null; (nohup llama-server -m models/day3/model-latest-q8_0.gguf -c 1024 -ngl 99 --host 127.0.0.1 --port 8086 --no-jinja > night/day3/serve.out 2>&1 < /dev/null &)
@@ -501,7 +503,8 @@ step 7's with `day3b`.
 
 ## the 4-read variant
 
-The same runbook with the variant's mix and length from `day4.md`: its two weights in
+Retired: `day4` showed new fiction goes flat at about two reads (`day4.md`, how it went). Kept
+as the pattern for running a variant of a recipe. The same runbook with the variant's mix and length from `day4.md`: its two weights in
 `runs/day4/mix.txt` (`bins2/modern.bin` and `bins2/anth.bin`), `21574` for `16215`
 everywhere, and in step 3 `WANT` for those two shelves at 4.0 and `5302` for the sum of
 the weights.
