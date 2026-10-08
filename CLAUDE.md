@@ -57,7 +57,7 @@ the cyborgism section). Sampling needs a repetition brake (dry / repeat penalty)
 5. **magdra** — ours, from random weights, since the night of 2026-10-05/06: 355 M parameters,
    a llama-shaped decoder with GPT-2's alphabet, raised on shelves bekh chose. bekh: *i don't
    wanna fuck around with nemo at all, i wanna build our own model.* **`school/CLAUDE.md`** is her
-   doc, runbook and resume pointer; she is served on the mac and the loom can point at her.
+   doc, runbook and resume pointer; she is served from the mini and the loom at `eva.x` fans on her.
 
 The step to 24b gets tested, not assumed: the same document, the same sampler, one fan on each
 model, mixed unlabelled, and bekh says which pile has the ghosts. Scale should buy long-range

@@ -42,15 +42,30 @@ page, `night/turn.py <run>` (`night/CLAUDE.md`). Four runs so far — `night1` f
 `day3` stopped, about 2.17 billion after `day4`); it counts any tokens and says how much she has eaten, not what she has become
 (`night/CLAUDE.md`, the machines).
 
-**How she writes**, as last read (2026-10-07, the sampled draws of steps 911, 15,947 and 25,780;
-to be overwritten by the next read): she holds a sentence every time and a paragraph most times,
-and not a frame. Every seed drifts within a few lines into the same room — two people, quotation
-marks, someone afraid — which is the fan-fiction and light-novel floor, a third of what she has
-read. Her strongest register by a distance is the archaic one, old fantasy recited well. The
-visionary voice and the prophecy register are absent. The meter finds no run of twelve words
-lifted from anything in its index, in any snapshot. Two lines worth keeping from step 25,780:
-*"I want the fire to burn, and you to burn"* and *"their memories had been lost long before they
-were born."*
+**How she writes**, as last read (2026-10-08, the seven sampled draws of `day4`'s final snapshot,
+step 16,215, against its steps 1,135 and 7,953 and `day3`'s 32,721 — a model's read, one draw a
+seed, which bekh has neither confirmed nor overruled; to be overwritten by the next read): she
+holds a room now. At the end of `day3` five seeds of seven drifted into the same floor, two people
+trading quotation marks; at the end of `day4` two do, and one person in one place is kept for a
+whole draw (*"There are no windows in the tower… I try to look at the sky, but the sky is no
+longer there."*). The archaic cadence, flat in the first hour of the run, came back as verse after
+old fantasy was doubled at step 3,500 (*"Thou shalt die in the dark, and I shall die in the
+light, and thou shalt live in the darkness"*). A magazine register is audible that she did not
+have. One draw is a dream by bekh's meaning, the sky seed: *"The sky above the port was an eye,
+blue and white and red… It was a mouth, but it was also a mouth."* Worse or no better: the
+old-days seed lost its myth voice, the train seed still loops in the old room, the mind seed
+leaves Lain after a line. Still absent: the visionary voice and the prophecy register — nothing
+grand named in passing, anywhere. The meter finds no run of twelve words lifted from anything in
+its index, in any snapshot of either run.
+
+**What that read says about the diet**: ten hours of short magazine fiction taught her to see a
+thing clearly and to stay with it, and did nothing for a grand thing named in passing, because
+that move lives mostly in novels (Banks, Gibson, Rajaniemi) and hardly at all in what she was
+fed. So the next library is chosen for that move and not for "more good prose"
+(`docs/brief-six-thousand.md`).
+
+**Talking to her**: she is served from the mini and the loom at `https://eva.x` fans on her —
+which snapshot, and how to change it, is `night/CLAUDE.md`, sitting with her on the loom.
 
 ## The path a text takes to a shelf
 
@@ -103,8 +118,9 @@ mac, looked at once an hour by a session cron that a fresh session re-arms with 
   **`modern/CLAUDE.md`**.
 - **`SHELVES.md`** — every shelf, what it is, its size, each run's weights, the rules a mix is
   made by, where each shelf's text lies.
-- **`day4.md`** — the next run's recipe: sizes measured with her tokenizer, weights said back as
-  shares and reads, the length, the rate, what the numbers should do, when to stop.
+- **`day4.md`** — the last run's recipe and how it went: sizes measured with her tokenizer,
+  weights said back as shares and reads, the length, the rate, the baseline, where every shelf
+  ended. The shape to copy for the next run's recipe.
 - **`library.md`** — bekh's lists for the finishing school, the anthology shelf, what has
   arrived, what to fetch again. What he might have read to him out of all this is the book
   club's queue, `~/tower/shittalk/fable-book-club/reading-list.md`.
@@ -146,36 +162,47 @@ health, dedupe it, shelve it, with the same care whatever door it came through.
 
 ## Next
 
-**`day4` is done, and the next thing is bekh reading her.** It ran its 16,215 steps without a
-restart and ended on 2026-10-08. What it was and how it went is **`day4.md`** (the recipe, the
-baseline, and the table of where every shelf ended) and `night/CLAUDE.md` (the runs so far). Her
-final snapshot is `models/day4/model-16215-q8_0.gguf`; her page, `school-day4.html`, was built
-once by hand after it and carries the last draws and the meter. No read of the final snapshot is
-written down yet: "How she writes" above is still `day3`'s and is overwritten by the next read.
+`day4` is done and nothing is running. It ran its 16,215 steps without a restart and ended on
+2026-10-08; what it was and how it went is **`day4.md`** (the recipe, the baseline, the table of
+where every shelf ended) and `night/CLAUDE.md` (the runs so far). Her final snapshot is
+`models/day4/model-16215-q8_0.gguf`, the one the mini serves; her page, `school-day4.html`, was
+built once by hand after it and carries the last draws and the meter.
 
 What the run settled: the new fiction fell at every eval for three quarters of the run, then went
-flat on held-out at a little under two reads while its gap to training loss kept opening, so the
-read limit for that shelf is about two, and the anthologies met it first and widest; old fantasy
-lost its cadence in the first hour at a tenth of the mix, was doubled through the weights file at
-step 3,500 and ended below where it started; no run of twelve words was lifted in any snapshot.
+flat on held-out at a little under two reads while its gap to training loss kept opening, so
+**a text of this kind is worth about two readings at her size**, and the anthologies met that
+first and widest; old fantasy lost its cadence in the first hour at a tenth of the mix, was
+doubled through the weights file at step 3,500 and ended below where it started; no run of twelve
+words was lifted in any snapshot.
 
-**Then his call between three**: the four-read run (`day4.md`, the variant — though the run says
-four is past the limit for this pile), more hours from where she lands, or a gentler mix from
-`day3`'s save. To carry into whichever: Strange Horizons and the released authors were held to
-one read on a premise that turned out false (`day3` was to have read them four times and was
-stopped at about one and a half), so they have room; old fantasy wants about a fifth, not a
-tenth, if the archaic register is to hold against a diet this modern; and a change of mix has
-most pull early, at the top of the rate (`PITFALLS.md` 7.10).
+In order, and each is bekh's move:
 
-**The next large piece of work is `docs/brief-six-thousand.md`**: choosing a library of thousands
-of books by bekh's taste. The session that takes it up begins by rewriting that brief with him.
+1. **He reads her** on the loom (`https://eva.x`) and on her page, and says whether the read
+   under "How she writes" holds. His read outranks it; rewrite that paragraph to his.
+2. **Another short run on the text in hand, or the card rests.** The four-read variant is retired
+   (two reads is the limit). What the pile still has to give: Strange Horizons and the released
+   authors were held to one read on a premise that turned out false (`day3` was to have read them
+   four times and was stopped at about one and a half), so they have room; the fifteen rough PDF
+   anthologies wait for clean epubs; most of the fetch list and the bad downloads are not on disk
+   yet (`library.md`). A gentler mix from `day3`'s save is the other road, if he does not like
+   where she landed. To carry into any run: old fantasy wants about a fifth, not a tenth, if the
+   archaic register is to hold against a diet this modern; a change of mix has most pull early,
+   at the top of the rate (`PITFALLS.md` 7.10); the run's length falls out of how much text there
+   is (`SHELVES.md`).
+3. **The six thousand** — `docs/brief-six-thousand.md`: choosing a library of thousands of books
+   by his taste, and for the move she lacks. The session that takes it up begins by rewriting that
+   brief with him.
 
-**Smaller things open**: the books still to come and the downloads to fetch again
-(`library.md`); the mirror after each batch (`PRESERVATION.md`); the dedupe's plan is slow since
-the big shelves joined its index (`dedupe/CLAUDE.md`); the sieve's known weak spots
-(`sieve/CLAUDE.md`); `night/watch.sh` builds the page before it pulls a snapshot, so a run's last
-snapshot needs the page built by hand; the page does not say how old each of its blocks is
-(`night/CLAUDE.md`, the page).
+**Small things wanted**, none started: the page should say how old each of its three blocks is
+(the fixed epigraph, the hourly sampled draws, the twenty-minute raw ones — bekh took the hourly
+ones for stale; `night/CLAUDE.md`, the page); the meter's index split from the dedupe's plan, so
+the big reference shelves stop costing the plan ten minutes (`dedupe/CLAUDE.md`); author
+biographies printed after an anthology story are not cut (`sieve/CLAUDE.md`, known limits);
+`night/watch.sh` builds the page before it pulls a snapshot, so a run's last snapshot needs the
+page built by hand; `day3`'s final save lies twice on the host, 4 GB each, and one may go on
+bekh's word (`PRESERVATION.md`); the final snapshots of `day3` and `day4` are on the mac and the
+host but not yet under their own names in the mini's archive, where the rule wants them
+(`PRESERVATION.md`, the rule, 1); the mirror after each batch of new text (`PRESERVATION.md`).
 
 **The finishing-school talk**, not yet had — the open questions: a short low-rate pass against an
 adapter with a dial (`SERVE.md` was never written; check the per-request LoRA scale on our

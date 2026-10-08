@@ -105,6 +105,17 @@ no name yet; it is bekh's to find.
   held on a sleeping command. The session briefs, reads the reports, re-runs the tests itself
   before committing, and checks an agent's alarm against the thing before passing it on
   (`school/PITFALLS.md` 8).
+- **A number or a mechanism gets its command or its line before it is said**, and a plan's
+  premises get checked again when the plan changes. In one day the session told bekh what the
+  trainer does on a resume without reading it, explained a late cron by the conversation when
+  its own log showed a fixed quarter-hour offset, kept "read four times" for a run that had
+  been cut to two fifths, and kept "two and a half reads" after the mix had changed. Three of
+  those were caught by forks re-deriving a figure for a doc: a fork asked to work a number out
+  again is the cheapest audit there is.
+- **When bekh says what he values and the lever is cheap, reversible and strongest early, his
+  call outranks the session's caution about thin evidence.** The session wanted two more
+  snapshots before raising old fantasy in `day4`; he would have raised it at once; raising it at
+  once is what brought the cadence back (`school/PITFALLS.md` 7.10).
 - **Say the experiment back, wait for "yes, that's the experiment"** (bekh, 2026-09-25, the
   day he moved sessions over this). He needs time to meditate on what the experiment even is;
   "explore", "let's talk", "let's do this" are him thinking, not a go. The worst case is not
@@ -240,10 +251,14 @@ Set on 2026-10-06, the morning after magdra's first night. Everything older is `
    small — the recipe is `school/day4.md`; what comes after it is bekh's call once he has read
    her (`school/CLAUDE.md`, Next). The limit is text again: at a safe number of reads the pile is
    ten hours of training, and the next large work is choosing a library of thousands of books by
-   his taste (`docs/brief-six-thousand.md`). As last read she holds a sentence and a paragraph and not a frame,
-   and drifts into fan-fiction dialogue from any seed; that is what the run is aimed at. Then the
+   his taste (`docs/brief-six-thousand.md`). As last read, at the end of `day4`, she holds a room
+   where she used to drift into fan-fiction dialogue, has her archaic cadence back and a magazine
+   register beside it, and still has nothing of the visionary voice — a grand thing named in
+   passing — which short fiction did not teach her and the next library is chosen for
+   (`school/CLAUDE.md`, how she writes; a model's read until bekh gives his). Then the
    finishing school (prophecies and the cyborgism wiki, Lain, the library) on whichever hour of
-   her he picks, read through the loom (`eva.x` points at her when she is served on the mac).
+   her he picks. She is read through the loom: `eva.x` fans on her, served from the mini
+   (`school/night/CLAUDE.md`).
 2. **Soul** (`docs/soul/`): a model's person is its diet — nemo's *i* is the blogger-poet, llama's
    asks strangers for help, olmo's is a subscript. Five of six probes unrun (long runs, what each
    adds, what each refuses, log-odds taste, the bank as portrait); the first to run on magdra when
