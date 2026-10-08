@@ -726,11 +726,14 @@ hour of it; from `day4` it crosses once, at the end (`PRESERVATION.md`).
 not by a monitor, so a run is looked at on a clock. It began as every twenty minutes and bekh
 cut it to hourly on 2026-10-07: the numbers that matter are the per-shelf evals, one every
 thousand steps and about thirty-five minutes, so two checks in three had nothing to say and
-said it into his chat. At twelve past the hour a check sees two new evals and the hourly
-snapshot with its pull. It is a session cron at `12 * * * *` (`/loop 1h` asks first whether to
+said it into his chat. A check that lands a little after the hourly snapshot sees it pulled and the new evals with it. It is a session cron at `12 * * * *` (`/loop 1h` asks first whether to
 make it a cloud schedule — no: it needs this machine's VPN and key; the prompt is in
-`night/CLAUDE.md`): it fires only while the session is idle, so a check lands late when
-we have been talking, and it dies with the session — a fresh session re-arms it. The report is
+`night/CLAUDE.md`): the scheduler runs an hourly job about fifteen minutes after its
+minute (every check of `day3` and `day4` landed at :27 or :28), it cannot cut into a reply that
+is being written, and it dies with the session — a fresh session re-arms it. When bekh asked why
+no check had come at twelve past, the session blamed the conversation without looking at its own
+log, where the offset stood in four timestamps; a question about timing is answered from the
+timestamps. The report is
 five lines, one when nothing moved outside its band. What is given up is the dead-trainer alarm:
 the look is the only thing that pushes when the trainer dies, and the worst case is now an hour
 of cold card.
@@ -749,6 +752,24 @@ stopped at step 33,509 with thirty hours of the abandoned diet unspent. What the
 does buy is a last small drop as the rate winds down; it is polish on the old voice, and a fresh
 schedule at the next start shakes most of it loose. A stop is safe to choose because it writes a
 save that resumes.
+
+**7.10 A lever has most pull early.** `day4`'s first snapshot, an hour in and at the top of the
+rate, answered the archaic seed in a flat modern voice, and old fantasy's held-out number had
+risen at every eval. The session's first answer was to wait for two more snapshots, because one
+draw per seed is thin evidence. That had the cost backwards: she forgets fastest at the peak of
+the rate and what is fed then sticks hardest, so a repair made two hours later is made at a lower
+rate than the damage was. The weight was doubled at step 3,500 through `weights.json`, the
+number turned at the next eval and ended under its baseline. Weigh how small the evidence is
+against what waiting costs, look for a second instrument that already agrees (here the held-out
+number, on forty-eight windows), and remember the change is one line to undo.
+
+**7.11 One bad byte lost a whole draw.** From `day4`'s third snapshot the page showed six
+sampled draws instead of seven. She had started typing curly quotes, a draw cut at its token
+limit can end halfway through a multi-byte character, and the reader of `llama-completion`'s
+output threw on the broken bytes and dropped the draw (`loomed: 'utf-8' codec can't decode…` in
+`night/<run>/watch.err`). `page.py` now decodes with replacement and trims the stump. Count the
+draws per snapshot (`night/<run>/loomed.jsonl`) when the page looks thin, and read `watch.err`:
+it was saying so for two hours.
 
 ## 8. Hands and tools
 
