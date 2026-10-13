@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=bek
-WorkingDirectory=/home/bek/eva-mirror
+User=bekh
+WorkingDirectory=/Users/bekh/eva-mirror
 # Loopback only: caddy is the one door, same as the mac's loom behind its tailnet ip.
 Environment=LOOM_HOST=127.0.0.1
 Environment=LOOM_PORT=8083
@@ -14,13 +14,13 @@ Environment=LOOM_PORT=8083
 Environment=LOOM_READONLY=1
 # ...but marks: keep and good land here too, and in this journal, which the mac's push replays
 # through its own loom. Outside ~/eva-mirror, which rsync --delete owns.
-Environment=LOOM_MARKS=/home/bek/eva-marks.jsonl
+Environment=LOOM_MARKS=/Users/bekh/eva-marks.jsonl
 Environment=LOOM_LLAMA=http://127.0.0.1:9
 # The dream being written: one held connection to the mac loom's /api/stream/events, its `live`
 # events passed on to whoever reads this mirror (dreamshit.net). The mac asleep is a quiet retry.
 Environment=LOOM_LIVE_UPSTREAM=http://100.91.166.121:8082
 # uv's 3.12, by path: stdlib only, and the box's own python is whatever pacman shipped this week.
-ExecStart=/home/bek/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 /home/bek/eva-mirror/eva/server/loom.py
+ExecStart=/Users/bekh/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 /Users/bekh/eva-mirror/eva/server/loom.py
 Restart=always
 RestartSec=3
 

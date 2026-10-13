@@ -223,7 +223,7 @@ run that is still going, that is step 9's command with its name; wait for `STOPP
 ```bash
 hx 'cd /opt/llama/magdra && e=$(tail -n 3 runs/day3.log | grep -o -E "^(DONE|STOPPED) step=[0-9]+" | tail -1); [ -n "$e" ] && grep -q "guard down" runs/day3.guard.log && ! pgrep -f "[t]rain.py" > /dev/null \
   && echo "MATCH day3 ended ($e), its guard is down, no trainer is alive" || echo "MISMATCH day3 has not ended: $(tail -n 1 runs/day3.log | cut -c1-60)"'
-a=$(hx 'sha256sum /opt/llama/magdra/runs/day3/ckpt.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bek@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
+a=$(hx 'sha256sum /opt/llama/magdra/runs/day3/ckpt.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bekh@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
 [ -n "$a" ] && [ "$a" = "$b" ] && echo "MATCH the mini holds day3's final save" || echo "MISMATCH the mini's copy is not the final save"
 ```
 
@@ -232,7 +232,7 @@ copy it by hand, about half an hour, and run the check again. It does not hold u
 steps; it may run beside them:
 
 ```bash
-hx 'cat /opt/llama/magdra/runs/day3/ckpt.pt' | ssh bek@100.69.218.90 'cat > /srv/music/school-archive/models/day3/ckpt.pt.part && mv /srv/music/school-archive/models/day3/ckpt.pt.part /srv/music/school-archive/models/day3/ckpt.pt'
+hx 'cat /opt/llama/magdra/runs/day3/ckpt.pt' | ssh bekh@100.69.218.90 'cat > /srv/music/school-archive/models/day3/ckpt.pt.part && mv /srv/music/school-archive/models/day3/ckpt.pt.part /srv/music/school-archive/models/day3/ckpt.pt'
 ```
 
 Then the final save gets a name of its own on the host, so no later run can write over the
@@ -468,7 +468,7 @@ for it.
 Check — the fallback is where it should be, three times:
 
 ```bash
-a=$(hx 'sha256sum /opt/llama/magdra/ckpt-day3-final.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bek@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
+a=$(hx 'sha256sum /opt/llama/magdra/ckpt-day3-final.pt | cut -d" " -f1'); b=$(ssh -o ConnectTimeout=15 bekh@100.69.218.90 'sha256sum /srv/music/school-archive/models/day3/ckpt.pt | cut -d" " -f1')
 [ -n "$a" ] && [ "$a" = "$b" ] && echo "MATCH the trainable save: host and mini agree" || echo "MISMATCH"
 f=$(hx 'cd /opt/llama/magdra && s=$(grep -o -E "^(DONE|STOPPED) step=[0-9]+" runs/day3.log | tail -1 | grep -o "[0-9]*$"); ls runs/day3/model-$s-q8_0.gguf 2>/dev/null | xargs -n1 basename 2>/dev/null')
 [ -n "$f" ] && echo "MATCH the servable snapshot is on the host ($f)" || echo "MISMATCH no snapshot for the step day3 ended on"

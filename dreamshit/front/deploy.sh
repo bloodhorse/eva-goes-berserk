@@ -4,6 +4,6 @@
 # so only the page goes up — serve.py and eva-root.crt are for running it locally.
 set -e
 cd "$(dirname "$0")"
-ssh bek@miniarch 'test -d /srv/dreamshit || (sudo mkdir -p /srv/dreamshit && sudo chown bek:bek /srv/dreamshit)'
-rsync -a --delete index.html style.css app.js dev.js looks.js fonts.js analyst.jpg bek@miniarch:/srv/dreamshit/
+ssh bekh@miniarch 'test -d /srv/dreamshit || (sudo mkdir -p /srv/dreamshit && sudo chown bekh:bekh /srv/dreamshit)'
+rsync -a --delete index.html style.css app.js dev.js looks.js fonts.js analyst.jpg bekh@miniarch:/srv/dreamshit/
 curl -s -o /dev/null -w 'dreamshit.x %{http_code}\n' https://dreamshit.x/

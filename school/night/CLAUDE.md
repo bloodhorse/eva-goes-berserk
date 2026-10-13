@@ -202,7 +202,7 @@ so `eva.x` fans on her. bekh does not want her followed snapshot by snapshot dur
 moved by hand when a run ends. Which snapshot she is, and whether she answers:
 
 ```bash
-ssh bek@100.69.218.90 'systemctl cat magdra.service | grep ExecStart; systemctl is-active magdra.service'
+ssh bekh@100.69.218.90 'systemctl cat magdra.service | grep ExecStart; systemctl is-active magdra.service'
 curl -s http://100.69.218.90:8086/health; grep 'loom up' /tmp/eva-loom.log | tail -1
 ```
 

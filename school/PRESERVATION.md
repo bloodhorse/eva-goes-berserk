@@ -10,7 +10,7 @@ the newest trainable save, and the kit. Everything else is weight.
   runs and trainable saves live, and nothing there needs insuring against the box disappearing.
   The note "lent for days and liable to vanish" belongs to the other box, `ubuntu@10.4.65.34`
   (olmo's, and `night1`/`day2`'s), which is a different machine.
-- **The mini** (`bek@100.69.218.90`) has two disks: the internal SSD (btrfs root; nothing big goes
+- **The mini** (`bekh@100.69.218.90`) has two disks: the internal SSD (btrfs root; nothing big goes
   on it — `PITFALLS.md` 5.5b) and the external WD at `/srv/music/` (one shingled USB drive: good
   for large files and cold storage, slow under many small rewrites, and no second copy of what is
   on it). The archive is `/srv/music/school-archive/`.
@@ -45,7 +45,7 @@ Run it after any new text lands. Three copies, then a checksum verdict for each;
 deleted on the mini by it.
 
 ```bash
-cd ~/tower/forge/eva-goes-berserk && M=bek@100.69.218.90 && S="ssh -o BatchMode=yes -o ConnectTimeout=10"
+cd ~/tower/forge/eva-goes-berserk && M=bekh@100.69.218.90 && S="ssh -o BatchMode=yes -o ConnectTimeout=10"
 EX=(--exclude=__pycache__/ --exclude=.venv/ --exclude=models/ --exclude=dedupe/state/ --exclude=dedupe/out/ --exclude=sieve/state/ --exclude=sieve/out/ --exclude=shelves/ '--exclude=night/*/status.new' '--exclude=*.part')
 rsync -a -e "$S" "${EX[@]}" school/ "$M:/srv/music/school-archive/"
 rsync -a -e "$S" --exclude=__pycache__/ --exclude=.venv/ shelf/gpt/ "$M:/srv/music/school-archive/gpt/"
@@ -76,7 +76,7 @@ one copy is streamed from the host straight to the mini with a sha256 verdict (4
 an hour through the VPN; it never touches the mac's disk):
 
 ```bash
-N=day4; H=BekmemetevVO@ds-dev2.x340.org; M=bek@100.69.218.90
+N=day4; H=BekmemetevVO@ds-dev2.x340.org; M=bekh@100.69.218.90
 ssh -i $KEY $H "cd /opt/llama/magdra && { [ -e ckpt-$N-final.pt ] || cp runs/$N/ckpt.pt ckpt-$N-final.pt; }"
 ssh $M "mkdir -p /srv/music/school-archive/models/$N"
 ssh -i $KEY $H "cat /opt/llama/magdra/ckpt-$N-final.pt" | ssh $M "cat > /srv/music/school-archive/models/$N/ckpt.pt.part && mv /srv/music/school-archive/models/$N/ckpt.pt.part /srv/music/school-archive/models/$N/ckpt.pt"
@@ -99,7 +99,7 @@ he has been told and has not given it. The snapshot the mini serves her from
 What is where today is three commands, never a list in a doc:
 
 ```bash
-ssh bek@100.69.218.90 'df -h / /srv/music | tail -2; du -sh /srv/music/school-archive/* | sort -h | tail -12; ls -la /srv/music/school-archive/models/*/'
+ssh bekh@100.69.218.90 'df -h / /srv/music | tail -2; du -sh /srv/music/school-archive/* | sort -h | tail -12; ls -la /srv/music/school-archive/models/*/'
 ssh -o ConnectTimeout=15 -i $KEY BekmemetevVO@ds-dev2.x340.org 'cd /opt/llama/magdra && df -h . | tail -1 && du -sh * runs/* | sort -h | tail -14'
 df -h /System/Volumes/Data | tail -1; du -sh ~/tower/forge/eva-goes-berserk/school/* | sort -h | tail -8
 ```

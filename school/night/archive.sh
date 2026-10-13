@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd ~/tower/forge/eva-goes-berserk/school
-B=ubuntu@10.4.65.34; M=bek@100.69.218.90
+B=ubuntu@10.4.65.34; M=bekh@100.69.218.90
 S="ssh -o BatchMode=yes -o ConnectTimeout=8"
 log=night/archive.log
 echo "$(date -u +%FT%TZ) start" >> $log

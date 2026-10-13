@@ -13,7 +13,7 @@ while true; do
   scp -q "${O[@]}" "${B}:$D/runs/$N.temp" "night/$N/temp" 2>/dev/null
   /opt/homebrew/bin/uv run -q --python 3.12 python night/page.py "$N" > "night/$N/page.md" 2>> "night/$N/watch.err" \
     && /opt/homebrew/bin/pandoc -s "night/$N/page.md" -o "night/$N/school-$N.html" --metadata pagetitle="school $N" -V header-includes='<meta http-equiv="refresh" content="120">' \
-    && scp -q -o BatchMode=yes -o ConnectTimeout=8 "night/$N/school-$N.html" bek@100.69.218.90:sheets/ 2>> "night/$N/watch.err"
+    && scp -q -o BatchMode=yes -o ConnectTimeout=8 "night/$N/school-$N.html" bekh@100.69.218.90:sheets/ 2>> "night/$N/watch.err"
   f=$(ssh "${O[@]}" $B "ls -t $D/runs/$N/ 2>/dev/null | grep '^model-.*gguf$' | head -1" </dev/null 2>/dev/null)
   if [ -n "$f" ] && [ "$f" != "$(cat "models/$N/latest" 2>/dev/null)" ]; then
     scp -q "${O[@]}" "${B}:$D/runs/$N/$f" "models/$N/model-latest-q8_0.gguf.part" 2>/dev/null \

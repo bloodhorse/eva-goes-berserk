@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd ~/tower/forge/eva-goes-berserk/school
 N=${1:-night1}; B=${BOX:-BekmemetevVO@ds-dev2.x340.org}; D=${BOXDIR:-/opt/llama/magdra}
-M=bek@100.69.218.90; A=/srv/music/school-archive/models/$N
+M=bekh@100.69.218.90; A=/srv/music/school-archive/models/$N
 O=(-o BatchMode=yes -o ConnectTimeout=8 ${KEY:+-i "$KEY"})
 mkdir -p "night/$N"
 ssh -o BatchMode=yes -o ConnectTimeout=8 $M "mkdir -p $A" </dev/null

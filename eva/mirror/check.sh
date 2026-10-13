@@ -1,7 +1,7 @@
 #!/bin/bash
 # Verdicts only, one per line: is each piece of the mirror doing its job. Run from the mac.
 set -u
-HOST=bek@miniarch
+HOST=bekh@miniarch
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=15"
 v(){ printf '%-34s %s\n' "$1" "$2"; }
 

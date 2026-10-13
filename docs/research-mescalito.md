@@ -206,7 +206,7 @@ does a base model's switchboard look like: genres, obsessions, or weather?
    .venv/bin/python kit/blind.py        # blind.md to read, key.json sealed: don't open it
    ```
 5. Read blind, on the sheets site (from the mac:
-   `scp -P <port> root@<pod>:~/blind.md . && pandoc -s blind.md -o blind.html && scp blind.html bek@100.69.218.90:~/sheets/`).
+   `scp -P <port> root@<pod>:~/blind.md . && pandoc -s blind.md -o blind.html && scp blind.html bekh@100.69.218.90:~/sheets/`).
    Mark every page 0 (nothing), 1 (odd), 2 (the frame held and something arrived). Then open
    the key.
 

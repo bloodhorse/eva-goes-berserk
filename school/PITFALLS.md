@@ -522,7 +522,7 @@ uploads to `~/sheets` failed with `scp: write remote … Failure` while `df` loo
 alarm), and `du -x` lies there too: it stops at each subvolume, so `/home` and the music
 library were invisible to it (`findmnt -t btrfs` lists them). What was on that disk and is not
 any more: the music library and three attic folders, now on the WD with symlinks left in
-`/srv/attic`; what is where today is `ssh bek@100.69.218.90 'df -h / /srv/music; ls -la /srv/attic'`.
+`/srv/attic`; what is where today is `ssh bekh@100.69.218.90 'df -h / /srv/music; ls -la /srv/attic'`.
 `/srv/backups/tower` there is the rustic repository itself — a backup, never scratch.
 
 **5.8 A last-read date is not "unused", and a check never shares a command line with the

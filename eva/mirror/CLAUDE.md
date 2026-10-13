@@ -15,11 +15,11 @@ the read-only switch all stay when the loom itself moves; only who writes change
   replays every line through the mac loom's own `/api/mark` — so a keep builds its artifact on
   the mac like any keep — and clears it only when all landed (400/404 = that room or branch is
   gone, dropped; anything else = stop, push nothing, retry next minute). Then rsync of
-  `eva/server`, `eva/front` and `shelf/` to `bek@miniarch:~/eva-mirror/` (`--delete`, no
+  `eva/server`, `eva/front` and `shelf/` to `bekh@miniarch:~/eva-mirror/` (`--delete`, no
   `.trash`, no berserk heartbeat/state), then `touch ~/eva-mirror/.synced`. When `loom.py`
   changed, it restarts the mirror too. Log: `/tmp/eva-mirror.log`, one line only when something
   changed.
-- **The mini serves read-only.** `eva-mirror.service` (system unit, user bek): the same
+- **The mini serves read-only.** `eva-mirror.service` (system unit, user bekh): the same
   `loom.py` on `127.0.0.1:8083` with `LOOM_READONLY=1` — every POST is a 403 except
   `/api/mark` and `/api/keep`, which write the mirror's copy of the room (so the page shows the
   mark) and append a line to `LOOM_MARKS`; no artifact is built there. `/api/health` says
@@ -59,28 +59,28 @@ bash ~/tower/forge/eva-goes-berserk/eva/mirror/check.sh
 Marks still waiting on the mini (empty = all home):
 
 ```bash
-ssh bek@miniarch 'cat eva-marks.jsonl eva-marks.jsonl.taking 2>/dev/null'
+ssh bekh@miniarch 'cat eva-marks.jsonl eva-marks.jsonl.taking 2>/dev/null'
 ```
 
 Push now instead of waiting a minute; restart the mirror:
 
 ```bash
 launchctl kickstart -k gui/$(id -u)/com.bekh.eva-mirror
-ssh bek@miniarch 'sudo systemctl restart eva-mirror; journalctl -u eva-mirror -n 20 --no-pager'
+ssh bekh@miniarch 'sudo systemctl restart eva-mirror; journalctl -u eva-mirror -n 20 --no-pager'
 ```
 
 A changed `eva-mirror.service`:
 
 ```bash
-scp ~/tower/forge/eva-goes-berserk/eva/mirror/eva-mirror.service bek@miniarch:/tmp/ && \
-  ssh bek@miniarch 'sudo mv /tmp/eva-mirror.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl restart eva-mirror'
+scp ~/tower/forge/eva-goes-berserk/eva/mirror/eva-mirror.service bekh@miniarch:/tmp/ && \
+  ssh bekh@miniarch 'sudo mv /tmp/eva-mirror.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl restart eva-mirror'
 ```
 
 **Rollback, whole thing** — caddy back to the mac alone (the pre-mirror file is kept on the
 mini), stop both halves:
 
 ```bash
-ssh bek@miniarch 'sudo cp /etc/caddy/Caddyfile.bak-eva-mirror /etc/caddy/Caddyfile && sudo systemctl reload caddy && sudo systemctl disable --now eva-mirror'
+ssh bekh@miniarch 'sudo cp /etc/caddy/Caddyfile.bak-eva-mirror /etc/caddy/Caddyfile && sudo systemctl reload caddy && sudo systemctl disable --now eva-mirror'
 launchctl bootout gui/$(id -u)/com.bekh.eva-mirror
 ```
 

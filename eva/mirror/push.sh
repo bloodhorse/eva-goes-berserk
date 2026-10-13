@@ -7,7 +7,7 @@
 # whatever is there and not here is stale by definition.
 set -u
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-HOST=${EVA_MIRROR_HOST:-bek@miniarch}
+HOST=${EVA_MIRROR_HOST:-bekh@miniarch}
 DEST=eva-mirror
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=15"
 stamp(){ date '+%F %T'; }
